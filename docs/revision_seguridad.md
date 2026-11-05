@@ -24,6 +24,7 @@ Revisión de las lecciones `l0_trifasica`, `l0_peligros` y `l0_loto`, y de la fi
 | Comprobación de guantes por inflado antes de usarlos (descripción de un fabricante, no el texto de la norma) | [CATU](https://www.slideshare.net/slideshow/catu-insulating-rubber-gloves-53927041/53927041) |
 | Primera falla en red aislada: no dispara; requiere vigilancia del aislamiento | [Electrical Installation Guide](https://www.electrical-installation.org/enwiki/IT_system_-_Principle) |
 | Medir entre fases y de cada fase a tierra | [EC&M](https://www.ecmweb.com/safety/article/20902603/establishing-an-electrically-safe-work-condition) |
+| Bloqueo y etiquetado en todos los puntos de desconexión, y descarga de energía almacenada | [Electricity Forum](https://electricityforum.com/iep/arc-flash/to-verify-an-electrically-safe-work-condition) |
 | Umbral de "no poder soltar" cerca de 10 mA; diferenciales de 30 mA | [IPD](https://ipd.com.au/why-30ma-and-300ms), [Electrician Courses](https://electriciancourses4u.co.uk/?p=906) |
 | Fibrilación como principal causa de muerte | [IEC 60479-1, vista previa](https://webstore.ansi.org/preview-pages/IEC/preview_iec60479-1%7Bed4.1%7Den.pdf) |
 | Bobina de contactor: cierre entre 85 % y 110 %. La caída depende del modelo | [Rockwell](https://www.rockwellautomation.com/en-us/products/details.104-K12B02.html), [ABB](https://resources.ipd.com.au/Flipbook/Contactor/files/basic-html/page318.html) |
@@ -33,7 +34,7 @@ Revisión de las lecciones `l0_trifasica`, `l0_peligros` y `l0_loto`, y de la fi
 Siguen en las lecciones como valores orientativos o a verificar:
 
 - Que NFPA 70E no admite detectores sin contacto para verificar ausencia de tensión hasta 1000 V: lo indicó un resumen de búsqueda, pero no se pudo abrir la fuente.
-- Secuencia probar, medir, probar, y descarga de energía almacenada dentro del procedimiento: se confirmó solo en resúmenes de búsqueda, sin abrir la fuente.
+- Probar el instrumento en una fuente conocida antes y después de medir: se confirmó solo en resúmenes de búsqueda, sin abrir la fuente.
 - Resistencia del cuerpo de unos 1000 Ω.
 - Percepción en 0,5 mA y 1 mA.
 - Dificultad respiratoria cerca de 30 mA.
