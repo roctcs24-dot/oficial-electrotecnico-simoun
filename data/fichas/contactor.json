@@ -5,7 +5,7 @@
   "dibujo": {
     "svg": "res://art/equipos/contactor.svg",
     "tamano": [360, 500],
-    "nota": "Ilustración sin marca con la disposición típica de un contactor de 25 A en carril DIN. Cada fabricante cambia detalles: los bornes se identifican siempre por sus marcas.",
+    "nota": "Ilustración sin marca con la disposición típica de un contactor de 25 A en carril DIN. Cada fabricante cambia detalles: identifique siempre los bornes por sus marcas.",
     "etiquetas": [
       { "texto": "1/L1", "x": 110, "y": 39, "tam": 15 },
       { "texto": "3/L2", "x": 180, "y": 39, "tam": 15 },
@@ -57,7 +57,7 @@
     "pulsador": "S1",
     "contactor": "K1",
     "lampara": "H1",
-    "explicacion": "Con S1 pulsado, la bobina recibe 110 V (valor típico, verificar a bordo), la armadura cierra y el contacto 13-14 enciende la luz piloto."
+    "explicacion": "Mantenga pulsado S1: la bobina recibe 110 V (valor típico, verificar a bordo), la armadura cierra y el contacto 13-14 enciende la luz piloto."
   },
   "secciones": [
     {
@@ -73,27 +73,27 @@
     {
       "id": "conexion",
       "titulo": "Cómo se conecta",
-      "texto": "• [b]Línea:[/b] 1/L1, 3/L2 y 5/L3, del lado de la alimentación.\n• [b]Carga:[/b] 2/T1, 4/T2 y 6/T3, hacia el relé térmico y el motor.\n• [b]Bobina:[/b] A1 y A2, en la fila central junto a los auxiliares, a la tensión de mando. A bordo suele ser 110 V AC ([i]valor típico — verificar a bordo[/i]). La tensión de la bobina se lee siempre en su etiqueta: no tiene por qué coincidir con la de los polos.\n• [b]Auxiliares:[/b] el 13-14 en paralelo con el pulsador de marcha es el {{retencion}}: mantiene la bobina alimentada al soltar el pulsador.\n\nEn los auxiliares, los números que acaban en 1-2 son NC y los que acaban en 3-4 son NA."
+      "texto": "• [b]Línea:[/b] 1/L1, 3/L2 y 5/L3, del lado de la alimentación.\n• [b]Carga:[/b] 2/T1, 4/T2 y 6/T3, hacia el relé térmico y el motor.\n• [b]Bobina:[/b] A1 y A2, en la fila central junto a los auxiliares, a la tensión de mando. A bordo suele ser 110 V AC ([i]valor típico — verificar a bordo[/i]). Lea siempre la tensión de la bobina en su etiqueta: no tiene por qué coincidir con la de los polos.\n• [b]Auxiliares:[/b] el 13-14 en paralelo con el pulsador de marcha es el {{retencion}}: mantiene la bobina alimentada al soltar el pulsador.\n\nEn los auxiliares, los números que acaban en 1-2 son NC y los que acaban en 3-4 son NA."
     },
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "El contactor no tiene ajustes. Se elige por:\n• Su {{categoria_empleo}}: AC-3 para motores de jaula de ardilla que arrancan y paran con normalidad.\n• La corriente de empleo a la tensión de la red, que se lee en la placa.\n• La tensión y frecuencia de la bobina. Una bobina de 50 Hz no siempre sirve en 60 Hz: debe comprobarse con el fabricante."
+      "texto": "El contactor no tiene ajustes. Se elige por:\n• Su {{categoria_empleo}}: AC-3 para motores de jaula de ardilla que arrancan y paran con normalidad.\n• La corriente de empleo a la tensión de la red, que se lee en la placa.\n• La tensión y frecuencia de la bobina. Una bobina de 50 Hz no siempre sirve en 60 Hz: compruébelo con el fabricante."
     },
     {
       "id": "pruebas",
       "titulo": "Cómo se prueba",
-      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada:[/b]\n• [b]Bobina,[/b] multímetro en Ω entre A1 y A2: debe leer un valor finito, típicamente de decenas a cientos de ohmios según el modelo ([i]verificar con el fabricante[/i]). Fuera de rango indica bobina abierta; casi 0 Ω indica espiras en corto.\n• [b]Polos abiertos,[/b] entre 1-2, 3-4 y 5-6: fuera de rango. Si marca casi 0 Ω, los contactos están soldados.\n• [b]Polos cerrados,[/b] accionando la armadura a mano si el modelo lo permite: casi 0 Ω en los tres. Se comparan los polos entre sí: uno más alto indica contacto picado.\n• [b]Aislamiento,[/b] con {{megohmetro}} entre polos y a masa, desconectado de la electrónica. Se aplica el criterio del buque ([i]verificar a bordo[/i]).\n\n[b]Con tensión, usando EPP:[/b] se mide la tensión entre A1 y A2. Según IEC 60947-4-1 debe cerrar con seguridad entre el 85 % y el 110 % de la nominal ([i]verificar[/i])."
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada:[/b]\n• [b]Bobina,[/b] multímetro en Ω entre A1 y A2: debe leer un valor finito, típicamente de decenas a cientos de ohmios según el modelo ([i]verificar con el fabricante[/i]). Fuera de rango indica bobina abierta; casi 0 Ω indica espiras en corto.\n• [b]Polos abiertos,[/b] entre 1-2, 3-4 y 5-6: fuera de rango. Si marca casi 0 Ω, los contactos están soldados.\n• [b]Polos cerrados,[/b] accionando la armadura a mano si el modelo lo permite: casi 0 Ω en los tres. Compare los polos entre sí: uno más alto indica contacto picado.\n• [b]Aislamiento,[/b] con {{megohmetro}} entre polos y a masa, desconectado de la electrónica. Aplique el criterio del buque ([i]verificar a bordo[/i]).\n\n[b]Con tensión, usando EPP:[/b] mida la tensión entre A1 y A2. Según IEC 60947-4-1 debe cerrar con seguridad entre el 85 % y el 110 % de la nominal ([i]verificar[/i])."
     },
     {
       "id": "fallas",
       "titulo": "Fallas típicas",
-      "texto": "• [b]No cierra:[/b] bobina abierta o sin tensión de mando. Se mide primero la tensión en A1-A2.\n• [b]Zumba o vibra:[/b] tensión de mando baja, núcleo sucio o espira de sombra rota.\n• [b]No abre al quitar el mando:[/b] contactos soldados por un cortocircuito o por demasiadas maniobras con carga. El motor sigue en marcha aunque se pulse parada: es una situación peligrosa.\n• [b]Motor con corrientes desiguales o falta de fase:[/b] un polo picado o con alta resistencia. El relé térmico puede dispararse sin causa aparente.\n• [b]Bobina quemada:[/b] sobretensión, o una bobina de otra tensión. Huele a barniz y suele verse oscurecida."
+      "texto": "• [b]No cierra:[/b] bobina abierta o sin tensión de mando. Mida primero la tensión en A1-A2.\n• [b]Zumba o vibra:[/b] tensión de mando baja, núcleo sucio o espira de sombra rota.\n• [b]No abre al quitar el mando:[/b] contactos soldados por un cortocircuito o por demasiadas maniobras con carga. El motor sigue en marcha aunque pulse parada: es una situación peligrosa.\n• [b]Motor con corrientes desiguales o falta de fase:[/b] un polo picado o con alta resistencia. El relé térmico puede dispararse sin causa aparente.\n• [b]Bobina quemada:[/b] sobretensión, o una bobina de otra tensión. Huele a barniz y suele verse oscurecida."
     },
     {
       "id": "mantenimiento",
       "titulo": "Mantenimiento",
-      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo y en el plan de mantenimiento[/i]):\n• Cada 6 meses: apriete de bornes, limpieza de polvo y humedad, signos de recalentamiento.\n• Cada año o por número de maniobras: estado de los contactos, de la cámara apagachispas y del núcleo.\n\n[b]Correctivo:[/b] se cambia el juego de contactos si el modelo lo admite, o el contactor completo. Los tres polos se sustituyen siempre a la vez. Los contactos plateados no deben limarse. Si hubo un cortocircuito, se revisan también las protecciones y el motor."
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo y en el plan de mantenimiento[/i]):\n• Cada 6 meses: apriete de bornes, limpieza de polvo y humedad, signos de recalentamiento.\n• Cada año o por número de maniobras: estado de los contactos, de la cámara apagachispas y del núcleo.\n\n[b]Correctivo:[/b] cambie el juego de contactos si el modelo lo admite, o el contactor completo. Sustituya siempre los tres polos a la vez. No lime contactos plateados. Si hubo un cortocircuito, revise también las protecciones y el motor."
     }
   ],
   "para_saber_mas": [

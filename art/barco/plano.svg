@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420">
-  <rect width="1000" height="420" fill="#1e2429"/>
+  <rect width="1000" height="420" fill="#12283a"/>
 
   <!-- Cuadrícula de referencia -->
-  <g stroke="#2a3238" stroke-width="1">
+  <g stroke="#1b3347" stroke-width="1">
     <path d="M100,0 V420 M200,0 V420 M300,0 V420 M400,0 V420 M500,0 V420 M600,0 V420 M700,0 V420 M800,0 V420 M900,0 V420"/>
     <path d="M0,100 H1000 M0,200 H1000 M0,300 H1000"/>
   </g>
 
   <!-- Casco -->
-  <path d="M60,220 L620,220 L620,172 L900,150 L958,132 C950,200 925,290 880,352 L110,352 C85,345 66,320 60,290 Z" fill="#283036" stroke="#c6cfd5" stroke-width="2.5"/>
+  <path d="M60,220 L620,220 L620,172 L900,150 L958,132 C950,200 925,290 880,352 L110,352 C85,345 66,320 60,290 Z" fill="#1a3247" stroke="#c6cfd5" stroke-width="2.5"/>
 
   <!-- Línea de flotación -->
   <path d="M20,316 H980" stroke="#6f9db8" stroke-width="1.5" stroke-dasharray="14 7"/>
@@ -20,7 +20,7 @@
   </g>
 
   <!-- Superestructura -->
-  <g fill="#242b30" stroke="#c6cfd5" stroke-width="2">
+  <g fill="#173044" stroke="#c6cfd5" stroke-width="2">
     <rect x="570" y="120" width="220" height="52"/>
     <rect x="610" y="76" width="160" height="44"/>
     <path d="M636,76 L642,40 H752 L758,76 Z"/>
@@ -32,35 +32,35 @@
 
   <!-- Mástil de proa y cofa -->
   <path d="M697,40 V6" stroke="#c6cfd5" stroke-width="2.5"/>
-  <rect x="686" y="8" width="22" height="9" fill="#242b30" stroke="#c6cfd5" stroke-width="1.5"/>
+  <rect x="686" y="8" width="22" height="9" fill="#173044" stroke="#c6cfd5" stroke-width="1.5"/>
 
   <!-- Chimenea -->
-  <path d="M532,172 L540,118 H566 V172 Z" fill="#242b30" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M532,172 L540,118 H566 V172 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
 
   <!-- Mástil, pluma y power block -->
   <path d="M510,220 V52" stroke="#c6cfd5" stroke-width="3"/>
   <path d="M510,62 L150,104" stroke="#c6cfd5" stroke-width="2.5"/>
   <path d="M510,52 L150,104" stroke="#8d989f" stroke-width="1"/>
   <path d="M216,96 V118" stroke="#8d989f" stroke-width="1.5"/>
-  <circle cx="216" cy="128" r="10" fill="#242b30" stroke="#c6cfd5" stroke-width="2"/>
+  <circle cx="216" cy="128" r="10" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
 
   <!-- Red y panga en popa -->
   <path d="M90,220 C100,192 210,192 248,220 Z" fill="none" stroke="#8d989f" stroke-width="1.5" stroke-dasharray="5 4"/>
-  <path d="M46,190 H150 L136,212 H64 Z" fill="#242b30" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M46,190 H150 L136,212 H64 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
 
   <!-- Cubas de salmuera -->
-  <g fill="#222a2f" stroke="#a3afb6" stroke-width="1.5">
+  <g fill="#152c40" stroke="#a3afb6" stroke-width="1.5">
     <rect x="258" y="242" width="62" height="88"/>
     <rect x="330" y="242" width="62" height="88"/>
     <rect x="402" y="242" width="62" height="88"/>
     <rect x="474" y="242" width="62" height="88"/>
   </g>
-  <g stroke="#3a454c" stroke-width="1">
+  <g stroke="#2b4a60" stroke-width="1">
     <path d="M258,262 H320 M258,282 H320 M258,302 H320 M330,262 H392 M330,282 H392 M330,302 H392 M402,262 H464 M402,282 H464 M402,302 H464 M474,262 H536 M474,282 H536 M474,302 H536"/>
   </g>
 
   <!-- Mamparos de cámara de máquinas -->
-  <rect x="560" y="176" width="176" height="164" fill="#20272c" stroke="#a3afb6" stroke-width="1.5"/>
+  <rect x="560" y="176" width="176" height="164" fill="#142a3d" stroke="#a3afb6" stroke-width="1.5"/>
   <path d="M560,228 H736" stroke="#a3afb6" stroke-width="1.5"/>
   <path d="M648,228 V340" stroke="#a3afb6" stroke-width="1" stroke-dasharray="6 4"/>
 

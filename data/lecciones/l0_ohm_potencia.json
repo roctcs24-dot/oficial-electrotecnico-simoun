@@ -12,7 +12,7 @@
           "tipo": "animacion",
           "id": "circuito_ohm",
           "params": { "v_min": 0, "v_max": 110, "v": 24, "r_min": 2, "r_max": 200, "r": 12, "potencia": false },
-          "pie": "Comprobación de la fórmula: seleccione una tensión y una resistencia, y calcule la corriente antes de leer el resultado."
+          "pie": "Compruebe la fórmula: seleccione una tensión y una resistencia, y calcule la corriente antes de leer el resultado."
         },
         {
           "tipo": "quiz",
@@ -41,7 +41,7 @@
     {
       "titulo": "Potencia y energía",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{potencia}} indica cuánto trabajo realiza la electricidad cada segundo:\n\n[center][b]P = V × I[/b][/center]\n\nSe mide en vatios (W), y 1 kW equivale a 1 000 W. Esta fórmula se aplica directamente en corriente continua y con cargas puramente resistivas. Los motores trifásicos tienen una fórmula propia, que se estudia más adelante.\n\nLa {{energia}} es la potencia mantenida en el tiempo: 15 kW durante 2 horas son 30 kWh. Esa energía se traduce en consumo de combustible.\n\nAl ajustar los controles, la lámpara varía su brillo según la potencia." },
+        { "tipo": "texto", "texto": "La {{potencia}} indica cuánto trabajo realiza la electricidad cada segundo:\n\n[center][b]P = V × I[/b][/center]\n\nSe mide en vatios (W), y 1 kW equivale a 1 000 W. Esta fórmula se aplica directamente en corriente continua y con cargas puramente resistivas. Los motores trifásicos tienen una fórmula propia, que estudiará más adelante.\n\nLa {{energia}} es la potencia mantenida en el tiempo: 15 kW durante 2 horas son 30 kWh. Esa energía se traduce en consumo de combustible.\n\nAjuste los controles y observe cómo varía el brillo de la lámpara según la potencia." },
         {
           "tipo": "animacion",
           "id": "circuito_ohm",

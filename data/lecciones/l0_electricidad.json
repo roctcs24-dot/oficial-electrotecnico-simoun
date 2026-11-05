@@ -7,20 +7,20 @@
     {
       "titulo": "Cargas en movimiento",
       "bloques": [
-        { "tipo": "texto", "texto": "Toda la materia contiene electrones, partículas con carga eléctrica. En los metales, como el cobre de los cables, algunos electrones se desplazan con libertad. Por eso el cobre es un buen {{conductor}}.\n\nEn un {{aislante}}, como el caucho de un cable o el barniz de un motor, los electrones apenas pueden moverse. El trabajo eléctrico consiste en conducir la corriente por el camino previsto y mantenerla fuera de cualquier otro, en especial del cuerpo humano." }
+        { "tipo": "texto", "texto": "Toda la materia contiene electrones, partículas con carga eléctrica. En los metales, como el cobre de los cables, algunos electrones se desplazan con libertad. Por eso el cobre es un buen {{conductor}}.\n\nEn un {{aislante}}, como el caucho de un cable o el barniz de un motor, los electrones apenas pueden moverse. Su trabajo consiste en conducir la corriente por el camino previsto y mantenerla fuera de cualquier otro, en especial de su cuerpo." }
       ]
     },
     {
       "titulo": "Magnitudes básicas",
       "bloques": [
-        { "tipo": "texto", "texto": "Una tubería de agua sirve de analogía:\n\n• El {{voltaje}} equivale a la presión que empuja. Se mide en voltios (V).\n• La {{corriente}} equivale al caudal que pasa. Se mide en amperios (A).\n• La {{resistencia}} equivale a la estrechez de la tubería. Se mide en ohmios (Ω).\n\nSin presión no hay caudal, y con la válvula cerrada tampoco, aunque la presión se mantenga. Lo mismo ocurre en un tablero: un cable sin carga conectada no conduce corriente, pero [b]mantiene la tensión y supone riesgo de muerte[/b]." },
+        { "tipo": "texto", "texto": "Imagine una tubería de agua:\n\n• El {{voltaje}} equivale a la presión que empuja. Se mide en voltios (V).\n• La {{corriente}} equivale al caudal que pasa. Se mide en amperios (A).\n• La {{resistencia}} equivale a la estrechez de la tubería. Se mide en ohmios (Ω).\n\nSin presión no hay caudal, y con la válvula cerrada tampoco, aunque la presión se mantenga. Lo mismo ocurre en un tablero: un cable sin carga conectada no conduce corriente, pero [b]mantiene la tensión y puede causarle la muerte[/b]." },
         {
           "tipo": "quiz",
           "tema": "voltaje_sin_corriente",
           "pregunta": "Un cable conectado a la barra de 440 V no alimenta ninguna carga en este momento. ¿Es seguro tocarlo?",
           "opciones": ["Sí, porque no circula corriente por él", "No, porque tiene tensión aunque no conduzca corriente", "Sí, si el motor está parado"],
           "correcta": 1,
-          "explicacion": "La tensión está presente aunque no circule corriente. El cuerpo cerraría el circuito y la corriente pasaría a través de él."
+          "explicacion": "La tensión está presente aunque no circule corriente. Su cuerpo cerraría el circuito y la corriente pasaría a través de usted."
         }
       ]
     },

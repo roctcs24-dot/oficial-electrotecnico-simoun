@@ -19,7 +19,7 @@
     {
       "titulo": "Frecuencia",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{frecuencia}} es el número de ciclos completos por segundo, en hercios (Hz). La red del Vía Simoun es de 60 Hz: cada ciclo dura 1 ÷ 60 ≈ 16,7 milisegundos.\n\nLa frecuencia determina la velocidad de los motores. Un motor de 50 Hz en una red de 60 Hz gira un 20 % más rápido, y una bomba puede sobrecargarse. Si una placa indica otra frecuencia, se debe consultar antes de conectar." },
+        { "tipo": "texto", "texto": "La {{frecuencia}} es el número de ciclos completos por segundo, en hercios (Hz). La red del Vía Simoun es de 60 Hz: cada ciclo dura 1 ÷ 60 ≈ 16,7 milisegundos.\n\nLa frecuencia determina la velocidad de los motores. Un motor de 50 Hz en una red de 60 Hz gira un 20 % más rápido, y una bomba puede sobrecargarse. Si una placa indica otra frecuencia, consulte antes de conectar." },
         {
           "tipo": "quiz",
           "tema": "frecuencia",

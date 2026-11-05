@@ -7,14 +7,14 @@
     {
       "titulo": "Antes de intervenir",
       "bloques": [
-        { "tipo": "texto", "texto": "El pulsador de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 440 V, y el equipo puede arrancarse desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del buque ([i]verificar el procedimiento a bordo[/i]). Las reglas siguientes se aplican en orden, sin omitir ninguna." },
+        { "tipo": "texto", "texto": "El pulsador de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 440 V, y el equipo puede arrancarse desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del buque ([i]verificar el procedimiento a bordo[/i]). Aplique las reglas siguientes en orden, sin omitir ninguna." },
         {
           "tipo": "quiz",
           "tema": "parada_no_es_seguro",
           "pregunta": "La bomba está detenida con el pulsador de parada. ¿Se puede abrir ya la bornera?",
           "opciones": ["Sí, porque el motor no gira", "No: el pulsador solo actúa sobre el mando y los bornes pueden seguir con tensión", "Sí, si la luz piloto está apagada"],
           "correcta": 1,
-          "explicacion": "Parar no es aislar. Hay que abrir el aislador, bloquearlo, etiquetarlo y verificar la ausencia de tensión."
+          "explicacion": "Recuerde que parar no es aislar. Abra el aislador, colóquele su candado y tarjeta, y verifique la ausencia de tensión."
         }
       ]
     },
@@ -34,7 +34,7 @@
     {
       "titulo": "Bloqueo y etiquetado",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{loto}} materializa la regla 2:\n\n• [b]Candado personal:[/b] cada persona que trabaja coloca el suyo y conserva su llave. Si son varias, se usa un cerrojo múltiple con un candado por persona.\n• [b]Tarjeta:[/b] indica quién trabaja, en qué equipo, desde cuándo y cómo contactar con esa persona.\n• [b]Retirada:[/b] cada candado lo retira únicamente quien lo colocó, al terminar su trabajo." },
+        { "tipo": "texto", "texto": "El {{loto}} materializa la regla 2:\n\n• [b]Candado personal:[/b] coloque el suyo y conserve su llave. Si trabajan varias personas, use un cerrojo múltiple con un candado por persona.\n• [b]Tarjeta:[/b] indica quién trabaja, en qué equipo, desde cuándo y cómo contactar con esa persona.\n• [b]Retirada:[/b] retire únicamente su propio candado, al terminar su trabajo." },
         {
           "tipo": "imagen",
           "svg": "res://art/seguridad/loto.svg",
@@ -57,11 +57,11 @@
     {
       "titulo": "Probar, medir, probar",
       "bloques": [
-        { "tipo": "texto", "texto": "Un instrumento averiado puede indicar 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se realiza en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nTambién debe descargarse la {{energia_almacenada}}: se espera el tiempo que indica el fabricante y se mide en el bus de los condensadores." },
+        { "tipo": "texto", "texto": "Un instrumento averiado puede indicar 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se realiza en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nDescargue también la {{energia_almacenada}}: espere el tiempo que indica el fabricante y mida en el bus de los condensadores." },
         {
           "tipo": "ordenar",
           "tema": "secuencia_loto",
-          "pregunta": "Se va a sustituir el motor de una bomba. Seleccione los pasos en orden:",
+          "pregunta": "Debe sustituir el motor de una bomba. Seleccione los pasos en orden:",
           "pasos": ["Obtener el permiso y avisar al personal afectado", "Parar el equipo con su mando normal", "Abrir el aislador", "Colocar candado y tarjeta", "Probar el instrumento, medir ausencia de tensión y probarlo de nuevo", "Realizar el trabajo", "Retirar herramientas y personal, y quitar candado y tarjeta", "Avisar, energizar y probar el equipo"],
           "explicacion": "Parar y luego aislar evita abrir el aislador con carga. La verificación se hace siempre después de bloquear y antes de intervenir."
         },
