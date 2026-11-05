@@ -1,0 +1,32 @@
+{
+  "nota": "Textos comunes de las misiones de Guardia. Cada misión puede sustituir los de un accidente. Los procedimientos son de formación: a bordo prevalecen los del buque.",
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: trabajo sin bloqueo",
+      "que_ocurrio": "Se intervino en el equipo sin candado ni tarjeta en todos sus aisladores. Otra persona, que no sabía del trabajo, energizó el arrancador. El oficial recibió una descarga eléctrica y fue atendido por el oficial sanitario.",
+      "causa": "El equipo no estaba bloqueado contra la reconexión. Un aislador abierto, sin candado, puede cerrarlo cualquiera.",
+      "como_evitar": "• Abra todas las alimentaciones del equipo, incluidas las de mando.\n• Coloque en cada una su candado y su tarjeta, y conserve la llave.\n• Verifique la ausencia de tensión antes de tocar nada."
+    },
+    "sin_verificar": {
+      "titulo": "Informe de accidente: tensión sin verificar",
+      "que_ocurrio": "Se intervino en el equipo sin completar la verificación de ausencia de tensión. Un conductor seguía con tensión y el oficial recibió una descarga eléctrica. Fue atendido por el oficial sanitario.",
+      "causa": "El candado impide reconectar, pero no demuestra que no haya tensión: un polo puede quedar pegado o puede existir otra alimentación.",
+      "como_evitar": "• Pruebe el instrumento en una fuente conocida.\n• Mida entre fases, de cada fase a masa y en el circuito de mando.\n• Pruebe de nuevo el instrumento en la fuente conocida.\n• Repita la verificación si vuelve a accionar un aislador."
+    }
+  },
+  "faltas": {
+    "sin_epp": { "titulo": "Medición con tensión sin EPP", "texto": "Midió un punto energizado sin el equipo de protección. Antes de abrir el tablero o medir con tensión, colóquese guantes aislantes, protección facial y ropa adecuada según el procedimiento del buque." },
+    "sin_aviso": { "titulo": "Bloqueo sin aviso previo", "texto": "Bloqueó el equipo sin avisar ni obtener el permiso. Quien depende de ese equipo debe saber que va a quedar fuera de servicio. Avise al oficial de guardia y obtenga el permiso antes de aislar." },
+    "abrir_con_carga": { "titulo": "Aislador abierto con el motor en marcha", "texto": "Pare primero con el mando normal y abra después el aislador. Abrir con carga desgasta los contactos y genera arco." },
+    "medir_sin_bloqueo": { "titulo": "Prueba sin bloquear el equipo", "texto": "Los óhmetros y megóhmetros se usan con el equipo bloqueado y la ausencia de tensión verificada. Si alguien energiza durante la prueba, el instrumento se daña y usted queda expuesto." },
+    "energizar_sin_aviso": { "titulo": "Energizado sin aviso", "texto": "Cerró el aislador sin avisar. Antes de energizar, confirme que no quedan personas ni herramientas en el equipo y avise a quien corresponda." },
+    "bornera_abierta": { "titulo": "Bornera abierta", "texto": "No retire el candado con la bornera abierta o sin sus puentes. Primero deje el equipo como debe funcionar, y solo después retire el bloqueo." },
+    "sin_remedir": { "titulo": "Sin medir después de reparar", "texto": "Una reparación no se da por buena sin medir de nuevo. Con el equipo aún bloqueado, repita la medición que mostró el problema y compárela con el criterio." },
+    "instrumento_destruido": { "titulo": "Instrumento destruido", "texto": "Lo aplicó a un circuito con tensión. Elija el modo antes de colocar las puntas, y use óhmetro o megóhmetro solo con el equipo bloqueado y verificado." },
+    "fusible_instrumento": { "titulo": "Fusible del multímetro fundido", "texto": "La entrada de corriente tiene una resistencia casi nula, y en paralelo con una fuente equivale a un cortocircuito. Mida tensión en paralelo; la corriente se mide en serie o con pinza." },
+    "diagnostico_sin_medir": { "titulo": "Diagnóstico sin mediciones", "texto": "Acertó la causa, pero sin todas las mediciones que la demuestran. A bordo, un diagnóstico sin datos suele terminar en repuestos cambiados sin necesidad." },
+    "reparacion_innecesaria": { "titulo": "Repuesto innecesario", "texto": "Ese repuesto estaba en buen estado. A bordo los repuestos son limitados: mida antes de cambiar." },
+    "ajuste_alterado": { "titulo": "Protección fuera de ajuste", "texto": "El relé térmico se ajusta a la corriente de la placa. Subirlo no elimina la sobrecarga: solo deja al motor sin protección hasta que el devanado se daña." },
+    "prueba_fallida": { "titulo": "Puesta en servicio con la avería sin resolver", "texto": "El equipo volvió a servicio y siguió fallando. Vuelva a aislar, y revise las mediciones y la causa." }
+  }
+}

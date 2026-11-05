@@ -11,7 +11,8 @@ const T_AMBIENTE := 40.0
 const T_ALARMA := 155.0
 const T_QUEMADO := 180.0
 const TAU_TERMICA_S := 600.0
-const SUBPASOS := 5
+## La velocidad se integra siempre con este paso, para que el tiempo acelerado sea estable.
+const PASO_GIRO_S := 0.01
 const A_RE := -0.5
 const A_IM := 0.8660254037844386
 
@@ -209,8 +210,9 @@ func _avanzar_giro(dt: float, secuencias: Array) -> void:
 	var v2_pos: float = 0.0 if estado["quemado"] else pow(secuencias[0], 2.0)
 	var v2_neg: float = 0.0 if estado["quemado"] else pow(secuencias[1], 2.0)
 	var w_a_rpm := 60.0 / TAU
-	var paso := dt / SUBPASOS
-	for _i in SUBPASOS:
+	var subpasos := maxi(roundi(dt / PASO_GIRO_S), 1)
+	var paso := dt / subpasos
+	for _i in subpasos:
 		var giro: float = estado["rpm"]
 		var par_e := _par_secuencia(v2_pos, 1.0 - giro / _ns) - _par_secuencia(v2_neg, 1.0 + giro / _ns)
 		var friccion := 0.03 * _par_nominal

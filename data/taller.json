@@ -95,6 +95,12 @@
         { "texto": "15", "x": 50, "y": 214, "tam": 16 }, { "texto": "16", "x": 130, "y": 214, "tam": 16 }, { "texto": "18", "x": 210, "y": 214, "tam": 16 },
         { "texto": "TEMPORIZADOR", "x": 130, "y": 100, "tam": 15 }, { "texto": "6 s", "x": 130, "y": 150, "tam": 20 }
       ]
+    },
+    {
+      "id": "masa", "tipo": "masa", "prefijo": "PE", "nombre": "Masa del casco",
+      "svg": "res://art/taller/masa.svg", "tamano": [200, 180],
+      "bornes": { "PE": [100, 60] },
+      "etiquetas": [ { "texto": "MASA", "x": 100, "y": 22, "tam": 18 } ]
     }
   ],
   "plantillas": [

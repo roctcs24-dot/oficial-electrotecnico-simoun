@@ -52,6 +52,7 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
 - Lecciones de motores, arrancadores, multímetro y megóhmetro, incluido el procedimiento de polaridad de un motor sin marcas.
 - Esquemas de arranque directo y estrella-triángulo: coinciden con las plantillas del motor de simulación, pero no con planos reales del buque.
 - Explicaciones de consecuencias del Taller, en `data/taller.json`.
+- Misiones de Guardia y sus informes de accidente, en `data/misiones/` y `data/guardia.json`: reportes, averías, secuencia del procedimiento, y el secado de devanados. El umbral de 30 V para considerar que hay tensión es un criterio del juego.
 - Los 12 símbolos de `data/simbolos.json`. No se pudo abrir la comparativa de referencia entre NEMA e IEC, y la simbología ANSI del guardamotor varía según el fabricante.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.

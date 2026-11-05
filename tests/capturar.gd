@@ -28,6 +28,8 @@ func _capturar() -> void:
 		await _capturar_fichas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "taller":
 		await _capturar_taller(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "guardia":
+		await _capturar_guardia(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -111,6 +113,44 @@ func _capturar_taller(raiz: Raiz, carpeta: String) -> void:
 		p._mostrar_aviso("Motor quemado", "Ejemplo de explicación tras una consecuencia.")
 		await _guardar(carpeta, "taller_aviso", tam)
 		p.mesa.vaciar()
+		raiz.volver()
+
+
+func _capturar_guardia(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("guardia", {"id": 3})
+		await _guardar(carpeta, "guardia_lista", tam)
+		raiz.volver()
+		raiz.ir_a("mision", {"id": "g3_bajo_aislamiento"})
+		var p = raiz.pantalla_actual()
+		await _guardar(carpeta, "mision_reporte", tam)
+		p._elegir_pestana("proceso")
+		await _guardar(carpeta, "mision_proceso", tam)
+		p._desplazable_panel.scroll_vertical = 800
+		await _guardar(carpeta, "mision_proceso_abajo", tam)
+		p._al_tocar_pieza("M1")
+		await _guardar(carpeta, "mision_equipo", tam)
+		p._elegir_pestana("medir")
+		p._al_tocar_borne("B.L1")
+		p._al_tocar_borne("B.L2")
+		await _guardar(carpeta, "mision_medir", tam)
+		p._elegir_pestana("libro")
+		await _guardar(carpeta, "mision_libro_pendiente", tam)
+		p.mision.diagnostico_ok = true
+		p.mision.prueba_ok = true
+		p._reconstruir_panel()
+		await _guardar(carpeta, "mision_libro", tam)
+		p.mision.fin = "completada"
+		p.mision.faltas.append({"tema": "x", "titulo": "Ejemplo de falta", "texto": "Explicación de la falta."})
+		raiz.reconstruir()
+		await _guardar(carpeta, "mision_resultado", tam)
+		raiz.volver()
+		raiz.ir_a("mision", {"id": "g3_bajo_aislamiento"})
+		p = raiz.pantalla_actual()
+		p._ejecutar("retirar_puentes")
+		await _guardar(carpeta, "mision_accidente", tam)
 		raiz.volver()
 
 

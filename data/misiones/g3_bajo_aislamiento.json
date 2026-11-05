@@ -1,0 +1,108 @@
+{
+  "id": "g3_bajo_aislamiento",
+  "titulo": "Bajo aislamiento",
+  "resumen": "Ventilador de sala de máquinas nº 2: el monitor de aislamiento da alarma al arrancarlo.",
+  "equipo": "Ventilador de sala de máquinas nº 2",
+  "reporte": {
+    "de": "Oficial de guardia",
+    "texto": "Tras baldear la sala de máquinas, el monitor de aislamiento de la red de 440 V da alarma cada vez que arranca el ventilador nº 2. Al pararlo, la alarma desaparece. El ventilador nº 1 cubre la ventilación por ahora. El mando de este arrancador se alimenta aparte, desde Q2.",
+    "nota": "Motor de 15 kW, 440 V en delta, 25 A. Alarma del monitor en 1 MΩ: valor típico — verificar a bordo."
+  },
+  "monitor": { "resto_mohm": 25 },
+  "circuito": {
+    "componentes": [
+      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
+      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 32 }, "estado": { "encendido": true } },
+      { "id": "Q2", "tipo": "guardamotor", "params": { "ajuste_a": 6 }, "estado": { "encendido": true } },
+      { "id": "K1", "tipo": "contactor" },
+      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 25 } },
+      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5, "carga": 0.8, "aislamiento_mohm": [0.4, 60, 55], "entre_devanados_mohm": 80 } },
+      { "id": "PE1", "tipo": "masa" },
+      { "id": "T1", "tipo": "transformador_mando" },
+      { "id": "F1", "tipo": "fusible" },
+      { "id": "S0", "tipo": "pulsador", "params": { "contacto": "NC" } },
+      { "id": "S1", "tipo": "pulsador", "params": { "contacto": "NA" } },
+      { "id": "H1", "tipo": "lampara" }
+    ],
+    "cables": [
+      ["B.L1", "Q1.1"], ["B.L2", "Q1.3"], ["B.L3", "Q1.5"],
+      ["Q1.2", "K1.1"], ["Q1.4", "K1.3"], ["Q1.6", "K1.5"],
+      ["K1.2", "F2.1"], ["K1.4", "F2.3"], ["K1.6", "F2.5"],
+      ["F2.2", "M1.U1"], ["F2.4", "M1.V1"], ["F2.6", "M1.W1"],
+      ["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"],
+      ["B.L1", "Q2.1"], ["B.L2", "Q2.3"], ["Q2.2", "T1.H1"], ["Q2.4", "T1.H2"],
+      ["T1.X1", "F1.1"], ["F1.2", "F2.95"], ["F2.96", "S0.21"],
+      ["S0.22", "S1.13"], ["S0.22", "K1.13"],
+      ["S1.14", "K1.A1"], ["K1.14", "K1.A1"],
+      ["K1.A2", "T1.X2"],
+      ["F1.2", "H1.X1"], ["H1.X2", "T1.X2"]
+    ]
+  },
+  "posiciones": {
+    "B": [0, 60], "Q1": [420, 0], "K1": [800, 0], "Q2": [1200, 0],
+    "F2": [0, 580], "M1": [420, 620], "PE1": [960, 660],
+    "T1": [0, 1060], "F1": [340, 1060], "S0": [520, 1060], "S1": [760, 1060], "H1": [1000, 1060]
+  },
+  "verificacion": {
+    "fuente_conocida": ["B.L1", "B.L2"],
+    "puntos": [
+      { "texto": "Salida de Q1: L1-L2", "a": "Q1.2", "b": "Q1.4" },
+      { "texto": "Salida de Q1: L2-L3", "a": "Q1.4", "b": "Q1.6" },
+      { "texto": "Salida de Q1: L3-L1", "a": "Q1.6", "b": "Q1.2" },
+      { "texto": "L1 a masa", "a": "Q1.2", "b": "PE1.PE" },
+      { "texto": "L2 a masa", "a": "Q1.4", "b": "PE1.PE" },
+      { "texto": "L3 a masa", "a": "Q1.6", "b": "PE1.PE" },
+      { "texto": "Mando: transformador X1-X2", "a": "T1.X1", "b": "T1.X2" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se intervino sin bloquear todas las alimentaciones. Q2 seguía cerrado, de modo que el circuito de mando mantenía 110 V en el tablero. El oficial recibió una descarga eléctrica al tocar un borne del mando, y fue atendido por el oficial sanitario.",
+      "causa": "El arrancador tiene dos alimentaciones: Q1 para la potencia y Q2 para el mando. Bloquear solo la potencia deja tensión en el tablero.",
+      "como_evitar": "• Revise el esquema y localice todas las alimentaciones antes de aislar.\n• Abra y bloquee cada una de ellas.\n• Verifique también la ausencia de tensión en el circuito de mando."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "megohmetro", "a": "M1.U1", "b": "PE1.PE", "despues_de": "retirar_puentes" },
+    { "instrumento": "megohmetro", "a": "M1.V1", "b": "PE1.PE", "despues_de": "retirar_puentes" },
+    { "instrumento": "megohmetro", "a": "M1.W1", "b": "PE1.PE", "despues_de": "retirar_puentes" }
+  ],
+  "remediciones": [
+    { "instrumento": "megohmetro", "a": "M1.U1", "b": "PE1.PE", "despues_de": "secar_devanado" }
+  ],
+  "pistas": [
+    "Arranque el ventilador y observe el valor del monitor bajo la mesa. Después párelo y compare.",
+    "El arrancador tiene dos alimentaciones. Bloquee Q1 y Q2, y verifique. Sin puentes, cada devanado se puede medir por separado.",
+    "Abra la bornera y retire los puentes. Con el megóhmetro a 500 V, mida M1.U1, M1.V1 y M1.W1 contra la masa.",
+    "Después del secado, mida de nuevo antes de reponer los puentes. El mínimo habitual es 1 MΩ: verifique el criterio del buque."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Cuál es la causa de la alarma?",
+    "opciones": [
+      { "texto": "Humedad en el devanado U: aislamiento bajo a masa", "correcta": true, "explicacion": "El devanado U marca unos 0,4 MΩ a masa, por debajo del mínimo habitual de 1 MΩ, mientras que V y W superan los 20 MΩ. La alarma apareció tras baldear la sala, y solo con el motor conectado." },
+      { "texto": "Falla en el monitor de aislamiento", "explicacion": "La alarma sigue al arranque de este motor, y el megóhmetro confirma un valor bajo en su devanado U. El monitor está indicando bien." },
+      { "texto": "Cortocircuito entre fases", "explicacion": "Un cortocircuito entre fases haría disparar la protección. Aquí el motor funciona y el problema es de fuga a masa." },
+      { "texto": "Devanado U abierto", "explicacion": "Un devanado abierto se detecta con el óhmetro, y el motor no arrancaría bien. Aquí el problema es de aislamiento, no de continuidad." }
+    ]
+  },
+  "acciones": [
+    { "id": "retirar_puentes", "boton": "Abrir la bornera y retirar los puentes", "titulo": "Bornera abierta", "texto": "Se retiraron los tres puentes de la conexión en delta. Cada devanado se puede medir por separado. Hay condensación en el interior de la caja de bornes.", "impide": ["bornera_abierta"], "si_impide": "La bornera ya está abierta y sin puentes.", "pone": { "bornera_abierta": true }, "efecto": [{ "op": "desconectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
+    { "id": "secar_devanado", "boton": "Secar el devanado con calor controlado", "titulo": "Devanado seco", "texto": "Se limpió y secó el devanado con aire caliente a temperatura controlada, sin superar la del aislamiento (valor según el fabricante — verificar). El secado es una reparación provisional si el agua vuelve a entrar: revise la junta de la caja de bornes.", "necesita": ["bornera_abierta"], "si_falta": "Abra primero la bornera y retire los puentes para llegar a los devanados.", "efecto": [{ "op": "param", "id": "M1", "clave": "aislamiento_mohm", "valor": [25, 60, 55] }] },
+    { "id": "reponer_puentes", "boton": "Reponer los puentes en delta y cerrar la bornera", "titulo": "Bornera cerrada", "texto": "Se repusieron los tres puentes según la placa, conexión en delta para 440 V. Se reapretaron los bornes y se cerró la tapa.", "necesita": ["bornera_abierta"], "si_falta": "La bornera ya está cerrada.", "pone": { "bornera_abierta": false }, "efecto": [{ "op": "conectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
+    { "id": "cambiar_motor", "boton": "Cambiar el motor completo", "titulo": "Motor innecesario", "texto": "Un aislamiento bajo por humedad suele recuperarse con limpieza y secado. Pruebe esa solución antes de sustituir un motor.", "innecesaria": true }
+  ],
+  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 120, "rpm_min": 1700 },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Aislamiento de U a masa antes del secado", "opciones": ["Unos 0,4 MΩ", "Unos 25 MΩ", "Fuera de rango"], "correcta": 0, "explicacion": "Revise el historial: antes del secado, el devanado U marcó unos 0,4 MΩ." },
+      { "etiqueta": "Aislamiento de U a masa después del secado", "opciones": ["Por encima de 1 MΩ, aceptable", "Por debajo de 1 MΩ", "No se midió"], "correcta": 0, "explicacion": "Después del secado, el devanado U marcó muy por encima del mínimo habitual de 1 MΩ." },
+      { "etiqueta": "Trabajo realizado", "opciones": ["Limpieza y secado del devanado", "Cambio del motor", "Anular la alarma del monitor"], "correcta": 0, "explicacion": "Anote el trabajo que resolvió la avería: la limpieza y el secado del devanado." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones del megóhmetro y de pruebas del motor.",
+    "IEEE 43: medición de la resistencia de aislamiento en máquinas rotativas.",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

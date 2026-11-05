@@ -266,6 +266,9 @@ func _dibujar_estado(id: String, r: Rect2) -> void:
 	var fuente := get_theme_default_font()
 	var t := clampi(int(22.0 * zoom), 11, 20)
 	var texto := "%s  %s" % [id, mesa.estado_pieza(id)]
+	# Con la vista alejada, el estado completo pisaría el rótulo de la pieza vecina.
+	if fuente.get_string_size(texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t).x > r.size.x:
+		texto = id
 	var color := Color("ff8a7a") if mesa.danada(id) else Tema.TEXTO
 	draw_string(fuente, r.position + Vector2(0.0, -6.0), texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t, color)
 

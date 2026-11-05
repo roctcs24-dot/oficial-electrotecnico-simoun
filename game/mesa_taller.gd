@@ -22,6 +22,8 @@ var sim := SimSimulacion.new()
 var piezas := {}
 ## "a|b" -> ruta del cable. Solo es presentación: la simulación no la usa.
 var rutas := {}
+## En una misión, averías que no se ven a simple vista: hay que encontrarlas midiendo.
+var ocultas := {}
 var _eventos_vistos := 0
 
 
@@ -348,6 +350,18 @@ func cargar_plantilla(nombre: String) -> bool:
 	return true
 
 
+## Coloca un circuito con posiciones fijas, como el de una misión: id -> [x, y].
+func cargar_circuito(circuito: Dictionary, posiciones: Dictionary) -> void:
+	piezas = {}
+	rutas = {}
+	ocultas = {}
+	sim = SimSimulacion.desde_dict(circuito.duplicate(true))
+	_eventos_vistos = 0
+	for c: SimComponente in sim.componentes.values():
+		var p: Array = posiciones[c.id]
+		piezas[c.id] = {"tipo": _catalogo_de(c), "x": float(p[0]), "y": float(p[1])}
+
+
 func _catalogo_de(c: SimComponente) -> String:
 	match c.tipo():
 		"pulsador":
@@ -370,6 +384,8 @@ func eventos_nuevos() -> Array:
 
 
 func danada(id: String) -> bool:
+	if ocultas.has(id):
+		return false
 	var e: Dictionary = sim.componente(id).estado
 	return e.get("quemado", false) or e.get("soldado", false) or e.get("bobina_quemada", false) \
 		or e.get("fundido", false) or e.get("quemada", false)
@@ -394,7 +410,7 @@ func estado_pieza(id: String) -> String:
 		"contactor":
 			if e["soldado"]:
 				return "Contactos soldados"
-			if e["bobina_quemada"]:
+			if e["bobina_quemada"] and not ocultas.has(id):
 				return "Bobina quemada"
 			return "Cerrado" if e["energizada"] else "Abierto"
 		"rele_termico":
@@ -421,4 +437,6 @@ func estado_pieza(id: String) -> String:
 			return "440 / 110 V"
 		"resistencia":
 			return "%s Ω" % TextoTecnico.numero(c.params.get("ohm", 0.0), 0)
+		"masa":
+			return "Casco"
 	return ""

@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 5**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 6**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, 3 misiones de Guardia, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -73,11 +73,11 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 
 | Carpeta | Contenido |
 |---|---|
-| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/` y `circuitos/` |
+| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/`, `circuitos/`, `lecciones/` y `misiones/` |
 | `art/` | Dibujos SVG de `barco/`, `equipos/`, `esquemas/`, `iconos/`, `seguridad/`, `simbolos/` y `taller/`, y la fuente en `fuentes/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
-| `game/` | Carga de contenido, partida guardada y términos técnicos |
-| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `screens/` y `widgets/` |
+| `game/` | Carga de contenido, partida guardada, términos técnicos, mesa del Taller y misiones |
+| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `pantalla_banco.gd` (base del Taller y de las misiones), `screens/` y `widgets/` |
 | `tests/` | Pruebas sin pantalla y captura de pantallas |
 | `tools/` | Ejecutor de pruebas con límite de tiempo |
 
@@ -128,6 +128,23 @@ Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera d
 **Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `similares` y sus dibujos `iec` y `ansi`. El minijuego los usa todos. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
 
 **Taller:** `data/taller.json` define el catálogo del cajón, con el tipo de componente, su dibujo y la posición de cada borne, además de las plantillas y las explicaciones de cada consecuencia. Cada evento nuevo del motor de simulación necesita su explicación en `consecuencias`. La forma de cada cable (curva, ángulos o recta, y su acomodo) se guarda con el circuito, pero no afecta a la simulación. Los circuitos del jugador se guardan en `user://circuitos/`, con sus daños incluidos, y la última mesa en `user://taller_ultimo.json`.
+
+**Misiones:** para añadir una, crea `data/misiones/<id>.json` y añade su id a `modos.guardia.misiones` del sistema. Las pruebas de `tests/test_guardia.gd` comprueban que esté bien formada; añade también una que la complete de principio a fin. Cada misión tiene:
+
+| Campo | Contenido |
+|---|---|
+| `reporte` | `de`, `texto` y `nota`, con los valores típicos marcados |
+| `circuito`, `posiciones` | La red con la avería en sus `params` o `estado`, y dónde se dibuja cada pieza |
+| `averias_ocultas` | Piezas cuyo daño no debe verse en la mesa: hay que encontrarlo midiendo |
+| `monitor` | Opcional: muestra el monitor de aislamiento, con `resto_mohm` para el resto de la red |
+| `verificacion` | `fuente_conocida` y los `puntos` donde verificar la ausencia de tensión |
+| `evidencias`, `remediciones` | Mediciones o acciones que respaldan el diagnóstico, y las que deben repetirse tras reparar (`despues_de`) |
+| `pistas`, `diagnostico`, `libro` | Ayudas, causas posibles con su explicación, y campos del libro de registro |
+| `acciones` | Trabajos sobre el equipo. `efecto` cambia la simulación con `param`, `reemplazar`, `conectar` o `desconectar`; `pone`, `necesita` e `impide` encadenan pasos; `innecesaria` los anota como falta |
+| `prueba` | Motor, relé y contactor que se observan, durante cuánto tiempo y la velocidad mínima |
+| `accidentes` | Opcional: sustituye los textos comunes de `data/guardia.json` |
+
+Las lecturas y las consecuencias salen de la simulación. Todos los aisladores (guardamotores) del circuito deben quedar bloqueados: trabajar sin bloqueo o sin verificar termina la misión con el informe de accidente. Una falta baja la calificación, y un equipo dañado sigue así en el siguiente intento, hasta cambiar el repuesto.
 
 **Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés. Al empezar una frase o una viñeta se usa mayúscula inicial: `{{Estator}}`. No se le pegan letras detrás: `{{devanado}}s` queda mal escrito, y una prueba lo detecta.
 

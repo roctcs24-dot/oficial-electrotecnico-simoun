@@ -49,6 +49,7 @@
           "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]
         },
         "taller": {},
+        "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento"] },
         "examen": { "minijuegos": ["simbolos"] }
       }
     },

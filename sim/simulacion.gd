@@ -26,6 +26,7 @@ static func tipos() -> Dictionary:
 		"temporizador": SimTemporizador,
 		"resistencia": SimResistencia,
 		"motor_trifasico": SimMotorTrifasico,
+		"masa": SimMasa,
 	}
 
 

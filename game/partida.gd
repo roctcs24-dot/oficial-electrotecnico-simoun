@@ -9,6 +9,7 @@ const RUTA := "user://partida.json"
 const PUNTOS_LECCION := 20
 const PUNTOS_ACIERTO := 5
 const PUNTOS_ESTRELLA := 10
+const PUNTOS_MISION := 50
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -165,6 +166,39 @@ func registrar_minijuego(id: String, estrellas: int) -> int:
 	juegos[id] = {"estrellas": maxi(mejor, estrellas), "partidas": int(previo["partidas"]) + 1}
 	guardar()
 	return ganados
+
+
+## Conserva la mejor calificación. La primera vez completada suma su base, y después solo
+## suman las estrellas nuevas; devuelve los puntos ganados. Un accidente no suma.
+func registrar_mision(id: String, estrellas: int, completada: bool) -> int:
+	var misiones: Dictionary = datos["misiones"]
+	var previo: Dictionary = misiones.get(id, {"estrellas": 0, "intentos": 0, "accidentes": 0, "completada": false})
+	var mejor := int(previo["estrellas"])
+	var ganados := maxi(estrellas - mejor, 0) * PUNTOS_ESTRELLA
+	if completada and not previo["completada"]:
+		ganados += PUNTOS_MISION
+	datos["puntos"] += ganados
+	misiones[id] = {
+		"estrellas": maxi(mejor, estrellas),
+		"intentos": int(previo["intentos"]) + 1,
+		"accidentes": int(previo["accidentes"]) + (0 if completada else 1),
+		"completada": completada or previo["completada"],
+	}
+	guardar()
+	return ganados
+
+
+func danos_mision(id: String) -> Dictionary:
+	return datos["equipos_danados"].get(id, {})
+
+
+## Un equipo dañado sigue así en el siguiente intento, hasta que se cambie el repuesto.
+func guardar_danos_mision(id: String, danos: Dictionary) -> void:
+	if danos.is_empty():
+		datos["equipos_danados"].erase(id)
+	else:
+		datos["equipos_danados"][id] = danos
+	guardar()
 
 
 ## Cada fallo alimenta el repaso de errores.
