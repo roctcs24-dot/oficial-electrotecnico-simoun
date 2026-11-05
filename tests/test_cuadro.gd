@@ -80,6 +80,37 @@ func test_mandos_de_velocidad_y_tension() -> String:
 	])
 
 
+func _botones(nodo: Node, lista: Array[String]) -> void:
+	if nodo is Button:
+		lista.append(nodo.text)
+	for hijo in nodo.get_children():
+		_botones(hijo, lista)
+
+
+func test_panel_de_sincronizacion_tiene_sus_mandos() -> String:
+	var raiz := _raiz()
+	var p = raiz.pantalla_actual()
+	var textos: Array[String] = []
+	_botones(p, textos)
+	p._alternar_diesel("G1")
+	p.sim.avanzar_tiempo(10.0)
+	p._alternar_acb("G1")
+	p._alternar_diesel("G2")
+	p.sim.avanzar_tiempo(10.0)
+	p.sincronizar_automaticamente()
+	var cancelar: Array[String] = []
+	_botones(p, cancelar)
+	p.sim.avanzar_tiempo(40.0)
+	var cerrado: bool = p.sim.componente("Q2").cerrado()
+	raiz.free()
+	return A.primero([
+		A.cierto(textos.has("Sincronizar automáticamente"), "debe estar el botón de sincronizar: %s" % str(textos)),
+		A.cierto(textos.has("Cerrar Q2") and textos.has("Velocidad + G2"), "deben estar el cierre y la velocidad del entrante"),
+		A.cierto(cancelar.has("Cancelar sincronización"), "mientras sincroniza debe poder cancelarse"),
+		A.cierto(cerrado, "el sincronizador debe cerrar Q2"),
+	])
+
+
 func test_el_sincronoscopio_cambia_de_entrante() -> String:
 	var raiz := _raiz()
 	var p = raiz.pantalla_actual()

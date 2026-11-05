@@ -58,13 +58,56 @@ func _disponible(i: int) -> bool:
 	return not _grupo(i).estado["danado"] and not _interruptor(i).estado["disparado"]
 
 
-func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
-	if not estado["automatico"] or sim() == null:
-		return
+## Sincronización automática de un grupo concreto, pedida por el operador también en manual.
+## Devuelve "" o el motivo por el que no puede empezar.
+func sincronizar(id: String) -> String:
+	var i: int = params["generadores"].find(id)
+	if i < 0:
+		return "Grupo desconocido."
+	if not _disponible(i):
+		return "El grupo o su interruptor están fuera de servicio."
+	if not _grupo(i).en_marcha():
+		return "Arranque primero el diésel de %s." % id
+	if _interruptor(i).cerrado():
+		return "%s ya está en barras." % id
+	if _en_barras().is_empty():
+		return "No hay ningún grupo en barras: no hace falta sincronizar, cierre directamente."
+	estado["sincronizando"] = id
+	estado["sincronizando_s"] = 0.0
+	estado["mensaje"] = "Sincronizando %s" % id
+	return ""
+
+
+func cancelar_sincronizacion() -> void:
+	if not estado["sincronizando"].is_empty():
+		estado["mensaje"] = "Sincronización de %s cancelada" % estado["sincronizando"]
+	estado["sincronizando"] = ""
+
+
+func sincronizando() -> String:
+	return estado["sincronizando"]
+
+
+func _en_barras() -> Array[int]:
 	var en_barras: Array[int] = []
 	for i in params["generadores"].size():
 		if _interruptor(i).cerrado():
 			en_barras.append(i)
+	return en_barras
+
+
+func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
+	if sim() == null:
+		return
+	var en_barras := _en_barras()
+	# En manual solo actúa el sincronizador, si el operador lo pidió.
+	if not estado["automatico"]:
+		if not estado["sincronizando"].is_empty():
+			if en_barras.is_empty():
+				cancelar_sincronizacion()
+			else:
+				_sincronizar(en_barras, dt, sol)
+		return
 	if en_barras.is_empty():
 		_recuperar_barras(sol)
 		return

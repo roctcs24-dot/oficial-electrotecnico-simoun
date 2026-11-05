@@ -359,6 +359,31 @@ func test_pms_recupera_las_barras() -> String:
 	])
 
 
+func test_sincronizador_automatico_en_manual() -> String:
+	var sim := _g1_en_barras()
+	var sin_marcha := _pms(sim).sincronizar("G2")
+	_gen(sim, "G2").arrancar()
+	sim.avanzar_tiempo(10.0)
+	var motivo := _pms(sim).sincronizar("G2")
+	sim.avanzar_tiempo(40.0)
+	return A.primero([
+		A.cierto(not sin_marcha.is_empty(), "sin el diésel en marcha no debe empezar"),
+		A.cierto(motivo.is_empty(), "debe aceptar la petición: %s" % motivo),
+		A.cierto(_acb(sim, "Q2").cerrado(), "debe cerrar Q2"),
+		A.cierto(sim.hubo_evento("cierre_sincronizado", "Q2"), "debe cerrar sincronizado"),
+		A.cierto(_pms(sim).sincronizando().is_empty(), "debe terminar la sincronización"),
+		A.cierto(not _pms(sim).automatico(), "el PMS debe seguir en manual"),
+	])
+
+
+func test_sincronizar_sin_barras_se_rechaza() -> String:
+	var sim := _cuadro()
+	_gen(sim, "G1").arrancar()
+	sim.avanzar_tiempo(10.0)
+	var motivo := _pms(sim).sincronizar("G1")
+	return A.cierto(motivo.contains("cierre directamente"), "con barras muertas no hace falta sincronizar: %s" % motivo)
+
+
 func test_pms_en_manual_no_actua() -> String:
 	var sim := _cuadro()
 	sim.avanzar_tiempo(10.0)

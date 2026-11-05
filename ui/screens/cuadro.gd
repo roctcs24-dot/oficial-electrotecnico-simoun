@@ -145,10 +145,20 @@ func _panel_barras(columna: VBoxContainer) -> void:
 		b.set_pressed_no_signal(args["sincronizar"] == g["id"])
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		selector.add_child(b)
+	# Los mandos junto a la aguja: se cierra mirándola, sin tener que desplazarse.
+	var junto: BoxContainer = VBoxContainer.new() if raiz.vertical else HBoxContainer.new()
+	junto.add_theme_constant_override("separation", 10)
+	columna.add_child(junto)
 	_dial = DialSincronoscopio.new()
-	columna.add_child(_dial)
+	junto.add_child(_dial)
+	var lado := _columna(6)
+	lado.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	lado.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	junto.add_child(lado)
+	_mandos_sincronizacion(lado)
 	_textos["sincronismo"] = _etiqueta("", "Nota")
 	columna.add_child(_textos["sincronismo"])
+	columna.add_child(_etiqueta("A mano: suba la velocidad hasta que la aguja gire despacio hacia RÁPIDO y cierre justo antes de las doce. En automático, el sincronizador ajusta la velocidad y cierra dentro de la ventana.", "Nota"))
 	columna.add_child(_rotulo("Monitor de aislamiento"))
 	columna.add_child(_luz_con_texto("aislamiento", "", LuzPiloto.AMBAR_APAGADO, LuzPiloto.AMBAR_ENCENDIDO))
 	columna.add_child(_rotulo("Gestión de potencia (PMS)"))
@@ -190,6 +200,44 @@ func _luz_con_texto(clave: String, texto: String, apagado: Color, encendido: Col
 	return fila
 
 
+## Mandos del entrante en el propio panel: velocidad, cierre manual y sincronizador automático.
+func _mandos_sincronizacion(columna: VBoxContainer) -> void:
+	var entrante: String = args["sincronizar"]
+	var q := _interruptor_de(entrante)
+	var pms: SimPMS = sim.componente("PMS")
+	var mandos := GridContainer.new()
+	mandos.columns = 2 if raiz.vertical else 1
+	mandos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mandos.add_theme_constant_override("h_separation", 6)
+	mandos.add_theme_constant_override("v_separation", 6)
+	columna.add_child(mandos)
+	var lista: Array = [
+		["Velocidad − %s" % entrante, _velocidad.bind(entrante, -1.0)],
+		["Velocidad + %s" % entrante, _velocidad.bind(entrante, 1.0)],
+		["Abrir %s" % q.id if q.cerrado() else "Cerrar %s" % q.id, _alternar_acb.bind(entrante)],
+	]
+	if pms.sincronizando() == entrante:
+		lista.append(["Cancelar sincronización", _cancelar_sincronizacion])
+	else:
+		lista.append(["Sincronizar automáticamente", sincronizar_automaticamente])
+	for m: Array in lista:
+		var b := _boton(m[0], m[1])
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		mandos.add_child(b)
+
+
+func sincronizar_automaticamente() -> void:
+	var motivo := (sim.componente("PMS") as SimPMS).sincronizar(args["sincronizar"])
+	if not motivo.is_empty():
+		_mostrar_aviso("No se puede sincronizar", motivo)
+	_comprobar_firma()
+
+
+func _cancelar_sincronizacion() -> void:
+	(sim.componente("PMS") as SimPMS).cancelar_sincronizacion()
+	_comprobar_firma()
+
+
 ## El sincronoscopio se conecta al generador entrante elegido.
 func _elegir_sincronizar(id: String) -> void:
 	var anterior: String = args["sincronizar"]
@@ -198,6 +246,8 @@ func _elegir_sincronizar(id: String) -> void:
 	sim.conectar("SY.G1", id + ".L1")
 	sim.conectar("SY.G2", id + ".L2")
 	args["sincronizar"] = id
+	_llenar()
+	_actualizar()
 
 
 func _alternar_pms() -> void:
@@ -430,7 +480,8 @@ func _calcular_firma() -> String:
 		partes.append("%s%s%s%s" % [g.en_marcha(), g.estado["danado"], q.cerrado(), q.estado["disparado"]])
 	for c: Dictionary in datos["cargas"]:
 		partes.append(str(sim.componente(c["id"]).estado["conectada"]))
-	partes.append(str((sim.componente("PMS") as SimPMS).automatico()))
+	var pms: SimPMS = sim.componente("PMS")
+	partes.append("%s%s" % [pms.automatico(), pms.sincronizando()])
 	return "|".join(partes)
 
 
