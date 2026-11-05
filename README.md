@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 1**, motor de simulación con pruebas, todavía sin pantallas de juego. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 2**, plano del barco navegable, guardado de partida y ficha de muestra del contactor. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo.
 
@@ -25,6 +25,18 @@ godot --headless --path . --script res://tests/run_tests.gd
 El ejecutor carga cada `tests/test_*.gd`. Cada método `test_*` devuelve `""` si pasa, o el motivo del fallo. Cualquier error de script durante una prueba también la hace fallar, porque una función `-> String` que revienta devuelve `""` y parecería aprobada.
 
 Si añades una clase con `class_name`, repite primero el `--import`.
+
+El ejecutor aborta con error si tarda más de 300 s, incluso si una prueba entra en un bucle infinito. El límite se cambia con la variable `LIMITE_PRUEBAS_S`. En Windows, `tools\correr_pruebas.ps1` añade un segundo límite desde fuera y guarda la salida en `build\pruebas\`:
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\correr_pruebas.ps1
+```
+
+Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este comando guarda imágenes de cada una en varios tamaños:
+
+```bash
+godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
+```
 
 ## Exportar
 
@@ -61,13 +73,35 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 
 | Carpeta | Contenido |
 |---|---|
-| `data/` | Contenido editable en JSON. `barco_via_simoun.json` guarda los datos del barco y `circuitos/` las plantillas de circuitos |
+| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/` y `circuitos/` |
+| `art/` | Dibujos SVG de `barco/`, `equipos/` y `simbolos/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
-| `ui/` | Pantallas |
-| `tests/` | Pruebas sin pantalla |
-| `game/`, `art/` | Lógica de juego y dibujos (se añaden en etapas siguientes) |
+| `game/` | Carga de contenido, partida guardada y términos técnicos |
+| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `screens/` y `widgets/` |
+| `tests/` | Pruebas sin pantalla y captura de pantallas |
+| `tools/` | Ejecutor de pruebas con límite de tiempo |
 
 Para corregir un dato del barco, edita `data/barco_via_simoun.json` y vuelve a exportar. No hace falta tocar código. El formato de las lecciones y cómo añadir nuevas se documentará aquí en la etapa 3.
+
+## Contenido
+
+**Sistemas:** `data/sistemas.json` define cada sistema, su `estado` (`activo` o `proximamente`), su `zona` en el plano y sus `modos`.
+
+**Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
+
+**Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés.
+
+**Datos sin confirmar:** todo valor típico debe indicar en el texto `valor típico — verificar a bordo`.
+
+**Dibujos:** Godot no dibuja el texto de los SVG, así que las letras van en `etiquetas` del JSON, en coordenadas del dibujo. Cada SVG necesita al lado un archivo `<nombre>.svg.import` con este contenido, para que se exporte tal cual y se pueda dibujar a la resolución de cada pantalla:
+
+```text
+[remap]
+
+importer="keep"
+```
+
+**Partida:** se guarda en `user://partida.json`, con una copia de la anterior en `.bak`. Si el archivo está dañado se recupera la copia y se avisa al jugador. La pantalla para exportar e importar llega en la etapa 7; la lógica ya está en `game/partida.gd`.
 
 ## Motor de simulación
 

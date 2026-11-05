@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="290" viewBox="0 0 400 290">
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round">
+    <!-- Polos principales NA: dos placas paralelas -->
+    <path d="M60,36 V136 M42,136 H78 M42,154 H78 M60,154 V254"/>
+    <path d="M110,36 V136 M92,136 H128 M92,154 H128 M110,154 V254"/>
+    <path d="M160,36 V136 M142,136 H178 M142,154 H178 M160,154 V254"/>
+    <!-- Auxiliar NA -->
+    <path d="M226,36 V136 M208,136 H244 M208,154 H244 M226,154 V254"/>
+    <!-- Auxiliar NC: placas con barra diagonal -->
+    <path d="M276,36 V136 M258,136 H294 M258,154 H294 M276,154 V254 M262,168 L290,122"/>
+    <!-- Bobina con su letra -->
+    <path d="M340,36 V122 M340,168 V254"/>
+    <circle cx="340" cy="145" r="23"/>
+  </g>
+</svg>

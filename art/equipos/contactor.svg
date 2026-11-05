@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="540" viewBox="0 0 400 540">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2b2f34"/>
+      <stop offset="0.12" stop-color="#4c5259"/>
+      <stop offset="0.5" stop-color="#555b62"/>
+      <stop offset="0.88" stop-color="#454a50"/>
+      <stop offset="1" stop-color="#26292d"/>
+    </linearGradient>
+    <linearGradient id="tapa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d4248"/>
+      <stop offset="1" stop-color="#2e3237"/>
+    </linearGradient>
+    <linearGradient id="bloque" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6b7178"/>
+      <stop offset="1" stop-color="#4a4f55"/>
+    </linearGradient>
+    <linearGradient id="placa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef0f0"/>
+      <stop offset="0.5" stop-color="#d4d8da"/>
+      <stop offset="1" stop-color="#bfc4c7"/>
+    </linearGradient>
+    <linearGradient id="niquel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9dcdc"/>
+      <stop offset="1" stop-color="#8e9496"/>
+    </linearGradient>
+    <radialGradient id="bronce" cx="0.38" cy="0.32" r="0.75">
+      <stop offset="0" stop-color="#fbe6a2"/>
+      <stop offset="0.5" stop-color="#c9973f"/>
+      <stop offset="1" stop-color="#6f4e1a"/>
+    </radialGradient>
+    <linearGradient id="carril" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9aa0a3"/>
+      <stop offset="0.5" stop-color="#d4d7d8"/>
+      <stop offset="1" stop-color="#7c8285"/>
+    </linearGradient>
+    <linearGradient id="cableMarron" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3f2413"/><stop offset="0.4" stop-color="#8a5a33"/><stop offset="1" stop-color="#3a2011"/>
+    </linearGradient>
+    <linearGradient id="cableNegro" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#050505"/><stop offset="0.4" stop-color="#3b3b3b"/><stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <linearGradient id="cableGris" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#55595c"/><stop offset="0.4" stop-color="#b7bbbe"/><stop offset="1" stop-color="#4e5255"/>
+    </linearGradient>
+    <g id="tornillo">
+      <circle r="11" fill="#1a1a1a"/>
+      <circle r="10" fill="url(#bronce)"/>
+      <circle r="10" fill="none" stroke="#fff3c4" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M-6,0 H6 M0,-6 V6" stroke="#4a3210" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M-5.5,0.9 H6 M0.9,-5.5 V6" stroke="#fff0b8" stroke-opacity="0.35" stroke-width="0.8"/>
+    </g>
+    <g id="bornePotencia">
+      <rect x="-23" y="-23" width="46" height="46" rx="3" fill="#121416"/>
+      <rect x="-19" y="-19" width="38" height="38" rx="2" fill="url(#niquel)"/>
+      <use xlink:href="#tornillo"/>
+    </g>
+    <g id="borneMando">
+      <rect x="-19" y="-19" width="38" height="38" rx="3" fill="#121416"/>
+      <rect x="-15" y="-15" width="30" height="30" rx="2" fill="url(#niquel)"/>
+      <use xlink:href="#tornillo" transform="scale(0.85)"/>
+    </g>
+    <g id="borneAux">
+      <rect x="-14" y="-14" width="28" height="28" rx="2" fill="#121416"/>
+      <use xlink:href="#tornillo" transform="scale(0.72)"/>
+    </g>
+  </defs>
+
+  <!-- Carril DIN detrás -->
+  <rect x="0" y="244" width="400" height="52" fill="url(#carril)"/>
+  <rect x="0" y="244" width="400" height="2" fill="#f2f4f4" fill-opacity="0.6"/>
+  <rect x="0" y="294" width="400" height="2" fill="#3b3f41" fill-opacity="0.8"/>
+
+  <!-- Cables de potencia -->
+  <rect x="129" y="0" width="18" height="46" fill="url(#cableMarron)"/>
+  <rect x="191" y="0" width="18" height="46" fill="url(#cableNegro)"/>
+  <rect x="253" y="0" width="18" height="46" fill="url(#cableGris)"/>
+  <rect x="129" y="494" width="18" height="46" fill="url(#cableMarron)"/>
+  <rect x="191" y="494" width="18" height="46" fill="url(#cableNegro)"/>
+  <rect x="253" y="494" width="18" height="46" fill="url(#cableGris)"/>
+
+  <!-- Sombra y cuerpo -->
+  <rect x="56" y="30" width="302" height="478" rx="16" fill="#000000" fill-opacity="0.28"/>
+  <rect x="48" y="24" width="304" height="492" rx="14" fill="url(#cuerpo)"/>
+  <rect x="48.5" y="24.5" width="303" height="491" rx="14" fill="none" stroke="#7b8187" stroke-opacity="0.5"/>
+
+  <!-- Bloques de bornes superior e inferior -->
+  <rect x="54" y="30" width="292" height="84" rx="8" fill="url(#tapa)"/>
+  <rect x="54" y="426" width="292" height="84" rx="8" fill="url(#tapa)"/>
+  <rect x="54" y="113" width="292" height="2" fill="#16181a"/>
+  <rect x="54" y="425" width="292" height="2" fill="#16181a"/>
+
+  <use xlink:href="#borneMando" x="78" y="62"/>
+  <use xlink:href="#bornePotencia" x="138" y="62"/>
+  <use xlink:href="#bornePotencia" x="200" y="62"/>
+  <use xlink:href="#bornePotencia" x="262" y="62"/>
+  <use xlink:href="#borneMando" x="322" y="62"/>
+  <use xlink:href="#borneMando" x="78" y="478"/>
+  <use xlink:href="#bornePotencia" x="138" y="478"/>
+  <use xlink:href="#bornePotencia" x="200" y="478"/>
+  <use xlink:href="#bornePotencia" x="262" y="478"/>
+  <use xlink:href="#borneMando" x="322" y="478"/>
+
+  <!-- Separadores entre polos -->
+  <rect x="166" y="34" width="4" height="76" rx="2" fill="#1a1c1f"/>
+  <rect x="228" y="34" width="4" height="76" rx="2" fill="#1a1c1f"/>
+  <rect x="166" y="430" width="4" height="76" rx="2" fill="#1a1c1f"/>
+  <rect x="228" y="430" width="4" height="76" rx="2" fill="#1a1c1f"/>
+
+  <!-- Rejillas de la cámara apagachispas -->
+  <g fill="#17191b">
+    <rect x="60" y="122" width="46" height="4" rx="2"/><rect x="60" y="130" width="46" height="4" rx="2"/><rect x="60" y="138" width="46" height="4" rx="2"/>
+    <rect x="294" y="122" width="46" height="4" rx="2"/><rect x="294" y="130" width="46" height="4" rx="2"/><rect x="294" y="138" width="46" height="4" rx="2"/>
+    <rect x="60" y="396" width="46" height="4" rx="2"/><rect x="60" y="404" width="46" height="4" rx="2"/><rect x="60" y="412" width="46" height="4" rx="2"/>
+    <rect x="294" y="396" width="46" height="4" rx="2"/><rect x="294" y="404" width="46" height="4" rx="2"/><rect x="294" y="412" width="46" height="4" rx="2"/>
+  </g>
+
+  <!-- Bloque de contactos auxiliares, enganchado al frente -->
+  <rect x="124" y="126" width="158" height="124" rx="7" fill="#000000" fill-opacity="0.3"/>
+  <rect x="120" y="120" width="160" height="124" rx="7" fill="url(#bloque)"/>
+  <rect x="120.5" y="120.5" width="159" height="123" rx="7" fill="none" stroke="#9aa0a6" stroke-opacity="0.6"/>
+  <use xlink:href="#borneAux" x="150" y="140"/>
+  <use xlink:href="#borneAux" x="200" y="140"/>
+  <use xlink:href="#borneAux" x="250" y="140"/>
+  <use xlink:href="#borneAux" x="150" y="204"/>
+  <use xlink:href="#borneAux" x="200" y="204"/>
+  <use xlink:href="#borneAux" x="250" y="204"/>
+  <rect x="132" y="170" width="136" height="6" rx="3" fill="#33373b"/>
+
+  <!-- Ventana del indicador mecánico -->
+  <rect x="166" y="258" width="68" height="60" rx="6" fill="#1b1d20"/>
+  <rect x="170" y="262" width="60" height="52" rx="4" fill="#0d0e10"/>
+
+  <!-- Tornillos de fijación -->
+  <use xlink:href="#tornillo" transform="translate(70,270) scale(0.7)"/>
+  <use xlink:href="#tornillo" transform="translate(330,270) scale(0.7)"/>
+
+  <!-- Placa de datos -->
+  <rect x="88" y="344" width="228" height="82" rx="3" fill="#000000" fill-opacity="0.3"/>
+  <rect x="86" y="340" width="228" height="82" rx="3" fill="url(#placa)"/>
+  <rect x="86.5" y="340.5" width="227" height="81" rx="3" fill="none" stroke="#7d8285"/>
+</svg>

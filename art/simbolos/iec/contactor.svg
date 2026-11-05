@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="290" viewBox="0 0 400 290">
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Polos principales NA con la marca de contactor -->
+    <path d="M60,36 V112 M60,172 V254 M60,172 L38,122"/>
+    <path d="M53,112 A7,7 0 0 0 67,112"/>
+    <path d="M110,36 V112 M110,172 V254 M110,172 L88,122"/>
+    <path d="M103,112 A7,7 0 0 0 117,112"/>
+    <path d="M160,36 V112 M160,172 V254 M160,172 L138,122"/>
+    <path d="M153,112 A7,7 0 0 0 167,112"/>
+    <!-- Auxiliar NA 13-14 -->
+    <path d="M226,36 V116 M226,172 V254 M226,172 L204,122"/>
+    <!-- Auxiliar NC 21-22 -->
+    <path d="M276,36 V116 M276,116 H290 M276,172 V254 M276,172 L294,110"/>
+    <!-- Bobina -->
+    <path d="M340,36 V124 M340,168 V254"/>
+    <rect x="318" y="124" width="44" height="44"/>
+  </g>
+  <!-- Unión mecánica -->
+  <path d="M49,147 H318" fill="none" stroke="#20242a" stroke-width="2" stroke-dasharray="8 6"/>
+</svg>

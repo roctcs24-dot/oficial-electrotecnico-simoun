@@ -1,0 +1,110 @@
+{
+  "id": "contactor",
+  "titulo": "Contactor",
+  "resumen": "Interruptor de potencia que se manda a distancia con una bobina.",
+  "dibujo": {
+    "svg": "res://art/equipos/contactor.svg",
+    "tamano": [400, 540],
+    "nota": "Ilustración de un contactor genérico, no de una marca concreta.",
+    "etiquetas": [
+      { "texto": "A1", "x": 78, "y": 100, "tam": 15 },
+      { "texto": "1/L1", "x": 138, "y": 100, "tam": 15 },
+      { "texto": "3/L2", "x": 200, "y": 100, "tam": 15 },
+      { "texto": "5/L3", "x": 262, "y": 100, "tam": 15 },
+      { "texto": "13 NO", "x": 322, "y": 100, "tam": 13 },
+      { "texto": "21", "x": 150, "y": 158, "tam": 12 },
+      { "texto": "31", "x": 200, "y": 158, "tam": 12 },
+      { "texto": "43", "x": 250, "y": 158, "tam": 12 },
+      { "texto": "22", "x": 150, "y": 226, "tam": 12 },
+      { "texto": "32", "x": 200, "y": 226, "tam": 12 },
+      { "texto": "44", "x": 250, "y": 226, "tam": 12 },
+      { "texto": "CONTACTOR", "x": 200, "y": 362, "tam": 15, "color": "#20242a" },
+      { "texto": "AC-3   25 A   440 V", "x": 200, "y": 382, "tam": 13, "color": "#20242a" },
+      { "texto": "Bobina / Coil 110 V 60 Hz", "x": 200, "y": 400, "tam": 12, "color": "#20242a" },
+      { "texto": "IEC 60947-4-1", "x": 200, "y": 416, "tam": 11, "color": "#20242a" },
+      { "texto": "A2", "x": 78, "y": 452, "tam": 15 },
+      { "texto": "2/T1", "x": 138, "y": 452, "tam": 15 },
+      { "texto": "4/T2", "x": 200, "y": 452, "tam": 15 },
+      { "texto": "6/T3", "x": 262, "y": 452, "tam": 15 },
+      { "texto": "14 NO", "x": 322, "y": 452, "tam": 13 }
+    ],
+    "indicador": { "x": 176, "y": 268, "ancho": 48, "alto": 40 }
+  },
+  "simbolos": {
+    "nota": "Los símbolos siempre se dibujan en reposo: sin tensión en la bobina. Dibujados según IEC 60617 y ANSI/IEEE 315: verificar contra la norma.",
+    "iec": {
+      "titulo": "IEC 60617",
+      "svg": "res://art/simbolos/iec/contactor.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "1", "x": 45, "y": 26, "tam": 20 }, { "texto": "3", "x": 95, "y": 26, "tam": 20 }, { "texto": "5", "x": 145, "y": 26, "tam": 20 },
+        { "texto": "13", "x": 212, "y": 26, "tam": 20 }, { "texto": "21", "x": 262, "y": 26, "tam": 20 }, { "texto": "A1", "x": 318, "y": 26, "tam": 20 },
+        { "texto": "2", "x": 45, "y": 276, "tam": 20 }, { "texto": "4", "x": 95, "y": 276, "tam": 20 }, { "texto": "6", "x": 145, "y": 276, "tam": 20 },
+        { "texto": "14", "x": 212, "y": 276, "tam": 20 }, { "texto": "22", "x": 262, "y": 276, "tam": 20 }, { "texto": "A2", "x": 318, "y": 276, "tam": 20 },
+        { "texto": "K1", "x": 384, "y": 146, "tam": 22 }
+      ]
+    },
+    "ansi": {
+      "titulo": "ANSI/IEEE 315 (NEMA)",
+      "svg": "res://art/simbolos/ansi/contactor.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "L1", "x": 45, "y": 26, "tam": 20 }, { "texto": "L2", "x": 95, "y": 26, "tam": 20 }, { "texto": "L3", "x": 145, "y": 26, "tam": 20 },
+        { "texto": "T1", "x": 45, "y": 276, "tam": 20 }, { "texto": "T2", "x": 95, "y": 276, "tam": 20 }, { "texto": "T3", "x": 145, "y": 276, "tam": 20 },
+        { "texto": "M", "x": 70, "y": 118, "tam": 19 }, { "texto": "M", "x": 120, "y": 118, "tam": 19 }, { "texto": "M", "x": 170, "y": 118, "tam": 19 },
+        { "texto": "M", "x": 234, "y": 118, "tam": 19 }, { "texto": "M", "x": 284, "y": 118, "tam": 19 },
+        { "texto": "M", "x": 340, "y": 150, "tam": 25 }
+      ]
+    }
+  },
+  "banco": {
+    "circuito": "muestra_contactor",
+    "pulsador": "S1",
+    "contactor": "K1",
+    "lampara": "H1",
+    "explicacion": "Mantén pulsado S1: la bobina recibe 110 V (valor típico, verificar a bordo), la armadura cierra y el contacto 13-14 enciende la luz piloto."
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "Un {{contactor}} conecta y desconecta la alimentación de un motor u otra carga, muchas veces y a distancia. Una señal pequeña de mando en su {{bobina}} maneja la corriente grande de la potencia. Abre solo la corriente de servicio: no protege contra sobrecarga ni cortocircuito, de eso se encargan el guardamotor y el {{rele_termico}}."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "Con tensión, la {{bobina}} magnetiza el {{nucleo}} y este atrae la {{armadura}}, que arrastra todos los contactos a la vez. Sin tensión, un resorte la devuelve a reposo.\n\n[b]Partes:[/b]\n• {{contacto_principal}}: tres polos, 1-2, 3-4 y 5-6.\n• {{contacto_auxiliar}} de mando: 13-14 es {{na}} y 21-22 es {{nc}}.\n• {{camara_arco}}, que enfría el arco al abrir con carga.\n• {{espira_sombra}} en el núcleo: en corriente alterna evita que la armadura vibre."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Línea:[/b] 1/L1, 3/L2 y 5/L3, del lado de la alimentación.\n• [b]Carga:[/b] 2/T1, 4/T2 y 6/T3, hacia el relé térmico y el motor.\n• [b]Bobina:[/b] A1 y A2, a la tensión de mando. A bordo suele ser 110 V AC ([i]valor típico — verificar a bordo[/i]). Lee siempre la tensión de la bobina en su etiqueta: no tiene por qué coincidir con la de los polos.\n• [b]Auxiliares:[/b] el 13-14 en paralelo con el pulsador de marcha es el {{retencion}}: mantiene la bobina alimentada al soltar el pulsador.\n\nEn los auxiliares, los números que acaban en 1-2 son NC y los que acaban en 3-4 son NA."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "El contactor no tiene ajustes. Se elige por:\n• Su {{categoria_empleo}}: AC-3 para motores de jaula de ardilla que arrancan y paran con normalidad.\n• La corriente de empleo a la tensión de la red, que se lee en la placa.\n• La tensión y frecuencia de la bobina. Una bobina de 50 Hz no siempre sirve en 60 Hz: compruébalo con el fabricante."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada:[/b]\n• [b]Bobina,[/b] multímetro en Ω entre A1 y A2: debe leer un valor finito, típicamente de decenas a cientos de ohmios según el modelo ([i]verificar con el fabricante[/i]). Fuera de rango indica bobina abierta; casi 0 Ω indica espiras en corto.\n• [b]Polos abiertos,[/b] entre 1-2, 3-4 y 5-6: fuera de rango. Si marca casi 0 Ω, los contactos están soldados.\n• [b]Polos cerrados,[/b] accionando la armadura a mano si el modelo lo permite: casi 0 Ω en los tres. Compara entre polos: uno más alto indica contacto picado.\n• [b]Aislamiento,[/b] con {{megohmetro}} entre polos y a masa, desconectado de la electrónica. Usa el criterio del barco ([i]verificar a bordo[/i]).\n\n[b]Con tensión, usando EPP:[/b] mide la tensión entre A1 y A2. Según IEC 60947-4-1 debe cerrar con seguridad entre el 85 % y el 110 % de la nominal ([i]verificar[/i])."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No cierra:[/b] bobina abierta o sin tensión de mando. Mide primero la tensión en A1-A2.\n• [b]Zumba o vibra:[/b] tensión de mando baja, núcleo sucio o espira de sombra rota.\n• [b]No abre al quitar el mando:[/b] contactos soldados por un cortocircuito o por demasiadas maniobras con carga. El motor sigue en marcha aunque pulses parada: es una situación peligrosa.\n• [b]Motor con corrientes desiguales o falta de fase:[/b] un polo picado o con alta resistencia. El relé térmico puede dispararse sin causa aparente.\n• [b]Bobina quemada:[/b] sobretensión, o una bobina de otra tensión. Huele a barniz y suele verse oscurecida."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo y en el plan de mantenimiento[/i]):\n• Cada 6 meses: apriete de bornes, limpieza de polvo y humedad, signos de recalentamiento.\n• Cada año o por número de maniobras: estado de los contactos, de la cámara apagachispas y del núcleo.\n\n[b]Correctivo:[/b] cambia el juego de contactos si el modelo lo admite, o el contactor completo. Sustituye siempre los tres polos a la vez. Nunca limes contactos plateados. Si hubo un cortocircuito, revisa también las protecciones y el motor."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: contactores y arrancadores de motor.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "NFPA 70E: seguridad eléctrica en el trabajo."
+  ]
+}

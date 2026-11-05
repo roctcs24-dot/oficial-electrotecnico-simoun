@@ -1,0 +1,16 @@
+{
+  "nombre": "Banco de prueba del contactor",
+  "nota": "Mando de 110 V AC: valor típico, verificar a bordo.",
+  "componentes": [
+    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
+    { "id": "T1", "tipo": "transformador_mando" },
+    { "id": "S1", "tipo": "pulsador", "params": { "contacto": "NA" } },
+    { "id": "K1", "tipo": "contactor" },
+    { "id": "H1", "tipo": "lampara" }
+  ],
+  "cables": [
+    ["B.L1", "T1.H1"], ["B.L2", "T1.H2"],
+    ["T1.X1", "S1.13"], ["S1.14", "K1.A1"], ["K1.A2", "T1.X2"],
+    ["T1.X1", "K1.13"], ["K1.14", "H1.X1"], ["H1.X2", "T1.X2"]
+  ]
+}

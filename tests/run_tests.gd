@@ -7,9 +7,28 @@ extends SceneTree
 
 const CARPETA := "res://tests/"
 const RegistroErrores := preload("res://tests/registro_errores.gd")
+## Límite de toda la ejecución. Se puede cambiar con la variable LIMITE_PRUEBAS_S.
+const LIMITE_S := 300
+
+var _vigilante := Thread.new()
+var _terminado := false
+var _empezado := false
 
 
 func _initialize() -> void:
+	_vigilante.start(_vigilar)
+
+
+## Las pruebas corren en el primer fotograma: en _initialize el árbol aún no existe
+## y las pruebas de pantallas no podrían añadir nodos.
+func _process(_delta: float) -> bool:
+	if not _empezado:
+		_empezado = true
+		_ejecutar()
+	return false
+
+
+func _ejecutar() -> void:
 	var registro := RegistroErrores.new()
 	OS.add_logger(registro)
 	var fallos := 0
@@ -45,4 +64,17 @@ func _initialize() -> void:
 				printerr("FALLO %s::%s (%d ms) -> %s" % [archivo, nombre, ms, motivo])
 	print("%d pruebas, %d fallos" % [total, fallos])
 	OS.remove_logger(registro)
+	_terminado = true
+	_vigilante.wait_to_finish()
 	quit(1 if fallos > 0 or total == 0 else 0)
+
+
+## Corre en otro hilo: si una prueba entra en un bucle infinito, o si el ejecutor no llega
+## a quit(), aborta el proceso con error en vez de dejarlo esperando para siempre.
+func _vigilar() -> void:
+	var limite := OS.get_environment("LIMITE_PRUEBAS_S").to_int()
+	var fin := Time.get_ticks_msec() + (limite if limite > 0 else LIMITE_S) * 1000
+	while not _terminado:
+		if Time.get_ticks_msec() > fin:
+			OS.crash("Las pruebas superaron el tiempo límite: posible cuelgue.")
+		OS.delay_msec(200)

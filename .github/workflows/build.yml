@@ -92,6 +92,8 @@ jobs:
           $HOME/godot/godot --headless --path . --export-release "Android" build/android/OficialElectrotecnico.apk
           test -s build/windows/OficialElectrotecnico.exe
           test -s build/android/OficialElectrotecnico.apk
+          unzip -l build/android/OficialElectrotecnico.apk | grep -q 'assets/art/equipos/contactor.svg$'
+          unzip -l build/android/OficialElectrotecnico.apk | grep -q 'assets/data/sistemas.json$'
       - uses: actions/upload-artifact@v4
         with:
           name: oficial-electrotecnico

@@ -1,0 +1,18 @@
+{
+  "terminos": {
+    "contactor": { "es": "contactor", "en": "contactor" },
+    "bobina": { "es": "bobina", "en": "coil" },
+    "armadura": { "es": "armadura", "en": "armature" },
+    "nucleo": { "es": "núcleo", "en": "core" },
+    "contacto_principal": { "es": "contacto principal", "en": "main contact" },
+    "contacto_auxiliar": { "es": "contacto auxiliar", "en": "auxiliary contact" },
+    "na": { "es": "normalmente abierto (NA)", "en": "normally open, NO" },
+    "nc": { "es": "normalmente cerrado (NC)", "en": "normally closed, NC" },
+    "camara_arco": { "es": "cámara apagachispas", "en": "arc chute" },
+    "espira_sombra": { "es": "espira de sombra", "en": "shading ring" },
+    "retencion": { "es": "contacto de retención", "en": "seal-in contact" },
+    "rele_termico": { "es": "relé térmico", "en": "overload relay" },
+    "categoria_empleo": { "es": "categoría de empleo", "en": "utilization category" },
+    "megohmetro": { "es": "megóhmetro", "en": "insulation tester, megger" }
+  }
+}
