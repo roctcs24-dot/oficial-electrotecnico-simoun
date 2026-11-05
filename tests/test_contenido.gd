@@ -197,6 +197,46 @@ func test_terminos_bien_escritos_en_el_contenido() -> String:
 	return ""
 
 
+func _archivos_texto(carpeta: String, lista: Array[String]) -> void:
+	for f in DirAccess.get_files_at(carpeta):
+		if f.ends_with(".json") or f.ends_with(".gd"):
+			lista.append(carpeta.path_join(f))
+	for d in DirAccess.get_directories_at(carpeta):
+		_archivos_texto(carpeta.path_join(d), lista)
+
+
+## Un carácter sin dibujo saldría como un recuadro vacío en pantalla.
+func test_la_fuente_tiene_todos_los_caracteres() -> String:
+	var base: FontFile = load(Tema.RUTA_FUENTE)
+	var respaldo := ThemeDB.fallback_font
+	var lista: Array[String] = []
+	_archivos_texto("res://data", lista)
+	_archivos_texto("res://ui", lista)
+	var faltan := {}
+	var en_respaldo := {}
+	for ruta in lista:
+		var texto := FileAccess.get_file_as_string(ruta)
+		for i in texto.length():
+			var c := texto.unicode_at(i)
+			if c < 128 or base.has_char(c):
+				continue
+			if respaldo.has_char(c):
+				en_respaldo[String.chr(c)] = true
+			else:
+				faltan[String.chr(c)] = ruta
+	if not en_respaldo.is_empty():
+		print("      caracteres resueltos por la fuente de respaldo: %s" % " ".join(en_respaldo.keys()))
+	return A.cierto(faltan.is_empty(), "sin dibujo en ninguna fuente: %s" % str(faltan))
+
+
+func test_registro_del_barco_marcado_para_verificar() -> String:
+	var registro: Dictionary = Contenido.new().barco()["registro"]
+	for clave: String in registro:
+		if not registro[clave]["verificar"]:
+			return "%s viene de un registro público y debe marcarse para verificar" % clave
+	return A.cierto(int(registro["eslora"]["valor"]) == 69, "eslora del registro WCPFC")
+
+
 func test_mayuscula_inicial_en_terminos() -> String:
 	var glosario := {"estator": {"es": "estator", "en": "stator"}}
 	var vistos := {}

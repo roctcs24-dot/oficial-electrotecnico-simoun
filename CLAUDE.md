@@ -81,6 +81,7 @@ Cada equipo o componente tiene una **ficha** con:
 - Blackout y recuperación: arranque automático, generador de emergencia, prioridad de cargas (*preferential trip*).
 - Conexión a tierra (*shore connection*) en puerto.
 - Detección de fallas a tierra en sistema aislado (monitor de aislamiento / lámparas de tierra).
+- **Paneles de generador y controladores digitales**: panel local, instrumentos, pantalla del controlador, parámetros y alarmas. Sistema de gestión de potencia (PMS): arranque y parada automáticos, reparto de carga. Modelos reales: verificar a bordo.
 
 ### Sistema 2 — Distribución, transformadores y alumbrado
 - Transformadores 440/220/110 V: identificación, placa, pruebas de continuidad y aislamiento.
@@ -116,6 +117,8 @@ Cada equipo o componente tiene una **ficha** con:
 - **Sensores inductivos/capacitivos NPN y PNP** (2 y 3 hilos), cómo cablearlos a un PLC y cómo probarlos.
 - Transmisores 4–20 mA, termocuplas, PT100.
 - **PLC**: entradas/salidas, lógica ladder básica, cableado, diagnóstico por LEDs.
+- **HMI**: pantallas táctiles de equipos, navegación, lectura de alarmas y de tendencias, cambio de parámetros, alimentación y comunicación con el PLC.
+- **SCADA o sistema de alarmas y monitoreo**: arquitectura, red de comunicación (Modbus, Ethernet), puestos de operación, historial de alarmas y diagnóstico de fallas de comunicación.
 - Sistema de alarmas de sala de máquinas, detectores de incendio.
 - Introducción a electrónica del puente (radar, sonar, comunicaciones) solo a nivel de alimentación y cuidados — para versiones posteriores.
 
@@ -170,7 +173,7 @@ Para que la v1 ya sea útil, debe incluir solo esto, bien hecho y probado:
 8. Examen de la v1, rangos y guardado del progreso.
 9. APK y .exe funcionando offline.
 
-Hoja de ruta posterior: v2 generadores y cuadro principal → v3 refrigeración por amoníaco → v4 electrónica, sensores y PLC → v5 distribución, cubierta y alarmas → v6 vista 3D/recorrido.
+Hoja de ruta posterior: v2 generadores, paneles y controladores, cuadro principal y PMS → v3 refrigeración por amoníaco → v4 electrónica, sensores, PLC, HMI y SCADA → v5 distribución, cubierta y alarmas → v6 vista 3D/recorrido.
 
 ## 13. Forma de trabajar
 

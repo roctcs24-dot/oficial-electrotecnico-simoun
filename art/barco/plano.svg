@@ -7,72 +7,74 @@
     <path d="M0,100 H1000 M0,200 H1000 M0,300 H1000"/>
   </g>
 
-  <!-- Casco -->
-  <path d="M60,220 L620,220 L620,172 L900,150 L958,132 C950,200 925,290 880,352 L110,352 C85,345 66,320 60,290 Z" fill="#1a3247" stroke="#c6cfd5" stroke-width="2.5"/>
+  <!-- Pluma principal, pluma corta y power block -->
+  <path d="M472,208 L170,64" stroke="#c6cfd5" stroke-width="5"/>
+  <path d="M472,196 L356,104" stroke="#c6cfd5" stroke-width="3"/>
+  <path d="M484,60 L170,64 M484,90 L356,104" stroke="#8d989f" stroke-width="1"/>
+  <path d="M170,64 V106 M356,104 V150" stroke="#8d989f" stroke-width="1.5"/>
+  <circle cx="170" cy="116" r="10" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
 
-  <!-- Línea de flotación -->
-  <path d="M20,316 H980" stroke="#6f9db8" stroke-width="1.5" stroke-dasharray="14 7"/>
+  <!-- Torre con cofa -->
+  <path d="M468,208 L476,56 H492 L500,208 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <rect x="468" y="38" width="32" height="18" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M484,38 V14 M474,24 H494" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M476,120 H492 M474,160 H494" stroke="#8d989f" stroke-width="1"/>
 
-  <!-- Línea base y cuadernas -->
-  <path d="M90,362 H890" stroke="#8d989f" stroke-width="1.5"/>
-  <g stroke="#8d989f" stroke-width="1">
-    <path d="M110,358 V366 M190,358 V366 M270,358 V366 M350,358 V366 M430,358 V366 M510,358 V366 M590,358 V366 M670,358 V366 M750,358 V366 M830,358 V366"/>
-  </g>
+  <!-- Casco largo y bajo -->
+  <path d="M60,264 L700,252 L880,246 L950,230 C940,270 915,322 880,350 L110,350 C85,345 66,320 60,290 Z" fill="#1a3247" stroke="#c6cfd5" stroke-width="2.5"/>
 
-  <!-- Superestructura -->
-  <g fill="#173044" stroke="#c6cfd5" stroke-width="2">
-    <rect x="570" y="120" width="220" height="52"/>
-    <rect x="610" y="76" width="160" height="44"/>
-    <path d="M636,76 L642,40 H752 L758,76 Z"/>
-  </g>
-  <path d="M630,40 H764" stroke="#c6cfd5" stroke-width="3"/>
+  <!-- Red amontonada en popa -->
+  <path d="M68,262 C72,226 110,214 150,216 C176,218 192,238 196,260 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M84,258 C88,236 112,226 140,228 M108,258 C112,244 130,238 150,240 M150,258 C152,250 166,246 180,250" fill="none" stroke="#8d989f" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+  <!-- Caseta de popa y panga -->
+  <rect x="204" y="232" width="34" height="28" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <path d="M250,240 H340 L328,258 H262 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+
+  <!-- Baranda de la cubierta de trabajo -->
+  <path d="M350,258 H466 M360,246 H460 M370,246 V258 M400,246 V258 M430,246 V258 M460,246 V258" stroke="#8d989f" stroke-width="1"/>
+
+  <!-- Superestructura alargada -->
+  <path d="M466,256 V206 H762 L772,252 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
   <g fill="none" stroke="#8d989f" stroke-width="1.5">
-    <rect x="650" y="48" width="18" height="18"/><rect x="674" y="48" width="18" height="18"/><rect x="698" y="48" width="18" height="18"/><rect x="722" y="48" width="18" height="18"/>
+    <rect x="612" y="218" width="30" height="14" rx="6"/>
+    <rect x="654" y="218" width="30" height="14" rx="6"/>
+    <rect x="696" y="218" width="30" height="14" rx="6"/>
   </g>
 
-  <!-- Mástil de proa y cofa -->
-  <path d="M697,40 V6" stroke="#c6cfd5" stroke-width="2.5"/>
-  <rect x="686" y="8" width="22" height="9" fill="#173044" stroke="#c6cfd5" stroke-width="1.5"/>
+  <!-- Puente y plataforma superior -->
+  <path d="M604,206 V172 H740 L748,206 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <g fill="none" stroke="#8d989f" stroke-width="1.5">
+    <rect x="618" y="180" width="22" height="14"/>
+    <rect x="648" y="180" width="22" height="14"/>
+    <rect x="678" y="180" width="22" height="14"/>
+    <rect x="708" y="180" width="22" height="14"/>
+  </g>
+  <path d="M592,160 H756 M610,160 V172 M738,160 V172" stroke="#c6cfd5" stroke-width="2.5"/>
 
-  <!-- Chimenea -->
-  <path d="M532,172 L540,118 H566 V172 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <!-- Baranda del castillo de proa -->
+  <path d="M782,236 H926 M800,236 V248 M840,236 V247 M880,236 V246 M918,234 V240" stroke="#8d989f" stroke-width="1"/>
 
-  <!-- Mástil, pluma y power block -->
-  <path d="M510,220 V52" stroke="#c6cfd5" stroke-width="3"/>
-  <path d="M510,62 L150,104" stroke="#c6cfd5" stroke-width="2.5"/>
-  <path d="M510,52 L150,104" stroke="#8d989f" stroke-width="1"/>
-  <path d="M216,96 V118" stroke="#8d989f" stroke-width="1.5"/>
-  <circle cx="216" cy="128" r="10" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
+  <!-- Línea de flotación, línea base y cuadernas -->
+  <path d="M20,306 H980" stroke="#6f9db8" stroke-width="1.5" stroke-dasharray="14 7"/>
+  <path d="M90,362 H890" stroke="#8d989f" stroke-width="1.5"/>
+  <path d="M110,358 V366 M190,358 V366 M270,358 V366 M350,358 V366 M430,358 V366 M510,358 V366 M590,358 V366 M670,358 V366 M750,358 V366 M830,358 V366" stroke="#8d989f" stroke-width="1"/>
 
-  <!-- Red y panga en popa -->
-  <path d="M90,220 C100,192 210,192 248,220 Z" fill="none" stroke="#8d989f" stroke-width="1.5" stroke-dasharray="5 4"/>
-  <path d="M46,190 H150 L136,212 H64 Z" fill="#173044" stroke="#c6cfd5" stroke-width="2"/>
-
-  <!-- Cubas de salmuera -->
+  <!-- Cubas -->
   <g fill="#152c40" stroke="#a3afb6" stroke-width="1.5">
-    <rect x="258" y="242" width="62" height="88"/>
-    <rect x="330" y="242" width="62" height="88"/>
-    <rect x="402" y="242" width="62" height="88"/>
-    <rect x="474" y="242" width="62" height="88"/>
+    <rect x="238" y="274" width="68" height="66"/>
+    <rect x="314" y="274" width="68" height="66"/>
+    <rect x="390" y="274" width="68" height="66"/>
+    <rect x="726" y="270" width="66" height="70"/>
+    <rect x="800" y="270" width="60" height="64"/>
   </g>
-  <g stroke="#2b4a60" stroke-width="1">
-    <path d="M258,262 H320 M258,282 H320 M258,302 H320 M330,262 H392 M330,282 H392 M330,302 H392 M402,262 H464 M402,282 H464 M402,302 H464 M474,262 H536 M474,282 H536 M474,302 H536"/>
-  </g>
+  <path d="M238,296 H306 M238,318 H306 M314,296 H382 M314,318 H382 M390,296 H458 M390,318 H458 M726,296 H792 M726,318 H792 M800,296 H860 M800,318 H858" stroke="#2b4a60" stroke-width="1"/>
 
-  <!-- Mamparos de cámara de máquinas -->
-  <rect x="560" y="176" width="176" height="164" fill="#142a3d" stroke="#a3afb6" stroke-width="1.5"/>
-  <path d="M560,228 H736" stroke="#a3afb6" stroke-width="1.5"/>
-  <path d="M648,228 V340" stroke="#a3afb6" stroke-width="1" stroke-dasharray="6 4"/>
-
-  <!-- Tres generadores y cuadro -->
+  <!-- Cámara de máquinas -->
+  <rect x="476" y="262" width="240" height="80" fill="#142a3d" stroke="#a3afb6" stroke-width="1.5"/>
+  <path d="M596,262 V342" stroke="#a3afb6" stroke-width="1" stroke-dasharray="6 4"/>
   <g fill="none" stroke="#c6cfd5" stroke-width="1.5">
-    <rect x="570" y="292" width="20" height="36"/><rect x="594" y="292" width="20" height="36"/><rect x="618" y="292" width="20" height="36"/>
-    <rect x="572" y="242" width="60" height="32"/>
-    <path d="M592,242 V274 M612,242 V274"/>
-  </g>
-
-  <!-- Motores y bombas -->
-  <g fill="none" stroke="#c6cfd5" stroke-width="1.5">
-    <circle cx="672" cy="312" r="15"/><circle cx="712" cy="312" r="15"/><circle cx="672" cy="262" r="11"/><circle cx="712" cy="262" r="11"/>
+    <rect x="484" y="300" width="26" height="34"/><rect x="516" y="300" width="26" height="34"/><rect x="548" y="300" width="26" height="34"/>
+    <circle cx="630" cy="314" r="14"/><circle cx="676" cy="314" r="14"/>
   </g>
 </svg>

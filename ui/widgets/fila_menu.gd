@@ -41,7 +41,7 @@ func iniciar(titulo: String, detalle := "", icono := "", estado := "", esta_acti
 	textos.add_theme_constant_override("separation", 0)
 	textos.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fila.add_child(textos)
-	textos.add_child(_texto(titulo, "", Tema.TEXTO if activa else Tema.APAGADO))
+	textos.add_child(_texto(titulo, "Fuerte", Tema.TEXTO if activa else Tema.APAGADO))
 	if not detalle.is_empty():
 		textos.add_child(_texto(detalle, "Nota", Tema.TEXTO_SUAVE if activa else Tema.APAGADO))
 	if not estado.is_empty():

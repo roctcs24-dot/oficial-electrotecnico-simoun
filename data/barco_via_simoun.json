@@ -1,7 +1,20 @@
 {
   "nombre": "B/P Vía Simoun",
   "tipo": "Atunero cerquero (NIRSA, Ecuador)",
-  "nota": "verificar=true significa valor típico de atuneros cerqueros: verificar a bordo.",
+  "nota": "verificar=true significa valor por confirmar a bordo: típico de atuneros cerqueros, o de un registro público que puede estar desactualizado.",
+  "fuente_registro": "WCPFC Record of Fishing Vessels, VID 9770, actualizado en julio de 2016. Algunas bases comerciales indican otra eslora (40 m), posiblemente por error. https://vessels.wcpfc.int/vessel/9770",
+  "registro": {
+    "imo": { "valor": 7809285, "unidad": "", "verificar": true },
+    "senal_llamada": { "valor": "HC2913", "unidad": "", "verificar": true },
+    "construccion": { "valor": "Francia, 1980", "unidad": "", "verificar": true },
+    "eslora": { "valor": 69, "unidad": "m", "verificar": true },
+    "manga": { "valor": 12.8, "unidad": "m", "verificar": true },
+    "puntal": { "valor": 8.33, "unidad": "m", "verificar": true },
+    "arqueo": { "valor": 1559.79, "unidad": "", "verificar": true },
+    "motor_principal": { "valor": 4000, "unidad": "hp", "verificar": true },
+    "capacidad_bodega": { "valor": 1324, "unidad": "m3", "verificar": true },
+    "tripulacion": { "valor": 24, "unidad": "personas", "verificar": true }
+  },
   "red_principal": {
     "tension_v": { "valor": 440, "unidad": "V", "verificar": false },
     "frecuencia_hz": { "valor": 60, "unidad": "Hz", "verificar": false },

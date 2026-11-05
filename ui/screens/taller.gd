@@ -474,7 +474,7 @@ func _actualizar_lectura() -> void:
 		_lectura.text = "OL"
 	else:
 		var decimales := 3 if float(r["valor"]) < 10.0 else 1
-		var pita := "  ♪" if r.get("pita", false) else ""
+		var pita := "  · continuidad" if r.get("pita", false) else ""
 		_lectura.text = "%s %s%s" % [TextoTecnico.numero(r["valor"], decimales), r["unidad"], pita]
 	if estaba_bien and not (m.fusible_ok and not m.destruido):
 		_reconstruir_panel()

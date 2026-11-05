@@ -3,10 +3,11 @@
     "svg": "res://art/barco/plano.svg",
     "tamano": [1000, 420],
     "etiquetas": [
-      { "texto": "Esquema ilustrativo de un atunero cerquero. No corresponde al plano real del buque.", "x": 500, "y": 396, "tam": 20, "color": "#b1bcc4" },
-      { "texto": "POPA", "x": 40, "y": 340, "tam": 16, "color": "#8d989f" },
-      { "texto": "PROA", "x": 950, "y": 340, "tam": 16, "color": "#8d989f" },
-      { "texto": "L.F.", "x": 978, "y": 302, "tam": 15, "color": "#6f9db8" }
+      { "texto": "Silueta basada en un atunero francés de la misma época. No es el plano real del buque: verificar a bordo.", "x": 500, "y": 400, "tam": 18, "color": "#b1bcc4" },
+      { "texto": "Eslora: 69 m (registro WCPFC, verificar)", "x": 490, "y": 378, "tam": 16, "color": "#b1bcc4" },
+      { "texto": "POPA", "x": 40, "y": 334, "tam": 16, "color": "#8d989f" },
+      { "texto": "PROA", "x": 960, "y": 334, "tam": 16, "color": "#8d989f" },
+      { "texto": "L.F.", "x": 978, "y": 292, "tam": 15, "color": "#6f9db8" }
     ]
   },
   "sistemas": [
@@ -15,7 +16,7 @@
       "nombre": "Fundamentos y seguridad",
       "resumen": "Desde qué es un voltio hasta bloqueo y etiquetado, y seguridad con amoníaco.",
       "estado": "activo",
-      "zona": [575, 124, 210, 44],
+      "zona": [600, 208, 164, 44],
       "modos": {
         "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto"] }
       }
@@ -23,9 +24,9 @@
     {
       "id": 1,
       "nombre": "Generación y cuadro principal",
-      "resumen": "Diésel-generadores, sincronización, reparto de carga y blackout.",
+      "resumen": "Diésel-generadores, paneles y controladores, sincronización, gestión de potencia y blackout.",
       "estado": "proximamente",
-      "zona": [562, 232, 84, 104],
+      "zona": [478, 264, 116, 76],
       "modos": {}
     },
     {
@@ -33,7 +34,7 @@
       "nombre": "Distribución y alumbrado",
       "resumen": "Transformadores, breakers, alumbrado de emergencia y baterías de 24 V.",
       "estado": "proximamente",
-      "zona": [562, 178, 172, 48],
+      "zona": [472, 210, 124, 44],
       "modos": {}
     },
     {
@@ -41,7 +42,7 @@
       "nombre": "Motores y arrancadores",
       "resumen": "Motor trifásico, placa de datos, estrella o delta, arranque directo y estrella-triángulo.",
       "estado": "activo",
-      "zona": [650, 232, 84, 104],
+      "zona": [598, 264, 116, 76],
       "modos": {
         "aprender": {
           "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "i1_multimetro", "i2_megohmetro"],
@@ -56,7 +57,7 @@
       "nombre": "Refrigeración por amoníaco",
       "resumen": "Ciclo de compresión, presostatos, salmuera y seguridad con NH3.",
       "estado": "proximamente",
-      "zona": [252, 236, 292, 100],
+      "zona": [232, 268, 232, 76],
       "modos": {}
     },
     {
@@ -64,15 +65,15 @@
       "nombre": "Cubierta y pesca",
       "resumen": "Winches, power block, grúas y alumbrado de cubierta.",
       "estado": "proximamente",
-      "zona": [70, 120, 440, 92],
+      "zona": [64, 96, 396, 152],
       "modos": {}
     },
     {
       "id": 6,
-      "nombre": "Electrónica y alarmas",
-      "resumen": "Componentes, sensores, PLC, alarmas de sala de máquinas e incendio.",
+      "nombre": "Electrónica, PLC y alarmas",
+      "resumen": "Componentes, sensores, PLC, HMI, SCADA, alarmas de sala de máquinas e incendio.",
       "estado": "proximamente",
-      "zona": [614, 42, 150, 76],
+      "zona": [602, 166, 148, 40],
       "modos": {}
     }
   ]

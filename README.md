@@ -74,7 +74,7 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 | Carpeta | Contenido |
 |---|---|
 | `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/` y `circuitos/` |
-| `art/` | Dibujos SVG de `barco/`, `equipos/` y `simbolos/` |
+| `art/` | Dibujos SVG de `barco/`, `equipos/`, `esquemas/`, `iconos/`, `seguridad/`, `simbolos/` y `taller/`, y la fuente en `fuentes/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
 | `game/` | Carga de contenido, partida guardada y términos técnicos |
 | `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `screens/` y `widgets/` |
@@ -144,6 +144,12 @@ importer="keep"
 ```
 
 **Partida:** se guarda en `user://partida.json`, con una copia de la anterior en `.bak`. Si el archivo está dañado se recupera la copia y se avisa al jugador. La pantalla para exportar e importar llega en la etapa 7; la lógica ya está en `game/partida.gd`.
+
+## Referencias
+
+- **Datos del barco:** los campos de `registro` en `data/barco_via_simoun.json` provienen del [registro público de WCPFC](https://vessels.wcpfc.int/vessel/9770), actualizado en 2016, y van marcados para verificar.
+- **Silueta del plano:** se dibujó tomando como referencia una [foto de un atunero francés de la misma época](https://commons.wikimedia.org/wiki/File:French_tuna_purse_seiner.jpg). No es el plano real ni incluye esa foto.
+- **Fuente:** IBM Plex Sans, © 2017 IBM Corp., con licencia [SIL Open Font License 1.1](art/fuentes/OFL.txt).
 
 ## Motor de simulación
 

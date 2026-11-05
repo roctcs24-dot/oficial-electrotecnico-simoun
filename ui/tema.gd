@@ -18,6 +18,29 @@ const AVISO := Color("6b3a1f")
 const ACIERTO := Color("2f6f4a")
 const FALLO := Color("8c3b30")
 const RADIO := 3
+const RUTA_FUENTE := "res://art/fuentes/IBMPlexSans.ttf"
+const RUTA_FUENTE_CURSIVA := "res://art/fuentes/IBMPlexSans-Italic.ttf"
+const PESO_NORMAL := 400
+const PESO_MEDIO := 500
+const PESO_FUERTE := 600
+const PESO_NEGRITA := 700
+
+static var _fuentes := {}
+
+
+## La fuente es variable: un solo archivo da todos los pesos. Si le falta un carácter,
+## recurre a la fuente de Godot.
+static func fuente(peso: int, ruta := RUTA_FUENTE) -> Font:
+	var clave := "%s_%d" % [ruta, peso]
+	if not _fuentes.has(clave):
+		var base: FontFile = load(ruta)
+		if base.fallbacks.is_empty():
+			base.fallbacks = [ThemeDB.fallback_font]
+		var f := FontVariation.new()
+		f.base_font = base
+		f.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): peso}
+		_fuentes[clave] = f
+	return _fuentes[clave]
 
 
 static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, borde := Color.TRANSPARENT) -> StyleBoxFlat:
@@ -38,16 +61,26 @@ static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, b
 ## encima" se quedaría sobre el botón mientras la lista se desplaza.
 static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	var t := Theme.new()
+	t.default_font = fuente(PESO_NORMAL)
 	t.default_font_size = 18
 
 	t.set_color("font_color", "Label", TEXTO)
 	t.set_type_variation("Titulo", "Label")
 	t.set_font_size("font_size", "Titulo", 24)
+	t.set_font("font", "Titulo", fuente(PESO_FUERTE))
 	t.set_type_variation("Subtitulo", "Label")
 	t.set_font_size("font_size", "Subtitulo", 19)
+	t.set_font("font", "Subtitulo", fuente(PESO_FUERTE))
+	t.set_type_variation("Fuerte", "Label")
+	t.set_font("font", "Fuerte", fuente(PESO_MEDIO))
 	t.set_type_variation("Nota", "Label")
 	t.set_font_size("font_size", "Nota", 15)
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
+	t.set_font("font", "Button", fuente(PESO_MEDIO))
+	t.set_font("normal_font", "RichTextLabel", fuente(PESO_NORMAL))
+	t.set_font("bold_font", "RichTextLabel", fuente(PESO_NEGRITA))
+	t.set_font("italics_font", "RichTextLabel", fuente(PESO_NORMAL, RUTA_FUENTE_CURSIVA))
+	t.set_font("bold_italics_font", "RichTextLabel", fuente(PESO_NEGRITA, RUTA_FUENTE_CURSIVA))
 
 	t.set_stylebox("normal", "Button", caja(BOTON, RADIO, 14, 13, BORDE))
 	var resaltado := 0.0 if tactil else 0.08
@@ -65,6 +98,7 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 
 	t.set_type_variation("Rotulo", "Label")
 	t.set_font_size("font_size", "Rotulo", 13)
+	t.set_font("font", "Rotulo", fuente(PESO_FUERTE))
 	t.set_color("font_color", "Rotulo", ACENTO)
 
 	var cabecera := caja(PANEL, RADIO, 12, 8)
