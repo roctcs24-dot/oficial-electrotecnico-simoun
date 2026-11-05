@@ -373,6 +373,8 @@ func _registrar_final() -> void:
 	args["ganados"] = raiz.partida.registrar_mision(mision.id(), mision.estrellas(), completada)
 	for f: Dictionary in mision.faltas:
 		raiz.partida.registrar_error(f["tema"])
+	if not completada:
+		raiz.partida.registrar_error(mision.accidente["tema"])
 	raiz.partida.guardar_danos_mision(mision.id(), mision.danos() if not completada else {})
 
 

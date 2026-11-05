@@ -375,6 +375,7 @@ func _ocurre_accidente(tipo: String) -> Dictionary:
 	var informe: Dictionary = comunes["accidentes"][tipo].duplicate()
 	informe.merge(datos.get("accidentes", {}).get(tipo, {}), true)
 	accidente = informe
+	accidente["tema"] = "accidente_%s" % tipo
 	fin = "accidente"
 	return _aviso("accidente", informe["titulo"], informe["que_ocurrio"])
 

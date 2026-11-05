@@ -1,10 +1,10 @@
 {
-  "nota": "Los puntos se calibrarán en la etapa de progresión, cuando existan las misiones.",
+  "nota": "Calibrados con el contenido de la v1. Para el rango más alto hacen falta lecciones, misiones y examen. Subir estos valores al añadir contenido.",
   "rangos": [
     { "nombre": "Cadete", "puntos": 0 },
-    { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 500 },
-    { "nombre": "Oficial Electrotécnico de 2da", "puntos": 1500 },
-    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 3500 },
-    { "nombre": "Jefe Electrotécnico", "puntos": 7000 }
+    { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 150 },
+    { "nombre": "Oficial Electrotécnico de 2da", "puntos": 350 },
+    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 650 },
+    { "nombre": "Jefe Electrotécnico", "puntos": 900 }
   ]
 }

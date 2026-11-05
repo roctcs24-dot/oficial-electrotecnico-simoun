@@ -18,7 +18,8 @@
       "estado": "activo",
       "zona": [600, 208, 164, 44],
       "modos": {
-        "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto"] }
+        "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto"] },
+        "examen": { "examenes": ["v1"] }
       }
     },
     {
@@ -50,7 +51,7 @@
         },
         "taller": {},
         "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento"] },
-        "examen": { "minijuegos": ["simbolos"] }
+        "examen": { "examenes": ["v1"], "minijuegos": ["simbolos"] }
       }
     },
     {

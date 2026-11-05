@@ -10,6 +10,12 @@ const PUNTOS_LECCION := 20
 const PUNTOS_ACIERTO := 5
 const PUNTOS_ESTRELLA := 10
 const PUNTOS_MISION := 50
+const PUNTOS_EXAMEN := 100
+## Tras cada acierto en el repaso, el tema vuelve a preguntarse más tarde. Al superar el
+## último intervalo queda resuelto, aunque sus fallos siguen en las estadísticas.
+const INTERVALOS_REPASO_DIAS := [1, 3, 7, 14, 30]
+const SEGUNDOS_POR_DIA := 86400.0
+const APARTADOS := ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos", "examenes"]
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -28,6 +34,7 @@ static func datos_nuevos() -> Dictionary:
 		"errores": {},
 		"equipos_danados": {},
 		"minijuegos": {},
+		"examenes": {},
 	}
 
 
@@ -44,7 +51,7 @@ static func validar(valor: Variant) -> String:
 		return "es de una versión más nueva del juego"
 	if not (d.get("puntos", 0) is float or d.get("puntos", 0) is int) or d.get("puntos", 0) < 0:
 		return "tiene puntos no válidos"
-	for clave in ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos"]:
+	for clave: String in APARTADOS:
 		if not d.get(clave, {}) is Dictionary:
 			return "tiene dañado el apartado %s" % clave
 	return ""
@@ -119,12 +126,29 @@ func exportar(destino: String) -> bool:
 ## Reemplaza la partida por la del archivo. Devuelve "" o el motivo del rechazo,
 ## y en ese caso la partida actual no cambia.
 func importar(origen: String) -> String:
-	if not FileAccess.file_exists(origen):
+	# En Android el selector devuelve una URI: se abre directamente, sin comprobar una ruta.
+	var archivo := FileAccess.open(origen, FileAccess.READ)
+	if archivo == null:
 		return "no se encontró el archivo"
-	var motivo := desde_texto(FileAccess.get_file_as_string(origen))
+	return importar_texto(archivo.get_as_text())
+
+
+func importar_texto(texto: String) -> String:
+	var motivo := desde_texto(texto)
 	if not motivo.is_empty():
 		return motivo
 	return "" if guardar() else "no se pudo guardar la partida importada"
+
+
+## Sin cambiar nada: devuelve {motivo, puntos}, para pedir confirmación antes de reemplazar.
+static func examinar(texto: String) -> Dictionary:
+	var json := JSON.new()
+	if json.parse(texto) != OK:
+		return {"motivo": "el archivo está dañado", "puntos": 0}
+	var motivo := validar(json.data)
+	if not motivo.is_empty():
+		return {"motivo": motivo, "puntos": 0}
+	return {"motivo": "", "puntos": int(json.data.get("puntos", 0))}
 
 
 func marcar_ficha_vista(id: String) -> void:
@@ -201,12 +225,93 @@ func guardar_danos_mision(id: String, danos: Dictionary) -> void:
 	guardar()
 
 
-## Cada fallo alimenta el repaso de errores.
-func registrar_error(tema: String) -> void:
+## Conserva el mejor resultado. El primer aprobado suma su base, y después solo suman las
+## estrellas nuevas; devuelve los puntos ganados.
+func registrar_examen(id: String, porcentaje: float, estrellas: int, aprobado: bool) -> int:
+	var examenes: Dictionary = datos["examenes"]
+	var previo: Dictionary = examenes.get(id, {"mejor": 0.0, "estrellas": 0, "aprobado": false, "intentos": 0})
+	var mejor_estrellas := int(previo["estrellas"])
+	var ganados := maxi(estrellas - mejor_estrellas, 0) * PUNTOS_ESTRELLA
+	if aprobado and not previo["aprobado"]:
+		ganados += PUNTOS_EXAMEN
+	datos["puntos"] += ganados
+	examenes[id] = {
+		"mejor": maxf(float(previo["mejor"]), porcentaje),
+		"estrellas": maxi(mejor_estrellas, estrellas),
+		"aprobado": aprobado or previo["aprobado"],
+		"intentos": int(previo["intentos"]) + 1,
+	}
+	guardar()
+	return ganados
+
+
+## Cada fallo alimenta el repaso de errores: el tema vuelve al principio de los intervalos.
+func registrar_error(tema: String, ahora := -1.0) -> void:
+	var momento := ahora if ahora >= 0.0 else Time.get_unix_time_from_system()
 	var errores: Dictionary = datos["errores"]
 	var previo: Dictionary = errores.get(tema, {"fallos": 0})
-	errores[tema] = {"fallos": int(previo["fallos"]) + 1, "ultimo": Time.get_unix_time_from_system()}
+	errores[tema] = {"fallos": int(previo["fallos"]) + 1, "ultimo": momento, "caja": 0, "proximo": momento}
 	guardar()
+
+
+## Temas que toca repasar, primero los más fallados. Una partida antigua no tiene "proximo":
+## sus temas quedan pendientes desde el principio.
+func temas_pendientes(ahora := -1.0) -> Array[String]:
+	var momento := ahora if ahora >= 0.0 else Time.get_unix_time_from_system()
+	var errores: Dictionary = datos["errores"]
+	var lista: Array[String] = []
+	for tema: String in errores:
+		if not errores[tema].get("resuelto", false) and float(errores[tema].get("proximo", 0.0)) <= momento:
+			lista.append(tema)
+	lista.sort_custom(func(a: String, b: String) -> bool:
+		return int(errores[a]["fallos"]) > int(errores[b]["fallos"]))
+	return lista
+
+
+## Un acierto aleja el siguiente repaso; un fallo lo reinicia y cuenta como fallo.
+func registrar_repaso(tema: String, acierto: bool, ahora := -1.0) -> void:
+	if not acierto:
+		registrar_error(tema, ahora)
+		var e: Dictionary = datos["errores"][tema]
+		e["proximo"] = float(e["ultimo"]) + SEGUNDOS_POR_DIA
+		guardar()
+		return
+	var momento := ahora if ahora >= 0.0 else Time.get_unix_time_from_system()
+	var entrada: Dictionary = datos["errores"].get(tema, {"fallos": 0})
+	var caja := int(entrada.get("caja", 0))
+	if caja >= INTERVALOS_REPASO_DIAS.size():
+		entrada["resuelto"] = true
+	else:
+		entrada["proximo"] = momento + INTERVALOS_REPASO_DIAS[caja] * SEGUNDOS_POR_DIA
+		entrada["caja"] = caja + 1
+	datos["errores"][tema] = entrada
+	guardar()
+
+
+## Los temas más fallados, para las estadísticas.
+func temas_mas_fallados(cantidad: int) -> Array[String]:
+	var errores: Dictionary = datos["errores"]
+	var lista: Array[String] = []
+	for tema: String in errores:
+		lista.append(tema)
+	lista.sort_custom(func(a: String, b: String) -> bool:
+		return int(errores[a]["fallos"]) > int(errores[b]["fallos"]))
+	return lista.slice(0, cantidad)
+
+
+func total_fallos() -> int:
+	var total := 0
+	for e: Dictionary in datos["errores"].values():
+		total += int(e["fallos"])
+	return total
+
+
+## Puntos que faltan para el rango siguiente, y su nombre. En el último rango no hay siguiente.
+func siguiente_rango(rangos: Array) -> Dictionary:
+	for r: Dictionary in rangos:
+		if datos["puntos"] < r["puntos"]:
+			return {"nombre": r["nombre"], "faltan": int(r["puntos"]) - int(datos["puntos"])}
+	return {}
 
 
 ## Avance hacia el rango siguiente, de 0 a 1. En el último rango vale 1.

@@ -41,6 +41,10 @@ func construir() -> void:
 	filas.add_child(_rotulo("Sistemas del buque"))
 	for s: Dictionary in c.sistemas():
 		filas.add_child(_fila_sistema(s))
+	filas.add_child(_rotulo("Progreso"))
+	filas.add_child(_fila_examen())
+	filas.add_child(_fila_repaso())
+	filas.add_child(_fila("Mi progreso", "Rango, estadísticas y traspaso de la partida", raiz.ir_a.bind("progreso"), "progreso"))
 	filas.add_child(_rotulo("Consulta"))
 	filas.add_child(_fila("Glosario español-inglés", "", raiz.ir_a.bind("glosario"), "glosario"))
 
@@ -80,6 +84,21 @@ func _crear_rango() -> Control:
 	textos.add_child(puntos)
 	rango.add_child(_barra_avance(raiz.partida.progreso_rango(rangos)))
 	return rango
+
+
+func _fila_examen() -> FilaMenu:
+	var e := raiz.contenido.leer("examenes/v1.json")
+	var r: Dictionary = raiz.partida.datos["examenes"].get("v1", {})
+	var estado := ""
+	if not r.is_empty():
+		estado = "%d de 3 estrellas" % int(r["estrellas"]) if r["aprobado"] else "No aprobado"
+	return _fila(e.get("titulo", "Examen"), e.get("resumen", ""), raiz.ir_a.bind("prueba_examen", {"id": "v1"}), "examen", estado)
+
+
+func _fila_repaso() -> FilaMenu:
+	var pendientes := raiz.partida.temas_pendientes().size()
+	var detalle := "Sin temas pendientes" if pendientes == 0 else "%d temas pendientes" % pendientes
+	return _fila("Repasar mis errores", detalle, raiz.ir_a.bind("repaso"), "repaso")
 
 
 func _fila_sistema(s: Dictionary) -> FilaMenu:

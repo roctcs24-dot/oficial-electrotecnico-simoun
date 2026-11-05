@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 6**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, 3 misiones de Guardia, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 7**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, 3 misiones de Guardia, examen de la v1, rangos, repaso de errores, traspaso de partida, glosario y plano del barco. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -73,11 +73,11 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 
 | Carpeta | Contenido |
 |---|---|
-| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/`, `circuitos/`, `lecciones/` y `misiones/` |
+| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/`, `circuitos/`, `lecciones/`, `misiones/` y `examenes/` |
 | `art/` | Dibujos SVG de `barco/`, `equipos/`, `esquemas/`, `iconos/`, `seguridad/`, `simbolos/` y `taller/`, y la fuente en `fuentes/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
-| `game/` | Carga de contenido, partida guardada, términos técnicos, mesa del Taller y misiones |
-| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `pantalla_banco.gd` (base del Taller y de las misiones), `screens/` y `widgets/` |
+| `game/` | Carga de contenido, partida guardada, términos técnicos, mesa del Taller, misiones, examen y banco de repaso |
+| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `pantalla_banco.gd` (base del Taller y de las misiones), `pantalla_preguntas.gd` (base del examen y del repaso), `screens/` y `widgets/` |
 | `tests/` | Pruebas sin pantalla y captura de pantallas |
 | `tools/` | Ejecutor de pruebas con límite de tiempo |
 
@@ -146,6 +146,12 @@ Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera d
 
 Las lecturas y las consecuencias salen de la simulación. Todos los aisladores (guardamotores) del circuito deben quedar bloqueados: trabajar sin bloqueo o sin verificar termina la misión con el informe de accidente. Una falta baja la calificación, y un equipo dañado sigue así en el siguiente intento, hasta cambiar el repuesto.
 
+**Examen:** `data/examenes/v1.json` define `minimo` (porcentaje para aprobar), `composicion` (cuántas preguntas de cada tipo: `quiz`, `caso`, `ordenar`, `simbolo`) y el banco `preguntas`. Para que el examen varíe, el banco debe tener al menos el doble de lo que se pregunta, y una prueba lo comprueba. Las de tipo `caso` añaden un texto `caso`; cada pregunta lleva un `tema` que no se repite en ninguna lección.
+
+**Repaso:** cada fallo guarda su `tema` en la partida. `game/banco_repaso.gd` busca la pregunta de ese tema en las lecciones, en el examen, en `preguntas` de `data/guardia.json` (faltas y accidentes), en el diagnóstico y el libro de las misiones, y en los símbolos. Cada acierto aleja el tema 1, 3, 7, 14 y 30 días; un fallo lo reinicia. **Cada falta o accidente nuevo necesita su pregunta**, y una prueba lo comprueba.
+
+**Rangos:** `data/rangos.json`. Las pruebas exigen que el rango más alto se pueda alcanzar con el contenido publicado, y que no baste sin misiones o sin examen. Al añadir contenido, suba los valores.
+
 **Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés. Al empezar una frase o una viñeta se usa mayúscula inicial: `{{Estator}}`. No se le pegan letras detrás: `{{devanado}}s` queda mal escrito, y una prueba lo detecta.
 
 **Datos sin confirmar:** todo valor típico debe indicar en el texto `valor típico — verificar a bordo`.
@@ -160,7 +166,7 @@ Las lecturas y las consecuencias salen de la simulación. Todos los aisladores (
 importer="keep"
 ```
 
-**Partida:** se guarda en `user://partida.json`, con una copia de la anterior en `.bak`. Si el archivo está dañado se recupera la copia y se avisa al jugador. La pantalla para exportar e importar llega en la etapa 7; la lógica ya está en `game/partida.gd`.
+**Partida:** se guarda en `user://partida.json`, con una copia de la anterior en `.bak`. Si el archivo está dañado se recupera la copia y se avisa al jugador. En **Mi progreso** se exporta o importa como archivo, con el selector nativo del sistema, o como texto copiado y pegado. Importar pide confirmación antes de reemplazar el progreso.
 
 ## Referencias
 

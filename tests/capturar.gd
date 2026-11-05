@@ -30,6 +30,8 @@ func _capturar() -> void:
 		await _capturar_taller(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "guardia":
 		await _capturar_guardia(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "progresion":
+		await _capturar_progresion(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -151,6 +153,42 @@ func _capturar_guardia(raiz: Raiz, carpeta: String) -> void:
 		p = raiz.pantalla_actual()
 		p._ejecutar("retirar_puentes")
 		await _guardar(carpeta, "mision_accidente", tam)
+		raiz.volver()
+
+
+func _capturar_progresion(raiz: Raiz, carpeta: String) -> void:
+	raiz.partida.registrar_error("ohm_corriente")
+	raiz.partida.registrar_error("sin_epp")
+	raiz.partida.registrar_error("simbolo_contacto_na")
+	var banco: Dictionary = raiz.contenido.leer("examenes/v1.json")
+	var por_tipo := {}
+	for q: Dictionary in banco["preguntas"]:
+		if not por_tipo.has(q["tipo"]):
+			por_tipo[q["tipo"]] = q
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 3
+	var simbolo := JuegoSimbolos.crear_ronda("contacto_na", raiz.contenido.simbolos(), azar)
+	simbolo["tipo"] = "simbolo"
+	simbolo["tema"] = "simbolo_contacto_na"
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.reconstruir()
+		await _guardar(carpeta, "plano", tam)
+		for item: Dictionary in [por_tipo["quiz"], por_tipo["caso"], por_tipo["ordenar"], simbolo]:
+			raiz.ir_a("prueba_examen", {"id": "v1", "items": [item], "indice": 0, "respuestas": {}})
+			await _guardar(carpeta, "examen_%s" % item["tipo"], tam)
+			raiz.volver()
+		raiz.ir_a("prueba_examen", {"id": "v1", "items": [por_tipo["quiz"], por_tipo["caso"]], "indice": 2, "respuestas": {0: {"acierto": true, "elegida": 0}, 1: {"acierto": false, "elegida": 0}}, "ganados": 0})
+		await _guardar(carpeta, "examen_final", tam)
+		raiz.volver()
+		raiz.ir_a("repaso", {"items": [por_tipo["quiz"]], "indice": 0, "respuestas": {}})
+		await _guardar(carpeta, "repaso", tam)
+		raiz.volver()
+		raiz.ir_a("progreso")
+		await _guardar(carpeta, "progreso", tam)
+		raiz.pantalla_actual().recibir_texto('{"juego":"%s","version":1,"puntos":777}' % Partida.ID_JUEGO)
+		await _guardar(carpeta, "progreso_importar", tam)
 		raiz.volver()
 
 
