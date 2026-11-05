@@ -1,0 +1,22 @@
+{
+  "nombre": "B/P Vía Simoun",
+  "tipo": "Atunero cerquero (NIRSA, Ecuador)",
+  "nota": "verificar=true significa valor típico de atuneros cerqueros: verificar a bordo.",
+  "red_principal": {
+    "tension_v": { "valor": 440, "unidad": "V", "verificar": false },
+    "frecuencia_hz": { "valor": 60, "unidad": "Hz", "verificar": false },
+    "fases": { "valor": 3, "unidad": "", "verificar": false }
+  },
+  "generacion": {
+    "cantidad": { "valor": 3, "unidad": "", "verificar": false },
+    "tipo": { "valor": "diésel-generador en paralelo sobre el cuadro principal", "unidad": "", "verificar": false }
+  },
+  "tensiones_secundarias": {
+    "alumbrado_y_servicios_v": { "valor": [220, 110], "unidad": "V", "verificar": true },
+    "corriente_continua_v": { "valor": 24, "unidad": "V DC", "verificar": true },
+    "mando_v": { "valor": 110, "unidad": "V AC", "verificar": true }
+  },
+  "refrigeracion": {
+    "refrigerante": { "valor": "amoníaco (NH3, R-717)", "unidad": "", "verificar": false }
+  }
+}

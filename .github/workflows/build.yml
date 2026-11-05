@@ -1,0 +1,107 @@
+name: Pruebas y compilación
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.7.2
+  GODOT_BASE: https://github.com/godotengine/godot/releases/download/4.7.2-stable
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar Godot
+        run: |
+          curl -sSL --fail -O "$GODOT_BASE/SHA512-SUMS.txt"
+          curl -sSL --fail -O "$GODOT_BASE/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          grep "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" SHA512-SUMS.txt | sha512sum -c -
+          unzip -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" -d "$HOME/godot"
+          mv "$HOME/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" "$HOME/godot/godot"
+          rm SHA512-SUMS.txt "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+      - name: Importar el proyecto
+        run: $HOME/godot/godot --headless --path . --import
+      - name: Ejecutar pruebas
+        run: $HOME/godot/godot --headless --path . --script res://tests/run_tests.gd
+
+  compilar:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    needs: pruebas
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Paquetes del Android SDK
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "build-tools;35.0.1" "platforms;android-35" > /dev/null
+      - name: Instalar Godot y plantillas
+        run: |
+          curl -sSL --fail -O "$GODOT_BASE/SHA512-SUMS.txt"
+          curl -sSL --fail -O "$GODOT_BASE/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl -sSL --fail -O "$GODOT_BASE/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          grep -E "Godot_v${GODOT_VERSION}-stable_(linux.x86_64.zip|export_templates.tpz)$" SHA512-SUMS.txt | sha512sum -c -
+          unzip -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" -d "$HOME/godot"
+          mv "$HOME/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" "$HOME/godot/godot"
+          destino="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$destino"
+          unzip -q -j "Godot_v${GODOT_VERSION}-stable_export_templates.tpz" \
+            "templates/android_release.apk" "templates/android_debug.apk" \
+            "templates/windows_release_x86_64.exe" "templates/windows_debug_x86_64.exe" \
+            "templates/version.txt" -d "$destino"
+          rm SHA512-SUMS.txt Godot_v*
+      - name: Configurar SDK en Godot
+        run: |
+          mkdir -p "$HOME/.config/godot"
+          cat > "$HOME/.config/godot/editor_settings-4.7.tres" <<EOF
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          EOF
+          sed -i 's/^ *//' "$HOME/.config/godot/editor_settings-4.7.tres"
+      - name: Restaurar el keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_DEBUG_KEYSTORE_BASE64 }}
+        run: |
+          test -n "$KEYSTORE_BASE64" || { echo "Falta el secreto ANDROID_DEBUG_KEYSTORE_BASE64"; exit 1; }
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/debug.keystore"
+      - name: Importar el proyecto
+        run: $HOME/godot/godot --headless --path . --import
+      - name: Exportar
+        env:
+          GODOT_ANDROID_KEYSTORE_RELEASE_PATH: ${{ runner.temp }}/debug.keystore
+          GODOT_ANDROID_KEYSTORE_RELEASE_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: android
+        run: |
+          mkdir -p build/windows build/android
+          $HOME/godot/godot --headless --path . --export-release "Windows" build/windows/OficialElectrotecnico.exe
+          $HOME/godot/godot --headless --path . --export-release "Android" build/android/OficialElectrotecnico.apk
+          test -s build/windows/OficialElectrotecnico.exe
+          test -s build/android/OficialElectrotecnico.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oficial-electrotecnico
+          path: |
+            build/windows/OficialElectrotecnico.exe
+            build/android/OficialElectrotecnico.apk
+      - name: Adjuntar al release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" \
+            build/windows/OficialElectrotecnico.exe \
+            build/android/OficialElectrotecnico.apk --clobber

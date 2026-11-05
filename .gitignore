@@ -1,0 +1,14 @@
+# Godot
+.godot/
+*.translation
+
+# Exportaciones
+build/
+
+# Claves de firma: nunca en el repositorio
+*.keystore
+*.jks
+
+# Sistema
+Thumbs.db
+.DS_Store
