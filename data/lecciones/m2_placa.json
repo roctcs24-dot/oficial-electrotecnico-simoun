@@ -1,0 +1,51 @@
+{
+  "id": "m2_placa",
+  "titulo": "La placa de datos",
+  "resumen": "Qué significa cada valor y cuál es el decisivo.",
+  "minutos": 3,
+  "paginas": [
+    {
+      "titulo": "Lectura de la placa",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{placa_datos}} es la primera información que debe consultar antes de conectar, ajustar o sustituir un motor." },
+        {
+          "tipo": "imagen",
+          "svg": "res://art/equipos/placa_motor.svg",
+          "tamano": [560, 340],
+          "etiquetas": [
+            { "texto": "MOTOR DE INDUCCIÓN TRIFÁSICO  3~", "x": 278, "y": 44, "tam": 22, "color": "#20242a" },
+            { "texto": "Potencia:  15 kW", "x": 161, "y": 98, "tam": 19, "color": "#20242a" },
+            { "texto": "Tensión:  440 Δ / 760 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
+            { "texto": "Corriente:  25,0 / 14,5 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
+            { "texto": "Frecuencia:  60 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
+            { "texto": "Velocidad:  1760 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
+            { "texto": "cos φ:  0,86", "x": 395, "y": 146, "tam": 19, "color": "#20242a" },
+            { "texto": "Protección:  IP55", "x": 395, "y": 194, "tam": 19, "color": "#20242a" },
+            { "texto": "Aislamiento:  clase F", "x": 395, "y": 242, "tam": 19, "color": "#20242a" },
+            { "texto": "Servicio S1  ·  IEC 60034", "x": 278, "y": 296, "tam": 18, "color": "#20242a" }
+          ],
+          "pie": "Placa de ejemplo con valores típicos — verificar a bordo."
+        },
+        { "tipo": "texto", "texto": "• [b]Potencia:[/b] la mecánica en el eje, no la eléctrica absorbida.\n• [b]Tensión y corriente:[/b] van en parejas y en el mismo orden. 440 Δ corresponde a 25 A, y 760 Y a 14,5 A.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] grado de protección contra sólidos y agua.\n• [b]Clase:[/b] temperatura que admite el aislamiento.\n• [b]S1:[/b] servicio continuo." }
+      ]
+    },
+    {
+      "titulo": "Comprobación de la potencia",
+      "bloques": [
+        { "tipo": "texto", "texto": "La potencia eléctrica absorbida es:\n\n[center][b]P = √3 × V × I × cos φ[/b][/center]\n\nCon los datos de la placa: 1,732 × 440 × 25 × 0,86 ≈ 16,4 kW. La diferencia con los 15 kW del eje son las pérdidas del motor: su rendimiento es de cerca del 91 %.\n\nEsta cuenta sirve para detectar placas mal leídas, pero la corriente que debe usar para ajustar la protección es la de la placa." },
+        {
+          "tipo": "quiz",
+          "tema": "corriente_placa",
+          "pregunta": "En una placa 440Δ/760Y con corrientes 25/14,5 A, conectada en delta a 440 V, ¿cuál es la corriente nominal?",
+          "opciones": ["14,5 A", "25 A", "39,5 A"],
+          "correcta": 1,
+          "explicacion": "La corriente se lee en el mismo orden que la tensión: a 440 V en delta corresponden 25 A."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-1: valores nominales y características de funcionamiento.",
+    "IEC 60034-5: grados de protección (código IP)."
+  ]
+}

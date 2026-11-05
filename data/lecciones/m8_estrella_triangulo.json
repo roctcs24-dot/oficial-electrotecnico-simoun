@@ -1,0 +1,78 @@
+{
+  "id": "m8_estrella_triangulo",
+  "titulo": "Arranque estrella-triángulo",
+  "resumen": "Reducir el pico de arranque cambiando la conexión.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El principio",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{arranque_yd}} arranca en estrella y pasa a delta:\n\n• En estrella cada devanado recibe 254 V, 1 ÷ √3 de su tensión.\n• La corriente de línea y el {{par}} de arranque se reducen a [b]un tercio[/b].\n\n[b]Requisito:[/b] el motor debe trabajar en delta a la tensión de red. En 440 V hace falta una placa [b]440Δ/760Y[/b]. Un motor 254Δ/440Y no admite este arranque: en delta se quemaría.\n\nComo el par también baja, se usa con cargas que arrancan con poco esfuerzo, como bombas centrífugas o ventiladores." },
+        {
+          "tipo": "quiz",
+          "tema": "requisito_yd",
+          "pregunta": "¿Qué placa debe tener un motor para arrancar en estrella-triángulo en 440 V?",
+          "opciones": ["254Δ/440Y", "440Δ/760Y", "Cualquiera"],
+          "correcta": 1,
+          "explicacion": "Debe poder trabajar en delta a 440 V. Un motor 254Δ/440Y recibiría √3 veces su tensión en delta."
+        }
+      ]
+    },
+    {
+      "titulo": "El esquema",
+      "bloques": [
+        { "tipo": "imagen",
+          "svg": "res://art/esquemas/estrella_triangulo.svg",
+          "tamano": [980, 640],
+          "alto": 400,
+          "etiquetas": [
+            { "texto": "L1 L2 L3", "x": 90, "y": 14, "tam": 22, "color": "#20242a" },
+            { "texto": "Q1", "x": 164, "y": 76, "tam": 22, "color": "#20242a" }, { "texto": "K1", "x": 164, "y": 192, "tam": 22, "color": "#20242a" }, { "texto": "F2", "x": 16, "y": 270, "tam": 22, "color": "#20242a" },
+            { "texto": "K2", "x": 310, "y": 192, "tam": 22, "color": "#20242a" }, { "texto": "K3", "x": 454, "y": 240, "tam": 22, "color": "#20242a" },
+            { "texto": "M 3~", "x": 165, "y": 436, "tam": 28, "color": "#20242a" },
+            { "texto": "U1 V1 W1", "x": 92, "y": 368, "tam": 18, "color": "#20242a" }, { "texto": "W2 U2 V2", "x": 240, "y": 368, "tam": 18, "color": "#20242a" },
+            { "texto": "F2 95-96", "x": 626, "y": 76, "tam": 20, "color": "#20242a" }, { "texto": "S0", "x": 596, "y": 170, "tam": 22, "color": "#20242a" },
+            { "texto": "S1", "x": 448, "y": 274, "tam": 22, "color": "#20242a" }, { "texto": "13-14", "x": 696, "y": 274, "tam": 20, "color": "#20242a" },
+            { "texto": "K1", "x": 616, "y": 410, "tam": 22, "color": "#20242a" }, { "texto": "KT", "x": 950, "y": 410, "tam": 22, "color": "#20242a" },
+            { "texto": "KT 15-16", "x": 634, "y": 396, "tam": 15, "color": "#20242a" }, { "texto": "KT 15-18", "x": 840, "y": 396, "tam": 15, "color": "#20242a" }, { "texto": "K2 21-22", "x": 634, "y": 470, "tam": 15, "color": "#20242a" }, { "texto": "K3 21-22", "x": 840, "y": 470, "tam": 15, "color": "#20242a" },
+            { "texto": "K3", "x": 732, "y": 552, "tam": 22, "color": "#20242a" }, { "texto": "K2", "x": 842, "y": 552, "tam": 22, "color": "#20242a" }
+          ],
+          "pie": "Esquema simplificado según IEC 60617: verificar contra los planos del buque. Enclavamiento K2/K3 en la parte inferior derecha."
+        },
+        { "tipo": "texto", "texto": "• [b]K1:[/b] conecta la alimentación a U1, V1 y W1.\n• [b]K3:[/b] une W2, U2 y V2: es el punto estrella.\n• [b]K2:[/b] alimenta W2, U2 y V2: forma el delta.\n• [b]KT:[/b] temporizador con retardo a la conexión.\n\n[b]{{Enclavamiento}}:[/b] K2 y K3 no pueden cerrar a la vez, porque sería un cortocircuito entre fases. Por eso la bobina de K3 se alimenta a través del NC 21-22 de K2, y la de K2 a través del NC 21-22 de K3.\n\n[b]Relé térmico:[/b] en línea con K1 circula la corriente de devanado. Ajústelo a In ÷ √3: 25 ÷ 1,732 ≈ 14,4 A." },
+        {
+          "tipo": "quiz",
+          "tema": "enclavamiento_yd",
+          "pregunta": "¿Qué ocurre si K2 y K3 cierran a la vez?",
+          "opciones": ["El motor arranca más rápido", "Un cortocircuito entre fases", "No ocurre nada, porque están en paralelo"],
+          "correcta": 1,
+          "explicacion": "K2 lleva las fases a W2, U2 y V2, y K3 une esos tres puntos. Juntos, cortocircuitan L1, L2 y L3."
+        }
+      ]
+    },
+    {
+      "titulo": "Práctica con la simulación",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cierre Q1, pulse S1 y observe la gráfica: primero el pico en estrella, más bajo que en directo, y tras 6 segundos el cambio a delta. K3 abre antes de que K2 cierre." },
+        {
+          "tipo": "animacion",
+          "id": "banco_arranque",
+          "params": { "circuito": "estrella_triangulo", "contactores": ["K1", "K2", "K3"] },
+          "pie": "Motor de 15 kW, 440Δ/760Y. Retardo de 6 s y valores típicos: verificar a bordo."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "secuencia_yd",
+          "pregunta": "Seleccione la secuencia correcta del arranque:",
+          "pasos": ["Pulsar S1: cierran K1 y K3", "El motor arranca en estrella y KT cuenta el retardo", "KT conmuta y K3 abre", "K2 cierra y el motor queda en delta"],
+          "explicacion": "Primero debe abrir K3, y solo después puede cerrar K2. Esa pausa breve evita el cortocircuito."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: arrancadores.",
+    "IEC 60617: símbolos gráficos.",
+    "IEC 60034-1: valores nominales."
+  ]
+}

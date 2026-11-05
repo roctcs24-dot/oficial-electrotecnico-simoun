@@ -1,0 +1,53 @@
+{
+  "id": "i2_megohmetro",
+  "titulo": "El megóhmetro",
+  "resumen": "Medir el aislamiento y valorar el resultado.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Para qué sirve",
+      "bloques": [
+        { "tipo": "texto", "texto": "El multímetro mide con muy poca tensión, y un aislamiento dañado puede parecer sano con él. El {{megohmetro}} aplica una tensión de prueba alta, de 250 V, 500 V o 1000 V, y mide la {{aislamiento}} en megaohmios (MΩ).\n\nEn equipos de 440 V es habitual probar a 500 V ([i]valor típico — verificar con el manual del equipo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "megger_vs_multimetro",
+          "pregunta": "¿Por qué no basta con un multímetro para comprobar el aislamiento?",
+          "opciones": ["Porque aplica muy poca tensión y no revela un aislamiento debilitado", "Porque no mide resistencia", "Porque solo mide en corriente alterna"],
+          "correcta": 0,
+          "explicacion": "Un aislamiento dañado puede fallar solo con tensión alta. Por eso se prueba con una tensión del orden de la de servicio o superior."
+        }
+      ]
+    },
+    {
+      "titulo": "Procedimiento",
+      "bloques": [
+        { "tipo": "ordenar",
+          "tema": "procedimiento_megger",
+          "pregunta": "Seleccione en orden los pasos para medir el aislamiento de un motor:",
+          "pasos": ["Aislar, bloquear y etiquetar", "Verificar ausencia de tensión", "Desconectar los cables y retirar los puentes", "Aplicar la prueba entre devanado y masa, y entre devanados", "Descargar los devanados", "Registrar el valor y reconectar"],
+          "explicacion": "Un megóhmetro aplicado a un circuito energizado se destruye y es peligroso. Después de la prueba, el devanado queda cargado como un condensador: descárguelo."
+        },
+        { "tipo": "texto", "texto": "[b]Precauciones:[/b]\n• Desconecte electrónica, variadores y sensores: la tensión de prueba los destruye.\n• No toque las puntas ni el devanado durante la prueba ni antes de descargar.\n• Avise a quien esté cerca." }
+      ]
+    },
+    {
+      "titulo": "Criterios",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Mínimo habitual en baja tensión:[/b] 1 MΩ ([i]verificar el criterio del buque y del fabricante[/i]).\n• [b]Tendencia:[/b] compare con registros anteriores. Una bajada brusca o progresiva indica deterioro, aunque el valor siga por encima del mínimo.\n• [b]Humedad:[/b] un motor frío y húmedo puede dar valores bajos. Límpielo, séquelo y mida de nuevo antes de condenarlo.\n• [b]Nunca energice[/b] un motor con aislamiento por debajo del criterio." },
+        {
+          "tipo": "quiz",
+          "tema": "criterio_megger",
+          "pregunta": "Un motor marca 0,3 MΩ a masa. ¿Cuál es la actuación correcta?",
+          "opciones": ["Energizarlo para que se seque con su propio calor", "No energizarlo: limpiar, secar, medir de nuevo y registrar", "Probar con otra tensión hasta que marque más"],
+          "correcta": 1,
+          "explicacion": "Está por debajo del criterio habitual. Energizarlo puede provocar una falla a tierra o la pérdida del devanado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEEE 43: medición de la resistencia de aislamiento en máquinas rotativas.",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "NFPA 70E: seguridad eléctrica en el trabajo."
+  ]
+}

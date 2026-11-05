@@ -78,9 +78,10 @@ func _recorrer(raiz: Raiz) -> String:
 		pasos.append(["ficha", {"id": id, "vista": "simbolos"}])
 		for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
 			pasos.append(["ficha", {"id": id, "vista": "extra_%d" % n}])
-	for id: String in raiz.contenido.sistema(0)["modos"]["aprender"]["lecciones"]:
-		for n in raiz.contenido.leccion(id)["paginas"].size():
-			pasos.append(["leccion", {"id": id, "sistema": 0, "pagina": n, "respuestas": {}}])
+	for sistema in [0, 3]:
+		for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
+			for n in raiz.contenido.leccion(id)["paginas"].size():
+				pasos.append(["leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}}])
 	for vertical in [false, true]:
 		raiz.vertical = vertical
 		raiz.reconstruir()

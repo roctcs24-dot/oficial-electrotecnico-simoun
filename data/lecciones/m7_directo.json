@@ -1,0 +1,70 @@
+{
+  "id": "m7_directo",
+  "titulo": "Arranque directo",
+  "resumen": "Esquema, secuencia y pico de corriente.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El esquema",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{arranque_directo}} aplica la tensión plena al motor. Es el método más simple y barato." },
+        {
+          "tipo": "imagen",
+          "svg": "res://art/esquemas/arranque_directo.svg",
+          "tamano": [760, 560],
+          "alto": 420,
+          "etiquetas": [
+            { "texto": "L1", "x": 60, "y": 22, "tam": 22, "color": "#20242a" }, { "texto": "L2", "x": 110, "y": 22, "tam": 22, "color": "#20242a" }, { "texto": "L3", "x": 160, "y": 22, "tam": 22, "color": "#20242a" },
+            { "texto": "Q1", "x": 202, "y": 96, "tam": 22, "color": "#20242a" }, { "texto": "K1", "x": 202, "y": 190, "tam": 22, "color": "#20242a" }, { "texto": "F2", "x": 16, "y": 284, "tam": 22, "color": "#20242a" },
+            { "texto": "M", "x": 110, "y": 408, "tam": 34, "color": "#20242a" }, { "texto": "3~", "x": 110, "y": 444, "tam": 24, "color": "#20242a" },
+            { "texto": "110 V", "x": 330, "y": 22, "tam": 22, "color": "#20242a" }, { "texto": "F1", "x": 376, "y": 96, "tam": 22, "color": "#20242a" },
+            { "texto": "95-96", "x": 392, "y": 190, "tam": 20, "color": "#20242a" }, { "texto": "S0", "x": 376, "y": 284, "tam": 22, "color": "#20242a" },
+            { "texto": "S1", "x": 174, "y": 392, "tam": 22, "color": "#20242a" }, { "texto": "13-14", "x": 480, "y": 392, "tam": 20, "color": "#20242a" },
+            { "texto": "K1", "x": 390, "y": 500, "tam": 22, "color": "#20242a" }, { "texto": "H1", "x": 650, "y": 500, "tam": 22, "color": "#20242a" }
+          ],
+          "pie": "A la izquierda, potencia. A la derecha, mando. Esquema simplificado según IEC 60617: verificar contra los planos del buque."
+        },
+        { "tipo": "texto", "texto": "Recorra el mando desde el origen: fusible F1, contacto 95-96 del relé térmico, parada S0, marcha S1 en paralelo con la retención 13-14, y bobina K1." }
+      ]
+    },
+    {
+      "titulo": "Práctica con la simulación",
+      "bloques": [
+        { "tipo": "texto", "texto": "1. Cierre Q1.\n2. Mantenga pulsado S1 un instante y suéltelo.\n3. Observe el pico de la {{corriente_arranque}}: unas 6 veces la nominal, durante un instante.\n4. Pulse S0 para parar." },
+        {
+          "tipo": "animacion",
+          "id": "banco_arranque",
+          "params": { "circuito": "arranque_directo", "contactores": ["K1"] },
+          "pie": "Motor de 15 kW, 440Δ/760Y, conectado en delta. Valores típicos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "pico_directo",
+          "pregunta": "En arranque directo, ¿de qué orden es la corriente de arranque?",
+          "opciones": ["Igual a la nominal", "Unas 2 veces la nominal", "Unas 6 a 8 veces la nominal"],
+          "correcta": 2,
+          "explicacion": "Con el rotor parado, el motor se comporta casi como un transformador en cortocircuito. El pico baja a medida que acelera."
+        }
+      ]
+    },
+    {
+      "titulo": "Limitaciones",
+      "bloques": [
+        { "tipo": "texto", "texto": "El pico de arranque provoca una caída de tensión en la red. En un buque, con generadores de potencia limitada, un motor grande puede afectar a otros equipos o forzar a conectar otro generador.\n\nPor eso los motores grandes usan arranque estrella-triángulo, arrancador suave o variador de frecuencia ([i]qué equipo usa cada método: verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "limite_directo",
+          "pregunta": "¿Por qué no se arranca en directo un motor muy grande a bordo?",
+          "opciones": ["Porque gira al revés", "Porque su pico de corriente hunde la tensión de una red con potencia limitada", "Porque el relé térmico no se puede ajustar"],
+          "correcta": 1,
+          "explicacion": "Los generadores tienen potencia limitada. Un pico grande provoca una caída de tensión que afecta al resto de la red."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: arrancadores directos.",
+    "IEC 60617: símbolos gráficos.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

@@ -62,6 +62,17 @@
     "conexion_delta": { "es": "conexión en delta", "en": "delta connection, Δ", "def": "Los devanados se conectan en anillo. Cada devanado recibe la tensión de línea." },
     "bornera": { "es": "bornera", "en": "terminal box, terminal board", "def": "Conjunto de bornes donde se conectan los devanados y la alimentación." },
     "puente": { "es": "puente", "en": "jumper, link", "def": "Pletina que une dos bornes." },
-    "desequilibrio": { "es": "desequilibrio de corriente", "en": "current unbalance", "def": "Diferencia entre las corrientes de las tres fases." }
+    "desequilibrio": { "es": "desequilibrio de corriente", "en": "current unbalance", "def": "Diferencia entre las corrientes de las tres fases." },
+    "par": { "es": "par", "en": "torque", "def": "Fuerza de giro que entrega el motor en el eje." },
+    "corriente_arranque": { "es": "corriente de arranque", "en": "inrush or starting current", "def": "Corriente alta que absorbe el motor al arrancar, varias veces la nominal." },
+    "arranque_directo": { "es": "arranque directo", "en": "direct-on-line, DOL", "def": "Arranque aplicando la tensión plena al motor." },
+    "arranque_yd": { "es": "arranque estrella-triángulo", "en": "star-delta starter", "def": "Arranque en estrella que pasa a delta para reducir el pico de corriente." },
+    "enclavamiento": { "es": "enclavamiento", "en": "interlock", "def": "Medio que impide que dos maniobras incompatibles ocurran a la vez." },
+    "circuito_mando": { "es": "circuito de mando", "en": "control circuit", "def": "Circuito de baja potencia que gobierna bobinas, luces y señales." },
+    "circuito_potencia": { "es": "circuito de potencia", "en": "power circuit", "def": "Circuito que lleva la corriente de la carga." },
+    "multimetro": { "es": "multímetro", "en": "multimeter", "def": "Instrumento que mide tensión, resistencia, continuidad y corriente." },
+    "continuidad": { "es": "continuidad", "en": "continuity", "def": "Existencia de un camino de baja resistencia entre dos puntos." },
+    "pinza": { "es": "pinza amperimétrica", "en": "clamp meter", "def": "Instrumento que mide corriente abrazando un conductor, sin abrir el circuito." },
+    "aislamiento": { "es": "resistencia de aislamiento", "en": "insulation resistance", "def": "Resistencia entre partes que deben estar aisladas. Se mide en megaohmios." }
   }
 }

@@ -1,0 +1,61 @@
+{
+  "id": "m4_bornera",
+  "titulo": "La bornera y los motores sin marcas",
+  "resumen": "Puentes, marcas U-V-W e identificación de terminales.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Marcas de la bornera",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cada devanado tiene un principio y un final: U1-U2, V1-V2 y W1-W2. En la {{bornera}}, la fila superior suele ser W2, U2, V2 y la inferior U1, V1, W1. Así, cada {{puente}} queda recto." },
+        {
+          "tipo": "imagen",
+          "svg": "res://art/equipos/bornera_estrella.svg",
+          "tamano": [480, 400],
+          "fondo": "papel",
+          "etiquetas": [
+            { "texto": "W2", "x": 130, "y": 76, "tam": 20 }, { "texto": "U2", "x": 240, "y": 76, "tam": 20 }, { "texto": "V2", "x": 350, "y": 76, "tam": 20 },
+            { "texto": "U1", "x": 94, "y": 240, "tam": 20 }, { "texto": "V1", "x": 204, "y": 240, "tam": 20 }, { "texto": "W1", "x": 314, "y": 240, "tam": 20 }
+          ],
+          "pie": "Estrella: un puente une W2, U2 y V2. Colores según IEC 60445."
+        },
+        {
+          "tipo": "imagen",
+          "svg": "res://art/equipos/bornera_delta.svg",
+          "tamano": [480, 400],
+          "fondo": "papel",
+          "etiquetas": [
+            { "texto": "W2", "x": 94, "y": 110, "tam": 20 }, { "texto": "U2", "x": 204, "y": 110, "tam": 20 }, { "texto": "V2", "x": 314, "y": 110, "tam": 20 },
+            { "texto": "U1", "x": 94, "y": 240, "tam": 20 }, { "texto": "V1", "x": 204, "y": 240, "tam": 20 }, { "texto": "W1", "x": 314, "y": 240, "tam": 20 }
+          ],
+          "pie": "Delta: tres puentes unen U1-W2, V1-U2 y W1-V2."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "puentes_delta",
+          "pregunta": "¿Qué puentes corresponden a la conexión en delta?",
+          "opciones": ["W2-U2-V2 unidos en una sola barra", "U1-W2, V1-U2 y W1-V2", "U1-U2, V1-V2 y W1-W2"],
+          "correcta": 1,
+          "explicacion": "En delta, el final de cada devanado se une al principio del siguiente. Unir U1 con U2 pondría un devanado en cortocircuito."
+        }
+      ]
+    },
+    {
+      "titulo": "Motor sin marcas",
+      "bloques": [
+        { "tipo": "texto", "texto": "Si los seis cables no tienen marcas, se identifican así, [b]con el motor aislado y sin puentes[/b]:\n\n[b]1. Pares de devanado, con {{continuidad}}:[/b] mida entre cables hasta encontrar los tres pares. Cada par es un devanado. Márquelos como U, V y W.\n\n[b]2. Polaridad, con una pila y un voltímetro de cc:[/b]\n• Conecte el voltímetro al devanado V, en su escala más baja.\n• Toque un instante con la pila de 1,5 V a 9 V el devanado U, positivo en un cable que llamará U1.\n• Si al [b]cerrar[/b] la aguja sube o la lectura es positiva, el cable en el positivo del voltímetro es V1.\n• Si baja, intercambie las marcas de V.\n• Repita con W.\n\n[i]Procedimiento habitual — verificar con el manual o la persona responsable a bordo.[/i]" },
+        {
+          "tipo": "ordenar",
+          "tema": "motor_sin_marcas",
+          "pregunta": "Seleccione en orden los pasos para identificar un motor sin marcas:",
+          "pasos": ["Aislar el motor y retirar los puentes", "Encontrar los tres pares con continuidad", "Determinar la polaridad con pila y voltímetro", "Marcar los cables como U1-U2, V1-V2 y W1-W2", "Conectar según la placa y comprobar el giro"],
+          "explicacion": "Sin saber qué cables forman cada devanado no se puede determinar la polaridad. Una polaridad errónea desequilibra las corrientes y calienta el motor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-8: marcado de bornes y sentido de giro.",
+    "IEC 60445: identificación de bornes y conductores."
+  ]
+}

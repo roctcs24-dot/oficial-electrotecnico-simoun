@@ -1,0 +1,58 @@
+{
+  "id": "m1_motor",
+  "titulo": "El motor de inducción",
+  "resumen": "Partes, campo giratorio, deslizamiento y sentido de giro.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Partes del motor",
+      "bloques": [
+        { "tipo": "texto", "texto": "Casi todas las bombas y ventiladores del buque usan un motor de inducción trifásico. Tiene dos partes principales:\n\n• {{Estator}}: la parte fija, con tres {{devanado}} separados 120°.\n• {{Rotor_jaula}}: barras unidas en cortocircuito, sin ninguna conexión exterior.\n\nLa corriente llega solo al estator. Al rotor se le induce, como en un transformador. Por eso no necesita escobillas y requiere poco mantenimiento." },
+        {
+          "tipo": "imagen",
+          "svg": "res://art/equipos/motor_trifasico.svg",
+          "tamano": [660, 400],
+          "etiquetas": [
+            { "texto": "Caja de bornes", "x": 305, "y": 22, "tam": 18, "color": "#20242a" },
+            { "texto": "Ventilador", "x": 84, "y": 96, "tam": 18, "color": "#20242a" },
+            { "texto": "Eje", "x": 570, "y": 164, "tam": 18, "color": "#20242a" },
+            { "texto": "Patas", "x": 300, "y": 376, "tam": 18, "color": "#20242a" }
+          ],
+          "pie": "Motor de carcasa con aletas, enfriado por el ventilador del propio eje."
+        }
+      ]
+    },
+    {
+      "titulo": "Campo giratorio y deslizamiento",
+      "bloques": [
+        { "tipo": "texto", "texto": "Las tres fases, desfasadas 120°, crean un campo magnético que gira. Su velocidad, llamada de sincronismo, depende de la frecuencia y de los polos:\n\n[center][b]n = 120 × f ÷ polos[/b][/center]\n\nCon 60 Hz y 4 polos, n = 1800 rpm. El rotor siempre gira un poco más lento: esa diferencia es el {{deslizamiento}}. Si girara a la misma velocidad, no se induciría corriente y no habría {{par}}. Por eso la placa indica, por ejemplo, 1760 rpm." },
+        {
+          "tipo": "quiz",
+          "tema": "velocidad_sincronismo",
+          "pregunta": "¿Cuál es la velocidad de sincronismo de un motor de 4 polos a 60 Hz?",
+          "opciones": ["900 rpm", "1500 rpm", "1800 rpm", "3600 rpm"],
+          "correcta": 2,
+          "explicacion": "n = 120 × 60 ÷ 4 = 1800 rpm. A plena carga el rotor gira algo más lento."
+        }
+      ]
+    },
+    {
+      "titulo": "Sentido de giro",
+      "bloques": [
+        { "tipo": "texto", "texto": "El sentido del campo depende del orden de las fases. [b]Para invertir el giro, intercambie dos fases[/b] de la alimentación, con el equipo aislado.\n\nCompruebe siempre el sentido después de una intervención. Una bomba centrífuga que gira al revés da poca presión, y algunas cargas se dañan." },
+        {
+          "tipo": "quiz",
+          "tema": "invertir_giro",
+          "pregunta": "¿Cómo se invierte el sentido de giro de un motor trifásico?",
+          "opciones": ["Intercambiando dos de las tres fases", "Intercambiando las tres fases entre sí en orden", "Cambiando de estrella a delta"],
+          "correcta": 0,
+          "explicacion": "Al intercambiar dos fases se invierte la secuencia. Una rotación de las tres mantiene el mismo orden y el mismo giro."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034: máquinas eléctricas rotativas.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

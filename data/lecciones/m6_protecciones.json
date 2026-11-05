@@ -1,0 +1,55 @@
+{
+  "id": "m6_protecciones",
+  "titulo": "Relé térmico y guardamotor",
+  "resumen": "Qué protege cada uno y cómo se ajustan.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Dos tipos de sobrecorriente",
+      "bloques": [
+        { "tipo": "texto", "texto": "• {{Sobrecarga}}: corriente algo superior a la nominal, durante minutos. El motor se calienta poco a poco. La detecta una protección térmica.\n• {{Cortocircuito}}: corriente enorme, en milisegundos. Requiere abrir de inmediato: es la función del {{disparo_magnetico}}.\n\n[b]{{Rele_termico}}:[/b] detecta la sobrecarga y abre su contacto 95-96 para soltar el contactor. No corta la potencia por sí mismo.\n\n[b]{{Guardamotor}}:[/b] reúne protección térmica y magnética, y sí abre la potencia." },
+        {
+          "tipo": "quiz",
+          "tema": "funcion_rele",
+          "pregunta": "¿Qué hace un relé térmico cuando dispara?",
+          "opciones": ["Abre los polos de potencia", "Abre 95-96 para que el mando suelte el contactor", "Funde un fusible interno"],
+          "correcta": 1,
+          "explicacion": "El relé no corta la potencia: quien abre es el contactor, al perder la tensión de su bobina."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajuste",
+      "bloques": [
+        { "tipo": "texto", "texto": "[b]Ajuste la protección térmica a la corriente nominal de la placa[/b], para la conexión con que trabaja el motor.\n\nLa {{clase_disparo}} indica cuánto tarda en disparar a 7,2 veces el ajuste. Clase 10: de 4 a 10 segundos ([i]IEC 60947-4-1, verificar con el fabricante[/i]). El pico normal de arranque dura menos.\n\n[b]No suba el ajuste para que deje de disparar.[/b] Un disparo avisa de una causa: sobrecarga, {{falta_fase}}, tensión baja o un contacto dañado. Búsquela antes de rearmar." },
+        {
+          "tipo": "quiz",
+          "tema": "ajuste_termico",
+          "pregunta": "Un relé ajustado a 25 A dispara a los 5 minutos de marcha, en un motor de 25 A. ¿Qué debe hacer?",
+          "opciones": ["Subir el ajuste a 30 A", "Medir la corriente de las tres fases y buscar la causa", "Puentear el contacto 95-96"],
+          "correcta": 1,
+          "explicacion": "El ajuste es correcto. Mida las fases: una corriente alta o desigual orienta hacia la causa."
+        }
+      ]
+    },
+    {
+      "titulo": "Falta de fase",
+      "bloques": [
+        { "tipo": "texto", "texto": "Si falta una fase con el motor en marcha, este sigue girando con dos fases, pero la corriente aumenta y se calienta. Parado, no arranca: zumba con corriente alta.\n\nLos relés térmicos suelen ser sensibles a la falta de fase: disparan antes si un polo conduce menos que los demás ([i]verificar en la hoja de datos[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "falta_fase_marcha",
+          "pregunta": "Se pierde una fase con el motor en marcha. ¿Qué es lo más probable?",
+          "opciones": ["Se detiene al instante", "Sigue girando, sube la corriente y termina disparando la protección", "Gira más rápido"],
+          "correcta": 1,
+          "explicacion": "En marcha puede mantener el giro con dos fases, pero a costa de una corriente mayor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: relés de sobrecarga y clases de disparo.",
+    "IEC 60947-2: interruptores automáticos.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

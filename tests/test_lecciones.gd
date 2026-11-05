@@ -79,7 +79,8 @@ func test_lecciones_bien_formadas() -> String:
 
 func test_todas_las_lecciones_estan_publicadas() -> String:
 	var c := Contenido.new()
-	var publicadas: Array = c.sistema(0)["modos"]["aprender"]["lecciones"]
+	var publicadas: Array = c.sistema(0)["modos"]["aprender"]["lecciones"].duplicate()
+	publicadas.append_array(c.sistema(3)["modos"]["aprender"]["lecciones"])
 	for l in _lecciones():
 		if not publicadas.has(l["id"]):
 			return "%s no aparece en ningún sistema" % l["id"]
@@ -148,6 +149,84 @@ func test_escala_de_corriente_escoge_el_nivel() -> String:
 		A.cierto(Escala.efecto_de(niveles, 0.5) == "a", "por debajo del primer nivel"),
 		A.cierto(Escala.efecto_de(niveles, 60.0) == "b", "entre niveles"),
 		A.cierto(Escala.efecto_de(niveles, 440.0) == "c", "por encima del último"),
+	])
+
+
+func _ensayar(placa: String, conexion: String, segundos: float) -> EnsayoConexion:
+	var ensayo := EnsayoConexion.new(placa, conexion)
+	ensayo.avanzar(int(segundos / SimSimulacion.PASO_S))
+	return ensayo
+
+
+func test_ensayo_conexion_correcta_no_dispara() -> String:
+	var a := _ensayar("254_440", "estrella", 60.0)
+	var b := _ensayar("440_760", "delta", 60.0)
+	return A.primero([
+		A.cierto(not a.disparo(), "254Δ/440Y en estrella no debe disparar"),
+		A.cierto(not b.disparo(), "440Δ/760Y en delta no debe disparar"),
+		A.cerca(a.v_devanado, 254.0, 0.02, "tensión de devanado en estrella"),
+		A.cerca(b.v_devanado, 440.0, 0.02, "tensión de devanado en delta"),
+		A.cierto(EnsayoConexion.diagnostico("254_440", "estrella") == "correcto", "diagnóstico estrella"),
+		A.cierto(EnsayoConexion.diagnostico("440_760", "delta") == "correcto", "diagnóstico delta"),
+	])
+
+
+func test_ensayo_conexion_incorrecta_dispara() -> String:
+	var exceso := _ensayar("254_440", "delta", 60.0)
+	# DURACION_MAXIMA_S de la práctica: debe disparar antes de que esta termine.
+	var defecto := _ensayar("440_760", "estrella", 900.0)
+	return A.primero([
+		A.cierto(exceso.disparo(), "254Δ/440Y en delta debe disparar en 60 s"),
+		A.cierto(defecto.disparo(), "440Δ/760Y en estrella a plena carga debe disparar"),
+		A.cierto(EnsayoConexion.diagnostico("254_440", "delta") == "exceso", "diagnóstico de exceso"),
+		A.cierto(EnsayoConexion.diagnostico("440_760", "estrella") == "defecto", "diagnóstico de defecto"),
+	])
+
+
+func _banco(circuito: String, contactores: Array) -> Node:
+	var b: Node = load("res://ui/animaciones/banco_arranque.gd").new()
+	b.iniciar({"circuito": circuito, "contactores": contactores}, Contenido.new())
+	return b
+
+
+func test_banco_directo_arranca_con_pico() -> String:
+	var b := _banco("arranque_directo", ["K1"])
+	b.alternar_q1()
+	b.avanzar_pasos(2)
+	b.pulsar("S1", true)
+	b.avanzar_pasos(4)
+	b.pulsar("S1", false)
+	b.avanzar_pasos(200)
+	var enclavado: bool = b.sim.componente("K1").cerrado()
+	var rpm: float = b.sim.componente("M1").rpm()
+	var pico: float = b.corriente_maxima()
+	b.free()
+	return A.primero([
+		A.cierto(enclavado, "K1 debe quedar enclavado"),
+		A.cierto(rpm > 1700.0, "debe llegar a su velocidad: %.0f" % rpm),
+		A.cerca(pico, 162.5, 0.2, "pico de arranque"),
+	])
+
+
+func test_banco_estrella_triangulo_reduce_el_pico() -> String:
+	var b := _banco("estrella_triangulo", ["K1", "K2", "K3"])
+	b.alternar_q1()
+	b.avanzar_pasos(2)
+	b.pulsar("S1", true)
+	b.avanzar_pasos(4)
+	b.pulsar("S1", false)
+	b.avanzar_pasos(20)
+	var pico_estrella: float = b.corriente_maxima()
+	b.avanzar_pasos(180)
+	var delta: bool = b.sim.componente("K2").cerrado() and not b.sim.componente("K3").cerrado()
+	var rpm: float = b.sim.componente("M1").rpm()
+	var disparo: bool = b.sim.hubo_evento("disparo_rele_termico") or b.sim.hubo_evento("disparo_termico")
+	b.free()
+	return A.primero([
+		A.cerca(pico_estrella, 162.5 / 3.0, 0.2, "pico en estrella"),
+		A.cierto(delta, "tras el retardo debe quedar en delta"),
+		A.cierto(rpm > 1700.0, "debe llegar a su velocidad: %.0f" % rpm),
+		A.cierto(not disparo, "un arranque normal no debe disparar protecciones"),
 	])
 
 

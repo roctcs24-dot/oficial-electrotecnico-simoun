@@ -85,11 +85,12 @@ func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("glosario")
 		await _guardar(carpeta, "glosario", tam)
 		raiz.volver()
-		for id: String in raiz.contenido.sistema(0)["modos"]["aprender"]["lecciones"]:
-			for n in raiz.contenido.leccion(id)["paginas"].size():
-				raiz.ir_a("leccion", {"id": id, "sistema": 0, "pagina": n, "respuestas": {}})
-				await _guardar(carpeta, "%s_%d" % [id, n], tam)
-				raiz.volver()
+		for sistema in [0, 3]:
+			for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
+				for n in raiz.contenido.leccion(id)["paginas"].size():
+					raiz.ir_a("leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}})
+					await _guardar(carpeta, "%s_%d" % [id, n], tam)
+					raiz.volver()
 
 
 func _esperar() -> void:

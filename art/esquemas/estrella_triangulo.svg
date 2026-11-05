@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="980" height="640" viewBox="0 0 980 640">
+  <defs>
+    <g id="principal" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-36 V-14 M0,36 V14 M0,14 L-14,-12 M-6,-14 A6,6 0 0 0 6,-14"/></g>
+    <g id="interruptor" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-36 V-14 M0,36 V14 M0,14 L-14,-12 M-5,-19 L5,-9 M-5,-9 L5,-19"/></g>
+    <g id="termico" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-30 V-12 H9 V12 H0 V30"/></g>
+    <g id="na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-36 V-14 M0,36 V14 M0,14 L-14,-12"/></g>
+    <g id="nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-36 V-14 H11 M0,36 V14 M0,14 L13,-18"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-26" y="-19" width="52" height="38"/><path d="M0,-30 V-19 M0,30 V19"/></g>
+  </defs>
+
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round">
+    <!-- Barras y guardamotor -->
+    <path d="M50,28 V40 M90,28 V40 M130,28 V40"/>
+    <path d="M50,112 V132 H200 V156 M90,112 V144 H240 V156 M130,112 V120 H280 V156"/>
+    <path d="M50,132 V156 M90,144 V156 M130,120 V156"/>
+
+    <!-- K1 y relé térmico hacia U1, V1, W1 -->
+    <path d="M50,228 V240 M90,228 V240 M130,228 V240"/>
+    <rect x="34" y="248" width="114" height="46"/>
+    <path d="M50,300 V380 M90,300 V380 M130,300 V380"/>
+
+    <!-- K2 hacia W2, U2, V2 -->
+    <path d="M200,228 V380 M240,228 V380 M280,228 V380"/>
+
+    <!-- K3: punto estrella -->
+    <path d="M200,340 H340 V300 M240,352 H380 V300 M280,364 H420 V300"/>
+    <path d="M340,156 H420 M380,156 V156 M340,156 V176 M380,156 V176 M420,156 V176"/>
+
+    <!-- Motor -->
+    <rect x="30" y="380" width="270" height="110" rx="6"/>
+
+    <!-- Mando -->
+    <path d="M560,24 V40 M560,112 V134 M560,206 V226 M480,226 H640 M480,226 V238 M640,226 V238 M480,310 V322 M640,310 V322 M480,322 H640 M560,322 V340 H900 M560,340 V380 M680,340 V360 M790,340 V360 M900,340 V380"/>
+    <path d="M560,440 V612 M900,440 V612 M560,612 H900"/>
+  </g>
+  <g stroke="#20242a" stroke-width="2" stroke-dasharray="7 5" fill="none">
+    <path d="M36,76 H130"/><path d="M36,192 H130"/><path d="M186,192 H280"/><path d="M326,240 H420"/>
+  </g>
+
+  <use xlink:href="#interruptor" x="50" y="76"/><use xlink:href="#interruptor" x="90" y="76"/><use xlink:href="#interruptor" x="130" y="76"/>
+  <use xlink:href="#principal" x="50" y="192"/><use xlink:href="#principal" x="90" y="192"/><use xlink:href="#principal" x="130" y="192"/>
+  <use xlink:href="#termico" x="50" y="270"/><use xlink:href="#termico" x="90" y="270"/><use xlink:href="#termico" x="130" y="270"/>
+  <use xlink:href="#principal" x="200" y="192"/><use xlink:href="#principal" x="240" y="192"/><use xlink:href="#principal" x="280" y="192"/>
+  <use xlink:href="#principal" x="340" y="240" transform="rotate(180 340 240)"/><use xlink:href="#principal" x="380" y="240" transform="rotate(180 380 240)"/><use xlink:href="#principal" x="420" y="240" transform="rotate(180 420 240)"/>
+
+  <use xlink:href="#nc" x="560" y="76"/>
+  <use xlink:href="#nc" x="560" y="170"/>
+  <use xlink:href="#na" x="480" y="274"/>
+  <use xlink:href="#na" x="640" y="274"/>
+  <use xlink:href="#bobina" x="560" y="410"/>
+  <use xlink:href="#nc" x="680" y="396"/>
+  <use xlink:href="#na" x="790" y="396"/>
+  <use xlink:href="#nc" x="680" y="470"/>
+  <use xlink:href="#nc" x="790" y="470"/>
+  <use xlink:href="#bobina" x="680" y="552"/>
+  <use xlink:href="#bobina" x="790" y="552"/>
+  <use xlink:href="#bobina" x="900" y="410"/>
+  <path d="M680,432 V434 M790,432 V434 M680,506 V522 M790,506 V522 M680,582 V612 M790,582 V612" fill="none" stroke="#20242a" stroke-width="3"/>
+</svg>

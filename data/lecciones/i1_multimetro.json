@@ -1,0 +1,54 @@
+{
+  "id": "i1_multimetro",
+  "titulo": "El multímetro",
+  "resumen": "Modos de medida y errores que dañan el instrumento.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Modos de medida",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{multimetro}} reúne varios instrumentos. Antes de tocar nada, compruebe el modo y las puntas:\n\n• [b]V~ y V=:[/b] tensión alterna y continua. Se mide [b]en paralelo[/b], entre dos puntos.\n• [b]Ω y {{continuidad}}:[/b] resistencia. Se mide [b]sin tensión[/b]: el instrumento inyecta su propia corriente.\n• [b]A:[/b] corriente. Se mide [b]en serie[/b]: hay que abrir el circuito e intercalar el instrumento.\n\nPara corrientes de potencia, use una {{pinza}}: no hace falta abrir el circuito." },
+        {
+          "tipo": "quiz",
+          "tema": "multimetro_paralelo",
+          "pregunta": "¿Cómo se mide una tensión?",
+          "opciones": ["En paralelo con el punto de medida", "En serie, abriendo el circuito", "Con el circuito sin tensión"],
+          "correcta": 0,
+          "explicacion": "El voltímetro tiene una impedancia muy alta y se conecta entre los dos puntos, sin abrir el circuito."
+        }
+      ]
+    },
+    {
+      "titulo": "Errores que dañan el instrumento",
+      "bloques": [
+        { "tipo": "texto", "texto": "[b]Medir ohmios en un circuito con tensión:[/b] la tensión externa entra en el circuito de medida, y puede dañar el instrumento y crear un arco en sus manos.\n\n[b]Medir corriente en paralelo:[/b] el amperímetro tiene una resistencia casi nula, así que equivale a un cortocircuito. Se funde el fusible interno, o peor. Un buen fusible de alta capacidad de ruptura es una protección para usted: sustitúyalo solo por uno equivalente.\n\n[b]Instrumento inadecuado:[/b] use una categoría acorde a la tensión y el lugar, como CAT III o CAT IV ([i]IEC 61010, verificar[/i]), con las puntas en buen estado." },
+        {
+          "tipo": "quiz",
+          "tema": "multimetro_ohm_tension",
+          "pregunta": "Mide ohmios entre dos fases con la red energizada. ¿Qué ocurre?",
+          "opciones": ["Lee un valor muy alto y no pasa nada", "La tensión daña el instrumento y puede provocar un arco", "Lee la tensión automáticamente"],
+          "correcta": 1,
+          "explicacion": "Mida la resistencia solo con el circuito aislado y la ausencia de tensión verificada."
+        }
+      ]
+    },
+    {
+      "titulo": "Lectura y fiabilidad",
+      "bloques": [
+        { "tipo": "texto", "texto": "• Un valor de 0 V solo es válido si el instrumento funciona. Aplique siempre probar, medir, probar.\n• Fuera de rango en ohmios (OL) indica circuito abierto o resistencia superior a la escala.\n• Una lectura pequeña en un cable suelto puede ser una tensión inducida: una entrada de alta impedancia la detecta aunque no pueda entregar corriente.\n\nPractique en el Taller: allí los errores tienen consecuencias, pero no le costarán un instrumento real." },
+        {
+          "tipo": "quiz",
+          "tema": "multimetro_ol",
+          "pregunta": "En modo Ω, el multímetro marca OL en un cable. ¿Qué significa?",
+          "opciones": ["Cortocircuito", "Cable con continuidad perfecta", "Circuito abierto o resistencia fuera de escala"],
+          "correcta": 2,
+          "explicacion": "OL indica que la resistencia supera la escala: el camino está abierto."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61010: seguridad de los instrumentos de medida y sus categorías.",
+    "NFPA 70E: seguridad eléctrica en el trabajo."
+  ]
+}

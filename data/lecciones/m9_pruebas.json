@@ -1,0 +1,41 @@
+{
+  "id": "m9_pruebas",
+  "titulo": "Pruebas del motor",
+  "resumen": "Devanados, aislamiento y corriente por fase.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Sin tensión",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con el equipo bloqueado y la ausencia de tensión verificada, retire los puentes de la bornera y mida:\n\n[b]1. Continuidad de devanados:[/b] U1-U2, V1-V2 y W1-W2. Los tres valores deben ser bajos y casi iguales. Si uno difiere más de un 5 % aproximadamente, revise ([i]criterio típico — verificar[/i]). Un devanado abierto marca fuera de rango.\n\n[b]2. Entre devanados:[/b] U-V, V-W y W-U, con {{megohmetro}}.\n\n[b]3. Devanado a masa:[/b] cada uno contra la carcasa.\n\nEl mínimo habitual de {{aislamiento}} es 1 MΩ ([i]verificar el criterio del buque[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla." },
+        {
+          "tipo": "quiz",
+          "tema": "devanado_abierto",
+          "pregunta": "Entre U1 y U2 el multímetro marca fuera de rango, y V y W dan 0,5 Ω. ¿Qué indica?",
+          "opciones": ["El motor está bien", "Devanado U abierto", "Bajo aislamiento"],
+          "correcta": 1,
+          "explicacion": "Un devanado sano tiene una resistencia baja. Fuera de rango significa que el camino está cortado."
+        }
+      ]
+    },
+    {
+      "titulo": "En servicio",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con EPP y el motor en marcha, mida con la {{pinza}} la corriente en cada fase:\n\n• Debe ser igual o menor que la nominal de la placa.\n• Las tres deben ser parecidas. Un {{desequilibrio}} apreciable indica un contacto picado, un borne flojo, un devanado dañado o tensiones desiguales ([i]límite según el fabricante — verificar[/i]).\n\nMida también la tensión entre fases: debe ser igual en las tres." },
+        {
+          "tipo": "quiz",
+          "tema": "desequilibrio_motor",
+          "pregunta": "Mide 24 A, 25 A y 33 A en un motor de 25 A. ¿Qué concluye?",
+          "opciones": ["Normal, el promedio es cercano a 25 A", "Hay un desequilibrio y una fase supera la nominal: busque la causa", "Solo hay que subir el ajuste del relé"],
+          "correcta": 1,
+          "explicacion": "El promedio no sirve. Una fase por encima de la nominal calienta el motor. Revise contactos, bornes y tensiones."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEEE 43: medición de la resistencia de aislamiento en máquinas rotativas.",
+    "IEC 60034-1: valores nominales.",
+    "NFPA 70E: seguridad eléctrica en el trabajo."
+  ]
+}

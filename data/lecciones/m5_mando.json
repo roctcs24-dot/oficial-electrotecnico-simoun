@@ -1,0 +1,55 @@
+{
+  "id": "m5_mando",
+  "titulo": "Contactor, pulsadores y retención",
+  "resumen": "Cómo un toque mantiene un motor en marcha.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Potencia y mando",
+      "bloques": [
+        { "tipo": "texto", "texto": "Un arrancador tiene dos circuitos:\n\n• {{Circuito_potencia}}: lleva la corriente del motor, a 440 V.\n• {{Circuito_mando}}: gobierna la {{bobina}} del {{contactor}}, normalmente a 110 V AC ([i]valor típico — verificar a bordo[/i]).\n\nUn pulsador solo maneja la pequeña corriente de la bobina. Y esa bobina acciona el contactor, que maneja la corriente grande." },
+        {
+          "tipo": "quiz",
+          "tema": "potencia_mando",
+          "pregunta": "¿Qué corriente maneja un pulsador de marcha?",
+          "opciones": ["La corriente del motor", "La corriente de la bobina del contactor", "La suma de ambas"],
+          "correcta": 1,
+          "explicacion": "El pulsador está en el circuito de mando. La corriente del motor pasa solo por los contactos principales."
+        }
+      ]
+    },
+    {
+      "titulo": "El contacto de retención",
+      "bloques": [
+        { "tipo": "texto", "texto": "Al soltar el pulsador de marcha, este se abre. Para que el motor siga en marcha, se conecta en paralelo el {{retencion}} 13-14 del propio contactor:\n\n1. Al pulsar S1, la bobina recibe tensión y el contactor cierra.\n2. El contacto 13-14 cierra junto con los polos.\n3. Al soltar S1, la corriente sigue por 13-14.\n4. Al pulsar S0, que es {{nc}}, se corta el circuito: la bobina suelta y 13-14 se abre.\n\nLa retención también ofrece protección: si falta la tensión, el contactor suelta y el motor [b]no vuelve a arrancar solo[/b] al regresar." },
+        {
+          "tipo": "quiz",
+          "tema": "retencion_blackout",
+          "pregunta": "Falla la tensión un momento y luego regresa. ¿Qué hace un motor con mando de retención?",
+          "opciones": ["Arranca solo al volver la tensión", "Queda parado hasta que alguien pulse marcha", "Dispara el relé térmico"],
+          "correcta": 1,
+          "explicacion": "Sin tensión, la bobina suelta y el contacto de retención se abre. Al volver, no hay camino hasta pulsar marcha."
+        }
+      ]
+    },
+    {
+      "titulo": "Paradas y marchas",
+      "bloques": [
+        { "tipo": "texto", "texto": "Si un equipo tiene varios puestos de mando, conecte:\n\n• [b]Las paradas en serie:[/b] cualquiera de ellas corta el circuito.\n• [b]Las marchas en paralelo:[/b] cualquiera de ellas lo cierra.\n\nLa parada usa un contacto NC porque así, si se corta un cable, el motor se detiene: la falla queda del lado seguro." },
+        {
+          "tipo": "quiz",
+          "tema": "paradas_serie",
+          "pregunta": "¿Cómo se conectan dos pulsadores de parada de un mismo motor?",
+          "opciones": ["En serie", "En paralelo", "Uno en la potencia y otro en el mando"],
+          "correcta": 0,
+          "explicacion": "En serie, abrir cualquiera de los dos corta el circuito. En paralelo, uno solo no podría detener el motor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: contactores y arrancadores.",
+    "IEC 60947-5-1: aparatos de mando.",
+    "IEC 60204-1: equipos eléctricos de máquinas."
+  ]
+}

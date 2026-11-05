@@ -89,7 +89,7 @@ func _crear_imagen(bloque: Dictionary) -> Control:
 	columna.add_child(tarjeta)
 	var imagen := VistaSvg.new()
 	imagen.cargar(bloque)
-	imagen.custom_minimum_size.y = ALTO_IMAGEN
+	imagen.custom_minimum_size.y = bloque.get("alto", ALTO_IMAGEN)
 	tarjeta.add_child(imagen)
 	if bloque.has("pie"):
 		columna.add_child(_etiqueta(bloque["pie"], "Nota"))
