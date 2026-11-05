@@ -28,6 +28,7 @@ jobs:
       - name: Importar el proyecto
         run: $HOME/godot/godot --headless --path . --import
       - name: Ejecutar pruebas
+        timeout-minutes: 15
         run: $HOME/godot/godot --headless --path . --script res://tests/run_tests.gd
 
   compilar:
