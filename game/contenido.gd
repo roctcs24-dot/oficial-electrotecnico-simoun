@@ -60,6 +60,17 @@ func ficha(id: String) -> Dictionary:
 	return leer("fichas/%s.json" % id)
 
 
+func simbolos() -> Array:
+	return leer("simbolos.json").get("simbolos", [])
+
+
+func simbolo(id: String) -> Dictionary:
+	for s: Dictionary in simbolos():
+		if s["id"] == id:
+			return s
+	return {}
+
+
 func leccion(id: String) -> Dictionary:
 	return leer("lecciones/%s.json" % id)
 

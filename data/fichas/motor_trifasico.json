@@ -1,0 +1,118 @@
+{
+  "id": "motor_trifasico",
+  "titulo": "Motor trifásico",
+  "resumen": "Motor de inducción con rotor de jaula de ardilla, placa de datos y bornera.",
+  "dibujo": {
+    "svg": "res://art/equipos/motor_trifasico.svg",
+    "tamano": [660, 400],
+    "nota": "Ilustración de un motor de carcasa con aletas, en vista lateral. El color y las proporciones varían según el fabricante.",
+    "etiquetas": [
+      { "texto": "Caja de bornes", "x": 305, "y": 22, "tam": 16 },
+      { "texto": "Ventilador", "x": 84, "y": 96, "tam": 16 },
+      { "texto": "Eje", "x": 570, "y": 164, "tam": 16 },
+      { "texto": "Carcasa con aletas", "x": 460, "y": 86, "tam": 16 },
+      { "texto": "Patas", "x": 300, "y": 376, "tam": 16 },
+      { "texto": "PLACA DE DATOS", "x": 323, "y": 192, "tam": 11, "color": "#20242a" }
+    ]
+  },
+  "dibujos_extra": [
+    {
+      "titulo": "Placa de datos",
+      "svg": "res://art/equipos/placa_motor.svg",
+      "tamano": [560, 340],
+      "nota": "Placa de ejemplo con valores típicos — verificar a bordo. Lea siempre la placa del motor real.",
+      "etiquetas": [
+        { "texto": "MOTOR DE INDUCCIÓN TRIFÁSICO  3~", "x": 278, "y": 44, "tam": 22, "color": "#20242a" },
+        { "texto": "Potencia:  15 kW", "x": 161, "y": 98, "tam": 19, "color": "#20242a" },
+        { "texto": "Tensión:  440 Δ / 760 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
+        { "texto": "Corriente:  25,0 / 14,5 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
+        { "texto": "Frecuencia:  60 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
+        { "texto": "Velocidad:  1760 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
+        { "texto": "cos φ:  0,86", "x": 395, "y": 146, "tam": 19, "color": "#20242a" },
+        { "texto": "Protección:  IP55", "x": 395, "y": 194, "tam": 19, "color": "#20242a" },
+        { "texto": "Aislamiento:  clase F", "x": 395, "y": 242, "tam": 19, "color": "#20242a" },
+        { "texto": "Servicio S1  ·  IEC 60034", "x": 278, "y": 296, "tam": 18, "color": "#20242a" }
+      ]
+    },
+    {
+      "titulo": "Bornera en estrella",
+      "svg": "res://art/equipos/bornera_estrella.svg",
+      "tamano": [480, 400],
+      "nota": "Estrella (Y): un solo puente une W2, U2 y V2. Cada devanado recibe la tensión de línea ÷ √3. Colores según IEC 60445; a bordo pueden ser otros.",
+      "etiquetas": [
+        { "texto": "W2", "x": 130, "y": 76, "tam": 20 },
+        { "texto": "U2", "x": 240, "y": 76, "tam": 20 },
+        { "texto": "V2", "x": 350, "y": 76, "tam": 20 },
+        { "texto": "U1", "x": 94, "y": 240, "tam": 20 },
+        { "texto": "V1", "x": 204, "y": 240, "tam": 20 },
+        { "texto": "W1", "x": 314, "y": 240, "tam": 20 },
+        { "texto": "L1", "x": 104, "y": 378, "tam": 18 },
+        { "texto": "L2", "x": 214, "y": 378, "tam": 18 },
+        { "texto": "L3", "x": 324, "y": 378, "tam": 18 }
+      ]
+    },
+    {
+      "titulo": "Bornera en delta",
+      "svg": "res://art/equipos/bornera_delta.svg",
+      "tamano": [480, 400],
+      "nota": "Delta (Δ): tres puentes unen U1-W2, V1-U2 y W1-V2. Cada devanado recibe la tensión de línea completa. Colores según IEC 60445; a bordo pueden ser otros.",
+      "etiquetas": [
+        { "texto": "W2", "x": 94, "y": 110, "tam": 20 },
+        { "texto": "U2", "x": 204, "y": 110, "tam": 20 },
+        { "texto": "V2", "x": 314, "y": 110, "tam": 20 },
+        { "texto": "U1", "x": 94, "y": 240, "tam": 20 },
+        { "texto": "V1", "x": 204, "y": 240, "tam": 20 },
+        { "texto": "W1", "x": 314, "y": 240, "tam": 20 },
+        { "texto": "L1", "x": 104, "y": 378, "tam": 18 },
+        { "texto": "L2", "x": 214, "y": 378, "tam": 18 },
+        { "texto": "L3", "x": 324, "y": 378, "tam": 18 }
+      ]
+    }
+  ],
+  "simbolos": {
+    "nota": "Verificar contra la norma.",
+    "lista": ["motor"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El motor de inducción trifásico convierte energía eléctrica en giro. A bordo mueve bombas de agua salada, agua dulce, combustible y aceite, ventiladores y compresores de aire. Es robusto y sencillo porque no tiene escobillas."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]{{Estator}}:[/b] la parte fija. Aloja el {{devanado}} trifásico, que crea un campo magnético giratorio.\n• [b]{{Rotor_jaula}}:[/b] barras en cortocircuito. El campo induce en ellas una corriente que produce el par.\n• [b]{{Rodamiento}}, ventilador y carcasa con aletas:[/b] sostienen el eje y evacúan el calor.\n\nEl rotor gira un poco más despacio que el campo: esa diferencia es el {{deslizamiento}}. En un motor de 4 polos a 60 Hz, el campo gira a 1800 rpm y el rotor, a unas 1760 rpm.\n\nEl campo depende del orden de las fases. Para invertir el giro, intercambie dos fases de la alimentación."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Estrella o delta: cómo se conecta",
+      "texto": "La {{placa_datos}} indica dos tensiones. [b]La menor es la que admite cada devanado.[/b]\n\n• [b]Placa 254Δ/440Y en red de 440 V:[/b] conéctelo en {{conexion_estrella}}.\n• [b]Placa 440Δ/760Y en red de 440 V:[/b] conéctelo en {{conexion_delta}}. Es el motor que admite arranque estrella-triángulo.\n\nEn la {{bornera}}, la fila superior suele ser W2, U2, V2 y la inferior U1, V1, W1, de modo que cada {{puente}} queda recto. Compruébelo en el esquema de la tapa de la caja de bornes.\n\n[b]Error grave:[/b] un motor 254Δ/440Y conectado en delta a 440 V recibe √3 veces su tensión por devanado, y se quema."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo leer la placa",
+      "texto": "• [b]Potencia:[/b] la mecánica entregada en el eje.\n• [b]Tensión y corriente:[/b] la primera corriente corresponde a la primera tensión. Con 440Δ son 25 A.\n• [b]Velocidad:[/b] a plena carga, no la del campo.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] protección contra sólidos y agua. IP55 es típico en sala de máquinas ([i]verificar a bordo[/i]).\n• [b]Clase de aislamiento:[/b] temperatura que admite el devanado.\n• [b]Servicio S1:[/b] continuo.\n• [b]Frecuencia:[/b] un motor de 50 Hz en red de 60 Hz gira un 20 % más rápido. Consulte antes de conectarlo.\n\n[b]Motor sin marcas:[/b] con continuidad se identifican los tres pares de devanado. La polaridad se determina con el procedimiento que verá en el Taller."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada,[/b] retire los puentes de la bornera:\n\n• [b]Continuidad:[/b] U1-U2, V1-V2 y W1-W2 deben dar valores bajos y casi iguales. Una diferencia superior al 5 % merece revisión ([i]criterio típico — verificar[/i]). Fuera de rango indica devanado abierto.\n• [b]Entre devanados y a masa,[/b] con {{megohmetro}} de 500 V ([i]valor típico — verificar a bordo[/i]): el mínimo habitual es de 1 MΩ ([i]verificar el criterio del buque[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla.\n\n[b]En servicio, con EPP:[/b] mida con pinza la corriente de las tres fases. Debe ser igual o menor que la de placa y estar equilibrada. Un {{desequilibrio}} apreciable obliga a buscar la causa."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No arranca y zumba:[/b] {{falta_fase}} o rotor bloqueado.\n• [b]Se calienta y dispara el térmico:[/b] sobrecarga, conexión incorrecta, tensión baja o ventilación obstruida.\n• [b]Bajo aislamiento:[/b] humedad, sal o deterioro. Limpie y seque antes de energizar.\n• [b]Ruido y vibración:[/b] rodamientos, desalineación o base floja.\n• [b]Gira al revés:[/b] secuencia de fases invertida. Una bomba puede dañarse o no dar presión.\n• [b]Olor a barniz quemado:[/b] devanado dañado. No lo vuelva a energizar sin medir."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: inspección de ruido, vibración y temperatura, y limpieza de aletas y rejilla.\n• Cada 6 meses: apriete de bornes y aislamiento con megóhmetro, y registro del valor.\n• Según el fabricante: engrase de rodamientos, sin exceso de grasa.\n\n[b]Correctivo:[/b] cambio de rodamientos, secado o rebobinado. Tras cualquier intervención, compruebe el sentido de giro con la carga desacoplada si es posible."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034: máquinas eléctricas rotativas, incluidas las placas y la marcación de bornes.",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos."
+  ]
+}

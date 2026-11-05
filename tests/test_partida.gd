@@ -140,6 +140,25 @@ func test_lecciones_y_errores_sobreviven_al_guardado() -> String:
 	])
 
 
+func test_minijuego_solo_suma_estrellas_nuevas() -> String:
+	var ruta := _ruta_limpia("minijuego.json")
+	var p := Partida.new(ruta)
+	var primera := p.registrar_minijuego("simbolos", 2)
+	var igual := p.registrar_minijuego("simbolos", 2)
+	var peor := p.registrar_minijuego("simbolos", 1)
+	var mejor := p.registrar_minijuego("simbolos", 3)
+	var q := Partida.new(ruta)
+	q.cargar()
+	return A.primero([
+		A.cierto(primera == 20, "2 estrellas nuevas: %d" % primera),
+		A.cierto(igual == 0 and peor == 0, "repetir o bajar no debe sumar"),
+		A.cierto(mejor == 10, "1 estrella nueva: %d" % mejor),
+		A.cierto(q.datos["puntos"] == 30, "los puntos deben guardarse"),
+		A.cierto(int(q.datos["minijuegos"]["simbolos"]["estrellas"]) == 3, "debe guardar el mejor resultado"),
+		A.cierto(int(q.datos["minijuegos"]["simbolos"]["partidas"]) == 4, "debe contar las partidas"),
+	])
+
+
 func test_rangos_segun_puntos() -> String:
 	var rangos := [{"nombre": "Cadete", "puntos": 0}, {"nombre": "3ra", "puntos": 500}]
 	var p := Partida.new(_ruta_limpia("rango.json"))

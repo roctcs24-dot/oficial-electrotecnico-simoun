@@ -83,7 +83,17 @@ func test_dibujos_de_las_fichas_se_pueden_rasterizar() -> String:
 	var rutas: Array = [c.plano()["svg"]]
 	for f in DirAccess.get_files_at("res://data/fichas"):
 		var ficha := c.ficha(f.get_basename())
-		rutas.append_array([ficha["dibujo"]["svg"], ficha["simbolos"]["iec"]["svg"], ficha["simbolos"]["ansi"]["svg"]])
+		rutas.append(ficha["dibujo"]["svg"])
+		for extra: Dictionary in ficha.get("dibujos_extra", []):
+			rutas.append(extra["svg"])
+		if ficha["simbolos"].has("lista"):
+			for id: String in ficha["simbolos"]["lista"]:
+				if c.simbolo(id).is_empty():
+					return "%s usa un símbolo que no existe: %s" % [f, id]
+		else:
+			rutas.append_array([ficha["simbolos"]["iec"]["svg"], ficha["simbolos"]["ansi"]["svg"]])
+	for s: Dictionary in c.simbolos():
+		rutas.append_array([s["iec"]["svg"], s["ansi"]["svg"]])
 	for ruta: String in rutas:
 		var textura := VistaSvg.rasterizar(ruta, 0.5)
 		if textura == null or textura.get_width() == 0:
@@ -110,6 +120,88 @@ func _archivos_svg(carpeta: String, lista: Array[String]) -> void:
 			lista.append(carpeta.path_join(f))
 	for d in DirAccess.get_directories_at(carpeta):
 		_archivos_svg(carpeta.path_join(d), lista)
+
+
+func test_componentes_de_la_v1_tienen_ficha_y_simbolo() -> String:
+	var c := Contenido.new()
+	var publicadas: Array = c.sistema(3)["modos"]["aprender"]["fichas"]
+	for id in ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]:
+		if not publicadas.has(id):
+			return "falta publicar la ficha %s" % id
+	for id in ["bobina", "contacto_principal", "contacto_na", "contacto_nc", "rele_termico", "guardamotor", "pulsador_na", "pulsador_nc", "motor"]:
+		if c.simbolo(id).is_empty():
+			return "falta el símbolo %s" % id
+	var extras: Array = c.ficha("motor_trifasico")["dibujos_extra"]
+	return A.cierto(extras.size() >= 3, "el motor debe mostrar placa y bornera en estrella y delta")
+
+
+func test_rondas_del_minijuego_son_validas() -> String:
+	var c := Contenido.new()
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 4
+	for _intento in 30:
+		var rondas := JuegoSimbolos.crear_rondas(c.simbolos(), 10, azar)
+		if rondas.size() != 10:
+			return "debe haber 10 rondas"
+		for r: Dictionary in rondas:
+			var opciones: Array = r["opciones"]
+			var distintas := {}
+			for o: String in opciones:
+				distintas[o] = true
+			if opciones.size() != 4 or distintas.size() != 4:
+				return "deben ser 4 opciones distintas: %s" % str(opciones)
+			if opciones[r["correcta"]] != r["id"]:
+				return "la respuesta correcta no coincide"
+			for similar: String in c.simbolo(r["id"]).get("similares", []):
+				if opciones.has(similar):
+					return "%s y %s comparten dibujo y no pueden ofrecerse juntos" % [r["id"], similar]
+	return ""
+
+
+func test_el_minijuego_cubre_los_simbolos_sin_repetir() -> String:
+	var c := Contenido.new()
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 9
+	var ids := {}
+	for r: Dictionary in JuegoSimbolos.crear_rondas(c.simbolos(), 10, azar):
+		ids[r["id"]] = true
+	return A.cierto(ids.size() == 10, "10 rondas no deben repetir símbolos: %d distintos" % ids.size())
+
+
+func test_estrellas_del_minijuego() -> String:
+	return A.primero([
+		A.cierto(JuegoSimbolos.estrellas(10, 10) == 3, "10 de 10"),
+		A.cierto(JuegoSimbolos.estrellas(9, 10) == 3, "9 de 10"),
+		A.cierto(JuegoSimbolos.estrellas(7, 10) == 2, "7 de 10"),
+		A.cierto(JuegoSimbolos.estrellas(5, 10) == 1, "5 de 10"),
+		A.cierto(JuegoSimbolos.estrellas(4, 10) == 0, "4 de 10"),
+		A.cierto(JuegoSimbolos.estrellas(0, 0) == 0, "sin rondas"),
+	])
+
+
+## Un término seguido de letras queda "devanado (winding)s", y uno al inicio de una viñeta
+## o de un rótulo en negrita debe escribirse con mayúscula: {{Estator}}.
+func test_terminos_bien_escritos_en_el_contenido() -> String:
+	var lista: Array[String] = []
+	_archivos_json("res://data", lista)
+	var pegado := RegEx.create_from_string("\\}\\}[a-záéíóúñ]")
+	var inicio := RegEx.create_from_string("(•\\s*|\\[b\\])\\{\\{[a-z]")
+	for ruta in lista:
+		var texto := FileAccess.get_file_as_string(ruta)
+		var m := pegado.search(texto)
+		if m != null:
+			return "%s: letras pegadas a un término, cerca de %s" % [ruta, texto.substr(m.get_start() - 20, 30)]
+		m = inicio.search(texto)
+		if m != null:
+			return "%s: término en minúscula al iniciar, cerca de %s" % [ruta, texto.substr(m.get_start(), 30)]
+	return ""
+
+
+func test_mayuscula_inicial_en_terminos() -> String:
+	var glosario := {"estator": {"es": "estator", "en": "stator"}}
+	var vistos := {}
+	var uno := TextoTecnico.expandir("{{Estator}} y {{estator}}.", glosario, vistos)
+	return A.cierto(uno == "Estator ([i]stator[/i]) y estator.", "debe capitalizar y contar como el mismo término: %s" % uno)
 
 
 func test_el_ingles_solo_aparece_la_primera_vez() -> String:

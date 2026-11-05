@@ -1,0 +1,76 @@
+{
+  "id": "guardamotor",
+  "titulo": "Guardamotor",
+  "resumen": "Interruptor con protección térmica ajustable y magnética instantánea.",
+  "dibujo": {
+    "svg": "res://art/equipos/guardamotor.svg",
+    "tamano": [320, 500],
+    "nota": "Ilustración sin marca con la disposición típica de un guardamotor de pulsadores. Algunos modelos usan perilla giratoria. Identifique siempre los bornes por sus marcas.",
+    "etiquetas": [
+      { "texto": "1/L1", "x": 102, "y": 36, "tam": 13 },
+      { "texto": "3/L2", "x": 160, "y": 36, "tam": 13 },
+      { "texto": "5/L3", "x": 218, "y": 36, "tam": 13 },
+      { "texto": "17", "x": 84, "y": 222, "tam": 12, "color": "#20242a" },
+      { "texto": "20", "x": 105, "y": 146, "tam": 12, "color": "#20242a" },
+      { "texto": "23", "x": 126, "y": 222, "tam": 12, "color": "#20242a" },
+      { "texto": "A", "x": 105, "y": 240, "tam": 12, "color": "#20242a" },
+      { "texto": "O", "x": 170, "y": 176, "tam": 26 },
+      { "texto": "I", "x": 225, "y": 170, "tam": 26 },
+      { "texto": "STOP", "x": 170, "y": 240, "tam": 11 },
+      { "texto": "START", "x": 225, "y": 240, "tam": 11 },
+      { "texto": "GUARDAMOTOR", "x": 160, "y": 292, "tam": 15, "color": "#20242a" },
+      { "texto": "17-23 A", "x": 160, "y": 314, "tam": 14, "color": "#20242a" },
+      { "texto": "Ue 440 V  60 Hz", "x": 160, "y": 336, "tam": 12, "color": "#20242a" },
+      { "texto": "IEC 60947-2 / 60947-4-1", "x": 160, "y": 358, "tam": 11, "color": "#20242a" },
+      { "texto": "2/T1", "x": 102, "y": 464, "tam": 13 },
+      { "texto": "4/T2", "x": 160, "y": 464, "tam": 13 },
+      { "texto": "6/T3", "x": 218, "y": 464, "tam": 13 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Los símbolos siempre se dibujan en reposo. La simbología ANSI de este equipo varía según el fabricante: verificar contra la norma.",
+    "lista": ["guardamotor"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{guardamotor}} reúne en un solo aparato tres funciones: maniobra manual, protección contra {{sobrecarga}} y contra cortocircuito. A diferencia del relé térmico, [b]sí abre la potencia[/b] cuando dispara.\n\nEn un arranque directo con contactor se instala antes de este. Un motor pequeño puede arrancarse con el guardamotor solo, si no necesita mando a distancia."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Disparo térmico:[/b] láminas bimetálicas por polo, ajustables con el dial. Responde a sobrecargas y a la {{falta_fase}}.\n• [b]{{Disparo_magnetico}}:[/b] una bobina por polo abre al instante si la corriente supera un valor fijo, normalmente unas 13 veces el máximo del rango ([i]verificar en la hoja de datos[/i]). Responde a cortocircuitos.\n• [b]Contactos con cámara de arco:[/b] capaces de abrir la corriente de falla, dentro del poder de corte del modelo.\n• [b]Mecanismo:[/b] botones STOP y START, o perilla giratoria."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Línea:[/b] 1/L1, 3/L2 y 5/L3, del lado de la alimentación.\n• [b]Carga:[/b] 2/T1, 4/T2 y 6/T3, hacia el contactor o el motor.\n• [b]Auxiliares:[/b] bloque opcional. El contacto 13-14 indica si está cerrado, y otros bloques señalan el disparo.\n\nLos tres polos deben estar conectados aunque la carga sea de menos fases: si un polo no conduce corriente, puede interpretarse como falta de fase."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Rango:[/b] elija un modelo cuyo rango incluya la corriente nominal del motor. Si la corriente nominal queda en un extremo, el siguiente rango puede dar más margen.\n• [b]Dial:[/b] ajústelo a la corriente nominal de la placa.\n• [b]Poder de corte:[/b] debe superar la corriente de cortocircuito disponible en el punto de instalación ([i]dato del estudio eléctrico — verificar a bordo[/i]).\n\nEl pico de arranque, de unas 6 a 8 veces la nominal, no debe alcanzar el disparo magnético."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada:[/b]\n• [b]Abierto (STOP):[/b] fuera de rango en 1-2, 3-4 y 5-6.\n• [b]Cerrado (START):[/b] casi 0 Ω en los tres polos. Un polo alto indica contactos dañados.\n• [b]Aislamiento,[/b] con {{megohmetro}}: entre polos y a masa, abierto y cerrado, con la carga desconectada. Aplique el criterio del buque ([i]verificar a bordo[/i]).\n\n[b]Disparo:[/b] muchos modelos tienen un mecanismo de prueba. Tras un disparo, lleve el mando a apagado antes de volver a cerrar."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Disparo inmediato al cerrar:[/b] cortocircuito o {{falla_tierra}} doble aguas abajo. No insista: mida el aislamiento primero.\n• [b]Disparo al arrancar:[/b] rotor bloqueado, arranque largo o rango demasiado pequeño.\n• [b]Disparo tras un tiempo de marcha:[/b] sobrecarga, falta de fase o ajuste bajo.\n• [b]No cierra:[/b] falta llevarlo a apagado después del disparo, o el mecanismo está dañado.\n• [b]Falta una fase a la salida:[/b] contactos quemados por cortes anteriores."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: apriete de bornes, limpieza, signos de calentamiento y ajuste frente a la placa.\n• Cada año: maniobra en vacío y prueba de disparo.\n\n[b]Correctivo:[/b] sustituya el aparato tras cortar un cortocircuito severo si hay señales de daño, y revise también los cables y el contactor."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-2 e IEC 60947-4-1: interruptores automáticos y arrancadores.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

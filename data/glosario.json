@@ -44,6 +44,24 @@
     "retencion": { "es": "contacto de retención", "en": "seal-in contact", "def": "Contacto en paralelo con el pulsador de marcha que mantiene la bobina alimentada." },
     "rele_termico": { "es": "relé térmico", "en": "overload relay", "def": "Protección contra sobrecarga que abre el circuito de mando del contactor." },
     "categoria_empleo": { "es": "categoría de empleo", "en": "utilization category", "def": "Clase de servicio de un contactor. AC-3 es la de motores de jaula de ardilla." },
-    "megohmetro": { "es": "megóhmetro", "en": "insulation tester, megger", "def": "Instrumento que mide el aislamiento aplicando una tensión de prueba alta." }
+    "megohmetro": { "es": "megóhmetro", "en": "insulation tester, megger", "def": "Instrumento que mide el aislamiento aplicando una tensión de prueba alta." },
+    "sobrecarga": { "es": "sobrecarga", "en": "overload", "def": "Corriente superior a la nominal, sin cortocircuito, mantenida durante un tiempo." },
+    "falta_fase": { "es": "falta de fase", "en": "phase loss", "def": "Pérdida de una de las tres fases. El motor se sobrecalienta o no arranca." },
+    "guardamotor": { "es": "guardamotor", "en": "motor protection circuit breaker, MPCB", "def": "Interruptor con protección térmica ajustable y magnética instantánea." },
+    "disparo_magnetico": { "es": "disparo magnético", "en": "magnetic trip", "def": "Apertura instantánea ante una corriente muy alta, como la de un cortocircuito." },
+    "clase_disparo": { "es": "clase de disparo", "en": "trip class", "def": "Tiempo máximo de disparo de un relé térmico a 7,2 veces su ajuste." },
+    "rearme": { "es": "rearme", "en": "reset", "def": "Acción de devolver una protección disparada a su estado normal." },
+    "pulsador": { "es": "pulsador", "en": "pushbutton", "def": "Mando con retorno por resorte que da una orden momentánea." },
+    "devanado": { "es": "devanado", "en": "winding", "def": "Conjunto de bobinas de cobre esmaltado de un motor o transformador." },
+    "estator": { "es": "estator", "en": "stator", "def": "Parte fija del motor, que aloja los devanados." },
+    "rotor_jaula": { "es": "rotor de jaula de ardilla", "en": "squirrel-cage rotor", "def": "Rotor con barras en cortocircuito, sin conexión exterior." },
+    "rodamiento": { "es": "rodamiento", "en": "bearing", "def": "Pieza que sostiene el eje y le permite girar con poca fricción." },
+    "deslizamiento": { "es": "deslizamiento", "en": "slip", "def": "Diferencia entre la velocidad del campo magnético y la del rotor." },
+    "placa_datos": { "es": "placa de datos", "en": "nameplate", "def": "Placa con los datos nominales del equipo." },
+    "conexion_estrella": { "es": "conexión en estrella", "en": "star or wye connection, Y", "def": "Los tres finales de devanado se unen. Cada devanado recibe la tensión de línea ÷ √3." },
+    "conexion_delta": { "es": "conexión en delta", "en": "delta connection, Δ", "def": "Los devanados se conectan en anillo. Cada devanado recibe la tensión de línea." },
+    "bornera": { "es": "bornera", "en": "terminal box, terminal board", "def": "Conjunto de bornes donde se conectan los devanados y la alimentación." },
+    "puente": { "es": "puente", "en": "jumper, link", "def": "Pletina que une dos bornes." },
+    "desequilibrio": { "es": "desequilibrio de corriente", "en": "current unbalance", "def": "Diferencia entre las corrientes de las tres fases." }
   }
 }

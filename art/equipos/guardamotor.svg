@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="500" viewBox="0 0 320 500">
+  <defs>
+    <linearGradient id="carril" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8f9598"/><stop offset="0.08" stop-color="#d9dcdd"/><stop offset="0.5" stop-color="#b9bdbf"/><stop offset="0.92" stop-color="#d0d3d4"/><stop offset="1" stop-color="#7d8386"/>
+    </linearGradient>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#34383c"/><stop offset="0.07" stop-color="#4d5257"/><stop offset="0.5" stop-color="#565b60"/><stop offset="0.93" stop-color="#4a4f54"/><stop offset="1" stop-color="#2f3337"/>
+    </linearGradient>
+    <linearGradient id="frente" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4c5156"/><stop offset="1" stop-color="#303438"/>
+    </linearGradient>
+    <linearGradient id="dial" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e4e6e6"/><stop offset="1" stop-color="#bcc0c2"/>
+    </linearGradient>
+    <linearGradient id="rojo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2574a"/><stop offset="1" stop-color="#9c231a"/>
+    </linearGradient>
+    <linearGradient id="negro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a3d41"/><stop offset="1" stop-color="#0e1012"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+    <radialGradient id="hueco" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0.55" stop-color="#050506"/><stop offset="1" stop-color="#26282b"/>
+    </radialGradient>
+    <g id="tornillo">
+      <circle r="10" fill="#0a0a0b"/><circle r="9.2" fill="url(#acero)"/>
+      <path d="M-5.2,0 H5.2 M0,-5.2 V5.2" stroke="#33373a" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+    <g id="borne">
+      <circle r="22" fill="#2b2e31"/><circle r="20" fill="url(#hueco)"/>
+      <use xlink:href="#tornillo" transform="scale(1.1)"/>
+    </g>
+  </defs>
+
+  <!-- Carril DIN -->
+  <rect x="0" y="166" width="320" height="168" fill="url(#carril)"/>
+
+  <!-- Sombra y cuerpo -->
+  <rect x="70" y="26" width="196" height="466" rx="10" fill="#000000" fill-opacity="0.32"/>
+  <path d="M72,20 H248 Q254,20 254,26 V100 L262,110 V390 L254,400 V474 Q254,480 248,480 H72 Q66,480 66,474 V400 L58,390 V110 L66,100 V26 Q66,20 72,20 Z" fill="url(#cuerpo)"/>
+  <rect x="58" y="106" width="204" height="3" fill="#191b1d"/>
+  <rect x="58" y="391" width="204" height="3" fill="#191b1d"/>
+
+  <!-- Bornes -->
+  <use xlink:href="#borne" x="102" y="72"/>
+  <use xlink:href="#borne" x="160" y="72"/>
+  <use xlink:href="#borne" x="218" y="72"/>
+  <use xlink:href="#borne" x="102" y="428"/>
+  <use xlink:href="#borne" x="160" y="428"/>
+  <use xlink:href="#borne" x="218" y="428"/>
+  <g fill="#23262a">
+    <rect x="128" y="28" width="5" height="74" rx="2"/><rect x="186" y="28" width="5" height="74" rx="2"/>
+    <rect x="128" y="398" width="5" height="74" rx="2"/><rect x="186" y="398" width="5" height="74" rx="2"/>
+  </g>
+
+  <!-- Frente -->
+  <rect x="64" y="116" width="192" height="268" rx="4" fill="url(#frente)"/>
+
+  <!-- Ventana del dial de ajuste -->
+  <rect x="70" y="124" width="70" height="132" rx="3" fill="url(#dial)"/>
+  <rect x="70.75" y="124.75" width="68.5" height="130.5" rx="2.5" fill="none" stroke="#7d8285" stroke-width="1.5"/>
+  <circle cx="105" cy="184" r="27" fill="#ced1d2"/>
+  <circle cx="105" cy="184" r="27" fill="none" stroke="#7d8285" stroke-width="1.5"/>
+  <rect x="101" y="160" width="8" height="24" rx="2" fill="#2a2d30" transform="rotate(35 105 184)"/>
+  <circle cx="105" cy="184" r="6" fill="#2a2d30"/>
+
+  <!-- Botón de parada -->
+  <rect x="146" y="126" width="48" height="100" rx="3" fill="#0e1012"/>
+  <rect x="150" y="130" width="40" height="92" rx="3" fill="url(#rojo)"/>
+  <rect x="150" y="130" width="40" height="8" rx="3" fill="#ffffff" fill-opacity="0.22"/>
+
+  <!-- Botón de marcha -->
+  <rect x="200" y="126" width="50" height="100" rx="3" fill="#0e1012"/>
+  <rect x="204" y="130" width="42" height="80" rx="3" fill="url(#negro)"/>
+  <rect x="204" y="210" width="42" height="12" rx="2" fill="#2f9e57"/>
+
+  <!-- Placa de datos -->
+  <rect x="72" y="272" width="176" height="104" rx="3" fill="url(#dial)"/>
+  <rect x="72.75" y="272.75" width="174.5" height="102.5" rx="2.5" fill="none" stroke="#7d8285" stroke-width="1.5"/>
+</svg>

@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 3**, 6 lecciones de fundamentos y seguridad con animaciones y preguntas, glosario, plano del barco, guardado de partida y ficha de muestra del contactor. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 4**, 6 lecciones de fundamentos y seguridad, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de identificación de símbolos, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -123,7 +123,11 @@ Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fa
 
 **Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
 
-**Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés.
+Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera del motor. Sus `simbolos` pueden ser `iec` y `ansi` propios, o una `lista` de ids de `data/simbolos.json`.
+
+**Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `similares` y sus dibujos `iec` y `ansi`. El minijuego los usa todos. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
+
+**Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés. Al empezar una frase o una viñeta se usa mayúscula inicial: `{{Estator}}`. No se le pegan letras detrás: `{{devanado}}s` queda mal escrito, y una prueba lo detecta.
 
 **Datos sin confirmar:** todo valor típico debe indicar en el texto `valor típico — verificar a bordo`.
 

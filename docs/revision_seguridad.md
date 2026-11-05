@@ -44,6 +44,15 @@ Siguen en las lecciones como valores orientativos o a verificar:
 - Tiempo de descarga de condensadores de un variador.
 - Permisos de trabajo según el Código IGS.
 
+## Contenido sin contrastar todavía
+
+Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verificar" en los puntos sensibles:
+
+- Fichas de motor trifásico, relé térmico, guardamotor y pulsadores.
+- Los 12 símbolos de `data/simbolos.json`. No se pudo abrir la comparativa de referencia entre NEMA e IEC, y la simbología ANSI del guardamotor varía según el fabricante.
+
+Solo la forma de los equipos se comparó con fotos de productos reales.
+
 ## Pendiente de una persona cualificada
 
 - Verificar los umbrales contra IEC 60479-1:2018, ya que IEC/TS 60479-1:2005 fue retirada.

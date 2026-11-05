@@ -24,6 +24,8 @@ func _capturar() -> void:
 	root.add_child(raiz)
 	if argumentos.size() > 1 and argumentos[1] == "lecciones":
 		await _capturar_lecciones(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "fichas":
+		await _capturar_fichas(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -46,6 +48,31 @@ func _capturar_general(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("ficha", {"id": "contactor", "vista": "simbolos"})
 		await _guardar(carpeta, "simbolos", tam)
 		raiz.volver()
+
+
+func _capturar_fichas(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS_LECCIONES:
+		root.size = tam
+		await _esperar()
+		for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"]:
+			var vistas := ["real", "simbolos"]
+			for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
+				vistas.append("extra_%d" % n)
+			for vista: String in vistas:
+				raiz.ir_a("ficha", {"id": id, "vista": vista})
+				await _guardar(carpeta, "%s_%s" % [id, vista], tam)
+				raiz.volver()
+		raiz.ir_a("minijuego_simbolos")
+		await _guardar(carpeta, "minijuego", tam)
+		var p = raiz.pantalla_actual()
+		p._al_responder(true, int(p.args["rondas"][0]["correcta"]), 0, p.args["rondas"][0])
+		await _guardar(carpeta, "minijuego_respondido", tam)
+		raiz.volver()
+		for s: Dictionary in raiz.contenido.simbolos():
+			var r := {"id": s["id"], "norma": "iec", "opciones": [s["id"]], "correcta": 0}
+			raiz.ir_a("minijuego_simbolos", {"rondas": [r], "indice": 0, "respuestas": {0: 0}})
+			await _guardar(carpeta, "simbolo_%s" % s["id"], tam)
+			raiz.volver()
 
 
 func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:

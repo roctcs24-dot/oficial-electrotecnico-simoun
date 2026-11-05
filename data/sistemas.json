@@ -43,7 +43,8 @@
       "estado": "activo",
       "zona": [650, 232, 84, 104],
       "modos": {
-        "aprender": { "fichas": ["contactor"] }
+        "aprender": { "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"] },
+        "examen": { "minijuegos": ["simbolos"] }
       }
     },
     {

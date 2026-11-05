@@ -69,6 +69,13 @@ func _recorrer(raiz: Raiz) -> String:
 		["aprender", {"id": 0}],
 		["glosario", {}],
 	]
+	pasos.append(["examen", {"id": 3}])
+	pasos.append(["minijuego_simbolos", {}])
+	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"]:
+		pasos.append(["ficha", {"id": id}])
+		pasos.append(["ficha", {"id": id, "vista": "simbolos"}])
+		for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
+			pasos.append(["ficha", {"id": id, "vista": "extra_%d" % n}])
 	for id: String in raiz.contenido.sistema(0)["modos"]["aprender"]["lecciones"]:
 		for n in raiz.contenido.leccion(id)["paginas"].size():
 			pasos.append(["leccion", {"id": id, "sistema": 0, "pagina": n, "respuestas": {}}])
@@ -98,6 +105,44 @@ func test_recorrido_en_ambas_orientaciones() -> String:
 	var motivo := _recorrer(raiz)
 	raiz.free()
 	return motivo
+
+
+func _buscar_quiz(nodo: Node) -> BloqueQuiz:
+	if nodo is BloqueQuiz:
+		return nodo
+	for hijo in nodo.get_children():
+		var encontrado := _buscar_quiz(hijo)
+		if encontrado != null:
+			return encontrado
+	return null
+
+
+func test_partida_completa_del_minijuego() -> String:
+	var raiz := _crear_raiz()
+	raiz.ir_a("minijuego_simbolos")
+	var args: Dictionary = raiz.pantalla_actual().args
+	var rondas: Array = args["rondas"]
+	var cantidad := rondas.size()
+	var bloquea := false
+	for i in cantidad:
+		var quiz := _buscar_quiz(raiz.pantalla_actual())
+		var correcta := int(rondas[i]["correcta"])
+		quiz.elegir(correcta if i > 0 else (correcta + 1) % 4)
+		raiz.reconstruir()
+		if _buscar_quiz(raiz.pantalla_actual())._botones[0].disabled == false:
+			bloquea = true
+		raiz.pantalla_actual()._avanzar()
+	var fallo_id: String = "simbolo_%s" % rondas[0]["id"]
+	var error: bool = raiz.partida.datos["errores"].has(fallo_id)
+	var resultado: Dictionary = raiz.partida.datos["minijuegos"].get("simbolos", {})
+	var puntos: int = raiz.partida.datos["puntos"]
+	raiz.free()
+	return A.primero([
+		A.cierto(not bloquea, "una ronda contestada no debe poder responderse de nuevo"),
+		A.cierto(error, "el símbolo fallado debe quedar para el repaso"),
+		A.cierto(int(resultado.get("estrellas", -1)) == 3, "9 de 10 son 3 estrellas: %s" % str(resultado)),
+		A.cierto(puntos == 30, "3 estrellas nuevas son 30 puntos: %d" % puntos),
+	])
 
 
 func test_volver_no_sale_de_la_primera_pantalla() -> String:

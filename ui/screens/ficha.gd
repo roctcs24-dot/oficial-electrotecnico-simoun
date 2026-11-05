@@ -7,8 +7,7 @@ var _ficha := {}
 var _vista := "real"
 var _visual: Control
 var _nota: Label
-var _boton_real: Button
-var _boton_simbolos: Button
+var _botones_vista := {}
 var _sim: SimSimulacion
 var _dibujo: VistaEquipo
 var _luz: LuzPiloto
@@ -58,35 +57,44 @@ func construir() -> void:
 
 
 func _crear_selector() -> Control:
-	var fila := HBoxContainer.new()
+	var rejilla := GridContainer.new()
+	rejilla.columns = 2
 	var grupo := ButtonGroup.new()
-	_boton_real = _boton("Equipo", _mostrar_vista.bind("real"))
-	_boton_simbolos = _boton("Símbolos", _mostrar_vista.bind("simbolos"))
-	for b: Button in [_boton_real, _boton_simbolos]:
-		b.toggle_mode = true
-		b.button_group = grupo
-		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		fila.add_child(b)
-	return fila
+	_agregar_vista(rejilla, grupo, "Equipo", "real")
+	_agregar_vista(rejilla, grupo, "Símbolos", "simbolos")
+	var extras: Array = _ficha.get("dibujos_extra", [])
+	for i in extras.size():
+		_agregar_vista(rejilla, grupo, extras[i]["titulo"], "extra_%d" % i)
+	return rejilla
+
+
+func _agregar_vista(rejilla: GridContainer, grupo: ButtonGroup, titulo: String, vista: String) -> void:
+	var b := _boton(titulo, _mostrar_vista.bind(vista))
+	b.toggle_mode = true
+	b.button_group = grupo
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rejilla.add_child(b)
+	_botones_vista[vista] = b
 
 
 func _mostrar_vista(vista: String) -> void:
 	_vista = vista
 	args["vista"] = vista
-	_boton_real.set_pressed_no_signal(vista == "real")
-	_boton_simbolos.set_pressed_no_signal(vista == "simbolos")
+	for clave: String in _botones_vista:
+		_botones_vista[clave].set_pressed_no_signal(clave == vista)
 	for hijo in _visual.get_children():
 		_visual.remove_child(hijo)
 		hijo.queue_free()
+	_dibujo = null
 	if vista == "real":
-		_mostrar_dibujo()
-	else:
-		_dibujo = null
+		_mostrar_dibujo(_ficha["dibujo"])
+	elif vista == "simbolos":
 		_mostrar_simbolos()
+	else:
+		_mostrar_dibujo(_ficha["dibujos_extra"][vista.trim_prefix("extra_").to_int()])
 
 
-func _mostrar_dibujo() -> void:
-	var definicion: Dictionary = _ficha["dibujo"]
+func _mostrar_dibujo(definicion: Dictionary) -> void:
 	_dibujo = VistaEquipo.new()
 	_dibujo.cargar(definicion)
 	_dibujo.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -100,9 +108,21 @@ func _mostrar_simbolos() -> void:
 	var caja: BoxContainer = VBoxContainer.new()
 	caja.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_visual.add_child(caja)
-	for clave: String in ["iec", "ansi"]:
-		caja.add_child(_tarjeta_simbolo(simbolos[clave]))
+	if simbolos.has("lista"):
+		for id: String in simbolos["lista"]:
+			var datos := raiz.contenido.simbolo(id)
+			caja.add_child(_tarjeta_simbolo(_con_titulo(datos["iec"], "IEC 60617")))
+			caja.add_child(_tarjeta_simbolo(_con_titulo(datos["ansi"], "ANSI/IEEE 315 (NEMA)")))
+	else:
+		for clave: String in ["iec", "ansi"]:
+			caja.add_child(_tarjeta_simbolo(simbolos[clave]))
 	_nota.text = simbolos.get("nota", "")
+
+
+func _con_titulo(definicion: Dictionary, titulo: String) -> Dictionary:
+	var copia := definicion.duplicate()
+	copia["titulo"] = titulo
+	return copia
 
 
 func _tarjeta_simbolo(definicion: Dictionary) -> Control:

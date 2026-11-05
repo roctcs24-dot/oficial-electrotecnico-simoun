@@ -1,0 +1,91 @@
+{
+  "nota": "Símbolos dibujados según IEC 60617 y ANSI/IEEE 315 (NEMA). Verificar contra la norma: las versiones varían según fabricante y año.",
+  "simbolos": [
+    {
+      "id": "bobina", "nombre": "Bobina de contactor", "similares": ["temporizador"],
+      "iec": { "svg": "res://art/simbolos/iec/bobina.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A1", "x": 144, "y": 34, "tam": 18 }, { "texto": "A2", "x": 144, "y": 166, "tam": 18 }, { "texto": "K1", "x": 176, "y": 100, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/bobina.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "M", "x": 120, "y": 100, "tam": 26 }, { "texto": "A1", "x": 144, "y": 34, "tam": 18 }, { "texto": "A2", "x": 144, "y": 166, "tam": 18 } ] }
+    },
+    {
+      "id": "contacto_principal", "nombre": "Contacto principal de contactor", "similares": ["contacto_na"],
+      "iec": { "svg": "res://art/simbolos/iec/contacto_principal.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "1", "x": 140, "y": 34, "tam": 18 }, { "texto": "2", "x": 140, "y": 166, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/contacto_principal.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "L1", "x": 144, "y": 34, "tam": 18 }, { "texto": "T1", "x": 144, "y": 166, "tam": 18 }, { "texto": "M", "x": 170, "y": 100, "tam": 20 } ] }
+    },
+    {
+      "id": "contacto_na", "nombre": "Contacto auxiliar NA", "similares": ["contacto_principal"],
+      "iec": { "svg": "res://art/simbolos/iec/contacto_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "13", "x": 144, "y": 34, "tam": 18 }, { "texto": "14", "x": 144, "y": 166, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/contacto_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "13", "x": 144, "y": 34, "tam": 18 }, { "texto": "14", "x": 144, "y": 166, "tam": 18 } ] }
+    },
+    {
+      "id": "contacto_nc", "nombre": "Contacto auxiliar NC", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/contacto_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "21", "x": 96, "y": 34, "tam": 18 }, { "texto": "22", "x": 96, "y": 166, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/contacto_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "21", "x": 144, "y": 34, "tam": 18 }, { "texto": "22", "x": 144, "y": 166, "tam": 18 } ] }
+    },
+    {
+      "id": "rele_termico", "nombre": "Relé térmico", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/rele_termico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "95", "x": 176, "y": 34, "tam": 16 }, { "texto": "96", "x": 176, "y": 166, "tam": 16 }, { "texto": "F2", "x": 16, "y": 98, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/rele_termico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "OL", "x": 74, "y": 138, "tam": 18 }, { "texto": "OL", "x": 226, "y": 150, "tam": 16 } ] }
+    },
+    {
+      "id": "guardamotor", "nombre": "Guardamotor", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/guardamotor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "I>", "x": 70, "y": 140, "tam": 18 }, { "texto": "Q1", "x": 204, "y": 140, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/guardamotor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "MCP", "x": 204, "y": 132, "tam": 18 } ] }
+    },
+    {
+      "id": "pulsador_na", "nombre": "Pulsador NA", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/pulsador_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "13", "x": 164, "y": 34, "tam": 18 }, { "texto": "14", "x": 164, "y": 166, "tam": 18 }, { "texto": "S1", "x": 80, "y": 62, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/pulsador_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PB", "x": 120, "y": 44, "tam": 18 } ] }
+    },
+    {
+      "id": "pulsador_nc", "nombre": "Pulsador NC", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/pulsador_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "21", "x": 116, "y": 34, "tam": 18 }, { "texto": "22", "x": 116, "y": 166, "tam": 18 }, { "texto": "S0", "x": 80, "y": 62, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/pulsador_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PB", "x": 120, "y": 44, "tam": 18 } ] }
+    },
+    {
+      "id": "motor", "nombre": "Motor trifásico", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/motor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "M", "x": 120, "y": 102, "tam": 28 }, { "texto": "3~", "x": 120, "y": 134, "tam": 20 },
+        { "texto": "U1", "x": 72, "y": 30, "tam": 15 }, { "texto": "V1", "x": 136, "y": 30, "tam": 15 }, { "texto": "W1", "x": 172, "y": 30, "tam": 15 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/motor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "MOT", "x": 120, "y": 116, "tam": 22 },
+        { "texto": "T1", "x": 72, "y": 30, "tam": 15 }, { "texto": "T2", "x": 136, "y": 30, "tam": 15 }, { "texto": "T3", "x": 172, "y": 30, "tam": 15 } ] }
+    },
+    {
+      "id": "luz_piloto", "nombre": "Luz piloto", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/luz_piloto.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "X1", "x": 144, "y": 34, "tam": 18 }, { "texto": "X2", "x": 144, "y": 166, "tam": 18 }, { "texto": "H1", "x": 180, "y": 100, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/luz_piloto.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "G", "x": 120, "y": 100, "tam": 26 } ] }
+    },
+    {
+      "id": "fusible", "nombre": "Fusible", "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/fusible.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "F1", "x": 170, "y": 100, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/fusible.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "FU", "x": 170, "y": 100, "tam": 18 } ] }
+    },
+    {
+      "id": "temporizador", "nombre": "Temporizador con retardo a la conexión", "similares": ["bobina"],
+      "iec": { "svg": "res://art/simbolos/iec/temporizador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A1", "x": 120, "y": 34, "tam": 18 }, { "texto": "A2", "x": 120, "y": 166, "tam": 18 }, { "texto": "KT", "x": 42, "y": 100, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/temporizador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "TR", "x": 120, "y": 100, "tam": 26 }, { "texto": "A1", "x": 144, "y": 34, "tam": 18 }, { "texto": "A2", "x": 144, "y": 166, "tam": 18 } ] }
+    }
+  ]
+}

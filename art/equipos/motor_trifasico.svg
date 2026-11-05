@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="400" viewBox="0 0 660 400">
+  <defs>
+    <linearGradient id="carcasa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6e8aa1"/><stop offset="0.3" stop-color="#4b6b86"/><stop offset="0.75" stop-color="#2f4c64"/><stop offset="1" stop-color="#1f3546"/>
+    </linearGradient>
+    <linearGradient id="tapa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5f7c93"/><stop offset="0.5" stop-color="#3f5f79"/><stop offset="1" stop-color="#22394b"/>
+    </linearGradient>
+    <linearGradient id="cubre" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#58748a"/><stop offset="0.5" stop-color="#3c5a73"/><stop offset="1" stop-color="#1f3546"/>
+    </linearGradient>
+    <linearGradient id="eje" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8d9396"/><stop offset="0.4" stop-color="#eef0f0"/><stop offset="1" stop-color="#6d7376"/>
+    </linearGradient>
+    <linearGradient id="placa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef0f0"/><stop offset="1" stop-color="#bfc4c7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sombra en la base -->
+  <rect x="130" y="344" width="340" height="10" rx="5" fill="#000000" fill-opacity="0.3"/>
+
+  <!-- Patas -->
+  <path d="M176,290 H256 L268,342 H164 Z" fill="#2a4458"/>
+  <path d="M344,290 H424 L436,342 H332 Z" fill="#2a4458"/>
+  <ellipse cx="190" cy="334" rx="9" ry="3.5" fill="#0d1820"/>
+  <ellipse cx="242" cy="334" rx="9" ry="3.5" fill="#0d1820"/>
+  <ellipse cx="358" cy="334" rx="9" ry="3.5" fill="#0d1820"/>
+  <ellipse cx="410" cy="334" rx="9" ry="3.5" fill="#0d1820"/>
+
+  <!-- Eje con chaveta -->
+  <rect x="510" y="186" width="110" height="38" rx="3" fill="url(#eje)"/>
+  <rect x="556" y="186" width="48" height="8" rx="2" fill="#4a4f53"/>
+
+  <!-- Cubreventilador con rejilla -->
+  <path d="M40,140 Q40,122 56,120 L128,112 V298 L56,290 Q40,288 40,270 Z" fill="url(#cubre)"/>
+  <g fill="#0d1820">
+    <rect x="52" y="146" width="66" height="6" rx="3"/><rect x="52" y="162" width="66" height="6" rx="3"/>
+    <rect x="52" y="178" width="66" height="6" rx="3"/><rect x="52" y="194" width="66" height="6" rx="3"/>
+    <rect x="52" y="210" width="66" height="6" rx="3"/><rect x="52" y="226" width="66" height="6" rx="3"/>
+    <rect x="52" y="242" width="66" height="6" rx="3"/><rect x="52" y="258" width="66" height="6" rx="3"/>
+  </g>
+
+  <!-- Carcasa con aletas -->
+  <rect x="124" y="104" width="348" height="200" rx="8" fill="url(#carcasa)"/>
+  <g fill="#17293a" fill-opacity="0.75">
+    <rect x="130" y="118" width="336" height="4" rx="2"/><rect x="130" y="134" width="336" height="4" rx="2"/>
+    <rect x="130" y="150" width="336" height="4" rx="2"/><rect x="130" y="166" width="336" height="4" rx="2"/>
+    <rect x="130" y="182" width="336" height="4" rx="2"/><rect x="130" y="198" width="336" height="4" rx="2"/>
+    <rect x="130" y="214" width="336" height="4" rx="2"/><rect x="130" y="230" width="336" height="4" rx="2"/>
+    <rect x="130" y="246" width="336" height="4" rx="2"/><rect x="130" y="262" width="336" height="4" rx="2"/>
+    <rect x="130" y="278" width="336" height="4" rx="2"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.09">
+    <rect x="130" y="122" width="336" height="2"/><rect x="130" y="138" width="336" height="2"/>
+    <rect x="130" y="154" width="336" height="2"/><rect x="130" y="170" width="336" height="2"/>
+  </g>
+
+  <!-- Tapa del lado del eje con tornillos -->
+  <rect x="468" y="108" width="44" height="192" rx="8" fill="url(#tapa)"/>
+  <circle cx="490" cy="124" r="5" fill="#0d1820"/><circle cx="490" cy="284" r="5" fill="#0d1820"/>
+
+  <!-- Caja de bornes -->
+  <rect x="246" y="46" width="118" height="66" rx="5" fill="url(#tapa)"/>
+  <rect x="254" y="38" width="102" height="14" rx="4" fill="#5a7690"/>
+  <circle cx="262" cy="45" r="3.5" fill="#0d1820"/><circle cx="348" cy="45" r="3.5" fill="#0d1820"/>
+  <rect x="222" y="70" width="26" height="24" rx="3" fill="#20242a"/>
+  <rect x="208" y="74" width="16" height="16" rx="2" fill="#17191b"/>
+
+  <!-- Placa de datos -->
+  <rect x="258" y="176" width="130" height="76" rx="2" fill="url(#placa)"/>
+  <rect x="258.75" y="176.75" width="128.5" height="74.5" rx="1.5" fill="none" stroke="#6d7376" stroke-width="1.5"/>
+  <circle cx="264" cy="182" r="2" fill="#6d7376"/><circle cx="382" cy="182" r="2" fill="#6d7376"/>
+  <circle cx="264" cy="246" r="2" fill="#6d7376"/><circle cx="382" cy="246" r="2" fill="#6d7376"/>
+  <g stroke="#6d7376" stroke-width="1">
+    <path d="M270,206 H376 M270,218 H376 M270,230 H376 M270,242 H376"/>
+  </g>
+</svg>

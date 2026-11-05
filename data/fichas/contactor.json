@@ -68,7 +68,7 @@
     {
       "id": "partes",
       "titulo": "Cómo funciona por dentro",
-      "texto": "Con tensión, la {{bobina}} magnetiza el {{nucleo}} y este atrae la {{armadura}}, que arrastra todos los contactos a la vez. Sin tensión, un resorte la devuelve a reposo.\n\n[b]Partes:[/b]\n• {{contacto_principal}}: tres polos, 1-2, 3-4 y 5-6.\n• {{contacto_auxiliar}} de mando: 13-14 es {{na}} y 21-22 es {{nc}}. Si hacen falta más, se añade un bloque auxiliar en el frente.\n• {{camara_arco}}, que enfría el arco al abrir con carga.\n• {{espira_sombra}} en el núcleo: en corriente alterna evita que la armadura vibre."
+      "texto": "Con tensión, la {{bobina}} magnetiza el {{nucleo}} y este atrae la {{armadura}}, que arrastra todos los contactos a la vez. Sin tensión, un resorte la devuelve a reposo.\n\n[b]Partes:[/b]\n• {{Contacto_principal}}: tres polos, 1-2, 3-4 y 5-6.\n• {{Contacto_auxiliar}} de mando: 13-14 es {{na}} y 21-22 es {{nc}}. Si hacen falta más, se añade un bloque auxiliar en el frente.\n• {{Camara_arco}}, que enfría el arco al abrir con carga.\n• {{Espira_sombra}} en el núcleo: en corriente alterna evita que la armadura vibre."
     },
     {
       "id": "conexion",

@@ -27,7 +27,7 @@
     {
       "titulo": "Tensión de línea y de fase",
       "bloques": [
-        { "tipo": "texto", "texto": "Si los tres devanados se unen en un punto común, ese punto es el {{neutro}} y existen dos tensiones distintas:\n\n• {{tension_linea}}: entre dos fases, como L1 y L2.\n• {{tension_fase}}: entre una fase y el neutro.\n\nSe relacionan de esta forma:\n\n[center][b]V línea = √3 × V fase[/b][/center]\n\nCon 440 V de línea, la tensión de fase es 440 ÷ 1,732 ≈ 254 V, y no 220 V, porque las dos tensiones están desfasadas y no se suman como números simples.\n\nSeleccione cada medición para ver la lectura. Los valores proceden del motor de simulación." },
+        { "tipo": "texto", "texto": "Si los tres devanados se unen en un punto común, ese punto es el {{neutro}} y existen dos tensiones distintas:\n\n• {{Tension_linea}}: entre dos fases, como L1 y L2.\n• {{Tension_fase}}: entre una fase y el neutro.\n\nSe relacionan de esta forma:\n\n[center][b]V línea = √3 × V fase[/b][/center]\n\nCon 440 V de línea, la tensión de fase es 440 ÷ 1,732 ≈ 254 V, y no 220 V, porque las dos tensiones están desfasadas y no se suman como números simples.\n\nSeleccione cada medición para ver la lectura. Los valores proceden del motor de simulación." },
         {
           "tipo": "animacion",
           "id": "estrella",

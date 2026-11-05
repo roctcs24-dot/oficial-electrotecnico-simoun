@@ -8,6 +8,7 @@ const VERSION := 1
 const RUTA := "user://partida.json"
 const PUNTOS_LECCION := 20
 const PUNTOS_ACIERTO := 5
+const PUNTOS_ESTRELLA := 10
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -25,6 +26,7 @@ static func datos_nuevos() -> Dictionary:
 		"misiones": {},
 		"errores": {},
 		"equipos_danados": {},
+		"minijuegos": {},
 	}
 
 
@@ -41,7 +43,7 @@ static func validar(valor: Variant) -> String:
 		return "es de una versión más nueva del juego"
 	if not (d.get("puntos", 0) is float or d.get("puntos", 0) is int) or d.get("puntos", 0) < 0:
 		return "tiene puntos no válidos"
-	for clave in ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados"]:
+	for clave in ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos"]:
 		if not d.get(clave, {}) is Dictionary:
 			return "tiene dañado el apartado %s" % clave
 	return ""
@@ -149,6 +151,18 @@ func completar_leccion(id: String, aciertos: int, total: int) -> int:
 		ganados = PUNTOS_LECCION + PUNTOS_ACIERTO * aciertos
 		datos["puntos"] += ganados
 		lecciones[id] = {"aciertos": aciertos, "total": total}
+	guardar()
+	return ganados
+
+
+## Solo suman puntos las estrellas nuevas; devuelve los ganados.
+func registrar_minijuego(id: String, estrellas: int) -> int:
+	var juegos: Dictionary = datos["minijuegos"]
+	var previo: Dictionary = juegos.get(id, {"estrellas": 0, "partidas": 0})
+	var mejor := int(previo["estrellas"])
+	var ganados := maxi(estrellas - mejor, 0) * PUNTOS_ESTRELLA
+	datos["puntos"] += ganados
+	juegos[id] = {"estrellas": maxi(mejor, estrellas), "partidas": int(previo["partidas"]) + 1}
 	guardar()
 	return ganados
 

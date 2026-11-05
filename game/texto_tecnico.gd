@@ -19,16 +19,21 @@ static func expandir(texto: String, glosario: Dictionary, vistos: Dictionary) ->
 	for m in _regex().search_all(texto):
 		resultado += texto.substr(cursor, m.get_start() - cursor)
 		cursor = m.get_end()
-		var id := m.get_string(1)
+		var escrito := m.get_string(1)
+		var id := escrito.to_lower()
 		if not glosario.has(id):
-			resultado += id
+			resultado += escrito
 			continue
 		var termino: Dictionary = glosario[id]
+		var nombre: String = termino["es"]
+		# {{Estator}} con mayúscula inicial sirve para empezar una frase.
+		if escrito != id:
+			nombre = nombre.substr(0, 1).to_upper() + nombre.substr(1)
 		if vistos.has(id):
-			resultado += termino["es"]
+			resultado += nombre
 		else:
 			vistos[id] = true
-			resultado += "%s ([i]%s[/i])" % [termino["es"], termino["en"]]
+			resultado += "%s ([i]%s[/i])" % [nombre, termino["en"]]
 	return resultado + texto.substr(cursor)
 
 
@@ -41,5 +46,5 @@ static func numero(valor: float, decimales := 0) -> String:
 static func terminos(texto: String) -> Array[String]:
 	var lista: Array[String] = []
 	for m in _regex().search_all(texto):
-		lista.append(m.get_string(1))
+		lista.append(m.get_string(1).to_lower())
 	return lista

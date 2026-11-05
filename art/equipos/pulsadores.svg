@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="480" height="420" viewBox="0 0 480 420">
+  <defs>
+    <linearGradient id="tablero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfd2cd"/><stop offset="1" stop-color="#b3b7b1"/>
+    </linearGradient>
+    <linearGradient id="cromo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fafbfb"/><stop offset="0.5" stop-color="#9ea3a6"/><stop offset="1" stop-color="#e7e9ea"/>
+    </linearGradient>
+    <radialGradient id="verde" cx="0.4" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#2fa84d"/><stop offset="1" stop-color="#0d6a2a"/>
+    </radialGradient>
+    <radialGradient id="rojo" cx="0.4" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#e2473a"/><stop offset="1" stop-color="#96180f"/>
+    </radialGradient>
+    <linearGradient id="bloque" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26282b"/><stop offset="0.5" stop-color="#46494d"/><stop offset="1" stop-color="#1f2123"/>
+    </linearGradient>
+    <linearGradient id="zinc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c8285"/><stop offset="0.5" stop-color="#c9cdcf"/><stop offset="1" stop-color="#6d7376"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+    <g id="tornillo">
+      <circle r="10" fill="#0a0a0b"/><circle r="9.2" fill="url(#acero)"/>
+      <path d="M-5.2,0 H5.2 M0,-5.2 V5.2" stroke="#33373a" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <!-- Frente del tablero -->
+  <rect x="10" y="10" width="460" height="196" rx="4" fill="url(#tablero)"/>
+  <rect x="10.75" y="10.75" width="458.5" height="194.5" rx="3.5" fill="none" stroke="#7f847d" stroke-width="1.5"/>
+
+  <!-- Pulsador de marcha -->
+  <circle cx="125" cy="92" r="60" fill="#000000" fill-opacity="0.22"/>
+  <circle cx="125" cy="90" r="58" fill="url(#cromo)"/>
+  <circle cx="125" cy="90" r="47" fill="url(#verde)"/>
+  <circle cx="125" cy="90" r="47" fill="none" stroke="#0a3d18" stroke-width="2"/>
+  <rect x="62" y="162" width="126" height="30" rx="2" fill="#20242a"/>
+
+  <!-- Pulsador de parada -->
+  <circle cx="355" cy="92" r="60" fill="#000000" fill-opacity="0.22"/>
+  <circle cx="355" cy="90" r="58" fill="url(#cromo)"/>
+  <circle cx="355" cy="90" r="47" fill="url(#rojo)"/>
+  <circle cx="355" cy="90" r="47" fill="none" stroke="#5a0f09" stroke-width="2"/>
+  <rect x="292" y="162" width="126" height="30" rx="2" fill="#20242a"/>
+
+  <!-- Cuerpos vistos por detrás del tablero -->
+  <g>
+    <rect x="75" y="224" width="100" height="26" rx="3" fill="url(#zinc)"/>
+    <rect x="85" y="250" width="80" height="150" rx="5" fill="url(#bloque)"/>
+    <rect x="85" y="256" width="80" height="16" fill="#2f9e57"/>
+    <use xlink:href="#tornillo" x="125" y="304"/>
+    <use xlink:href="#tornillo" x="125" y="366"/>
+  </g>
+  <g>
+    <rect x="305" y="224" width="100" height="26" rx="3" fill="url(#zinc)"/>
+    <rect x="315" y="250" width="80" height="150" rx="5" fill="url(#bloque)"/>
+    <rect x="315" y="256" width="80" height="16" fill="#c9352b"/>
+    <use xlink:href="#tornillo" x="355" y="304"/>
+    <use xlink:href="#tornillo" x="355" y="366"/>
+  </g>
+</svg>

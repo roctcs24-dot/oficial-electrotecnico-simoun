@@ -1,0 +1,68 @@
+{
+  "id": "pulsador",
+  "titulo": "Pulsadores",
+  "resumen": "Mandos de marcha y parada, con contactos NA y NC.",
+  "dibujo": {
+    "svg": "res://art/equipos/pulsadores.svg",
+    "tamano": [480, 420],
+    "nota": "Arriba, frente del tablero. Abajo, bloques de contacto por detrás del tablero, en la versión típica de 22 mm. Los colores de los bloques varían según el fabricante.",
+    "etiquetas": [
+      { "texto": "I", "x": 125, "y": 90, "tam": 34, "color": "#eef3f7" },
+      { "texto": "O", "x": 355, "y": 90, "tam": 34, "color": "#eef3f7" },
+      { "texto": "MARCHA", "x": 125, "y": 177, "tam": 16 },
+      { "texto": "PARADA", "x": 355, "y": 177, "tam": 16 },
+      { "texto": "13", "x": 125, "y": 284, "tam": 14 },
+      { "texto": "14", "x": 125, "y": 346, "tam": 14 },
+      { "texto": "21", "x": 355, "y": 284, "tam": 14 },
+      { "texto": "22", "x": 355, "y": 346, "tam": 14 },
+      { "texto": "NA", "x": 208, "y": 320, "tam": 22 },
+      { "texto": "NC", "x": 272, "y": 320, "tam": 22 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Los símbolos siempre se dibujan en reposo: sin pulsar. Verificar contra la norma.",
+    "lista": ["pulsador_na", "pulsador_nc"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "Un {{pulsador}} da una orden momentánea al circuito de mando: al soltarlo, un resorte lo devuelve a reposo. No maneja la corriente del motor, sino la pequeña corriente de la bobina del contactor.\n\n• El de [b]marcha[/b] lleva un contacto {{na}}: al pulsarlo, cierra.\n• El de [b]parada[/b] lleva un contacto {{nc}}: al pulsarlo, abre."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cabeza:[/b] la parte visible, fijada al tablero con una tuerca y una junta que mantiene la protección contra el agua.\n• [b]Collar de fijación:[/b] aprieta la cabeza desde atrás y sujeta los bloques.\n• [b]Bloque de contacto:[/b] encaja por detrás. Se pueden montar varios en la misma cabeza.\n\n[b]¿Por qué la parada usa un contacto NC?[/b] Porque si se corta un cable o se afloja un borne, el circuito se abre y el motor se detiene. La falla queda del lado seguro."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "En un arranque directo, el mando va en este orden:\n\n1. 95-96 del relé térmico.\n2. Parada: 21-22 del pulsador, [b]en serie[/b].\n3. Marcha: 13-14 del pulsador, [b]en paralelo[/b] con el {{retencion}} 13-14 del contactor.\n4. Bobina A1-A2.\n\nSi hay varios puestos de mando, las paradas van en serie y las marchas en paralelo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se elige",
+      "texto": "No tiene ajustes. Se elige por:\n• Diámetro de montaje, normalmente 22 mm.\n• Tipo de contacto: NA, NC o varios bloques.\n• Grado de protección: en cubierta y sala de máquinas, el adecuado a la humedad y la sal ([i]verificar a bordo[/i]).\n• Color: IEC 60073 e IEC 60204-1 asignan significado a los colores. El rojo se reserva para parada y emergencia, y el verde suele indicar marcha ([i]verificar contra la norma[/i]).\n\nLa parada de emergencia es un dispositivo distinto: seta roja sobre fondo amarillo, con enclavamiento y contactos NC de apertura positiva."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada,[/b] con el multímetro en continuidad:\n\n• [b]NA, 13-14:[/b] sin pulsar, abierto. Pulsado, casi 0 Ω.\n• [b]NC, 21-22:[/b] sin pulsar, casi 0 Ω. Pulsado, abierto.\n\nAccione varias veces y observe que la lectura sea estable. Una lectura intermitente indica un contacto sucio o gastado."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]El motor no arranca al pulsar marcha:[/b] contacto NA oxidado, bloque suelto o cable flojo. También puede estar abierta la parada o disparado el relé térmico.\n• [b]El motor arranca solo o no para:[/b] contacto NA soldado, o cable de marcha a tierra junto con otra falla en el mando.\n• [b]El motor para sin motivo:[/b] contacto NC con mal contacto o borne flojo.\n• [b]Se sostiene solo mientras se pulsa:[/b] falta el contacto de retención del contactor.\n• [b]Entra agua:[/b] junta dañada o tuerca floja."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: prueba de funcionamiento, apriete de bornes y sujeción de bloques.\n• Cada año: estado de la junta y rotulación.\n\n[b]Correctivo:[/b] sustituya el bloque si el contacto es intermitente. No lo limpie con productos que dejen residuo sobre los contactos."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-1: aparatos de mando y elementos de conmutación.",
+    "IEC 60073 e IEC 60204-1: códigos de color de los mandos.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos."
+  ]
+}

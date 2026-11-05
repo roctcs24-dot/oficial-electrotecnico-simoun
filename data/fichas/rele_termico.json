@@ -1,0 +1,74 @@
+{
+  "id": "rele_termico",
+  "titulo": "Relé térmico",
+  "resumen": "Protege el motor contra sobrecargas y falta de fase.",
+  "dibujo": {
+    "svg": "res://art/equipos/rele_termico.svg",
+    "tamano": [360, 440],
+    "nota": "Ilustración sin marca con la disposición típica de un relé térmico de montaje directo bajo el contactor. Identifique siempre los bornes por sus marcas.",
+    "etiquetas": [
+      { "texto": "RELÉ TÉRMICO  12-18 A", "x": 180, "y": 87, "tam": 15, "color": "#20242a" },
+      { "texto": "12", "x": 88, "y": 200, "tam": 12 },
+      { "texto": "14", "x": 100, "y": 126, "tam": 12 },
+      { "texto": "16", "x": 156, "y": 126, "tam": 12 },
+      { "texto": "18", "x": 176, "y": 200, "tam": 12 },
+      { "texto": "A", "x": 204, "y": 114, "tam": 12 },
+      { "texto": "H", "x": 204, "y": 182, "tam": 12 },
+      { "texto": "RESET", "x": 260, "y": 114, "tam": 12 },
+      { "texto": "STOP", "x": 260, "y": 186, "tam": 12 },
+      { "texto": "97 NO", "x": 96, "y": 311, "tam": 13 },
+      { "texto": "98 NO", "x": 152, "y": 311, "tam": 13 },
+      { "texto": "95 NC", "x": 208, "y": 311, "tam": 13 },
+      { "texto": "96 NC", "x": 264, "y": 311, "tam": 13 },
+      { "texto": "2/T1", "x": 110, "y": 418, "tam": 14 },
+      { "texto": "4/T2", "x": 180, "y": 418, "tam": 14 },
+      { "texto": "6/T3", "x": 250, "y": 418, "tam": 14 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Los símbolos siempre se dibujan en reposo. Verificar contra la norma.",
+    "lista": ["rele_termico"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{rele_termico}} protege al motor contra la {{sobrecarga}} y la {{falta_fase}}. Mide la corriente de los tres polos y, si es excesiva durante demasiado tiempo, cambia sus contactos auxiliares.\n\n[b]No corta la potencia:[/b] al disparar, abre 95-96 y el circuito de mando suelta el contactor. Tampoco protege contra cortocircuitos: esa función corresponde al {{guardamotor}} o a los fusibles."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "Cada polo calienta una lámina bimetálica, que se dobla con la temperatura y acciona el mecanismo de disparo. El calentamiento imita al del motor: una sobrecarga pequeña tarda minutos en disparar y una grande, segundos.\n\n[b]Partes visibles:[/b]\n• Pernos de cobre que entran en los bornes 2, 4 y 6 del contactor.\n• Dial de ajuste de corriente.\n• Botón RESET (azul) y botón STOP (rojo).\n• Selector de {{rearme}} manual (H) o automático (A).\n• Testigo de disparo.\n\nLa {{clase_disparo}} indica el tiempo máximo a 7,2 veces el ajuste: clase 10 dispara entre 4 y 10 segundos ([i]IEC 60947-4-1, verificar con el fabricante[/i])."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Potencia:[/b] los pernos superiores van al contactor. Los bornes 2/T1, 4/T2 y 6/T3 van al motor.\n• [b]Mando:[/b] conecte 95-96 en serie con la bobina del contactor, de modo que el disparo la deje sin tensión.\n• [b]Señal:[/b] 97-98 cierra al disparar y se usa para una luz o alarma de disparo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta",
+      "texto": "Ajuste el dial a la corriente nominal de la placa del motor, para la tensión y conexión con que trabaja.\n\n[b]Excepción, estrella-triángulo:[/b] si el relé va en línea con el contactor principal, circula por él la corriente de devanado. Ajústelo a In ÷ √3.\n\nNo suba el ajuste para que deje de disparar: si dispara, busque la causa. Un ajuste excesivo puede quemar el motor.\n\nEl rearme manual (H) obliga a una persona a revisar antes de volver a arrancar ([i]configuración típica — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada:[/b]\n• [b]Contactos en reposo,[/b] multímetro en continuidad: 95-96 cerrado y 97-98 abierto.\n• [b]Simulación de disparo,[/b] con el botón de prueba si el modelo lo tiene: 95-96 abierto y 97-98 cerrado. Luego rearme.\n• [b]Polos:[/b] casi 0 Ω en los tres. Un polo abierto indica daño por sobrecorriente.\n\n[b]En servicio, con EPP:[/b] mida la corriente de cada fase con pinza y compárela con el ajuste."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Dispara a los pocos minutos:[/b] sobrecarga mecánica, tensión baja, falta de fase, contacto picado o ajuste por debajo de la corriente nominal.\n• [b]Dispara al arrancar:[/b] arranque demasiado largo, rotor bloqueado o clase de disparo inadecuada.\n• [b]No rearma:[/b] todavía está caliente. Espere a que se enfríe.\n• [b]Nunca dispara:[/b] ajuste demasiado alto o mecanismo agarrotado, y el motor se quema sin protección.\n• [b]Bornes recalentados:[/b] apriete insuficiente."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: apriete de bornes, limpieza y comprobación del ajuste frente a la placa.\n• Cada año: prueba de disparo y de los contactos 95-96 y 97-98.\n\n[b]Correctivo:[/b] sustituya el relé si un polo está dañado o si no dispara en la prueba. Si cambió el motor, revise de nuevo el ajuste y el rango del relé."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: contactores y arrancadores de motor, incluidas las clases de disparo.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}
