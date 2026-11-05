@@ -60,6 +60,10 @@ func ficha(id: String) -> Dictionary:
 	return leer("fichas/%s.json" % id)
 
 
+func leccion(id: String) -> Dictionary:
+	return leer("lecciones/%s.json" % id)
+
+
 func circuito(nombre: String) -> SimSimulacion:
 	var datos := leer("circuitos/%s.json" % nombre)
 	return null if datos.is_empty() else SimSimulacion.desde_dict(datos)

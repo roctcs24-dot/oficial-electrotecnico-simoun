@@ -44,6 +44,18 @@ func _etiqueta(texto: String, variante := "") -> Label:
 	return e
 
 
+func _texto_rico(bbcode: String) -> RichTextLabel:
+	var t := RichTextLabel.new()
+	t.bbcode_enabled = true
+	t.fit_content = true
+	t.scroll_active = false
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Con el filtro por defecto, el texto no dejaría arrastrar la lista con el dedo.
+	t.mouse_filter = Control.MOUSE_FILTER_PASS
+	t.text = bbcode
+	return t
+
+
 func _boton(texto: String, al_pulsar: Callable) -> Button:
 	var b := Button.new()
 	b.text = texto

@@ -203,12 +203,4 @@ func _crear_textos() -> Control:
 
 func _agregar_seccion(columna: VBoxContainer, titulo: String, texto: String) -> void:
 	columna.add_child(_etiqueta(titulo, "Subtitulo"))
-	var cuerpo := RichTextLabel.new()
-	cuerpo.bbcode_enabled = true
-	cuerpo.fit_content = true
-	cuerpo.scroll_active = false
-	cuerpo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	# Con el filtro por defecto, el texto no dejaría arrastrar la lista con el dedo.
-	cuerpo.mouse_filter = Control.MOUSE_FILTER_PASS
-	cuerpo.text = texto
-	columna.add_child(cuerpo)
+	columna.add_child(_texto_rico(texto))

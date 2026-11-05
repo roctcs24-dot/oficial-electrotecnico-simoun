@@ -30,7 +30,12 @@ func _recorrer(raiz: Raiz) -> String:
 		["aprender", {"id": 3}],
 		["ficha", {"id": "contactor"}],
 		["ficha", {"id": "contactor", "vista": "simbolos"}],
+		["aprender", {"id": 0}],
+		["glosario", {}],
 	]
+	for id: String in raiz.contenido.sistema(0)["modos"]["aprender"]["lecciones"]:
+		for n in raiz.contenido.leccion(id)["paginas"].size():
+			pasos.append(["leccion", {"id": id, "sistema": 0, "pagina": n, "respuestas": {}}])
 	for vertical in [false, true]:
 		raiz.vertical = vertical
 		raiz.reconstruir()

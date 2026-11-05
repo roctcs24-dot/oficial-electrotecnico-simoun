@@ -6,6 +6,8 @@ extends RefCounted
 const ID_JUEGO := "oficial-electrotecnico-simoun"
 const VERSION := 1
 const RUTA := "user://partida.json"
+const PUNTOS_LECCION := 20
+const PUNTOS_ACIERTO := 5
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -131,6 +133,32 @@ func marcar_ficha_vista(id: String) -> void:
 
 func ficha_vista(id: String) -> bool:
 	return datos["fichas_vistas"].has(id)
+
+
+func leccion_completada(id: String) -> bool:
+	return datos["lecciones"].has(id)
+
+
+## Conserva el mejor resultado. Los puntos solo se suman la primera vez; devuelve los ganados.
+func completar_leccion(id: String, aciertos: int, total: int) -> int:
+	var lecciones: Dictionary = datos["lecciones"]
+	var ganados := 0
+	if lecciones.has(id):
+		lecciones[id]["aciertos"] = maxi(int(lecciones[id]["aciertos"]), aciertos)
+	else:
+		ganados = PUNTOS_LECCION + PUNTOS_ACIERTO * aciertos
+		datos["puntos"] += ganados
+		lecciones[id] = {"aciertos": aciertos, "total": total}
+	guardar()
+	return ganados
+
+
+## Cada fallo alimenta el repaso de errores.
+func registrar_error(tema: String) -> void:
+	var errores: Dictionary = datos["errores"]
+	var previo: Dictionary = errores.get(tema, {"fallos": 0})
+	errores[tema] = {"fallos": int(previo["fallos"]) + 1, "ultimo": Time.get_unix_time_from_system()}
+	guardar()
 
 
 ## rangos va de menor a mayor: [{nombre, puntos}].

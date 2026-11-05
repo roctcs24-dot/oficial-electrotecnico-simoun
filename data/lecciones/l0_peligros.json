@@ -1,0 +1,72 @@
+{
+  "id": "l0_peligros",
+  "titulo": "Peligros eléctricos y EPP",
+  "resumen": "Qué le hace la corriente al cuerpo y cómo protegerte.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Lo que daña es la corriente",
+      "bloques": [
+        { "tipo": "texto", "texto": "Lo que hiere es la corriente que atraviesa el cuerpo, y la tensión es lo que la empuja. Por la ley de Ohm, con una resistencia del cuerpo de unos 1 000 Ω ([i]valor orientativo: varía mucho con la piel y la humedad[/i]), 440 V producirían unos 440 mA.\n\nCompáralo con esta escala. Los umbrales son orientativos: el daño depende de la persona, del tiempo y del recorrido por el cuerpo. La causa de muerte más típica es la {{fibrilacion}}." },
+        {
+          "tipo": "animacion",
+          "id": "escala_corriente",
+          "params": {
+            "inicial": 440,
+            "niveles": [
+              { "ma": 0.5, "texto": "Por debajo de 0,5 mA: normalmente no se siente." },
+              { "ma": 1, "texto": "Alrededor de 1 mA: hormigueo perceptible." },
+              { "ma": 10, "texto": "Unos 10 mA: dolor y contracción muscular. Puede que no logres soltar el conductor." },
+              { "ma": 30, "texto": "Unos 30 mA: riesgo de dificultad para respirar si se prolonga. Por eso los diferenciales de protección de personas actúan a este valor." },
+              { "ma": 50, "texto": "Desde unos 50 mA: riesgo de fibrilación ventricular según el tiempo de exposición." },
+              { "ma": 200, "texto": "Desde unos 200 mA: fibrilación muy probable, además de quemaduras internas." }
+            ]
+          },
+          "pie": "Valores orientativos basados en IEC 60479-1. No son límites seguros."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "corriente_cuerpo",
+          "pregunta": "Con unos 1 000 Ω de cuerpo y 440 V, ¿qué corriente circularía aproximadamente?",
+          "opciones": ["0,44 mA: apenas se siente", "44 mA: dolor fuerte", "440 mA: riesgo mortal"],
+          "correcta": 2,
+          "explicacion": "I = 440 ÷ 1 000 = 0,44 A = 440 mA, muy por encima del umbral de fibrilación."
+        }
+      ]
+    },
+    {
+      "titulo": "A bordo el riesgo es mayor",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Humedad y sal:[/b] la piel mojada baja tu resistencia y el casco de acero es un conductor enorme bajo tus pies.\n• [b]{{falla_tierra}}:[/b] en un sistema aislado no dispara nada. Una carcasa puede estar con tensión y el equipo seguir funcionando.\n• [b]{{arco_electrico}}:[/b] un cortocircuito en un tablero libera calor y presión en un instante. Puede causar quemaduras graves incluso sin tocar nada.\n• [b]{{energia_almacenada}}:[/b] los condensadores de un variador siguen cargados varios minutos después de desconectar ([i]lee el tiempo en el equipo[/i]).\n• [b]Espacios reducidos:[/b] poca salida en una sala de máquinas si algo sale mal." },
+        {
+          "tipo": "quiz",
+          "tema": "riesgo_aislado",
+          "pregunta": "En una red aislada, una carcasa de motor queda en contacto con una fase. ¿Qué es lo más probable?",
+          "opciones": ["Salta el breaker de inmediato", "El motor sigue funcionando y la falla pasa inadvertida si nadie mira el monitor de aislamiento", "El motor se detiene por seguridad"],
+          "correcta": 1,
+          "explicacion": "La primera falla a tierra no crea un camino de retorno con baja impedancia, así que no dispara. Solo el monitor de aislamiento o las lámparas de tierra la delatan."
+        }
+      ]
+    },
+    {
+      "titulo": "Equipo de protección",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{epp}} es la última barrera. No sustituye a desconectar y bloquear. Lo que corresponde depende de la tarea y del análisis de riesgo del barco:\n\n• [b]Guantes aislantes[/b] con clase adecuada a la tensión, por ejemplo clase 0 para hasta 1 000 V AC ([i]IEC 60903, verificar[/i]). Revísalos inflándolos antes de usarlos, y ponles encima los guantes protectores de cuero.\n• [b]Ropa resistente al arco y careta facial[/b] cuando hay riesgo de arco, según NFPA 70E. Nada de ropa sintética, que se derrite sobre la piel.\n• [b]Calzado de seguridad[/b] dieléctrico, seco y en buen estado.\n• [b]Sin metales:[/b] quítate anillos, reloj y cadenas.\n• [b]Instrumento adecuado:[/b] multímetro con categoría CAT III o CAT IV para la tensión, y puntas en buen estado.\n\nSi el EPP falta o está dañado, el trabajo no se hace." },
+        {
+          "tipo": "quiz",
+          "tema": "epp_ultima_barrera",
+          "pregunta": "¿Cuándo es aceptable trabajar en un equipo energizado confiando solo en los guantes?",
+          "opciones": ["Siempre que sean nuevos", "Cuando el trabajo es corto", "El EPP no sustituye a desconectar y bloquear: se trabaja sin tensión siempre que sea posible"],
+          "correcta": 2,
+          "explicacion": "El EPP protege si algo falla. La protección principal es eliminar la energía. El trabajo con tensión solo se admite con justificación y autorización expresas."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60479-1: efectos de la corriente en las personas.",
+    "NFPA 70E: seguridad eléctrica en el trabajo.",
+    "IEC 60903: guantes aislantes.",
+    "IEC 61010: categorías de medida de los instrumentos."
+  ]
+}

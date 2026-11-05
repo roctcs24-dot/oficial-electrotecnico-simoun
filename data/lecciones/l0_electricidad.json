@@ -1,0 +1,52 @@
+{
+  "id": "l0_electricidad",
+  "titulo": "Qué es la electricidad",
+  "resumen": "Voltaje, corriente y resistencia, desde cero.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Cargas en movimiento",
+      "bloques": [
+        { "tipo": "texto", "texto": "Toda la materia tiene electrones, unas partículas diminutas con carga eléctrica. En los metales, como el cobre de los cables, algunos electrones se mueven con libertad. Por eso el cobre es un buen {{conductor}}.\n\nEn un {{aislante}}, como el caucho del cable o el barniz de un motor, los electrones casi no pueden moverse. Todo el trabajo eléctrico consiste en llevar los electrones por donde queremos y mantenerlos fuera de donde no queremos, sobre todo de tu cuerpo." }
+      ]
+    },
+    {
+      "titulo": "Tres palabras básicas",
+      "bloques": [
+        { "tipo": "texto", "texto": "Imagina una tubería de agua:\n\n• El {{voltaje}} es la presión que empuja. Se mide en voltios (V).\n• La {{corriente}} es el caudal que pasa. Se mide en amperios (A).\n• La {{resistencia}} es lo angosta que es la tubería. Se mide en ohmios (Ω).\n\nSin presión no hay caudal. Con la llave cerrada tampoco, aunque la presión siga ahí. Lo mismo ocurre en un tablero abierto: un cable sin carga conectada no lleva corriente, pero [b]sigue teniendo tensión y puede matarte[/b]." },
+        {
+          "tipo": "quiz",
+          "tema": "voltaje_sin_corriente",
+          "pregunta": "Un cable conectado a la barra de 440 V no alimenta nada en este momento. ¿Es seguro tocarlo?",
+          "opciones": ["Sí, porque no pasa corriente por él", "No, porque tiene tensión aunque no lleve corriente", "Sí, si el motor está parado"],
+          "correcta": 1,
+          "explicacion": "La tensión está presente aunque no circule corriente. Tu cuerpo cerraría el camino y la corriente pasaría a través de ti."
+        }
+      ]
+    },
+    {
+      "titulo": "El circuito cerrado",
+      "bloques": [
+        { "tipo": "texto", "texto": "La corriente necesita un {{circuito}}: un camino cerrado que salga de la fuente y vuelva a ella. Si se abre en cualquier punto, deja de circular en todo el camino.\n\nMueve los controles y observa la lámpara. Los puntos representan los electrones, que van del polo negativo al positivo. En los esquemas se dibuja la corriente en sentido contrario, por una convención histórica." },
+        {
+          "tipo": "animacion",
+          "id": "circuito_ohm",
+          "params": { "v_min": 0, "v_max": 24, "v": 12, "r_min": 2, "r_max": 24, "r": 6, "potencia": false },
+          "pie": "Más voltaje empuja más corriente. Más resistencia la frena."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "circuito_abierto",
+          "pregunta": "En un circuito de una lámpara, se abre un contacto antes de la lámpara. ¿Qué pasa con la corriente después de la lámpara?",
+          "opciones": ["Sigue circulando normalmente", "Se reduce a la mitad", "Deja de circular en todo el circuito"],
+          "correcta": 2,
+          "explicacion": "En un camino único, la corriente es la misma en todos los puntos. Al abrirlo en un lugar, se detiene en todo el recorrido."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Convenio STCW, sección A-III/6: competencias del oficial electrotécnico.",
+    "IEC 60050: vocabulario electrotécnico internacional."
+  ]
+}

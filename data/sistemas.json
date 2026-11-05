@@ -13,7 +13,9 @@
       "resumen": "Desde qué es un voltio hasta bloqueo y etiquetado, y seguridad con amoníaco.",
       "estado": "activo",
       "zona": [575, 124, 210, 44],
-      "modos": {}
+      "modos": {
+        "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto"] }
+      }
     },
     {
       "id": 1,

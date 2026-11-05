@@ -32,6 +32,11 @@ static func expandir(texto: String, glosario: Dictionary, vistos: Dictionary) ->
 	return resultado + texto.substr(cursor)
 
 
+## Número con coma decimal, como se escribe en español.
+static func numero(valor: float, decimales := 0) -> String:
+	return String.num(valor, decimales).pad_decimals(decimales).replace(".", ",")
+
+
 ## Ids usados en un texto, para validar que todos existen en el glosario.
 static func terminos(texto: String) -> Array[String]:
 	var lista: Array[String] = []

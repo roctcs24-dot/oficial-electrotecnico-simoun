@@ -1,0 +1,52 @@
+{
+  "id": "l0_alterna",
+  "titulo": "Corriente continua y alterna",
+  "resumen": "Frecuencia, valor eficaz y por qué 440 V llegan a 622 V.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Dos tipos de corriente",
+      "bloques": [
+        { "tipo": "texto", "texto": "En la {{cc}} los electrones avanzan siempre en el mismo sentido. La dan las baterías y las fuentes: a bordo, por ejemplo, los 24 V DC de alarmas y emergencia ([i]valor típico — verificar a bordo[/i]).\n\nEn la {{ca}} los electrones van y vienen sin parar. La producen los generadores del barco, porque es fácil de cambiar de tensión con transformadores y mueve motores muy sencillos y robustos." },
+        {
+          "tipo": "animacion",
+          "id": "onda_alterna",
+          "params": { "v_rms": 110 },
+          "pie": "Animación en cámara lenta. La onda real completa 60 ciclos cada segundo."
+        }
+      ]
+    },
+    {
+      "titulo": "Frecuencia",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{frecuencia}} es el número de ciclos completos por segundo, en hercios (Hz). La red del Vía Simoun es de 60 Hz: cada ciclo dura 1 ÷ 60 ≈ 16,7 milisegundos.\n\nLa frecuencia importa porque fija la velocidad de los motores. Un motor de 50 Hz en una red de 60 Hz gira un 20 % más rápido, y una bomba puede sobrecargarse. Si ves una placa que indica otra frecuencia, consulta antes de conectar." },
+        {
+          "tipo": "quiz",
+          "tema": "frecuencia",
+          "pregunta": "¿Qué significa que la red sea de 60 Hz?",
+          "opciones": ["Que hay 60 V entre las fases", "Que la onda completa 60 ciclos cada segundo", "Que el motor gira a 60 vueltas por minuto"],
+          "correcta": 1,
+          "explicacion": "Hercio significa ciclo por segundo. La velocidad de un motor depende de ella, pero no es lo mismo."
+        }
+      ]
+    },
+    {
+      "titulo": "Valor eficaz y valor de pico",
+      "bloques": [
+        { "tipo": "texto", "texto": "Como la tensión alterna cambia a cada instante, se resume con un solo número: el {{valor_eficaz}}. Es la tensión continua que produciría el mismo calor. Es lo que indican las placas y lo que lee tu multímetro.\n\nEl {{valor_pico}} es el máximo real de la onda:\n\n[center][b]V pico = V eficaz × √2[/b][/center]\n\nLos 440 V de la red llegan a 622 V en cada pico, y por eso el aislamiento de los cables y de los guantes debe soportar más que los 440 V nominales." },
+        {
+          "tipo": "quiz",
+          "tema": "valor_pico",
+          "pregunta": "El multímetro lee 110 V AC. ¿Cuál es aproximadamente el pico de esa onda?",
+          "opciones": ["78 V", "110 V", "156 V", "220 V"],
+          "correcta": 2,
+          "explicacion": "110 × √2 = 110 × 1,414 ≈ 156 V. El multímetro muestra el valor eficaz, no el pico."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050: vocabulario electrotécnico internacional.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

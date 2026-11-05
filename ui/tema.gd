@@ -12,9 +12,11 @@ const APAGADO := Color("7e93a3")
 const PAPEL := Color("eef1ec")
 const TINTA := Color("20242a")
 const AVISO := Color("7a2e22")
+const ACIERTO := Color("23804a")
+const FALLO := Color("a8352a")
 
 
-static func _caja(color: Color, radio := 8, margen_x := 14, margen_y := 13) -> StyleBoxFlat:
+static func caja(color: Color, radio := 8, margen_x := 14, margen_y := 13) -> StyleBoxFlat:
 	var c := StyleBoxFlat.new()
 	c.bg_color = color
 	c.set_corner_radius_all(radio)
@@ -38,11 +40,11 @@ static func crear() -> Theme:
 	t.set_font_size("font_size", "Nota", 15)
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
 
-	t.set_stylebox("normal", "Button", _caja(PANEL_CLARO))
-	t.set_stylebox("hover", "Button", _caja(PANEL_CLARO.lightened(0.12)))
-	t.set_stylebox("pressed", "Button", _caja(ACENTO))
-	t.set_stylebox("hover_pressed", "Button", _caja(ACENTO.lightened(0.1)))
-	t.set_stylebox("disabled", "Button", _caja(PANEL))
+	t.set_stylebox("normal", "Button", caja(PANEL_CLARO))
+	t.set_stylebox("hover", "Button", caja(PANEL_CLARO.lightened(0.12)))
+	t.set_stylebox("pressed", "Button", caja(ACENTO))
+	t.set_stylebox("hover_pressed", "Button", caja(ACENTO.lightened(0.1)))
+	t.set_stylebox("disabled", "Button", caja(PANEL))
 	t.set_stylebox("focus", "Button", StyleBoxEmpty.new())
 	t.set_color("font_color", "Button", TEXTO)
 	t.set_color("font_hover_color", "Button", TEXTO)
@@ -51,11 +53,11 @@ static func crear() -> Theme:
 	t.set_color("font_hover_pressed_color", "Button", FONDO)
 	t.set_color("font_disabled_color", "Button", TEXTO_SUAVE.darkened(0.15))
 
-	t.set_stylebox("panel", "PanelContainer", _caja(PANEL, 10, 12, 12))
+	t.set_stylebox("panel", "PanelContainer", caja(PANEL, 10, 12, 12))
 	t.set_type_variation("Papel", "PanelContainer")
-	t.set_stylebox("panel", "Papel", _caja(PAPEL, 10, 10, 10))
+	t.set_stylebox("panel", "Papel", caja(PAPEL, 10, 10, 10))
 	t.set_type_variation("Aviso", "PanelContainer")
-	t.set_stylebox("panel", "Aviso", _caja(AVISO, 8, 12, 8))
+	t.set_stylebox("panel", "Aviso", caja(AVISO, 8, 12, 8))
 
 	t.set_color("default_color", "RichTextLabel", TEXTO)
 	for clave in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]:

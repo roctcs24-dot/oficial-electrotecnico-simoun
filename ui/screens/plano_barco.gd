@@ -56,6 +56,7 @@ func construir() -> void:
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.disabled = not activo
 		botones.add_child(b)
+	botones.add_child(_boton("Glosario español-inglés", raiz.ir_a.bind("glosario")))
 
 
 func _resumen_barco(barco: Dictionary) -> String:

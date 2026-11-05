@@ -1,9 +1,10 @@
 extends SceneTree
 ## Guarda imágenes de las pantallas tal como las dibuja el juego, para revisarlas:
-##   godot --path . --script res://tests/capturar.gd -- <carpeta de salida>
+##   godot --path . --script res://tests/capturar.gd -- <carpeta de salida> [lecciones]
 ## No usa --headless porque necesita dibujar. Se excluye de las versiones exportadas.
 
 const TAMANOS := [Vector2i(1280, 720), Vector2i(432, 960), Vector2i(960, 432)]
+const TAMANOS_LECCIONES := [Vector2i(432, 960), Vector2i(1280, 720)]
 
 var _empezado := false
 
@@ -21,6 +22,14 @@ func _capturar() -> void:
 	var raiz: Raiz = load("res://ui/raiz.tscn").instantiate()
 	raiz.ruta_partida = "user://pruebas_capturas.json"
 	root.add_child(raiz)
+	if argumentos.size() > 1 and argumentos[1] == "lecciones":
+		await _capturar_lecciones(raiz, carpeta)
+	else:
+		await _capturar_general(raiz, carpeta)
+	quit()
+
+
+func _capturar_general(raiz: Raiz, carpeta: String) -> void:
 	for tam: Vector2i in TAMANOS:
 		root.size = tam
 		await _esperar()
@@ -37,7 +46,23 @@ func _capturar() -> void:
 		raiz.ir_a("ficha", {"id": "contactor", "vista": "simbolos"})
 		await _guardar(carpeta, "simbolos", tam)
 		raiz.volver()
-	quit()
+
+
+func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS_LECCIONES:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("aprender", {"id": 0})
+		await _guardar(carpeta, "aprender", tam)
+		raiz.volver()
+		raiz.ir_a("glosario")
+		await _guardar(carpeta, "glosario", tam)
+		raiz.volver()
+		for id: String in raiz.contenido.sistema(0)["modos"]["aprender"]["lecciones"]:
+			for n in raiz.contenido.leccion(id)["paginas"].size():
+				raiz.ir_a("leccion", {"id": id, "sistema": 0, "pagina": n, "respuestas": {}})
+				await _guardar(carpeta, "%s_%d" % [id, n], tam)
+				raiz.volver()
 
 
 func _esperar() -> void:

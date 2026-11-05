@@ -122,6 +122,24 @@ func test_partida_antigua_recibe_los_apartados_nuevos() -> String:
 	])
 
 
+func test_lecciones_y_errores_sobreviven_al_guardado() -> String:
+	var ruta := _ruta_limpia("avance.json")
+	var p := Partida.new(ruta)
+	var ganados := p.completar_leccion("a", 2, 3)
+	var repetida := p.completar_leccion("a", 3, 3)
+	p.registrar_error("tema")
+	p.registrar_error("tema")
+	var q := Partida.new(ruta)
+	q.cargar()
+	return A.primero([
+		A.cierto(ganados == 30, "20 + 2 aciertos: %d" % ganados),
+		A.cierto(repetida == 0, "repetir no debe sumar: %d" % repetida),
+		A.cierto(q.datos["puntos"] == 30, "los puntos deben guardarse"),
+		A.cierto(int(q.datos["lecciones"]["a"]["aciertos"]) == 3, "debe conservar el mejor resultado"),
+		A.cierto(int(q.datos["errores"]["tema"]["fallos"]) == 2, "debe contar los fallos"),
+	])
+
+
 func test_rangos_segun_puntos() -> String:
 	var rangos := [{"nombre": "Cadete", "puntos": 0}, {"nombre": "3ra", "puntos": 500}]
 	var p := Partida.new(_ruta_limpia("rango.json"))

@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 2**, plano del barco navegable, guardado de partida y ficha de muestra del contactor. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 3**, 6 lecciones de fundamentos y seguridad con animaciones y preguntas, glosario, plano del barco, guardado de partida y ficha de muestra del contactor. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo.
 
@@ -81,11 +81,45 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 | `tests/` | Pruebas sin pantalla y captura de pantallas |
 | `tools/` | Ejecutor de pruebas con límite de tiempo |
 
-Para corregir un dato del barco, edita `data/barco_via_simoun.json` y vuelve a exportar. No hace falta tocar código. El formato de las lecciones y cómo añadir nuevas se documentará aquí en la etapa 3.
+Para corregir un dato del barco, edita `data/barco_via_simoun.json` y vuelve a exportar. No hace falta tocar código.
 
 ## Contenido
 
 **Sistemas:** `data/sistemas.json` define cada sistema, su `estado` (`activo` o `proximamente`), su `zona` en el plano y sus `modos`.
+
+**Lecciones:** para añadir una, crea `data/lecciones/<id>.json` y añade su id a `modos.aprender.lecciones` del sistema, en el orden deseado. Las pruebas validan que esté bien formada. Debe durar de 3 a 5 minutos y tener al menos una pregunta:
+
+```json
+{
+  "id": "l0_ejemplo",
+  "titulo": "Título",
+  "resumen": "Una línea para la lista.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Título de la página",
+      "bloques": [
+        { "tipo": "texto", "texto": "Admite [b]negrita[/b] y términos como {{voltaje}}." },
+        { "tipo": "animacion", "id": "circuito_ohm", "params": {}, "pie": "Texto opcional." },
+        { "tipo": "imagen", "svg": "res://art/seguridad/loto.svg", "tamano": [420, 360], "etiquetas": [], "pie": "Texto opcional." },
+        {
+          "tipo": "quiz", "tema": "id_unico_para_el_repaso", "pregunta": "¿...?",
+          "opciones": ["A", "B", "C"], "correcta": 1, "explicacion": "Por qué."
+        },
+        {
+          "tipo": "ordenar", "tema": "otro_id_unico", "pregunta": "Toca en orden:",
+          "pasos": ["Primero", "Segundo", "Tercero"], "explicacion": "Por qué."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": ["Norma o fuente de referencia."]
+}
+```
+
+Los pasos de `ordenar` se escriben en su orden correcto: el juego los mezcla. No se puede avanzar de página sin contestar, y los fallos se guardan por `tema` para el repaso.
+
+Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fasores`, `estrella` y `escala_corriente`. Para crear otra, añade `<id>.gd` heredando de `Animacion`.
 
 **Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
 

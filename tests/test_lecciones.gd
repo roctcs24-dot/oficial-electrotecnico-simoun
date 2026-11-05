@@ -1,0 +1,290 @@
+extends RefCounted
+## Lecciones y glosario: estructura del contenido, cálculos de las animaciones y recorrido.
+
+const A := preload("res://tests/ayuda_sim.gd")
+const TIPOS := ["texto", "animacion", "imagen", "quiz", "ordenar"]
+const RUTA_PARTIDA := "user://pruebas_lecciones.json"
+const Ohm := preload("res://ui/animaciones/circuito_ohm.gd")
+const Onda := preload("res://ui/animaciones/onda_alterna.gd")
+const Fasores := preload("res://ui/animaciones/fasores.gd")
+const Estrella := preload("res://ui/animaciones/estrella.gd")
+const Escala := preload("res://ui/animaciones/escala_corriente.gd")
+const Glosario := preload("res://ui/screens/glosario.gd")
+
+
+func _lecciones() -> Array[Dictionary]:
+	var c := Contenido.new()
+	var lista: Array[Dictionary] = []
+	for f in DirAccess.get_files_at("res://data/lecciones"):
+		if f.ends_with(".json"):
+			lista.append(c.leccion(f.get_basename()))
+	return lista
+
+
+func _validar_bloque(id: String, b: Dictionary, glosario: Dictionary, temas: Dictionary) -> String:
+	if not b["tipo"] in TIPOS:
+		return "%s: tipo desconocido %s" % [id, b["tipo"]]
+	match b["tipo"]:
+		"texto":
+			for t in TextoTecnico.terminos(b["texto"]):
+				if not glosario.has(t):
+					return "%s usa un término fuera del glosario: %s" % [id, t]
+		"animacion":
+			if not FileAccess.file_exists("res://ui/animaciones/%s.gd" % b["id"]):
+				return "%s: no existe la animación %s" % [id, b["id"]]
+		"imagen":
+			if VistaSvg.rasterizar(b["svg"], 0.5) == null:
+				return "%s: no se puede dibujar %s" % [id, b["svg"]]
+		"quiz", "ordenar":
+			if temas.has(b["tema"]):
+				return "tema repetido, el repaso los mezclaría: %s" % b["tema"]
+			temas[b["tema"]] = true
+			if b["explicacion"].is_empty():
+				return "%s: la pregunta %s no explica la respuesta" % [id, b["tema"]]
+			if JSON.stringify(b).contains("{{"):
+				return "%s: los términos {{ }} solo se usan en los textos" % id
+			if b["tipo"] == "quiz" and not (int(b["correcta"]) >= 0 and int(b["correcta"]) < b["opciones"].size()):
+				return "%s: la respuesta de %s no existe" % [id, b["tema"]]
+			if b["tipo"] == "quiz" and b["opciones"].size() < 2:
+				return "%s: %s necesita al menos dos opciones" % [id, b["tema"]]
+			if b["tipo"] == "ordenar" and b["pasos"].size() < 3:
+				return "%s: %s necesita al menos tres pasos" % [id, b["tema"]]
+	return ""
+
+
+func test_lecciones_bien_formadas() -> String:
+	var c := Contenido.new()
+	var glosario := c.glosario()
+	var temas := {}
+	var lista := _lecciones()
+	if lista.size() < 6:
+		return "deben existir las 6 lecciones de fundamentos: hay %d" % lista.size()
+	for l in lista:
+		if l.get("para_saber_mas", []).is_empty():
+			return "%s no tiene Para saber más" % l["id"]
+		if int(l["minutos"]) < 3 or int(l["minutos"]) > 5:
+			return "%s debe durar de 3 a 5 minutos" % l["id"]
+		var preguntas := 0
+		for p: Dictionary in l["paginas"]:
+			for b: Dictionary in p["bloques"]:
+				var motivo := _validar_bloque(l["id"], b, glosario, temas)
+				if not motivo.is_empty():
+					return motivo
+				if b["tipo"] in ["quiz", "ordenar"]:
+					preguntas += 1
+		if preguntas == 0:
+			return "%s no comprueba nada: debe tener preguntas" % l["id"]
+	return "; ".join(c.errores)
+
+
+func test_todas_las_lecciones_estan_publicadas() -> String:
+	var c := Contenido.new()
+	var publicadas: Array = c.sistema(0)["modos"]["aprender"]["lecciones"]
+	for l in _lecciones():
+		if not publicadas.has(l["id"]):
+			return "%s no aparece en ningún sistema" % l["id"]
+	return ""
+
+
+func test_glosario_completo() -> String:
+	var terminos := Contenido.new().glosario()
+	for id: String in terminos:
+		for campo in ["es", "en", "def"]:
+			if terminos[id].get(campo, "").is_empty():
+				return "al término %s le falta %s" % [id, campo]
+	return ""
+
+
+func test_buscar_en_el_glosario() -> String:
+	var t := {"es": "tensión de línea", "en": "line voltage"}
+	return A.primero([
+		A.cierto(Glosario.coincide(t, "tension"), "debe ignorar la tilde"),
+		A.cierto(Glosario.coincide(t, "TENSIÓN"), "debe ignorar las mayúsculas"),
+		A.cierto(Glosario.coincide(t, "voltage"), "debe buscar en inglés"),
+		A.cierto(Glosario.coincide(t, "  "), "sin búsqueda debe mostrarlo"),
+		A.cierto(not Glosario.coincide(t, "contactor"), "no debe coincidir con otro término"),
+	])
+
+
+func test_calculos_de_ley_de_ohm() -> String:
+	return A.primero([
+		A.cerca(Ohm.corriente(440.0, 22.0), 20.0, 0.001, "I = V / R"),
+		A.cerca(Ohm.potencia(24.0, 4.8), 120.0, 0.001, "P = V * I"),
+		A.cierto(Ohm.corriente(24.0, 0.0) == 0.0, "sin resistencia no debe dividir entre cero"),
+	])
+
+
+func test_valor_de_pico() -> String:
+	return A.primero([
+		A.cerca(Onda.valor_pico(110.0), 155.56, 0.001, "pico de 110 V"),
+		A.cerca(Onda.valor_pico(440.0), 622.25, 0.001, "pico de 440 V"),
+	])
+
+
+func test_las_tres_fases_suman_cero() -> String:
+	for grados in [0.0, 17.0, 90.0, 133.0, 250.0]:
+		var a := deg_to_rad(grados)
+		var suma := Fasores.valor_fase(0, a) + Fasores.valor_fase(1, a) + Fasores.valor_fase(2, a)
+		if absf(suma) > 1e-9:
+			return "a %s° suman %f" % [grados, suma]
+	return ""
+
+
+func test_estrella_lee_del_motor_de_simulacion() -> String:
+	var e: Node = Estrella.new()
+	e.iniciar({}, Contenido.new())
+	var linea: float = e.lectura("L1", "L2")
+	var fase: float = e.lectura("L1", "N")
+	e.free()
+	return A.primero([
+		A.cerca(linea, 440.0, 0.001, "tensión de línea"),
+		A.cerca(fase, 254.03, 0.001, "tensión de fase"),
+	])
+
+
+func test_escala_de_corriente_escoge_el_nivel() -> String:
+	var niveles := [{"ma": 1, "texto": "a"}, {"ma": 50, "texto": "b"}, {"ma": 200, "texto": "c"}]
+	return A.primero([
+		A.cierto(Escala.efecto_de(niveles, 0.5) == "a", "por debajo del primer nivel"),
+		A.cierto(Escala.efecto_de(niveles, 60.0) == "b", "entre niveles"),
+		A.cierto(Escala.efecto_de(niveles, 440.0) == "c", "por encima del último"),
+	])
+
+
+func test_numero_con_coma_decimal() -> String:
+	return A.primero([
+		A.cierto(TextoTecnico.numero(2.5, 2) == "2,50", "2,50: %s" % TextoTecnico.numero(2.5, 2)),
+		A.cierto(TextoTecnico.numero(254.03, 0) == "254", "254: %s" % TextoTecnico.numero(254.03, 0)),
+	])
+
+
+func _crear_raiz() -> Raiz:
+	for sufijo in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(RUTA_PARTIDA + sufijo):
+			DirAccess.remove_absolute(RUTA_PARTIDA + sufijo)
+	var raiz: Raiz = load("res://ui/raiz.tscn").instantiate()
+	raiz.ruta_partida = RUTA_PARTIDA
+	(Engine.get_main_loop() as SceneTree).root.add_child(raiz)
+	return raiz
+
+
+func _buscar(nodo: Node, clase: Variant) -> Array:
+	var lista := []
+	if is_instance_of(nodo, clase):
+		lista.append(nodo)
+	for hijo in nodo.get_children():
+		lista.append_array(_buscar(hijo, clase))
+	return lista
+
+
+## Completa la lección entera. fallar responde mal todas las preguntas tipo test.
+func _completar(raiz: Raiz, id: String, fallar: bool) -> void:
+	raiz.ir_a("leccion", {"id": id, "sistema": 0})
+	var datos := raiz.contenido.leccion(id)
+	for n in datos["paginas"].size():
+		var p = raiz.pantalla_actual()
+		for quiz: BloqueQuiz in _buscar(p, BloqueQuiz):
+			var correcta := int(quiz._datos["correcta"])
+			quiz.elegir((correcta + 1) % quiz._botones.size() if fallar else correcta)
+		for ordenar: BloqueOrdenar in _buscar(p, BloqueOrdenar):
+			for paso: String in ordenar._datos["pasos"]:
+				for b: Button in ordenar._pendientes.get_children():
+					if b.text == paso:
+						b.pressed.emit()
+						break
+		p.ir_a_pagina(n + 1)
+
+
+func test_no_se_avanza_sin_responder() -> String:
+	var raiz := _crear_raiz()
+	raiz.ir_a("leccion", {"id": "l0_electricidad", "sistema": 0})
+	var p = raiz.pantalla_actual()
+	var sin_preguntas: bool = p.pagina_resuelta()
+	p.ir_a_pagina(1)
+	p = raiz.pantalla_actual()
+	var antes: bool = p.pagina_resuelta()
+	var quiz: BloqueQuiz = _buscar(p, BloqueQuiz)[0]
+	quiz.elegir(int(quiz._datos["correcta"]))
+	var despues: bool = p.pagina_resuelta()
+	raiz.free()
+	return A.primero([
+		A.cierto(sin_preguntas, "una página sin preguntas no debe bloquear"),
+		A.cierto(not antes, "no debe avanzar sin responder"),
+		A.cierto(despues, "debe avanzar al responder"),
+	])
+
+
+func test_respuesta_se_conserva_al_girar() -> String:
+	var raiz := _crear_raiz()
+	raiz.ir_a("leccion", {"id": "l0_electricidad", "sistema": 0})
+	raiz.pantalla_actual().ir_a_pagina(1)
+	var quiz: BloqueQuiz = _buscar(raiz.pantalla_actual(), BloqueQuiz)[0]
+	quiz.elegir(0)
+	raiz.vertical = not raiz.vertical
+	raiz.reconstruir()
+	var rehecho: BloqueQuiz = _buscar(raiz.pantalla_actual(), BloqueQuiz)[0]
+	var resuelta: bool = raiz.pantalla_actual().pagina_resuelta()
+	var bloqueado := rehecho._botones[0].disabled
+	raiz.free()
+	return A.primero([
+		A.cierto(resuelta, "debe seguir contestada"),
+		A.cierto(bloqueado, "no debe poder responderse de nuevo"),
+	])
+
+
+func test_completar_suma_puntos_una_sola_vez() -> String:
+	var raiz := _crear_raiz()
+	_completar(raiz, "l0_electricidad", false)
+	var puntos: int = raiz.partida.datos["puntos"]
+	var completada := raiz.partida.leccion_completada("l0_electricidad")
+	raiz.volver()
+	_completar(raiz, "l0_electricidad", false)
+	var segunda: int = raiz.partida.datos["puntos"]
+	raiz.free()
+	return A.primero([
+		A.cierto(completada, "debe quedar completada"),
+		A.cierto(puntos == 30, "20 de la lección y 5 por cada uno de los 2 aciertos: %d" % puntos),
+		A.cierto(segunda == puntos, "repetirla no debe sumar más: %d" % segunda),
+	])
+
+
+func test_los_fallos_quedan_para_el_repaso() -> String:
+	var raiz := _crear_raiz()
+	_completar(raiz, "l0_electricidad", true)
+	var errores: Dictionary = raiz.partida.datos["errores"]
+	var resultado: Dictionary = raiz.partida.datos["lecciones"]["l0_electricidad"]
+	var p := Partida.new(RUTA_PARTIDA)
+	p.cargar()
+	raiz.free()
+	return A.primero([
+		A.cierto(errores.has("voltaje_sin_corriente"), "debe anotar el tema fallado"),
+		A.cierto(int(resultado["aciertos"]) == 0, "no debe contar aciertos"),
+		A.cierto(p.datos["errores"].has("circuito_abierto"), "debe quedar guardado en disco"),
+	])
+
+
+func test_ordenar_cuenta_los_errores() -> String:
+	var raiz := _crear_raiz()
+	raiz.ir_a("leccion", {"id": "l0_loto", "sistema": 0})
+	raiz.pantalla_actual().ir_a_pagina(1)
+	var o: BloqueOrdenar = _buscar(raiz.pantalla_actual(), BloqueOrdenar)[0]
+	var pasos: Array = o._datos["pasos"]
+	for b: Button in o._pendientes.get_children():
+		if b.text == pasos[4]:
+			b.pressed.emit()
+			break
+	var aviso := not o._aviso.text.is_empty()
+	var sin_avance := o._siguiente == 0
+	for paso: String in pasos:
+		for b: Button in o._pendientes.get_children():
+			if b.text == paso:
+				b.pressed.emit()
+				break
+	var fin: bool = raiz.pantalla_actual().pagina_resuelta()
+	var anotado: bool = raiz.partida.datos["errores"].has("cinco_reglas")
+	raiz.free()
+	return A.primero([
+		A.cierto(aviso and sin_avance, "un toque equivocado no debe avanzar"),
+		A.cierto(fin, "debe poder terminarse"),
+		A.cierto(anotado, "el error debe quedar para el repaso"),
+	])

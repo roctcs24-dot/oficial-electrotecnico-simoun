@@ -1,0 +1,66 @@
+{
+  "id": "l0_ohm_potencia",
+  "titulo": "Ley de Ohm y potencia",
+  "resumen": "Las dos fórmulas que usarás todos los días.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La ley de Ohm",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{ley_ohm}} une las tres magnitudes:\n\n[center][b]V = I × R[/b][/center]\n\n• Tensión: V = I × R\n• Corriente: I = V ÷ R\n• Resistencia: R = V ÷ I\n\n[b]Ejemplo:[/b] una lámpara piloto de 4 000 Ω en un mando de 110 V ([i]valor típico — verificar a bordo[/i]) deja pasar I = 110 ÷ 4 000 = 0,0275 A, es decir 27,5 mA." },
+        {
+          "tipo": "animacion",
+          "id": "circuito_ohm",
+          "params": { "v_min": 0, "v_max": 110, "v": 24, "r_min": 2, "r_max": 200, "r": 12, "potencia": false },
+          "pie": "Comprueba la fórmula: elige una tensión y una resistencia, y calcula antes de mirar el resultado."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ohm_corriente",
+          "pregunta": "Una resistencia de 22 Ω se conecta a 440 V. ¿Qué corriente circula?",
+          "opciones": ["2 A", "20 A", "220 A", "9 680 A"],
+          "correcta": 1,
+          "explicacion": "I = V ÷ R = 440 ÷ 22 = 20 A."
+        }
+      ]
+    },
+    {
+      "titulo": "Cortocircuito",
+      "bloques": [
+        { "tipo": "texto", "texto": "¿Qué pasa si la resistencia casi desaparece? Según I = V ÷ R, la corriente se dispara. Eso es un {{cortocircuito}}.\n\nCon 440 V y solo 0,02 Ω en el camino, la cuenta da I = 440 ÷ 0,02 = 22 000 A. El cobre se funde en un instante y aparece un arco. Por eso las protecciones deben abrir de inmediato, y por eso una herramienta olvidada sobre una barra es tan peligrosa." },
+        {
+          "tipo": "quiz",
+          "tema": "cortocircuito",
+          "pregunta": "¿Qué caracteriza a un cortocircuito?",
+          "opciones": ["Mucha resistencia y poca corriente", "Casi nada de resistencia y una corriente enorme", "Falta de tensión en todo el barco"],
+          "correcta": 1,
+          "explicacion": "Sin resistencia que la limite, la corriente solo queda limitada por la capacidad de la red. Por eso destruye equipos en milisegundos."
+        }
+      ]
+    },
+    {
+      "titulo": "Potencia y energía",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{potencia}} dice cuánto trabajo hace la electricidad cada segundo:\n\n[center][b]P = V × I[/b][/center]\n\nSe mide en vatios (W), y 1 kW son 1 000 W. Esta fórmula sirve tal cual en corriente continua y con cargas puramente resistivas. Los motores trifásicos tienen su propia fórmula, que verás más adelante.\n\nLa {{energia}} es la potencia mantenida en el tiempo: 15 kW durante 2 horas son 30 kWh. Esa energía la paga el barco en combustible.\n\nMueve los controles: la lámpara brilla según su potencia." },
+        {
+          "tipo": "animacion",
+          "id": "circuito_ohm",
+          "params": { "v_min": 0, "v_max": 24, "v": 24, "r_min": 2, "r_max": 24, "r": 12, "potencia": true },
+          "pie": "Toda la potencia que consume una resistencia se convierte en calor. Por eso un borne flojo, con resistencia alta, se calienta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "potencia_cc",
+          "pregunta": "Un equipo de 24 V DC consume 5 A. ¿Qué potencia consume?",
+          "opciones": ["4,8 W", "29 W", "120 W", "240 W"],
+          "correcta": 2,
+          "explicacion": "P = V × I = 24 × 5 = 120 W."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050: vocabulario electrotécnico internacional.",
+    "Convenio STCW, sección A-III/6: competencias del oficial electrotécnico."
+  ]
+}
