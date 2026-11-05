@@ -27,6 +27,12 @@ static func tipos() -> Dictionary:
 		"resistencia": SimResistencia,
 		"motor_trifasico": SimMotorTrifasico,
 		"masa": SimMasa,
+		"generador": SimGenerador,
+		"interruptor_generador": SimInterruptorGenerador,
+		"barras": SimBarras,
+		"carga_trifasica": SimCargaTrifasica,
+		"sincronoscopio": SimSincronoscopio,
+		"monitor_aislamiento": SimMonitorAislamiento,
 	}
 
 
@@ -90,7 +96,25 @@ func resolver(dc := false, extra := Callable()) -> SimSolver.Solucion:
 	return SimSolver.resolver(e)
 
 
+## Divide el paso si algún componente, como un generador, necesita pasos más cortos.
 func paso(dt := PASO_S) -> void:
+	var limite := INF
+	for c: SimComponente in componentes.values():
+		limite = minf(limite, c.paso_maximo())
+	var partes := maxi(int(ceil(dt / limite - 1e-6)), 1)
+	for _i in partes:
+		_paso(dt / partes)
+
+
+## Momento del último evento de un tipo, o -1 si no ocurrió.
+func tiempo_ultimo(tipo: String) -> float:
+	for i in range(eventos.size() - 1, -1, -1):
+		if eventos[i]["tipo"] == tipo:
+			return eventos[i]["t"]
+	return -1.0
+
+
+func _paso(dt: float) -> void:
 	_asentar()
 	for c: SimComponente in componentes.values():
 		c.avanzar(dt, solucion)

@@ -16,7 +16,7 @@ func tipo() -> String:
 
 
 func _params_por_defecto() -> Dictionary:
-	return {"v_linea": 440.0, "f_hz": 60.0, "r": 0.005, "x": 0.02, "neutro_mohm": 1.0, "i_disparo_a": 3000.0}
+	return {"v_linea": 440.0, "f_hz": 60.0, "r": 0.005, "x": 0.02, "neutro_mohm": 1.0, "i_disparo_a": 3000.0, "secuencia": "directa"}
 
 
 func _estado_inicial() -> Dictionary:
@@ -38,7 +38,13 @@ func _v_fase() -> float:
 func estampar(e: SimEstampa) -> void:
 	e.impedancia(n("N"), SimSolver.TIERRA, params["neutro_mohm"] * 1e6)
 	for fase: String in ANGULOS:
-		e.fuente(n(fase), n("N"), Cx.polar(_v_fase(), ANGULOS[fase]), params["r"], params["x"])
+		e.fuente(n(fase), n("N"), Cx.polar(_v_fase(), _angulo(fase)), params["r"], params["x"])
+
+
+## Con la secuencia inversa, como una toma de tierra mal conectada, L2 y L3 se intercambian.
+func _angulo(fase: String) -> float:
+	var a: float = ANGULOS[fase]
+	return -a if params["secuencia"] == "inversa" else a
 
 
 func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
@@ -48,7 +54,7 @@ func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 	var z := Cx.new(params["r"], params["x"])
 	var maxima := 0.0
 	for fase: String in ANGULOS:
-		var caida := Cx.polar(_v_fase(), ANGULOS[fase]).menos(sol.entre(n(fase), n("N")))
+		var caida := Cx.polar(_v_fase(), _angulo(fase)).menos(sol.entre(n(fase), n("N")))
 		maxima = maxf(maxima, caida.entre(z).modulo())
 	if maxima <= params["i_disparo_a"]:
 		_sobrecorriente_s = 0.0

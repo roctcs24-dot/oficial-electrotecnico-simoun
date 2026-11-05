@@ -207,4 +207,17 @@ Los circuitos son JSON con `componentes` y `cables`, igual que lo que se guarda 
 
 El motor es un modelo simplificado para enseñar, no para dimensionar. Sus parámetros salen de la placa de datos y de valores típicos, que hay que verificar a bordo.
 
-Para añadir un componente, crea una clase que herede de `SimComponente` en `sim/components/`, regístrala en `SimSimulacion._tipos()` y añade sus pruebas.
+Para añadir un componente, crea una clase que herede de `SimComponente` en `sim/components/`, regístrala en `SimSimulacion.tipos()` y añade sus pruebas.
+
+**Generación (v2, en desarrollo):**
+
+- **Generador** (`generador`): fuerza electromotriz con su propia frecuencia y ángulo detrás de una reactancia. Lleva gobernador con estatismo o isócrono, y AVR con estatismo de reactiva.
+- **Interruptor de generador** (`interruptor_generador`): comprueba el sincronismo al cerrar. Tiene protecciones de sobrecarga, cortocircuito, potencia inversa, mínima tensión y disparo preferente.
+- **Otros componentes:**
+  - `barras`.
+  - `carga_trifasica`, esencial o no.
+  - `sincronoscopio`.
+  - `monitor_aislamiento`.
+- **Instrumento:** el secuencímetro `SimSecuencimetro`.
+
+Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene tres grupos de 450 kW, con valores típicos a verificar.

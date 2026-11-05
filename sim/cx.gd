@@ -40,3 +40,17 @@ func escala(k: float) -> Cx:
 
 func modulo() -> float:
 	return sqrt(re * re + im * im)
+
+
+func conjugado() -> Cx:
+	return Cx.new(re, -im)
+
+
+## Ángulo en grados, de -180 a 180.
+func angulo() -> float:
+	return rad_to_deg(atan2(im, re))
+
+
+## Diferencia de ángulos llevada a -180..180.
+static func diferencia_angulo(a: float, b: float) -> float:
+	return fposmod(a - b + 180.0, 360.0) - 180.0

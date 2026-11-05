@@ -51,6 +51,16 @@ func avanzar(_dt: float, _sol: SimSolver.Solucion) -> void:
 	pass
 
 
+## Paso de tiempo más largo con el que el componente sigue siendo estable. La simulación
+## divide los pasos más largos.
+func paso_maximo() -> float:
+	return INF
+
+
+func sim() -> SimSimulacion:
+	return sim_ref.get_ref() if sim_ref != null else null
+
+
 ## Cambiar el repuesto: el componente vuelve a su estado de fábrica.
 func reemplazar() -> void:
 	estado = _estado_inicial()

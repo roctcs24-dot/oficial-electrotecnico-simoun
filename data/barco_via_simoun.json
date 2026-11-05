@@ -22,7 +22,22 @@
   },
   "generacion": {
     "cantidad": { "valor": 3, "unidad": "", "verificar": false },
-    "tipo": { "valor": "diésel-generador en paralelo sobre el cuadro principal", "unidad": "", "verificar": false }
+    "tipo": { "valor": "diésel-generador en paralelo sobre el cuadro principal", "unidad": "", "verificar": false },
+    "potencia_por_grupo_kw": { "valor": 450, "unidad": "kW", "verificar": true },
+    "potencia_aparente_kva": { "valor": 562.5, "unidad": "kVA", "verificar": true },
+    "factor_potencia": { "valor": 0.8, "unidad": "", "verificar": true },
+    "corriente_nominal_a": { "valor": 738, "unidad": "A", "verificar": true },
+    "velocidad_rpm": { "valor": 1800, "unidad": "rpm", "verificar": true },
+    "estatismo_gobernador": { "valor": 4, "unidad": "%", "verificar": true },
+    "controlador": { "valor": "genérico: modelo real sin identificar", "unidad": "", "verificar": true },
+    "emergencia_kw": { "valor": 75, "unidad": "kW", "verificar": true }
+  },
+  "protecciones_generador": {
+    "potencia_inversa": { "valor": "8 % durante 5 s", "unidad": "", "verificar": true },
+    "corto_retardo": { "valor": "2,5 × In durante 0,2 s", "unidad": "", "verificar": true },
+    "instantaneo": { "valor": "10 × In", "unidad": "", "verificar": true },
+    "minima_tension": { "valor": "70 % durante 1 s", "unidad": "", "verificar": true },
+    "disparo_preferente": { "valor": "1,0 × In durante 5 s", "unidad": "", "verificar": true }
   },
   "tensiones_secundarias": {
     "alumbrado_y_servicios_v": { "valor": [220, 110], "unidad": "V", "verificar": true },
