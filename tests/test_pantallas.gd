@@ -114,6 +114,10 @@ func _recorrer(raiz: Raiz) -> String:
 		["glosario", {}],
 	]
 	pasos.append(["taller", {}])
+	pasos.append(["sistema", {"id": 1}])
+	pasos.append(["cuadro", {"id": 1}])
+	for pestana in ["G1", "G2", "G3"]:
+		pasos.append(["cuadro", {"id": 1, "pestana": pestana}])
 	pasos.append(["guardia", {"id": 3}])
 	for id: String in raiz.contenido.sistema(3)["modos"]["guardia"]["misiones"]:
 		for pestana: String in ["reporte", "proceso", "medir", "libro"]:

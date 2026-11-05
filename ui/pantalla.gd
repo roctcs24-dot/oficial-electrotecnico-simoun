@@ -7,6 +7,9 @@ const ANCHO_LECTURA := 900.0
 
 var raiz: Raiz
 var args := {}
+## Contenedor de avisos de las pantallas que los usan, y los que esperan su turno.
+var _avisos: VBoxContainer
+var _cola_avisos: Array[Array] = []
 
 
 func iniciar(raiz_juego: Raiz, argumentos: Dictionary) -> void:
@@ -139,6 +142,35 @@ func _aviso(texto: String) -> Control:
 	var caja := _tarjeta_base("Aviso")
 	caja.add_child(_etiqueta(texto))
 	return caja
+
+
+## De uno en uno: varios a la vez dejarían los botones fuera de una pantalla apaisada.
+func _mostrar_aviso(titulo: String, texto: String) -> void:
+	for hijo in _avisos.get_children():
+		if hijo.get_meta("titulo", "") == titulo:
+			return
+	for pendiente: Array in _cola_avisos:
+		if pendiente[0] == titulo:
+			return
+	if _avisos.get_child_count() > 0:
+		_cola_avisos.append([titulo, texto])
+		return
+	var caja := _tarjeta_base("Aviso")
+	caja.set_meta("titulo", titulo)
+	_avisos.add_child(caja)
+	var columna := _columna(4)
+	caja.add_child(columna)
+	columna.add_child(_etiqueta(titulo, "Subtitulo"))
+	columna.add_child(_etiqueta(texto))
+	columna.add_child(_boton("Entendido", _cerrar_aviso.bind(caja)))
+
+
+func _cerrar_aviso(caja: Control) -> void:
+	_avisos.remove_child(caja)
+	caja.queue_free()
+	if not _cola_avisos.is_empty():
+		var siguiente: Array = _cola_avisos.pop_front()
+		_mostrar_aviso(siguiente[0], siguiente[1])
 
 
 ## Con el filtro por defecto, una tarjeta impediría arrastrar la lista con el dedo.

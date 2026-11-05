@@ -1,0 +1,34 @@
+{
+  "nota": "Práctica libre del cuadro principal. Tres grupos de 450 kW sobre barras de 440 V, valores típicos de atuneros cerqueros: verificar a bordo.",
+  "circuito": "cuadro_principal",
+  "generadores": [
+    { "id": "G1", "interruptor": "Q1", "nombre": "Generador nº 1" },
+    { "id": "G2", "interruptor": "Q2", "nombre": "Generador nº 2" },
+    { "id": "G3", "interruptor": "Q3", "nombre": "Generador nº 3" }
+  ],
+  "cargas": [
+    { "id": "C1", "nombre": "Servicios esenciales" },
+    { "id": "C2", "nombre": "Servicios no esenciales" }
+  ],
+  "paso_velocidad_hz": 0.1,
+  "paso_tension_v": 2.0,
+  "consecuencias": {
+    "cierre_sincronizado": { "titulo": "Cierre sincronizado", "texto": "El interruptor cerró con el ángulo dentro de la ventana. Ahora suba la velocidad del entrante para que tome carga, sin pasar a potencia inversa." },
+    "cierre_barra_muerta": { "titulo": "Cierre sobre barras sin tensión", "texto": "No había ningún generador en barras, así que no hacía falta sincronizar. Compruebe la frecuencia y la tensión." },
+    "cierre_brusco": { "titulo": "Cierre brusco", "texto": "Cerró con un ángulo de más de 15°. El grupo recibió un golpe de par y de corriente. Espere a que la aguja se mueva despacio en sentido rápido y cierre justo antes de las doce." },
+    "cierre_fuera_de_fase": { "titulo": "Cierre fuera de fase", "texto": "Cerró con las tensiones muy desfasadas. La corriente de choque hizo disparar el interruptor. A partir de 120° el par puede dañar el acoplamiento, los devanados y el diésel. Sincronice siempre antes de cerrar." },
+    "generador_danado": { "titulo": "Grupo dañado", "texto": "El cierre fuera de fase dañó el grupo, que queda fuera de servicio hasta su reparación." },
+    "disparo_potencia_inversa": { "titulo": "Disparo por potencia inversa", "texto": "El grupo absorbía potencia de las barras y trabajaba como motor. Suele ocurrir al bajar demasiado la velocidad de un grupo en paralelo, o por falta de combustible. La protección lo desconecta para no arrastrar al diésel." },
+    "disparo_preferente": { "titulo": "Disparo preferente", "texto": "La corriente del generador superó la nominal. Las cargas no esenciales se desconectan para no perder todo el barco. Ponga otro grupo en paralelo antes de reconectarlas." },
+    "carga_desconectada": { "titulo": "Carga no esencial desconectada", "texto": "La salida no esencial salió por el disparo preferente. Reconéctela cuando haya potencia suficiente en barras." },
+    "parada_por_sobrecarga": { "titulo": "Diésel calado por sobrecarga", "texto": "La carga superó la potencia del diésel y la velocidad cayó hasta pararlo. Sin otro grupo en barras, el resultado es un blackout. Reparta la carga entre varios grupos." },
+    "disparo_minima_tension": { "titulo": "Disparo por mínima tensión", "texto": "La tensión del generador cayó por debajo del 70 %: el interruptor abre para que no vuelva a cerrar solo con barras sin tensión." },
+    "disparo_cortocircuito": { "titulo": "Disparo por cortocircuito", "texto": "La corriente superó varias veces la nominal durante el corto retardo. Antes de rearmar, busque la falla y mida el aislamiento." },
+    "disparo_instantaneo": { "titulo": "Disparo instantáneo", "texto": "Una corriente muy alta hizo disparar el interruptor al instante. No rearme sin localizar la causa." },
+    "disparo_sobrecarga_generador": { "titulo": "Disparo por sobrecarga del generador", "texto": "La corriente estuvo por encima de la nominal demasiado tiempo. Ponga otro grupo en paralelo o reduzca la carga." },
+    "alarma_aislamiento": { "titulo": "Alarma de aislamiento", "texto": "La resistencia de la red contra el casco bajó del umbral. En una red aislada la primera falla no dispara, pero una segunda en otra fase sería un cortocircuito. Localícela desconectando salidas una a una." },
+    "arranque_automatico": { "titulo": "Arranque automático", "texto": "El grupo arrancó solo al faltar la tensión vigilada." },
+    "pms_arranque": { "titulo": "El PMS arrancó un grupo", "texto": "La gestión de potencia arrancó un grupo de reserva, por carga alta o por barras sin tensión. Lo sincronizará y lo cerrará en barras automáticamente." },
+    "pms_sincronizacion_fallida": { "titulo": "Sincronización automática fallida", "texto": "El PMS no consiguió sincronizar el grupo a tiempo. Compruebe el gobernador, el AVR y el sincronizador, y sincronice a mano si hace falta." }
+  }
+}

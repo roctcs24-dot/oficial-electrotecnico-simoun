@@ -312,6 +312,59 @@ func test_monitor_de_aislamiento() -> String:
 	])
 
 
+func _pms(sim: SimSimulacion) -> SimPMS:
+	return sim.componente("PMS")
+
+
+func test_pms_reparte_y_mantiene_60_hz() -> String:
+	var sim := _en_paralelo()
+	_gen(sim, "G1").estado["f_ref"] = 61.5
+	_pms(sim).fijar_automatico(true)
+	sim.avanzar_tiempo(40.0)
+	var p1: float = _gen(sim, "G1").estado["p_kw"]
+	var p2: float = _gen(sim, "G2").estado["p_kw"]
+	return A.primero([
+		A.cerca(p1, p2, 0.05, "reparto de kW"),
+		A.cerca(_gen(sim, "G1").frecuencia(), 60.0, 0.002, "frecuencia"),
+	])
+
+
+func test_pms_arranca_y_sincroniza_la_reserva() -> String:
+	var sim := _g1_en_barras()
+	_pms(sim).fijar_automatico(true)
+	sim.componente("C1").params["p_kw"] = 290.0
+	sim.componente("C1").params["q_kvar"] = 200.0
+	sim.avanzar_tiempo(45.0)
+	return A.primero([
+		A.cierto(sim.hubo_evento("pms_arranque"), "debe arrancar un grupo de reserva"),
+		A.cierto(_acb(sim, "Q2").cerrado(), "G2 debe quedar en barras"),
+		A.cierto(sim.hubo_evento("cierre_sincronizado", "Q2"), "debe cerrar sincronizado"),
+		A.cierto(not sim.hubo_evento("cierre_fuera_de_fase") and not sim.hubo_evento("cierre_brusco"), "sin cierres bruscos"),
+		A.cerca(_gen(sim, "G1").estado["p_kw"], _gen(sim, "G2").estado["p_kw"], 0.1, "deben repartirse la carga"),
+		A.cierto(not _acb(sim, "Q3").cerrado(), "no debe arrancar más grupos de los necesarios"),
+	])
+
+
+func test_pms_recupera_las_barras() -> String:
+	var sim := _cuadro()
+	_pms(sim).fijar_automatico(true)
+	sim.avanzar_tiempo(20.0)
+	var primero := _acb(sim, "Q1").cerrado()
+	_gen(sim, "G1").parar()
+	sim.avanzar_tiempo(25.0)
+	var v: float = sim.solucion.entre("BP.L1", "BP.L2").modulo()
+	return A.primero([
+		A.cierto(primero, "sin grupos, debe arrancar uno y cerrar sobre barra muerta"),
+		A.cerca(v, 440.0, 0.05, "tras el blackout debe recuperar las barras: %.0f V" % v),
+	])
+
+
+func test_pms_en_manual_no_actua() -> String:
+	var sim := _cuadro()
+	sim.avanzar_tiempo(10.0)
+	return A.cierto(not _gen(sim, "G1").en_marcha() and not sim.hubo_evento("pms_arranque"), "en manual no debe arrancar nada")
+
+
 func test_cuadro_se_guarda_y_carga() -> String:
 	var sim := _en_paralelo()
 	var copia := SimSimulacion.desde_dict(JSON.parse_string(JSON.stringify(sim.a_dict())))

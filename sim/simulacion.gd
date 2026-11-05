@@ -33,6 +33,7 @@ static func tipos() -> Dictionary:
 		"carga_trifasica": SimCargaTrifasica,
 		"sincronoscopio": SimSincronoscopio,
 		"monitor_aislamiento": SimMonitorAislamiento,
+		"pms": SimPMS,
 	}
 
 

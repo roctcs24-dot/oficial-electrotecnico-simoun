@@ -220,4 +220,8 @@ Para añadir un componente, crea una clase que herede de `SimComponente` en `sim
   - `monitor_aislamiento`.
 - **Instrumento:** el secuencímetro `SimSecuencimetro`.
 
+El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout.
+
+La pantalla `ui/screens/cuadro.gd` es la práctica libre del cuadro principal, en el modo Taller del sistema 1. Sus textos, grupos, salidas y explicaciones de cada evento están en `data/cuadro.json`.
+
 Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene tres grupos de 450 kW, con valores típicos a verificar.

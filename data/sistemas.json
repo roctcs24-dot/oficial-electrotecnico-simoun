@@ -26,9 +26,11 @@
       "id": 1,
       "nombre": "Generación y cuadro principal",
       "resumen": "Diésel-generadores, paneles y controladores, sincronización, gestión de potencia y blackout.",
-      "estado": "proximamente",
+      "estado": "activo",
       "zona": [478, 264, 116, 76],
-      "modos": {}
+      "modos": {
+        "taller": { "pantalla": "cuadro", "detalle": "Cuadro principal: arranque, sincronización y reparto de carga" }
+      }
     },
     {
       "id": 2,

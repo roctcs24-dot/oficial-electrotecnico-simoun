@@ -32,6 +32,8 @@ func _capturar() -> void:
 		await _capturar_guardia(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "progresion":
 		await _capturar_progresion(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "cuadro":
+		await _capturar_cuadro(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -160,6 +162,31 @@ func _capturar_guardia(raiz: Raiz, carpeta: String) -> void:
 		p = raiz.pantalla_actual()
 		p._ejecutar("retirar_puentes")
 		await _guardar(carpeta, "mision_accidente", tam)
+		raiz.volver()
+
+
+## G1 en barras y G2 arrancado, algo más rápido, a punto de sincronizar.
+func _capturar_cuadro(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("cuadro", {"id": 1})
+		var p = raiz.pantalla_actual()
+		p._alternar_diesel("G1")
+		p._alternar_diesel("G2")
+		p.sim.avanzar_tiempo(10.0)
+		p._alternar_acb("G1")
+		p.sim.componente("G2").estado["f_ref"] = 58.7
+		p.sim.avanzar_tiempo(6.0)
+		p._revisar_eventos()
+		for hijo in p._avisos.get_children():
+			p._cerrar_aviso(hijo)
+		p._comprobar_firma()
+		p._actualizar()
+		await _guardar(carpeta, "cuadro_barras", tam)
+		for id in ["G1", "G2"]:
+			p._elegir_pestana(id)
+			await _guardar(carpeta, "cuadro_%s" % id, tam)
 		raiz.volver()
 
 

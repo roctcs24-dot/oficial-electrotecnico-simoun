@@ -23,10 +23,13 @@ func construir() -> void:
 	var modos: Dictionary = s.get("modos", {})
 	for m: Array in MODOS:
 		var disponible := modos.has(m[0])
-		var f := _fila(m[1], m[2] if disponible else "Próximamente", _abrir_modo.bind(m[0]), m[0], "", disponible)
+		var detalle: String = modos.get(m[0], {}).get("detalle", m[2]) if disponible else "Próximamente"
+		var f := _fila(m[1], detalle, _abrir_modo.bind(m[0]), m[0], "", disponible)
 		f.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		rejilla.add_child(f)
 
 
+## Un modo puede abrir otra pantalla, como el Taller del cuadro principal.
 func _abrir_modo(modo: String) -> void:
-	raiz.ir_a(modo, {"id": args["id"]})
+	var s := raiz.contenido.sistema(args["id"])
+	raiz.ir_a(s["modos"][modo].get("pantalla", modo), {"id": args["id"]})

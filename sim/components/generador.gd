@@ -94,8 +94,10 @@ func ajustar_velocidad(hz: float) -> void:
 	estado["f_ref"] = clampf(estado["f_ref"] + hz, F_NOMINAL * 0.9, F_NOMINAL * 1.1)
 
 
-func ajustar_tension(pu: float) -> void:
-	estado["e_pu"] = clampf(estado["e_pu"] + pu, 0.0, E_MAXIMA_PU)
+## Subir o bajar la consigna del AVR, en voltios.
+func ajustar_tension(voltios: float) -> void:
+	var nominal: float = params["v_linea"]
+	estado["v_ref"] = clampf(estado.get("v_ref", nominal) + voltios, nominal * 0.9, nominal * 1.1)
 
 
 func _z() -> Cx:
@@ -194,7 +196,7 @@ func _regular_tension(dt: float, q_pu: float) -> void:
 		return
 	if estado["f"] < F_NOMINAL * F_EXCITACION:
 		return
-	var consigna: float = params["v_linea"] * (1.0 - params["estatismo_q"] * q_pu)
+	var consigna: float = estado.get("v_ref", params["v_linea"]) * (1.0 - params["estatismo_q"] * q_pu)
 	var error: float = (consigna - estado["v"]) / params["v_linea"]
 	estado["e_pu"] = clampf(estado["e_pu"] + GANANCIA_AVR * error * dt, 0.0, E_MAXIMA_PU)
 
