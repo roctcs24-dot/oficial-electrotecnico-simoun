@@ -91,10 +91,22 @@ func _crear_vista() -> Control:
 	var ver := _boton("Ver todo", func() -> void: vista.encuadrar())
 	ver.autowrap_mode = TextServer.AUTOWRAP_OFF
 	barra.add_child(ver)
+	var ordenar := _boton("Ordenar cables", ordenar_cables)
+	ordenar.autowrap_mode = TextServer.AUTOWRAP_OFF
+	barra.add_child(ordenar)
+	# En su propia línea y sin ajuste: en vertical no queda ancho junto a los botones.
 	_estado = _etiqueta("", "Nota")
-	_estado.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	barra.add_child(_estado)
+	_estado.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_estado.clip_text = true
+	contenedor.add_child(_estado)
 	return contenedor
+
+
+func ordenar_cables() -> void:
+	mesa.ordenar_cables()
+	vista.queue_redraw()
+	if args["cable"] >= 0:
+		_reconstruir_panel()
 
 
 func _zoom(factor: float) -> void:
@@ -175,6 +187,9 @@ func _panel_pieza() -> void:
 	if cable >= 0 and cable < mesa.sim.cables.size():
 		var c: Array = mesa.sim.cables[cable]
 		_panel.add_child(_etiqueta("Cable %s — %s" % [c[0], c[1]], "Subtitulo"))
+		_panel.add_child(_selector_estilo_cable(cable))
+		if mesa.tiene_mango(cable):
+			_panel.add_child(_etiqueta("Arrastre el punto dorado para acomodarlo.", "Nota"))
 		_panel.add_child(_boton("Quitar este cable", _quitar_cable.bind(cable)))
 		return
 	if id.is_empty() or not mesa.piezas.has(id):
@@ -207,6 +222,28 @@ func _panel_pieza() -> void:
 	if mesa.danada(id):
 		_panel.add_child(_boton("Cambiar el repuesto", _reparar.bind(id)))
 	_panel.add_child(_boton("Quitar de la mesa", _quitar.bind(id)))
+
+
+func _selector_estilo_cable(cable: int) -> Control:
+	var fila := HBoxContainer.new()
+	fila.add_theme_constant_override("separation", 4)
+	var grupo := ButtonGroup.new()
+	var actual: String = mesa.ruta_cable(cable)["estilo"]
+	for e: Array in [["curva", "Curva"], ["angulos", "Ángulos"], ["recta", "Recta"]]:
+		var b := _boton(e[1], _elegir_estilo_cable.bind(cable, e[0]))
+		b.autowrap_mode = TextServer.AUTOWRAP_OFF
+		b.toggle_mode = true
+		b.button_group = grupo
+		b.set_pressed_no_signal(actual == e[0])
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		fila.add_child(b)
+	return fila
+
+
+func _elegir_estilo_cable(cable: int, estilo: String) -> void:
+	mesa.fijar_estilo_cable(cable, estilo)
+	vista.queue_redraw()
+	_reconstruir_panel()
 
 
 func _agregar_ajuste(c: SimComponente, titulo: String, minimo: float, maximo: float) -> void:

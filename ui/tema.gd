@@ -63,6 +63,40 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_color("font_hover_pressed_color", "Button", TEXTO)
 	t.set_color("font_disabled_color", "Button", TEXTO_SUAVE.darkened(0.2))
 
+	t.set_type_variation("Rotulo", "Label")
+	t.set_font_size("font_size", "Rotulo", 13)
+	t.set_color("font_color", "Rotulo", ACENTO)
+
+	var cabecera := caja(PANEL, RADIO, 12, 8)
+	cabecera.border_color = ACENTO
+	cabecera.border_width_bottom = 2
+	t.set_type_variation("Cabecera", "PanelContainer")
+	t.set_stylebox("panel", "Cabecera", cabecera)
+
+	t.set_stylebox("background", "ProgressBar", caja(FONDO.lightened(0.08), 2, 0, 0))
+	t.set_stylebox("fill", "ProgressBar", caja(ACENTO, 2, 0, 0))
+
+	var pista := caja(Color(TEXTO_SUAVE, 0.12), 2, 0, 0)
+	var asidero := caja(Color(TEXTO_SUAVE, 0.45), 2, 0, 0)
+	asidero.content_margin_left = 3
+	asidero.content_margin_right = 3
+	for barra in ["VScrollBar", "HScrollBar"]:
+		t.set_stylebox("scroll", barra, pista)
+		t.set_stylebox("grabber", barra, asidero)
+		t.set_stylebox("grabber_highlight", barra, asidero)
+		t.set_stylebox("grabber_pressed", barra, asidero)
+
+	var surco := caja(FONDO.lightened(0.14), 2, 0, 3)
+	var recorrido := caja(ACENTO, 2, 0, 3)
+	t.set_stylebox("slider", "HSlider", surco)
+	t.set_stylebox("grabber_area", "HSlider", recorrido)
+	t.set_stylebox("grabber_area_highlight", "HSlider", recorrido)
+
+	t.set_stylebox("normal", "LineEdit", caja(FONDO.lightened(0.05), RADIO, 12, 11, BORDE))
+	t.set_stylebox("focus", "LineEdit", caja(FONDO.lightened(0.05), RADIO, 12, 11, ACENTO))
+	t.set_color("font_color", "LineEdit", TEXTO)
+	t.set_color("font_placeholder_color", "LineEdit", APAGADO)
+
 	t.set_stylebox("panel", "PanelContainer", caja(PANEL, RADIO, 12, 12, PANEL.lightened(0.1)))
 	t.set_type_variation("Papel", "PanelContainer")
 	t.set_stylebox("panel", "Papel", caja(PAPEL, RADIO, 10, 10))

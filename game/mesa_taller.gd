@@ -9,6 +9,8 @@ const COLUMNAS_PLANTILLA := 4
 const SEPARACION_PLANTILLA := Vector2(540.0, 640.0)
 const CURVA_CABLE := 0.12
 const PUNTOS_CABLE := 12
+const CANALES_CABLE := 9
+const SEPARACION_CANALES := 22.0
 ## Colores de IEC 60445 para potencia; los cables de mando van en rojo.
 const COLOR_FASE := {"1": Color("7a4a24"), "2": Color("7a4a24"), "3": Color("17181a"), "4": Color("17181a"), "5": Color("8a8f93"), "6": Color("8a8f93"),
 	"L1": Color("7a4a24"), "L2": Color("17181a"), "L3": Color("8a8f93"), "U1": Color("7a4a24"), "V1": Color("17181a"), "W1": Color("8a8f93")}
@@ -18,6 +20,8 @@ var contenido: Contenido
 var sim := SimSimulacion.new()
 ## id -> {tipo, x, y}, donde tipo es el id en el catálogo de data/taller.json.
 var piezas := {}
+## "a|b" -> ruta del cable. Solo es presentación: la simulación no la usa.
+var rutas := {}
 var _eventos_vistos := 0
 
 
@@ -80,6 +84,7 @@ func conectar(a: String, b: String) -> bool:
 
 
 func quitar_cable(indice: int) -> void:
+	rutas.erase(_clave_cable(indice))
 	sim.cables.remove_at(indice)
 
 
@@ -131,11 +136,88 @@ func pieza_en(punto: Vector2) -> String:
 	return encontrada
 
 
+func _clave_cable(indice: int) -> String:
+	var c: Array = sim.cables[indice]
+	return "%s|%s" % [c[0], c[1]]
+
+
+## La ruta de un cable: estilo (curva, angulos o recta) y desplazamiento respecto al punto
+## medio entre sus bornes, para que siga al cable cuando se mueven las piezas.
+func ruta_cable(indice: int) -> Dictionary:
+	return rutas.get(_clave_cable(indice), {"estilo": "curva", "dx": 0.0, "dy": 0.0})
+
+
+func fijar_estilo_cable(indice: int, estilo: String) -> void:
+	var r := ruta_cable(indice).duplicate()
+	r["estilo"] = estilo
+	rutas[_clave_cable(indice)] = r
+
+
+## Punto del que se arrastra un cable para acomodarlo. Una recta no tiene ninguno.
+func mango_cable(indice: int) -> Vector2:
+	var r := ruta_cable(indice)
+	var c: Array = sim.cables[indice]
+	var a := posicion_borne(c[0])
+	var b := posicion_borne(c[1])
+	var medio := (a + b) / 2.0
+	match r["estilo"]:
+		"curva":
+			var p := puntos_cable(indice)
+			return p[p.size() / 2]
+		"angulos":
+			return Vector2(medio.x, medio.y + r["dy"])
+	return medio
+
+
+func tiene_mango(indice: int) -> bool:
+	return ruta_cable(indice)["estilo"] != "recta"
+
+
+func mover_mango(indice: int, punto: Vector2) -> void:
+	var r := ruta_cable(indice).duplicate()
+	var c: Array = sim.cables[indice]
+	var a := posicion_borne(c[0])
+	var b := posicion_borne(c[1])
+	var medio := (a + b) / 2.0
+	if r["estilo"] == "curva":
+		# El punto medio de la curva queda a mitad de camino hacia su punto de control.
+		var caida := Vector2(0.0, a.distance_to(b) * CURVA_CABLE)
+		var d := (punto - medio) * 2.0 - caida
+		r["dx"] = d.x
+		r["dy"] = d.y
+	else:
+		r["dy"] = punto.y - medio.y
+	rutas[_clave_cable(indice)] = r
+
+
+## Pasa todos los cables a ángulos rectos, cada uno en su propio canal para que no se
+## tapen entre sí. Llamarlo de nuevo con todos ordenados los devuelve a curvas.
+func ordenar_cables() -> void:
+	var todos_ordenados := not sim.cables.is_empty()
+	for i in sim.cables.size():
+		if ruta_cable(i)["estilo"] != "angulos":
+			todos_ordenados = false
+	if todos_ordenados:
+		rutas = {}
+		return
+	for i in sim.cables.size():
+		var canal := (i % CANALES_CABLE) - CANALES_CABLE / 2
+		rutas[_clave_cable(i)] = {"estilo": "angulos", "dx": 0.0, "dy": float(canal) * SEPARACION_CANALES}
+
+
 func puntos_cable(indice: int) -> PackedVector2Array:
 	var c: Array = sim.cables[indice]
 	var a := posicion_borne(c[0])
 	var b := posicion_borne(c[1])
-	var control := (a + b) / 2.0 + Vector2(0.0, a.distance_to(b) * CURVA_CABLE)
+	var r := ruta_cable(indice)
+	var medio := (a + b) / 2.0
+	match r["estilo"]:
+		"recta":
+			return PackedVector2Array([a, b])
+		"angulos":
+			var y: float = medio.y + r["dy"]
+			return PackedVector2Array([a, Vector2(a.x, y), Vector2(b.x, y), b])
+	var control := medio + Vector2(r["dx"], r["dy"]) + Vector2(0.0, a.distance_to(b) * CURVA_CABLE)
 	var puntos := PackedVector2Array()
 	for i in PUNTOS_CABLE + 1:
 		var t := float(i) / PUNTOS_CABLE
@@ -168,7 +250,7 @@ func color_cable(indice: int) -> Color:
 
 
 func a_dict() -> Dictionary:
-	return {"piezas": piezas.duplicate(true), "circuito": sim.a_dict()}
+	return {"piezas": piezas.duplicate(true), "rutas": rutas.duplicate(true), "circuito": sim.a_dict()}
 
 
 ## Devuelve false si los datos no se pueden interpretar; entonces la mesa no cambia.
@@ -179,6 +261,7 @@ func desde_dict(datos: Variant) -> bool:
 		if entrada(pieza.get("tipo", "")).is_empty():
 			return false
 	piezas = datos["piezas"].duplicate(true)
+	rutas = datos.get("rutas", {}).duplicate(true)
 	sim = SimSimulacion.desde_dict(datos["circuito"])
 	_eventos_vistos = 0
 	return true
@@ -186,6 +269,7 @@ func desde_dict(datos: Variant) -> bool:
 
 func vaciar() -> void:
 	piezas = {}
+	rutas = {}
 	sim = SimSimulacion.new()
 	_eventos_vistos = 0
 
@@ -252,6 +336,7 @@ func cargar_plantilla(nombre: String) -> bool:
 	if plantilla == null:
 		return false
 	piezas = {}
+	rutas = {}
 	sim = plantilla
 	_eventos_vistos = 0
 	var n := 0

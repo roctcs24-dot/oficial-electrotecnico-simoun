@@ -14,6 +14,9 @@ const ZONA_MUERTA := 10.0
 ## Radio táctil en pantalla, para acertar con el dedo aunque la vista esté alejada.
 const RADIO_TOQUE := 24.0
 const TOLERANCIA_CABLE := 14.0
+const TOLERANCIA_CABLE_EXACTA := 6.0
+const RADIO_MANGO := 10.0
+const ALFA_ATENUADO := 0.3
 const ESCALA_TEXTURA := 1.5
 const FONDO := Color("0b1824")
 const CUADRICULA := Color("15283a")
@@ -35,6 +38,7 @@ var _inicio_toque := Vector2.ZERO
 var _pulsado := false
 var _movido := false
 var _pieza_arrastrada := ""
+var _mango_arrastrado := false
 var _desfase_pieza := Vector2.ZERO
 var _toques := {}
 var _distancia_pellizco := 0.0
@@ -106,6 +110,9 @@ func _boton_raton(evento: InputEventMouseButton) -> void:
 			_inicio_toque = evento.position
 			var en_mesa := a_mesa(evento.position)
 			_pieza_arrastrada = ""
+			_mango_arrastrado = _mango_en(evento.position)
+			if _mango_arrastrado:
+				return
 			if mesa.borne_en(en_mesa, RADIO_TOQUE / zoom).is_empty():
 				_pieza_arrastrada = mesa.pieza_en(en_mesa)
 				if not _pieza_arrastrada.is_empty():
@@ -115,13 +122,23 @@ func _boton_raton(evento: InputEventMouseButton) -> void:
 				tocar(evento.position)
 			_pulsado = false
 			_pieza_arrastrada = ""
+			_mango_arrastrado = false
+
+
+## El mango solo existe en el cable seleccionado.
+func _mango_en(p: Vector2) -> bool:
+	if cable_marcado < 0 or cable_marcado >= mesa.sim.cables.size() or not mesa.tiene_mango(cable_marcado):
+		return false
+	return a_pantalla(mesa.mango_cable(cable_marcado)).distance_to(p) <= RADIO_TOQUE
 
 
 func _arrastrar(evento: InputEventMouseMotion) -> void:
 	if not _movido and evento.position.distance_to(_inicio_toque) < ZONA_MUERTA:
 		return
 	_movido = true
-	if _pieza_arrastrada.is_empty():
+	if _mango_arrastrado:
+		mesa.mover_mango(cable_marcado, a_mesa(evento.position))
+	elif _pieza_arrastrada.is_empty():
 		origen += evento.relative
 	else:
 		mesa.mover(_pieza_arrastrada, a_mesa(evento.position) - _desfase_pieza)
@@ -135,9 +152,13 @@ func tocar(p: Vector2) -> void:
 	if not nodo.is_empty():
 		borne_tocado.emit(nodo)
 		return
+	# Un cable sobre una pieza se puede tocar si el dedo cae justo encima de él.
+	var cable_exacto := mesa.cable_en(en_mesa, TOLERANCIA_CABLE_EXACTA / zoom)
 	var cable := mesa.cable_en(en_mesa, TOLERANCIA_CABLE / zoom)
 	var pieza := mesa.pieza_en(en_mesa)
-	if not pieza.is_empty():
+	if cable_exacto >= 0:
+		cable_tocado.emit(cable_exacto)
+	elif not pieza.is_empty():
 		pieza_tocada.emit(pieza)
 	elif cable >= 0:
 		cable_tocado.emit(cable)
@@ -185,10 +206,18 @@ func _draw() -> void:
 		return
 	for id: String in mesa.piezas:
 		_dibujar_pieza(id)
+	# El cable seleccionado va al final, sobre los demás.
 	for i in mesa.sim.cables.size():
-		_dibujar_cable(i)
+		if i != cable_marcado:
+			_dibujar_cable(i)
+	if cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size():
+		_dibujar_cable(cable_marcado)
 	for id: String in mesa.piezas:
 		_dibujar_bornes(id)
+	if cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size() and mesa.tiene_mango(cable_marcado):
+		var mango := a_pantalla(mesa.mango_cable(cable_marcado))
+		draw_circle(mango, RADIO_MANGO, Tema.ACENTO)
+		draw_arc(mango, RADIO_MANGO, 0.0, TAU, 24, Color.WHITE, 2.0, true)
 	_dibujar_punta(punta_roja, Color("d8322a"))
 	_dibujar_punta(punta_negra, Color("111214"))
 
@@ -247,11 +276,13 @@ func _dibujar_cable(i: int) -> void:
 	for p in puntos:
 		pantalla.append(a_pantalla(p))
 	var ancho := maxf(5.0 * zoom, 2.0)
+	# Con un cable seleccionado, los demás se atenúan para poder seguirlo.
+	var alfa := ALFA_ATENUADO if cable_marcado >= 0 and i != cable_marcado else 1.0
 	if i == cable_marcado:
 		draw_polyline(pantalla, Tema.ACENTO, ancho + 4.0, true)
 	else:
-		draw_polyline(pantalla, Color(0.0, 0.0, 0.0, 0.5), ancho + 2.0, true)
-	draw_polyline(pantalla, mesa.color_cable(i), ancho, true)
+		draw_polyline(pantalla, Color(0.0, 0.0, 0.0, 0.5 * alfa), ancho + 2.0, true)
+	draw_polyline(pantalla, Color(mesa.color_cable(i), alfa), ancho, true)
 
 
 func _dibujar_bornes(id: String) -> void:

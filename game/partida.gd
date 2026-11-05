@@ -175,6 +175,18 @@ func registrar_error(tema: String) -> void:
 	guardar()
 
 
+## Avance hacia el rango siguiente, de 0 a 1. En el último rango vale 1.
+func progreso_rango(rangos: Array) -> float:
+	var puntos: float = datos["puntos"]
+	var base := 0.0
+	for r in rangos:
+		if puntos >= float(r["puntos"]):
+			base = r["puntos"]
+		else:
+			return (puntos - base) / (float(r["puntos"]) - base)
+	return 1.0
+
+
 ## rangos va de menor a mayor: [{nombre, puntos}].
 func rango(rangos: Array) -> String:
 	var actual := ""

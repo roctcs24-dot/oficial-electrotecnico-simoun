@@ -28,10 +28,11 @@ func construir() -> void:
 	_marcar_terminos_previos(pagina)
 	var datos: Dictionary = paginas[pagina]
 	_cabecera(_leccion["titulo"], "Página %d de %d · %s" % [pagina + 1, paginas.size(), datos["titulo"]])
+	add_child(_barra_avance(float(pagina + 1) / paginas.size()))
 	var desplazable := _desplazable()
 	add_child(desplazable)
 	var columna := _columna(14)
-	desplazable.add_child(columna)
+	desplazable.add_child(_ancho_lectura(columna))
 	var bloques: Array = datos["bloques"]
 	for i in bloques.size():
 		columna.add_child(_crear_bloque(bloques[i], "%d_%d" % [pagina, i]))
@@ -166,13 +167,14 @@ func _construir_final() -> void:
 	var desplazable := _desplazable()
 	add_child(desplazable)
 	var columna := _columna(12)
-	desplazable.add_child(columna)
+	desplazable.add_child(_ancho_lectura(columna))
+	columna.add_child(_rotulo("Resultado"))
 	columna.add_child(_etiqueta("Respuestas correctas al primer intento: %d de %d" % [aciertos, total], "Subtitulo"))
 	var ganados: int = args["ganados"]
 	columna.add_child(_etiqueta("Puntos obtenidos: %d." % ganados if ganados > 0 else "Los puntos de esta lección ya estaban registrados."))
 	if aciertos < total:
 		columna.add_child(_etiqueta("Los temas con error quedan registrados para su repaso.", "Nota"))
-	columna.add_child(_etiqueta("Para saber más", "Subtitulo"))
+	columna.add_child(_rotulo("Para saber más"))
 	var referencias := PackedStringArray()
 	for r: String in _leccion.get("para_saber_mas", []):
 		referencias.append("• %s" % r)

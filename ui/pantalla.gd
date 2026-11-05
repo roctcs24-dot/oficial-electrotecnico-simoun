@@ -3,6 +3,7 @@ extends VBoxContainer
 ## Base de las pantallas. Se construyen en código y se rehacen al girar el celular.
 
 const ZONA_MUERTA_ARRASTRE := 14
+const ANCHO_LECTURA := 900.0
 
 var raiz: Raiz
 var args := {}
@@ -20,9 +21,11 @@ func construir() -> void:
 
 
 func _cabecera(titulo: String, nota := "") -> void:
+	var barra := _tarjeta_base("Cabecera")
+	add_child(barra)
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 12)
-	add_child(fila)
+	barra.add_child(fila)
 	var volver := _boton("‹ Volver", raiz.volver)
 	# Con ajuste de línea, el contenedor lo aplastaría hasta dejarlo sin ancho.
 	volver.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -68,6 +71,41 @@ func _boton(texto: String, al_pulsar: Callable) -> Button:
 	return b
 
 
+func _fila(titulo: String, detalle: String, al_pulsar: Callable, icono := "", estado := "", activa := true) -> FilaMenu:
+	var f := FilaMenu.new()
+	f.iniciar(titulo, detalle, icono, estado, activa)
+	f.pulsada.connect(al_pulsar)
+	return f
+
+
+## Rótulo de sección, en mayúsculas pequeñas.
+func _rotulo(texto: String) -> Label:
+	var e := _etiqueta(texto.to_upper(), "Rotulo")
+	return e
+
+
+func _barra_avance(fraccion: float) -> ProgressBar:
+	var b := ProgressBar.new()
+	b.min_value = 0.0
+	b.max_value = 1.0
+	b.value = fraccion
+	b.show_percentage = false
+	b.custom_minimum_size.y = 6.0
+	b.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return b
+
+
+## Limita el ancho del texto en pantallas grandes: las líneas muy largas cansan al leer.
+func _ancho_lectura(contenido_columna: Control) -> Control:
+	var margen := MarginContainer.new()
+	margen.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var sobrante := maxf(raiz.size.x - ANCHO_LECTURA, 0.0) / 2.0
+	margen.add_theme_constant_override("margin_left", int(sobrante))
+	margen.add_theme_constant_override("margin_right", int(sobrante))
+	margen.add_child(contenido_columna)
+	return margen
+
+
 func _desplazable() -> ScrollContainer:
 	var s := ScrollContainer.new()
 	s.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -84,6 +122,8 @@ static func cancelar_pulsaciones(nodo: Node) -> void:
 	if nodo is BaseButton and not nodo.disabled:
 		nodo.disabled = true
 		nodo.disabled = false
+	elif nodo is FilaMenu:
+		nodo.cancelar()
 	for hijo in nodo.get_children():
 		cancelar_pulsaciones(hijo)
 

@@ -136,6 +136,129 @@ func test_tocar_cable() -> String:
 	])
 
 
+func _mesa_con_cable() -> MesaTaller:
+	var mesa := _mesa()
+	mesa.agregar("lampara", Vector2.ZERO)
+	mesa.agregar("lampara", Vector2(1000.0, 300.0))
+	mesa.conectar("H1.X1", "H2.X2")
+	return mesa
+
+
+func test_cable_en_angulos_es_rectilineo_y_se_acomoda() -> String:
+	var mesa := _mesa_con_cable()
+	mesa.fijar_estilo_cable(0, "angulos")
+	var p := mesa.puntos_cable(0)
+	var rectos := true
+	for i in p.size() - 1:
+		if not (is_equal_approx(p[i].x, p[i + 1].x) or is_equal_approx(p[i].y, p[i + 1].y)):
+			rectos = false
+	var antes := p[1].y
+	mesa.mover_mango(0, mesa.mango_cable(0) + Vector2(0.0, 80.0))
+	var despues := mesa.puntos_cable(0)[1].y
+	return A.primero([
+		A.cierto(rectos, "todos los tramos deben ser rectos"),
+		A.cerca(despues - antes, 80.0, 0.01, "el canal debe seguir al mango"),
+		A.cierto(mesa.puntos_cable(0)[0] == mesa.posicion_borne("H1.X1"), "debe seguir conectado al borne"),
+	])
+
+
+func test_mango_de_la_curva_sigue_al_dedo() -> String:
+	var mesa := _mesa_con_cable()
+	var destino := Vector2(500.0, 900.0)
+	mesa.mover_mango(0, destino)
+	var llegada := mesa.mango_cable(0)
+	var p := mesa.puntos_cable(0)
+	return A.primero([
+		A.cierto(llegada.distance_to(destino) < 1.0, "el mango debe quedar bajo el dedo: %s" % llegada),
+		A.cierto(p[0] == mesa.posicion_borne("H1.X1") and p[-1] == mesa.posicion_borne("H2.X2"), "los extremos no deben moverse"),
+	])
+
+
+func test_la_ruta_sigue_a_la_pieza_y_se_guarda() -> String:
+	var mesa := _mesa_con_cable()
+	mesa.fijar_estilo_cable(0, "angulos")
+	mesa.mover_mango(0, mesa.mango_cable(0) + Vector2(0.0, 40.0))
+	mesa.mover("H2", Vector2(1000.0, 500.0))
+	var extremo := mesa.puntos_cable(0)[-1] == mesa.posicion_borne("H2.X2")
+	var ok := mesa.guardar("prueba_rutas")
+	var otra := _mesa()
+	var cargado := otra.cargar("prueba_rutas")
+	otra.borrar("prueba_rutas")
+	return A.primero([
+		A.cierto(extremo, "el cable debe seguir a la pieza"),
+		A.cierto(ok and cargado, "debe guardar y cargar"),
+		A.cierto(otra.ruta_cable(0)["estilo"] == "angulos", "debe conservar el estilo"),
+		A.cierto(is_equal_approx(otra.ruta_cable(0)["dy"], 40.0), "debe conservar el acomodo"),
+	])
+
+
+func test_ordenar_cables_y_deshacer() -> String:
+	var mesa := _mesa()
+	_montar_directo(mesa, "motor_440", true)
+	mesa.ordenar_cables()
+	var estilos := {}
+	var canales := {}
+	for i in mesa.sim.cables.size():
+		estilos[mesa.ruta_cable(i)["estilo"]] = true
+		canales[mesa.ruta_cable(i)["dy"]] = true
+	mesa.ordenar_cables()
+	var deshecho: bool = mesa.ruta_cable(0)["estilo"] == "curva"
+	return A.primero([
+		A.cierto(estilos.keys() == ["angulos"], "todos deben quedar en ángulos: %s" % str(estilos.keys())),
+		A.cierto(canales.size() > 1, "deben repartirse en varios canales"),
+		A.cierto(deshecho, "ordenar de nuevo debe devolver las curvas"),
+	])
+
+
+func test_acomodar_no_afecta_a_la_simulacion() -> String:
+	var mesa := _mesa()
+	_montar_directo(mesa, "motor_440", true)
+	mesa.ordenar_cables()
+	mesa.fijar_estilo_cable(0, "recta")
+	_arrancar(mesa)
+	mesa.avanzar(200)
+	return A.cierto(mesa.sim.componente("M1").rpm() > 1700.0, "el circuito debe funcionar igual")
+
+
+func test_quitar_cable_borra_su_ruta() -> String:
+	var mesa := _mesa_con_cable()
+	mesa.fijar_estilo_cable(0, "recta")
+	mesa.quitar_cable(0)
+	return A.cierto(mesa.rutas.is_empty(), "no debe quedar la ruta de un cable quitado")
+
+
+func test_arrastrar_el_mango_en_pantalla() -> String:
+	var v := VistaMesa.new()
+	v.mesa = _mesa_con_cable()
+	v.zoom = 1.0
+	v.origen = Vector2.ZERO
+	v.cable_marcado = 0
+	var inicio := v.mesa.mango_cable(0)
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.pressed = true
+	press.position = inicio
+	v._gui_input(press)
+	var motion := InputEventMouseMotion.new()
+	motion.position = inicio + Vector2(0.0, 120.0)
+	motion.relative = Vector2(0.0, 120.0)
+	v._gui_input(motion)
+	var final := v.mesa.mango_cable(0)
+	var release := InputEventMouseButton.new()
+	release.button_index = MOUSE_BUTTON_LEFT
+	release.pressed = false
+	release.position = motion.position
+	var tocado := []
+	v.fondo_tocado.connect(func() -> void: tocado.append(true))
+	v._gui_input(release)
+	var distancia := final.distance_to(motion.position)
+	v.free()
+	return A.primero([
+		A.cierto(distancia < 1.0, "el mango debe seguir al dedo: %f" % distancia),
+		A.cierto(tocado.is_empty(), "arrastrar no debe contar como toque"),
+	])
+
+
 func test_zoom_mantiene_el_punto_bajo_el_dedo() -> String:
 	var v := VistaMesa.new()
 	v.origen = Vector2(30.0, 40.0)

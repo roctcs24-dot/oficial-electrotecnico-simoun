@@ -17,18 +17,15 @@ func construir() -> void:
 	var rejilla := GridContainer.new()
 	rejilla.columns = 1 if raiz.vertical else 2
 	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rejilla.add_theme_constant_override("h_separation", 10)
-	rejilla.add_theme_constant_override("v_separation", 10)
+	rejilla.add_theme_constant_override("h_separation", 8)
+	rejilla.add_theme_constant_override("v_separation", 8)
 	desplazable.add_child(rejilla)
 	var modos: Dictionary = s.get("modos", {})
 	for m: Array in MODOS:
 		var disponible := modos.has(m[0])
-		var texto: String = "%s\n%s" % [m[1], m[2] if disponible else "Próximamente"]
-		var b := _boton(texto, _abrir_modo.bind(m[0]))
-		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.custom_minimum_size.y = 84.0
-		b.disabled = not disponible
-		rejilla.add_child(b)
+		var f := _fila(m[1], m[2] if disponible else "Próximamente", _abrir_modo.bind(m[0]), m[0], "", disponible)
+		f.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		rejilla.add_child(f)
 
 
 func _abrir_modo(modo: String) -> void:

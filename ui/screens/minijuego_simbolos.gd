@@ -17,10 +17,11 @@ func construir() -> void:
 		return
 	var ronda: Dictionary = rondas[indice]
 	_cabecera("Identificación de símbolos", "Símbolo %d de %d" % [indice + 1, rondas.size()])
+	add_child(_barra_avance(float(indice + 1) / rondas.size()))
 	var desplazable := _desplazable()
 	add_child(desplazable)
 	var columna := _columna(12)
-	desplazable.add_child(columna)
+	desplazable.add_child(_ancho_lectura(columna))
 	var datos := raiz.contenido.simbolo(ronda["id"])
 	var respondida: bool = args["respuestas"].has(indice)
 	var fila := HBoxContainer.new()
@@ -116,7 +117,7 @@ func _construir_final() -> void:
 	if ganados > 0:
 		columna.add_child(_etiqueta("Puntos obtenidos: %d." % ganados))
 	if not falladas.is_empty():
-		columna.add_child(_etiqueta("Símbolos a repasar", "Subtitulo"))
+		columna.add_child(_rotulo("Símbolos a repasar"))
 		columna.add_child(_texto_rico("\n".join(falladas)))
 	columna.add_child(_etiqueta(raiz.contenido.leer("simbolos.json").get("nota", ""), "Nota"))
 	columna.add_child(_boton("Repetir con otros símbolos", _repetir))

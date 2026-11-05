@@ -152,7 +152,7 @@ func _crear_banco() -> Control:
 	var tarjeta := _tarjeta_base()
 	var columna := _columna(8)
 	tarjeta.add_child(columna)
-	columna.add_child(_etiqueta("Banco de prueba", "Subtitulo"))
+	columna.add_child(_rotulo("Banco de prueba"))
 	columna.add_child(_etiqueta(banco.get("explicacion", ""), "Nota"))
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 14)
@@ -225,5 +225,9 @@ func _crear_textos() -> Control:
 
 
 func _agregar_seccion(columna: VBoxContainer, titulo: String, texto: String) -> void:
-	columna.add_child(_etiqueta(titulo, "Subtitulo"))
-	columna.add_child(_texto_rico(texto))
+	var tarjeta := _tarjeta_base()
+	columna.add_child(tarjeta)
+	var interior := _columna(6)
+	tarjeta.add_child(interior)
+	interior.add_child(_rotulo(titulo))
+	interior.add_child(_texto_rico(texto))

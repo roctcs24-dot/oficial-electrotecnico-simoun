@@ -2,23 +2,13 @@ extends Pantalla
 ## Menú principal: el plano del barco dividido por sistemas.
 
 const ALTO_PLANO_POR_ANCHO := 0.42
+const ANCHO_RANGO := 240.0
 
 
 func construir() -> void:
 	var c := raiz.contenido
 	var barco := c.barco()
-	var cabecera := HBoxContainer.new()
-	add_child(cabecera)
-	var textos := VBoxContainer.new()
-	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	textos.add_theme_constant_override("separation", 0)
-	cabecera.add_child(textos)
-	textos.add_child(_etiqueta(barco.get("nombre", "Oficial Electrotécnico"), "Titulo"))
-	textos.add_child(_etiqueta(_resumen_barco(barco), "Nota"))
-	var rango := _etiqueta("%s · %d pts" % [raiz.partida.rango(c.rangos()), raiz.partida.datos["puntos"]], "Nota")
-	rango.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	rango.autowrap_mode = TextServer.AUTOWRAP_OFF
-	cabecera.add_child(rango)
+	add_child(_crear_cabecera(barco))
 
 	if not raiz.partida.aviso.is_empty():
 		add_child(_aviso(raiz.partida.aviso))
@@ -46,17 +36,67 @@ func construir() -> void:
 
 	var lista := _desplazable()
 	cuerpo.add_child(lista)
-	var botones := _columna(8)
-	lista.add_child(botones)
+	var filas := _columna(6)
+	lista.add_child(filas)
+	filas.add_child(_rotulo("Sistemas del buque"))
 	for s: Dictionary in c.sistemas():
-		var id := int(s["id"])
-		var activo: bool = s["estado"] == "activo"
-		var texto: String = "%d · %s" % [id, s["nombre"]]
-		var b := _boton(texto if activo else "%s (próximamente)" % texto, _abrir_sistema.bind(id))
-		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.disabled = not activo
-		botones.add_child(b)
-	botones.add_child(_boton("Glosario español-inglés", raiz.ir_a.bind("glosario")))
+		filas.add_child(_fila_sistema(s))
+	filas.add_child(_rotulo("Consulta"))
+	filas.add_child(_fila("Glosario español-inglés", "", raiz.ir_a.bind("glosario"), "glosario"))
+
+
+func _crear_cabecera(barco: Dictionary) -> Control:
+	var barra := _tarjeta_base("Cabecera")
+	var disposicion: BoxContainer = VBoxContainer.new() if raiz.vertical else HBoxContainer.new()
+	disposicion.add_theme_constant_override("separation", 8 if raiz.vertical else 12)
+	barra.add_child(disposicion)
+	var textos := VBoxContainer.new()
+	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textos.add_theme_constant_override("separation", 0)
+	disposicion.add_child(textos)
+	textos.add_child(_etiqueta(barco.get("nombre", "Oficial Electrotécnico"), "Titulo"))
+	textos.add_child(_etiqueta(_resumen_barco(barco), "Nota"))
+	disposicion.add_child(_crear_rango())
+	return barra
+
+
+## En vertical ocupa todo el ancho; en horizontal, una columna a la derecha.
+func _crear_rango() -> Control:
+	var rangos := raiz.contenido.rangos()
+	var rango := _columna(3)
+	if not raiz.vertical:
+		rango.size_flags_horizontal = Control.SIZE_SHRINK_END
+		rango.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		rango.custom_minimum_size.x = ANCHO_RANGO
+	var textos := HBoxContainer.new()
+	textos.add_theme_constant_override("separation", 12)
+	rango.add_child(textos)
+	var nombre := _etiqueta(raiz.partida.rango(rangos), "Nota")
+	nombre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textos.add_child(nombre)
+	var puntos := _etiqueta("%d pts" % raiz.partida.datos["puntos"], "Nota")
+	puntos.autowrap_mode = TextServer.AUTOWRAP_OFF
+	puntos.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	textos.add_child(puntos)
+	rango.add_child(_barra_avance(raiz.partida.progreso_rango(rangos)))
+	return rango
+
+
+func _fila_sistema(s: Dictionary) -> FilaMenu:
+	var id := int(s["id"])
+	var activo: bool = s["estado"] == "activo"
+	return _fila("%d · %s" % [id, s["nombre"]], "Próximamente" if not activo else _avance_sistema(s), _abrir_sistema.bind(id), "sistema_%d" % id, "", activo)
+
+
+func _avance_sistema(s: Dictionary) -> String:
+	var lecciones: Array = s["modos"].get("aprender", {}).get("lecciones", [])
+	if lecciones.is_empty():
+		return s.get("resumen", "")
+	var hechas := 0
+	for id: String in lecciones:
+		if raiz.partida.leccion_completada(id):
+			hechas += 1
+	return "%d de %d lecciones completadas" % [hechas, lecciones.size()]
 
 
 func _resumen_barco(barco: Dictionary) -> String:

@@ -20,6 +20,8 @@ func _crear_raiz() -> Raiz:
 func _botones_pequenos(nodo: Node, lista: Array[String]) -> void:
 	if nodo is Button and nodo.get_combined_minimum_size().y < ALTO_MIN_BOTON:
 		lista.append("%s (%d)" % [nodo.text, nodo.get_combined_minimum_size().y])
+	elif nodo is FilaMenu and nodo.get_combined_minimum_size().y < ALTO_MIN_BOTON:
+		lista.append("fila (%d)" % nodo.get_combined_minimum_size().y)
 	for hijo in nodo.get_children():
 		_botones_pequenos(hijo, lista)
 
@@ -32,6 +34,46 @@ func _botones_que_bloquean(nodo: Node, en_lista: bool, lista: Array[String]) -> 
 			lista.append("%s %s" % [nodo.get_class(), nodo.name])
 	for hijo in nodo.get_children():
 		_botones_que_bloquean(hijo, en_lista or nodo is ScrollContainer, lista)
+
+
+func _evento_boton(pulsado: bool, posicion: Vector2) -> InputEventMouseButton:
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = pulsado
+	e.position = posicion
+	return e
+
+
+func _fila_prueba(activa := true) -> Array:
+	var f := FilaMenu.new()
+	f.iniciar("Título", "Detalle", "", "", activa)
+	f.size = Vector2(300.0, 70.0)
+	var pulsaciones := [0]
+	f.pulsada.connect(func() -> void: pulsaciones[0] += 1)
+	return [f, pulsaciones]
+
+
+func test_fila_distingue_toque_de_arrastre() -> String:
+	var toque := _fila_prueba()
+	toque[0]._gui_input(_evento_boton(true, Vector2(50.0, 30.0)))
+	toque[0]._gui_input(_evento_boton(false, Vector2(52.0, 31.0)))
+	var arrastre := _fila_prueba()
+	arrastre[0]._gui_input(_evento_boton(true, Vector2(50.0, 30.0)))
+	var mover := InputEventMouseMotion.new()
+	mover.position = Vector2(50.0, 60.0)
+	arrastre[0]._gui_input(mover)
+	arrastre[0]._gui_input(_evento_boton(false, Vector2(50.0, 60.0)))
+	var cancelada := _fila_prueba()
+	cancelada[0]._gui_input(_evento_boton(true, Vector2(50.0, 30.0)))
+	Pantalla.cancelar_pulsaciones(cancelada[0])
+	cancelada[0]._gui_input(_evento_boton(false, Vector2(50.0, 30.0)))
+	var inactiva := _fila_prueba(false)
+	inactiva[0]._gui_input(_evento_boton(true, Vector2(50.0, 30.0)))
+	inactiva[0]._gui_input(_evento_boton(false, Vector2(50.0, 30.0)))
+	var resultados := [toque[1][0], arrastre[1][0], cancelada[1][0], inactiva[1][0]]
+	for par in [toque, arrastre, cancelada, inactiva]:
+		par[0].free()
+	return A.cierto(resultados == [1, 0, 0, 0], "toque, arrastre, cancelada, inactiva: %s" % str(resultados))
 
 
 func test_en_tactil_no_hay_resaltado_de_cursor() -> String:

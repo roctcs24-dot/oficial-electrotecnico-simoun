@@ -159,6 +159,24 @@ func test_minijuego_solo_suma_estrellas_nuevas() -> String:
 	])
 
 
+func test_progreso_hacia_el_rango_siguiente() -> String:
+	var rangos := [{"nombre": "A", "puntos": 0}, {"nombre": "B", "puntos": 500}, {"nombre": "C", "puntos": 1500}]
+	var p := Partida.new(_ruta_limpia("progreso.json"))
+	var inicio := p.progreso_rango(rangos)
+	p.datos["puntos"] = 250
+	var mitad := p.progreso_rango(rangos)
+	p.datos["puntos"] = 1000
+	var segundo := p.progreso_rango(rangos)
+	p.datos["puntos"] = 9000
+	var fin := p.progreso_rango(rangos)
+	return A.primero([
+		A.cierto(is_equal_approx(inicio, 0.0), "sin puntos: %f" % inicio),
+		A.cierto(is_equal_approx(mitad, 0.5), "a mitad del primer tramo: %f" % mitad),
+		A.cierto(is_equal_approx(segundo, 0.5), "a mitad del segundo tramo: %f" % segundo),
+		A.cierto(is_equal_approx(fin, 1.0), "en el último rango: %f" % fin),
+	])
+
+
 func test_rangos_segun_puntos() -> String:
 	var rangos := [{"nombre": "Cadete", "puntos": 0}, {"nombre": "3ra", "puntos": 500}]
 	var p := Partida.new(_ruta_limpia("rango.json"))
