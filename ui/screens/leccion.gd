@@ -85,8 +85,7 @@ func _crear_animacion(bloque: Dictionary) -> Control:
 
 func _crear_imagen(bloque: Dictionary) -> Control:
 	var columna := _columna(4)
-	var tarjeta := PanelContainer.new()
-	tarjeta.theme_type_variation = "Papel"
+	var tarjeta := _tarjeta_base("Papel")
 	columna.add_child(tarjeta)
 	var imagen := VistaSvg.new()
 	imagen.cargar(bloque)

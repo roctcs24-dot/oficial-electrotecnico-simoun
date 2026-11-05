@@ -24,10 +24,12 @@ func _botones_pequenos(nodo: Node, lista: Array[String]) -> void:
 		_botones_pequenos(hijo, lista)
 
 
-## Botones dentro de listas que impedirían arrastrarlas con el dedo.
+## Elementos dentro de listas que impedirían arrastrarlas con el dedo. Los deslizadores y el
+## pulsador que se mantiene deben conservar el gesto para sí.
 func _botones_que_bloquean(nodo: Node, en_lista: bool, lista: Array[String]) -> void:
-	if en_lista and nodo is BaseButton and nodo.mouse_filter != Control.MOUSE_FILTER_PASS and not nodo.has_meta("se_mantiene"):
-		lista.append(nodo.text)
+	if en_lista and nodo is Control and nodo.mouse_filter == Control.MOUSE_FILTER_STOP:
+		if not nodo is Slider and not nodo.has_meta("se_mantiene"):
+			lista.append("%s %s" % [nodo.get_class(), nodo.name])
 	for hijo in nodo.get_children():
 		_botones_que_bloquean(hijo, en_lista or nodo is ScrollContainer, lista)
 

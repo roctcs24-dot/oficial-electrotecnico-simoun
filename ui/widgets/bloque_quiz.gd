@@ -13,6 +13,7 @@ var _explicacion: Label
 ## respuesta es la opción ya elegida si se vuelve a una página, o -1.
 func iniciar(datos: Dictionary, respuesta := -1) -> void:
 	_datos = datos
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	_columna = VBoxContainer.new()
 	_columna.add_theme_constant_override("separation", 8)
 	add_child(_columna)

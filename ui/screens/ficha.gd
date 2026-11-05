@@ -126,8 +126,7 @@ func _con_titulo(definicion: Dictionary, titulo: String) -> Dictionary:
 
 
 func _tarjeta_simbolo(definicion: Dictionary) -> Control:
-	var tarjeta := PanelContainer.new()
-	tarjeta.theme_type_variation = "Papel"
+	var tarjeta := _tarjeta_base("Papel")
 	tarjeta.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var columna := _columna(2)
 	tarjeta.add_child(columna)
@@ -145,10 +144,12 @@ func _tarjeta_simbolo(definicion: Dictionary) -> Control:
 
 func _crear_banco() -> Control:
 	if not _ficha.has("banco"):
-		return Control.new()
+		var vacio := Control.new()
+		vacio.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return vacio
 	var banco: Dictionary = _ficha["banco"]
 	_sim = raiz.contenido.circuito(banco["circuito"])
-	var tarjeta := PanelContainer.new()
+	var tarjeta := _tarjeta_base()
 	var columna := _columna(8)
 	tarjeta.add_child(columna)
 	columna.add_child(_etiqueta("Banco de prueba", "Subtitulo"))

@@ -33,8 +33,9 @@ func construir() -> void:
 	if respondida and raiz.vertical:
 		columna.add_child(_tarjeta(datos, OTRA_NORMA[ronda["norma"]]))
 	if respondida:
+		# Fuera de la lista: siempre a la vista, sin tener que desplazarse hasta él.
 		var ultima: bool = indice + 1 >= rondas.size()
-		columna.add_child(_boton("Ver resultado" if ultima else "Siguiente símbolo", _avanzar))
+		add_child(_boton("Ver resultado" if ultima else "Siguiente símbolo", _avanzar))
 
 
 func _empezar() -> void:
@@ -46,8 +47,7 @@ func _empezar() -> void:
 
 
 func _tarjeta(datos: Dictionary, norma: String) -> Control:
-	var tarjeta := PanelContainer.new()
-	tarjeta.theme_type_variation = "Papel"
+	var tarjeta := _tarjeta_base("Papel")
 	tarjeta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var columna := _columna(2)
 	tarjeta.add_child(columna)

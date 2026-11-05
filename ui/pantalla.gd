@@ -96,7 +96,14 @@ func _columna(separacion := 10) -> VBoxContainer:
 
 
 func _aviso(texto: String) -> Control:
-	var caja := PanelContainer.new()
-	caja.theme_type_variation = "Aviso"
+	var caja := _tarjeta_base("Aviso")
 	caja.add_child(_etiqueta(texto))
+	return caja
+
+
+## Con el filtro por defecto, una tarjeta impediría arrastrar la lista con el dedo.
+func _tarjeta_base(variante := "") -> PanelContainer:
+	var caja := PanelContainer.new()
+	caja.theme_type_variation = variante
+	caja.mouse_filter = Control.MOUSE_FILTER_PASS
 	return caja

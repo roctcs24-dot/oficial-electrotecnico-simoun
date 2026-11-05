@@ -16,6 +16,7 @@ var _errores := 0
 ## ya_resuelto muestra el resultado si se vuelve a una página ya completada.
 func iniciar(datos: Dictionary, ya_resuelto := false) -> void:
 	_datos = datos
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	var columna := VBoxContainer.new()
 	columna.add_theme_constant_override("separation", 8)
 	add_child(columna)
