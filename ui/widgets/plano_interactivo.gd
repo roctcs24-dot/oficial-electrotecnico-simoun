@@ -1,11 +1,11 @@
 class_name PlanoInteractivo
 extends VistaSvg
-## Plano del barco con una zona tocable por sistema.
+## Plano del barco con una zona tocable por sistema, marcada con su número.
 
 signal sistema_tocado(id: int)
 
-const RADIO_MIN := 10.0
-const RADIO_MAX := 16.0
+const LADO_MIN := 19.0
+const LADO_MAX := 27.0
 
 var sistemas: Array = []
 
@@ -39,16 +39,20 @@ func _rect_zona(s: Dictionary) -> Rect2:
 func _draw() -> void:
 	super()
 	var fuente := get_theme_default_font()
-	var radio := clampf(rect_imagen().size.x * 0.03, RADIO_MIN, RADIO_MAX)
-	var tam_numero := int(radio * 1.2)
+	var lado := clampf(rect_imagen().size.x * 0.045, LADO_MIN, LADO_MAX)
+	var tam_numero := int(lado * 0.72)
 	for s: Dictionary in sistemas:
 		var activo: bool = s["estado"] == "activo"
 		var r := _rect_zona(s)
-		var color: Color = Tema.ACENTO if activo else Tema.APAGADO
-		draw_rect(r, Color(color, 0.22 if activo else 0.12))
-		draw_rect(r, color, false, 2.0 if activo else 1.0)
-		var centro := r.get_center()
-		draw_circle(centro, radio, color if activo else Tema.PANEL)
+		if activo:
+			draw_rect(r, Color(Tema.ACENTO, 0.12))
+			draw_rect(r, Tema.ACENTO, false, 1.5)
+		else:
+			draw_rect(r, Tema.APAGADO, false, 1.0)
+		var insignia := Rect2(r.get_center() - Vector2(lado, lado) / 2.0, Vector2(lado, lado))
+		draw_rect(insignia, Tema.ACENTO if activo else Tema.PANEL)
+		draw_rect(insignia, Tema.ACENTO if activo else Tema.APAGADO, false, 1.0)
 		var numero := str(int(s["id"]))
 		var ancho := fuente.get_string_size(numero, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_numero).x
-		draw_string(fuente, centro + Vector2(-ancho / 2.0, tam_numero * 0.35), numero, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_numero, Tema.FONDO if activo else Tema.TEXTO_SUAVE)
+		var base := insignia.get_center() + Vector2(-ancho / 2.0, tam_numero * 0.35)
+		draw_string(fuente, base, numero, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_numero, Tema.FONDO if activo else Tema.TEXTO_SUAVE)

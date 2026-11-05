@@ -1,18 +1,18 @@
 {
   "id": "l0_trifasica",
   "titulo": "Trifásica: tensión de línea y de fase",
-  "resumen": "Tres ondas desfasadas y por qué 440 V también son 254 V.",
+  "resumen": "Tres ondas desfasadas y la relación entre 440 V y 254 V.",
   "minutos": 5,
   "paginas": [
     {
-      "titulo": "Tres ondas, 120° de diferencia",
+      "titulo": "Tres ondas desfasadas 120°",
       "bloques": [
-        { "tipo": "texto", "texto": "Un sistema {{monofasico}} tiene una sola onda de tensión. Un sistema {{trifasico}}, como la red de 440 V del barco, tiene tres: una por cada devanado del generador, separados 120° entre sí.\n\nCada línea se llama {{fase}}: L1, L2 y L3. Las tres alcanzan su máximo por turnos, así que la potencia llega de forma muy pareja y se forma un campo magnético giratorio. Ese campo es el que hace girar a los motores sin escobillas." },
+        { "tipo": "texto", "texto": "Un sistema {{monofasico}} tiene una sola onda de tensión. Un sistema {{trifasico}}, como la red de 440 V del buque, tiene tres: una por cada devanado del generador, separados 120° entre sí.\n\nCada línea se denomina {{fase}}: L1, L2 y L3. Las tres alcanzan su máximo por turnos, de modo que la potencia se entrega de forma muy uniforme y se genera un campo magnético giratorio. Ese campo es el que hace girar los motores de inducción, que no necesitan escobillas." },
         {
           "tipo": "animacion",
           "id": "fasores",
           "params": {},
-          "pie": "Las flechas giran juntas. La altura de cada una es el valor de esa fase en ese instante. Colores de la norma IEC 60445; los cables a bordo pueden ser otros: verificar a bordo."
+          "pie": "Los vectores giran solidarios. La altura de cada uno es el valor de esa fase en ese instante. Colores según IEC 60445; los conductores a bordo pueden ser distintos: verificar a bordo."
         },
         {
           "tipo": "quiz",
@@ -25,14 +25,14 @@
       ]
     },
     {
-      "titulo": "Línea y fase",
+      "titulo": "Tensión de línea y de fase",
       "bloques": [
-        { "tipo": "texto", "texto": "Si los tres devanados se unen en un punto común, ese punto es el {{neutro}} y hay dos tensiones distintas:\n\n• {{tension_linea}}: entre dos fases, como L1 y L2.\n• {{tension_fase}}: entre una fase y el neutro.\n\nSe relacionan así:\n\n[center][b]V línea = √3 × V fase[/b][/center]\n\nCon 440 V de línea, la tensión de fase es 440 ÷ 1,732 ≈ 254 V. No son 220 V, porque las dos tensiones están desfasadas: no se suman como números simples.\n\nToca cada medición y mira qué lee el instrumento. Los valores salen del motor de simulación del juego." },
+        { "tipo": "texto", "texto": "Si los tres devanados se unen en un punto común, ese punto es el {{neutro}} y existen dos tensiones distintas:\n\n• {{tension_linea}}: entre dos fases, como L1 y L2.\n• {{tension_fase}}: entre una fase y el neutro.\n\nSe relacionan de esta forma:\n\n[center][b]V línea = √3 × V fase[/b][/center]\n\nCon 440 V de línea, la tensión de fase es 440 ÷ 1,732 ≈ 254 V, y no 220 V, porque las dos tensiones están desfasadas y no se suman como números simples.\n\nSeleccione cada medición para ver la lectura. Los valores proceden del motor de simulación." },
         {
           "tipo": "animacion",
           "id": "estrella",
           "params": {},
-          "pie": "Generador en estrella visto de forma esquemática."
+          "pie": "Generador en estrella, en representación esquemática."
         },
         {
           "tipo": "quiz",
@@ -45,14 +45,14 @@
       ]
     },
     {
-      "titulo": "Por qué te importa",
+      "titulo": "Aplicación a bordo",
       "bloques": [
-        { "tipo": "texto", "texto": "[b]Red aislada.[/b] La red de muchos buques es un {{sistema_aislado}}: el neutro no se conecta a la estructura y a menudo ni siquiera se distribuye ([i]verificar a bordo[/i]). A los motores trifásicos solo llegan L1, L2 y L3. Una primera {{falla_tierra}} no dispara ninguna protección, así que la instalación sigue funcionando con la falla presente. Por eso no puedes suponer que tocar una sola fase sea seguro.\n\n[b]Estrella o delta.[/b] Un motor con placa 254Δ/440Y soporta 254 V por devanado. En 440 V debe ir en estrella. Si lo conectas en delta, cada devanado recibe 440 V, √3 veces lo que aguanta, y se quema. Lo practicarás en las lecciones de motores.\n\n[b]Potencia del motor.[/b] Se calcula con P = √3 × V × I × cos φ, donde cos φ es el {{factor_potencia}} que aparece en la placa." },
+        { "tipo": "texto", "texto": "[b]Red aislada.[/b] La red de muchos buques es un {{sistema_aislado}}: el neutro no se conecta a la estructura y a menudo ni siquiera se distribuye ([i]verificar a bordo[/i]). A los motores trifásicos solo llegan L1, L2 y L3. Una primera {{falla_tierra}} no dispara ninguna protección, de modo que la instalación sigue en servicio con la falla presente. No se debe suponer que tocar una sola fase sea seguro.\n\n[b]Estrella o delta.[/b] Un motor con placa 254Δ/440Y admite 254 V por devanado. En 440 V debe conectarse en estrella. Conectado en delta, cada devanado recibe 440 V, √3 veces su tensión admisible, y se quema. Se estudia en detalle en las lecciones de motores.\n\n[b]Potencia del motor.[/b] Se calcula con P = √3 × V × I × cos φ, donde cos φ es el {{factor_potencia}} indicado en la placa." },
         {
           "tipo": "quiz",
           "tema": "placa_254_440",
           "pregunta": "Un motor tiene placa 254Δ/440Y y la red es de 440 V. ¿Cómo se conecta?",
-          "opciones": ["En delta, porque es la conexión de mayor potencia", "En estrella, para que cada devanado reciba 254 V", "Da igual, el motor se adapta"],
+          "opciones": ["En delta, porque es la conexión de mayor potencia", "En estrella, para que cada devanado reciba 254 V", "Es indiferente, el motor se adapta"],
           "correcta": 1,
           "explicacion": "En estrella, cada devanado recibe la tensión de fase: 440 ÷ √3 ≈ 254 V, justo lo que indica la placa."
         }

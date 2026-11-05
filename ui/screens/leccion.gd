@@ -168,11 +168,11 @@ func _construir_final() -> void:
 	add_child(desplazable)
 	var columna := _columna(12)
 	desplazable.add_child(columna)
-	columna.add_child(_etiqueta("Aciertos a la primera: %d de %d" % [aciertos, total], "Subtitulo"))
+	columna.add_child(_etiqueta("Respuestas correctas al primer intento: %d de %d" % [aciertos, total], "Subtitulo"))
 	var ganados: int = args["ganados"]
-	columna.add_child(_etiqueta("Has ganado %d puntos." % ganados if ganados > 0 else "Ya habías sumado los puntos de esta lección."))
+	columna.add_child(_etiqueta("Puntos obtenidos: %d." % ganados if ganados > 0 else "Los puntos de esta lección ya estaban registrados."))
 	if aciertos < total:
-		columna.add_child(_etiqueta("Lo que fallaste queda anotado para repasarlo más adelante.", "Nota"))
+		columna.add_child(_etiqueta("Los temas con error quedan registrados para su repaso.", "Nota"))
 	columna.add_child(_etiqueta("Para saber más", "Subtitulo"))
 	var referencias := PackedStringArray()
 	for r: String in _leccion.get("para_saber_mas", []):

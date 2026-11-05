@@ -50,7 +50,7 @@ func _dibujar_onda(area: Rect2, fase: float) -> void:
 		var x := float(n) / cantidad
 		puntos.append(Vector2(area.position.x + x * area.size.x, medio - alto * sin(fase - x * TAU * 2.0)))
 	lienzo.draw_polyline(puntos, Color("1668c4"), 3.0, true)
-	lienzo.draw_circle(puntos[0], 6.0, Color("f2a93b"))
+	lienzo.draw_circle(puntos[0], 6.0, Tema.ACENTO)
 	var leyenda := "pico %s V   ·   eficaz %d V" % [rotulo, int(v_eficaz)]
 	texto(Vector2(area.get_center().x, area.end.y + 18.0), leyenda, 13)
 

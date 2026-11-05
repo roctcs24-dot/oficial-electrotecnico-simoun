@@ -62,6 +62,7 @@ func _crear_pendientes() -> void:
 		b.text = _datos["pasos"][i]
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.mouse_filter = Control.MOUSE_FILTER_PASS
 		b.pressed.connect(_tocar.bind(i, b))
 		_pendientes.add_child(b)
 
@@ -69,7 +70,7 @@ func _crear_pendientes() -> void:
 func _tocar(indice: int, boton: Button) -> void:
 	if indice != _siguiente:
 		_errores += 1
-		_aviso.text = "Ese paso todavía no va. ¿Qué tiene que ocurrir antes?"
+		_aviso.text = "Paso fuera de secuencia. Revise qué debe ejecutarse antes."
 		return
 	_aviso.text = ""
 	_agregar_hecho(boton.text)

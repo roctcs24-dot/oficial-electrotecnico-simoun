@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 
 
 func fondo() -> void:
-	lienzo.draw_style_box(Tema.caja(Tema.PAPEL, 10, 0, 0), Rect2(Vector2.ZERO, lienzo.size))
+	lienzo.draw_style_box(Tema.caja(Tema.PAPEL, Tema.RADIO, 0, 0), Rect2(Vector2.ZERO, lienzo.size))
 
 
 func texto(posicion: Vector2, cadena: String, tam := 16, color := Tema.TINTA, centrado := true) -> void:

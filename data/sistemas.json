@@ -3,7 +3,10 @@
     "svg": "res://art/barco/plano.svg",
     "tamano": [1000, 420],
     "etiquetas": [
-      { "texto": "Dibujo ilustrativo de un atunero cerquero: no es el plano real del barco.", "x": 500, "y": 392, "tam": 22 }
+      { "texto": "Esquema ilustrativo de un atunero cerquero. No corresponde al plano real del buque.", "x": 500, "y": 396, "tam": 20, "color": "#b1bcc4" },
+      { "texto": "POPA", "x": 40, "y": 340, "tam": 16, "color": "#8d989f" },
+      { "texto": "PROA", "x": 950, "y": 340, "tam": 16, "color": "#8d989f" },
+      { "texto": "L.F.", "x": 978, "y": 302, "tam": 15, "color": "#6f9db8" }
     ]
   },
   "sistemas": [

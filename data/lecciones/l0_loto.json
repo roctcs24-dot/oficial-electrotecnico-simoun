@@ -1,17 +1,17 @@
 {
   "id": "l0_loto",
   "titulo": "Las 5 reglas de oro y LOTO",
-  "resumen": "El procedimiento que te permite volver a casa.",
+  "resumen": "Procedimiento de aislamiento seguro antes de intervenir un equipo.",
   "minutos": 5,
   "paginas": [
     {
-      "titulo": "Antes de tocar nada",
+      "titulo": "Antes de intervenir",
       "bloques": [
-        { "tipo": "texto", "texto": "El botón de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 440 V, y alguien puede arrancarlo desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del barco ([i]verificar el procedimiento a bordo[/i]). Sigue estas reglas en orden, sin saltarte ninguna." },
+        { "tipo": "texto", "texto": "El pulsador de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 440 V, y el equipo puede arrancarse desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del buque ([i]verificar el procedimiento a bordo[/i]). Las reglas siguientes se aplican en orden, sin omitir ninguna." },
         {
           "tipo": "quiz",
           "tema": "parada_no_es_seguro",
-          "pregunta": "La bomba está detenida con el pulsador de parada. ¿Ya puedes abrir la bornera?",
+          "pregunta": "La bomba está detenida con el pulsador de parada. ¿Se puede abrir ya la bornera?",
           "opciones": ["Sí, porque el motor no gira", "No: el pulsador solo actúa sobre el mando y los bornes pueden seguir con tensión", "Sí, si la luz piloto está apagada"],
           "correcta": 1,
           "explicacion": "Parar no es aislar. Hay que abrir el aislador, bloquearlo, etiquetarlo y verificar la ausencia de tensión."
@@ -21,20 +21,20 @@
     {
       "titulo": "Las 5 reglas de oro",
       "bloques": [
-        { "tipo": "texto", "texto": "1. [b]Desconectar[/b] todas las fuentes de alimentación, incluidas las de mando y calefacción.\n2. [b]Bloquear[/b] para que nadie pueda volver a conectar.\n3. [b]Verificar[/b] la ausencia de tensión con un instrumento adecuado.\n4. [b]Poner a tierra y en cortocircuito[/b] cuando el procedimiento lo requiera.\n5. [b]Proteger y señalizar[/b] las partes cercanas que sigan con tensión y delimitar la zona." },
+        { "tipo": "texto", "texto": "1. [b]Desconectar[/b] todas las fuentes de alimentación, incluidas las de mando y calefacción.\n2. [b]Bloquear[/b] para impedir la reconexión.\n3. [b]Verificar[/b] la ausencia de tensión con un instrumento adecuado.\n4. [b]Poner a tierra y en cortocircuito[/b] cuando el procedimiento lo requiera.\n5. [b]Proteger y señalizar[/b] las partes cercanas que sigan con tensión, y delimitar la zona." },
         {
           "tipo": "ordenar",
           "tema": "cinco_reglas",
-          "pregunta": "Toca las 5 reglas en su orden correcto:",
+          "pregunta": "Seleccione las 5 reglas en su orden correcto:",
           "pasos": ["Desconectar", "Bloquear contra reconexión", "Verificar ausencia de tensión", "Poner a tierra y en cortocircuito", "Proteger y señalizar"],
-          "explicacion": "El orden importa: no se verifica antes de bloquear, ni se pone a tierra antes de verificar. Poner a tierra un equipo con tensión provoca un cortocircuito."
+          "explicacion": "El orden es obligatorio: no se verifica antes de bloquear, ni se pone a tierra antes de verificar. Poner a tierra un equipo con tensión provoca un cortocircuito."
         }
       ]
     },
     {
       "titulo": "Bloqueo y etiquetado",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{loto}} convierte la regla 2 en algo físico:\n\n• [b]Candado personal:[/b] cada persona que trabaja pone el suyo y guarda su llave. Si son varias, se usa un cerrojo múltiple con un candado por persona.\n• [b]Tarjeta:[/b] indica quién trabaja, en qué, cuándo y cómo contactarle.\n• [b]Nadie más retira tu candado.[/b] Solo tú, cuando termines." },
+        { "tipo": "texto", "texto": "El {{loto}} materializa la regla 2:\n\n• [b]Candado personal:[/b] cada persona que trabaja coloca el suyo y conserva su llave. Si son varias, se usa un cerrojo múltiple con un candado por persona.\n• [b]Tarjeta:[/b] indica quién trabaja, en qué equipo, desde cuándo y cómo contactar con esa persona.\n• [b]Retirada:[/b] cada candado lo retira únicamente quien lo colocó, al terminar su trabajo." },
         {
           "tipo": "imagen",
           "svg": "res://art/seguridad/loto.svg",
@@ -57,21 +57,21 @@
     {
       "titulo": "Probar, medir, probar",
       "bloques": [
-        { "tipo": "texto", "texto": "Un instrumento dañado puede leer 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se hace en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nDescarga también la {{energia_almacenada}}: espera el tiempo que indica el fabricante y mide en el bus de los condensadores." },
+        { "tipo": "texto", "texto": "Un instrumento averiado puede indicar 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se realiza en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nTambién debe descargarse la {{energia_almacenada}}: se espera el tiempo que indica el fabricante y se mide en el bus de los condensadores." },
         {
           "tipo": "ordenar",
           "tema": "secuencia_loto",
-          "pregunta": "Vas a cambiar el motor de una bomba. Toca los pasos en orden:",
-          "pasos": ["Obtener el permiso y avisar al personal afectado", "Parar el equipo con su mando normal", "Abrir el aislador", "Poner candado y tarjeta", "Probar el instrumento, medir ausencia de tensión y probarlo de nuevo", "Hacer el trabajo", "Retirar herramientas y a las personas, y quitar candado y tarjeta", "Avisar, energizar y probar el equipo"],
-          "explicacion": "Parar y luego aislar evita abrir el aislador con carga. Verificar va siempre después de bloquear y antes de tocar."
+          "pregunta": "Se va a sustituir el motor de una bomba. Seleccione los pasos en orden:",
+          "pasos": ["Obtener el permiso y avisar al personal afectado", "Parar el equipo con su mando normal", "Abrir el aislador", "Colocar candado y tarjeta", "Probar el instrumento, medir ausencia de tensión y probarlo de nuevo", "Realizar el trabajo", "Retirar herramientas y personal, y quitar candado y tarjeta", "Avisar, energizar y probar el equipo"],
+          "explicacion": "Parar y luego aislar evita abrir el aislador con carga. La verificación se hace siempre después de bloquear y antes de intervenir."
         },
         {
           "tipo": "quiz",
           "tema": "candado_ajeno",
-          "pregunta": "Terminaste tu parte, pero el candado de un compañero sigue puesto y no lo encuentras. ¿Qué haces?",
-          "opciones": ["Lo cortas para no retrasar el arranque", "Energizas, ya que él debió avisar", "No energizas: lo localizas o sigues el procedimiento del barco a través del responsable"],
+          "pregunta": "Su parte del trabajo ha terminado, pero el candado de un compañero sigue colocado y no se le localiza. ¿Cuál es la actuación correcta?",
+          "opciones": ["Cortar el candado para no retrasar el arranque", "Energizar, ya que el compañero debió avisar", "No energizar: localizarlo o seguir el procedimiento del buque a través del responsable"],
           "correcta": 2,
-          "explicacion": "Ese candado puede ser lo único que protege a tu compañero. Retirar el candado de otra persona solo se hace con el procedimiento formal y tras confirmar que está a salvo."
+          "explicacion": "Ese candado puede ser lo único que protege al compañero. La retirada de un candado ajeno solo se hace con el procedimiento formal y tras confirmar que la persona está a salvo."
         }
       ]
     }
@@ -79,7 +79,7 @@
   "para_saber_mas": [
     "EN 50110-1: operación de instalaciones eléctricas, con las cinco reglas.",
     "NFPA 70E: bloqueo y etiquetado, y condición de trabajo eléctricamente segura.",
-    "Código IGS (ISM) y sistema de gestión de seguridad del barco: permisos de trabajo.",
-    "Este material es de formación. A bordo mandan los procedimientos del barco."
+    "Código IGS (ISM) y sistema de gestión de seguridad del buque: permisos de trabajo.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
   ]
 }

@@ -2,6 +2,8 @@ class_name Pantalla
 extends VBoxContainer
 ## Base de las pantallas. Se construyen en código y se rehacen al girar el celular.
 
+const ZONA_MUERTA_ARRASTRE := 14
+
 var raiz: Raiz
 var args := {}
 
@@ -60,6 +62,8 @@ func _boton(texto: String, al_pulsar: Callable) -> Button:
 	var b := Button.new()
 	b.text = texto
 	b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# Con el filtro por defecto, un botón impediría arrastrar la lista con el dedo.
+	b.mouse_filter = Control.MOUSE_FILTER_PASS
 	b.pressed.connect(al_pulsar)
 	return b
 
@@ -69,7 +73,19 @@ func _desplazable() -> ScrollContainer:
 	s.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	s.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	s.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	s.scroll_deadzone = ZONA_MUERTA_ARRASTRE
+	s.scroll_started.connect(cancelar_pulsaciones.bind(s))
 	return s
+
+
+## Al empezar a arrastrar se anula el botón bajo el dedo, para que no se active al soltar.
+## Deshabilitar un botón es lo único que borra su pulsación en curso.
+static func cancelar_pulsaciones(nodo: Node) -> void:
+	if nodo is BaseButton and not nodo.disabled:
+		nodo.disabled = true
+		nodo.disabled = false
+	for hijo in nodo.get_children():
+		cancelar_pulsaciones(hijo)
 
 
 func _columna(separacion := 10) -> VBoxContainer:

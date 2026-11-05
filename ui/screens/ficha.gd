@@ -60,7 +60,7 @@ func construir() -> void:
 func _crear_selector() -> Control:
 	var fila := HBoxContainer.new()
 	var grupo := ButtonGroup.new()
-	_boton_real = _boton("Como se ve", _mostrar_vista.bind("real"))
+	_boton_real = _boton("Equipo", _mostrar_vista.bind("real"))
 	_boton_simbolos = _boton("Símbolos", _mostrar_vista.bind("simbolos"))
 	for b: Button in [_boton_real, _boton_simbolos]:
 		b.toggle_mode = true
@@ -131,7 +131,7 @@ func _crear_banco() -> Control:
 	var tarjeta := PanelContainer.new()
 	var columna := _columna(8)
 	tarjeta.add_child(columna)
-	columna.add_child(_etiqueta("Pruébalo", "Subtitulo"))
+	columna.add_child(_etiqueta("Banco de prueba", "Subtitulo"))
 	columna.add_child(_etiqueta(banco.get("explicacion", ""), "Nota"))
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 14)
@@ -139,6 +139,8 @@ func _crear_banco() -> Control:
 	var pulsador := Button.new()
 	pulsador.text = "Mantener pulsado %s" % banco["pulsador"]
 	pulsador.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Se mantiene pulsado: el filtro por defecto evita que un movimiento del dedo arrastre la lista.
+	pulsador.set_meta("se_mantiene", true)
 	pulsador.button_down.connect(pulsar_banco.bind(true))
 	pulsador.button_up.connect(pulsar_banco.bind(false))
 	fila.add_child(pulsador)

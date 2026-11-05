@@ -25,6 +25,7 @@ func preparar() -> void:
 		b.button_group = grupo
 		b.button_pressed = m == _medida
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.mouse_filter = Control.MOUSE_FILTER_PASS
 		b.pressed.connect(_elegir.bind(m))
 		rejilla.add_child(b)
 
@@ -58,16 +59,16 @@ func dibujar() -> void:
 	texto(c + Vector2(-18.0, -8.0), "N", 15)
 	var a: Vector2 = puntos[_medida[0]]
 	var b: Vector2 = puntos[_medida[1]]
-	lienzo.draw_line(a, b, Color("f2a93b"), 8.0, true)
+	lienzo.draw_line(a, b, Tema.ACENTO, 8.0, true)
 	lienzo.draw_circle(a, 8.0, Color("c9352b"))
 	lienzo.draw_circle(b, 8.0, Color("20242a"))
 	_dibujar_instrumento(Rect2(tam.x * 0.62, tam.y * 0.18, tam.x * 0.34, tam.y * 0.62))
 
 
 func _dibujar_instrumento(r: Rect2) -> void:
-	lienzo.draw_style_box(Tema.caja(Color("2a2d31"), 12, 0, 0), r)
+	lienzo.draw_style_box(Tema.caja(Color("2a2d31"), 4, 0, 0), r)
 	var pantalla := r.grow_individual(-10.0, -10.0, -10.0, -r.size.y * 0.42)
-	lienzo.draw_style_box(Tema.caja(Color("bcd0b4"), 5, 0, 0), pantalla)
+	lienzo.draw_style_box(Tema.caja(Color("bcd0b4"), 2, 0, 0), pantalla)
 	var valor := lectura(_medida[0], _medida[1])
 	texto(pantalla.get_center(), "%s V" % TextoTecnico.numero(valor, 0), 26, Tema.TINTA)
 	var tipo := "tensión de fase" if _medida[1] == "N" else "tensión de línea"

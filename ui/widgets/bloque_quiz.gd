@@ -27,6 +27,7 @@ func iniciar(datos: Dictionary, respuesta := -1) -> void:
 		b.text = opciones[i]
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.mouse_filter = Control.MOUSE_FILTER_PASS
 		b.pressed.connect(elegir.bind(i))
 		_columna.add_child(b)
 		_botones.append(b)
@@ -52,7 +53,7 @@ func _mostrar_resultado(indice: int) -> void:
 			_pintar(b, Tema.ACIERTO)
 		elif i == indice:
 			_pintar(b, Tema.FALLO)
-	var inicio := "Correcto. " if indice == correcta else "No es correcto. "
+	var inicio := "Respuesta correcta. " if indice == correcta else "Respuesta incorrecta. "
 	_explicacion.text = inicio + _datos["explicacion"]
 	_explicacion.visible = true
 

@@ -1,18 +1,18 @@
 {
   "id": "l0_ohm_potencia",
   "titulo": "Ley de Ohm y potencia",
-  "resumen": "Las dos fórmulas que usarás todos los días.",
+  "resumen": "Relación entre tensión, corriente, resistencia y potencia.",
   "minutos": 5,
   "paginas": [
     {
       "titulo": "La ley de Ohm",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{ley_ohm}} une las tres magnitudes:\n\n[center][b]V = I × R[/b][/center]\n\n• Tensión: V = I × R\n• Corriente: I = V ÷ R\n• Resistencia: R = V ÷ I\n\n[b]Ejemplo:[/b] una lámpara piloto de 4 000 Ω en un mando de 110 V ([i]valor típico — verificar a bordo[/i]) deja pasar I = 110 ÷ 4 000 = 0,0275 A, es decir 27,5 mA." },
+        { "tipo": "texto", "texto": "La {{ley_ohm}} relaciona las tres magnitudes:\n\n[center][b]V = I × R[/b][/center]\n\n• Tensión: V = I × R\n• Corriente: I = V ÷ R\n• Resistencia: R = V ÷ I\n\n[b]Ejemplo:[/b] una lámpara piloto de 4 000 Ω en un circuito de mando de 110 V ([i]valor típico — verificar a bordo[/i]) conduce I = 110 ÷ 4 000 = 0,0275 A, es decir, 27,5 mA." },
         {
           "tipo": "animacion",
           "id": "circuito_ohm",
           "params": { "v_min": 0, "v_max": 110, "v": 24, "r_min": 2, "r_max": 200, "r": 12, "potencia": false },
-          "pie": "Comprueba la fórmula: elige una tensión y una resistencia, y calcula antes de mirar el resultado."
+          "pie": "Comprobación de la fórmula: seleccione una tensión y una resistencia, y calcule la corriente antes de leer el resultado."
         },
         {
           "tipo": "quiz",
@@ -27,12 +27,12 @@
     {
       "titulo": "Cortocircuito",
       "bloques": [
-        { "tipo": "texto", "texto": "¿Qué pasa si la resistencia casi desaparece? Según I = V ÷ R, la corriente se dispara. Eso es un {{cortocircuito}}.\n\nCon 440 V y solo 0,02 Ω en el camino, la cuenta da I = 440 ÷ 0,02 = 22 000 A. El cobre se funde en un instante y aparece un arco. Por eso las protecciones deben abrir de inmediato, y por eso una herramienta olvidada sobre una barra es tan peligrosa." },
+        { "tipo": "texto", "texto": "Si la resistencia casi desaparece, según I = V ÷ R la corriente aumenta de forma extrema. Esto es un {{cortocircuito}}.\n\nCon 440 V y solo 0,02 Ω en el camino, el cálculo da I = 440 ÷ 0,02 = 22 000 A. El cobre se funde en un instante y se forma un arco. Por este motivo las protecciones deben abrir de inmediato, y una herramienta olvidada sobre una barra constituye un riesgo grave." },
         {
           "tipo": "quiz",
           "tema": "cortocircuito",
           "pregunta": "¿Qué caracteriza a un cortocircuito?",
-          "opciones": ["Mucha resistencia y poca corriente", "Casi nada de resistencia y una corriente enorme", "Falta de tensión en todo el barco"],
+          "opciones": ["Mucha resistencia y poca corriente", "Resistencia casi nula y corriente muy elevada", "Falta de tensión en todo el buque"],
           "correcta": 1,
           "explicacion": "Sin resistencia que la limite, la corriente solo queda limitada por la capacidad de la red. Por eso destruye equipos en milisegundos."
         }
@@ -41,12 +41,12 @@
     {
       "titulo": "Potencia y energía",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{potencia}} dice cuánto trabajo hace la electricidad cada segundo:\n\n[center][b]P = V × I[/b][/center]\n\nSe mide en vatios (W), y 1 kW son 1 000 W. Esta fórmula sirve tal cual en corriente continua y con cargas puramente resistivas. Los motores trifásicos tienen su propia fórmula, que verás más adelante.\n\nLa {{energia}} es la potencia mantenida en el tiempo: 15 kW durante 2 horas son 30 kWh. Esa energía la paga el barco en combustible.\n\nMueve los controles: la lámpara brilla según su potencia." },
+        { "tipo": "texto", "texto": "La {{potencia}} indica cuánto trabajo realiza la electricidad cada segundo:\n\n[center][b]P = V × I[/b][/center]\n\nSe mide en vatios (W), y 1 kW equivale a 1 000 W. Esta fórmula se aplica directamente en corriente continua y con cargas puramente resistivas. Los motores trifásicos tienen una fórmula propia, que se estudia más adelante.\n\nLa {{energia}} es la potencia mantenida en el tiempo: 15 kW durante 2 horas son 30 kWh. Esa energía se traduce en consumo de combustible.\n\nAl ajustar los controles, la lámpara varía su brillo según la potencia." },
         {
           "tipo": "animacion",
           "id": "circuito_ohm",
           "params": { "v_min": 0, "v_max": 24, "v": 24, "r_min": 2, "r_max": 24, "r": 12, "potencia": true },
-          "pie": "Toda la potencia que consume una resistencia se convierte en calor. Por eso un borne flojo, con resistencia alta, se calienta."
+          "pie": "La potencia que consume una resistencia se convierte en calor. Por eso un borne flojo, con resistencia alta, se calienta."
         },
         {
           "tipo": "quiz",

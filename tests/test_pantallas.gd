@@ -24,6 +24,30 @@ func _botones_pequenos(nodo: Node, lista: Array[String]) -> void:
 		_botones_pequenos(hijo, lista)
 
 
+## Botones dentro de listas que impedirían arrastrarlas con el dedo.
+func _botones_que_bloquean(nodo: Node, en_lista: bool, lista: Array[String]) -> void:
+	if en_lista and nodo is BaseButton and nodo.mouse_filter != Control.MOUSE_FILTER_PASS and not nodo.has_meta("se_mantiene"):
+		lista.append(nodo.text)
+	for hijo in nodo.get_children():
+		_botones_que_bloquean(hijo, en_lista or nodo is ScrollContainer, lista)
+
+
+func test_cancelar_pulsaciones_respeta_los_deshabilitados() -> String:
+	var caja := VBoxContainer.new()
+	var activo := Button.new()
+	var inactivo := Button.new()
+	inactivo.disabled = true
+	caja.add_child(activo)
+	caja.add_child(inactivo)
+	Pantalla.cancelar_pulsaciones(caja)
+	var resultado := A.primero([
+		A.cierto(not activo.disabled, "un botón activo debe seguir activo"),
+		A.cierto(inactivo.disabled, "un botón deshabilitado debe seguir deshabilitado"),
+	])
+	caja.free()
+	return resultado
+
+
 func _recorrer(raiz: Raiz) -> String:
 	var pasos := [
 		["sistema", {"id": 3}],
@@ -45,7 +69,15 @@ func _recorrer(raiz: Raiz) -> String:
 			_botones_pequenos(raiz, pequenos)
 			if not pequenos.is_empty():
 				return "botones bajo %d en %s: %s" % [int(ALTO_MIN_BOTON), p[0], ", ".join(pequenos)]
+			var bloquean: Array[String] = []
+			_botones_que_bloquean(raiz, false, bloquean)
+			if not bloquean.is_empty():
+				return "botones que impiden arrastrar en %s: %s" % [p[0], ", ".join(bloquean)]
 			raiz.volver()
+		var en_plano: Array[String] = []
+		_botones_que_bloquean(raiz, false, en_plano)
+		if not en_plano.is_empty():
+			return "botones que impiden arrastrar en el plano: %s" % ", ".join(en_plano)
 	return ""
 
 

@@ -127,6 +127,8 @@ Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fa
 
 **Datos sin confirmar:** todo valor típico debe indicar en el texto `valor típico — verificar a bordo`.
 
+**Redacción:** tono de manual técnico, impersonal o con "usted", sin humor ni frases ingeniosas.
+
 **Dibujos:** Godot no dibuja el texto de los SVG, así que las letras van en `etiquetas` del JSON, en coordenadas del dibujo. Cada SVG necesita al lado un archivo `<nombre>.svg.import` con este contenido, para que se exporte tal cual y se pueda dibujar a la resolución de cada pantalla:
 
 ```text

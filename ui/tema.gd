@@ -1,22 +1,26 @@
 class_name Tema
 extends RefCounted
-## Colores y estilos de la interfaz. Los márgenes de los botones garantizan 48 de alto.
+## Colores y estilos de la interfaz: sobrios, de manual técnico.
+## Los márgenes de los botones garantizan 48 de alto.
 
-const FONDO := Color("12344d")
-const PANEL := Color("1b4663")
-const PANEL_CLARO := Color("2a5f83")
-const ACENTO := Color("f2a93b")
-const TEXTO := Color("f3f6f8")
-const TEXTO_SUAVE := Color("c3d3de")
-const APAGADO := Color("7e93a3")
-const PAPEL := Color("eef1ec")
+const FONDO := Color("171b1f")
+const PANEL := Color("20262b")
+const BOTON := Color("2b3339")
+const BORDE := Color("47525a")
+const SELECCION := Color("3b6a8a")
+const ACENTO := Color("cf9a35")
+const TEXTO := Color("e9edf0")
+const TEXTO_SUAVE := Color("b1bcc4")
+const APAGADO := Color("6f7a82")
+const PAPEL := Color("e9ebe8")
 const TINTA := Color("20242a")
-const AVISO := Color("7a2e22")
-const ACIERTO := Color("23804a")
-const FALLO := Color("a8352a")
+const AVISO := Color("6b3a1f")
+const ACIERTO := Color("2f6f4a")
+const FALLO := Color("8c3b30")
+const RADIO := 3
 
 
-static func caja(color: Color, radio := 8, margen_x := 14, margen_y := 13) -> StyleBoxFlat:
+static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, borde := Color.TRANSPARENT) -> StyleBoxFlat:
 	var c := StyleBoxFlat.new()
 	c.bg_color = color
 	c.set_corner_radius_all(radio)
@@ -24,6 +28,9 @@ static func caja(color: Color, radio := 8, margen_x := 14, margen_y := 13) -> St
 	c.content_margin_right = margen_x
 	c.content_margin_top = margen_y
 	c.content_margin_bottom = margen_y
+	if borde.a > 0.0:
+		c.border_color = borde
+		c.set_border_width_all(1)
 	return c
 
 
@@ -33,31 +40,31 @@ static func crear() -> Theme:
 
 	t.set_color("font_color", "Label", TEXTO)
 	t.set_type_variation("Titulo", "Label")
-	t.set_font_size("font_size", "Titulo", 26)
+	t.set_font_size("font_size", "Titulo", 24)
 	t.set_type_variation("Subtitulo", "Label")
-	t.set_font_size("font_size", "Subtitulo", 20)
+	t.set_font_size("font_size", "Subtitulo", 19)
 	t.set_type_variation("Nota", "Label")
 	t.set_font_size("font_size", "Nota", 15)
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
 
-	t.set_stylebox("normal", "Button", caja(PANEL_CLARO))
-	t.set_stylebox("hover", "Button", caja(PANEL_CLARO.lightened(0.12)))
-	t.set_stylebox("pressed", "Button", caja(ACENTO))
-	t.set_stylebox("hover_pressed", "Button", caja(ACENTO.lightened(0.1)))
-	t.set_stylebox("disabled", "Button", caja(PANEL))
+	t.set_stylebox("normal", "Button", caja(BOTON, RADIO, 14, 13, BORDE))
+	t.set_stylebox("hover", "Button", caja(BOTON.lightened(0.08), RADIO, 14, 13, BORDE.lightened(0.2)))
+	t.set_stylebox("pressed", "Button", caja(SELECCION, RADIO, 14, 13, SELECCION.lightened(0.2)))
+	t.set_stylebox("hover_pressed", "Button", caja(SELECCION.lightened(0.08), RADIO, 14, 13, SELECCION.lightened(0.2)))
+	t.set_stylebox("disabled", "Button", caja(PANEL, RADIO, 14, 13, PANEL.lightened(0.1)))
 	t.set_stylebox("focus", "Button", StyleBoxEmpty.new())
 	t.set_color("font_color", "Button", TEXTO)
 	t.set_color("font_hover_color", "Button", TEXTO)
 	t.set_color("font_focus_color", "Button", TEXTO)
-	t.set_color("font_pressed_color", "Button", FONDO)
-	t.set_color("font_hover_pressed_color", "Button", FONDO)
-	t.set_color("font_disabled_color", "Button", TEXTO_SUAVE.darkened(0.15))
+	t.set_color("font_pressed_color", "Button", TEXTO)
+	t.set_color("font_hover_pressed_color", "Button", TEXTO)
+	t.set_color("font_disabled_color", "Button", TEXTO_SUAVE.darkened(0.2))
 
-	t.set_stylebox("panel", "PanelContainer", caja(PANEL, 10, 12, 12))
+	t.set_stylebox("panel", "PanelContainer", caja(PANEL, RADIO, 12, 12, PANEL.lightened(0.1)))
 	t.set_type_variation("Papel", "PanelContainer")
-	t.set_stylebox("panel", "Papel", caja(PAPEL, 10, 10, 10))
+	t.set_stylebox("panel", "Papel", caja(PAPEL, RADIO, 10, 10))
 	t.set_type_variation("Aviso", "PanelContainer")
-	t.set_stylebox("panel", "Aviso", caja(AVISO, 8, 12, 8))
+	t.set_stylebox("panel", "Aviso", caja(AVISO, RADIO, 12, 8))
 
 	t.set_color("default_color", "RichTextLabel", TEXTO)
 	for clave in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]:
