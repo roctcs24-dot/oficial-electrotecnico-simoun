@@ -21,7 +21,7 @@
     {
       "titulo": "Las 5 reglas de oro",
       "bloques": [
-        { "tipo": "texto", "texto": "1. [b]Desconectar[/b] todas las fuentes de alimentación, incluidas las de mando y calefacción.\n2. [b]Bloquear[/b] para impedir la reconexión.\n3. [b]Verificar[/b] la ausencia de tensión con un instrumento adecuado.\n4. [b]Poner a tierra y en cortocircuito[/b] cuando el procedimiento lo requiera.\n5. [b]Proteger y señalizar[/b] las partes cercanas que sigan con tensión, y delimitar la zona." },
+        { "tipo": "texto", "texto": "1. [b]Desconectar[/b] todas las fuentes de alimentación, incluidas las de mando y calefacción.\n2. [b]Bloquear[/b] para impedir la reconexión.\n3. [b]Verificar[/b] la ausencia de tensión con un instrumento adecuado.\n4. [b]Poner a tierra y en cortocircuito[/b] cuando el procedimiento lo requiera: es obligatorio en alta tensión y, en baja tensión, depende del riesgo.\n5. [b]Proteger y señalizar[/b] las partes cercanas que sigan con tensión, y delimitar la zona." },
         {
           "tipo": "ordenar",
           "tema": "cinco_reglas",
@@ -57,7 +57,7 @@
     {
       "titulo": "Probar, medir, probar",
       "bloques": [
-        { "tipo": "texto", "texto": "Un instrumento averiado puede indicar 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se realiza en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nDescargue también la {{energia_almacenada}}: espere el tiempo que indica el fabricante y mida en el bus de los condensadores." },
+        { "tipo": "texto", "texto": "Un instrumento averiado puede indicar 0 V en un equipo con tensión. Por eso la {{ausencia_tension}} se realiza en tres pasos:\n\n1. [b]Probar[/b] el instrumento en una fuente conocida con tensión.\n2. [b]Medir[/b] en el equipo: entre fases, y de cada fase a tierra. Use un instrumento de contacto: un detector sin contacto no basta para confirmar la ausencia de tensión.\n3. [b]Probar[/b] de nuevo en la fuente conocida, para confirmar que el instrumento sigue funcionando.\n\nDescargue también la {{energia_almacenada}}: espere el tiempo que indica el fabricante y mida en el bus de los condensadores." },
         {
           "tipo": "ordenar",
           "tema": "secuencia_loto",

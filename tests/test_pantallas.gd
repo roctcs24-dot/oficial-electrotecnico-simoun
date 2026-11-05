@@ -32,6 +32,18 @@ func _botones_que_bloquean(nodo: Node, en_lista: bool, lista: Array[String]) -> 
 		_botones_que_bloquean(hijo, en_lista or nodo is ScrollContainer, lista)
 
 
+func test_en_tactil_no_hay_resaltado_de_cursor() -> String:
+	var tactil := Tema.crear(true)
+	var pc := Tema.crear(false)
+	var normal: StyleBoxFlat = tactil.get_stylebox("normal", "Button")
+	var encima: StyleBoxFlat = tactil.get_stylebox("hover", "Button")
+	var encima_pc: StyleBoxFlat = pc.get_stylebox("hover", "Button")
+	return A.primero([
+		A.cierto(encima.bg_color == normal.bg_color, "en táctil, hover debe verse igual que normal"),
+		A.cierto(encima_pc.bg_color != normal.bg_color, "en PC, hover debe seguir resaltando"),
+	])
+
+
 func test_cancelar_pulsaciones_respeta_los_deshabilitados() -> String:
 	var caja := VBoxContainer.new()
 	var activo := Button.new()

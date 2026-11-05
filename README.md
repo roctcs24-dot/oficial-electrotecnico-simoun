@@ -4,7 +4,7 @@ Juego educativo de simulación para Android y Windows que enseña, desde cero, l
 
 Estado: **etapa 3**, 6 lecciones de fundamentos y seguridad con animaciones y preguntas, glosario, plano del barco, guardado de partida y ficha de muestra del contactor. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
-> Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo.
+> Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
 ## Abrir el proyecto
 

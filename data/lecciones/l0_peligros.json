@@ -17,9 +17,9 @@
               { "ma": 0.5, "texto": "Por debajo de 0,5 mA: normalmente imperceptible." },
               { "ma": 1, "texto": "Alrededor de 1 mA: hormigueo perceptible." },
               { "ma": 10, "texto": "Unos 10 mA: dolor y contracción muscular. Es posible que no logre soltar el conductor." },
-              { "ma": 30, "texto": "Unos 30 mA: riesgo de dificultad respiratoria si se prolonga. Los diferenciales de protección de personas actúan a este valor." },
-              { "ma": 50, "texto": "Desde unos 50 mA: riesgo de fibrilación ventricular según el tiempo de exposición." },
-              { "ma": 200, "texto": "Desde unos 200 mA: fibrilación muy probable, además de quemaduras internas." }
+              { "ma": 30, "texto": "Unos 30 mA: posible dificultad respiratoria si se prolonga. Los diferenciales de protección de personas actúan a este valor o por debajo." },
+              { "ma": 40, "texto": "Desde unos 40 a 50 mA durante un segundo: lesiones graves y riesgo de fibrilación ventricular." },
+              { "ma": 200, "texto": "Cientos de mA: riesgo muy alto de fibrilación incluso con exposiciones breves, además de quemaduras internas." }
             ]
           },
           "pie": "Valores orientativos basados en IEC 60479-1. No son límites seguros."
@@ -37,21 +37,21 @@
     {
       "titulo": "Factores de riesgo a bordo",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]Humedad y salinidad:[/b] la piel mojada reduce la resistencia corporal, y el casco de acero es un conductor de gran tamaño bajo sus pies.\n• [b]{{falla_tierra}}:[/b] en un sistema aislado no dispara ninguna protección. Una carcasa puede estar con tensión mientras el equipo sigue funcionando.\n• [b]{{arco_electrico}}:[/b] un cortocircuito en un tablero libera calor y presión en un instante. Puede causar quemaduras graves sin contacto directo.\n• [b]{{energia_almacenada}}:[/b] los condensadores de un variador permanecen cargados varios minutos después de la desconexión ([i]consultar el tiempo indicado en el equipo[/i]).\n• [b]Espacios reducidos:[/b] las vías de escape en una sala de máquinas son limitadas." },
+        { "tipo": "texto", "texto": "• [b]Humedad y salinidad:[/b] la piel mojada reduce la resistencia corporal, y el casco de acero es un conductor de gran tamaño bajo sus pies.\n• [b]{{falla_tierra}}:[/b] en un sistema aislado no dispara ninguna protección. Las fases sanas quedan a la tensión de línea (440 V) respecto al casco. Si además falla la conexión a masa de una carcasa, esa carcasa puede quedar con tensión mientras el equipo sigue funcionando.\n• [b]{{arco_electrico}}:[/b] un cortocircuito en un tablero libera calor y presión en un instante. Puede causar quemaduras graves sin contacto directo.\n• [b]{{energia_almacenada}}:[/b] los condensadores de un variador permanecen cargados varios minutos después de la desconexión ([i]consultar el tiempo indicado en el equipo[/i]).\n• [b]Espacios reducidos:[/b] las vías de escape en una sala de máquinas son limitadas." },
         {
           "tipo": "quiz",
           "tema": "riesgo_aislado",
           "pregunta": "En una red aislada, una carcasa de motor queda en contacto con una fase. ¿Qué es lo más probable?",
           "opciones": ["El breaker dispara de inmediato", "El motor sigue funcionando y la falla pasa inadvertida si no se consulta el monitor de aislamiento", "El motor se detiene por seguridad"],
           "correcta": 1,
-          "explicacion": "La primera falla a tierra no crea un camino de retorno de baja impedancia, por lo que no dispara. Solo el monitor de aislamiento o las lámparas de tierra la detectan."
+          "explicacion": "La primera falla a tierra no crea un camino de retorno de baja impedancia, por lo que no dispara, y las fases sanas quedan a 440 V respecto al casco. Solo el monitor de aislamiento o las lámparas de tierra la detectan."
         }
       ]
     },
     {
       "titulo": "Equipo de protección",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{epp}} es la última barrera y no sustituye a la desconexión y el bloqueo. El equipo necesario depende de la tarea y del análisis de riesgos del buque:\n\n• [b]Guantes aislantes[/b] de clase adecuada a la tensión, por ejemplo clase 0 hasta 1 000 V AC ([i]IEC 60903, verificar[/i]). Compruébelos por inflado antes de cada uso y use encima guantes protectores de cuero.\n• [b]Ropa resistente al arco y careta facial[/b] cuando exista riesgo de arco, según NFPA 70E. No use ropa sintética, que se funde sobre la piel.\n• [b]Calzado de seguridad[/b] dieléctrico, seco y en buen estado.\n• [b]Sin objetos metálicos:[/b] retírese anillos, relojes y cadenas.\n• [b]Instrumento adecuado:[/b] multímetro con categoría CAT III o CAT IV para la tensión, y puntas en buen estado.\n\nSi el EPP falta o está dañado, no realice el trabajo." },
+        { "tipo": "texto", "texto": "El {{epp}} es la última barrera y no sustituye a la desconexión y el bloqueo. El equipo necesario depende de la tarea y del análisis de riesgos del buque:\n\n• [b]Guantes aislantes[/b] de clase adecuada a la tensión, por ejemplo clase 0 hasta 1 000 V AC ([i]IEC 60903, verificar[/i]). Compruébelos por inflado antes de cada uso y revise la fecha de su último ensayo eléctrico. Use encima guantes protectores de cuero, salvo que el fabricante indique que no hacen falta.\n• [b]Ropa resistente al arco y careta facial[/b] cuando exista riesgo de arco, según NFPA 70E. No use ropa sintética, que se funde sobre la piel.\n• [b]Calzado de seguridad[/b] dieléctrico, seco y en buen estado.\n• [b]Sin objetos metálicos:[/b] retírese anillos, relojes y cadenas.\n• [b]Instrumento adecuado:[/b] multímetro con categoría CAT III o CAT IV para la tensión, y puntas en buen estado.\n\nSi el EPP falta o está dañado, no realice el trabajo." },
         {
           "tipo": "quiz",
           "tema": "epp_ultima_barrera",

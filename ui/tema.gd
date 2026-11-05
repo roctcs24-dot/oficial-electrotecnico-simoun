@@ -34,7 +34,9 @@ static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, b
 	return c
 
 
-static func crear() -> Theme:
+## En pantallas táctiles no hay cursor: el dedo cuenta como ratón y el resaltado de "cursor
+## encima" se quedaría sobre el botón mientras la lista se desplaza.
+static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	var t := Theme.new()
 	t.default_font_size = 18
 
@@ -48,9 +50,10 @@ static func crear() -> Theme:
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
 
 	t.set_stylebox("normal", "Button", caja(BOTON, RADIO, 14, 13, BORDE))
-	t.set_stylebox("hover", "Button", caja(BOTON.lightened(0.08), RADIO, 14, 13, BORDE.lightened(0.2)))
+	var resaltado := 0.0 if tactil else 0.08
+	t.set_stylebox("hover", "Button", caja(BOTON.lightened(resaltado), RADIO, 14, 13, BORDE.lightened(resaltado * 2.5)))
 	t.set_stylebox("pressed", "Button", caja(SELECCION, RADIO, 14, 13, SELECCION.lightened(0.2)))
-	t.set_stylebox("hover_pressed", "Button", caja(SELECCION.lightened(0.08), RADIO, 14, 13, SELECCION.lightened(0.2)))
+	t.set_stylebox("hover_pressed", "Button", caja(SELECCION.lightened(resaltado), RADIO, 14, 13, SELECCION.lightened(0.2)))
 	t.set_stylebox("disabled", "Button", caja(PANEL, RADIO, 14, 13, PANEL.lightened(0.1)))
 	t.set_stylebox("focus", "Button", StyleBoxEmpty.new())
 	t.set_color("font_color", "Button", TEXTO)
