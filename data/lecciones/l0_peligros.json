@@ -22,7 +22,7 @@
               { "ma": 200, "texto": "Cientos de mA: riesgo muy alto de fibrilación incluso con exposiciones breves, además de quemaduras internas." }
             ]
           },
-          "pie": "Valores orientativos basados en IEC 60479-1. No son límites seguros."
+          "pie": "Valores orientativos, a verificar contra IEC 60479-1. No son límites seguros."
         },
         {
           "tipo": "quiz",

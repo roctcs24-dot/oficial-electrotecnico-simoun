@@ -3,6 +3,8 @@ extends Animacion
 
 const MA_MIN := 0.3
 const MA_MAX := 1000.0
+const SEPARACION_ROTULOS := 26.0
+const SEPARACION_FILAS := 14.0
 
 var _ma := 440.0
 var _etiqueta: Label
@@ -19,7 +21,7 @@ static func efecto_de(niveles: Array, ma_consulta: float) -> String:
 
 
 func preparar() -> void:
-	lienzo.custom_minimum_size.y = 110.0
+	lienzo.custom_minimum_size.y = 120.0
 	_ma = params.get("inicial", 440.0)
 	var inicio := (log(_ma) - log(MA_MIN)) / (log(MA_MAX) - log(MA_MIN))
 	_etiqueta = deslizador(0.0, 1.0, 0.002, inicio, _al_cambiar)
@@ -53,10 +55,16 @@ func dibujar() -> void:
 		var f := float(n) / pasos
 		var color := Color("2f9e57").lerp(Color("f2a93b"), f * 2.0) if f < 0.5 else Color("f2a93b").lerp(Color("c9231b"), (f - 0.5) * 2.0)
 		lienzo.draw_rect(Rect2(area.position.x + f * area.size.x, area.position.y, area.size.x / pasos + 1.0, area.size.y), color)
+	var x_previa := -INF
+	var abajo := false
 	for n: Dictionary in params["niveles"]:
 		var x := _x(area, n["ma"])
+		# Dos valores cercanos no caben en la misma línea en un celular.
+		abajo = not abajo and x - x_previa < SEPARACION_ROTULOS
+		x_previa = x
+		var y := area.end.y + (SEPARACION_FILAS + 15.0 if abajo else 15.0)
 		lienzo.draw_line(Vector2(x, area.position.y), Vector2(x, area.end.y + 5.0), Tema.TINTA, 2.0)
-		texto(Vector2(x, area.end.y + 15.0), TextoTecnico.numero(n["ma"], 1 if float(n["ma"]) < 1.0 else 0), 13)
+		texto(Vector2(x, y), TextoTecnico.numero(n["ma"], 1 if float(n["ma"]) < 1.0 else 0), 13)
 	var cursor := _x(area, _ma)
 	flecha(Vector2(cursor, area.position.y - 30.0), Vector2(cursor, area.position.y - 2.0), Tema.TINTA, 4.0)
 	var fijo := clampf(cursor, 60.0, lienzo.size.x - 60.0)
