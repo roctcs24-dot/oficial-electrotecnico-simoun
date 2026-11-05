@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 4**, 6 lecciones de fundamentos y seguridad, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de identificación de símbolos, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **etapa 5**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, glosario, plano del barco y guardado de partida. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -126,6 +126,8 @@ Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fa
 Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera del motor. Sus `simbolos` pueden ser `iec` y `ansi` propios, o una `lista` de ids de `data/simbolos.json`.
 
 **Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `similares` y sus dibujos `iec` y `ansi`. El minijuego los usa todos. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
+
+**Taller:** `data/taller.json` define el catálogo del cajón, con el tipo de componente, su dibujo y la posición de cada borne, además de las plantillas y las explicaciones de cada consecuencia. Cada evento nuevo del motor de simulación necesita su explicación en `consecuencias`. Los circuitos del jugador se guardan en `user://circuitos/`, con sus daños incluidos, y la última mesa en `user://taller_ultimo.json`.
 
 **Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés. Al empezar una frase o una viñeta se usa mayúscula inicial: `{{Estator}}`. No se le pegan letras detrás: `{{devanado}}s` queda mal escrito, y una prueba lo detecta.
 

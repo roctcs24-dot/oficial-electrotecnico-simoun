@@ -71,6 +71,7 @@ func _recorrer(raiz: Raiz) -> String:
 		["aprender", {"id": 0}],
 		["glosario", {}],
 	]
+	pasos.append(["taller", {}])
 	pasos.append(["examen", {"id": 3}])
 	pasos.append(["minijuego_simbolos", {}])
 	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"]:

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="240" viewBox="0 0 200 240">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#565b60"/><stop offset="1" stop-color="#34383c"/></linearGradient>
+    <linearGradient id="azul" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f5f79"/><stop offset="1" stop-color="#22394b"/></linearGradient>
+    <linearGradient id="placa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4d50"/><stop offset="1" stop-color="#2f3235"/></linearGradient>
+    <linearGradient id="cromo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fafbfb"/><stop offset="0.5" stop-color="#9ea3a6"/><stop offset="1" stop-color="#e7e9ea"/></linearGradient>
+    <linearGradient id="cobre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a77a"/><stop offset="1" stop-color="#8d4f25"/></linearGradient>
+    <linearGradient id="porcelana" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9bcb6"/><stop offset="0.5" stop-color="#f1f2ee"/><stop offset="1" stop-color="#aeb1ab"/></linearGradient>
+    <radialGradient id="verde" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#2fa84d"/><stop offset="1" stop-color="#0d6a2a"/></radialGradient>
+    <radialGradient id="rojo" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#e2473a"/><stop offset="1" stop-color="#96180f"/></radialGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <radialGradient id="bronce" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#fbe6a2"/><stop offset="0.5" stop-color="#c9973f"/><stop offset="1" stop-color="#6f4e1a"/></radialGradient>
+    <g id="tornillo"><circle r="12" fill="#0a0a0b"/><circle r="11" fill="url(#acero)"/><path d="M-6,0 H6 M0,-6 V6" stroke="#33373a" stroke-width="2.6" stroke-linecap="round"/></g>
+    <g id="espiga"><path d="M-17,-10 L0,-20 L17,-10 V10 L0,20 L-17,10 Z" fill="url(#bronce)" stroke="#4a3210" stroke-width="1.5"/><circle r="8" fill="#e8c878" stroke="#6f4e1a" stroke-width="1.5"/></g>
+  </defs>
+<rect x="4" y="4" width="192" height="232" rx="6" fill="url(#cuerpo)"/><circle cx="100" cy="70" r="54" fill="url(#cromo)"/><circle cx="100" cy="70" r="43" fill="url(#verde)"/><rect x="24" y="136" width="152" height="6" fill="#2f9e57"/><use xlink:href="#tornillo" x="60" y="196"/><use xlink:href="#tornillo" x="140" y="196"/>
+</svg>

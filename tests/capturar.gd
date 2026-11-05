@@ -26,6 +26,8 @@ func _capturar() -> void:
 		await _capturar_lecciones(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fichas":
 		await _capturar_fichas(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "taller":
+		await _capturar_taller(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -73,6 +75,39 @@ func _capturar_fichas(raiz: Raiz, carpeta: String) -> void:
 			raiz.ir_a("minijuego_simbolos", {"rondas": [r], "indice": 0, "respuestas": {0: 0}})
 			await _guardar(carpeta, "simbolo_%s" % s["id"], tam)
 			raiz.volver()
+
+
+func _capturar_taller(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("taller")
+		var p = raiz.pantalla_actual()
+		p.mesa.vaciar()
+		await _guardar(carpeta, "taller_vacio", tam)
+		p._cargar_plantilla("arranque_directo")
+		await _guardar(carpeta, "taller_directo", tam)
+		p.mesa.sim.componente("Q1").accionar(true)
+		p.mesa.avanzar(2)
+		p.mesa.sim.componente("S1").estado["presionado"] = true
+		p.mesa.avanzar(4)
+		p.mesa.sim.componente("S1").estado["presionado"] = false
+		p.mesa.avanzar(100)
+		p._elegir_pestana("medir")
+		p._elegir_instrumento("multimetro")
+		p._al_tocar_borne("B.L1")
+		p._al_tocar_borne("B.L2")
+		await _guardar(carpeta, "taller_multimetro", tam)
+		p._al_tocar_pieza("M1")
+		await _esperar()
+		p = raiz.pantalla_actual()
+		await _guardar(carpeta, "taller_pieza", tam)
+		p._elegir_pestana("archivo")
+		await _guardar(carpeta, "taller_archivo", tam)
+		p._mostrar_aviso("Motor quemado", "Ejemplo de explicación tras una consecuencia.")
+		await _guardar(carpeta, "taller_aviso", tam)
+		p.mesa.vaciar()
+		raiz.volver()
 
 
 func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:

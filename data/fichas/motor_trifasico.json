@@ -92,7 +92,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo leer la placa",
-      "texto": "• [b]Potencia:[/b] la mecánica entregada en el eje.\n• [b]Tensión y corriente:[/b] la primera corriente corresponde a la primera tensión. Con 440Δ son 25 A.\n• [b]Velocidad:[/b] a plena carga, no la del campo.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] protección contra sólidos y agua. IP55 es típico en sala de máquinas ([i]verificar a bordo[/i]).\n• [b]Clase de aislamiento:[/b] temperatura que admite el devanado.\n• [b]Servicio S1:[/b] continuo.\n• [b]Frecuencia:[/b] un motor de 50 Hz en red de 60 Hz gira un 20 % más rápido. Consulte antes de conectarlo.\n\n[b]Motor sin marcas:[/b] con continuidad se identifican los tres pares de devanado. La polaridad se determina con el procedimiento que verá en el Taller."
+      "texto": "• [b]Potencia:[/b] la mecánica entregada en el eje.\n• [b]Tensión y corriente:[/b] la primera corriente corresponde a la primera tensión. Con 440Δ son 25 A.\n• [b]Velocidad:[/b] a plena carga, no la del campo.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] protección contra sólidos y agua. IP55 es típico en sala de máquinas ([i]verificar a bordo[/i]).\n• [b]Clase de aislamiento:[/b] temperatura que admite el devanado.\n• [b]Servicio S1:[/b] continuo.\n• [b]Frecuencia:[/b] un motor de 50 Hz en red de 60 Hz gira un 20 % más rápido. Consulte antes de conectarlo.\n\n[b]Motor sin marcas:[/b] con continuidad se identifican los tres pares de devanado. La polaridad se determina con el procedimiento de la lección sobre la bornera."
     },
     {
       "id": "pruebas",

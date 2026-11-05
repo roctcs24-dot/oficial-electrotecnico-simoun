@@ -1,0 +1,120 @@
+{
+  "nota": "bornes indica la posición de cada borne en el dibujo. Valores típicos: verificar a bordo.",
+  "componentes": [
+    {
+      "id": "fuente_trifasica", "tipo": "fuente_trifasica", "prefijo": "B", "nombre": "Barras de 440 V", "potencia": true,
+      "svg": "res://art/taller/barras.svg", "tamano": [360, 140],
+      "bornes": { "L1": [60, 96], "L2": [180, 96], "L3": [300, 96] },
+      "etiquetas": [
+        { "texto": "BARRAS 440 V  60 Hz", "x": 180, "y": 30, "tam": 18 },
+        { "texto": "L1", "x": 60, "y": 62, "tam": 16 }, { "texto": "L2", "x": 180, "y": 62, "tam": 16 }, { "texto": "L3", "x": 300, "y": 62, "tam": 16 }
+      ]
+    },
+    {
+      "id": "guardamotor", "tipo": "guardamotor", "prefijo": "Q", "nombre": "Guardamotor", "potencia": true, "ficha": "guardamotor",
+      "params": { "ajuste_a": 32 },
+      "bornes": { "1": [102, 72], "3": [160, 72], "5": [218, 72], "2": [102, 428], "4": [160, 428], "6": [218, 428] }
+    },
+    {
+      "id": "contactor", "tipo": "contactor", "prefijo": "K", "nombre": "Contactor", "potencia": true, "ficha": "contactor",
+      "bornes": {
+        "1": [110, 80], "3": [180, 80], "5": [250, 80], "2": [110, 420], "4": [180, 420], "6": [250, 420],
+        "13": [110, 165], "21": [180, 165], "A1": [250, 165], "14": [110, 336], "22": [180, 336], "A2": [250, 336]
+      }
+    },
+    {
+      "id": "rele_termico", "tipo": "rele_termico", "prefijo": "F", "nombre": "Relé térmico", "potencia": true, "ficha": "rele_termico",
+      "params": { "ajuste_a": 25 },
+      "bornes": {
+        "1": [108, 12], "3": [180, 12], "5": [252, 12], "2": [110, 380], "4": [180, 380], "6": [250, 380],
+        "97": [96, 282], "98": [152, 282], "95": [208, 282], "96": [264, 282]
+      }
+    },
+    {
+      "id": "motor_440", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 440Δ/760Y", "potencia": true,
+      "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5 },
+      "svg": "res://art/taller/motor.svg", "tamano": [480, 320],
+      "bornes": { "W2": [130, 110], "U2": [240, 110], "V2": [350, 110], "U1": [130, 240], "V1": [240, 240], "W1": [350, 240] },
+      "etiquetas": [
+        { "texto": "MOTOR 15 kW  440Δ / 760Y", "x": 240, "y": 30, "tam": 20 },
+        { "texto": "W2", "x": 94, "y": 110, "tam": 18 }, { "texto": "U2", "x": 204, "y": 110, "tam": 18 }, { "texto": "V2", "x": 314, "y": 110, "tam": 18 },
+        { "texto": "U1", "x": 94, "y": 240, "tam": 18 }, { "texto": "V1", "x": 204, "y": 240, "tam": 18 }, { "texto": "W1", "x": 314, "y": 240, "tam": 18 }
+      ]
+    },
+    {
+      "id": "motor_254", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 254Δ/440Y", "potencia": true,
+      "params": { "p_kw": 15, "v_delta": 254, "v_estrella": 440, "i_delta": 43.3, "i_estrella": 25 },
+      "svg": "res://art/taller/motor.svg", "tamano": [480, 320],
+      "bornes": { "W2": [130, 110], "U2": [240, 110], "V2": [350, 110], "U1": [130, 240], "V1": [240, 240], "W1": [350, 240] },
+      "etiquetas": [
+        { "texto": "MOTOR 15 kW  254Δ / 440Y", "x": 240, "y": 30, "tam": 20 },
+        { "texto": "W2", "x": 94, "y": 110, "tam": 18 }, { "texto": "U2", "x": 204, "y": 110, "tam": 18 }, { "texto": "V2", "x": 314, "y": 110, "tam": 18 },
+        { "texto": "U1", "x": 94, "y": 240, "tam": 18 }, { "texto": "V1", "x": 204, "y": 240, "tam": 18 }, { "texto": "W1", "x": 314, "y": 240, "tam": 18 }
+      ]
+    },
+    {
+      "id": "transformador_mando", "tipo": "transformador_mando", "prefijo": "T", "nombre": "Transformador 440/110 V",
+      "svg": "res://art/taller/transformador.svg", "tamano": [300, 260],
+      "bornes": { "H1": [70, 44], "H2": [230, 44], "X1": [70, 216], "X2": [230, 216] },
+      "etiquetas": [
+        { "texto": "H1", "x": 34, "y": 44, "tam": 16 }, { "texto": "H2", "x": 266, "y": 44, "tam": 16 },
+        { "texto": "X1", "x": 34, "y": 216, "tam": 16 }, { "texto": "X2", "x": 266, "y": 216, "tam": 16 },
+        { "texto": "440 / 110 V", "x": 150, "y": 130, "tam": 18 }
+      ]
+    },
+    {
+      "id": "fusible", "tipo": "fusible", "prefijo": "F", "nombre": "Fusible de mando",
+      "svg": "res://art/taller/fusible.svg", "tamano": [140, 240],
+      "bornes": { "1": [70, 34], "2": [70, 206] },
+      "etiquetas": [ { "texto": "1", "x": 112, "y": 34, "tam": 16 }, { "texto": "2", "x": 112, "y": 206, "tam": 16 }, { "texto": "2 A", "x": 70, "y": 120, "tam": 16, "color": "#20242a" } ]
+    },
+    {
+      "id": "pulsador_na", "tipo": "pulsador", "prefijo": "S", "nombre": "Pulsador NA (marcha)", "params": { "contacto": "NA" },
+      "svg": "res://art/taller/pulsador_na.svg", "tamano": [200, 240],
+      "bornes": { "13": [60, 196], "14": [140, 196] },
+      "etiquetas": [ { "texto": "13", "x": 60, "y": 166, "tam": 16 }, { "texto": "14", "x": 140, "y": 166, "tam": 16 }, { "texto": "I", "x": 100, "y": 70, "tam": 30, "color": "#eef3f7" } ]
+    },
+    {
+      "id": "pulsador_nc", "tipo": "pulsador", "prefijo": "S", "nombre": "Pulsador NC (parada)", "params": { "contacto": "NC" },
+      "svg": "res://art/taller/pulsador_nc.svg", "tamano": [200, 240],
+      "bornes": { "21": [60, 196], "22": [140, 196] },
+      "etiquetas": [ { "texto": "21", "x": 60, "y": 166, "tam": 16 }, { "texto": "22", "x": 140, "y": 166, "tam": 16 }, { "texto": "O", "x": 100, "y": 70, "tam": 30, "color": "#eef3f7" } ]
+    },
+    {
+      "id": "lampara", "tipo": "lampara", "prefijo": "H", "nombre": "Luz piloto 110 V",
+      "svg": "res://art/taller/lampara.svg", "tamano": [200, 220],
+      "bornes": { "X1": [60, 176], "X2": [140, 176] },
+      "etiquetas": [ { "texto": "X1", "x": 60, "y": 146, "tam": 16 }, { "texto": "X2", "x": 140, "y": 146, "tam": 16 } ]
+    },
+    {
+      "id": "temporizador", "tipo": "temporizador", "prefijo": "KT", "nombre": "Temporizador a la conexión", "params": { "modo": "on_delay", "retardo_s": 6 },
+      "svg": "res://art/taller/temporizador.svg", "tamano": [260, 300],
+      "bornes": { "A1": [60, 54], "A2": [200, 54], "15": [50, 246], "16": [130, 246], "18": [210, 246] },
+      "etiquetas": [
+        { "texto": "A1", "x": 60, "y": 22, "tam": 16 }, { "texto": "A2", "x": 200, "y": 22, "tam": 16 },
+        { "texto": "15", "x": 50, "y": 214, "tam": 16 }, { "texto": "16", "x": 130, "y": 214, "tam": 16 }, { "texto": "18", "x": 210, "y": 214, "tam": 16 },
+        { "texto": "TEMPORIZADOR", "x": 130, "y": 100, "tam": 15 }, { "texto": "6 s", "x": 130, "y": 150, "tam": 20 }
+      ]
+    }
+  ],
+  "plantillas": [
+    { "id": "arranque_directo", "nombre": "Arranque directo" },
+    { "id": "estrella_triangulo", "nombre": "Estrella-triángulo" },
+    { "id": "muestra_contactor", "nombre": "Banco de prueba del contactor" }
+  ],
+  "consecuencias": {
+    "disparo_magnetico": { "titulo": "Disparo magnético del guardamotor", "texto": "La corriente superó el umbral magnético: hubo un cortocircuito o una corriente muy alta aguas abajo, como la de un motor 254Δ/440Y conectado en delta a 440 V. Abra el guardamotor, corrija la causa y mida el aislamiento antes de volver a cerrar. Tras un disparo, lleve el mando a apagado antes de cerrar." },
+    "disparo_termico": { "titulo": "Disparo térmico del guardamotor", "texto": "La corriente estuvo por encima del ajuste durante demasiado tiempo. Compruebe la carga, la conexión del motor y que el ajuste coincida con la corriente de la placa. No suba el ajuste para evitar el disparo." },
+    "disparo_rele_termico": { "titulo": "Disparo del relé térmico", "texto": "La sobrecarga fue suficiente para cambiar 95-96 y 97-98. Revise la conexión estrella o delta según la placa, la carga y las tres fases. El relé no corta la potencia: si 95-96 no está en serie con la bobina, el motor sigue conectado." },
+    "disparo_barras": { "titulo": "Disparo del interruptor de barras", "texto": "Un cortocircuito sin protección cercana hizo disparar el interruptor aguas arriba. A bordo, esto podría dejar sin servicio a muchos otros equipos. Toda salida debe tener su propia protección. Corrija el cableado antes de rearmar." },
+    "arco_contactos_soldados": { "titulo": "Arco: contactos soldados", "texto": "La corriente de cortocircuito soldó los polos del contactor, que ya no abrirá aunque su bobina quede sin tensión. Cambie el repuesto. Revise por qué se produjo el cortocircuito: dos contactores que nunca deben cerrar a la vez necesitan enclavamiento." },
+    "bobina_quemada": { "titulo": "Bobina quemada", "texto": "La bobina recibió mucha más tensión que la nominal. Compruebe la etiqueta de la bobina y la tensión de mando antes de conectar. Cambie el repuesto." },
+    "motor_quemado": { "titulo": "Motor quemado", "texto": "El devanado superó la temperatura admisible. Las causas habituales son una conexión incorrecta, como un motor 254Δ/440Y en delta a 440 V, o la falta de protección. Cambie el repuesto y corrija la causa." },
+    "fusible_fundido": { "titulo": "Fusible fundido", "texto": "La corriente del circuito de mando superó la capacidad del fusible. Busque el cortocircuito o la sobrecarga antes de sustituirlo, y use siempre uno del mismo valor." },
+    "lampara_quemada": { "titulo": "Luz piloto quemada", "texto": "La lámpara recibió demasiada tensión. Compruebe que su tensión nominal coincida con la del circuito de mando." },
+    "vibracion_mando": { "titulo": "Vibración del contactor", "texto": "La bobina cierra y suelta sin parar, porque se alimenta a través de un contacto que ella misma abre. Revise el mando: el contacto de retención 13-14 es NA y va en paralelo con la marcha." },
+    "multimetro_destruido": { "titulo": "Multímetro destruido", "texto": "Midió resistencia en un circuito con tensión. El óhmetro inyecta su propia corriente y no admite tensión externa. A bordo esto puede causar un arco en sus manos. Mida resistencia solo con el circuito aislado y la ausencia de tensión verificada." },
+    "fusible_multimetro": { "titulo": "Fusible del multímetro fundido", "texto": "La entrada de corriente tiene una resistencia casi nula. En paralelo con una fuente equivale a un cortocircuito. La corriente se mide en serie, y en potencia es mejor usar la pinza." },
+    "megohmetro_destruido": { "titulo": "Megóhmetro destruido", "texto": "Lo aplicó a un circuito con tensión. Aísle, bloquee y verifique la ausencia de tensión antes de medir el aislamiento." }
+  }
+}

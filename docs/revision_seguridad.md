@@ -49,6 +49,9 @@ Siguen en las lecciones como valores orientativos o a verificar:
 Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verificar" en los puntos sensibles:
 
 - Fichas de motor trifásico, relé térmico, guardamotor y pulsadores.
+- Lecciones de motores, arrancadores, multímetro y megóhmetro, incluido el procedimiento de polaridad de un motor sin marcas.
+- Esquemas de arranque directo y estrella-triángulo: coinciden con las plantillas del motor de simulación, pero no con planos reales del buque.
+- Explicaciones de consecuencias del Taller, en `data/taller.json`.
 - Los 12 símbolos de `data/simbolos.json`. No se pudo abrir la comparativa de referencia entre NEMA e IEC, y la simbología ANSI del guardamotor varía según el fabricante.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.

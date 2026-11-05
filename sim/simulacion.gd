@@ -13,7 +13,7 @@ var tiempo := 0.0
 var solucion: SimSolver.Solucion
 
 
-static func _tipos() -> Dictionary:
+static func tipos() -> Dictionary:
 	return {
 		"fuente_trifasica": SimFuenteTrifasica,
 		"transformador_mando": SimTransformadorMando,
@@ -31,9 +31,9 @@ static func _tipos() -> Dictionary:
 
 static func desde_dict(datos: Dictionary) -> SimSimulacion:
 	var s := SimSimulacion.new()
-	var tipos := _tipos()
+	var clases := tipos()
 	for c in datos.get("componentes", []):
-		var clase: GDScript = tipos[c["tipo"]]
+		var clase: GDScript = clases[c["tipo"]]
 		s.agregar(clase.new(c["id"], c.get("params", {}), c.get("estado", {})))
 	for cable in datos.get("cables", []):
 		s.conectar(cable[0], cable[1])
