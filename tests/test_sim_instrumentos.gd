@@ -105,6 +105,42 @@ func test_amperimetro_en_serie_lee_la_corriente() -> String:
 	return A.cerca(lectura["valor"], 4.4, 0.01, "corriente en serie")
 
 
+func test_modo_diodo() -> String:
+	var sim := _motor_aislado()
+	var bobina := SimSimulacion.new()
+	bobina.agregar(SimResistencia.new("R1", {"ohm": 360.0}))
+	bobina.paso()
+	var devanado := _multimetro().medir(sim, "diodo", "M1.U1", "M1.U2")
+	var resistencia := _multimetro().medir(bobina, "diodo", "R1.A", "R1.B")
+	var abierto := _multimetro().medir(bobina, "diodo", "R1.A", SimSolver.TIERRA)
+	var m := _multimetro()
+	var con_tension := m.medir(sim, "diodo", "B.L1", "B.L2")
+	return A.primero([
+		A.cierto(devanado["unidad"] == "V" and float(devanado["valor"]) < 0.01, "un devanado casi no da caída: %s" % str(devanado)),
+		A.cerca(resistencia["valor"], 0.36, 0.02, "360 Ω con 1 mA"),
+		A.cierto(abierto["fuera_de_rango"], "abierto debe marcar OL"),
+		A.cierto(not con_tension["averia"].is_empty(), "con tensión debe dañarse como el óhmetro"),
+	])
+
+
+## Una fase perdida a la salida del contactor, con el motor conectado: el caso del examen.
+func test_falta_de_fase_a_la_salida_del_contactor() -> String:
+	var sim := A.circuito("arranque_directo")
+	sim.componente("K1").params["r_contacto"] = [0.0, 0.0, 1e9]
+	sim.componente("Q1").accionar(true)
+	sim.avanzar_tiempo(0.1)
+	sim.componente("S1").estado["presionado"] = true
+	sim.avanzar_tiempo(1.0)
+	var m := _multimetro()
+	var sana: float = m.medir(sim, "vac", "K1.2", "K1.4")["valor"]
+	var otra: float = m.medir(sim, "vac", "K1.4", "K1.6")["valor"]
+	return A.primero([
+		A.cierto(sana > 400.0, "la fase sana: %.0f V" % sana),
+		A.cerca(otra, 220.0, 0.1, "con la fase perdida"),
+		A.cierto(absf(sim.componente("M1").rpm()) < 5.0, "parado no arranca"),
+	])
+
+
 func test_megohmetro_motor_sano() -> String:
 	var sim := _motor_aislado()
 	var lectura := _megohmetro().medir(sim, "M1.U1", SimSolver.TIERRA, 500)

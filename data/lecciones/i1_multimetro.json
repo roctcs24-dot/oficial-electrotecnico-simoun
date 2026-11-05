@@ -7,7 +7,7 @@
     {
       "titulo": "Modos de medida",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{multimetro}} reúne varios instrumentos. Antes de tocar nada, compruebe el modo y las puntas:\n\n• [b]V~ y V=:[/b] tensión alterna y continua. Se mide [b]en paralelo[/b], entre dos puntos.\n• [b]Ω y {{continuidad}}:[/b] resistencia. Se mide [b]sin tensión[/b]: el instrumento inyecta su propia corriente.\n• [b]A:[/b] corriente. Se mide [b]en serie[/b]: hay que abrir el circuito e intercalar el instrumento.\n\nPara corrientes de potencia, use una {{pinza}}: no hace falta abrir el circuito." },
+        { "tipo": "texto", "texto": "El {{multimetro}} reúne varios instrumentos. Antes de tocar nada, compruebe el modo y las puntas:\n\n• [b]V~ y V=:[/b] tensión alterna y continua. Se mide [b]en paralelo[/b], entre dos puntos.\n• [b]Ω, {{continuidad}} y diodo:[/b] resistencia. Se mide [b]sin tensión[/b]: el instrumento inyecta su propia corriente. En modo diodo muestra la caída de tensión: unos 0,6 V en un diodo de silicio en directo, y OL en inverso.\n• [b]A:[/b] corriente. Se mide [b]en serie[/b]: hay que abrir el circuito e intercalar el instrumento.\n\nPara corrientes de potencia, use una {{pinza}}: no hace falta abrir el circuito." },
         {
           "tipo": "quiz",
           "tema": "multimetro_paralelo",

@@ -1,6 +1,6 @@
 class_name SimMultimetro
 extends RefCounted
-## Multímetro: modos vac, vdc, ohm, continuidad y a. Las medidas añaden su propia
+## Multímetro: modos vac, vdc, ohm, continuidad, diodo y a. Las medidas añaden su propia
 ## impedancia a la red, por eso un punto flotante no muestra una tensión falsa.
 ## Medir resistencia con tensión o corriente en paralelo lo daña, como en la realidad.
 
@@ -12,6 +12,7 @@ const V_DESTRUYE_OHM := 250.0
 const I_FUSIBLE := 10.0
 const OHM_MAX := 4e7
 const CONTINUIDAD_MAX := 30.0
+const V_MAX_DIODO := 2.0
 
 var ruido := 0.003
 var fusible_ok := true
@@ -28,7 +29,7 @@ func medir(sim: SimSimulacion, modo: String, a: String, b: String) -> Dictionary
 			return _lectura(_voltios(sim, a, b), "V", false, "")
 		"vdc":
 			return _lectura(0.0, "V", false, "")
-		"ohm", "continuidad":
+		"ohm", "continuidad", "diodo":
 			return _medir_ohm(sim, modo, a, b)
 		"a":
 			return _medir_corriente(sim, a, b)
@@ -57,6 +58,10 @@ func _medir_ohm(sim: SimSimulacion, modo: String, a: String, b: String) -> Dicti
 		return _lectura(0.0, "Ω", false, averia)
 	var sol := sim.resolver(true, func(e: SimEstampa) -> void: e.inyectar(a, b, I_PRUEBA))
 	var r := sol.entre(a, b).modulo() / I_PRUEBA
+	# En modo diodo muestra la caída de tensión con la corriente de prueba, hasta su límite.
+	if modo == "diodo":
+		var caida := r * I_PRUEBA
+		return _lectura(caida, "V", caida > V_MAX_DIODO, "")
 	var resultado := _lectura(r, "Ω", r > OHM_MAX, "")
 	if modo == "continuidad":
 		resultado["pita"] = r < CONTINUIDAD_MAX

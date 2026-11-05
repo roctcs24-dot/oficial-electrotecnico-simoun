@@ -7,7 +7,7 @@
     {
       "titulo": "Sin tensión",
       "bloques": [
-        { "tipo": "texto", "texto": "Con el equipo bloqueado y la ausencia de tensión verificada, retire los puentes de la bornera y mida:\n\n[b]1. Continuidad de devanados:[/b] U1-U2, V1-V2 y W1-W2. Los tres valores deben ser bajos y casi iguales. Si uno difiere más de un 5 % aproximadamente, revise ([i]criterio típico — verificar[/i]). Un devanado abierto marca fuera de rango.\n\n[b]2. Entre devanados:[/b] U-V, V-W y W-U, con {{megohmetro}}.\n\n[b]3. Devanado a masa:[/b] cada uno contra la carcasa.\n\nEl mínimo habitual de {{aislamiento}} es 1 MΩ ([i]verificar el criterio del buque[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla." },
+        { "tipo": "texto", "texto": "Con el equipo bloqueado y la ausencia de tensión verificada, retire los puentes de la bornera y mida:\n\n[b]1. Continuidad de devanados:[/b] U1-U2, V1-V2 y W1-W2. Los tres valores deben ser bajos y casi iguales. Si uno difiere más de un 5 % aproximadamente, revise ([i]criterio típico — verificar[/i]). Un devanado abierto marca fuera de rango.\n\n[b]2. Entre devanados:[/b] U-V, V-W y W-U, con {{megohmetro}}.\n\n[b]3. Devanado a masa:[/b] cada uno contra la carcasa.\n\nPara devanados de menos de 1 kV, IEEE 43 recomienda un mínimo de {{aislamiento}} de 5 MΩ, medido a 500 V ([i]verificar el criterio del buque y del fabricante[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla." },
         {
           "tipo": "quiz",
           "tema": "devanado_abierto",

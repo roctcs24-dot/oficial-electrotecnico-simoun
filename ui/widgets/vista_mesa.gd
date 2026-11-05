@@ -21,6 +21,16 @@ const ESCALA_TEXTURA := 1.5
 const FONDO := Color("0b1824")
 const CUADRICULA := Color("15283a")
 const LADO_CUADRICULA := 100.0
+## Consecuencias visibles: el arco es un destello breve; el humo y el disparo duran algo más.
+const DURACION_EFECTO_S := {"arco": 0.7, "humo": 2.5, "disparo": 1.2}
+const EFECTO_DE_EVENTO := {
+	"arco_contactos_soldados": "arco", "disparo_barras": "arco", "disparo_magnetico": "arco",
+	"motor_quemado": "humo", "bobina_quemada": "humo", "lampara_quemada": "humo", "fusible_fundido": "humo",
+	"disparo_rele_termico": "disparo", "disparo_termico": "disparo",
+}
+## Por encima de esta temperatura el motor se tiñe de rojo, cada vez más hasta quemarse.
+const T_TINTE := 90.0
+const T_TINTE_MAX := 180.0
 
 var mesa: MesaTaller
 var origen := Vector2(20.0, 20.0)
@@ -43,6 +53,8 @@ var _desfase_pieza := Vector2.ZERO
 var _toques := {}
 var _distancia_pellizco := 0.0
 var _en_pellizco := false
+## {id, tipo, t}: efectos en curso.
+var efectos: Array[Dictionary] = []
 
 
 func _init() -> void:
@@ -50,6 +62,24 @@ func _init() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+
+## Muestra la consecuencia de un evento sobre su pieza. Devuelve false si no tiene efecto.
+func mostrar_evento(tipo_evento: String, id: String) -> bool:
+	if not EFECTO_DE_EVENTO.has(tipo_evento) or mesa == null or not mesa.piezas.has(id):
+		return false
+	efectos.append({"id": id, "tipo": EFECTO_DE_EVENTO[tipo_evento], "t": 0.0})
+	queue_redraw()
+	return true
+
+
+func _process(delta: float) -> void:
+	if efectos.is_empty():
+		return
+	for e in efectos:
+		e["t"] += delta
+	efectos = efectos.filter(func(e: Dictionary) -> bool: return e["t"] < DURACION_EFECTO_S[e["tipo"]])
+	queue_redraw()
 
 
 func a_mesa(p: Vector2) -> Vector2:
@@ -220,6 +250,41 @@ func _draw() -> void:
 		draw_arc(mango, RADIO_MANGO, 0.0, TAU, 24, Color.WHITE, 2.0, true)
 	_dibujar_punta(punta_roja, Color("d8322a"))
 	_dibujar_punta(punta_negra, Color("111214"))
+	for e: Dictionary in efectos:
+		_dibujar_efecto(e)
+
+
+func _rect_pieza(id: String) -> Rect2:
+	return Rect2(a_pantalla(mesa.posicion_pieza(id)), mesa.tamano_pieza(id) * zoom)
+
+
+func _dibujar_efecto(e: Dictionary) -> void:
+	if not mesa.piezas.has(e["id"]):
+		return
+	var r := _rect_pieza(e["id"])
+	var centro := r.get_center()
+	var avance: float = e["t"] / DURACION_EFECTO_S[e["tipo"]]
+	var radio := maxf(r.size.x, r.size.y) * 0.5
+	match e["tipo"]:
+		"arco":
+			draw_circle(centro, radio * (0.6 + avance * 0.6), Color(0.85, 0.92, 1.0, 0.75 * (1.0 - avance)))
+			# Trazos quebrados fijos por pieza: el destello no cambia de forma en cada cuadro.
+			var azar := RandomNumberGenerator.new()
+			azar.seed = hash(e["id"])
+			for _rayo in 5:
+				var puntos := PackedVector2Array([centro])
+				var angulo := azar.randf() * TAU
+				for paso in 4:
+					angulo += azar.randf_range(-0.6, 0.6)
+					puntos.append(puntos[-1] + Vector2.from_angle(angulo) * radio * 0.3)
+				draw_polyline(puntos, Color(1.0, 1.0, 1.0, 1.0 - avance), maxf(3.0 * zoom, 1.5), true)
+		"humo":
+			for i in 4:
+				var fase := fposmod(avance + i * 0.25, 1.0)
+				var p := centro + Vector2((i - 1.5) * radio * 0.25, -fase * radio * 1.4)
+				draw_circle(p, radio * (0.15 + fase * 0.25), Color(0.35, 0.36, 0.38, 0.55 * (1.0 - fase)))
+		"disparo":
+			draw_arc(centro, radio * (0.5 + avance * 0.5), 0.0, TAU, 40, Color(Tema.ACENTO, 1.0 - avance), maxf(6.0 * zoom, 2.0), true)
 
 
 func _dibujar_cuadricula() -> void:
@@ -263,6 +328,12 @@ func _dibujar_estado(id: String, r: Rect2) -> void:
 	var c := mesa.sim.componente(id)
 	if c.tipo() == "lampara" and c.estado["encendida"]:
 		draw_circle(r.position + Vector2(100.0, 66.0) * zoom, 40.0 * zoom, Color("5dff8f"))
+	if c.tipo() == "motor_trifasico":
+		var calor := clampf((c.estado["temperatura"] - T_TINTE) / (T_TINTE_MAX - T_TINTE), 0.0, 1.0)
+		if c.estado["quemado"]:
+			draw_rect(r, Color(0.05, 0.04, 0.03, 0.5))
+		elif calor > 0.0:
+			draw_rect(r, Color(0.9, 0.2, 0.1, 0.45 * calor))
 	var fuente := get_theme_default_font()
 	var t := clampi(int(22.0 * zoom), 11, 20)
 	var texto := "%s  %s" % [id, mesa.estado_pieza(id)]

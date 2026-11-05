@@ -97,7 +97,7 @@
     {
       "id": "pruebas",
       "titulo": "Cómo se prueba",
-      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada,[/b] retire los puentes de la bornera:\n\n• [b]Continuidad:[/b] U1-U2, V1-V2 y W1-W2 deben dar valores bajos y casi iguales. Una diferencia superior al 5 % merece revisión ([i]criterio típico — verificar[/i]). Fuera de rango indica devanado abierto.\n• [b]Entre devanados y a masa,[/b] con {{megohmetro}} de 500 V ([i]valor típico — verificar a bordo[/i]): el mínimo habitual es de 1 MΩ ([i]verificar el criterio del buque[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla.\n\n[b]En servicio, con EPP:[/b] mida con pinza la corriente de las tres fases. Debe ser igual o menor que la de placa y estar equilibrada. Un {{desequilibrio}} apreciable obliga a buscar la causa."
+      "texto": "[b]Sin tensión, con bloqueo y etiquetado aplicados y ausencia de tensión verificada,[/b] retire los puentes de la bornera:\n\n• [b]Continuidad:[/b] U1-U2, V1-V2 y W1-W2 deben dar valores bajos y casi iguales. Una diferencia superior al 5 % merece revisión ([i]criterio típico — verificar[/i]). Fuera de rango indica devanado abierto.\n• [b]Entre devanados y a masa,[/b] con {{megohmetro}} de 500 V ([i]valor típico — verificar a bordo[/i]): IEEE 43 recomienda un mínimo de 5 MΩ en devanados de menos de 1 kV ([i]verificar el criterio del buque y del fabricante[/i]). Compare con registros anteriores: una bajada progresiva anticipa la falla.\n\n[b]En servicio, con EPP:[/b] mida con pinza la corriente de las tres fases. Debe ser igual o menor que la de placa y estar equilibrada. Un {{desequilibrio}} apreciable obliga a buscar la causa."
     },
     {
       "id": "fallas",

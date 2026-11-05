@@ -391,6 +391,26 @@ func test_instrumentos_sobre_la_mesa() -> String:
 	])
 
 
+func test_las_consecuencias_se_ven_en_la_mesa() -> String:
+	var raiz := _raiz_taller()
+	var p = raiz.pantalla_actual()
+	p.mesa.vaciar()
+	p.mesa.agregar("fuente_trifasica", Vector2.ZERO)
+	p.mesa.conectar("B1.L1", "B1.L2")
+	p.mesa.avanzar(10)
+	p._revisar_eventos()
+	var arco: bool = p.vista.efectos.size() == 1 and p.vista.efectos[0]["tipo"] == "arco"
+	var sin_pieza: bool = not p.vista.mostrar_evento("motor_quemado", "M9")
+	p.vista._process(5.0)
+	var termina: bool = p.vista.efectos.is_empty()
+	raiz.free()
+	return A.primero([
+		A.cierto(arco, "un cortocircuito debe mostrar el arco"),
+		A.cierto(sin_pieza, "sin pieza no hay efecto"),
+		A.cierto(termina, "el efecto debe terminar"),
+	])
+
+
 func test_todas_las_consecuencias_tienen_explicacion() -> String:
 	var textos: Dictionary = Contenido.new().leer("taller.json")["consecuencias"]
 	for e in ["disparo_magnetico", "disparo_termico", "disparo_rele_termico", "disparo_barras", "arco_contactos_soldados", "bobina_quemada", "motor_quemado", "fusible_fundido", "lampara_quemada", "vibracion_mando", "multimetro_destruido", "fusible_multimetro", "megohmetro_destruido"]:

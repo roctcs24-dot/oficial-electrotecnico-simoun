@@ -2,7 +2,16 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **etapa 7**, 17 lecciones, fichas de los equipos de la v1 con simbología IEC y ANSI, minijuego de símbolos, Taller con multímetro y megóhmetro, 3 misiones de Guardia, examen de la v1, rangos, repaso de errores, traspaso de partida, glosario y plano del barco. Los requisitos completos están en [CLAUDE.md](CLAUDE.md).
+Estado: **v1.0**. Incluye:
+
+- 17 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
+- Fichas de los equipos de la v1, con simbología IEC y ANSI, y minijuego de símbolos.
+- Taller con multímetro y megóhmetro.
+- 3 misiones de Guardia.
+- Examen de la v1, rangos, repaso de errores y traspaso de partida.
+- Glosario y plano del barco.
+
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La hoja de ruta sigue con la v2: generadores, paneles y cuadro principal.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -11,6 +20,12 @@ Estado: **etapa 7**, 17 lecciones, fichas de los equipos de la v1 con simbologí
 1. Instala [Godot 4.7.2](https://godotengine.org/) (versión estándar, no .NET).
 2. En el gestor de proyectos, elige **Importar** y selecciona `project.godot`.
 3. Pulsa **F5** para ejecutar.
+
+## Probar la versión
+
+- **En PC:** ejecute `OficialElectrotecnico.exe`. No necesita instalación ni conexión.
+- **En Android:** instale `OficialElectrotecnico.apk`. Es un APK arm64 firmado con un keystore de depuración, así que Android pedirá permitir la instalación desde esa fuente. No pide ningún permiso, ni siquiera internet.
+- **Partida:** para pasarla de un dispositivo a otro, abra **Mi progreso** en la pantalla de inicio.
 
 ## Pruebas
 

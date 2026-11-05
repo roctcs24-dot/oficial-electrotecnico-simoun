@@ -29,6 +29,19 @@ Revisión de las lecciones `l0_trifasica`, `l0_peligros` y `l0_loto`, y de la fi
 | Fibrilación como principal causa de muerte | [IEC 60479-1, vista previa](https://webstore.ansi.org/preview-pages/IEC/preview_iec60479-1%7Bed4.1%7Den.pdf) |
 | Bobina de contactor: cierre entre 85 % y 110 %. La caída depende del modelo | [Rockwell](https://www.rockwellautomation.com/en-us/products/details.104-K12B02.html), [ABB](https://resources.ipd.com.au/Flipbook/Contactor/files/basic-html/page318.html) |
 
+## Revisión del cierre de la v1
+
+Se contrastaron con fuentes públicas los datos de motores, protecciones e instrumentos que más pesan en las misiones y el examen. Ninguna es el texto de la norma: son fabricantes, guías técnicas y foros profesionales.
+
+| Dato | Resultado | Fuentes |
+|---|---|---|
+| Aislamiento mínimo del devanado | **Corregido.** Antes decía 1 MΩ. IEEE 43 recomienda 5 MΩ en devanados de menos de 1 kV, a 500 V DC; el valor de kV + 1 MΩ es para devanados antiguos. Se cambió en lecciones, ficha, misión, examen y megóhmetro | [EASA](https://easa.com/resources/resource-library/whats-new-in-the-ieee-43-insulation-resistance-testing-standard-1), [Open Exam Prep](https://open-exam-prep.com/study-guides/neta-ett-level-ii/insulation-resistance-testing/ir-test-voltages-ieee-43-minimums), [TestGuy](https://wiki.testguy.net/t/field-testing-of-motors/249) |
+| Clase 10: de 4 a 10 s a 7,2 × Ir, en frío; no dispara a 1,05 × Ir | Confirmado | [Schneider](https://www.se.com/vn/en/faqs/FA286067), [Siemens 3RU11](https://www.manualslib.com/manual/2997046/Siemens-3ru11.html?page=39) |
+| Disparo magnético del guardamotor de unas 13 veces el máximo del rango | Confirmado como valor habitual; otras series usan de 12 a 21 veces | [Rockwell 140M](https://configurator.rockwellautomation.com/api/Product/140M-C2E-C32/cutsheet), [Omron J7MN](https://manualmachine.com/omron/j7mn/10123057-datasheet) |
+| Estrella-triángulo: corriente y par de arranque a cerca de un tercio | Confirmado | [Electrical4U](https://www.electrical4u.com/star-delta-starter/), [EEPower](https://eepower.com/technical-articles/motor-starters-part-3-pros-and-cons-of-the-star-delta-configuration/) |
+| Polaridad de un motor sin marcas con pila y voltímetro | Práctica habitual, pero algunas fuentes prefieren baja tensión alterna. Se añadió esa advertencia a la lección | [Industrial Monitor Direct](https://industrialmonitordirect.com/blogs/knowledgebase/determining-three-phase-motor-lead-polarity-with-unidentified-leads), [Eng-Tips](https://eng-tips.com/threads/how-to-determine-polarity-on-three-phase-motor.153197/page-2), [EASA](https://easa.com/resources/trade_press/identifying-unmarked-leads-of-6-lead-motors-with-1-or-2-windings) |
+| Unos 220 V entre la fase perdida y las sanas, con el motor parado | Comprobado en el motor de simulación, con una prueba | Modelo del juego |
+
 ## Sin confirmar con una fuente
 
 Siguen en las lecciones como valores orientativos o a verificar:
@@ -48,7 +61,7 @@ Siguen en las lecciones como valores orientativos o a verificar:
 
 Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verificar" en los puntos sensibles:
 
-- Fichas de motor trifásico, relé térmico, guardamotor y pulsadores.
+- Fichas de motor trifásico, relé térmico, guardamotor y pulsadores, salvo los datos de la tabla anterior.
 - Lecciones de motores, arrancadores, multímetro y megóhmetro, incluido el procedimiento de polaridad de un motor sin marcas.
 - Esquemas de arranque directo y estrella-triángulo: coinciden con las plantillas del motor de simulación, pero no con planos reales del buque.
 - Explicaciones de consecuencias del Taller, en `data/taller.json`.

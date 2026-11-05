@@ -33,7 +33,7 @@
     {
       "titulo": "Criterios",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]Mínimo habitual en baja tensión:[/b] 1 MΩ ([i]verificar el criterio del buque y del fabricante[/i]).\n• [b]Tendencia:[/b] compare con registros anteriores. Una bajada brusca o progresiva indica deterioro, aunque el valor siga por encima del mínimo.\n• [b]Humedad:[/b] un motor frío y húmedo puede dar valores bajos. Límpielo, séquelo y mida de nuevo antes de condenarlo.\n• [b]Nunca energice[/b] un motor con aislamiento por debajo del criterio." },
+        { "tipo": "texto", "texto": "• [b]Mínimo en devanados de menos de 1 kV:[/b] 5 MΩ según IEEE 43, medido a 500 V. El fabricante o el buque pueden fijar otro valor ([i]verificar el criterio del buque y del fabricante[/i]).\n• [b]Tendencia:[/b] compare con registros anteriores. Una bajada brusca o progresiva indica deterioro, aunque el valor siga por encima del mínimo.\n• [b]Humedad:[/b] un motor frío y húmedo puede dar valores bajos. Límpielo, séquelo y mida de nuevo antes de condenarlo.\n• [b]Nunca energice[/b] un motor con aislamiento por debajo del criterio." },
         {
           "tipo": "quiz",
           "tema": "criterio_megger",

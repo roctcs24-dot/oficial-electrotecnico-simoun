@@ -279,6 +279,84 @@ func test_rangos_calibrados_con_el_contenido() -> String:
 	])
 
 
+## Las tres misiones resueltas sin faltas, con los mismos pasos que las pruebas de Guardia.
+func _completar_misiones(raiz: Raiz) -> Array[String]:
+	var g = load("res://tests/test_guardia.gd").new()
+	var fallos: Array[String] = []
+	var flujos := {
+		"g1_no_arranca": func(m: MisionGuardia) -> void:
+			g._medir_ohm(m, "K1.A1", "K1.A2")
+			m.diagnosticar(g._opcion_correcta(m))
+			m.ejecutar("cambiar_k1"),
+		"g2_termico_dispara": func(m: MisionGuardia) -> void:
+			g._medir_mega(m, "M1.U1", "PE1.PE")
+			m.ejecutar("girar_eje")
+			m.diagnosticar(g._opcion_correcta(m))
+			m.ejecutar("cambiar_rodamiento"),
+		"g3_bajo_aislamiento": func(m: MisionGuardia) -> void:
+			m.ejecutar("retirar_puentes")
+			for nodo in ["M1.U1", "M1.V1", "M1.W1"]:
+				g._medir_mega(m, nodo, "PE1.PE")
+			m.diagnosticar(g._opcion_correcta(m))
+			m.ejecutar("secar_devanado")
+			g._medir_mega(m, "M1.U1", "PE1.PE")
+			m.ejecutar("reponer_puentes"),
+	}
+	for id: String in flujos:
+		var m := MisionGuardia.new(raiz.contenido, id)
+		g._bloquear_y_verificar(m)
+		flujos[id].call(m)
+		g._quitar_bloqueo_y_energizar(m)
+		g._pulsar_marcha(m)
+		m.mesa.avanzar(100)
+		g._observar(m, m.tiempo_de_prueba())
+		m.firmar(g._respuestas_correctas(m))
+		if m.fin != "completada" or m.estrellas() != 3:
+			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
+		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
+	return fallos
+
+
+## Recorrido de toda la v1 sin errores: lecciones, símbolos, misiones y examen.
+func test_v1_completa_alcanza_el_rango_mas_alto() -> String:
+	var raiz := _raiz()
+	var l = load("res://tests/test_lecciones.gd").new()
+	for s in [0, 3]:
+		for id: String in raiz.contenido.sistema(s)["modos"]["aprender"]["lecciones"]:
+			l._completar(raiz, id, false)
+			raiz.volver()
+	var lecciones_completas := 0
+	for id: String in raiz.partida.datos["lecciones"]:
+		lecciones_completas += 1
+	raiz.ir_a("minijuego_simbolos")
+	var juego = raiz.pantalla_actual()
+	var rondas: Array = juego.args["rondas"]
+	for i in rondas.size():
+		raiz.pantalla_actual()._al_responder(true, int(rondas[i]["correcta"]), i, rondas[i])
+		raiz.pantalla_actual()._avanzar()
+	raiz.reconstruir()
+	raiz.volver()
+	var misiones := _completar_misiones(raiz)
+	raiz.ir_a("prueba_examen", {"id": "v1"})
+	var examen = raiz.pantalla_actual()
+	_responder_todo(examen, examen.args["items"].size())
+	raiz.volver()
+	var rangos := raiz.contenido.rangos()
+	var rango := raiz.partida.rango(rangos)
+	var puntos: int = raiz.partida.datos["puntos"]
+	var errores: int = raiz.partida.datos["errores"].size()
+	raiz.ir_a("progreso")
+	var progreso_ok: bool = raiz.pantalla_actual() != null
+	raiz.free()
+	return A.primero([
+		A.cierto(lecciones_completas == 17, "deben completarse las 17 lecciones: %d" % lecciones_completas),
+		A.cierto(misiones.is_empty(), "misiones: %s" % ", ".join(misiones)),
+		A.cierto(errores == 0, "un recorrido sin fallos no debe dejar errores: %d" % errores),
+		A.cierto(rango == rangos[-1]["nombre"], "debe alcanzar %s: %s con %d puntos" % [rangos[-1]["nombre"], rango, puntos]),
+		A.cierto(progreso_ok, "debe mostrarse el progreso"),
+	])
+
+
 func test_siguiente_rango() -> String:
 	var rangos := [{"nombre": "A", "puntos": 0}, {"nombre": "B", "puntos": 100}]
 	var p := _partida("siguiente.json")

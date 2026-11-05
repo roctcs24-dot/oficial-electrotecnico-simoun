@@ -114,6 +114,13 @@ func _capturar_taller(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "taller_archivo", tam)
 		p._mostrar_aviso("Motor quemado", "Ejemplo de explicación tras una consecuencia.")
 		await _guardar(carpeta, "taller_aviso", tam)
+		p.mesa.sim.componente("M1").estado["temperatura"] = 150.0
+		p.vista.mostrar_evento("arco_contactos_soldados", "K1")
+		p.vista.mostrar_evento("motor_quemado", "F2")
+		p.vista.mostrar_evento("disparo_magnetico", "Q1")
+		await RenderingServer.frame_post_draw
+		var ruta_efecto := carpeta.path_join("taller_efecto_%dx%d.png" % [tam.x, tam.y])
+		root.get_texture().get_image().save_png(ruta_efecto)
 		p.mesa.vaciar()
 		raiz.volver()
 

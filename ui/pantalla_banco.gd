@@ -3,7 +3,7 @@ extends Pantalla
 ## Base del Taller y de las misiones: la mesa con sus piezas, las pestañas laterales y los
 ## instrumentos. El estado vive en args para sobrevivir al giro del celular.
 
-const MODOS_MULTIMETRO := [["vac", "V~"], ["vdc", "V="], ["ohm", "Ω"], ["continuidad", "Cont."], ["a", "A"]]
+const MODOS_MULTIMETRO := [["vac", "V~"], ["vdc", "V="], ["ohm", "Ω"], ["continuidad", "Cont."], ["diodo", "Diodo"], ["a", "A"]]
 const LECTURAS_POR_SEGUNDO := 4.0
 ## La vista tarda unos cuadros en tomar su tamaño final: mientras tanto se repite el encuadre.
 const CUADROS_ENCUADRE := 4
@@ -285,6 +285,7 @@ func _panel_multimetro() -> void:
 	for m: Array in MODOS_MULTIMETRO:
 		var b := _boton(m[1], _elegir_modo.bind(m[0]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
+		_apretar_pestana(b)
 		b.toggle_mode = true
 		b.button_group = grupo
 		b.set_pressed_no_signal(args["modo"] == m[0])
@@ -330,7 +331,7 @@ func _panel_megohmetro() -> void:
 	_panel.add_child(_boton("Realizar la prueba", medir_aislamiento))
 	if args["megohmetro"].destruido:
 		_panel.add_child(_boton("Usar un megóhmetro nuevo", _megohmetro_nuevo))
-	_panel.add_child(_etiqueta("Criterio habitual en baja tensión: mínimo 1 MΩ. Verificar el criterio del buque.", "Nota"))
+	_panel.add_child(_etiqueta("Devanados de menos de 1 kV: mínimo 5 MΩ según IEEE 43. Verificar el criterio del buque.", "Nota"))
 
 
 func _elegir_v_prueba(v: int) -> void:
@@ -458,6 +459,7 @@ func _avanzar_simulacion(delta: float) -> void:
 func _revisar_eventos() -> void:
 	var textos: Dictionary = raiz.contenido.leer("taller.json").get("consecuencias", {})
 	for e: Dictionary in mesa.eventos_nuevos():
+		vista.mostrar_evento(e["tipo"], e["componente"])
 		var c: Dictionary = textos.get(e["tipo"], {})
 		if not c.is_empty():
 			var quien: String = e["componente"]

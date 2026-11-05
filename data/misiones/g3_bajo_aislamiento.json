@@ -74,12 +74,12 @@
     "Arranque el ventilador y observe el valor del monitor bajo la mesa. Después párelo y compare.",
     "El arrancador tiene dos alimentaciones. Bloquee Q1 y Q2, y verifique. Sin puentes, cada devanado se puede medir por separado.",
     "Abra la bornera y retire los puentes. Con el megóhmetro a 500 V, mida M1.U1, M1.V1 y M1.W1 contra la masa.",
-    "Después del secado, mida de nuevo antes de reponer los puentes. El mínimo habitual es 1 MΩ: verifique el criterio del buque."
+    "Después del secado, mida de nuevo antes de reponer los puentes. IEEE 43 recomienda al menos 5 MΩ en devanados de menos de 1 kV: verifique el criterio del buque."
   ],
   "diagnostico": {
     "pregunta": "¿Cuál es la causa de la alarma?",
     "opciones": [
-      { "texto": "Humedad en el devanado U: aislamiento bajo a masa", "correcta": true, "explicacion": "El devanado U marca unos 0,4 MΩ a masa, por debajo del mínimo habitual de 1 MΩ, mientras que V y W superan los 20 MΩ. La alarma apareció tras baldear la sala, y solo con el motor conectado." },
+      { "texto": "Humedad en el devanado U: aislamiento bajo a masa", "correcta": true, "explicacion": "El devanado U marca unos 0,4 MΩ a masa, muy por debajo de los 5 MΩ que recomienda IEEE 43, mientras que V y W superan los 20 MΩ. La alarma apareció tras baldear la sala, y solo con el motor conectado." },
       { "texto": "Falla en el monitor de aislamiento", "explicacion": "La alarma sigue al arranque de este motor, y el megóhmetro confirma un valor bajo en su devanado U. El monitor está indicando bien." },
       { "texto": "Cortocircuito entre fases", "explicacion": "Un cortocircuito entre fases haría disparar la protección. Aquí el motor funciona y el problema es de fuga a masa." },
       { "texto": "Devanado U abierto", "explicacion": "Un devanado abierto se detecta con el óhmetro, y el motor no arrancaría bien. Aquí el problema es de aislamiento, no de continuidad." }
@@ -95,7 +95,7 @@
   "libro": {
     "campos": [
       { "etiqueta": "Aislamiento de U a masa antes del secado", "opciones": ["Unos 0,4 MΩ", "Unos 25 MΩ", "Fuera de rango"], "correcta": 0, "explicacion": "Revise el historial: antes del secado, el devanado U marcó unos 0,4 MΩ." },
-      { "etiqueta": "Aislamiento de U a masa después del secado", "opciones": ["Por encima de 1 MΩ, aceptable", "Por debajo de 1 MΩ", "No se midió"], "correcta": 0, "explicacion": "Después del secado, el devanado U marcó muy por encima del mínimo habitual de 1 MΩ." },
+      { "etiqueta": "Aislamiento de U a masa después del secado", "opciones": ["Por encima de 5 MΩ, aceptable", "Por debajo de 5 MΩ", "No se midió"], "correcta": 0, "explicacion": "Después del secado, el devanado U marcó muy por encima del mínimo de 5 MΩ." },
       { "etiqueta": "Trabajo realizado", "opciones": ["Limpieza y secado del devanado", "Cambio del motor", "Anular la alarma del monitor"], "correcta": 0, "explicacion": "Anote el trabajo que resolvió la avería: la limpieza y el secado del devanado." }
     ]
   },

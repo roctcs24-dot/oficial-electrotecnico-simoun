@@ -2,14 +2,15 @@ class_name SimMegohmetro
 extends RefCounted
 ## Megóhmetro de 250, 500 o 1000 V. Se comprueba primero que no haya tensión:
 ## usarlo sobre un circuito energizado lo destruye.
-## El mínimo de 1 MΩ es un criterio habitual en baja tensión: verificar con el manual del equipo.
+## El mínimo de 5 MΩ es el que recomienda IEEE 43 para devanados de menos de 1 kV: verificar
+## con el manual del equipo y el criterio del buque.
 
 const TENSIONES := [250, 500, 1000]
 const R_ENTRADA := 1e7
 const V_MAX_EXTERNA := 30.0
 const I_PRUEBA := 0.001
 const MOHM_MAX := 999.0
-const MINIMO_MOHM := 1.0
+const MINIMO_MOHM := 5.0
 
 var ruido := 0.02
 var destruido := false
