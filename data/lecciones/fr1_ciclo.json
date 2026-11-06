@@ -1,0 +1,54 @@
+{
+  "id": "fr1_ciclo",
+  "titulo": "El ciclo de compresión",
+  "resumen": "Cómo se lleva el calor de la salmuera al agua de mar.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La idea",
+      "bloques": [
+        { "tipo": "texto", "texto": "Una planta de frío no fabrica frío: saca calor de donde sobra y lo lleva a otro sitio. En el atunero, lo saca de la {{salmuera}} de las cubas y lo tira al agua de mar.\n\nPara eso usa un {{refrigerante}}, aquí el {{amoniaco}}, que hierve a baja temperatura. Al hervir toma mucho calor, y al condensar lo devuelve. El {{ciclo_compresion}} tiene cuatro pasos:\n• [b]Evaporación:[/b] en el {{evaporador}}, el líquido hierve a baja presión y enfría la salmuera.\n• [b]Compresión:[/b] el compresor aspira ese vapor y lo comprime. Sale caliente y a alta presión.\n• [b]Condensación:[/b] en el {{condensador}}, el agua de mar enfría el vapor y lo vuelve líquido.\n• [b]Expansión:[/b] la {{valvula_expansion}} baja la presión del líquido, que vuelve al evaporador." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_donde_va_el_calor",
+          "pregunta": "¿Adónde va el calor que se saca de la salmuera?",
+          "opciones": ["Desaparece en el compresor", "Al agua de mar, en el condensador", "Al aire de la sala, por el evaporador"],
+          "correcta": 1,
+          "explicacion": "El condensador cede al agua de mar el calor de la salmuera más el que añade el compresor al comprimir."
+        }
+      ]
+    },
+    {
+      "titulo": "Alta y baja presión",
+      "bloques": [
+        { "tipo": "texto", "texto": "La planta tiene dos lados:\n• [b]Lado de alta:[/b] desde la descarga del compresor hasta la válvula de expansión. Pasa por el condensador y el recibidor. Presión de unos 11 a 14 bar.\n• [b]Lado de baja:[/b] desde la válvula de expansión hasta la succión del compresor. Pasa por el evaporador. Presión de unos 0,5 a 2 bar.\n\n([i]Valores típicos de una planta de salmuera con agua de mar tropical — verificar a bordo[/i].)\n\nEl compresor y la válvula de expansión son la frontera: uno sube la presión y la otra la baja." },
+        { "tipo": "animacion", "id": "banco_planta", "params": { "escenario": "ciclo" } }
+      ]
+    },
+    {
+      "titulo": "Comprobación",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "frio_orden_ciclo",
+          "pregunta": "Seleccione en orden el recorrido del refrigerante, empezando en el evaporador:",
+          "pasos": ["Evaporador: el líquido hierve y toma calor de la salmuera", "Compresor: el vapor se comprime", "Condensador: el vapor cede calor al agua de mar y se vuelve líquido", "Válvula de expansión: el líquido baja de presión"],
+          "explicacion": "Después de la válvula, el refrigerante vuelve al evaporador y el ciclo se repite."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "frio_lado_alta",
+          "pregunta": "¿Qué equipos están en el lado de alta presión?",
+          "opciones": ["El evaporador y la succión del compresor", "El condensador y el recibidor", "La salmuera y su bomba"],
+          "correcta": 1,
+          "explicacion": "El lado de alta va desde la descarga del compresor hasta la válvula de expansión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IIAR: introducción a la refrigeración por amoníaco.",
+    "ISO 5149: sistemas de refrigeración, seguridad y medio ambiente.",
+    "Manual de la planta de frío del buque."
+  ]
+}

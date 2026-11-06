@@ -1,0 +1,57 @@
+{
+  "id": "fr3_diagrama_ph",
+  "titulo": "El diagrama presión–entalpía",
+  "resumen": "Ver el ciclo en un gráfico y entender el rendimiento.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "El gráfico",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{diagrama_ph}} pone la presión en vertical, en escala logarítmica, y la {{entalpia}} en horizontal: la energía de cada kilogramo de refrigerante.\n\nLa campana separa tres zonas:\n• [b]A la izquierda,[/b] líquido.\n• [b]Dentro de la campana,[/b] mezcla de líquido y vapor, a temperatura constante para cada presión.\n• [b]A la derecha,[/b] vapor.\n\nEn la pantalla de la planta, el diagrama usa las presiones reales de la simulación, pero las entalpías son esquemáticas." },
+        { "tipo": "imagen", "svg": "res://art/lecciones/diagrama_ph.svg", "tamano": [480, 300], "fondo": "papel", "pie": "Ciclo de refrigeración en el diagrama P–h. Dibujo esquemático, no a escala.", "etiquetas": [
+          { "texto": "1", "x": 386, "y": 230, "tam": 16, "color": "#20242a" },
+          { "texto": "2", "x": 462, "y": 60, "tam": 16, "color": "#20242a" },
+          { "texto": "3", "x": 164, "y": 60, "tam": 16, "color": "#20242a" },
+          { "texto": "4", "x": 164, "y": 230, "tam": 16, "color": "#20242a" },
+          { "texto": "Condensación", "x": 300, "y": 66, "tam": 13, "color": "#a06a10" },
+          { "texto": "Evaporación", "x": 270, "y": 230, "tam": 13, "color": "#1f5f9c" },
+          { "texto": "Presión", "x": 76, "y": 16, "tam": 12, "color": "#20242a" },
+          { "texto": "Entalpía", "x": 440, "y": 290, "tam": 12, "color": "#20242a" }
+        ] }
+      ]
+    },
+    {
+      "titulo": "Los cuatro tramos",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]4-1, evaporación:[/b] a presión constante, el refrigerante hierve y gana entalpía. Esa ganancia es el frío útil de cada kilogramo.\n• [b]1-2, compresión:[/b] sube la presión y gana algo más de entalpía: es el trabajo del compresor.\n• [b]2-3, condensación:[/b] a presión constante, cede todo ese calor al agua de mar.\n• [b]3-4, expansión:[/b] baja la presión sin cambiar la entalpía. Es una línea vertical.\n\nEl {{cop}} es el frío útil dividido por el trabajo del compresor. Una planta de salmuera típica da un COP de 2 a 3 ([i]verificar con los datos del fabricante[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_tramo_vertical",
+          "pregunta": "¿Qué tramo del ciclo es una línea vertical en el diagrama P–h?",
+          "opciones": ["La compresión", "La expansión en la válvula", "La evaporación"],
+          "correcta": 1,
+          "explicacion": "En la válvula de expansión la presión baja sin intercambio de calor ni trabajo: la entalpía no cambia."
+        }
+      ]
+    },
+    {
+      "titulo": "Qué lo empeora",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cuanto más separadas están las dos presiones, más trabaja el compresor por cada kilovatio de frío:\n• [b]Condensación alta[/b], por agua de mar caliente, condensador sucio o {{incondensables}}: sube la línea 2-3.\n• [b]Evaporación baja[/b], por hielo, falta de refrigerante o salmuera sin circular: baja la línea 4-1.\n\nComo orientación, cada grado de más en la condensación o de menos en la evaporación cuesta unos puntos porcentuales de rendimiento ([i]valor orientativo — verificar[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_cop_empeora",
+          "pregunta": "El condensador está sucio y la condensación sube de 35 °C a 42 °C. ¿Qué ocurre con el COP?",
+          "opciones": ["Mejora, porque el vapor sale más caliente", "Empeora, porque el compresor tiene que subir más la presión", "No cambia"],
+          "correcta": 1,
+          "explicacion": "Con más diferencia de presión, el compresor gasta más por cada kilovatio de frío."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Diagrama P–h del amoníaco del fabricante o de IIAR.",
+    "ASHRAE Handbook, Fundamentals: ciclos de refrigeración.",
+    "Manual de la planta de frío del buque."
+  ]
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="laton" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6c46a"/><stop offset="0.5" stop-color="#c49a3a"/><stop offset="1" stop-color="#8a6a24"/>
+    </linearGradient>
+    <linearGradient id="cabeza" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9ced1"/><stop offset="1" stop-color="#7a8288"/>
+    </linearGradient>
+  </defs>
+  <!-- Tuberías: entra líquido por la izquierda, sale mezcla por abajo -->
+  <path d="M10,190 H110" stroke="#e0a030" stroke-width="16"/>
+  <path d="M160,230 V312" stroke="#5aa0e0" stroke-width="16"/>
+  <!-- Cuerpo -->
+  <rect x="104" y="160" width="112" height="72" rx="10" fill="url(#laton)"/>
+  <rect x="96" y="176" width="16" height="30" fill="#8a6a24"/>
+  <!-- Cabeza termostática con su diafragma -->
+  <rect x="126" y="120" width="68" height="44" rx="6" fill="url(#cabeza)"/>
+  <ellipse cx="160" cy="110" rx="56" ry="16" fill="url(#cabeza)"/>
+  <!-- Capilar hasta el bulbo -->
+  <path d="M206,104 C262,92 280,120 270,170 C262,210 250,236 280,250" fill="none" stroke="#c49a3a" stroke-width="3"/>
+  <rect x="270" y="244" width="40" height="18" rx="9" fill="url(#laton)"/>
+  <!-- Igualador externo -->
+  <path d="M120,150 C80,140 60,150 60,230 V290" fill="none" stroke="#8e9496" stroke-width="5"/>
+  <!-- Tornillo de ajuste del recalentamiento -->
+  <rect x="216" y="184" width="26" height="24" rx="3" fill="#5f6568"/>
+</svg>

@@ -1,0 +1,48 @@
+{
+  "id": "fr2_presion_temperatura",
+  "titulo": "Presión y temperatura del amoníaco",
+  "resumen": "Leer un manómetro de frío: bar, psi, relativa, absoluta y saturación.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Una presión, una temperatura",
+      "bloques": [
+        { "tipo": "texto", "texto": "Mientras el amoníaco está en {{saturacion}}, con líquido y vapor a la vez, su presión y su temperatura van juntas: a cada presión le corresponde una sola temperatura de ebullición. Por eso el manómetro de succión dice a qué temperatura evapora el refrigerante, y el de descarga, a qué temperatura condensa.\n\nAlgunos valores ([i]tablas del NH3 — verificar con la del fabricante[/i]):\n• −33 °C: 0 bar en el manómetro. Es su ebullición a presión atmosférica.\n• −15 °C: 1,35 bar.\n• 0 °C: 3,3 bar.\n• 35 °C: 12,5 bar." },
+        { "tipo": "animacion", "id": "saturacion_nh3", "params": { "temperatura": -15 } }
+      ]
+    },
+    {
+      "titulo": "Relativa, absoluta y psi",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]{{Presion_relativa}}:[/b] la que marca el {{manometro}}, medida desde la atmosférica. Puede ser negativa, si hay vacío.\n• [b]{{Presion_absoluta}}:[/b] la relativa más la atmosférica, unos 1,013 bar. Las tablas del refrigerante suelen darla así.\n• [b]psi:[/b] muchos manómetros y manuales vienen en libras por pulgada cuadrada. 1 bar son 14,5 psi.\n\nAntes de comparar una lectura con una tabla, compruebe si la tabla es absoluta o relativa. Confundirlas da un error de 1 bar, que en la succión es enorme." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_relativa_absoluta",
+          "pregunta": "El manómetro de succión marca 1,3 bar. ¿Cuál es la presión absoluta?",
+          "opciones": ["0,3 bar", "Unos 2,3 bar", "Unos 19 bar"],
+          "correcta": 1,
+          "explicacion": "Absoluta = relativa + atmosférica = 1,3 + 1,013 ≈ 2,3 bar. 19 son los psi de la lectura relativa."
+        }
+      ]
+    },
+    {
+      "titulo": "Usar la relación",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con un termómetro sobre la tubería y la temperatura de saturación del manómetro se calculan dos datos:\n• [b]{{Recalentamiento}}:[/b] la temperatura de la succión menos la de evaporación. Unos pocos grados indican que al compresor solo llega vapor.\n• [b]{{Subenfriamiento}}:[/b] la temperatura de condensación menos la del líquido. Indica que a la válvula de expansión llega solo líquido.\n\nUn recalentamiento casi nulo es peligroso: puede llegar líquido al compresor y dañarlo." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_recalentamiento",
+          "pregunta": "La succión marca una evaporación de −17 °C y el termómetro en la tubería de succión da −11 °C. ¿Cuánto recalentamiento hay?",
+          "opciones": ["6 K", "28 K", "0 K"],
+          "correcta": 0,
+          "explicacion": "Recalentamiento = −11 − (−17) = 6 K: el vapor está 6 grados por encima de su saturación."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Tablas termodinámicas del amoníaco (R-717) del fabricante del compresor.",
+    "IIAR: fundamentos de la refrigeración por amoníaco.",
+    "ISO 5149-1: definiciones y clasificación de refrigerantes."
+  ]
+}

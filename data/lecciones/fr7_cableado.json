@@ -1,0 +1,54 @@
+{
+  "id": "fr7_cableado",
+  "titulo": "Cableado eléctrico del compresor",
+  "resumen": "Potencia, mando, cadena de seguridades y enclavamientos.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Potencia",
+      "bloques": [
+        { "tipo": "texto", "texto": "El motor del compresor es un motor de inducción grande, de unos 110 kW a 440 V en la planta del simulador ([i]verificar la placa a bordo[/i]). Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nCon esa potencia, a bordo suele arrancar en estrella-triángulo o con arrancador suave. En el simulador arranca en directo, con el compresor descargado." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_ajuste_termico_compresor",
+          "pregunta": "La placa del motor del compresor dice 180 A en delta. ¿A cuánto se ajusta el relé térmico?",
+          "opciones": ["A 180 A", "A 250 A, para que no dispare al enfriar la salmuera", "Al pico de arranque"],
+          "correcta": 0,
+          "explicacion": "El relé térmico se ajusta a la corriente de la placa. La carga del arranque con salmuera caliente la limita el control de capacidad, no el relé."
+        }
+      ]
+    },
+    {
+      "titulo": "La cadena de seguridades",
+      "bloques": [
+        { "tipo": "texto", "texto": "En el circuito de mando, la bobina del contactor se alimenta a través de una cadena de contactos en serie:\n\n• Contacto 95-96 del relé térmico.\n• Pulsador de parada, normalmente cerrado.\n• Presostatos de alta, de baja y de aceite.\n• Contactos de enclavamiento: bombas de agua de mar y de salmuera en marcha, y parada de emergencia.\n• Pulsador de marcha con su contacto de retención.\n\nSi cualquiera se abre, el contactor suelta y el compresor se para. Para volver a arrancar hay que pulsar marcha: la retención se perdió." },
+        {
+          "tipo": "ordenar",
+          "tema": "frio_buscar_corte",
+          "pregunta": "El compresor no arranca y la luz de mando está encendida. Seleccione en orden cómo se busca el contacto abierto:",
+          "pasos": ["Mirar qué presostato o relé indica disparo", "Medir con el multímetro la tensión a la salida de cada contacto de la cadena", "Localizar el primer punto donde falta la tensión", "Corregir la causa de ese contacto antes de rearmar"],
+          "explicacion": "Siguiendo la tensión por la cadena, el primer punto sin tensión está justo después del contacto abierto. Se mide con el EPP, porque el mando tiene tensión."
+        }
+      ]
+    },
+    {
+      "titulo": "Enclavamientos y alarmas",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]{{Enclavamiento}} con las bombas:[/b] sin agua de mar en el condensador o sin salmuera en el evaporador, el compresor no debe arrancar. Un contacto auxiliar del contactor de cada bomba va en la cadena.\n• [b]Alarmas:[/b] cada disparo da una señal al sistema de alarmas de máquinas, para que se sepa por qué paró.\n• [b]Detector de amoníaco:[/b] con la alarma alta, el control suele parar el compresor y arrancar la ventilación de emergencia ([i]verificar la lógica del buque[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_enclavamiento_bombas",
+          "pregunta": "¿Por qué va un contacto de la bomba de agua de mar en la cadena del compresor?",
+          "opciones": ["Para que no arranque sin agua en el condensador", "Para que la bomba arranque sola", "Para medir el caudal"],
+          "correcta": 0,
+          "explicacion": "Sin agua de mar, la presión de descarga sube en segundos. El enclavamiento evita llegar al presostato de alta."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60204-1: equipo eléctrico de las máquinas, circuitos de mando.",
+    "IEC 60092-301: equipos eléctricos de buques.",
+    "Esquema eléctrico de la planta de frío del buque."
+  ]
+}

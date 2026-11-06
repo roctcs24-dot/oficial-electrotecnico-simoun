@@ -88,6 +88,13 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
 - El examen de la v2, `data/examenes/v2.json`, redactado a partir de las lecciones de generación.
 - La lección de la pinza amperimétrica, `i3_pinza`: el rango de 400 A y la resolución de 0,1 A, la categoría de medida CAT III o CAT IV, y el 10 % como orientación para el desequilibrio de corriente, que depende del fabricante del motor.
 - El motor de refrigeración por amoníaco: la tabla de presión–temperatura del NH3, redondeada de tablas publicadas; los ajustes de los presostatos (alta 16 bar, baja 0,3 bar, aceite 1 bar con 45 s), la válvula de seguridad a 20 bar, las alarmas de 25 y 150 ppm, la capacidad y la potencia del compresor, y las temperaturas de la salmuera y del agua de mar. Todos son valores típicos sin contrastar con la planta del buque.
+- La lección de seguridad con amoníaco (`l0_amoniaco`), las 8 lecciones de refrigeración (`fr1` a `fr8`) y las 7 fichas del sistema 4, redactadas sin fuentes consultadas en esta etapa. Lo más sensible:
+  - Los límites de exposición (25 ppm en la jornada, 300 ppm IDLH) y las alarmas de 25 y 150 ppm: comprobar con la ficha de datos de seguridad y con el detector del buque.
+  - La conducta ante una fuga: evacuar, ventilar y entrar solo con equipo de respiración autónomo y un compañero. Debe contrastarse con el plan de emergencia del buque.
+  - La posición del detector en alto y la lógica de parada de la planta y de arranque de la ventilación con la alarma alta.
+  - Los ajustes de recalentamiento, el diferencial de aceite de unos 3 bar en marcha y la temperatura de congelación de la salmuera, −21 °C.
+  - Que el compresor arranque en directo en el simulador, cuando a bordo suele hacerlo en estrella-triángulo o con arrancador suave.
+- Los 10 símbolos del sistema 4. IEC 60617 no cubre bien los equipos frigoríficos; se dibujaron a partir de ISO 14617 e ISA 5.1 sin las normas delante, y los ANSI de presostatos, termostato y transmisor son burbujas de instrumento ISA, no símbolos de IEEE 315.
 - Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.

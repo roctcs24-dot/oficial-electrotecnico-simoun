@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5f7a6a"/><stop offset="0.5" stop-color="#465d50"/><stop offset="1" stop-color="#2c3b33"/>
+    </linearGradient>
+    <linearGradient id="motor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a7186"/><stop offset="0.5" stop-color="#3e5366"/><stop offset="1" stop-color="#26343f"/>
+    </linearGradient>
+    <linearGradient id="separador" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a5055"/><stop offset="0.5" stop-color="#7a8288"/><stop offset="1" stop-color="#3a3f44"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+  </defs>
+  <!-- Bancada -->
+  <rect x="16" y="262" width="448" height="18" rx="3" fill="#2a2e31"/>
+  <!-- Motor eléctrico con aletas -->
+  <rect x="24" y="150" width="132" height="110" rx="10" fill="url(#motor)"/>
+  <g stroke="#26343f" stroke-width="3"><path d="M48,156 V254 M68,156 V254 M88,156 V254 M108,156 V254 M128,156 V254"/></g>
+  <rect x="64" y="128" width="52" height="24" rx="3" fill="#3e5366"/>
+  <!-- Acoplamiento -->
+  <rect x="156" y="190" width="22" height="34" rx="4" fill="#c8a248"/>
+  <!-- Compresor de tornillo -->
+  <rect x="178" y="160" width="150" height="100" rx="18" fill="url(#cuerpo)"/>
+  <path d="M196,184 H310 M196,236 H310" stroke="#2c3b33" stroke-width="3"/>
+  <!-- Indicador de la corredera -->
+  <circle cx="252" cy="210" r="20" fill="#e9ebe8" stroke="#8e9496" stroke-width="3"/>
+  <path d="M252,210 L264,198" stroke="#20242a" stroke-width="3" stroke-linecap="round"/>
+  <!-- Succión desde arriba -->
+  <path d="M210,160 V90 H170" fill="none" stroke="#5aa0e0" stroke-width="14"/>
+  <rect x="198" y="140" width="24" height="10" fill="url(#acero)"/>
+  <!-- Descarga al separador -->
+  <path d="M300,160 V112 H372" fill="none" stroke="#d9534f" stroke-width="14"/>
+  <!-- Separador de aceite -->
+  <rect x="372" y="50" width="76" height="210" rx="36" fill="url(#separador)"/>
+  <rect x="404" y="140" width="14" height="44" rx="3" fill="#20242a"/>
+  <rect x="407" y="160" width="8" height="22" fill="#c8a248"/>
+  <path d="M410,50 V26 H470" fill="none" stroke="#d9534f" stroke-width="12"/>
+  <!-- Retorno de aceite -->
+  <path d="M372,240 H340 V250 H328" fill="none" stroke="#c8a248" stroke-width="6"/>
+</svg>

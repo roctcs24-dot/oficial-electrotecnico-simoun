@@ -1,0 +1,65 @@
+{
+  "id": "presostato",
+  "titulo": "Presostato de seguridad",
+  "resumen": "Para el compresor cuando una presión sale de su valor.",
+  "dibujo": {
+    "svg": "res://art/equipos/presostato.svg",
+    "tamano": [300, 380],
+    "nota": "Presostato industrial genérico con escalas de corte y diferencial y rearme manual. Modelo, escalas y ajustes: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "CORTE", "x": 150, "y": 60, "tam": 11, "color": "#20242a" },
+      { "texto": "16 bar", "x": 192, "y": 80, "tam": 12, "color": "#20242a" },
+      { "texto": "DIFERENCIAL", "x": 150, "y": 132, "tam": 11, "color": "#20242a" },
+      { "texto": "2 bar", "x": 192, "y": 154, "tam": 12, "color": "#20242a" },
+      { "texto": "REARME", "x": 150, "y": 270, "tam": 11, "color": "#20242a" },
+      { "texto": "Cable", "x": 274, "y": 226, "tam": 11 },
+      { "texto": "Conexión de presión", "x": 150, "y": 370, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Presostatos de alta y de baja: contacto accionado por presión en IEC 60617, y PSH o PSL según ISA 5.1. Verificar contra la norma.",
+    "lista": ["presostato_alta", "presostato_baja", "termostato"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "Un {{presostato}} abre un contacto cuando la presión pasa de su corte. En la planta de frío hay tres de seguridad, en serie con la bobina del contactor del compresor: el {{presostato_alta}}, el {{presostato_baja}} y el {{presostato_aceite}}. Si uno abre, el compresor se para."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Fuelle o diafragma[/b] que recibe la presión por la conexión inferior.\n• [b]Resorte de corte[/b], que fija la presión a la que actúa.\n• [b]Resorte del diferencial[/b], que fija cuánto debe volver la presión para que cierre de nuevo.\n• [b]Contacto conmutado[/b] con bornes de entrada, normalmente cerrado y normalmente abierto.\n• [b]Pulsador de rearme[/b] en los de rearme manual. El de aceite añade un temporizador y dos conexiones: aceite y succión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Presión:[/b] el de alta, a la descarga antes de cualquier válvula de cierre; el de baja, a la succión; el de aceite, a la salida de la bomba de aceite y a la succión.\n• [b]Eléctrica:[/b] el contacto que se abre al disparar va en serie con la cadena de mando. El otro contacto puede dar la alarma.\n• [b]Nunca[/b] se puentea, ni para probar con el compresor en marcha."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "([i]Ajustes del simulador — verificar con el manual de la planta[/i])\n• [b]Alta:[/b] corte a 16 bar, por debajo del tarado de la válvula de seguridad, de 20 bar. Rearme manual.\n• [b]Baja:[/b] corte a 0,3 bar y diferencial de 0,7 bar. Rearme automático.\n• [b]Aceite:[/b] corte a 1 bar diferencial con 45 s de retardo. Rearme manual.\n\nEl ajuste se comprueba con un manómetro patrón, no con la escala del presostato, que es orientativa."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Continuidad:[/b] con el circuito de mando sin tensión y el contacto desconectado, el {{multimetro}} en continuidad debe pitar con la presión normal.\n• [b]Disparo real:[/b] con el procedimiento del fabricante, se sube o se baja la presión de forma controlada y se anota a qué valor dispara.\n• [b]Rearme:[/b] el de alta no debe rearmar mientras la presión siga alta."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Disparos repetidos:[/b] casi siempre es la planta, no el presostato. Busque la causa.\n• [b]Conexión de presión obstruida o con válvula cerrada:[/b] el presostato no ve la presión real y no protege.\n• [b]Contactos picados:[/b] el compresor no arranca aunque la presión sea correcta.\n• [b]Ajuste desplazado[/b] por vibración o por haber tocado los husillos."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos según el plan del buque y la sociedad de clasificación — verificar[/i]): prueba de disparo y registro del valor, apriete de bornes y revisión de la conexión de presión.\n\n[b]Correctivo:[/b] se cambia con el compresor bloqueado y la conexión de presión aislada con su válvula. El nuevo se ajusta y se prueba antes de devolver la planta a servicio."
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 5149-2: dispositivos de limitación de presión.",
+    "IEC 60947-5-1: contactos de los dispositivos de mando.",
+    "Manual de la planta de frío del buque."
+  ]
+}

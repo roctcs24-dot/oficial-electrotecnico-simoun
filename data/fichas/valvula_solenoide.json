@@ -1,0 +1,63 @@
+{
+  "id": "valvula_solenoide",
+  "titulo": "Válvula solenoide",
+  "resumen": "Abre o corta el paso del refrigerante con una bobina eléctrica.",
+  "dibujo": {
+    "svg": "res://art/equipos/valvula_solenoide.svg",
+    "tamano": [320, 320],
+    "nota": "Válvula solenoide genérica de línea de líquido con bobina y conector. Tensión de la bobina y modelo: verificar la placa a bordo.",
+    "etiquetas": [
+      { "texto": "Bobina", "x": 160, "y": 72, "tam": 12 },
+      { "texto": "110 V AC", "x": 160, "y": 120, "tam": 12, "color": "#20242a" },
+      { "texto": "Conector", "x": 268, "y": 96, "tam": 11 },
+      { "texto": "Sentido de paso", "x": 70, "y": 296, "tam": 11 },
+      { "texto": "Apertura manual", "x": 230, "y": 306, "tam": 10 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Símbolo de la válvula con accionamiento electromagnético. Verificar contra ISO 14617 e IEC 60617.",
+    "lista": ["valvula_solenoide"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{valvula_solenoide}} corta o abre el paso de refrigerante cuando lo pide el mando. En la línea de líquido se cierra al parar el compresor, para que el evaporador no se llene de líquido mientras está parado."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cuerpo[/b] con un asiento y un obturador.\n• [b]Núcleo móvil[/b] dentro de un tubo estanco: el amoníaco no sale al exterior.\n• [b]Bobina[/b] por fuera del tubo. Al energizarla, el campo magnético levanta el núcleo.\n• [b]Pilotaje:[/b] en las válvulas grandes, el núcleo abre un piloto y es la propia presión la que abre el obturador principal.\n• [b]Apertura manual[/b] para emergencias."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Sentido:[/b] respete la flecha del cuerpo. Montada al revés, no cierra.\n• [b]Eléctrica:[/b] la bobina se alimenta desde el mando del compresor, a menudo con un contacto auxiliar de su contactor ([i]verificar el esquema del buque[/i]).\n• [b]Posición:[/b] normalmente con la bobina hacia arriba."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No tiene ajustes. Se elige por el diámetro de paso, el refrigerante, la presión diferencial mínima que necesita para abrir si es pilotada, y la tensión de la bobina. Una bobina de repuesto debe ser de la misma tensión y del mismo tipo de corriente."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Tensión:[/b] con el multímetro, mida si llega tensión a la bobina cuando debería estar abierta.\n• [b]Campo:[/b] con tensión, una herramienta de acero se nota atraída junto a la bobina.\n• [b]Bobina:[/b] sin tensión y con el conector suelto, mida su resistencia. Abierta, marca fuera de rango.\n• [b]Cierre:[/b] con la válvula cerrada, una escarcha o un ruido de paso aguas abajo indica que no cierra bien."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Bobina quemada:[/b] la válvula no abre y la succión cae.\n• [b]Suciedad en el asiento:[/b] no cierra del todo; el evaporador se llena con el compresor parado.\n• [b]Presión diferencial insuficiente:[/b] una válvula pilotada no abre.\n• [b]Montaje al revés:[/b] deja pasar en cualquier caso."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]verificar el plan del buque[/i]): comprobar el apriete del conector y del prensaestopas, la ausencia de escarcha anormal y la apertura y el cierre al arrancar y parar.\n\n[b]Correctivo:[/b] la bobina se cambia sin abrir el circuito, con la alimentación bloqueada. El cuerpo o el núcleo solo se cambian con el tramo aislado y vaciado de amoníaco."
+    }
+  ],
+  "para_saber_mas": [
+    "Catálogo de la válvula instalada.",
+    "IEC 60204-1: circuitos de mando.",
+    "ISO 5149-2: componentes de los sistemas de refrigeración."
+  ]
+}

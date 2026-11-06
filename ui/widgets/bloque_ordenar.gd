@@ -21,7 +21,7 @@ func iniciar(datos: Dictionary, ya_resuelto := false) -> void:
 	columna.add_theme_constant_override("separation", 8)
 	add_child(columna)
 	var pregunta := Label.new()
-	pregunta.text = datos["pregunta"]
+	pregunta.text = TextoTecnico.unir_unidades(datos["pregunta"])
 	pregunta.theme_type_variation = "Subtitulo"
 	pregunta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	columna.add_child(pregunta)
@@ -41,7 +41,7 @@ func iniciar(datos: Dictionary, ya_resuelto := false) -> void:
 	columna.add_child(_explicacion)
 	if ya_resuelto:
 		for paso: String in datos["pasos"]:
-			_agregar_hecho(paso)
+			_agregar_hecho(TextoTecnico.unir_unidades(paso))
 		_siguiente = datos["pasos"].size()
 		_mostrar_explicacion()
 	else:
@@ -60,7 +60,7 @@ func _crear_pendientes() -> void:
 		indices[j] = temporal
 	for i: int in indices:
 		var b := Button.new()
-		b.text = _datos["pasos"][i]
+		b.text = TextoTecnico.unir_unidades(_datos["pasos"][i])
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -92,5 +92,5 @@ func _agregar_hecho(paso: String) -> void:
 
 
 func _mostrar_explicacion() -> void:
-	_explicacion.text = _datos["explicacion"]
+	_explicacion.text = TextoTecnico.unir_unidades(_datos["explicacion"])
 	_explicacion.visible = true

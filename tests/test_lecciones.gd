@@ -313,6 +313,91 @@ func test_practica_reparto_de_carga() -> String:
 	])
 
 
+func _banco_planta(escenario: String) -> Node:
+	var b: Node = load("res://ui/animaciones/banco_planta.gd").new()
+	b.iniciar({"escenario": escenario}, Contenido.new())
+	return b
+
+
+func test_practica_ciclo_de_frio() -> String:
+	var b := _banco_planta("ciclo")
+	var planta: SimPlantaFrio = b.sim.componente("PLANTA")
+	var parado: bool = not b.en_marcha()
+	var succion_0: float = planta.presion("succion")
+	var descarga_0: float = planta.presion("descarga")
+	var salmuera_0: float = planta.temperatura("salmuera")
+	b.alternar_compresor()
+	b.avanzar_segundos(240.0)
+	var marcha: bool = b.en_marcha()
+	var succion_1: float = planta.presion("succion")
+	var descarga_1: float = planta.presion("descarga")
+	var salmuera_1: float = planta.temperatura("salmuera")
+	b.alternar_compresor()
+	b.avanzar_segundos(240.0)
+	var parado_al_final: bool = not b.en_marcha()
+	var succion_2: float = planta.presion("succion")
+	b.free()
+	return A.primero([
+		A.cierto(parado, "la práctica empieza con el compresor parado"),
+		A.cierto(marcha, "arrancar debe dejar el compresor en marcha"),
+		A.cierto(succion_1 < succion_0 - 0.5, "la succión debe bajar: %.2f → %.2f bar" % [succion_0, succion_1]),
+		A.cierto(descarga_1 > descarga_0 + 2.0, "la descarga debe subir: %.1f → %.1f bar" % [descarga_0, descarga_1]),
+		A.cierto(salmuera_1 < salmuera_0 - 3.0, "la salmuera debe enfriarse: %.1f → %.1f °C" % [salmuera_0, salmuera_1]),
+		A.cierto(parado_al_final and succion_2 > succion_1, "al parar, la succión debe volver a subir: %.2f → %.2f bar" % [succion_1, succion_2]),
+	])
+
+
+func test_practica_presostato_de_alta() -> String:
+	var b := _banco_planta("presostatos")
+	var marcha: bool = b.en_marcha()
+	b.alternar_bomba("bomba_agua_mar")
+	b.avanzar_segundos(300.0)
+	var disparo: bool = b.sim.hubo_evento("disparo_presostato")
+	var parado: bool = not b.en_marcha()
+	var mensaje: String = b._mensaje.text
+	var rearme_pronto: bool = (b.sim.componente("PA") as SimPresostato).estado["disparado"]
+	b.alternar_bomba("bomba_agua_mar")
+	b.avanzar_segundos(300.0)
+	b.rearmar_alta()
+	var rearmado: bool = not (b.sim.componente("PA") as SimPresostato).estado["disparado"]
+	b.free()
+	return A.primero([
+		A.cierto(marcha, "el escenario empieza con el compresor en marcha"),
+		A.cierto(disparo and parado, "sin agua de mar debe disparar un presostato y parar el compresor"),
+		A.cierto(mensaje.begins_with("Disparo por alta presión"), "debe explicar el disparo de alta: %s" % mensaje),
+		A.cierto(rearme_pronto, "el de alta debe quedar disparado hasta rearmarlo a mano"),
+		A.cierto(rearmado, "con el agua de mar de vuelta y la presión baja, debe rearmar"),
+	])
+
+
+func test_practica_presostato_de_baja() -> String:
+	var b := _banco_planta("presostatos")
+	b.alternar_bomba("bomba_salmuera")
+	b.avanzar_segundos(600.0)
+	var mensaje: String = b._mensaje.text
+	var parado: bool = not b.en_marcha()
+	b.free()
+	return A.primero([
+		A.cierto(parado, "sin salmuera el compresor debe pararse"),
+		A.cierto(mensaje.begins_with("Disparo por baja presión"), "debe explicar el disparo de baja: %s" % mensaje),
+	])
+
+
+func test_curva_de_saturacion_del_amoniaco() -> String:
+	var s: Node = load("res://ui/animaciones/saturacion_nh3.gd").new()
+	s.iniciar({"temperatura": -15.0}, Contenido.new())
+	var frio: float = s.presion_relativa()
+	s._al_cambiar(35.0)
+	var caliente: float = s.presion_relativa()
+	var lectura: String = s._lectura.text
+	s.free()
+	return A.primero([
+		A.cerca(frio, 1.35, 0.05, "a −15 °C el amoníaco satura a unos 1,35 bar relativos"),
+		A.cerca(caliente, 12.5, 0.05, "a 35 °C satura a unos 12,5 bar relativos"),
+		A.cierto(lectura == "35 °C", "el deslizador debe mostrar la temperatura: %s" % lectura),
+	])
+
+
 func test_practica_potencia_inversa() -> String:
 	var b := _banco_generadores("reparto")
 	for _i in 8:
@@ -332,6 +417,13 @@ func test_numero_con_coma_decimal() -> String:
 		A.cierto(TextoTecnico.numero(2.5, 2) == "2,50", "2,50: %s" % TextoTecnico.numero(2.5, 2)),
 		A.cierto(TextoTecnico.numero(254.03, 0) == "254", "254: %s" % TextoTecnico.numero(254.03, 0)),
 	])
+
+
+## El número y su unidad no se separan al partir la línea; las palabras normales sí.
+func test_numero_y_unidad_no_se_separan() -> String:
+	var fijo := TextoTecnico.ESPACIO_FIJO
+	var texto := TextoTecnico.expandir("del 10 % al 100 %. Unos −21 °C, 16 bar, 440 V y 5 de ellos.", {}, {})
+	return A.cierto(texto == "del 10%s%% al 100%s%%. Unos −21%s°C, 16%sbar, 440%sV y 5 de ellos." % [fijo, fijo, fijo, fijo, fijo], "debe unir solo las unidades: %s" % texto.replace(fijo, "~"))
 
 
 func _crear_raiz() -> Raiz:

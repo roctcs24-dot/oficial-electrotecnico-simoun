@@ -1,0 +1,64 @@
+{
+  "id": "transmisor_presion",
+  "titulo": "Transmisor de presión de 4–20 mA",
+  "resumen": "Convierte una presión en una señal de corriente para el control de la planta.",
+  "dibujo": {
+    "svg": "res://art/equipos/transmisor_presion.svg",
+    "tamano": [260, 380],
+    "nota": "Transmisor de presión genérico de dos hilos. Escala y modelo: verificar la placa a bordo.",
+    "etiquetas": [
+      { "texto": "PT", "x": 130, "y": 128, "tam": 16, "color": "#20242a" },
+      { "texto": "−1 a 9 bar", "x": 130, "y": 154, "tam": 12, "color": "#20242a" },
+      { "texto": "4–20 mA", "x": 130, "y": 178, "tam": 12, "color": "#20242a" },
+      { "texto": "24 V DC", "x": 130, "y": 202, "tam": 11, "color": "#20242a" },
+      { "texto": "Conector", "x": 206, "y": 46, "tam": 11 },
+      { "texto": "Conexión de proceso", "x": 130, "y": 370, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Transmisor de presión: bloque de medida en IEC y PT según ISA 5.1. Verificar contra la norma.",
+    "lista": ["transmisor_presion"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{transmisor_presion}} mide una presión y la convierte en una corriente de un {{lazo_4_20}}. El PLC o el controlador de la planta la usa para mostrarla, regular la capacidad y dar alarmas antes de que actúen los presostatos."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Célula de medida[/b] con una membrana que se deforma con la presión.\n• [b]Electrónica[/b] que convierte la deformación en corriente.\n• [b]Conexión de proceso[/b] roscada, y conector o caja de bornes para el cable.\n\nEn dos hilos, el mismo par lleva la alimentación y la señal: el transmisor deja pasar de 4 a 20 mA según la presión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Dos hilos:[/b] la fuente de 24 V DC, el transmisor y la entrada analógica del PLC, en serie.\n• [b]Polaridad:[/b] el positivo de la fuente al borne + del transmisor. Invertida, no hay señal.\n• [b]Cable:[/b] apantallado, con la pantalla a masa en un solo extremo ([i]verificar el criterio del buque[/i]).\n• [b]Proceso:[/b] con una válvula de aislamiento, para poder cambiarlo sin vaciar el circuito."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Escala:[/b] 4 mA corresponde al inicio y 20 mA al final. Con una escala de −1 a 9 bar, 12 mA son 4 bar.\n• [b]Configuración:[/b] la escala del transmisor y la del PLC deben coincidir.\n• [b]Elección:[/b] escala adecuada a la presión, materiales compatibles con el amoníaco, y la categoría de protección adecuada al lugar."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Corriente del lazo:[/b] con la {{pinza}} de miliamperios, o con el multímetro en serie, abriendo el lazo con el permiso adecuado.\n• [b]Comparación:[/b] la presión que da el PLC debe coincidir con la de un manómetro patrón en el mismo punto.\n• [b]Alimentación:[/b] mida la tensión en los bornes del transmisor: debe quedar dentro de su rango con 20 mA."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]0 mA:[/b] lazo abierto, fusible fundido o transmisor sin alimentación.\n• [b]Más de 20 mA:[/b] sobrepresión, cortocircuito en el cable o transmisor averiado.\n• [b]Lectura fija:[/b] válvula de aislamiento cerrada o conexión obstruida.\n• [b]Lectura con desvío:[/b] célula dañada o escala mal configurada."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]verificar el plan del buque[/i]): comparación periódica con un manómetro patrón, revisión del conector y del cable.\n\n[b]Correctivo:[/b] se cierra su válvula de aislamiento, se descarga con cuidado la presión del tramo hacia un lugar seguro y se cambia. El nuevo se configura con la misma escala."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60381-1: señales analógicas de corriente continua.",
+    "ISA 5.1: símbolos e identificación de instrumentos.",
+    "Manual del transmisor instalado."
+  ]
+}

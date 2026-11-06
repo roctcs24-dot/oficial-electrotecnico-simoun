@@ -1,0 +1,63 @@
+{
+  "id": "l0_amoniaco",
+  "titulo": "Seguridad con amoníaco",
+  "resumen": "Toxicidad, detectores, protección y qué hacer ante una fuga.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El peligro",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{amoniaco}} es un refrigerante excelente, pero es tóxico y corrosivo para los ojos, la piel y los pulmones. Con mucha concentración también es inflamable ([i]valores de referencia — verificar con la ficha de seguridad[/i]):\n\n• [b]Olor:[/b] se nota desde unas 5 ppm. Avisa pronto, pero el olfato se acostumbra.\n• [b]25 ppm:[/b] {{limite_exposicion}} para una jornada.\n• [b]300 ppm:[/b] {{idlh}}. A partir de aquí hay que salir enseguida sin protección respiratoria.\n• [b]Más de 15 % en volumen:[/b] puede arder. Ocurre cerca de una fuga grande en un local cerrado.\n\nEl gas es más ligero que el aire y tiende a subir, pero una fuga de líquido forma una nube fría que se arrastra por el suelo." },
+        {
+          "tipo": "quiz",
+          "tema": "nh3_idlh",
+          "pregunta": "El detector de la sala marca 320 ppm. ¿Qué significa?",
+          "opciones": ["Que se puede trabajar una jornada con mascarilla de papel", "Que la atmósfera es inmediatamente peligrosa: se sale y solo se entra con equipo de respiración autónomo", "Que el detector está averiado, porque el amoníaco no llega a esa concentración"],
+          "correcta": 1,
+          "explicacion": "300 ppm es el umbral IDLH del amoníaco. Por encima no se permanece sin protección respiratoria autónoma."
+        }
+      ]
+    },
+    {
+      "titulo": "Protección",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Detectores fijos:[/b] en la sala de máquinas y en la de la planta, con alarma de aviso y alarma alta ([i]en el simulador, 25 y 150 ppm — verificar a bordo[/i]).\n• [b]{{Ventilacion_emergencia}}:[/b] se arranca desde fuera de la sala.\n• [b]{{Era}}:[/b] el equipo de respiración autónomo es el único válido en una fuga. Las máscaras con filtro solo sirven con concentraciones bajas y oxígeno suficiente.\n• [b]{{Epp}}:[/b] gafas estancas o pantalla, y guantes resistentes al amoníaco. Con líquido, traje de protección química.\n• [b]Duchas y lavaojos:[/b] cerca de la planta, y comprobados.\n\nTrabajar en el circuito de amoníaco exige un {{permiso_trabajo}}, y antes de abrirlo hay que vaciar el refrigerante del tramo." },
+        {
+          "tipo": "quiz",
+          "tema": "nh3_proteccion_respiratoria",
+          "pregunta": "Hay que entrar en una sala con una fuga de amoníaco. ¿Qué protección respiratoria se usa?",
+          "opciones": ["Una mascarilla contra el polvo", "Un equipo de respiración autónomo, con un compañero fuera", "Ninguna, si se entra muy deprisa"],
+          "correcta": 1,
+          "explicacion": "En una fuga la concentración puede pasar del IDLH y faltar oxígeno. Solo el equipo autónomo protege, y nunca se entra solo."
+        }
+      ]
+    },
+    {
+      "titulo": "Ante una fuga",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "nh3_actuacion_fuga",
+          "pregunta": "Salta la alarma alta de amoníaco en la sala de máquinas. Seleccione en orden la actuación:",
+          "pasos": ["Dar la alarma y avisar al puente", "Evacuar la sala, saliendo hacia donde viene el aire", "Arrancar la ventilación de emergencia y parar la planta desde fuera", "Entrar solo con equipo de respiración autónomo y un compañero, para aislar la fuga", "Atender a los afectados: aire fresco y lavado con mucha agua"],
+          "explicacion": "Primero las personas: avisar y salir. Después se controla la fuga desde fuera, y solo se entra con protección y apoyo."
+        },
+        { "tipo": "texto", "texto": "[b]Primeros auxilios[/b] ([i]siga la guía médica del buque[/i]):\n• [b]Ojos:[/b] lavar con agua abundante durante al menos 15 minutos, con los párpados abiertos.\n• [b]Piel:[/b] quitar la ropa contaminada y lavar con mucha agua. El líquido produce quemaduras por frío.\n• [b]Inhalación:[/b] sacar al aire fresco, mantener en reposo y pedir consejo médico por radio.\n\nEl amoníaco se disuelve muy bien en agua: una cortina de agua pulverizada ayuda a abatir una nube, pero el agua contaminada también es peligrosa." },
+        {
+          "tipo": "quiz",
+          "tema": "nh3_lavado_ojos",
+          "pregunta": "A un compañero le salpica amoníaco en los ojos. ¿Qué se hace primero?",
+          "opciones": ["Lavar con agua abundante al menos 15 minutos", "Neutralizar con vinagre", "Tapar los ojos y esperar al médico"],
+          "correcta": 0,
+          "explicacion": "El lavado inmediato y prolongado con agua es lo que más reduce el daño. No se neutraliza con ácidos."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Ficha de datos de seguridad del amoníaco del proveedor.",
+    "NIOSH: valores de exposición y de IDLH del amoníaco.",
+    "ISO 5149-3 y 5149-4: seguridad de la sala de máquinas y operación.",
+    "Guía médica internacional de a bordo (OMS)."
+  ]
+}

@@ -18,14 +18,14 @@ func iniciar(datos: Dictionary, respuesta := -1) -> void:
 	_columna.add_theme_constant_override("separation", 8)
 	add_child(_columna)
 	var pregunta := Label.new()
-	pregunta.text = datos["pregunta"]
+	pregunta.text = TextoTecnico.unir_unidades(datos["pregunta"])
 	pregunta.theme_type_variation = "Subtitulo"
 	pregunta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_columna.add_child(pregunta)
 	var opciones: Array = datos["opciones"]
 	for i in opciones.size():
 		var b := Button.new()
-		b.text = opciones[i]
+		b.text = TextoTecnico.unir_unidades(opciones[i])
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -55,7 +55,7 @@ func _mostrar_resultado(indice: int) -> void:
 		elif i == indice:
 			_pintar(b, Tema.FALLO)
 	var inicio := "Respuesta correcta. " if indice == correcta else "Respuesta incorrecta. "
-	_explicacion.text = inicio + _datos["explicacion"]
+	_explicacion.text = TextoTecnico.unir_unidades(inicio + _datos["explicacion"])
 	_explicacion.visible = true
 
 

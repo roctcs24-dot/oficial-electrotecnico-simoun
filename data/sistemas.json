@@ -18,7 +18,7 @@
       "estado": "activo",
       "zona": [600, 208, 164, 44],
       "modos": {
-        "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto"] },
+        "aprender": { "lecciones": ["l0_electricidad", "l0_ohm_potencia", "l0_alterna", "l0_trifasica", "l0_peligros", "l0_loto", "l0_amoniaco"] },
         "examen": { "examenes": ["v1"] }
       }
     },
@@ -67,7 +67,10 @@
       "estado": "activo",
       "zona": [232, 268, 232, 76],
       "modos": {
-        "taller": { "pantalla": "planta", "detalle": "Planta de frío: compresor, presostatos, bombas y salmuera" }
+        "aprender": { "lecciones": ["fr1_ciclo", "fr2_presion_temperatura", "fr3_diagrama_ph", "fr4_compresores", "fr5_componentes", "fr6_control", "fr7_cableado", "fr8_diagnostico"],
+          "fichas": ["compresor_tornillo", "condensador", "valvula_expansion", "valvula_solenoide", "presostato", "transmisor_presion", "detector_amoniaco"] },
+        "taller": { "pantalla": "planta", "detalle": "Planta de frío: compresor, presostatos, bombas y salmuera" },
+        "examen": { "minijuegos": ["simbolos_frio"] }
       }
     },
     {

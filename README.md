@@ -2,11 +2,12 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v2.0**, con la v1 y la v2 completas. Incluye:
+Estado: **v2.2**, con la v1 y la v2 completas y la v3 en desarrollo. Incluye:
 
-- 18 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
+- 19 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
-- Fichas de los equipos de los sistemas 1 y 3, entre ellas la del generador de emergencia, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
+- 8 lecciones de refrigeración: ciclo de compresión, presión y temperatura del NH3, diagrama presión–entalpía, compresores, componentes, control y protecciones, cableado del compresor y diagnóstico.
+- Fichas de los equipos de los sistemas 1, 3 y 4, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con tres generadores, sincronización, PMS, protecciones, lámparas de tierra y cuadro de emergencia con su generador.
 - Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
@@ -14,7 +15,7 @@ Estado: **v2.0**, con la v1 y la v2 completas. Incluye:
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación y la pantalla de la planta.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación, la pantalla de la planta, las lecciones, las fichas y los símbolos. Faltan las misiones de Guardia y el examen.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -259,3 +260,7 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite.
 - **Pantalla** `ui/screens/planta.gd`, en el Taller del sistema 4: esquema del ciclo (`EsquemaFrio`) con el termómetro sobre las tuberías, manómetros, mando eléctrico del compresor con sus presostatos, corredera de capacidad, bombas, diagrama presión–entalpía (`DiagramaPH`, con entalpías esquemáticas) y seguridad de la sala. Sus mandos están en `game/operador_planta.gd`, y sus textos y las explicaciones de cada evento, en `data/planta.json`. El tiempo se puede acelerar ×10.
 - **Circuito** `planta_frio`: arranque directo del compresor con los presostatos de alta, baja y aceite en serie con la bobina del contactor. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.
+- **Animaciones de las lecciones:** `banco_planta` usa la misma simulación de la planta con el tiempo ×5. El escenario `ciclo` arranca y para el compresor, y `presostatos` deja parar las bombas para ver qué presostato dispara y cómo se rearma. `saturacion_nh3` dibuja la curva de saturación con un deslizador de temperatura.
+- **Símbolos:** los del sistema 4 llevan `"sistema": 4` en `data/simbolos.json`. IEC 60617 no cubre bien los equipos frigoríficos, así que siguen ISO 14617 e ISA 5.1, marcados para verificar.
+
+**Números y unidades:** `TextoTecnico.unir_unidades()` pone un espacio que no se parte entre un número y su unidad (`16 bar`, `−21 °C`, `100 %`), para que no queden en líneas distintas. Se aplica a los textos de lecciones y fichas y a las preguntas. Una unidad nueva se añade a su expresión regular.

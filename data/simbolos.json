@@ -1,5 +1,5 @@
 {
-  "nota": "Símbolos dibujados según IEC 60617 y ANSI/IEEE 315 (NEMA). En los relés ANSI se usa la numeración de funciones IEEE C37.2. Verificar contra la norma: las versiones varían según fabricante y año.",
+  "nota": "Símbolos dibujados según IEC 60617 y ANSI/IEEE 315 (NEMA). En los relés ANSI se usa la numeración de funciones IEEE C37.2. Los símbolos de refrigeración siguen ISO 14617 en la columna IEC, y ISA 5.1 o la práctica habitual de los esquemas norteamericanos en la columna ANSI. Verificar contra la norma: las versiones varían según fabricante y año.",
   "simbolos": [
     {
       "id": "bobina", "nombre": "Bobina de contactor", "sistema": 3, "similares": ["temporizador"],
@@ -157,6 +157,76 @@
         { "texto": "R<", "x": 120, "y": 93, "tam": 28 }, { "texto": "L", "x": 136, "y": 34, "tam": 15 } ] },
       "ansi": { "svg": "res://art/simbolos/ansi/monitor_aislamiento.svg", "tamano": [240, 200], "etiquetas": [
         { "texto": "64", "x": 120, "y": 94, "tam": 26 }, { "texto": "L", "x": 136, "y": 34, "tam": 15 } ] }
+    },
+    {
+      "id": "compresor_frio", "nombre": "Compresor frigorífico", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/compresor_frio.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "CP1", "x": 206, "y": 44, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/compresor_frio.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "C", "x": 120, "y": 100, "tam": 34 }, { "texto": "CP1", "x": 206, "y": 44, "tam": 18 } ] }
+    },
+    {
+      "id": "condensador", "nombre": "Condensador", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/condensador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "CD1", "x": 210, "y": 36, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/condensador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "COND", "x": 120, "y": 100, "tam": 24 }, { "texto": "CD1", "x": 210, "y": 36, "tam": 18 } ] }
+    },
+    {
+      "id": "evaporador", "nombre": "Evaporador", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/evaporador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "EV1", "x": 210, "y": 36, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/evaporador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "EVAP", "x": 120, "y": 100, "tam": 24 }, { "texto": "EV1", "x": 210, "y": 36, "tam": 18 } ] }
+    },
+    {
+      "id": "valvula_expansion", "nombre": "Válvula de expansión", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/valvula_expansion.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "V1", "x": 196, "y": 60, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/valvula_expansion.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "TXV", "x": 120, "y": 154, "tam": 20 }, { "texto": "V1", "x": 196, "y": 60, "tam": 18 } ] }
+    },
+    {
+      "id": "valvula_solenoide", "nombre": "Válvula solenoide", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/valvula_solenoide.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "YV1", "x": 192, "y": 48, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/valvula_solenoide.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S", "x": 120, "y": 48, "tam": 22 }, { "texto": "YV1", "x": 192, "y": 48, "tam": 18 } ] }
+    },
+    {
+      "id": "valvula_seguridad", "nombre": "Válvula de seguridad", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/valvula_seguridad.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PSV1", "x": 196, "y": 160, "tam": 16 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/valvula_seguridad.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PSV", "x": 196, "y": 160, "tam": 20 } ] }
+    },
+    {
+      "id": "presostato_alta", "nombre": "Presostato de alta", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/presostato_alta.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "P>", "x": 122, "y": 39, "tam": 20 }, { "texto": "PA", "x": 196, "y": 66, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/presostato_alta.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PSH", "x": 120, "y": 100, "tam": 24 }, { "texto": "PA", "x": 196, "y": 50, "tam": 18 } ] }
+    },
+    {
+      "id": "presostato_baja", "nombre": "Presostato de baja", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/presostato_baja.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "P<", "x": 122, "y": 39, "tam": 20 }, { "texto": "PB", "x": 196, "y": 66, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/presostato_baja.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PSL", "x": 120, "y": 100, "tam": 24 }, { "texto": "PB", "x": 196, "y": 50, "tam": 18 } ] }
+    },
+    {
+      "id": "termostato", "nombre": "Termostato", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/termostato.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "θ", "x": 122, "y": 39, "tam": 22 }, { "texto": "TS", "x": 196, "y": 66, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/termostato.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "TS", "x": 120, "y": 100, "tam": 26 } ] }
+    },
+    {
+      "id": "transmisor_presion", "nombre": "Transmisor de presión", "sistema": 4, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/transmisor_presion.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "p", "x": 120, "y": 100, "tam": 30 }, { "texto": "4–20 mA", "x": 200, "y": 78, "tam": 11 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/transmisor_presion.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PT", "x": 120, "y": 100, "tam": 26 } ] }
     }
   ]
 }

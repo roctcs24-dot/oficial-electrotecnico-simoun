@@ -184,11 +184,11 @@ func test_el_minijuego_cubre_los_simbolos_sin_repetir() -> String:
 func test_simbolos_separados_por_sistema() -> String:
 	var c := Contenido.new()
 	for s: Dictionary in c.simbolos():
-		if not int(s.get("sistema", -1)) in [1, 3]:
+		if not int(s.get("sistema", -1)) in [1, 3, 4]:
 			return "el símbolo %s no indica su sistema" % s["id"]
 	var azar := RandomNumberGenerator.new()
 	azar.seed = 5
-	for sistema in [1, 3]:
+	for sistema in [1, 3, 4]:
 		var ids := {}
 		for r: Dictionary in JuegoSimbolos.crear_rondas(c.simbolos(sistema), 10, azar):
 			ids[r["id"]] = true

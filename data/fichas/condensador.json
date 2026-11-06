@@ -1,0 +1,66 @@
+{
+  "id": "condensador",
+  "titulo": "Condensador multitubular",
+  "resumen": "Pasa al agua de mar el calor del amoníaco y lo vuelve líquido.",
+  "dibujo": {
+    "svg": "res://art/equipos/condensador.svg",
+    "tamano": [480, 280],
+    "nota": "Condensador multitubular genérico con agua de mar por los tubos y amoníaco por la carcasa. Tamaño, pasos de agua y materiales: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Condensador", "x": 175, "y": 156, "tam": 11, "color": "#20242a" },
+      { "texto": "NH3 · agua de mar", "x": 175, "y": 170, "tam": 10, "color": "#20242a" },
+      { "texto": "Vapor del compresor", "x": 190, "y": 30, "tam": 12 },
+      { "texto": "Salida de agua", "x": 74, "y": 66, "tam": 11 },
+      { "texto": "Entrada de agua", "x": 60, "y": 270, "tam": 11 },
+      { "texto": "Líquido al recibidor", "x": 400, "y": 270, "tam": 11 },
+      { "texto": "Válvula de seguridad", "x": 400, "y": 30, "tam": 11 },
+      { "texto": "Purga", "x": 251, "y": 74, "tam": 10, "color": "#20242a" }
+    ]
+  },
+  "simbolos": {
+    "nota": "Símbolo del condensador en un esquema frigorífico. Verificar contra ISO 14617 y los esquemas de la planta.",
+    "lista": ["condensador", "valvula_seguridad"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{condensador}} recibe el vapor caliente de la descarga y lo enfría con agua de mar hasta volverlo líquido. Por él sale de la planta todo el calor que se saca de la salmuera, más el que añade el compresor."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Carcasa[/b] cilíndrica por la que entra el vapor y en cuyo fondo se recoge el líquido.\n• [b]Haz de tubos[/b] por el que pasa el agua de mar, de acero o de aleación resistente al agua salada.\n• [b]Cajas de agua[/b] en los extremos, que se abren para limpiar los tubos.\n• [b]Ánodos de sacrificio[/b] contra la corrosión, en muchos modelos.\n• [b]{{Valvula_seguridad}}[/b] y conexión de purga de {{incondensables}}."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Lado del amoníaco:[/b] entrada de vapor arriba, desde el separador de aceite, y salida de líquido abajo, hacia el recibidor.\n• [b]Lado del agua:[/b] entrada por abajo y salida por arriba, para que no quede aire en los tubos.\n• [b]Bomba de agua de mar:[/b] su contactor da un enclavamiento al compresor, que no debe arrancar sin agua."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "El condensador no tiene ajustes. Lo que se controla es el caudal de agua. Como orientación, la condensación queda unos 6 °C por encima de la temperatura del agua de mar, y el agua sale unos 4 °C más caliente de lo que entra ([i]valores del simulador — verificar con los datos de la planta[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Diferencia de temperatura:[/b] compare la condensación, sacada del manómetro de descarga, con la del agua de mar. Si crece con el tiempo, el condensador se ensucia.\n• [b]Salto del agua:[/b] mida con el termómetro la entrada y la salida. Un salto muy grande indica poco caudal.\n• [b]Fugas:[/b] una fuga de amoníaco en los tubos sube el pH del agua de mar de salida y se nota con un detector en la descarga del agua ([i]verificar el procedimiento del buque[/i])."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Tubos sucios[/b] por incrustaciones o algas: sube la presión de descarga.\n• [b]Incondensables[/b] acumulados: sube la presión aunque el agua esté bien.\n• [b]Poco caudal:[/b] filtro de toma de mar sucio, bomba gastada o válvulas medio cerradas.\n• [b]Tubos picados[/b] por corrosión: fuga de amoníaco al agua de mar."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar el plan del buque[/i]): limpieza del filtro de toma de mar, registro de presiones y temperaturas, cambio de ánodos, limpieza de los tubos en cada parada larga y purga de incondensables.\n\n[b]Correctivo:[/b] para limpiar o taponar tubos, el condensador se aísla, se vacía de amoníaco según el procedimiento del buque y se ventila antes de abrir."
+    }
+  ],
+  "para_saber_mas": [
+    "Manual de la planta de frío del buque.",
+    "ISO 5149-2: recipientes a presión y dispositivos de protección.",
+    "IIAR: intercambiadores para amoníaco."
+  ]
+}

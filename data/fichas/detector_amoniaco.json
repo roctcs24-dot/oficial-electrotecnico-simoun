@@ -1,0 +1,65 @@
+{
+  "id": "detector_amoniaco",
+  "titulo": "Detector de amoníaco",
+  "resumen": "Vigila la concentración de NH3 en la sala y da las alarmas.",
+  "dibujo": {
+    "svg": "res://art/equipos/detector_amoniaco.svg",
+    "tamano": [300, 360],
+    "nota": "Detector fijo de pared genérico con pantalla, dos niveles de alarma y aviso de avería. Modelo, sensor y ajustes: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "NH3  18 ppm", "x": 150, "y": 100, "tam": 18, "color": "#9fe3b5" },
+      { "texto": "A1", "x": 100, "y": 196, "tam": 11, "color": "#20242a" },
+      { "texto": "A2", "x": 150, "y": 196, "tam": 11, "color": "#20242a" },
+      { "texto": "AVERÍA", "x": 200, "y": 196, "tam": 10, "color": "#20242a" },
+      { "texto": "MENÚ", "x": 111, "y": 230, "tam": 10 },
+      { "texto": "OK", "x": 189, "y": 230, "tam": 10 },
+      { "texto": "Sensor", "x": 236, "y": 324, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "No tiene un símbolo propio en IEC 60617. En los diagramas de instrumentos se dibuja como el transmisor de presión, con un círculo, pero rotulado AT o AIT (analizador) según ISA 5.1. Verificar contra la norma y los esquemas del buque.",
+    "lista": []
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{detector_amoniaco}} mide la concentración de amoníaco en el aire, en {{ppm}}, y da alarma a dos niveles. Con la alarma alta suele arrancar la {{ventilacion_emergencia}} y parar la planta ([i]verificar la lógica del buque[/i])."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Sensor[/b] electroquímico, de semiconductor o infrarrojo, según el rango y el modelo.\n• [b]Electrónica[/b] con pantalla, relés de alarma y salida de 4–20 mA.\n• [b]Luces[/b] de alarma 1, alarma 2 y avería.\n• [b]Portátil:[/b] además del fijo, un detector de bolsillo sirve para buscar fugas y para entrar en la sala."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Alimentación[/b] de 24 V DC, desde una fuente que siga funcionando en un blackout ([i]verificar a bordo[/i]).\n• [b]Relés[/b] hacia el sistema de alarmas, la ventilación de emergencia y la parada de la planta.\n• [b]Posición:[/b] el amoníaco gaseoso sube, por eso el sensor suele ir en alto, cerca de los equipos y de la salida de ventilación ([i]según el estudio del fabricante y la sociedad de clasificación[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "([i]Ajustes del simulador — verificar a bordo[/i])\n• [b]Alarma 1:[/b] 25 ppm, el {{limite_exposicion}} de una jornada.\n• [b]Alarma 2:[/b] 150 ppm. El {{idlh}} del amoníaco es 300 ppm.\n• [b]Elección:[/b] el rango del sensor debe cubrir las dos alarmas. Los de rango bajo no sirven para concentraciones altas, y al revés."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Prueba con gas[/b] de concentración conocida, con el kit del fabricante. Es la única que comprueba el sensor.\n• [b]Prueba de alarmas:[/b] con la función de prueba del equipo, compruebe que llegan al sistema de alarmas y que arranca la ventilación.\n• [b]Registro:[/b] anote la fecha, la concentración de prueba y la lectura."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sensor agotado:[/b] marca cero aunque haya amoníaco. Por eso no basta con mirar la pantalla.\n• [b]Deriva del cero:[/b] alarmas falsas o lecturas bajas.\n• [b]Sensor saturado[/b] tras una exposición fuerte: hay que comprobarlo con gas.\n• [b]Sin alimentación:[/b] luz de avería o pantalla apagada."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos del fabricante — verificar[/i]): prueba con gas y calibración periódicas, cambio del sensor al final de su vida, y limpieza de la entrada del sensor.\n\n[b]Correctivo:[/b] mientras un detector esté fuera de servicio, la sala se vigila con un detector portátil y se avisa al jefe de máquinas."
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 5149-3: emplazamiento y detección en la sala de máquinas.",
+    "EN 378-3: detectores de refrigerante.",
+    "Manual del detector instalado."
+  ]
+}

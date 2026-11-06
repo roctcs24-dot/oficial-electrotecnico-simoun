@@ -1,0 +1,65 @@
+{
+  "id": "compresor_tornillo",
+  "titulo": "Compresor de tornillo",
+  "resumen": "Aspira el vapor del evaporador y lo comprime hasta la presión de condensación.",
+  "dibujo": {
+    "svg": "res://art/equipos/compresor_tornillo.svg",
+    "tamano": [480, 320],
+    "nota": "Grupo compresor genérico con motor eléctrico, compresor de tornillo y separador de aceite. En el simulador, 220 kW frigoríficos con motor de 110 kW: valores típicos — verificar la placa y el modelo a bordo.",
+    "etiquetas": [
+      { "texto": "Motor 110 kW", "x": 90, "y": 206, "tam": 13 },
+      { "texto": "Compresor", "x": 253, "y": 176, "tam": 12 },
+      { "texto": "Corredera", "x": 253, "y": 248, "tam": 11 },
+      { "texto": "Succión", "x": 150, "y": 80, "tam": 12 },
+      { "texto": "Descarga", "x": 336, "y": 98, "tam": 12 },
+      { "texto": "Separador de aceite", "x": 400, "y": 302, "tam": 12 },
+      { "texto": "Retorno de aceite", "x": 352, "y": 230, "tam": 10 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Símbolo del compresor en un esquema frigorífico. Verificar contra ISO 14617 y los esquemas de la planta.",
+    "lista": ["compresor_frio"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{compresor_tornillo}} aspira el vapor que sale del {{evaporador}} y lo comprime hasta la presión de condensación. Es el corazón de la planta: sin él no hay diferencia de presiones y el {{refrigerante}} no circula."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Dos rotores helicoidales[/b], macho y hembra, que atrapan el vapor y reducen su volumen al girar.\n• [b]{{Corredera_capacidad}}[/b], movida por aceite a presión, que regula del 10 % al 100 %.\n• [b]Inyección de aceite[/b] para sellar, enfriar y lubricar los rotores y los cojinetes.\n• [b]{{Separador_aceite}}[/b] a la salida, con su filtro y su enfriador de aceite.\n• [b]Motor eléctrico[/b] acoplado directamente, y cierre mecánico en el eje."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Succión[/b] desde el evaporador, y [b]descarga[/b] hacia el separador de aceite y el condensador.\n• [b]Motor:[/b] circuito de potencia con guardamotor, contactor y relé térmico. A bordo suele arrancar en estrella-triángulo o con arrancador suave ([i]verificar el esquema del buque[/i]).\n• [b]Mando:[/b] la bobina del contactor pasa por los presostatos de alta, baja y aceite, y por los enclavamientos de las bombas.\n• [b]Instrumentos:[/b] manómetros o transmisores de succión, descarga y aceite, y termómetro de descarga."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "([i]Valores del simulador — verificar con el manual del compresor[/i])\n• [b]Arranque:[/b] siempre con la corredera al mínimo.\n• [b]Capacidad en automático:[/b] sigue a la temperatura de la salmuera y no deja pasar el motor del 95 % de su potencia.\n• [b]Aceite:[/b] presión diferencial de unos 3 bar en marcha, con corte a 1 bar y 45 s de retardo.\n• [b]Elección:[/b] la capacidad frigorífica se da a unas temperaturas de evaporación y de condensación. Fuera de ellas, la capacidad cambia mucho."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]En marcha:[/b] anote succión, descarga, aceite, temperatura de descarga, corriente del motor y posición de la corredera. Compare con los registros anteriores.\n• [b]Motor:[/b] corriente de las tres fases con la {{pinza}}, y aislamiento con el {{megohmetro}} con el motor bloqueado.\n• [b]Protecciones:[/b] compruebe cada presostato según el plan de mantenimiento, con el procedimiento del fabricante.\n• [b]Vibración y ruido:[/b] un cambio indica desgaste de cojinetes o rotores."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Disparo por aceite:[/b] filtro obstruido, nivel bajo o espuma por refrigerante en el aceite.\n• [b]Descarga muy caliente:[/b] poca inyección de aceite o relación de presiones muy alta.\n• [b]Golpe de líquido:[/b] llega líquido por la succión, con recalentamiento casi nulo. Daña rotores y cojinetes.\n• [b]Motor que dispara por sobrecarga:[/b] capacidad en manual con la salmuera caliente, o tensión baja.\n• [b]Fuga por el cierre del eje:[/b] olor a amoníaco junto al acoplamiento."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos según el fabricante y las horas de marcha — verificar[/i]): registro diario de presiones y temperaturas, análisis y cambio de aceite y filtros, revisión del cierre del eje, alineación del acoplamiento, apriete de bornes del motor y prueba de las protecciones.\n\n[b]Correctivo:[/b] con el compresor parado, bloqueado y aislado del circuito, y el amoníaco del tramo vaciado según el procedimiento del buque."
+    }
+  ],
+  "para_saber_mas": [
+    "Manual del compresor del buque.",
+    "ISO 5149-2: diseño, construcción, ensayos y documentación.",
+    "IIAR: compresores para amoníaco."
+  ]
+}

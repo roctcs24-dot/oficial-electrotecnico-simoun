@@ -1,0 +1,54 @@
+{
+  "id": "fr4_compresores",
+  "titulo": "Compresores de tornillo y de pistón",
+  "resumen": "Cómo comprimen, cómo se regula su capacidad y por qué el aceite es vital.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Dos tipos",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]{{Compresor_tornillo}}:[/b] dos rotores helicoidales engranados atrapan el vapor y lo comprimen al avanzar. Gira continuamente, vibra poco y admite mucha capacidad. Necesita inyección de aceite para sellar, enfriar y lubricar.\n• [b]{{Compresor_piston}}:[/b] cilindros con pistones y válvulas, como un motor. Es robusto y fácil de reparar, pero vibra más. Su bomba de aceite lubrica los cojinetes.\n\nEn atuneros grandes son habituales los de tornillo ([i]tipo y marca: verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_aceite_tornillo",
+          "pregunta": "En un compresor de tornillo, ¿para qué se inyecta aceite?",
+          "opciones": ["Solo para lubricar el motor eléctrico", "Para sellar los rotores, enfriar la compresión y lubricar", "Para limpiar el refrigerante"],
+          "correcta": 1,
+          "explicacion": "Sin aceite, el vapor se escapa entre los rotores, la descarga se calienta demasiado y los cojinetes se dañan."
+        }
+      ]
+    },
+    {
+      "titulo": "Capacidad y arranque",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{corredera_capacidad}} del tornillo abre un paso que devuelve parte del vapor a la succión. Así la capacidad va del 10 % al 100 %. En el pistón se descargan cilindros.\n\n• [b]Arranque descargado:[/b] el compresor arranca con la corredera al mínimo. El motor solo tiene que vencer la inercia, y el pico de corriente dura menos.\n• [b]Limitador de corriente:[/b] el control no deja subir la corredera si el motor pasa de su corriente nominal. Pasa al arrancar con la salmuera caliente, cuando la succión está alta.\n• [b]Regulación:[/b] al acercarse la salmuera a la consigna, la corredera baja." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_arranque_descargado",
+          "pregunta": "¿Por qué arranca descargado el compresor de tornillo?",
+          "opciones": ["Para que el motor arranque con poco par y menos tiempo de corriente alta", "Para enfriar antes el aceite", "Porque la válvula de expansión lo exige"],
+          "correcta": 0,
+          "explicacion": "Con la corredera al mínimo, el motor de 110 kW arranca casi sin carga y el arranque dura menos."
+        }
+      ]
+    },
+    {
+      "titulo": "El aceite",
+      "bloques": [
+        { "tipo": "texto", "texto": "El aceite sale con el vapor de la descarga. El {{separador_aceite}} lo recoge y lo devuelve al compresor, tras pasar por un enfriador y un filtro.\n\n• [b]Presión diferencial:[/b] la del aceite menos la de succión. Es la que vigila el {{presostato_aceite}}.\n• [b]Retardo:[/b] al arrancar, la presión tarda en subir. El presostato espera unos 45 s antes de parar el compresor ([i]verificar el ajuste[/i]).\n• [b]Causas de baja presión:[/b] filtro obstruido, nivel bajo o espuma por refrigerante disuelto en el aceite." },
+        {
+          "tipo": "ordenar",
+          "tema": "frio_recorrido_aceite",
+          "pregunta": "Seleccione en orden el recorrido del aceite en un compresor de tornillo:",
+          "pasos": ["Se inyecta en los rotores", "Sale con el vapor por la descarga", "El separador de aceite lo recoge", "Pasa por el enfriador y el filtro", "Vuelve a inyectarse en el compresor"],
+          "explicacion": "Si el separador no retiene bien el aceite, este pasa al condensador y al evaporador, ensucia los intercambiadores y falta en el compresor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Manual del compresor del buque: aceite, ajustes y mantenimiento.",
+    "IIAR: compresores para amoníaco.",
+    "ISO 5149-2: diseño, construcción y ensayos de los sistemas de refrigeración."
+  ]
+}

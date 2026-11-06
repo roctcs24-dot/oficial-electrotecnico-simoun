@@ -4,12 +4,22 @@ extends RefCounted
 ## en una lección o ficha muestra también el inglés, como viene en manuales y placas.
 
 static var _patron: RegEx
+static var _patron_unidad: RegEx
+
+## Espacio que no se parte: el número y su unidad quedan siempre en la misma línea.
+const ESPACIO_FIJO := " "
 
 
 static func _regex() -> RegEx:
 	if _patron == null:
 		_patron = RegEx.create_from_string("\\{\\{([^}]+)\\}\\}")
 	return _patron
+
+
+static func unir_unidades(texto: String) -> String:
+	if _patron_unidad == null:
+		_patron_unidad = RegEx.create_from_string("(\\d) (%|°C|MΩ|Ω|(?:kVAr|kVA|kW|bar|psi|ppm|mA|Hz|min|K|V|A|s)\\b)")
+	return _patron_unidad.sub(texto, "$1" + ESPACIO_FIJO + "$2", true)
 
 
 ## vistos guarda los términos ya mostrados y se comparte entre los textos de una misma ficha.
@@ -34,7 +44,7 @@ static func expandir(texto: String, glosario: Dictionary, vistos: Dictionary) ->
 		else:
 			vistos[id] = true
 			resultado += "%s ([i]%s[/i])" % [nombre, termino["en"]]
-	return resultado + texto.substr(cursor)
+	return unir_unidades(resultado + texto.substr(cursor))
 
 
 ## Número con coma decimal, como se escribe en español.

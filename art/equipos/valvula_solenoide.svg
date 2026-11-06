@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="acero" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d0d4d6"/><stop offset="0.5" stop-color="#9aa1a5"/><stop offset="1" stop-color="#5f6568"/>
+    </linearGradient>
+    <linearGradient id="bobina" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2a2e31"/><stop offset="0.5" stop-color="#4a5055"/><stop offset="1" stop-color="#1b1e21"/>
+    </linearGradient>
+  </defs>
+  <!-- Tubería de líquido -->
+  <path d="M8,250 H312" stroke="#e0a030" stroke-width="16"/>
+  <!-- Cuerpo con bridas -->
+  <rect x="80" y="220" width="160" height="60" rx="8" fill="url(#acero)"/>
+  <rect x="64" y="226" width="20" height="48" fill="#7a8288"/><rect x="236" y="226" width="20" height="48" fill="#7a8288"/>
+  <!-- Flecha del sentido de paso -->
+  <path d="M110,262 H200 M188,254 L204,262 L188,270" fill="none" stroke="#20242a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Tubo del núcleo y bobina -->
+  <rect x="146" y="176" width="28" height="46" fill="url(#acero)"/>
+  <rect x="112" y="80" width="96" height="100" rx="8" fill="url(#bobina)"/>
+  <rect x="130" y="100" width="60" height="30" rx="3" fill="#e9ebe8"/>
+  <!-- Conector de la bobina -->
+  <rect x="208" y="104" width="48" height="52" rx="6" fill="#2a2e31"/>
+  <path d="M256,130 H300" stroke="#20242a" stroke-width="10"/>
+  <!-- Mando manual de apertura -->
+  <rect x="150" y="282" width="20" height="18" fill="#c8312a"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300">
+  <!-- Ejes -->
+  <g fill="none" stroke="#20242a" stroke-width="2" stroke-linecap="round">
+    <path d="M40,20 V270 H470"/>
+    <path d="M34,30 L40,20 L46,30 M460,264 L470,270 L460,276"/>
+  </g>
+  <!-- Campana de saturación: líquido a la izquierda, vapor a la derecha -->
+  <path d="M90,268 C120,200 170,120 236,36" fill="none" stroke="#6b7378" stroke-width="2.5"/>
+  <path d="M404,268 C398,200 392,120 376,36" fill="none" stroke="#6b7378" stroke-width="2.5"/>
+  <path d="M236,36 C280,14 340,14 376,36" fill="none" stroke="#6b7378" stroke-width="2.5" stroke-dasharray="6 6"/>
+  <!-- Ciclo -->
+  <path d="M180,210 H370" fill="none" stroke="#2a6fb4" stroke-width="4"/>
+  <path d="M370,210 L450,74" fill="none" stroke="#c0392b" stroke-width="4"/>
+  <path d="M450,74 H180" fill="none" stroke="#c98a1a" stroke-width="4"/>
+  <path d="M180,74 V210" fill="none" stroke="#c98a1a" stroke-width="3" stroke-dasharray="8 6"/>
+  <g fill="#20242a">
+    <circle cx="370" cy="210" r="5"/><circle cx="450" cy="74" r="5"/><circle cx="180" cy="74" r="5"/><circle cx="180" cy="210" r="5"/>
+  </g>
+</svg>

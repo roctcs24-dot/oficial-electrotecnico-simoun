@@ -1,0 +1,65 @@
+{
+  "id": "valvula_expansion",
+  "titulo": "Válvula de expansión termostática",
+  "resumen": "Baja la presión del líquido y dosifica cuánto entra en el evaporador.",
+  "dibujo": {
+    "svg": "res://art/equipos/valvula_expansion.svg",
+    "tamano": [320, 320],
+    "nota": "Válvula de expansión termostática genérica con bulbo, capilar e igualador externo. En plantas grandes también se usan válvulas manuales, de flotador o electrónicas: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Cabeza termostática", "x": 160, "y": 82, "tam": 12 },
+      { "texto": "Capilar", "x": 300, "y": 140, "tam": 11 },
+      { "texto": "Bulbo", "x": 290, "y": 282, "tam": 11 },
+      { "texto": "Líquido", "x": 44, "y": 172, "tam": 12 },
+      { "texto": "Al evaporador", "x": 214, "y": 300, "tam": 11 },
+      { "texto": "Igualador", "x": 34, "y": 304, "tam": 11 },
+      { "texto": "Ajuste", "x": 228, "y": 224, "tam": 10 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Símbolo de la válvula de expansión en un esquema frigorífico. Verificar contra ISO 14617.",
+    "lista": ["valvula_expansion"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{valvula_expansion}} estrangula el líquido que llega del recibidor: su presión baja y parte de él se evapora. Además dosifica cuánto entra en el {{evaporador}}, para que este trabaje lleno pero sin mandar líquido al compresor."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Orificio y aguja[/b], que abren más o menos el paso.\n• [b]Cabeza termostática[/b] con un diafragma: arriba empuja la presión del bulbo, y abajo, la de evaporación y el resorte.\n• [b]Bulbo y capilar[/b], cargados con un fluido que sigue la temperatura de la tubería de succión.\n• [b]Igualador externo[/b], que lleva al diafragma la presión real de la salida del evaporador.\n• [b]Tornillo de ajuste[/b] del resorte, que fija el {{recalentamiento}}."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Entrada[/b] desde la línea de líquido, tras la {{valvula_solenoide}} y el filtro.\n• [b]Salida[/b] hacia el evaporador.\n• [b]Bulbo[/b] bien apretado y aislado sobre la tubería de succión, a la salida del evaporador ([i]posición según el fabricante[/i]).\n• [b]Igualador[/b] conectado a la succión, después del bulbo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Recalentamiento:[/b] se ajusta para que al compresor llegue solo vapor, con unos pocos grados de margen ([i]valor del fabricante — verificar[/i]). Cada vuelta del tornillo cambia unos grados.\n• [b]Elección:[/b] por capacidad, refrigerante y presiones de trabajo. Una válvula demasiado grande oscila, y una pequeña deja el evaporador medio vacío."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "Mida el recalentamiento: la temperatura de la succión con el termómetro, menos la de evaporación del manómetro.\n• [b]Muy alto:[/b] la válvula deja pasar poco.\n• [b]Casi nulo:[/b] deja pasar demasiado, con riesgo de golpe de líquido.\n• [b]Variable:[/b] la válvula oscila, o el bulbo está mal colocado."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Bulbo suelto o sin aislar:[/b] lee mal la temperatura y abre de más.\n• [b]Capilar roto:[/b] pierde la carga, la válvula cierra y la succión cae.\n• [b]Orificio obstruido[/b] por suciedad o hielo de agua en el circuito: succión baja y recalentamiento alto.\n• [b]Ajuste tocado[/b] sin medir: recalentamiento fuera de valor."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]verificar el plan del buque[/i]): comprobar la sujeción y el aislamiento del bulbo, medir el recalentamiento en cada revisión y limpiar el filtro de la línea de líquido.\n\n[b]Correctivo:[/b] cambiar la válvula o su cabeza con el tramo aislado y vaciado de amoníaco, y ajustar después el recalentamiento midiéndolo."
+    }
+  ],
+  "para_saber_mas": [
+    "Catálogo y manual de la válvula instalada.",
+    "IIAR: válvulas y controles para amoníaco.",
+    "ISO 5149-2: componentes de los sistemas de refrigeración."
+  ]
+}
