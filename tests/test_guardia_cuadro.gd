@@ -633,11 +633,11 @@ func test_pantalla_muestra_el_procedimiento_y_los_objetivos() -> String:
 	var textos: Array[String] = []
 	_botones(p, textos)
 	p._actualizar()
-	var marcas: int = p._marcas_objetivos.size()
-	var primera: String = p._marcas_objetivos[0].text
-	p._dar_paso("aviso")
+	var marcas: int = p._panel.marcas_objetivos.size()
+	var primera: String = p._panel.marcas_objetivos[0].text
+	p._panel.dar_paso("aviso")
 	p._alternar_carga("C4")
-	p._bloquear("C4")
+	p._panel.bloquear("C4")
 	var despues: Array[String] = []
 	_botones(raiz.pantalla_actual(), despues)
 	if raiz.vertical:
@@ -683,7 +683,7 @@ func test_pantalla_conserva_la_mision_al_girar() -> String:
 	var raiz := _raiz("gen2_blackout")
 	var p = raiz.pantalla_actual()
 	var m: MisionCuadro = p.mision
-	p._dar_paso("aviso")
+	p._panel.dar_paso("aviso")
 	raiz.vertical = not raiz.vertical
 	raiz.reconstruir()
 	var igual: bool = raiz.pantalla_actual().mision == m and raiz.pantalla_actual().sim == m.sim
@@ -701,7 +701,7 @@ func test_pantalla_firma_y_registra_la_mision() -> String:
 	m.diagnostico_ok = true
 	m.prueba_ok = true
 	p.args["respuestas"] = _respuestas_correctas(m)
-	p._firmar()
+	p._panel.firmar()
 	raiz.reconstruir()
 	var q = raiz.pantalla_actual()
 	var completada: bool = q.mision.fin == "completada"
@@ -718,7 +718,7 @@ func test_pantalla_firma_y_registra_la_mision() -> String:
 func test_pantalla_observa_con_el_tiempo_acelerado() -> String:
 	var raiz := _raiz("gen3_falla_tierra")
 	var p = raiz.pantalla_actual()
-	p._observar()
+	p._panel.observar()
 	var observando: bool = p.mision.observando()
 	var inicio: float = p.mision.sim.tiempo
 	for _i in 400:

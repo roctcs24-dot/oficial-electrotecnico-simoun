@@ -18,6 +18,7 @@ const CAPACIDAD_MINIMA := 0.1
 const CAPACIDAD_SUBE_S := 0.01
 const CAPACIDAD_BAJA_S := 0.05
 const LIMITE_MOTOR := 0.95
+const HIELO_MAXIMO := 3.0
 ## 1 kg de amoníaco gaseoso ocupa unos 1,41 m³ a 20 °C.
 const M3_POR_KG_NH3 := 1.41
 
@@ -254,11 +255,12 @@ func _cargar_motor(w: float) -> void:
 
 
 ## Si la pared de los tubos queda por debajo de la congelación de la salmuera, se forma hielo.
+## Su espesor tiene un límite: con mucho hielo el evaporador ya casi no toma calor.
 func _formar_hielo(dt: float) -> void:
 	var pared: float = (estado["te"] + estado["ts"]) / 2.0
 	var margen: float = params["congelacion_salmuera"] - pared
 	if margen > 0.0:
-		estado["hielo"] += 0.002 * margen * dt
+		estado["hielo"] = minf(estado["hielo"] + 0.002 * margen * dt, HIELO_MAXIMO)
 	else:
 		estado["hielo"] = maxf(estado["hielo"] - 0.01 * dt, 0.0)
 

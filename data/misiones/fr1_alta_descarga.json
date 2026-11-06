@@ -1,0 +1,85 @@
+{
+  "id": "fr1_alta_descarga",
+  "tipo": "planta",
+  "titulo": "El compresor de frío dispara por alta presión",
+  "resumen": "El compresor se para por el presostato de alta a los pocos minutos de arrancar.",
+  "equipo": "Planta de frío: compresor y condensador",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "Desde que entramos en aguas más calientes, el compresor de frío se para por el {{presostato_alta}} a los pocos minutos de arrancar. Está parado y con PA disparado, y la {{salmuera}} se calienta. La bomba de agua de mar está en marcha. Averigüe la causa, corríjala y deje la planta enfriando de forma estable.",
+    "nota": "Presiones, temperaturas y ajustes de la planta: valores típicos — verificar a bordo."
+  },
+  "preparar": [
+    { "op": "param", "id": "PLANTA", "clave": "suciedad_condensador", "valor": 0.6 },
+    { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -8.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -9.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "tc", "valor": 30.0 },
+    { "op": "disparado", "id": "PA" }
+  ],
+  "repetidos": { "disparo_presostato_descarga": "rearme_sin_causa" },
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que el condensador queda fuera de servicio", "pone": ["aviso"] }
+  ],
+  "bloqueables": ["bomba_agua_mar"],
+  "evidencias": [
+    { "condiciones": [{ "c": "en_marcha" }, { "c": "presion", "punto": "descarga", "min": 14.0 }], "durante_s": 5 },
+    { "condiciones": [{ "c": "medido", "punto": "agua_mar_entrada" }, { "c": "medido", "punto": "agua_mar_salida" }] }
+  ],
+  "pistas": [
+    "Rearme PA y arranque el compresor. Mientras sube la descarga, compare su temperatura de condensación con la del agua de mar.",
+    "Mida con el termómetro la entrada y la salida del agua de mar en el condensador. Si el agua se calienta lo normal, hay caudal: el problema está en los tubos.",
+    "Para limpiar los tubos, pare la bomba, avise, bloquee su arrancador y cierre las válvulas de agua. Al terminar, ábralas antes de quitar el bloqueo."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Cuál es la causa de la alta presión de descarga?",
+    "opciones": [
+      { "texto": "Los tubos del condensador están sucios: el calor no pasa bien al agua de mar", "correcta": true, "explicacion": "El agua sale del condensador unos grados más caliente, como siempre: hay caudal. Aun así, la condensación queda más de 10 °C por encima del agua de mar, cuando en una planta sana son unos pocos grados. El calor no atraviesa bien los tubos." },
+      { "texto": "La bomba de agua de mar no da caudal", "explicacion": "Sin caudal, el poco agua que pasa saldría mucho más caliente. El agua se calienta lo normal: hay caudal." },
+      { "texto": "El presostato de alta corta antes de su ajuste", "explicacion": "El manómetro de descarga llega a 16 bar justo antes del disparo: el presostato corta en su valor. La presión es la que está mal." },
+      { "texto": "Falta refrigerante en la planta", "explicacion": "Con poca carga baja la succión y el compresor descarga menos. No sube la presión de descarga." }
+    ]
+  },
+  "acciones": [
+    { "id": "cerrar_agua", "boton": "Cerrar las válvulas de agua de mar del condensador y vaciar los tubos", "requiere": [{ "c": "bomba_parada", "nombre": "bomba_agua_mar", "si_no": "Pare antes la bomba de agua de mar: cerrar las válvulas con la bomba en marcha la deja trabajar contra la válvula cerrada." }], "impide": ["agua_cerrada"], "si_impide": "Las válvulas de agua del condensador ya están cerradas.", "titulo": "Lado de agua aislado", "texto": "Se cerraron las válvulas de entrada y salida de agua de mar del condensador y se vaciaron los tubos por el purgador de la caja de agua.", "pone": ["agua_cerrada"] },
+    { "id": "limpiar_condensador", "boton": "Abrir las cajas de agua y limpiar los tubos del condensador", "bloqueo": "bomba_agua_mar", "verificar": false, "necesita": ["agua_cerrada"], "si_falta": "Cierre antes las válvulas de agua de mar del condensador y vacíe los tubos.", "titulo": "Condensador limpio", "texto": "Los tubos tenían incrustaciones calcáreas y restos de algas. Se limpiaron uno a uno con escobillón, se revisaron los ánodos de sacrificio y se cerraron las tapas con juntas nuevas.", "efecto": [{ "op": "param", "id": "PLANTA", "clave": "suciedad_condensador", "valor": 0.0 }] },
+    { "id": "abrir_agua", "boton": "Abrir las válvulas de agua de mar del condensador y purgar el aire", "necesita": ["agua_cerrada"], "si_falta": "Las válvulas de agua del condensador ya están abiertas.", "titulo": "Lado de agua en servicio", "texto": "Se abrieron las válvulas de agua de mar y se purgó el aire de las cajas de agua. Las tapas no gotean.", "quita": ["agua_cerrada"] },
+    { "id": "subir_alta", "boton": "Subir el corte del presostato de alta PA a 21 bar para que no pare", "titulo": "Protección desajustada", "texto": "El corte de PA queda por encima del tarado de la válvula de seguridad, 20 bar. El compresor no parará por alta: la última protección será la válvula de seguridad, que descarga amoníaco a la atmósfera.", "innecesaria": true, "tema": "ajuste_presostato", "pone": ["alta_alterada"], "efecto": [{ "op": "param", "id": "PA", "clave": "corte_bar", "valor": 21.0 }] },
+    { "id": "restituir_alta", "boton": "Restituir el corte del presostato de alta PA a 16 bar", "necesita": ["alta_alterada"], "si_falta": "PA ya está en su ajuste: corta a 16 bar.", "titulo": "Ajuste restituido", "texto": "El presostato de alta vuelve a cortar a 16 bar, por debajo del tarado de la válvula de seguridad.", "quita": ["alta_alterada"], "efecto": [{ "op": "param", "id": "PA", "clave": "corte_bar", "valor": 16.0 }] },
+    { "id": "purgar", "boton": "Purgar incondensables del condensador", "titulo": "Purga sin resultado", "texto": "Por la purga salió apenas aire: los incondensables no eran la causa. Cada purga suelta algo de amoníaco y solo se hace cuando la presión de condensación, con la planta parada, queda por encima de la de saturación del agua de mar.", "innecesaria": true }
+  ],
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: caja de agua abierta sin bloqueo",
+      "que_ocurrio": "Se abrió una caja de agua del condensador sin bloquear el arrancador de la bomba de agua de mar. Otro tripulante, que no sabía del trabajo, arrancó la bomba: el agua salió a presión por la tapa abierta, golpeó al oficial y anegó la sentina.",
+      "causa": "Una bomba parada se puede arrancar desde su arrancador o desde el control de la planta si no está bloqueada.",
+      "como_evitar": "• Pare la bomba y avise.\n• Bloquee su arrancador con candado y tarjeta.\n• Cierre las válvulas de agua y vacíe los tubos antes de abrir las tapas."
+    }
+  },
+  "prueba": {
+    "mantener_s": 300,
+    "superada": "El compresor enfrió la salmuera durante 5 minutos con la descarga por debajo de 14 bar y sin disparos.",
+    "objetivos": [
+      { "c": "en_marcha", "texto": "Compresor en marcha" },
+      { "c": "presion", "punto": "descarga", "max": 14.0, "texto": "Descarga por debajo de 14 bar" },
+      { "c": "param", "id": "PLANTA", "clave": "suciedad_condensador", "max": 0.1, "texto": "Tubos del condensador limpios" },
+      { "c": "presostatos", "texto": "Presostatos de alta, baja y aceite cerrados" },
+      { "c": "bomba", "nombre": "bomba_agua_mar", "texto": "Bomba de agua de mar en marcha" },
+      { "c": "sin_marca", "marca": "agua_cerrada", "texto": "Válvulas de agua del condensador abiertas" },
+      { "c": "param", "id": "PA", "clave": "corte_bar", "max": 16.0, "texto": "Presostato de alta ajustado a 16 bar" },
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa del disparo", "opciones": ["Presostato de alta averiado", "Tubos del condensador sucios", "Bomba de agua de mar sin caudal"], "correcta": 1, "explicacion": "El agua de mar se calentaba lo normal y la condensación quedaba muy por encima de ella: los tubos estaban sucios." },
+      { "etiqueta": "Reparación", "opciones": ["Purga de incondensables", "Corte de PA subido a 21 bar", "Limpieza de los tubos del condensador"], "correcta": 2, "explicacion": "Se limpiaron los tubos. El ajuste del presostato no se toca." },
+      { "etiqueta": "Prueba", "opciones": ["5 minutos enfriando con la descarga por debajo de 14 bar", "Arranque y parada inmediata", "Ninguna: el condensador está limpio"], "correcta": 0, "explicacion": "La prueba se hace con la planta enfriando, que es cuando la descarga sube." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones de diagnóstico de la planta y de componentes del circuito.",
+    "Ficha del condensador multitubular.",
+    "ISO 5149-2: dispositivos de limitación de presión.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

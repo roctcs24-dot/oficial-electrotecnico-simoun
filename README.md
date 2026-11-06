@@ -11,11 +11,12 @@ Estado: **v2.2**, con la v1 y la v2 completas y la v3 en desarrollo. Incluye:
 - Cuadro principal con tres generadores, sincronización, PMS, protecciones, lámparas de tierra y cuadro de emergencia con su generador.
 - Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
+- 4 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite y fuga de amoníaco con evacuación.
 - Exámenes de la v1 y de la v2, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación, la pantalla de la planta, las lecciones, las fichas y los símbolos. Faltan las misiones de Guardia y el examen.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación, la pantalla de la planta, las lecciones, las fichas, los símbolos y las misiones de Guardia. Falta el examen.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -52,13 +53,15 @@ El ejecutor aborta con error si tarda más de 300 s, incluso si una prueba entra
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\correr_pruebas.ps1
 ```
 
+Con la variable `PRUEBAS_SOLO` se ejecutan solo los archivos cuyo nombre la contiene; por ejemplo, `PRUEBAS_SOLO=guardia_planta`.
+
 Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este comando guarda imágenes de cada una en varios tamaños:
 
 ```bash
 godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
 ```
 
-Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro`, `guardia_cuadro` o `planta` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
+Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro`, `guardia_cuadro`, `planta` o `guardia_planta` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
 
 ## Exportar
 
@@ -182,6 +185,18 @@ Las lecturas y las consecuencias salen de la simulación. Todos los aisladores (
 
 Las condiciones son `cerrado` y `abierto` (con `id` de un generador, o `interruptor` con el id de cualquier interruptor, como `QT`), `en_marcha`, `parado`, `conectada`, `desconectada`, `frecuencia`, `tension`, `reparto`, `aislamiento`, `pms`, `param` y `sin_bloqueos`. Dejar las barras sin tensión o cerrar fuera de fase termina la misión con un informe de incidente, cuyos textos están en `incidentes` de `data/guardia.json`.
 
+**Misiones de la planta de frío:** llevan `"tipo": "planta"` y se juegan en la pantalla de la planta, con una pestaña Misión. La lógica está en `game/mision_planta.gd`, y la pestaña Misión, común con las del cuadro, en `ui/panel_mision.gd`. Las prueba `tests/test_guardia_planta.gd`. Tienen los mismos campos que las del cuadro, salvo `cuadro` y `reglas`, y además:
+
+| Campo | Contenido |
+|---|---|
+| `preparar` | `param`, `estado` (de cualquier componente, como `PLANTA`), `disparado` (un presostato), `marcha` (pulsa S1) y `avanzar` (segundos de planta, en pasos de 1 s) |
+| `bloqueables` | `Q1`, el guardamotor del compresor, o el arrancador de una bomba: `bomba_agua_mar` o `bomba_salmuera` |
+| `eventos`, `repetidos` | Falta por un evento de la simulación. Los disparos de presostato llevan el punto: `disparo_presostato_descarga`. En `repetidos` la falta cuenta desde la segunda vez, porque el primer disparo sirve para ver la avería |
+| `verificar_en_sala` | Con `true`, verificar la ausencia de tensión también es entrar en la sala |
+| `acciones` | Como en las del cuadro, y además `en_sala` (con amoníaco por encima del aviso, exige las marcas `era` y `companero`, o es accidente), `abre_circuito` (exige la marca `aislado`, o es accidente), `requiere` (condiciones de la planta con su texto `si_no`), `comprobar` (condiciones que, si no se cumplen, dan la falta `falta`), `quita` (marcas que borra) y `medicion` (anota el texto en el libro). El texto puede citar lecturas: `{ppm}`, `{aceite}`, `{succion}`, `{descarga}`, `{salmuera}`, `{condensacion}` y `{hielo}` |
+
+Las condiciones son `en_marcha`, `parado`, `presion` y `temperatura` (con `punto`), `planta` (un valor de su estado, como `hielo` o `ppm_sala`), `estado` (igual a `valor`), `param`, `presostatos` (los tres cerrados), `bomba` y `bomba_parada`, `automatico`, `marca` y `sin_marca`, `medido` (un punto medido con el termómetro) y `sin_bloqueos`. Arrancar con la marca `aislado` o que abra la válvula de seguridad termina la misión con un informe de incidente.
+
 **Exámenes:** cada `data/examenes/<id>.json` se publica en `modos.examen.examenes` de un sistema, y aparece también en la pantalla de inicio y en Mi progreso. `sistema_simbolos` elige de qué sistema son los símbolos que pregunta. Cada examen define `minimo` (porcentaje para aprobar), `composicion` (cuántas preguntas de cada tipo: `quiz`, `caso`, `ordenar`, `simbolo`) y el banco `preguntas`. Para que el examen varíe, el banco debe tener al menos el doble de lo que se pregunta, y una prueba lo comprueba. Las de tipo `caso` añaden un texto `caso`; cada pregunta lleva un `tema` que no se repite en ninguna lección ni en otro examen. En las de tipo `ordenar`, los pasos deben tener un único orden posible.
 
 **Repaso:** cada fallo guarda su `tema` en la partida. `game/banco_repaso.gd` busca la pregunta de ese tema en las lecciones, en el examen, en `preguntas` de `data/guardia.json` (faltas, accidentes e incidentes), en el diagnóstico y el libro de las misiones, y en los símbolos. Cada acierto aleja el tema 1, 3, 7, 14 y 30 días; un fallo lo reinicia. **Cada falta o accidente nuevo necesita su pregunta**, y una prueba lo comprueba.
@@ -257,7 +272,7 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Planta de frío** (`planta_frio`): compresor, condensador de agua de mar, evaporador en la salmuera de las cubas y válvula de expansión, en un modelo concentrado. Las temperaturas de evaporación y de condensación salen de balances de calor, y las presiones son las de saturación a esas temperaturas. El compresor es un motor del circuito, y la planta le pone la carga según la potencia que pide. En automático, la corredera de capacidad sigue a la consigna de la salmuera y limita la potencia del motor al 95 %.
 - **Averías de la planta:** hielo en los tubos con la salmuera floja, falta de refrigerante, filtro de aceite obstruido, condensador sucio, bombas paradas, fugas (con la concentración de NH3 en la sala) y apertura de la válvula de seguridad.
 - **Tiempo:** la salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.
-- **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite.
+- **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite; ese se rearma con el compresor parado, y su retardo cuenta desde el arranque.
 - **Pantalla** `ui/screens/planta.gd`, en el Taller del sistema 4: esquema del ciclo (`EsquemaFrio`) con el termómetro sobre las tuberías, manómetros, mando eléctrico del compresor con sus presostatos, corredera de capacidad, bombas, diagrama presión–entalpía (`DiagramaPH`, con entalpías esquemáticas) y seguridad de la sala. Sus mandos están en `game/operador_planta.gd`, y sus textos y las explicaciones de cada evento, en `data/planta.json`. El tiempo se puede acelerar ×10.
 - **Circuito** `planta_frio`: arranque directo del compresor con los presostatos de alta, baja y aceite en serie con la bobina del contactor. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.
 - **Animaciones de las lecciones:** `banco_planta` usa la misma simulación de la planta con el tiempo ×5. El escenario `ciclo` arranca y para el compresor, y `presostatos` deja parar las bombas para ver qué presostato dispara y cómo se rearma. `saturacion_nh3` dibuja la curva de saturación con un deslizador de temperatura.

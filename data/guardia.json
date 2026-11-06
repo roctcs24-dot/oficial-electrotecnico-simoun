@@ -12,6 +12,20 @@
       "que_ocurrio": "Se intervino en el equipo sin completar la verificación de ausencia de tensión. Un conductor seguía con tensión y el oficial recibió una descarga eléctrica. Fue atendido por el oficial sanitario.",
       "causa": "El candado impide reconectar, pero no demuestra que no haya tensión: un polo puede quedar pegado o puede existir otra alimentación.",
       "como_evitar": "• Pruebe el instrumento en una fuente conocida.\n• Mida entre fases, de cada fase a masa y en el circuito de mando.\n• Pruebe de nuevo el instrumento en la fuente conocida.\n• Repita la verificación si vuelve a accionar un aislador."
+    },
+    "exposicion_nh3": {
+      "titulo": "Informe de accidente: exposición al amoníaco",
+      "que_ocurrio": "Se entró en la sala de máquinas de frío con la alarma de amoníaco activa, sin equipo de respiración autónomo o sin un compañero. El oficial sufrió irritación intensa de ojos y garganta y tuvo que salir con ayuda. Fue atendido por el oficial sanitario: lavado de ojos con abundante agua y aire fresco.",
+      "causa": "Con la alarma activa la concentración en la sala ya pasa del límite de exposición, y cerca de la fuga puede ser mucho mayor que la que marca el detector. El amoníaco ataca los ojos y las vías respiratorias; a 300 ppm es inmediatamente peligroso para la vida.",
+      "como_evitar": "• Con la alarma de amoníaco, no entre en la sala: avise y arranque la ventilación de emergencia desde fuera.\n• Entre solo con equipo de respiración autónomo y traje de protección, y con un compañero equipado que vigile desde la puerta.\n• Lleve un detector portátil y salga si la concentración sube.\n• Siga el plan de emergencia del buque (verificar a bordo).",
+      "repasar": "Repase la lección de seguridad con amoníaco antes de volver a intentarlo."
+    },
+    "abrir_con_presion": {
+      "titulo": "Informe de accidente: circuito de amoníaco abierto con presión",
+      "que_ocurrio": "Se aflojó una tapa del circuito de amoníaco sin cerrar las válvulas de aislamiento ni vaciar el tramo. Salió un chorro de amoníaco líquido y vapor. El oficial sufrió quemaduras por frío en las manos e irritación de ojos, y la sala se tuvo que evacuar.",
+      "causa": "El tramo seguía conectado a la planta y con presión. El amoníaco líquido que sale a la atmósfera se evapora de golpe a −33 °C y congela la piel.",
+      "como_evitar": "• Pare y bloquee el compresor.\n• Cierre las válvulas de aislamiento del tramo y compruebe con el manómetro que no queda presión.\n• Vacíe el amoníaco del tramo hacia la succión o hacia un recipiente según el procedimiento del buque.\n• Use gafas, guantes y protección respiratoria, y tenga el lavaojos a mano.",
+      "repasar": "Repase las lecciones de componentes del circuito y de seguridad con amoníaco antes de volver a intentarlo."
     }
   },
   "incidentes": {
@@ -30,6 +44,22 @@
       "causa": "El interruptor se cerró sin esperar a que el sincronoscopio estuviera cerca de las doce, o con la aguja girando deprisa.",
       "como_evitar": "• Ajuste la velocidad del entrante hasta que la aguja gire despacio hacia RÁPIDO.\n• Compruebe que las tensiones son iguales y que las lámparas de sincronismo se apagan a la vez.\n• Dé la orden de cierre justo antes de las doce, para que el interruptor cierre en el punto.\n• Si duda, deje que lo haga el sincronizador automático.",
       "repasar": "Repase la lección de sincronización antes de volver a intentarlo."
+    },
+    "valvula_seguridad": {
+      "cabecera": "Informe de incidente",
+      "titulo": "Apertura de la válvula de seguridad",
+      "que_ocurrio": "La presión de descarga llegó al tarado de la válvula de seguridad, que descargó amoníaco a la atmósfera por el palo de venteo. Se perdió refrigerante y hubo olor a amoníaco en cubierta.",
+      "causa": "El presostato de alta no paró el compresor a tiempo: su ajuste se había subido o estaba puenteado. La válvula de seguridad es la última protección y nunca debería abrir.",
+      "como_evitar": "• No suba el ajuste del presostato de alta ni lo puentee para que el compresor siga en marcha.\n• Si dispara por alta, busque la causa: agua de mar, condensador sucio o incondensables.\n• Después de una apertura, la válvula se revisa o se cambia según el plan de mantenimiento.",
+      "repasar": "Repase la lección de control y protecciones antes de volver a intentarlo."
+    },
+    "arranque_aislado": {
+      "cabecera": "Informe de incidente",
+      "titulo": "Arranque con las válvulas de aislamiento cerradas",
+      "que_ocurrio": "Se arrancó el compresor con un tramo del circuito todavía aislado. La presión subió de golpe en el tramo cerrado, se forzaron las juntas y hubo una pequeña fuga de amoníaco. El compresor se paró de emergencia.",
+      "causa": "Al terminar el trabajo no se abrieron las válvulas de aislamiento antes de quitar el bloqueo y arrancar.",
+      "como_evitar": "• Al terminar, abra las válvulas de aislamiento en el orden del procedimiento.\n• Compruebe con los manómetros que el tramo está otra vez conectado.\n• Quite el bloqueo y arranque solo después.",
+      "repasar": "Repase la lección de componentes del circuito antes de volver a intentarlo."
     }
   },
   "preguntas": {
@@ -57,7 +87,16 @@
     "diagnostico_sin_medir": { "pregunta": "¿Qué respalda un buen diagnóstico?", "opciones": ["La experiencia con averías parecidas, sin medir", "Las mediciones que demuestran la causa", "Cambiar piezas hasta que funcione"], "correcta": 1, "explicacion": "Un diagnóstico sin datos suele terminar en repuestos cambiados sin necesidad." },
     "reparacion_innecesaria": { "pregunta": "Sospecha de un componente de mando. ¿Qué hace antes de cambiarlo?", "opciones": ["Medirlo para confirmar la falla", "Cambiarlo: es más rápido", "Cambiar también los componentes vecinos"], "correcta": 0, "explicacion": "A bordo los repuestos son limitados, y una pieza cambiada sin medir puede dejar la causa sin resolver." },
     "ajuste_alterado": { "pregunta": "¿A qué valor se ajusta el relé térmico de un motor de 25 A que sufre disparos?", "opciones": ["A la corriente de la placa, 25 A, y se busca la causa", "A 40 A, para que deje de disparar", "Se anula con un puente en 95-96"], "correcta": 0, "explicacion": "Subir el ajuste no elimina la sobrecarga: deja al motor sin protección hasta que el devanado se daña." },
-    "prueba_fallida": { "pregunta": "El equipo falla de nuevo durante la prueba en servicio. ¿Qué hace?", "opciones": ["Rearmar hasta que aguante", "Aislar de nuevo y revisar las mediciones y la causa", "Firmar el libro y avisar después"], "correcta": 1, "explicacion": "Si la falla sigue, la causa no está resuelta. Vuelva a aislar y revise el diagnóstico." }
+    "prueba_fallida": { "pregunta": "El equipo falla de nuevo durante la prueba en servicio. ¿Qué hace?", "opciones": ["Rearmar hasta que aguante", "Aislar de nuevo y revisar las mediciones y la causa", "Firmar el libro y avisar después"], "correcta": 1, "explicacion": "Si la falla sigue, la causa no está resuelta. Vuelva a aislar y revise el diagnóstico." },
+    "accidente_exposicion_nh3": { "pregunta": "Suena la alarma de amoníaco de la sala de frío. ¿Cómo entra a buscar la fuga?", "opciones": ["Con una mascarilla de papel, rápido", "Con equipo de respiración autónomo, traje de protección y un compañero equipado, con la ventilación de emergencia arrancada", "Solo, para no exponer a nadie más"], "correcta": 1, "explicacion": "Con la alarma, la concentración ya pasa del límite de exposición. Se entra con equipo de respiración autónomo y acompañado, después de ventilar." },
+    "accidente_abrir_con_presion": { "pregunta": "Debe cambiar el filtro de aceite del compresor. El compresor ya está bloqueado. ¿Qué falta antes de abrir?", "opciones": ["Nada: parado no hay presión", "Cerrar las válvulas de aislamiento, vaciar el tramo y comprobar con el manómetro que no queda presión", "Abrir despacio la tapa para que salga poco a poco"], "correcta": 1, "explicacion": "Parado, el circuito sigue con la presión de saturación del amoníaco. El tramo se aísla y se vacía antes de abrir." },
+    "incidente_valvula_seguridad": { "pregunta": "El compresor dispara por alta presión. ¿Puede subir el corte del presostato de alta hasta cerca del tarado de la válvula de seguridad?", "opciones": ["Sí, así no se para", "No: el presostato debe actuar antes de la válvula de seguridad; se busca la causa de la alta presión", "Sí, si se vigila el manómetro"], "correcta": 1, "explicacion": "La válvula de seguridad es la última protección y descarga amoníaco a la atmósfera. El presostato de alta debe parar el compresor antes." },
+    "incidente_arranque_aislado": { "pregunta": "Terminó un trabajo en el compresor con un tramo aislado. ¿Qué hace antes de quitar el bloqueo y arrancar?", "opciones": ["Arrancar y abrir las válvulas con el compresor en marcha", "Abrir las válvulas de aislamiento según el procedimiento y comprobar los manómetros", "Nada: las válvulas se abren solas con la presión"], "correcta": 1, "explicacion": "Arrancar con un tramo cerrado sube la presión en él de golpe. Primero se abren las válvulas de aislamiento." },
+    "ajuste_presostato": { "pregunta": "El compresor dispara por el presostato de aceite. ¿Puede alargar su retardo para que no pare?", "opciones": ["Sí, a 2 minutos", "No: el ajuste es del manual de la planta; se busca por qué falta presión de aceite", "Sí, si se añade aceite"], "correcta": 1, "explicacion": "Alargar el retardo deja girar el compresor sin lubricación. Se busca la causa: filtro, nivel o bomba de aceite." },
+    "sin_ventilacion": { "pregunta": "Hay una fuga de amoníaco en la sala. ¿Qué hace antes de entrar con el equipo de respiración?", "opciones": ["Arrancar la ventilación de emergencia desde fuera de la sala", "Abrir la puerta de la sala para que se ventile hacia el pasillo", "Nada: con el equipo de respiración no hace falta ventilar"], "correcta": 0, "explicacion": "La ventilación de emergencia baja la concentración y lleva el amoníaco fuera del buque. Se arranca desde fuera antes de entrar." },
+    "sin_epp_quimico": { "pregunta": "Va a añadir sal a la salmuera de las cubas. ¿Qué protección usa?", "opciones": ["Ninguna: la sal no es peligrosa", "Guantes, gafas y delantal", "Solo guantes aislantes de electricista"], "correcta": 1, "explicacion": "La salmuera fría irrita la piel y los ojos. Se manipula con guantes, gafas y delantal." },
+    "sin_evacuar": { "pregunta": "Suena la alarma de amoníaco. ¿Qué se hace primero?", "opciones": ["Buscar la fuga con el detector portátil", "Que salga de la sala quien no lleve equipo de respiración, cerrar la puerta y avisar", "Parar todas las bombas de la sala"], "correcta": 1, "explicacion": "Primero las personas: se evacúa la sala, se cierra y se avisa. La fuga se busca después, con equipo de respiración y acompañado." },
+    "rearme_sin_causa": { "pregunta": "El compresor disparó por alta presión. Rearmó, arrancó y volvió a disparar. ¿Qué hace?", "opciones": ["Rearmar otra vez y arrancar", "Dejarlo parado y buscar la causa: agua de mar, condensador, incondensables", "Puentear el presostato"], "correcta": 1, "explicacion": "Un segundo disparo confirma que la causa sigue. Se busca y se corrige antes de arrancar de nuevo." }
   },
   "faltas": {
     "sin_epp": { "titulo": "Medición con tensión sin EPP", "texto": "Midió un punto energizado sin el equipo de protección. Antes de abrir el tablero o medir con tensión, colóquese guantes aislantes, protección facial y ropa adecuada según el procedimiento del buque." },
@@ -80,6 +119,11 @@
     "sobrecarga_generador": { "titulo": "Generador sobrecargado", "texto": "Un generador trabajó por encima de su corriente nominal hasta disparar. Reparta la carga entre varios grupos o reduzca el consumo antes de llegar al límite." },
     "restablecer_con_toda_la_carga": { "titulo": "Barras recuperadas con toda la carga", "texto": "Cerró el primer grupo sobre las barras con las salidas no esenciales conectadas. Tras un blackout se desconectan primero las no esenciales y se reconectan por prioridad, cuando hay potencia." },
     "cortar_esencial_sin_aviso": { "titulo": "Salida esencial cortada sin aviso", "texto": "Abrió una salida esencial sin avisar al puente ni al jefe de máquinas. Quien depende de ese servicio, como el gobierno del buque, debe saberlo y autorizarlo antes." },
-    "ajuste_proteccion_generador": { "titulo": "Protección del generador desajustada", "texto": "El ajuste de potencia inversa sale del estudio de protecciones del buque. Subirlo no corrige la avería: deja que el alternador arrastre al diésel como motor." }
+    "ajuste_proteccion_generador": { "titulo": "Protección del generador desajustada", "texto": "El ajuste de potencia inversa sale del estudio de protecciones del buque. Subirlo no corrige la avería: deja que el alternador arrastre al diésel como motor." },
+    "ajuste_presostato": { "titulo": "Protección de la planta desajustada", "texto": "Los ajustes de los presostatos de seguridad salen del manual de la planta. Cambiarlos para que el compresor no pare no corrige la avería: la deja sin protección." },
+    "sin_ventilacion": { "titulo": "Búsqueda de la fuga sin ventilación", "texto": "Entró a buscar la fuga sin arrancar la ventilación de emergencia. Con ella arrancada antes, la concentración en la sala baja y el riesgo para quien entra es menor." },
+    "sin_epp_quimico": { "titulo": "Salmuera manipulada sin protección", "texto": "Manejó la sal y la salmuera sin guantes ni gafas. La salmuera fría irrita la piel y los ojos: colóquese guantes, gafas y delantal antes." },
+    "sin_evacuar": { "titulo": "Sala sin evacuar", "texto": "Con la alarma de amoníaco, lo primero es que salga de la sala quien no lleve equipo de respiración y que se cierre la puerta. Buscar la fuga antes deja gente expuesta." },
+    "rearme_sin_causa": { "titulo": "Rearme sin buscar la causa", "texto": "Rearmó y arrancó de nuevo sin corregir la causa, y la protección volvió a disparar. Cada rearme sin causa somete otra vez al compresor a la falla." }
   }
 }

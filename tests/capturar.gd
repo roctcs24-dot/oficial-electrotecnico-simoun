@@ -45,6 +45,8 @@ func _capturar() -> void:
 		await _capturar_guardia_cuadro(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "planta":
 		await _capturar_planta(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "guardia_planta":
+		await _capturar_guardia_planta(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -225,9 +227,9 @@ func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("mision_cuadro", {"id": "gen3_falla_tierra"})
 		var p = raiz.pantalla_actual()
 		await _guardar(carpeta, "mision_cuadro_reporte", tam)
-		p._dar_paso("aviso")
+		p._panel.dar_paso("aviso")
 		p._alternar_carga("C4")
-		p._bloquear("C4")
+		p._panel.bloquear("C4")
 		p._desplazables[-1].scroll_vertical = 600
 		await _guardar(carpeta, "mision_cuadro_procedimiento", tam)
 		p._desplazables[-1].scroll_vertical = 1400
@@ -261,6 +263,33 @@ func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
 		raiz.reconstruir()
 		await _guardar(carpeta, "mision_cuadro_incidente", tam)
 		raiz.volver()
+
+## Misiones de la planta de frío: la lista, la pestaña Misión, la sala con amoníaco y el informe.
+func _capturar_guardia_planta(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS_LECCIONES:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("guardia", {"id": 4})
+		await _guardar(carpeta, "guardia_planta_lista", tam)
+		raiz.volver()
+		raiz.ir_a("mision_planta", {"id": "fr4_fuga_nh3"})
+		var p = raiz.pantalla_actual()
+		await _guardar(carpeta, "mision_planta_reporte", tam)
+		p._panel.dar_paso("evacuar")
+		p._panel.dar_paso("aviso")
+		p._desplazables[-1].scroll_vertical = 700
+		await _guardar(carpeta, "mision_planta_procedimiento", tam)
+		p._desplazables[-1].scroll_vertical = 1500
+		await _guardar(carpeta, "mision_planta_trabajo", tam)
+		p._desplazables[-1].scroll_vertical = 2400
+		await _guardar(carpeta, "mision_planta_prueba", tam)
+		p._elegir_pestana("seguridad")
+		await _guardar(carpeta, "mision_planta_seguridad", tam)
+		p._panel.ejecutar("localizar")
+		raiz.reconstruir()
+		await _guardar(carpeta, "mision_planta_accidente", tam)
+		raiz.volver()
+
 
 ## Planta de frío en marcha, con el termómetro en la descarga; después, un disparo por alta.
 func _capturar_planta(raiz: Raiz, carpeta: String) -> void:

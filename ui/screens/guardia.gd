@@ -1,6 +1,9 @@
 extends Pantalla
 ## Misiones de avería disponibles en un sistema.
 
+## Pantalla de cada tipo de misión; las de motores, sin tipo, usan la mesa de trabajo.
+const PANTALLAS := {"cuadro": "mision_cuadro", "planta": "mision_planta"}
+
 
 func construir() -> void:
 	var s := raiz.contenido.sistema(args["id"])
@@ -12,7 +15,7 @@ func construir() -> void:
 	lista.add_child(_etiqueta("Cada misión empieza con un reporte de avería. Aplique el procedimiento real: bloqueo y etiquetado, medición, diagnóstico, reparación, prueba y libro de registro.", "Nota"))
 	for id: String in s["modos"]["guardia"].get("misiones", []):
 		var m := raiz.contenido.mision(id)
-		var pantalla := "mision_cuadro" if m.get("tipo", "") == "cuadro" else "mision"
+		var pantalla: String = PANTALLAS.get(m.get("tipo", ""), "mision")
 		lista.add_child(_fila(m.get("titulo", id), m.get("resumen", ""), raiz.ir_a.bind(pantalla, {"id": id}), "guardia", _estado_mision(id)))
 
 

@@ -10,7 +10,8 @@ const PRESOSTATOS := ["PA", "PB", "PO"]
 
 var sim: SimSimulacion
 var datos: Dictionary
-var operador: OperadorPlanta
+## OperadorPlanta en la práctica libre, o la misión, que ofrece los mismos mandos.
+var operador
 var _zonas: Array[Array] = []
 var _desplazables: Array[ScrollContainer] = []
 var _instrumentos := {}
@@ -28,7 +29,7 @@ func construir() -> void:
 	_preparar()
 	if not raiz.vertical and args["pestana"] == "esquema":
 		args["pestana"] = "mando"
-	_cabecera("Planta de frío", "Práctica libre · valores típicos: verificar a bordo")
+	_poner_cabecera()
 	_avisos = _columna(6)
 	add_child(_avisos)
 	_construir_cuerpo()
@@ -48,10 +49,19 @@ func _preparar() -> void:
 	operador = OperadorPlanta.new(sim, datos)
 
 
+func _poner_cabecera() -> void:
+	_cabecera("Planta de frío", "Práctica libre · valores típicos: verificar a bordo")
+
+
+## Pestañas propias de quien amplía esta pantalla, delante de las de la planta.
+func _pestanas_extra() -> Array:
+	return []
+
+
 func _construir_cuerpo() -> void:
-	var pestanas := [["mando", "Mando"], ["ph", "P–h"], ["seguridad", "Seguridad"]]
+	var pestanas := _pestanas_extra() + [["mando", "Mando"], ["ph", "P–h"], ["seguridad", "Seguridad"]]
 	if raiz.vertical:
-		add_child(_fila_pestanas([["esquema", "Esquema"]] + pestanas))
+		add_child(_fila_pestanas(_pestanas_extra() + [["esquema", "Esquema"], ["mando", "Mando"], ["ph", "P–h"], ["seguridad", "Seguridad"]]))
 		_zonas.append([_agregar_zona(self), args["pestana"]])
 		return
 	var cuerpo := HBoxContainer.new()
@@ -77,20 +87,20 @@ func _agregar_zona(padre: Control) -> VBoxContainer:
 	return columna
 
 
+## Las pestañas no recortan su nombre: si no caben en una línea, como las cinco de una misión
+## en un celular vertical, pasan a la siguiente.
 func _fila_pestanas(pestanas: Array) -> Control:
-	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 4)
+	var fila := HFlowContainer.new()
+	fila.add_theme_constant_override("h_separation", 4)
+	fila.add_theme_constant_override("v_separation", 4)
 	var grupo := ButtonGroup.new()
 	for p: Array in pestanas:
 		var b := _boton(p[1], _elegir_pestana.bind(p[0]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
-		b.clip_text = true
 		b.toggle_mode = true
 		b.button_group = grupo
 		b.set_pressed_no_signal(args["pestana"] == p[0])
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		# Más ancho para los nombres largos, como «Seguridad» frente a «P–h».
-		b.size_flags_stretch_ratio = p[1].length() + 2.0
 		fila.add_child(b)
 		_botones_pestana[p[0]] = b
 	return fila
@@ -117,16 +127,20 @@ func _llenar() -> void:
 		for hijo in columna.get_children():
 			columna.remove_child(hijo)
 			hijo.queue_free()
-		match z[1]:
-			"esquema":
-				_panel_esquema(columna)
-			"mando":
-				_panel_mando(columna)
-			"ph":
-				_panel_ph(columna)
-			"seguridad":
-				_panel_seguridad(columna)
+		_llenar_zona(columna, z[1])
 	_firma = _calcular_firma()
+
+
+func _llenar_zona(columna: VBoxContainer, id: String) -> void:
+	match id:
+		"esquema":
+			_panel_esquema(columna)
+		"mando":
+			_panel_mando(columna)
+		"ph":
+			_panel_ph(columna)
+		"seguridad":
+			_panel_seguridad(columna)
 
 
 # --- Esquema, manómetros y termómetro ---
@@ -179,7 +193,7 @@ func _panel_mando(columna: VBoxContainer) -> void:
 	columna.add_child(instrumento)
 	var mandos := _rejilla()
 	columna.add_child(mandos)
-	var q := operador.guardamotor()
+	var q: SimGuardamotor = operador.guardamotor()
 	_agregar_a(mandos, _boton("Abrir el guardamotor Q1" if q.cerrado() else "Cerrar el guardamotor Q1", _atender_orden.bind(operador.alternar_guardamotor)))
 	_agregar_a(mandos, _pulsador("Marcha (S1): mantener", "S1"))
 	_agregar_a(mandos, _pulsador("Parada (S0): mantener", "S0"))
@@ -213,6 +227,10 @@ func _panel_mando(columna: VBoxContainer) -> void:
 	columna.add_child(_etiqueta(datos["nota"], "Nota"))
 	var rapido: bool = args["rapido"]
 	columna.add_child(_boton("Tiempo normal" if rapido else "Acelerar el tiempo ×%d" % int(datos["aceleracion"]), _alternar_rapido))
+	_pie_mando(columna)
+
+
+func _pie_mando(columna: VBoxContainer) -> void:
 	columna.add_child(_boton("Reiniciar la práctica", _reiniciar))
 
 
@@ -286,7 +304,7 @@ func _panel_ph(columna: VBoxContainer) -> void:
 
 func _panel_seguridad(columna: VBoxContainer) -> void:
 	columna.add_child(_rotulo("Detector de amoníaco de la sala"))
-	var planta := operador.planta()
+	var planta: SimPlantaFrio = operador.planta()
 	_instrumentos["ppm"] = InstrumentoAguja.new().configurar("NH3", "ppm", 0.0, 300.0, planta.params["alarma_alta_ppm"])
 	var detector := HFlowContainer.new()
 	detector.add_child(_instrumentos["ppm"])
@@ -304,7 +322,11 @@ func _panel_seguridad(columna: VBoxContainer) -> void:
 # --- Órdenes y lecturas ---
 
 func _atender_orden(orden: Callable) -> void:
-	var aviso: Dictionary = orden.call()
+	_atender(orden.call())
+
+
+## Muestra lo que explica una orden y rehace los mandos si cambió algún equipo.
+func _atender(aviso: Dictionary) -> void:
 	if not aviso.get("titulo", "").is_empty():
 		_mostrar_aviso(aviso["titulo"], aviso["texto"])
 	_comprobar_firma()
@@ -313,8 +335,8 @@ func _atender_orden(orden: Callable) -> void:
 func _actualizar() -> void:
 	if sim.solucion == null:
 		sim.paso()
-	var planta := operador.planta()
-	var marcha := operador.en_marcha()
+	var planta: SimPlantaFrio = operador.planta()
+	var marcha: bool = operador.en_marcha()
 	if _esquema != null:
 		_esquema.en_marcha = planta.compresor_en_marcha()
 		_esquema.bomba_agua_mar = planta.bomba_en_marcha("bomba_agua_mar")
@@ -355,7 +377,7 @@ func _actualizar() -> void:
 
 
 func _calcular_firma() -> String:
-	var planta := operador.planta()
+	var planta: SimPlantaFrio = operador.planta()
 	var partes := PackedStringArray()
 	for v in [operador.guardamotor().cerrado(), (sim.componente("F2") as SimReleTermico).estado["disparado"],
 			planta.estado["automatico"], planta.estado["bomba_agua_mar"], planta.estado["bomba_salmuera"], planta.estado["ventilacion_emergencia"], args["rapido"]]:
@@ -391,14 +413,18 @@ func _process(delta: float) -> void:
 	if pasos > 0:
 		_acumulado = 0.0
 		var dt := SimSimulacion.PASO_S * (float(datos["aceleracion"]) if args["rapido"] else 1.0)
-		for _i in pasos:
-			sim.paso(dt)
+		_avanzar(pasos, dt)
 		_revisar_eventos()
 	_hasta_lectura -= delta
 	if _hasta_lectura <= 0.0:
 		_hasta_lectura = 1.0 / ACTUALIZACIONES_POR_SEGUNDO
 		_comprobar_firma()
 		_actualizar()
+
+
+func _avanzar(pasos: int, dt: float) -> void:
+	for _i in pasos:
+		sim.paso(dt)
 
 
 func _revisar_eventos() -> void:

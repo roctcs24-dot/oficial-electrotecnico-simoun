@@ -39,9 +39,11 @@ func estampar(e: SimEstampa) -> void:
 		e.enlace(n("1"), n("2"))
 
 
-## Rearme manual: solo si la presión ya volvió a un valor correcto.
+## Rearme manual: solo si la presión ya volvió a un valor correcto. El que vigila solo en
+## marcha, como el de aceite, rearma con el compresor parado: el retardo cuenta al arrancar.
 func rearmar() -> bool:
-	if _fuera_de_corte(_presion()) or _en_diferencial(_presion()):
+	var vigila: bool = not params["solo_en_marcha"] or _planta().compresor_en_marcha()
+	if vigila and (_fuera_de_corte(_presion()) or _en_diferencial(_presion())):
 		return false
 	estado["disparado"] = false
 	estado["fuera_s"] = 0.0

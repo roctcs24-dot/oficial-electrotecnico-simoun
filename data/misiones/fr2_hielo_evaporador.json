@@ -1,0 +1,78 @@
+{
+  "id": "fr2_hielo_evaporador",
+  "tipo": "planta",
+  "titulo": "Baja presión de succión y la salmuera no enfría",
+  "resumen": "El compresor se para por baja presión cada pocos minutos y la salmuera no baja de −11 °C.",
+  "equipo": "Planta de frío: evaporador y salmuera",
+  "reporte": {
+    "de": "Primer maquinista",
+    "texto": "Ayer se lavaron dos cubas y se repuso la {{salmuera}} con agua de mar y la sal que quedaba en el pañol. Desde entonces el compresor se para por el {{presostato_baja}} cada pocos minutos, y la salmuera no baja de −11 °C. La consigna es −15 °C. Averigüe la causa, corríjala y deje la planta enfriando de forma estable.",
+    "nota": "Temperaturas de la salmuera, de congelación y ajustes de la planta: valores típicos — verificar a bordo."
+  },
+  "preparar": [
+    { "op": "param", "id": "PLANTA", "clave": "congelacion_salmuera", "valor": -12.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -11.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -18.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "hielo", "valor": 1.2 },
+    { "op": "marcha" },
+    { "op": "avanzar", "s": 20 }
+  ],
+  "repetidos": { "disparo_presostato_succion": "rearme_sin_causa" },
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que se va a corregir la salmuera", "pone": ["aviso"] },
+    { "id": "epp", "boton": "Ponerse guantes, gafas y delantal para manejar la sal y la salmuera", "pone": ["epp"] }
+  ],
+  "evidencias": [
+    { "condiciones": [{ "c": "en_marcha" }, { "c": "presion", "punto": "succion", "max": 0.6 }], "durante_s": 3 },
+    { "accion": "medir_densidad" },
+    { "accion": "mirar_evaporador" }
+  ],
+  "pistas": [
+    "Observe la succión con el compresor en marcha y compárela con la temperatura de la salmuera. Mire también el evaporador por la mirilla de la cuba.",
+    "Si hay hielo sobre los tubos, la salmuera se está congelando. Mida su densidad: dice a qué temperatura se congela.",
+    "Con la bomba de salmuera en marcha, añada sal hasta la densidad de la tabla. Después deje que el hielo se funda antes de la prueba."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Cuál es la causa de la baja succión?",
+    "opciones": [
+      { "texto": "La salmuera está floja: se congela sobre los tubos y el hielo aísla el evaporador", "correcta": true, "explicacion": "La densidad corresponde a una congelación hacia −12 °C. Los tubos del evaporador están más fríos que eso, así que la salmuera se congela sobre ellos. El hielo aísla, el evaporador toma poco calor y la succión cae." },
+      { "texto": "Falta refrigerante en la planta", "explicacion": "El nivel del recibidor es normal. Con poca carga tampoco se formaría hielo: el evaporador trabajaría medio vacío y más caliente." },
+      { "texto": "La válvula de expansión está obstruida", "explicacion": "Con poco líquido entrando, el evaporador se quedaría más caliente y no se cubriría de hielo." },
+      { "texto": "El presostato de baja corta antes de su ajuste", "explicacion": "El manómetro de succión baja de verdad hasta 0,3 bar antes del disparo: el presostato actúa en su valor." }
+    ]
+  },
+  "acciones": [
+    { "id": "medir_densidad", "boton": "Medir la densidad de la salmuera con el densímetro", "titulo": "Densidad medida", "texto": "Densidad de la salmuera: 1,09 a la temperatura de la cuba. Según la tabla, se congela hacia −12 °C. Para trabajar a −15 °C con margen debe congelarse hacia −21 °C, con una densidad de 1,16 a 1,18 (valores típicos — verificar con la tabla del buque).", "medicion": true },
+    { "id": "mirar_evaporador", "boton": "Mirar el evaporador por la mirilla de la cuba", "titulo": "Hielo en el evaporador", "texto": "Los tubos del evaporador están cubiertos por una capa blanca de hielo de salmuera de varios milímetros. Entre los tubos casi no circula la salmuera.", "medicion": true },
+    { "id": "mirar_recibidor", "boton": "Mirar el nivel del recibidor de líquido", "titulo": "Nivel normal", "texto": "El visor del recibidor marca el nivel de siempre: la carga de amoníaco es correcta.", "medicion": true },
+    { "id": "anadir_sal", "boton": "Añadir sal a la salmuera hasta la densidad de la tabla", "requiere": [{ "c": "bomba", "nombre": "bomba_salmuera", "si_no": "Arranque la bomba de salmuera: la sal se disuelve y se mezcla con la circulación." }], "comprobar": [{ "c": "marca", "marca": "epp", "falta": "sin_epp_quimico" }], "impide": ["sal"], "si_impide": "La salmuera ya tiene la densidad de la tabla.", "titulo": "Salmuera corregida", "texto": "Se añadió sal poco a poco en la cuba, con la bomba de salmuera en marcha, midiendo la densidad cada pocos sacos. Quedó en 1,17: se congela hacia −21 °C. El hielo de los tubos empezará a fundirse.", "pone": ["sal"], "efecto": [{ "op": "param", "id": "PLANTA", "clave": "congelacion_salmuera", "valor": -21.0 }] },
+    { "id": "bajar_baja", "boton": "Bajar el corte del presostato de baja PB a −0,5 bar para que no pare", "titulo": "Protección desajustada", "texto": "Con la succión en vacío puede entrar aire y humedad al circuito, y el evaporador se congela todavía más. El presostato de baja no es la causa.", "innecesaria": true, "tema": "ajuste_presostato", "pone": ["baja_alterada"], "efecto": [{ "op": "param", "id": "PB", "clave": "corte_bar", "valor": -0.5 }] },
+    { "id": "restituir_baja", "boton": "Restituir el corte del presostato de baja PB a 0,3 bar", "necesita": ["baja_alterada"], "si_falta": "PB ya está en su ajuste: corta a 0,3 bar.", "titulo": "Ajuste restituido", "texto": "El presostato de baja vuelve a cortar a 0,3 bar.", "quita": ["baja_alterada"], "efecto": [{ "op": "param", "id": "PB", "clave": "corte_bar", "valor": 0.3 }] },
+    { "id": "anadir_nh3", "boton": "Añadir amoníaco a la planta", "titulo": "Carga innecesaria", "texto": "El nivel del recibidor era normal: la carga sobra y se gastó amoníaco del pañol. Una planta sobrecargada condensa peor y puede mandar líquido al compresor.", "innecesaria": true }
+  ],
+  "prueba": {
+    "mantener_s": 300,
+    "superada": "El compresor enfrió la salmuera durante 5 minutos con la succión normal, sin hielo en el evaporador y sin disparos.",
+    "objetivos": [
+      { "c": "en_marcha", "texto": "Compresor en marcha" },
+      { "c": "presion", "punto": "succion", "min": 0.5, "texto": "Succión por encima de 0,5 bar" },
+      { "c": "planta", "clave": "hielo", "max": 0.1, "texto": "Evaporador sin hielo" },
+      { "c": "param", "id": "PLANTA", "clave": "congelacion_salmuera", "max": -20.0, "texto": "Salmuera con la densidad de la tabla" },
+      { "c": "bomba", "nombre": "bomba_salmuera", "texto": "Bomba de salmuera en marcha" },
+      { "c": "presostatos", "texto": "Presostatos de alta, baja y aceite cerrados" },
+      { "c": "param", "id": "PB", "clave": "corte_bar", "min": 0.3, "texto": "Presostato de baja ajustado a 0,3 bar" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa del disparo", "opciones": ["Falta de refrigerante", "Válvula de expansión obstruida", "Salmuera floja congelada sobre el evaporador"], "correcta": 2, "explicacion": "La densidad de la salmuera correspondía a una congelación hacia −12 °C, y los tubos estaban cubiertos de hielo." },
+      { "etiqueta": "Reparación", "opciones": ["Sal añadida hasta la densidad de la tabla y deshielo del evaporador", "Corte de PB bajado a −0,5 bar", "Carga de amoníaco"], "correcta": 0, "explicacion": "Se corrigió la concentración de la salmuera y se dejó fundir el hielo." },
+      { "etiqueta": "Prueba", "opciones": ["Un arranque sin disparo", "5 minutos enfriando con la succión normal y sin hielo", "Ninguna: la densidad ya es correcta"], "correcta": 1, "explicacion": "La prueba se hace con la planta enfriando y el evaporador limpio de hielo." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones de componentes del circuito y de diagnóstico de la planta.",
+    "Tabla de densidad y temperatura de congelación de la salmuera del buque (verificar a bordo).",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

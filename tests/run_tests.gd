@@ -1,7 +1,8 @@
 extends SceneTree
 ## Ejecutor mínimo de pruebas, sin complementos:
 ##   godot --headless --path . --script res://tests/run_tests.gd
-## Carga cada archivo test_*.gd de tests/ y ejecuta sus métodos test_*.
+## Carga cada archivo test_*.gd de tests/ y ejecuta sus métodos test_*. Con la variable
+## PRUEBAS_SOLO, solo los archivos cuyo nombre la contiene.
 ## Una prueba falla si devuelve un motivo o si durante ella hubo cualquier error de script.
 ## Sale con código 1 si alguna prueba falla.
 
@@ -33,8 +34,12 @@ func _ejecutar() -> void:
 	OS.add_logger(registro)
 	var fallos := 0
 	var total := 0
+	# PRUEBAS_SOLO=planta ejecuta solo los archivos cuyo nombre contiene «planta».
+	var solo := OS.get_environment("PRUEBAS_SOLO")
 	for archivo in DirAccess.get_files_at(CARPETA):
 		if not (archivo.begins_with("test_") and archivo.ends_with(".gd")):
+			continue
+		if not solo.is_empty() and not archivo.contains(solo):
 			continue
 		# Un error aquí no debe impedir llegar a quit(): Godot se quedaría esperando para siempre.
 		var guion: GDScript = load(CARPETA + archivo)

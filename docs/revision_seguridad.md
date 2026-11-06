@@ -94,6 +94,12 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
   - La posición del detector en alto y la lógica de parada de la planta y de arranque de la ventilación con la alarma alta.
   - Los ajustes de recalentamiento, el diferencial de aceite de unos 3 bar en marcha y la temperatura de congelación de la salmuera, −21 °C.
   - Que el compresor arranque en directo en el simulador, cuando a bordo suele hacerlo en estrella-triángulo o con arrancador suave.
+- Las 4 misiones de la planta de frío (`data/misiones/fr*.json`), sus faltas, accidentes e incidentes en `data/guardia.json`. Lo más sensible:
+  - La respuesta a una fuga: evacuar, avisar, ventilar desde fuera y entrar solo con equipo de respiración autónomo y un compañero. El umbral de entrada es el aviso del detector, 25 ppm: debe ajustarse al plan de emergencia del buque.
+  - Que los mandos del compresor y la ventilación de emergencia se manejen desde fuera de la sala.
+  - Aislar y vaciar el tramo antes de abrir el circuito, y el método de vaciado, que se deja «según el procedimiento del buque».
+  - La densidad de la salmuera (1,09 floja, 1,16 a 1,18 correcta) y su temperatura de congelación.
+  - El papel indicador para localizar fugas de amoníaco y el cambio del cierre mecánico a bordo.
 - Los 10 símbolos del sistema 4. IEC 60617 no cubre bien los equipos frigoríficos; se dibujaron a partir de ISO 14617 e ISA 5.1 sin las normas delante, y los ANSI de presostatos, termostato y transmisor son burbujas de instrumento ISA, no símbolos de IEEE 315.
 - Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 

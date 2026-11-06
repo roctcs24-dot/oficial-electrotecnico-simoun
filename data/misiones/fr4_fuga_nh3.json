@@ -1,0 +1,85 @@
+{
+  "id": "fr4_fuga_nh3",
+  "tipo": "planta",
+  "titulo": "Alarma de amoníaco en la sala de frío",
+  "resumen": "Suena el aviso del detector de amoníaco y hay olor junto al compresor.",
+  "equipo": "Planta de frío: sala de máquinas y compresor",
+  "reporte": {
+    "de": "Marinero de guardia",
+    "texto": "Ha sonado el aviso del {{detector_amoniaco}} de la sala de frío y hay olor fuerte junto al compresor, que sigue en marcha. He salido de la sala. Actúe según el plan de emergencia: proteja a las personas, ventile, localice la fuga con el equipo adecuado, repárela y deje la planta enfriando con la sala por debajo del aviso.",
+    "nota": "Concentraciones, alarmas y procedimiento: valores típicos y procedimiento de formación — verificar a bordo con el plan de emergencia del buque."
+  },
+  "verificar_en_sala": true,
+  "nota_trabajo": "La sala tiene amoníaco: cada trabajo dentro exige equipo de respiración autónomo y un compañero. Los trabajos en el compresor se hacen con él bloqueado, con la ausencia de tensión verificada y con el tramo aislado.",
+  "preparar": [
+    { "op": "param", "id": "PLANTA", "clave": "fuga_kg_h", "valor": 0.5 },
+    { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -14.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -16.0 },
+    { "op": "marcha" },
+    { "op": "avanzar", "s": 90 }
+  ],
+  "pasos": [
+    { "id": "evacuar", "boton": "Ordenar salir de la sala a quien no lleve equipo de respiración y cerrar la puerta", "pone": ["evacuada"] },
+    { "id": "aviso", "boton": "Avisar al puente y al jefe de máquinas de la alarma de amoníaco", "pone": ["aviso"] },
+    { "id": "era", "boton": "Ponerse el equipo de respiración autónomo y el traje de protección", "pone": ["era"] },
+    { "id": "companero", "boton": "Pedir un compañero equipado que vigile desde la puerta", "pone": ["companero"] }
+  ],
+  "bloqueables": ["Q1"],
+  "evidencias": [
+    { "accion": "localizar" }
+  ],
+  "pistas": [
+    "Primero las personas: evacúe la sala, avise y arranque la ventilación de emergencia desde la pestaña Seguridad. No entre sin equipo de respiración y sin compañero.",
+    "Con el equipo puesto, localice la fuga con el detector portátil. Junto al compresor, mire el eje.",
+    "Para cambiar el cierre del eje: pare, bloquee Q1, verifique la ausencia de tensión y aísle el compresor. Al terminar, abra sus válvulas antes de arrancar."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por dónde pierde amoníaco la planta?",
+    "opciones": [
+      { "texto": "Por el cierre mecánico del eje del compresor", "correcta": true, "explicacion": "El detector portátil marca la concentración más alta junto al acoplamiento, y el papel indicador cambia de color en el cierre del eje. Las caras del cierre están gastadas." },
+      { "texto": "Por la válvula de seguridad", "explicacion": "La válvula de seguridad está cerrada: la descarga está lejos de su tarado. Además, descargaría por el palo de venteo, fuera de la sala." },
+      { "texto": "Por los tubos del condensador, hacia el agua de mar", "explicacion": "Una fuga en los tubos pasa al agua de mar y sale por la descarga al mar: no llenaría la sala de amoníaco." },
+      { "texto": "No hay fuga: el detector está descalibrado", "explicacion": "El detector portátil confirma la concentración y hay olor. Nunca se supone una falsa alarma sin comprobarla con otro detector." }
+    ]
+  },
+  "acciones": [
+    { "id": "localizar", "boton": "Entrar en la sala y localizar la fuga con el detector portátil", "en_sala": true, "comprobar": [{ "c": "marca", "marca": "evacuada", "falta": "sin_evacuar" }, { "c": "estado", "id": "PLANTA", "clave": "ventilacion_emergencia", "valor": true, "falta": "sin_ventilacion" }], "titulo": "Fuga localizada", "texto": "El detector portátil marca {ppm} ppm en la sala y la lectura más alta junto al acoplamiento del compresor. El papel indicador se vuelve rojo en el cierre mecánico del eje.", "medicion": true },
+    { "id": "aislar_compresor", "boton": "Cerrar las válvulas de succión y descarga del compresor y vaciar su amoníaco", "en_sala": true, "requiere": [{ "c": "parado", "si_no": "Pare antes el compresor con el pulsador de parada." }], "impide": ["aislado"], "si_impide": "El compresor ya está aislado y vacío.", "titulo": "Compresor aislado", "texto": "Se cerraron las válvulas de succión y de descarga del compresor y se vació su amoníaco según el procedimiento del buque, hasta que el manómetro marcó cero.", "pone": ["aislado"] },
+    { "id": "cambiar_cierre", "boton": "Cambiar el cierre mecánico del eje del compresor", "en_sala": true, "bloqueo": "Q1", "abre_circuito": true, "titulo": "Cierre cambiado", "texto": "Las caras del cierre mecánico estaban rayadas. Se cambió el cierre completo por uno del pañol, se revisó la alineación del acoplamiento y se rellenó el aceite que se perdió.", "efecto": [{ "op": "param", "id": "PLANTA", "clave": "fuga_kg_h", "valor": 0.0 }] },
+    { "id": "abrir_compresor", "boton": "Abrir las válvulas de succión y descarga del compresor", "en_sala": true, "necesita": ["aislado"], "si_falta": "Las válvulas del compresor ya están abiertas.", "titulo": "Compresor conectado", "texto": "Se abrieron despacio las válvulas del compresor. Con el detector portátil no hay lectura junto al cierre.", "quita": ["aislado"] },
+    { "id": "apretar_brida", "boton": "Apretar los tornillos de la tapa del cierre con la planta en marcha", "en_sala": true, "titulo": "Apriete inútil", "texto": "La fuga sigue: pasa entre las caras del cierre, no por la junta de la tapa. Apretar una tapa con presión, además, puede romper un tornillo y soltar un chorro de amoníaco.", "innecesaria": true }
+  ],
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: cierre del eje cambiado sin bloqueo",
+      "que_ocurrio": "Se trabajaba en el cierre del eje sin bloquear el guardamotor. Desde el panel se pulsó marcha y el compresor arrancó con el acoplamiento al descubierto. El oficial sufrió un golpe en la mano.",
+      "causa": "Un compresor parado arranca con el pulsador de marcha si su guardamotor no está abierto y bloqueado.",
+      "como_evitar": "• Pare el compresor y abra su guardamotor.\n• Avise y bloquéelo con candado y tarjeta.\n• Verifique la ausencia de tensión en los bornes del motor.\n• Aísle y vacíe el compresor antes de abrir."
+    }
+  },
+  "prueba": {
+    "mantener_s": 300,
+    "superada": "El compresor trabajó 5 minutos sin fugas y con la sala por debajo del aviso de amoníaco.",
+    "objetivos": [
+      { "c": "en_marcha", "texto": "Compresor en marcha" },
+      { "c": "planta", "clave": "ppm_sala", "max": 24.0, "texto": "Sala por debajo de 25 ppm" },
+      { "c": "param", "id": "PLANTA", "clave": "fuga_kg_h", "max": 0.0, "texto": "Sin fuga" },
+      { "c": "presostatos", "texto": "Presostatos de alta, baja y aceite cerrados" },
+      { "c": "sin_marca", "marca": "aislado", "texto": "Válvulas del compresor abiertas" },
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Origen de la fuga", "opciones": ["Válvula de seguridad", "Cierre mecánico del eje del compresor", "Tubos del condensador"], "correcta": 1, "explicacion": "El detector portátil y el papel indicador señalaron el cierre del eje." },
+      { "etiqueta": "Respuesta a la alarma", "opciones": ["Evacuación, aviso, ventilación de emergencia y entrada con equipo de respiración y compañero", "Entrada inmediata para parar el compresor", "Esperar a que la alarma se apague sola"], "correcta": 0, "explicacion": "Primero las personas y la ventilación; se entra solo con equipo de respiración autónomo y acompañado." },
+      { "etiqueta": "Reparación", "opciones": ["Apriete de la tapa del cierre", "Cambio del cierre mecánico con el compresor aislado y vacío", "Recalibración del detector"], "correcta": 1, "explicacion": "Se cambió el cierre con el compresor bloqueado, aislado y vacío de amoníaco." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección de seguridad con amoníaco y ficha del detector de amoníaco.",
+    "ISO 5149-3: detección y ventilación de la sala de máquinas.",
+    "Plan de emergencia del buque para fugas de amoníaco (verificar a bordo).",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}
