@@ -122,6 +122,9 @@ func _recorrer(raiz: Raiz) -> String:
 	for id: String in raiz.contenido.sistema(3)["modos"]["guardia"]["misiones"]:
 		for pestana: String in ["reporte", "proceso", "medir", "libro"]:
 			pasos.append(["mision", {"id": id, "pestana_inicial": pestana}])
+	for pestana in ["esquema", "mando", "ph", "seguridad"]:
+		pasos.append(["planta", {"id": 4, "pestana": pestana}])
+	pasos.append(["sistema", {"id": 4}])
 	pasos.append(["guardia", {"id": 1}])
 	for id: String in raiz.contenido.sistema(1)["modos"]["guardia"]["misiones"]:
 		for pestana: String in ["mision", "G1"]:

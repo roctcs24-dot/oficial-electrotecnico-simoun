@@ -43,6 +43,8 @@ func _capturar() -> void:
 		await _capturar_cuadro(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "guardia_cuadro":
 		await _capturar_guardia_cuadro(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "planta":
+		await _capturar_planta(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -259,6 +261,36 @@ func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
 		raiz.reconstruir()
 		await _guardar(carpeta, "mision_cuadro_incidente", tam)
 		raiz.volver()
+
+## Planta de frío en marcha, con el termómetro en la descarga; después, un disparo por alta.
+func _capturar_planta(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("planta", {"id": 4})
+		var p = raiz.pantalla_actual()
+		p._atender_orden(p.operador.alternar_guardamotor)
+		p.sim.avanzar_tiempo(0.1)
+		p._pulsar("S1", true)
+		p.sim.avanzar_tiempo(0.3)
+		p._pulsar("S1", false)
+		p.sim.avanzar_tiempo(5.0)
+		for _i in 150:
+			p.sim.paso(1.0)
+		p.args["eventos"] = p.sim.eventos.size()
+		p._medir_tuberia("descarga")
+		var pestanas: Array = ["esquema", "mando", "ph", "seguridad"] if raiz.vertical else ["mando", "ph", "seguridad"]
+		for id: String in pestanas:
+			p._elegir_pestana(id)
+			await _guardar(carpeta, "planta_%s" % id, tam)
+		p._atender_orden(p.operador.alternar_bomba.bind("bomba_agua_mar"))
+		for _i in 90:
+			p.sim.paso(1.0)
+		p._revisar_eventos()
+		p._elegir_pestana("mando")
+		await _guardar(carpeta, "planta_disparo", tam)
+		raiz.volver()
+
 
 func _capturar_progresion(raiz: Raiz, carpeta: String) -> void:
 	raiz.partida.registrar_error("ohm_corriente")

@@ -11,9 +11,10 @@ Estado: **v2.0**, con la v1 y la v2 completas. Incluye:
 - Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
 - Exámenes de la v1 y de la v2, rangos, repaso de errores y traspaso de partida.
+- Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: está hecho su motor de simulación.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación y la pantalla de la planta.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -56,7 +57,7 @@ Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este c
 godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
 ```
 
-Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro` o `guardia_cuadro` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
+Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro`, `guardia_cuadro` o `planta` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
 
 ## Exportar
 
@@ -256,4 +257,5 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Averías de la planta:** hielo en los tubos con la salmuera floja, falta de refrigerante, filtro de aceite obstruido, condensador sucio, bombas paradas, fugas (con la concentración de NH3 en la sala) y apertura de la válvula de seguridad.
 - **Tiempo:** la salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.
 - **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite.
+- **Pantalla** `ui/screens/planta.gd`, en el Taller del sistema 4: esquema del ciclo (`EsquemaFrio`) con el termómetro sobre las tuberías, manómetros, mando eléctrico del compresor con sus presostatos, corredera de capacidad, bombas, diagrama presión–entalpía (`DiagramaPH`, con entalpías esquemáticas) y seguridad de la sala. Sus mandos están en `game/operador_planta.gd`, y sus textos y las explicaciones de cada evento, en `data/planta.json`. El tiempo se puede acelerar ×10.
 - **Circuito** `planta_frio`: arranque directo del compresor con los presostatos de alta, baja y aceite en serie con la bobina del contactor. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.

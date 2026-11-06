@@ -72,7 +72,7 @@ func _estado_inicial() -> Dictionary:
 		"capacidad_manual": 1.0, "carga_refrigerante": 1.0, "hielo": 0.0, "dp_aceite": 0.0,
 		"ppm_sala": 0.0, "ventilacion_emergencia": false, "carga_pescado_kw": 0.0,
 		"bomba_agua_mar": true, "bomba_salmuera": true,
-		"q_kw": 0.0, "w_kw": 0.0, "alarma": "", "valvula_abierta": false,
+		"q_kw": 0.0, "w_kw": 0.0, "q_condensador_kw": 0.0, "alarma": "", "valvula_abierta": false,
 	}
 
 
@@ -102,6 +102,38 @@ func temperatura(punto: String) -> float:
 		"agua_mar":
 			return params["t_agua_mar"]
 	push_error("Punto de temperatura desconocido: %s" % punto)
+	return 0.0
+
+
+## Puntos de tubería donde se puede medir con el termómetro de contacto o infrarrojo.
+const TUBERIAS := ["descarga", "liquido", "succion", "salmuera", "agua_mar_entrada", "agua_mar_salida"]
+
+
+## Temperatura de la superficie de una tubería, en °C. En marcha, la descarga sale muy caliente
+## por la compresión, el líquido algo subenfriado y la succión algo recalentada; parado, todo se
+## acerca a su temperatura de saturación. Valores típicos de un tornillo con inyección de aceite:
+## verificar con la planta.
+func temperatura_tuberia(punto: String) -> float:
+	var marcha := compresor_en_marcha()
+	match punto:
+		"descarga":
+			if not marcha:
+				return estado["tc"]
+			var relacion := SimNH3.p_sat_abs(estado["tc"]) / SimNH3.p_sat_abs(estado["te"])
+			return estado["tc"] + 20.0 + 3.0 * relacion
+		"liquido":
+			return estado["tc"] - (3.0 if marcha else 0.0)
+		"succion":
+			return estado["te"] + (6.0 if marcha else 0.0)
+		"salmuera":
+			return estado["ts"]
+		"agua_mar_entrada":
+			return params["t_agua_mar"]
+		"agua_mar_salida":
+			if not bomba_en_marcha("bomba_agua_mar"):
+				return params["t_agua_mar"]
+			return params["t_agua_mar"] + 4.0 * estado["q_condensador_kw"] / 320.0
+	push_error("Punto de tubería desconocido: %s" % punto)
 	return 0.0
 
 
@@ -182,6 +214,7 @@ func avanzar(dt: float, _sol: SimSolver.Solucion) -> void:
 	if not bomba_en_marcha("bomba_agua_mar"):
 		ua_c *= 0.05
 	var q_condensador := ua_c * (tc - float(params["t_agua_mar"]))
+	estado["q_condensador_kw"] = q_condensador
 	estado["tc"] = tc + (q + w - q_condensador) / params["c_condensador_kj_k"] * dt
 	# Salmuera: entra el calor de las cubas y del pescado, sale el que toma el evaporador.
 	var q_cubas: float = params["ua_cubas_kw_k"] * (params["t_ambiente"] - ts) + estado["carga_pescado_kw"]

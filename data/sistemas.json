@@ -64,9 +64,11 @@
       "id": 4,
       "nombre": "Refrigeración por amoníaco",
       "resumen": "Ciclo de compresión, presostatos, salmuera y seguridad con NH3.",
-      "estado": "proximamente",
+      "estado": "activo",
       "zona": [232, 268, 232, 76],
-      "modos": {}
+      "modos": {
+        "taller": { "pantalla": "planta", "detalle": "Planta de frío: compresor, presostatos, bombas y salmuera" }
+      }
     },
     {
       "id": 5,
