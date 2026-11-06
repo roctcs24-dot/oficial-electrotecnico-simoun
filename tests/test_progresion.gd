@@ -35,8 +35,10 @@ func _azar(semilla: int) -> RandomNumberGenerator:
 func test_banco_del_examen_bien_formado() -> String:
 	var c := Contenido.new()
 	var temas := {}
-	if c.examenes() != ["v1", "v2"]:
-		return "deben publicarse los exámenes v1 y v2: %s" % str(c.examenes())
+	var publicados := c.examenes()
+	publicados.sort()
+	if publicados != ["v1", "v2", "v3"]:
+		return "deben publicarse los exámenes v1, v2 y v3: %s" % str(c.examenes())
 	for id: String in c.examenes():
 		var motivo := _revisar_examen(c.examen(id), temas)
 		if not motivo.is_empty():

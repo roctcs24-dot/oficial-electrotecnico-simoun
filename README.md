@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v2.2**, con la v1 y la v2 completas y la v3 en desarrollo. Incluye:
+Estado: **v3.0**, con la v1, la v2 y la v3 completas. Incluye:
 
 - 19 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
@@ -12,11 +12,11 @@ Estado: **v2.2**, con la v1 y la v2 completas y la v3 en desarrollo. Incluye:
 - Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
 - 4 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite y fuga de amoníaco con evacuación.
-- Exámenes de la v1 y de la v2, rangos, repaso de errores y traspaso de partida.
+- Exámenes de la v1, la v2 y la v3, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: están hechos su motor de simulación, la pantalla de la planta, las lecciones, las fichas, los símbolos y las misiones de Guardia. Falta el examen.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, y la v3, de refrigeración por amoníaco, están completas. La siguiente es la v4: electrónica, sensores, PLC, HMI y SCADA.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -245,7 +245,7 @@ El motor es un modelo simplificado para enseñar, no para dimensionar. Sus pará
 
 Para añadir un componente, crea una clase que herede de `SimComponente` en `sim/components/`, regístrala en `SimSimulacion.tipos()` y añade sus pruebas.
 
-**Generación (v2, en desarrollo):**
+**Generación (v2):**
 
 - **Generador** (`generador`): fuerza electromotriz con su propia frecuencia y ángulo detrás de una reactancia. Lleva gobernador con estatismo o isócrono, y AVR con estatismo de reactiva. Puede quedar bloqueado, parado por una alarma o con la consigna de velocidad a la deriva (`deriva_hz_s`).
 - **Interruptor de generador** (`interruptor_generador`): comprueba el sincronismo al cerrar. Tiene protecciones de sobrecarga, cortocircuito, potencia inversa, mínima tensión y disparo preferente.
@@ -266,7 +266,7 @@ La pantalla `ui/screens/cuadro.gd` es la práctica libre del cuadro principal, e
 
 Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene tres grupos de 450 kW, con valores típicos a verificar.
 
-**Refrigeración (v3, en desarrollo):**
+**Refrigeración (v3):**
 
 - **Amoníaco** (`SimNH3`, en `sim/frio/nh3.gd`): presión de saturación según la temperatura y al revés, interpolando el logaritmo de la presión en la tabla de `data/frio/nh3.json`. Da presiones absolutas y relativas, y pasa de bar a psi.
 - **Planta de frío** (`planta_frio`): compresor, condensador de agua de mar, evaporador en la salmuera de las cubas y válvula de expansión, en un modelo concentrado. Las temperaturas de evaporación y de condensación salen de balances de calor, y las presiones son las de saturación a esas temperaturas. El compresor es un motor del circuito, y la planta le pone la carga según la potencia que pide. En automático, la corredera de capacidad sigue a la consigna de la salmuera y limita la potencia del motor al 95 %.

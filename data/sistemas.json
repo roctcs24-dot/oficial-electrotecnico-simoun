@@ -71,7 +71,7 @@
           "fichas": ["compresor_tornillo", "condensador", "valvula_expansion", "valvula_solenoide", "presostato", "transmisor_presion", "detector_amoniaco"] },
         "taller": { "pantalla": "planta", "detalle": "Planta de frío: compresor, presostatos, bombas y salmuera" },
         "guardia": { "misiones": ["fr1_alta_descarga", "fr2_hielo_evaporador", "fr3_presion_aceite", "fr4_fuga_nh3"] },
-        "examen": { "minijuegos": ["simbolos_frio"] }
+        "examen": { "examenes": ["v3"], "minijuegos": ["simbolos_frio"] }
       }
     },
     {

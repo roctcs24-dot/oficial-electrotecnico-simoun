@@ -197,7 +197,7 @@ func test_simbolos_separados_por_sistema() -> String:
 					return "el minijuego del sistema %d ofrece %s" % [sistema, o]
 		if ids.size() != 10:
 			return "el sistema %d debe tener 10 símbolos distintos: %d" % [sistema, ids.size()]
-	for par in [["v1", 3], ["v2", 1]]:
+	for par in [["v1", 3], ["v2", 1], ["v3", 4]]:
 		var datos := c.examen(par[0])
 		if int(datos["sistema_simbolos"]) != par[1]:
 			return "el examen %s debe preguntar los símbolos del sistema %d" % par
