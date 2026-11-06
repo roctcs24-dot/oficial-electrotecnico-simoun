@@ -25,6 +25,9 @@ const SALTO_MAXIMO_HZ := 2.0
 ## El diésel admite un 10 % de sobrecarga sobre su potencia nominal. Valor típico: verificar.
 const SOBRECARGA_DIESEL := 1.1
 const TAU_DESEXCITACION_S := 0.5
+## Sin combustible, la compresión y el rozamiento del diésel lo frenan en unos segundos.
+## Valor del simulador: verificar con el tiempo de parada del grupo.
+const ARRASTRE_PARADO_PU := 0.3
 
 var _ang_terminal := 0.0
 var _hay_ang_terminal := false
@@ -51,14 +54,17 @@ func _params_por_defecto() -> Dictionary:
 		"modo_gobernador": "estatismo",
 		"arranque_automatico": false,
 		"vigilar": [],
+		# Avería del mando de velocidad: la consigna se mueve sola, en Hz por segundo.
+		"deriva_hz_s": 0.0,
 	}
 
 
+## bloqueado: arranque bloqueado con candado y tarjeta. parada: alarma que paró el diésel.
 func _estado_inicial() -> Dictionary:
 	return {
 		"en_marcha": false, "f": 0.0, "delta": 0.0, "e_pu": 1.0, "f_ref": F_NOMINAL, "pm_pu": 0.0,
 		"danado": false, "f_red": 0.0, "p_kw": 0.0, "q_kvar": 0.0, "v": 0.0, "i": 0.0,
-		"calado_s": 0.0, "vigilancia_s": 0.0, "acelerado": false,
+		"calado_s": 0.0, "vigilancia_s": 0.0, "acelerado": false, "bloqueado": false, "parada": "",
 	}
 
 
@@ -78,6 +84,10 @@ func en_marcha() -> bool:
 func arrancar() -> String:
 	if estado["danado"]:
 		return "El grupo está dañado: cambie el repuesto antes de arrancar."
+	if estado["bloqueado"]:
+		return "El arranque está bloqueado con candado y tarjeta."
+	if not estado["parada"].is_empty():
+		return "Parada por alarma: %s. Resuelva la causa antes de arrancar." % estado["parada"]
 	if not estado["en_marcha"]:
 		estado["en_marcha"] = true
 		estado["e_pu"] = maxf(estado["e_pu"], 1.0)
@@ -87,6 +97,18 @@ func arrancar() -> String:
 
 func parar() -> void:
 	estado["en_marcha"] = false
+
+
+## Parada de seguridad del diésel, como la de baja presión de combustible o de aceite.
+func parar_por_alarma(alarma: String) -> void:
+	estado["en_marcha"] = false
+	estado["parada"] = alarma
+	avisar("parada_por_alarma", {"alarma": alarma})
+
+
+## Si puede arrancar: ni dañado, ni bloqueado, ni parado por una alarma.
+func disponible() -> bool:
+	return not estado["danado"] and not estado["bloqueado"] and estado["parada"].is_empty()
 
 
 ## Subir o bajar la velocidad con el mando del gobernador.
@@ -141,7 +163,9 @@ func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 	_gobernar(dt)
 	var pe := p / s_base
 	var amortiguamiento: float = params["amortiguamiento_pu"] * (estado["f"] - estado["f_red"])
-	var friccion: float = params["friccion_pu"] if estado["f"] > 0.0 else 0.0
+	var friccion: float = 0.0
+	if estado["f"] > 0.0:
+		friccion = params["friccion_pu"] if estado["en_marcha"] else ARRASTRE_PARADO_PU
 	var aceleracion: float = (estado["pm_pu"] - pe - amortiguamiento - friccion) * F_NOMINAL / (2.0 * params["h_s"])
 	estado["f"] = maxf(estado["f"] + aceleracion * dt, 0.0)
 	var avance: float = 360.0 * (estado["f"] - F_NOMINAL) * dt
@@ -180,6 +204,8 @@ func _pm_maxima() -> float:
 func _gobernar(dt: float) -> void:
 	var objetivo := 0.0
 	if estado["en_marcha"]:
+		if params["deriva_hz_s"] != 0.0:
+			ajustar_velocidad(params["deriva_hz_s"] * dt)
 		if params["modo_gobernador"] == "isocrono" and estado["f"] > F_NOMINAL * F_EXCITACION:
 			estado["f_ref"] += (F_NOMINAL - estado["f"]) * dt / TAU_ISOCRONO_S
 		var nominal: float = params["p_kw"] / params["s_kva"]
@@ -221,7 +247,7 @@ func _comprobar_calado(dt: float) -> void:
 ## durante unos segundos, el grupo arranca solo.
 func _vigilar(dt: float, sol: SimSolver.Solucion) -> void:
 	var vigilar: Array = params["vigilar"]
-	if not params["arranque_automatico"] or vigilar.size() < 2 or estado["en_marcha"] or estado["danado"]:
+	if not params["arranque_automatico"] or vigilar.size() < 2 or estado["en_marcha"] or not disponible():
 		estado["vigilancia_s"] = 0.0
 		return
 	if sol.entre(vigilar[0], vigilar[1]).modulo() < params["v_linea"] * 0.5:

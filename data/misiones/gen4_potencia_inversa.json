@@ -1,0 +1,89 @@
+{
+  "id": "gen4_potencia_inversa",
+  "tipo": "cuadro",
+  "titulo": "Disparo del generador nº 2 por potencia inversa",
+  "resumen": "Q2 disparó anoche en paralelo y el disparo preferente cortó la habilitación.",
+  "equipo": "Cuadro principal: generador nº 2",
+  "reporte": {
+    "de": "Primer maquinista",
+    "texto": "Anoche, con G1 y G2 en paralelo y el PMS en manual por pruebas, Q2 disparó por {{potencia_inversa}}. G1 se quedó con toda la carga y el {{disparo_preferente}} cortó la habilitación, la salida C2, que sigue desconectada. El diésel de G2 está bien: presiones y temperaturas normales. Averigüe la causa, repárela y deje G1 y G2 en paralelo con C2 conectada. Haga la prueba con el PMS en manual: en automático corrige la velocidad de los grupos y podría ocultar la avería.",
+    "nota": "Ajustes de protección y del gobernador: valores típicos — verificar a bordo."
+  },
+  "cuadro": {
+    "cargas": [
+      { "id": "C1", "nombre": "Servicios esenciales de máquinas", "params": { "p_kw": 200, "q_kvar": 150, "esencial": true } },
+      { "id": "C2", "nombre": "Habilitación y cocina", "params": { "p_kw": 120, "q_kvar": 90, "esencial": false }, "estado": { "conectada": false } }
+    ],
+    "ajustes": { "G2": { "deriva_hz_s": -0.02 } }
+  },
+  "preparar": [
+    { "op": "arrancar", "id": "G1" },
+    { "op": "avanzar", "s": 10 },
+    { "op": "cerrar", "id": "G1" },
+    { "op": "centrar" },
+    { "op": "disparado", "id": "G2", "causa": "disparo_potencia_inversa" }
+  ],
+  "eventos": { "disparo_potencia_inversa": "repetir_disparo" },
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que G2 queda fuera de servicio", "pone": ["aviso"] }
+  ],
+  "bloqueables": ["G2"],
+  "evidencias": [
+    { "condiciones": [{ "c": "en_marcha", "id": "G2" }, { "c": "abierto", "id": "G2" }], "durante_s": 30 }
+  ],
+  "pistas": [
+    "Rearme Q2 y arranque G2 sin cerrarlo. Durante medio minuto, observe su frecuencia y la consigna en la pantalla del controlador, sin tocar los mandos.",
+    "Si la consigna baja sola, el gobernador recibe una orden de bajar velocidad que nadie da. El relé que da esa orden está en el controlador de G2.",
+    "Para cambiar el relé, pare G2, avise, bloquee su arranque y verifique la ausencia de tensión. Después sincronice, reparta la carga y conecte C2."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Cuál es la causa del disparo de Q2?",
+    "opciones": [
+      { "texto": "La consigna de velocidad de G2 baja sola: el relé de «bajar velocidad» de su controlador está pegado", "correcta": true, "explicacion": "Con G2 en marcha y Q2 abierto, sin tocar los mandos, la consigna y la frecuencia bajan poco a poco. En paralelo, esa misma deriva descarga el grupo hasta que absorbe potencia de las barras y su protección dispara." },
+      { "texto": "El relé de potencia inversa está ajustado demasiado sensible", "explicacion": "La protección actuó al pasar del −8 % durante 5 s, que es su ajuste. El problema es que el grupo llegó a absorber potencia." },
+      { "texto": "El AVR de G2 está averiado", "explicacion": "El AVR regula la tensión y reparte los kVAr. La tensión de G2 es normal; lo que baja es la frecuencia, que depende del gobernador." },
+      { "texto": "Falta combustible en G2", "explicacion": "Las presiones son normales y, en vacío, una falta de combustible no movería la consigna de velocidad que muestra el controlador." }
+    ]
+  },
+  "acciones": [
+    { "id": "cambiar_rele_bajar", "boton": "Cambiar el relé de «bajar velocidad» del controlador de G2", "bloqueo": "G2", "titulo": "Relé cambiado", "texto": "El relé de «bajar velocidad» tenía los contactos pegados y daba la orden de bajar de forma continua. Se cambió por uno del pañol del mismo modelo, con bobina de 24 V DC.", "efecto": [{ "op": "param", "id": "G2", "clave": "deriva_hz_s", "valor": 0.0 }] },
+    { "id": "subir_inversa", "boton": "Subir el ajuste de potencia inversa de Q2 al 20 %", "titulo": "Protección desajustada", "texto": "El ajuste de potencia inversa sale del estudio de protecciones del buque. Subirlo no corrige la avería: deja que el alternador arrastre al diésel como motor.", "innecesaria": true, "tema": "ajuste_proteccion_generador", "pone": ["inversa_alterada"], "efecto": [{ "op": "param", "id": "Q2", "clave": "potencia_inversa_pct", "valor": 20.0 }] },
+    { "id": "restituir_inversa", "boton": "Restituir el ajuste de potencia inversa de Q2 al 8 %", "necesita": ["inversa_alterada"], "si_falta": "El ajuste de Q2 ya está en su valor: 8 % durante 5 s.", "titulo": "Ajuste restituido", "texto": "La protección de potencia inversa de Q2 vuelve a su ajuste: 8 % de la potencia nominal durante 5 s.", "efecto": [{ "op": "param", "id": "Q2", "clave": "potencia_inversa_pct", "valor": 8.0 }] },
+    { "id": "cambiar_avr", "boton": "Cambiar el AVR de G2", "bloqueo": "G2", "titulo": "AVR en buen estado", "texto": "El AVR retirado funcionaba bien: la tensión de G2 era normal. Se gastó un repuesto sin necesidad.", "innecesaria": true }
+  ],
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: trabajo en el controlador sin bloqueo",
+      "que_ocurrio": "Se trabajaba dentro del controlador de G2 sin el arranque bloqueado. Desde el cuadro se arrancó el grupo, el panel recibió la tensión del alternador y el oficial recibió una descarga eléctrica en los bornes de medida. Fue atendido por el oficial sanitario.",
+      "causa": "Un grupo parado puede arrancar por una orden del cuadro o del PMS si su arranque no está bloqueado. Con el alternador girando, los bornes de medida del controlador tienen 440 V.",
+      "como_evitar": "• Pare el grupo y abra su interruptor.\n• Avise y bloquee el arranque con candado y tarjeta.\n• Verifique la ausencia de tensión en los bornes del alternador y de medida antes de trabajar."
+    }
+  },
+  "prueba": {
+    "mantener_s": 120,
+    "superada": "G1 y G2 llevaron la carga repartida durante 2 minutos con el PMS en manual, sin que G2 se descargara.",
+    "objetivos": [
+      { "c": "cerrado", "id": "G1", "texto": "Q1 cerrado" },
+      { "c": "cerrado", "id": "G2", "texto": "Q2 cerrado" },
+      { "c": "conectada", "id": "C2", "texto": "C2, habilitación y cocina, conectada" },
+      { "c": "reparto", "ids": ["G1", "G2"], "pct": 10, "texto": "Carga repartida: G1 y G2 con los mismos kW, ±10 %" },
+      { "c": "frecuencia", "min": 59.8, "max": 60.2, "texto": "Frecuencia de barras entre 59,8 y 60,2 Hz" },
+      { "c": "pms", "automatico": false, "texto": "PMS en manual durante la prueba" },
+      { "c": "param", "id": "Q2", "clave": "potencia_inversa_pct", "max": 8.0, "texto": "Potencia inversa de Q2 ajustada al 8 %" },
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa del disparo", "opciones": ["Ajuste de potencia inversa demasiado bajo", "AVR de G2 averiado", "Relé de «bajar velocidad» de G2 pegado"], "correcta": 2, "explicacion": "Con G2 aislado, la consigna de velocidad bajaba sola: el relé de «bajar velocidad» tenía los contactos pegados." },
+      { "etiqueta": "Reparación", "opciones": ["Cambio del relé de «bajar velocidad» del controlador de G2", "Ajuste de potencia inversa al 20 %", "Cambio del AVR de G2"], "correcta": 0, "explicacion": "Se cambió el relé de «bajar velocidad». El ajuste de la protección se deja en su valor." },
+      { "etiqueta": "Prueba", "opciones": ["Ninguna: el relé es nuevo", "2 minutos en paralelo con la carga repartida y el PMS en manual, sin disparos", "Un minuto en vacío"], "correcta": 1, "explicacion": "La avería solo se ve con el grupo en marcha y sin el PMS corrigiendo: la prueba se hace en paralelo, en manual." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones de gobernador y estatismo, y de reparto de kW y kVAr.",
+    "Ficha del relé de potencia inversa.",
+    "IEEE C37.2: función 32, relé direccional de potencia.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

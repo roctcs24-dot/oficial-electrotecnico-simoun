@@ -400,3 +400,89 @@ func test_cuadro_se_guarda_y_carga() -> String:
 		A.cerca(_gen(copia, "G2").frecuencia(), _gen(sim, "G2").frecuencia(), 0.01, "debe conservar la frecuencia"),
 		A.cierto(not copia.hubo_evento("cierre_fuera_de_fase"), "cargar no debe provocar sacudidas"),
 	])
+
+
+func test_diesel_parado_se_detiene_en_segundos() -> String:
+	var sim := _cuadro()
+	var g := _gen(sim, "G1")
+	g.arrancar()
+	sim.avanzar_tiempo(10.0)
+	g.parar()
+	sim.avanzar_tiempo(2.0)
+	var f_2s := g.frecuencia()
+	sim.avanzar_tiempo(18.0)
+	return A.primero([
+		A.cierto(f_2s > 40.0, "no se para de golpe: %.1f Hz a los 2 s" % f_2s),
+		A.cierto(g.frecuencia() < 1.0, "a los 20 s debe estar parado: %.1f Hz" % g.frecuencia()),
+	])
+
+
+func test_bloqueado_o_parado_por_alarma_no_arranca() -> String:
+	var sim := _cuadro()
+	var g1 := _gen(sim, "G1")
+	var g2 := _gen(sim, "G2")
+	g1.estado["bloqueado"] = true
+	var bloqueado := g1.arrancar()
+	g2.arrancar()
+	sim.avanzar_tiempo(5.0)
+	g2.parar_por_alarma("Baja presión de aceite")
+	var alarma := g2.arrancar()
+	g2.estado["parada"] = ""
+	var reconocida := g2.arrancar()
+	return A.primero([
+		A.cierto(not bloqueado.is_empty() and not g1.en_marcha(), "bloqueado no debe arrancar"),
+		A.cierto(alarma.contains("aceite") and not g1.disponible(), "parado por alarma debe decir cuál: %s" % alarma),
+		A.cierto(sim.hubo_evento("parada_por_alarma", "G2"), "debe registrarse la parada"),
+		A.cierto(reconocida.is_empty() and g2.en_marcha(), "reconocida la alarma, arranca"),
+	])
+
+
+func test_deriva_de_la_consigna_de_velocidad() -> String:
+	var sim := _cuadro()
+	var g := _gen(sim, "G1")
+	g.params["deriva_hz_s"] = -0.02
+	g.arrancar()
+	sim.avanzar_tiempo(10.0)
+	var antes: float = g.estado["f_ref"]
+	sim.avanzar_tiempo(20.0)
+	var despues: float = g.estado["f_ref"]
+	g.parar()
+	sim.avanzar_tiempo(10.0)
+	return A.primero([
+		A.cerca(antes - despues, 0.4, 0.02, "en 20 s la consigna baja 0,4 Hz"),
+		A.cerca(g.estado["f_ref"], despues, 0.0001, "parado, la consigna no se mueve"),
+	])
+
+
+func test_falla_a_tierra_de_una_salida_solo_cuenta_conectada() -> String:
+	var sim := _g1_en_barras()
+	var c: SimCargaTrifasica = sim.componente("C2")
+	c.params["falla_mohm"] = 0.05
+	c.params["falla_fase"] = "L2"
+	sim.avanzar_tiempo(2.0)
+	var con_falla: float = sim.componente("MA").estado["mohm"]
+	var v_l2 := sim.solucion.entre("BP.L2", SimSolver.TIERRA).modulo()
+	c.desconectar()
+	sim.avanzar_tiempo(2.0)
+	var sin_falla: float = sim.componente("MA").estado["mohm"]
+	return A.primero([
+		A.cierto(con_falla < 0.1, "con la salida conectada, el monitor ve la falla: %.3f MΩ" % con_falla),
+		A.cierto(v_l2 < 20.0, "L2 queda al potencial del casco: %.0f V" % v_l2),
+		A.cierto(sin_falla > 10.0, "desconectada, la falla sale de la red: %.1f MΩ" % sin_falla),
+		A.cerca(c.aislamiento_mohm(), 0.05, 0.001, "el megóhmetro mide la falla en la salida abierta"),
+	])
+
+
+func test_pms_sin_sincronizador_arranca_pero_no_cierra() -> String:
+	var sim := _g1_en_barras()
+	var pms: SimPMS = sim.componente("PMS")
+	pms.params["sincronizador"] = false
+	pms.fijar_automatico(true)
+	sim.componente("C1").params["p_kw"] = 340.0
+	sim.avanzar_tiempo(30.0)
+	return A.primero([
+		A.cierto(_gen(sim, "G2").en_marcha(), "con carga alta debe arrancar la reserva"),
+		A.cierto(not _acb(sim, "Q2").cerrado(), "sin sincronizador no debe cerrarla"),
+		A.cierto(pms.estado["mensaje"].contains("a mano"), "debe pedir sincronizar a mano: %s" % pms.estado["mensaje"]),
+		A.cierto(not pms.sincronizar("G2").is_empty(), "la sincronización automática debe negarse"),
+	])

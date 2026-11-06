@@ -2,18 +2,18 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v1.2**, la v1 completa y la v2 en curso. Incluye:
+Estado: **v1.3**, la v1 completa y la v2 en curso. Incluye:
 
 - 17 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - Fichas de los equipos de los sistemas 1 y 3, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con tres generadores, sincronización, PMS y protecciones.
 - Taller con multímetro y megóhmetro.
-- 3 misiones de Guardia.
+- 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
 - Examen de la v1, rangos, repaso de errores y traspaso de partida.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, avanza por etapas: faltan sus misiones y su examen.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, avanza por etapas: falta su examen.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -55,7 +55,7 @@ Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este c
 godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
 ```
 
-Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion` o `cuadro` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
+Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro` o `guardia_cuadro` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
 
 ## Exportar
 
@@ -165,9 +165,23 @@ Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera d
 
 Las lecturas y las consecuencias salen de la simulación. Todos los aisladores (guardamotores) del circuito deben quedar bloqueados: trabajar sin bloqueo o sin verificar termina la misión con el informe de accidente. Una falta baja la calificación, y un equipo dañado sigue así en el siguiente intento, hasta cambiar el repuesto.
 
+**Misiones del cuadro principal:** llevan `"tipo": "cuadro"` y se juegan en la pantalla del cuadro, con una pestaña Misión. La lógica está en `game/mision_cuadro.gd`, y lo común a las dos clases de misión en `game/mision_base.gd`. Las prueba `tests/test_guardia_cuadro.gd`. Sus campos:
+
+| Campo | Contenido |
+|---|---|
+| `cuadro` | `cargas` (las salidas, con `id`, `nombre`, `params` y `estado`) y `ajustes` (parámetros de otros componentes, por id). Una salida con `falla_mohm` y `falla_fase` tiene una falla a tierra |
+| `preparar` | Órdenes que dejan el cuadro como dice el reporte: `arrancar`, `cerrar`, `abrir`, `avanzar`, `centrar`, `pms`, `sincronizar`, `conectar`, `desconectar`, `parada`, `disparado`, `param` y `estado` |
+| `pasos`, `bloqueables` | Botones del procedimiento que ponen marcas, como `aviso`, y los grupos o salidas que el jugador puede bloquear |
+| `reglas`, `eventos` | Faltas por maniobra (`al: desconectar`, con `sin` la marca que faltaba) o por evento (`evento`, con `si_conectada` opcional). `eventos` cambia la falta de un evento de la simulación |
+| `evidencias` | Condiciones que deben mantenerse `durante_s` segundos, o acciones hechas, antes del diagnóstico |
+| `acciones` | Como en las misiones de motores, con `bloqueo` (equipo que debe estar bloqueado y, salvo `"verificar": false`, verificado) y `medir` (megóhmetro sobre una salida, con `{mohm}` en el texto) |
+| `prueba` | `objetivos` (condiciones con su `texto`), `mantener_s` y el texto `superada` |
+
+Las condiciones son `cerrado`, `abierto`, `en_marcha`, `parado`, `conectada`, `desconectada`, `frecuencia`, `tension`, `reparto`, `aislamiento`, `pms`, `param` y `sin_bloqueos`. Dejar las barras sin tensión o cerrar fuera de fase termina la misión con un informe de incidente, cuyos textos están en `incidentes` de `data/guardia.json`.
+
 **Examen:** `data/examenes/v1.json` define `minimo` (porcentaje para aprobar), `composicion` (cuántas preguntas de cada tipo: `quiz`, `caso`, `ordenar`, `simbolo`) y el banco `preguntas`. Para que el examen varíe, el banco debe tener al menos el doble de lo que se pregunta, y una prueba lo comprueba. Las de tipo `caso` añaden un texto `caso`; cada pregunta lleva un `tema` que no se repite en ninguna lección.
 
-**Repaso:** cada fallo guarda su `tema` en la partida. `game/banco_repaso.gd` busca la pregunta de ese tema en las lecciones, en el examen, en `preguntas` de `data/guardia.json` (faltas y accidentes), en el diagnóstico y el libro de las misiones, y en los símbolos. Cada acierto aleja el tema 1, 3, 7, 14 y 30 días; un fallo lo reinicia. **Cada falta o accidente nuevo necesita su pregunta**, y una prueba lo comprueba.
+**Repaso:** cada fallo guarda su `tema` en la partida. `game/banco_repaso.gd` busca la pregunta de ese tema en las lecciones, en el examen, en `preguntas` de `data/guardia.json` (faltas, accidentes e incidentes), en el diagnóstico y el libro de las misiones, y en los símbolos. Cada acierto aleja el tema 1, 3, 7, 14 y 30 días; un fallo lo reinicia. **Cada falta o accidente nuevo necesita su pregunta**, y una prueba lo comprueba.
 
 **Rangos:** `data/rangos.json`. Las pruebas exigen que el rango más alto se pueda alcanzar con el contenido publicado, y que no baste sin misiones o sin examen. Al añadir contenido, suba los valores.
 
@@ -215,16 +229,18 @@ Para añadir un componente, crea una clase que herede de `SimComponente` en `sim
 
 **Generación (v2, en desarrollo):**
 
-- **Generador** (`generador`): fuerza electromotriz con su propia frecuencia y ángulo detrás de una reactancia. Lleva gobernador con estatismo o isócrono, y AVR con estatismo de reactiva.
+- **Generador** (`generador`): fuerza electromotriz con su propia frecuencia y ángulo detrás de una reactancia. Lleva gobernador con estatismo o isócrono, y AVR con estatismo de reactiva. Puede quedar bloqueado, parado por una alarma o con la consigna de velocidad a la deriva (`deriva_hz_s`).
 - **Interruptor de generador** (`interruptor_generador`): comprueba el sincronismo al cerrar. Tiene protecciones de sobrecarga, cortocircuito, potencia inversa, mínima tensión y disparo preferente.
 - **Otros componentes:**
   - `barras`.
-  - `carga_trifasica`, esencial o no.
+  - `carga_trifasica`, esencial o no, con una falla a tierra opcional.
   - `sincronoscopio`.
   - `monitor_aislamiento`.
 - **Instrumento:** el secuencímetro `SimSecuencimetro`.
 
-El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout.
+El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout. Con `"sincronizador": false` arranca la reserva pero no la cierra.
+
+`game/operador_cuadro.gd` reúne los mandos del cuadro sin interfaz. La práctica libre lo usa directamente, y las misiones del cuadro ofrecen los mismos mandos.
 
 La pantalla `ui/screens/cuadro.gd` es la práctica libre del cuadro principal, en el modo Taller del sistema 1. Sus textos, grupos, salidas y explicaciones de cada evento están en `data/cuadro.json`.
 

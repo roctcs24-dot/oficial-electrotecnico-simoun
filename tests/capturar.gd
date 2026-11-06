@@ -34,6 +34,8 @@ func _capturar() -> void:
 		await _capturar_progresion(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "cuadro":
 		await _capturar_cuadro(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "guardia_cuadro":
+		await _capturar_guardia_cuadro(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -196,6 +198,43 @@ func _capturar_cuadro(raiz: Raiz, carpeta: String) -> void:
 			await _guardar(carpeta, "cuadro_%s" % id, tam)
 		raiz.volver()
 
+
+## Misiones del cuadro: la pestaña Misión, las lámparas de tierra, el informe y el resultado.
+func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS_LECCIONES:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("guardia", {"id": 1})
+		await _guardar(carpeta, "guardia_cuadro_lista", tam)
+		raiz.volver()
+		raiz.ir_a("mision_cuadro", {"id": "gen3_falla_tierra"})
+		var p = raiz.pantalla_actual()
+		await _guardar(carpeta, "mision_cuadro_reporte", tam)
+		p._dar_paso("aviso")
+		p._alternar_carga("C4")
+		p._bloquear("C4")
+		p._desplazables[-1].scroll_vertical = 600
+		await _guardar(carpeta, "mision_cuadro_procedimiento", tam)
+		p._desplazables[-1].scroll_vertical = 1400
+		await _guardar(carpeta, "mision_cuadro_prueba", tam)
+		p._alternar_carga("C4")
+		if raiz.vertical:
+			p._elegir_pestana("barras")
+		p._desplazables[0].scroll_vertical = 700
+		await _guardar(carpeta, "mision_cuadro_lamparas", tam)
+		raiz.volver()
+		raiz.ir_a("mision_cuadro", {"id": "gen2_blackout"})
+		p = raiz.pantalla_actual()
+		p._elegir_pestana("G1")
+		await _guardar(carpeta, "mision_cuadro_alarma_g1", tam)
+		raiz.volver()
+		raiz.ir_a("mision_cuadro", {"id": "gen1_paralelo"})
+		p = raiz.pantalla_actual()
+		p._alternar_acb("G1")
+		p._avanzar(20)
+		raiz.reconstruir()
+		await _guardar(carpeta, "mision_cuadro_incidente", tam)
+		raiz.volver()
 
 func _capturar_progresion(raiz: Raiz, carpeta: String) -> void:
 	raiz.partida.registrar_error("ohm_corriente")

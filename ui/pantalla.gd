@@ -173,6 +173,64 @@ func _cerrar_aviso(caja: Control) -> void:
 		_mostrar_aviso(siguiente[0], siguiente[1])
 
 
+# --- Final de las misiones de Guardia ---
+
+## Suma la misión al progreso una sola vez, con sus faltas y su accidente para repasarlos.
+func _registrar_final_mision(m: MisionBase) -> void:
+	if args.has("ganados"):
+		return
+	var completada := m.fin == "completada"
+	args["ganados"] = raiz.partida.registrar_mision(m.id(), m.estrellas(), completada)
+	for f: Dictionary in m.faltas:
+		raiz.partida.registrar_error(f["tema"])
+	if not completada:
+		raiz.partida.registrar_error(m.accidente["tema"])
+	raiz.partida.guardar_danos_mision(m.id(), m.danos() if not completada else {})
+
+
+func _construir_informe_mision(m: MisionBase, repetir: Callable) -> void:
+	var a: Dictionary = m.accidente
+	_cabecera(a.get("cabecera", "Informe de accidente"), m.datos["equipo"])
+	var desplazable := _desplazable()
+	add_child(desplazable)
+	var columna := _columna(12)
+	desplazable.add_child(_ancho_lectura(columna))
+	columna.add_child(_etiqueta(a["titulo"], "Subtitulo"))
+	columna.add_child(_rotulo("Qué ocurrió"))
+	columna.add_child(_texto_rico(a["que_ocurrio"]))
+	columna.add_child(_rotulo("Causa"))
+	columna.add_child(_texto_rico(a["causa"]))
+	columna.add_child(_rotulo("Cómo se evita"))
+	columna.add_child(_texto_rico(a["como_evitar"]))
+	columna.add_child(_etiqueta("Misión terminada sin puntos. %s" % a.get("repasar", "Repase la lección de bloqueo y etiquetado antes de volver a intentarlo."), "Nota"))
+	columna.add_child(_boton("Repetir la misión", repetir))
+	columna.add_child(_boton("Volver a la lista", raiz.volver))
+
+
+func _construir_resultado_mision(m: MisionBase, repetir: Callable) -> void:
+	_cabecera("Misión completada", m.datos["equipo"])
+	var desplazable := _desplazable()
+	add_child(desplazable)
+	var columna := _columna(12)
+	desplazable.add_child(_ancho_lectura(columna))
+	columna.add_child(_etiqueta("Calificación: %d de 3 estrellas" % m.estrellas(), "Subtitulo"))
+	var ganados: int = args.get("ganados", 0)
+	if ganados > 0:
+		columna.add_child(_etiqueta("Puntos obtenidos: %d." % ganados))
+	if m.pistas_usadas > 0:
+		columna.add_child(_etiqueta("Pistas usadas: %d." % m.pistas_usadas))
+	if not m.faltas.is_empty():
+		columna.add_child(_rotulo("Faltas del procedimiento"))
+		for f: Dictionary in m.faltas:
+			columna.add_child(_etiqueta(f["titulo"], "Fuerte"))
+			columna.add_child(_etiqueta(f["texto"], "Nota"))
+	columna.add_child(_rotulo("Para saber más"))
+	for fuente: String in m.datos.get("para_saber_mas", []):
+		columna.add_child(_etiqueta("• %s" % fuente, "Nota"))
+	columna.add_child(_boton("Repetir la misión", repetir))
+	columna.add_child(_boton("Volver a la lista", raiz.volver))
+
+
 ## Con el filtro por defecto, una tarjeta impediría arrastrar la lista con el dedo.
 func _tarjeta_base(variante := "") -> PanelContainer:
 	var caja := PanelContainer.new()

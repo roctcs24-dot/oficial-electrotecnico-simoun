@@ -1,9 +1,7 @@
 class_name MisionGuardia
-extends RefCounted
+extends MisionBase
 ## Una avería de guardia sobre un circuito simulado: las lecturas, los disparos y los daños
 ## salen del motor de simulación. No depende de la interfaz, así se puede probar sin pantalla.
-## Las acciones devuelven un aviso {tipo, titulo, texto}, donde tipo es hecho, aviso, error
-## o accidente.
 
 ## Por encima de este valor se considera que hay tensión. Criterio del juego: verificar a bordo.
 const V_PRESENCIA := 30.0
@@ -16,22 +14,9 @@ const PASO_RAPIDO_S := 1.0
 const EXTENSION_SIN_PROTECCION_S := 1800.0
 const CLAVES_DANO := ["quemado", "soldado", "bobina_quemada", "fundido", "quemada"]
 
-var contenido: Contenido
-var datos: Dictionary
-var comunes: Dictionary
 var mesa: MesaTaller
-## "" mientras está en curso; después, "accidente" o "completada".
-var fin := ""
-var accidente := {}
-## Marcas del procedimiento, como epp o aviso, y las que ponen las acciones de la misión.
-var hechos := {}
 var candados := {}
-var acciones_hechas: Array[String] = []
-var faltas: Array[Dictionary] = []
 var mediciones: Array[Dictionary] = []
-var pistas_usadas := 0
-var diagnostico_ok := false
-var prueba_ok := false
 var hubo_bloqueo := false
 var observando_total := 0.0
 var _verificacion := {}
@@ -42,22 +27,16 @@ var _extendida := false
 var _eventos_anotados := 0
 
 
-func _init(contenido_juego: Contenido, id: String, danos := {}) -> void:
-	contenido = contenido_juego
-	datos = contenido.mision(id)
-	comunes = contenido.leer("guardia.json")
+func _init(contenido_juego: Contenido, id_mision: String, danos_previos := {}) -> void:
+	super(contenido_juego, id_mision)
 	mesa = MesaTaller.new(contenido)
 	mesa.cargar_circuito(datos["circuito"], datos["posiciones"])
 	for oculta: String in datos.get("averias_ocultas", []):
 		mesa.ocultas[oculta] = true
-	for pieza: String in danos:
+	for pieza: String in danos_previos:
 		if mesa.piezas.has(pieza):
-			mesa.sim.componente(pieza).estado.merge(danos[pieza], true)
+			mesa.sim.componente(pieza).estado.merge(danos_previos[pieza], true)
 	mesa.avanzar(1)
-
-
-func id() -> String:
-	return datos["id"]
 
 
 # --- Lecturas del panel ---
@@ -371,43 +350,6 @@ func _aplicar(efectos: Array) -> void:
 				push_error("Efecto de misión desconocido: %s" % ef["op"])
 
 
-func _ocurre_accidente(tipo: String) -> Dictionary:
-	var informe: Dictionary = comunes["accidentes"][tipo].duplicate()
-	informe.merge(datos.get("accidentes", {}).get(tipo, {}), true)
-	accidente = informe
-	accidente["tema"] = "accidente_%s" % tipo
-	fin = "accidente"
-	return _aviso("accidente", informe["titulo"], informe["que_ocurrio"])
-
-
-# --- Diagnóstico ---
-
-func diagnosticar(indice: int) -> Dictionary:
-	var d: Dictionary = datos["diagnostico"]
-	var opcion: Dictionary = d["opciones"][indice]
-	if not opcion.get("correcta", false):
-		var titulo: String = "Diagnóstico incorrecto: %s" % opcion["texto"]
-		_anotar_falta("diagnostico_%s" % id(), titulo, opcion["explicacion"])
-		return _aviso("error", titulo, opcion["explicacion"])
-	diagnostico_ok = true
-	if not evidencias_completas():
-		var falta := _falta("diagnostico_sin_medir")
-		return _aviso("error", falta["titulo"], "%s\n\n%s" % [opcion["explicacion"], falta["texto"]])
-	return _aviso("hecho", "Diagnóstico confirmado", opcion["explicacion"])
-
-
-# --- Pistas ---
-
-func hay_pista() -> bool:
-	return pistas_usadas < datos.get("pistas", []).size()
-
-
-func siguiente_pista() -> String:
-	var pista: String = datos["pistas"][pistas_usadas]
-	pistas_usadas += 1
-	return pista
-
-
 # --- Prueba en servicio ---
 
 func observando() -> bool:
@@ -494,41 +436,7 @@ func _minutos(segundos: float) -> String:
 	return "%d min %02d s" % [total / 60, total % 60]
 
 
-# --- Libro de registro ---
-
-func campos_libro() -> Array:
-	return datos["libro"]["campos"]
-
-
-func puede_firmar() -> bool:
-	return prueba_ok and diagnostico_ok
-
-
-## respuestas: índice elegido por campo. Devuelve lo que falta corregir, o completa la misión.
-func firmar(respuestas: Dictionary) -> Dictionary:
-	if not puede_firmar():
-		return _aviso("aviso", "Todavía no", "Antes de firmar, confirme el diagnóstico y supere la prueba en servicio.")
-	var campos := campos_libro()
-	for i in campos.size():
-		if not respuestas.has(i):
-			return _aviso("aviso", "Libro incompleto", "Complete: %s." % campos[i]["etiqueta"])
-		if int(respuestas[i]) != int(campos[i]["correcta"]):
-			var titulo: String = "Dato incorrecto: %s" % campos[i]["etiqueta"]
-			_anotar_falta("libro_%s" % id(), titulo, campos[i]["explicacion"])
-			return _aviso("error", titulo, campos[i]["explicacion"])
-	fin = "completada"
-	return _aviso("hecho", "Libro firmado", "Avería cerrada.")
-
-
 # --- Resultado ---
-
-func estrellas() -> int:
-	if fin != "completada":
-		return 0
-	if faltas.is_empty() and pistas_usadas == 0:
-		return 3
-	return 2 if faltas.size() <= 2 else 1
-
 
 ## Piezas dañadas al terminar: quedan así hasta que se cambie el repuesto.
 func danos() -> Dictionary:
@@ -541,21 +449,3 @@ func danos() -> Dictionary:
 					resultado[pieza] = {}
 				resultado[pieza][clave] = true
 	return resultado
-
-
-func _aviso(tipo: String, titulo: String, texto: String) -> Dictionary:
-	return {"tipo": tipo, "titulo": titulo, "texto": texto}
-
-
-func _falta(tema: String) -> Dictionary:
-	var f: Dictionary = comunes["faltas"][tema]
-	_anotar_falta(tema, f["titulo"], f["texto"])
-	return _aviso("error", f["titulo"], f["texto"])
-
-
-## Cada falta cuenta una sola vez por misión.
-func _anotar_falta(tema: String, titulo: String, texto: String) -> void:
-	for f: Dictionary in faltas:
-		if f["tema"] == tema and f["titulo"] == titulo:
-			return
-	faltas.append({"tema": tema, "titulo": titulo, "texto": texto})

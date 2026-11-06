@@ -12,7 +12,8 @@ func construir() -> void:
 	lista.add_child(_etiqueta("Cada misión empieza con un reporte de avería. Aplique el procedimiento real: bloqueo y etiquetado, medición, diagnóstico, reparación, prueba y libro de registro.", "Nota"))
 	for id: String in s["modos"]["guardia"].get("misiones", []):
 		var m := raiz.contenido.mision(id)
-		lista.add_child(_fila(m.get("titulo", id), m.get("resumen", ""), raiz.ir_a.bind("mision", {"id": id}), "guardia", _estado_mision(id)))
+		var pantalla := "mision_cuadro" if m.get("tipo", "") == "cuadro" else "mision"
+		lista.add_child(_fila(m.get("titulo", id), m.get("resumen", ""), raiz.ir_a.bind(pantalla, {"id": id}), "guardia", _estado_mision(id)))
 
 
 func _estado_mision(id: String) -> String:

@@ -74,6 +74,13 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
   - El plazo de 45 s de SOLAS II-1/43 para buques de carga, y qué norma aplica a un pesquero de la bandera del Vía Simoun.
   - El procedimiento para localizar fallas a tierra, la secuencia de recuperación de un blackout y la de sacar un grupo de barras.
   - Los nombres de bornes y ajustes del AVR y del controlador, que son genéricos.
+- Las 4 misiones del cuadro principal (`data/misiones/gen*.json`), sus faltas y sus informes de incidente y de accidente en `data/guardia.json`. Lo más sensible:
+  - La secuencia de recuperación tras un blackout: deslastrar las no esenciales, cerrar un grupo sobre barras sin tensión y reconectar por prioridad.
+  - La búsqueda de una falla a tierra abriendo salidas una a una, y el aviso al puente antes de cortar una salida esencial.
+  - Que un relé de «bajar velocidad» pegado del controlador explique un disparo por potencia inversa. Es una causa plausible, no un caso documentado del buque.
+  - El aislamiento de una salida sana, 150 MΩ, y el umbral del monitor, 1 MΩ: valores del simulador.
+  - El tiempo de parada de un diésel sin combustible, unos 15 s en el simulador.
+  - Las cargas de cada salida y la potencia de los compresores de frío.
 - Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.

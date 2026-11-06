@@ -8,9 +8,13 @@ const COLOR_LCD := Color("0f1a14")
 const BORDE_LCD := Color("2d4a38")
 const TEXTO_LCD := Color("9fe3b5")
 const PROPORCION_GENERADOR := 1.3
+const LAMPARA_TIERRA_APAGADA := Color("2e2f2c")
+const LAMPARA_TIERRA_ENCENDIDA := Color("fff1cc")
 
 var sim: SimSimulacion
 var datos: Dictionary
+## OperadorCuadro en la práctica libre; en una misión, la propia misión, con los mismos mandos.
+var operador
 var _zonas: Array[Array] = []
 var _desplazables: Array[ScrollContainer] = []
 var _instrumentos := {}
@@ -24,16 +28,10 @@ var _hasta_lectura := 0.0
 
 
 func construir() -> void:
-	datos = raiz.contenido.leer("cuadro.json")
-	if not args.has("sim"):
-		args["sim"] = raiz.contenido.circuito(datos["circuito"])
-		args["pestana"] = args.get("pestana", "barras")
-		args["sincronizar"] = "G2"
-		args["eventos"] = 0
-	sim = args["sim"]
+	_preparar()
 	if not raiz.vertical and args["pestana"] == "barras":
 		args["pestana"] = datos["generadores"][0]["id"]
-	_cabecera("Cuadro principal", "Práctica libre · valores típicos: verificar a bordo")
+	_poner_cabecera()
 	_avisos = _columna(6)
 	add_child(_avisos)
 	_construir_cuerpo()
@@ -41,9 +39,29 @@ func construir() -> void:
 	_actualizar()
 
 
+func _preparar() -> void:
+	datos = raiz.contenido.leer("cuadro.json")
+	if not args.has("sim"):
+		args["sim"] = raiz.contenido.circuito(datos["circuito"])
+		args["pestana"] = args.get("pestana", "barras")
+		args["sincronizar"] = "G2"
+		args["eventos"] = 0
+	sim = args["sim"]
+	operador = OperadorCuadro.new(sim, datos)
+
+
+func _poner_cabecera() -> void:
+	_cabecera("Cuadro principal", "Práctica libre · valores típicos: verificar a bordo")
+
+
+## Pestañas propias de quien amplía esta pantalla, delante de las del cuadro.
+func _pestanas_extra() -> Array:
+	return []
+
+
 func _construir_cuerpo() -> void:
 	if raiz.vertical:
-		var pestanas := [["barras", "Barras"]]
+		var pestanas := _pestanas_extra() + [["barras", "Barras"]]
 		for g: Dictionary in datos["generadores"]:
 			pestanas.append([g["id"], g["id"]])
 		add_child(_fila_pestanas(pestanas))
@@ -58,7 +76,7 @@ func _construir_cuerpo() -> void:
 	derecha.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	derecha.size_flags_stretch_ratio = PROPORCION_GENERADOR
 	cuerpo.add_child(derecha)
-	var pestanas := []
+	var pestanas := _pestanas_extra()
 	for g: Dictionary in datos["generadores"]:
 		pestanas.append([g["id"], g["nombre"]])
 	derecha.add_child(_fila_pestanas(pestanas))
@@ -87,6 +105,8 @@ func _fila_pestanas(pestanas: Array) -> Control:
 		b.button_group = grupo
 		b.set_pressed_no_signal(args["pestana"] == p[0])
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# Más ancho para los nombres largos: «Misión» y «Barras» no caben en el hueco de «G1».
+		b.size_flags_stretch_ratio = maxf(1.0, p[1].length() / 3.0)
 		fila.add_child(b)
 		_botones_pestana[p[0]] = b
 	return fila
@@ -113,11 +133,15 @@ func _llenar() -> void:
 		for hijo in columna.get_children():
 			columna.remove_child(hijo)
 			hijo.queue_free()
-		if z[1] == "barras":
-			_panel_barras(columna)
-		else:
-			_panel_generador(columna, z[1])
+		_llenar_zona(columna, z[1])
 	_firma = _calcular_firma()
+
+
+func _llenar_zona(columna: VBoxContainer, id: String) -> void:
+	if id == "barras":
+		_panel_barras(columna)
+	else:
+		_panel_generador(columna, id)
 
 
 # --- Barras, sincronización, aislamiento, PMS y salidas ---
@@ -161,8 +185,24 @@ func _panel_barras(columna: VBoxContainer) -> void:
 	columna.add_child(_etiqueta("A mano: suba la velocidad hasta que la aguja gire despacio hacia RÁPIDO y cierre justo antes de las doce. En automático, el sincronizador ajusta la velocidad y cierra dentro de la ventana.", "Nota"))
 	columna.add_child(_rotulo("Monitor de aislamiento"))
 	columna.add_child(_luz_con_texto("aislamiento", "", LuzPiloto.AMBAR_APAGADO, LuzPiloto.AMBAR_ENCENDIDO))
+	var lamparas := HBoxContainer.new()
+	lamparas.add_theme_constant_override("separation", 16)
+	columna.add_child(lamparas)
+	for fase in ["L1", "L2", "L3"]:
+		var una := _columna(2)
+		una.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		lamparas.add_child(una)
+		var luz := LuzPiloto.new()
+		luz.color_apagado = LAMPARA_TIERRA_APAGADA
+		luz.color_encendido = LAMPARA_TIERRA_ENCENDIDA
+		una.add_child(luz)
+		_luces["tierra_" + fase] = luz
+		var nombre := _etiqueta(fase, "Nota")
+		nombre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		una.add_child(nombre)
+	columna.add_child(_etiqueta("Lámparas de tierra, de cada fase al casco: con la red sana alumbran igual. Con una fase a masa, su lámpara se apaga y las otras dos brillan más.", "Nota"))
 	columna.add_child(_rotulo("Gestión de potencia (PMS)"))
-	var pms: SimPMS = sim.componente("PMS")
+	var pms: SimPMS = operador.pms()
 	columna.add_child(_boton("Pasar a manual" if pms.automatico() else "Pasar a automático", _alternar_pms))
 	_textos["pms"] = _etiqueta("", "Nota")
 	columna.add_child(_textos["pms"])
@@ -173,13 +213,20 @@ func _panel_barras(columna: VBoxContainer) -> void:
 		linea.add_theme_constant_override("separation", 8)
 		columna.add_child(linea)
 		var esencial := "esencial" if carga.params["esencial"] else "no esencial"
-		var texto := _etiqueta("%s (%s): %s kW, %s" % [c["nombre"], esencial, TextoTecnico.numero(carga.params["p_kw"], 0), "conectada" if carga.estado["conectada"] else "desconectada"])
+		var situacion := "conectada" if carga.estado["conectada"] else "desconectada"
+		if carga.estado["bloqueada"]:
+			situacion = "abierta, con candado y tarjeta"
+		var texto := _etiqueta("%s %s (%s): %s kW, %s" % [c["id"], c["nombre"], esencial, TextoTecnico.numero(carga.params["p_kw"], 0), situacion])
 		texto.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		linea.add_child(texto)
 		var b := _boton("Desconectar" if carga.estado["conectada"] else "Conectar", _alternar_carga.bind(c["id"]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
 		linea.add_child(b)
 	columna.add_child(_etiqueta(datos["nota"], "Nota"))
+	_pie_barras(columna)
+
+
+func _pie_barras(columna: VBoxContainer) -> void:
 	columna.add_child(_boton("Reiniciar la práctica", _reiniciar))
 
 
@@ -204,7 +251,7 @@ func _luz_con_texto(clave: String, texto: String, apagado: Color, encendido: Col
 func _mandos_sincronizacion(columna: VBoxContainer) -> void:
 	var entrante: String = args["sincronizar"]
 	var q := _interruptor_de(entrante)
-	var pms: SimPMS = sim.componente("PMS")
+	var pms: SimPMS = operador.pms()
 	var mandos := GridContainer.new()
 	mandos.columns = 2 if raiz.vertical else 1
 	mandos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -227,15 +274,11 @@ func _mandos_sincronizacion(columna: VBoxContainer) -> void:
 
 
 func sincronizar_automaticamente() -> void:
-	var motivo := (sim.componente("PMS") as SimPMS).sincronizar(args["sincronizar"])
-	if not motivo.is_empty():
-		_mostrar_aviso("No se puede sincronizar", motivo)
-	_comprobar_firma()
+	_atender(operador.sincronizar(args["sincronizar"]))
 
 
 func _cancelar_sincronizacion() -> void:
-	(sim.componente("PMS") as SimPMS).cancelar_sincronizacion()
-	_comprobar_firma()
+	_atender(operador.cancelar_sincronizacion())
 
 
 ## El sincronoscopio se conecta al generador entrante elegido.
@@ -251,17 +294,17 @@ func _elegir_sincronizar(id: String) -> void:
 
 
 func _alternar_pms() -> void:
-	var pms: SimPMS = sim.componente("PMS")
-	pms.fijar_automatico(not pms.automatico())
-	_comprobar_firma()
+	_atender(operador.alternar_pms())
 
 
 func _alternar_carga(id: String) -> void:
-	var c: SimCargaTrifasica = sim.componente(id)
-	if c.estado["conectada"]:
-		c.desconectar()
-	else:
-		c.conectar()
+	_atender(operador.alternar_carga(id))
+
+
+## Muestra lo que explica una orden y rehace los mandos si cambió algún equipo.
+func _atender(aviso: Dictionary) -> void:
+	if not aviso.get("titulo", "").is_empty():
+		_mostrar_aviso(aviso["titulo"], aviso["texto"])
 	_comprobar_firma()
 
 
@@ -327,7 +370,7 @@ func _panel_generador(columna: VBoxContainer, id: String) -> void:
 	]
 	if q.estado["disparado"]:
 		lista.append(["Rearmar %s" % d["interruptor"], _rearmar.bind(id)])
-	if g.estado["danado"]:
+	if g.estado["danado"] and _permite_reparar():
 		lista.append(["Reparar el grupo", _reparar.bind(id)])
 	for m: Array in lista:
 		var b := _boton(m[0], m[1])
@@ -339,55 +382,38 @@ func _interruptor_de(id: String) -> SimInterruptorGenerador:
 	return sim.componente(_datos_generador(id)["interruptor"])
 
 
+func _permite_reparar() -> bool:
+	return true
+
+
 func _alternar_diesel(id: String) -> void:
-	var g: SimGenerador = sim.componente(id)
-	if g.en_marcha():
-		g.parar()
-	else:
-		var motivo := g.arrancar()
-		if not motivo.is_empty():
-			_mostrar_aviso("No arranca", motivo)
-	_comprobar_firma()
+	_atender(operador.alternar_diesel(id))
 
 
 func _alternar_acb(id: String) -> void:
-	var q := _interruptor_de(id)
-	if q.cerrado():
-		q.abrir()
-	else:
-		var motivo := q.cerrar()
-		if not motivo.is_empty():
-			_mostrar_aviso("No cierra", motivo)
-	_comprobar_firma()
+	_atender(operador.alternar_interruptor(id))
 
 
 func _velocidad(id: String, signo: float) -> void:
-	(sim.componente(id) as SimGenerador).ajustar_velocidad(signo * datos["paso_velocidad_hz"])
+	_atender(operador.velocidad(id, signo))
 
 
 func _tension(id: String, signo: float) -> void:
-	(sim.componente(id) as SimGenerador).ajustar_tension(signo * datos["paso_tension_v"])
+	_atender(operador.tension(id, signo))
 
 
 func _rearmar(id: String) -> void:
-	_interruptor_de(id).rearmar()
-	_comprobar_firma()
+	_atender(operador.rearmar(id))
 
 
 func _reparar(id: String) -> void:
-	var g: SimGenerador = sim.componente(id)
-	g.estado["danado"] = false
-	_comprobar_firma()
+	_atender(operador.reparar(id))
 
 
 # --- Lecturas ---
 
 func _frecuencia_barras() -> float:
-	for d: Dictionary in datos["generadores"]:
-		if (sim.componente(d["interruptor"]) as SimInterruptorGenerador).cerrado():
-			return (sim.componente(d["id"]) as SimGenerador).frecuencia()
-	return 0.0
-
+	return operador.frecuencia_barras()
 
 func _actualizar() -> void:
 	if sim.solucion == null:
@@ -399,9 +425,14 @@ func _actualizar() -> void:
 		_actualizar_sincronismo(sol)
 		var ma: SimMonitorAislamiento = sim.componente("MA")
 		_luces["aislamiento"].encendida = ma.estado["alarma"]
+		var a_tierra: Array[float] = operador.tensiones_a_tierra()
+		for i in 3:
+			var luz: LuzPiloto = _luces["tierra_L%d" % (i + 1)]
+			luz.encendida = a_tierra[i] > 1.0
+			luz.brillo = a_tierra[i] / float(operador.pms().params["v_linea"])
 		var lectura := "> 999 MΩ" if ma.estado["mohm"] >= SimMonitorAislamiento.MOHM_MAX else "%s MΩ" % TextoTecnico.numero(ma.estado["mohm"], 2)
 		_textos["luz_aislamiento"].text = "%s · alarma por debajo de %s MΩ" % [lectura, TextoTecnico.numero(ma.params["alarma_mohm"], 1)]
-		var pms: SimPMS = sim.componente("PMS")
+		var pms: SimPMS = operador.pms()
 		_textos["pms"].text = "%s. %s" % ["Automático" if pms.automatico() else "Manual", pms.estado["mensaje"]]
 	if _instrumentos.has("g_v"):
 		_actualizar_generador(_zonas[-1][1])
@@ -458,6 +489,10 @@ func _n(valor: float, decimales: int) -> String:
 func _estado_grupo(g: SimGenerador) -> String:
 	if g.estado["danado"]:
 		return "DAÑADO"
+	if g.estado["bloqueado"]:
+		return "ARRANQUE BLOQUEADO"
+	if not g.estado["parada"].is_empty():
+		return "PARADO POR ALARMA"
 	if not g.en_marcha():
 		return "PARADO"
 	return "EN MARCHA" if g.frecuencia() > SimGenerador.F_NOMINAL * SimGenerador.F_EXCITACION else "ARRANCANDO"
@@ -466,6 +501,8 @@ func _estado_grupo(g: SimGenerador) -> String:
 func _alarma(g: SimGenerador, q: SimInterruptorGenerador) -> String:
 	if g.estado["danado"]:
 		return datos["consecuencias"]["generador_danado"]["titulo"]
+	if not g.estado["parada"].is_empty():
+		return g.estado["parada"]
 	var causa: String = q.estado["causa"]
 	if causa.is_empty():
 		return "ninguna"
@@ -477,10 +514,11 @@ func _calcular_firma() -> String:
 	for d: Dictionary in datos["generadores"]:
 		var g: SimGenerador = sim.componente(d["id"])
 		var q: SimInterruptorGenerador = sim.componente(d["interruptor"])
-		partes.append("%s%s%s%s" % [g.en_marcha(), g.estado["danado"], q.cerrado(), q.estado["disparado"]])
+		partes.append("%s%s%s%s%s%s" % [g.en_marcha(), g.estado["danado"], q.cerrado(), q.estado["disparado"], g.estado["bloqueado"], g.estado["parada"]])
 	for c: Dictionary in datos["cargas"]:
-		partes.append(str(sim.componente(c["id"]).estado["conectada"]))
-	var pms: SimPMS = sim.componente("PMS")
+		var estado: Dictionary = sim.componente(c["id"]).estado
+		partes.append("%s%s" % [estado["conectada"], estado["bloqueada"]])
+	var pms: SimPMS = operador.pms()
 	partes.append("%s%s" % [pms.automatico(), pms.sincronizando()])
 	return "|".join(partes)
 
@@ -510,14 +548,18 @@ func _process(delta: float) -> void:
 	var pasos := mini(int(_acumulado / SimSimulacion.PASO_S), PASOS_POR_CUADRO)
 	if pasos > 0:
 		_acumulado = 0.0
-		for _i in pasos:
-			sim.paso()
+		_avanzar(pasos)
 		_revisar_eventos()
 	_hasta_lectura -= delta
 	if _hasta_lectura <= 0.0:
 		_hasta_lectura = 1.0 / ACTUALIZACIONES_POR_SEGUNDO
 		_comprobar_firma()
 		_actualizar()
+
+
+func _avanzar(pasos: int) -> void:
+	for _i in pasos:
+		sim.paso()
 
 
 func _revisar_eventos() -> void:

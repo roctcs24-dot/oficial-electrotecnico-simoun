@@ -207,10 +207,14 @@ func test_todos_los_temas_tienen_pregunta_de_repaso() -> String:
 	for tipo: String in guardia["accidentes"]:
 		if not banco.tiene("accidente_%s" % tipo):
 			return "el accidente %s no tiene pregunta" % tipo
-	for id: String in c.sistema(3)["modos"]["guardia"]["misiones"]:
-		for tema in ["diagnostico_%s" % id, "libro_%s" % id]:
-			if not banco.tiene(tema):
-				return "falta la pregunta de %s" % tema
+	for tipo: String in guardia["incidentes"]:
+		if not banco.tiene("incidente_%s" % tipo):
+			return "el incidente %s no tiene pregunta" % tipo
+	for s: Dictionary in c.sistemas():
+		for id: String in s["modos"].get("guardia", {}).get("misiones", []):
+			for tema in ["diagnostico_%s" % id, "libro_%s" % id]:
+				if not banco.tiene(tema):
+					return "falta la pregunta de %s" % tema
 	for s: Dictionary in c.simbolos():
 		if not banco.tiene("simbolo_%s" % s["id"]):
 			return "falta el símbolo %s" % s["id"]
@@ -279,9 +283,10 @@ func test_rangos_calibrados_con_el_contenido() -> String:
 	])
 
 
-## Las tres misiones resueltas sin faltas, con los mismos pasos que las pruebas de Guardia.
+## Todas las misiones resueltas sin faltas, con los mismos pasos que las pruebas de Guardia.
 func _completar_misiones(raiz: Raiz) -> Array[String]:
 	var g = load("res://tests/test_guardia.gd").new()
+	var cuadro = load("res://tests/test_guardia_cuadro.gd").new()
 	var fallos: Array[String] = []
 	var flujos := {
 		"g1_no_arranca": func(m: MisionGuardia) -> void:
@@ -311,6 +316,12 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 		m.mesa.avanzar(100)
 		g._observar(m, m.tiempo_de_prueba())
 		m.firmar(g._respuestas_correctas(m))
+		if m.fin != "completada" or m.estrellas() != 3:
+			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
+		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
+	for id: String in raiz.contenido.sistema(1)["modos"]["guardia"]["misiones"]:
+		var m := MisionCuadro.new(raiz.contenido, id)
+		cuadro.completar(m)
 		if m.fin != "completada" or m.estrellas() != 3:
 			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
 		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")

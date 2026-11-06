@@ -29,6 +29,8 @@ func _params_por_defecto() -> Dictionary:
 		"carga_arranque": 0.85,
 		"carga_arranque_s": 5.0,
 		"v_linea": 440.0,
+		# Sin sincronizador automático, el PMS arranca la reserva pero no la cierra en barras.
+		"sincronizador": true,
 	}
 
 
@@ -55,7 +57,7 @@ func _interruptor(i: int) -> SimInterruptorGenerador:
 
 
 func _disponible(i: int) -> bool:
-	return not _grupo(i).estado["danado"] and not _interruptor(i).estado["disparado"]
+	return _grupo(i).disponible() and not _interruptor(i).estado["disparado"]
 
 
 ## Sincronización automática de un grupo concreto, pedida por el operador también en manual.
@@ -64,6 +66,8 @@ func sincronizar(id: String) -> String:
 	var i: int = params["generadores"].find(id)
 	if i < 0:
 		return "Grupo desconocido."
+	if not params["sincronizador"]:
+		return "El sincronizador automático está fuera de servicio. Sincronice a mano con el sincronoscopio."
 	if not _disponible(i):
 		return "El grupo o su interruptor están fuera de servicio."
 	if not _grupo(i).en_marcha():
@@ -167,11 +171,18 @@ func _vigilar_carga(en_barras: Array[int], dt: float) -> void:
 		return
 	estado["alta_s"] = 0.0
 	for i in params["generadores"].size():
+		if not en_barras.has(i) and _disponible(i) and _grupo(i).en_marcha() and not params["sincronizador"]:
+			estado["mensaje"] = "Carga alta: sincronice a mano %s" % _grupo(i).id
+			return
+	for i in params["generadores"].size():
 		if not en_barras.has(i) and _disponible(i):
 			_grupo(i).arrancar()
-			estado["sincronizando"] = _grupo(i).id
-			estado["sincronizando_s"] = 0.0
 			estado["mensaje"] = "Carga alta: arrancando %s" % _grupo(i).id
+			if params["sincronizador"]:
+				estado["sincronizando"] = _grupo(i).id
+				estado["sincronizando_s"] = 0.0
+			else:
+				estado["mensaje"] += ". Sincronícelo a mano"
 			avisar("pms_arranque", {"grupo": _grupo(i).id})
 			return
 	estado["mensaje"] = "Carga alta y sin grupos de reserva"

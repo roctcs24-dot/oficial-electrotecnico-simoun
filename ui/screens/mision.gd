@@ -21,10 +21,10 @@ func construir() -> void:
 	mision = args["mision"]
 	_faltas_mostradas = args.get("faltas_mostradas", 0)
 	if mision.fin == "accidente":
-		_construir_informe()
+		_construir_informe_mision(mision, _repetir)
 		return
 	if mision.fin == "completada":
-		_construir_resultado()
+		_construir_resultado_mision(mision, _repetir)
 		return
 	_cabecera(mision.datos["titulo"], mision.datos["equipo"])
 	_montar_banco()
@@ -356,7 +356,7 @@ func _firmar() -> void:
 ## Muestra el resultado de una acción. Un final de misión rehace la pantalla entera.
 func _atender(aviso: Dictionary) -> void:
 	if mision.fin == "accidente" or mision.fin == "completada":
-		_registrar_final()
+		_registrar_final_mision(mision)
 		raiz.reconstruir.call_deferred()
 		return
 	if aviso["tipo"] != "hecho" or not aviso["titulo"].is_empty():
@@ -364,61 +364,6 @@ func _atender(aviso: Dictionary) -> void:
 	vista.queue_redraw()
 	_actualizar_marcas()
 	_reconstruir_panel()
-
-
-func _registrar_final() -> void:
-	if args.has("ganados"):
-		return
-	var completada := mision.fin == "completada"
-	args["ganados"] = raiz.partida.registrar_mision(mision.id(), mision.estrellas(), completada)
-	for f: Dictionary in mision.faltas:
-		raiz.partida.registrar_error(f["tema"])
-	if not completada:
-		raiz.partida.registrar_error(mision.accidente["tema"])
-	raiz.partida.guardar_danos_mision(mision.id(), mision.danos() if not completada else {})
-
-
-func _construir_informe() -> void:
-	var a: Dictionary = mision.accidente
-	_cabecera("Informe de accidente", mision.datos["equipo"])
-	var desplazable := _desplazable()
-	add_child(desplazable)
-	var columna := _columna(12)
-	desplazable.add_child(_ancho_lectura(columna))
-	columna.add_child(_etiqueta(a["titulo"], "Subtitulo"))
-	columna.add_child(_rotulo("Qué ocurrió"))
-	columna.add_child(_texto_rico(a["que_ocurrio"]))
-	columna.add_child(_rotulo("Causa"))
-	columna.add_child(_texto_rico(a["causa"]))
-	columna.add_child(_rotulo("Cómo se evita"))
-	columna.add_child(_texto_rico(a["como_evitar"]))
-	columna.add_child(_etiqueta("Misión terminada sin puntos. Repase la lección de bloqueo y etiquetado antes de volver a intentarlo.", "Nota"))
-	columna.add_child(_boton("Repetir la misión", _repetir))
-	columna.add_child(_boton("Volver a la lista", raiz.volver))
-
-
-func _construir_resultado() -> void:
-	_cabecera("Misión completada", mision.datos["equipo"])
-	var desplazable := _desplazable()
-	add_child(desplazable)
-	var columna := _columna(12)
-	desplazable.add_child(_ancho_lectura(columna))
-	columna.add_child(_etiqueta("Calificación: %d de 3 estrellas" % mision.estrellas(), "Subtitulo"))
-	var ganados: int = args.get("ganados", 0)
-	if ganados > 0:
-		columna.add_child(_etiqueta("Puntos obtenidos: %d." % ganados))
-	if mision.pistas_usadas > 0:
-		columna.add_child(_etiqueta("Pistas usadas: %d." % mision.pistas_usadas))
-	if not mision.faltas.is_empty():
-		columna.add_child(_rotulo("Faltas del procedimiento"))
-		for f: Dictionary in mision.faltas:
-			columna.add_child(_etiqueta(f["titulo"], "Fuerte"))
-			columna.add_child(_etiqueta(f["texto"], "Nota"))
-	columna.add_child(_rotulo("Para saber más"))
-	for fuente: String in mision.datos.get("para_saber_mas", []):
-		columna.add_child(_etiqueta("• %s" % fuente, "Nota"))
-	columna.add_child(_boton("Repetir la misión", _repetir))
-	columna.add_child(_boton("Volver a la lista", raiz.volver))
 
 
 func _repetir() -> void:

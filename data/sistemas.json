@@ -32,6 +32,7 @@
         "aprender": { "lecciones": ["gen1_alternador", "gen2_avr", "gen3_gobernador", "gen4_cuadro", "gen5_sincronizacion", "gen6_reparto", "gen7_blackout", "gen8_aislamiento"],
           "fichas": ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento"] },
         "taller": { "pantalla": "cuadro", "detalle": "Cuadro principal: arranque, sincronización y reparto de carga" },
+        "guardia": { "misiones": ["gen1_paralelo", "gen2_blackout", "gen3_falla_tierra", "gen4_potencia_inversa"] },
         "examen": { "minijuegos": ["simbolos_generacion"] }
       }
     },

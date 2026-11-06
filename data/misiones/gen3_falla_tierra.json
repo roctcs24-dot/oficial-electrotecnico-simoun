@@ -1,0 +1,105 @@
+{
+  "id": "gen3_falla_tierra",
+  "tipo": "cuadro",
+  "titulo": "Alarma de aislamiento en el cuadro principal",
+  "resumen": "El monitor de aislamiento marca menos de 0,1 MΩ tras baldear la cubierta.",
+  "equipo": "Cuadro principal: red de 440 V",
+  "reporte": {
+    "de": "Oficial de guardia de máquinas",
+    "texto": "Salta la alarma del {{monitor_aislamiento}} del cuadro principal: marca menos de 0,1 MΩ. Esta mañana se baldeó la cubierta. Navegamos con G1 y G2 en paralelo y el PMS en automático. Localice la salida que tiene la {{falla_tierra}}, déjela aislada, haga que se repare y devuélvala a servicio.",
+    "nota": "Red aislada de 440 V. Aislamientos y umbral de alarma: valores del simulador — verificar a bordo."
+  },
+  "cuadro": {
+    "cargas": [
+      { "id": "C1", "nombre": "Servomotor del timón", "params": { "p_kw": 30, "q_kvar": 22, "esencial": true } },
+      { "id": "C2", "nombre": "Bombas de sala de máquinas", "params": { "p_kw": 160, "q_kvar": 120, "esencial": true } },
+      { "id": "C3", "nombre": "Cocina y habilitación", "params": { "p_kw": 70, "q_kvar": 50, "esencial": false } },
+      { "id": "C4", "nombre": "Alumbrado y reflectores de cubierta", "params": { "p_kw": 40, "q_kvar": 20, "esencial": false, "falla_mohm": 0.08, "falla_fase": "L3" } }
+    ]
+  },
+  "preparar": [
+    { "op": "arrancar", "id": "G1" },
+    { "op": "avanzar", "s": 10 },
+    { "op": "cerrar", "id": "G1" },
+    { "op": "arrancar", "id": "G2" },
+    { "op": "avanzar", "s": 10 },
+    { "op": "pms", "automatico": true },
+    { "op": "sincronizar", "id": "G2" },
+    { "op": "avanzar", "s": 20 }
+  ],
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al puente y al jefe de máquinas de la búsqueda de la falla", "pone": ["aviso"] }
+  ],
+  "bloqueables": ["C3", "C4"],
+  "reglas": [
+    { "al": "desconectar", "esencial": true, "sin": "aviso", "falta": "cortar_esencial_sin_aviso" }
+  ],
+  "evidencias": [
+    { "condiciones": [{ "c": "desconectada", "id": "C4" }, { "c": "aislamiento", "min": 1.0 }], "durante_s": 2 },
+    { "accion": "medir_c4" }
+  ],
+  "pistas": [
+    "Mire las lámparas de tierra del panel de barras: la que está apagada indica la fase que tiene contacto con el casco.",
+    "Abra una a una las salidas no esenciales, empezando por la más probable tras el baldeo, y mire si el monitor vuelve a valores normales. Antes de cortar una salida esencial, avise al puente.",
+    "Con la salida localizada abierta, bloquéela, verifique la ausencia de tensión y mida su aislamiento con el megóhmetro. Repare, mida otra vez y devuélvala a servicio."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Dónde está la falla a tierra?",
+    "opciones": [
+      { "texto": "En la salida C4, alumbrado de cubierta, en la fase L3", "correcta": true, "explicacion": "Con C4 abierta, el monitor vuelve a valores normales. Con C4 conectada, la lámpara de tierra de L3 se apaga. El megóhmetro mide 0,08 MΩ entre C4 y el casco." },
+      { "texto": "En la salida C3, cocina y habilitación", "explicacion": "Al abrir C3, el monitor sigue en alarma. C3 mide 150 MΩ contra el casco." },
+      { "texto": "En el devanado de G2", "explicacion": "Con C4 abierta y los dos grupos en barras, el monitor marca valores normales: la falla no está en un generador." },
+      { "texto": "En el propio monitor, que está averiado", "explicacion": "Las lámparas de tierra confirman la falla: la de L3 está apagada. Además, el monitor vuelve a valores normales al abrir C4." }
+    ]
+  },
+  "acciones": [
+    { "id": "medir_c3", "boton": "Medir con el megóhmetro, a 500 V, el aislamiento de C3 contra masa", "medir": "C3", "titulo": "Aislamiento de C3", "texto": "C3 contra masa, a 500 V: {mohm} MΩ." },
+    { "id": "medir_c4", "boton": "Medir con el megóhmetro, a 500 V, el aislamiento de C4 contra masa", "medir": "C4", "titulo": "Aislamiento de C4", "texto": "C4 contra masa, a 500 V: {mohm} MΩ.", "pone": ["medido_c4"] },
+    { "id": "reparar_c4", "boton": "Abrir y secar la caja de conexiones del reflector nº 3 y cambiar su junta", "bloqueo": "C4", "necesita": ["medido_c4"], "si_falta": "Mida antes el aislamiento de C4 para confirmar que la falla está ahí.", "titulo": "Caja de conexiones reparada", "texto": "La caja de conexiones del reflector nº 3 tenía agua del baldeo y la junta de la tapa rota. Se secó, se limpiaron los bornes y se cambió la junta.", "efecto": [{ "op": "param", "id": "C4", "clave": "falla_mohm", "valor": 0.0 }] },
+    { "id": "cambiar_monitor", "boton": "Cambiar el monitor de aislamiento", "titulo": "Monitor en buen estado", "texto": "El monitor retirado funcionaba bien: las lámparas de tierra ya confirmaban la falla. Se gastó un repuesto sin necesidad.", "innecesaria": true }
+  ],
+  "remediciones": [
+    { "despues_de": "reparar_c4", "accion": "medir_c4" }
+  ],
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: trabajo sin bloquear la salida",
+      "que_ocurrio": "Se abrió la caja de conexiones del reflector sin candado ni tarjeta en el interruptor de C4. Alguien cerró C4 desde el cuadro para dar luz en cubierta, y el oficial recibió una descarga eléctrica. Fue atendido por el oficial sanitario.",
+      "causa": "El interruptor de C4 estaba abierto, pero sin candado: cualquiera podía cerrarlo.",
+      "como_evitar": "• Abra la salida en el cuadro y coloque candado y tarjeta en su interruptor.\n• Verifique la ausencia de tensión en la salida.\n• Retire el bloqueo solo con el trabajo terminado y medido."
+    },
+    "sin_verificar": {
+      "titulo": "Informe de accidente: salida sin verificar",
+      "que_ocurrio": "Se abrió la caja de conexiones del reflector con C4 bloqueada, pero sin verificar la ausencia de tensión. El reflector tenía otra alimentación desde el cuadro de emergencia, y el oficial recibió una descarga eléctrica. Fue atendido por el oficial sanitario.",
+      "causa": "El candado impide cerrar el interruptor, pero no demuestra que no haya tensión: un reflector puede alimentarse también del cuadro de emergencia.",
+      "como_evitar": "• Pruebe el multímetro en una fuente conocida.\n• Mida entre fases y de cada fase a masa en la salida.\n• Pruebe de nuevo el multímetro.\n• Consulte los planos: algunas luces tienen doble alimentación (verificar a bordo)."
+    }
+  },
+  "prueba": {
+    "mantener_s": 10,
+    "superada": "Todas las salidas quedaron conectadas, con el monitor de aislamiento en valores normales, durante 10 s.",
+    "objetivos": [
+      { "c": "cerrado", "id": "G1", "texto": "Q1 cerrado" },
+      { "c": "cerrado", "id": "G2", "texto": "Q2 cerrado" },
+      { "c": "conectada", "id": "C1", "texto": "C1, servomotor del timón, conectada" },
+      { "c": "conectada", "id": "C2", "texto": "C2, bombas de sala de máquinas, conectada" },
+      { "c": "conectada", "id": "C3", "texto": "C3, cocina y habilitación, conectada" },
+      { "c": "conectada", "id": "C4", "texto": "C4, alumbrado de cubierta, conectada" },
+      { "c": "aislamiento", "min": 10.0, "texto": "Monitor de aislamiento por encima de 10 MΩ" },
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Salida con la falla", "opciones": ["C3, cocina y habilitación", "C4, alumbrado y reflectores de cubierta, fase L3", "C2, bombas de sala de máquinas"], "correcta": 1, "explicacion": "Al abrir C4 el monitor volvió a valores normales, y C4 midió 0,08 MΩ contra el casco." },
+      { "etiqueta": "Aislamiento de C4 antes de reparar", "opciones": ["0,08 MΩ", "150 MΩ", "1 MΩ"], "correcta": 0, "explicacion": "Revise las mediciones: antes de reparar, C4 midió 0,08 MΩ a 500 V." },
+      { "etiqueta": "Aislamiento de C4 después de reparar", "opciones": ["0,08 MΩ", "No se midió", "150 MΩ"], "correcta": 2, "explicacion": "Revise las mediciones: después de reparar, C4 midió 150 MΩ a 500 V." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección de red aislada y fallas a tierra.",
+    "Ficha del monitor de aislamiento.",
+    "IEC 61557-8: dispositivos de vigilancia del aislamiento en redes IT.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}
