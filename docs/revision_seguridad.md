@@ -87,6 +87,7 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
   - Que la vuelta al principal sea manual y se haga con el grupo en manual. En algunos cuadros es automática.
 - El examen de la v2, `data/examenes/v2.json`, redactado a partir de las lecciones de generación.
 - La lección de la pinza amperimétrica, `i3_pinza`: el rango de 400 A y la resolución de 0,1 A, la categoría de medida CAT III o CAT IV, y el 10 % como orientación para el desequilibrio de corriente, que depende del fabricante del motor.
+- El motor de refrigeración por amoníaco: la tabla de presión–temperatura del NH3, redondeada de tablas publicadas; los ajustes de los presostatos (alta 16 bar, baja 0,3 bar, aceite 1 bar con 45 s), la válvula de seguridad a 20 bar, las alarmas de 25 y 150 ppm, la capacidad y la potencia del compresor, y las temperaturas de la salmuera y del agua de mar. Todos son valores típicos sin contrastar con la planta del buque.
 - Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.

@@ -13,7 +13,7 @@ Estado: **v2.0**, con la v1 y la v2 completas. Incluye:
 - Exámenes de la v1 y de la v2, rangos, repaso de errores y traspaso de partida.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La siguiente es la v3, de refrigeración por amoníaco.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La v3, de refrigeración por amoníaco, avanza por etapas: está hecho su motor de simulación.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -241,8 +241,19 @@ Para añadir un componente, crea una clase que herede de `SimComponente` en `sim
 
 El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout. Con `"sincronizador": false` arranca la reserva pero no la cierra.
 
-El circuito `cuadro_principal` incluye el cuadro de emergencia: barras `BE`, enlace `QT` desde el principal, generador de emergencia `GE` de 75 kW con su interruptor `QE`, enclavados entre sí, y la salida `CE`. El selector AUTO de GE gobierna a la vez su arranque y el cierre automático de QE. En el circuito empieza en manual, con QT abierto, como al terminar una puesta en marcha. La práctica libre lo usa directamente, y las misiones del cuadro ofrecen los mismos mandos.
+El circuito `cuadro_principal` incluye el cuadro de emergencia: barras `BE`, enlace `QT` desde el principal, generador de emergencia `GE` de 75 kW con su interruptor `QE`, enclavados entre sí, y la salida `CE`. El selector AUTO de GE gobierna a la vez su arranque y el cierre automático de QE. En el circuito empieza en manual, con QT abierto, como al terminar una puesta en marcha.
+
+`game/operador_cuadro.gd` reúne los mandos del cuadro sin interfaz. La práctica libre lo usa directamente, y las misiones del cuadro ofrecen los mismos mandos.
 
 La pantalla `ui/screens/cuadro.gd` es la práctica libre del cuadro principal, en el modo Taller del sistema 1. Sus textos, grupos, salidas y explicaciones de cada evento están en `data/cuadro.json`.
 
 Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene tres grupos de 450 kW, con valores típicos a verificar.
+
+**Refrigeración (v3, en desarrollo):**
+
+- **Amoníaco** (`SimNH3`, en `sim/frio/nh3.gd`): presión de saturación según la temperatura y al revés, interpolando el logaritmo de la presión en la tabla de `data/frio/nh3.json`. Da presiones absolutas y relativas, y pasa de bar a psi.
+- **Planta de frío** (`planta_frio`): compresor, condensador de agua de mar, evaporador en la salmuera de las cubas y válvula de expansión, en un modelo concentrado. Las temperaturas de evaporación y de condensación salen de balances de calor, y las presiones son las de saturación a esas temperaturas. El compresor es un motor del circuito, y la planta le pone la carga según la potencia que pide. En automático, la corredera de capacidad sigue a la consigna de la salmuera y limita la potencia del motor al 95 %.
+- **Averías de la planta:** hielo en los tubos con la salmuera floja, falta de refrigerante, filtro de aceite obstruido, condensador sucio, bombas paradas, fugas (con la concentración de NH3 en la sala) y apertura de la válvula de seguridad.
+- **Tiempo:** la salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.
+- **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite.
+- **Circuito** `planta_frio`: arranque directo del compresor con los presostatos de alta, baja y aceite en serie con la bobina del contactor. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.

@@ -45,6 +45,19 @@
     "mando_v": { "valor": 110, "unidad": "V AC", "verificar": true }
   },
   "refrigeracion": {
-    "refrigerante": { "valor": "amoníaco (NH3, R-717)", "unidad": "", "verificar": false }
+    "refrigerante": { "valor": "amoníaco (NH3, R-717)", "unidad": "", "verificar": false },
+    "sistema": { "valor": "congelación del atún en salmuera, en cubas", "unidad": "", "verificar": true },
+    "compresores": { "valor": "tornillo, con corredera de capacidad", "unidad": "", "verificar": true },
+    "capacidad_por_compresor_kw": { "valor": 220, "unidad": "kW frigoríficos a −25/+35 °C", "verificar": true },
+    "motor_compresor_kw": { "valor": 110, "unidad": "kW", "verificar": true },
+    "consigna_salmuera_c": { "valor": -15, "unidad": "°C", "verificar": true },
+    "congelacion_salmuera_c": { "valor": -21, "unidad": "°C (salmuera de NaCl bien concentrada)", "verificar": true },
+    "temperatura_agua_mar_c": { "valor": 29, "unidad": "°C", "verificar": true },
+    "carga_nh3_kg": { "valor": 500, "unidad": "kg", "verificar": true },
+    "presostato_alta_bar": { "valor": 16, "unidad": "bar relativos, rearme manual", "verificar": true },
+    "presostato_baja_bar": { "valor": 0.3, "unidad": "bar relativos, rearme automático", "verificar": true },
+    "presostato_aceite_bar": { "valor": 1.0, "unidad": "bar diferenciales, 45 s de retardo", "verificar": true },
+    "valvula_seguridad_bar": { "valor": 20, "unidad": "bar relativos", "verificar": true },
+    "alarmas_nh3_ppm": { "valor": [25, 150], "unidad": "ppm en la sala de máquinas", "verificar": true }
   }
 }

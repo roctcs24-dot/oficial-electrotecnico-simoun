@@ -1,0 +1,30 @@
+{
+  "nota": "Presión de saturación del amoníaco (NH3, R-717) en bar absolutos, según la temperatura de saturación en °C. Valores redondeados de tablas termodinámicas publicadas: verificar con la tabla del fabricante de la planta. La presión relativa, la que marcan los manómetros, es la absoluta menos 1,013 bar.",
+  "atmosfera_bar": 1.013,
+  "psi_por_bar": 14.5038,
+  "tabla": [
+    [-50, 0.408],
+    [-45, 0.545],
+    [-40, 0.717],
+    [-35, 0.931],
+    [-30, 1.195],
+    [-25, 1.515],
+    [-20, 1.901],
+    [-15, 2.362],
+    [-10, 2.908],
+    [-5, 3.548],
+    [0, 4.294],
+    [5, 5.157],
+    [10, 6.149],
+    [15, 7.283],
+    [20, 8.572],
+    [25, 10.03],
+    [30, 11.67],
+    [35, 13.50],
+    [40, 15.54],
+    [45, 17.82],
+    [50, 20.33],
+    [55, 23.10],
+    [60, 26.15]
+  ]
+}

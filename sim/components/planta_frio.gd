@@ -1,0 +1,274 @@
+class_name SimPlantaFrio
+extends SimComponente
+## Planta de frío por amoníaco para salmuera: compresor, condensador de agua de mar,
+## evaporador sumergido en la salmuera de las cubas y válvula de expansión. No tiene bornes: el
+## compresor es un motor del circuito (params compresor), y los presostatos leen sus presiones.
+##
+## Modelo concentrado para enseñar, no para dimensionar. La temperatura de evaporación sale del
+## balance entre lo que el evaporador toma de la salmuera y lo que aspira el compresor; la de
+## condensación, del balance entre lo que el compresor descarga y lo que se lleva el agua de mar.
+## Las presiones son las de saturación del NH3 a esas temperaturas (SimNH3).
+## La salmuera se enfría mucho más deprisa que a bordo, para que se vea en minutos. Todos los
+## valores son típicos de atuneros cerqueros: verificar a bordo.
+
+const T_ABSOLUTA := 273.15
+const TE_MINIMA := -60.0
+## La corredera de capacidad del tornillo: sube despacio en marcha y vuelve al mínimo al parar.
+const CAPACIDAD_MINIMA := 0.1
+const CAPACIDAD_SUBE_S := 0.01
+const CAPACIDAD_BAJA_S := 0.05
+const LIMITE_MOTOR := 0.95
+## 1 kg de amoníaco gaseoso ocupa unos 1,41 m³ a 20 °C.
+const M3_POR_KG_NH3 := 1.41
+
+
+func tipo() -> String:
+	return "planta_frio"
+
+
+func paso_maximo() -> float:
+	return 0.5
+
+
+func _params_por_defecto() -> Dictionary:
+	return {
+		"compresor": "M1",
+		"bomba_agua_mar": "",
+		"bomba_salmuera": "",
+		"q_nominal_kw": 220.0,
+		"te_nominal": -25.0,
+		"tc_nominal": 35.0,
+		"eficiencia_carnot": 0.55,
+		"ua_evaporador_kw_k": 32.0,
+		"ua_condensador_kw_k": 52.0,
+		"ua_cubas_kw_k": 1.5,
+		"c_evaporador_kj_k": 400.0,
+		"c_condensador_kj_k": 600.0,
+		"c_salmuera_kj_k": 5000.0,
+		"t_agua_mar": 29.0,
+		"t_ambiente": 30.0,
+		"consigna_salmuera": -15.0,
+		"banda_capacidad_k": 3.0,
+		"congelacion_salmuera": -21.0,
+		"dp_aceite_nominal_bar": 3.0,
+		"masa_nh3_kg": 500.0,
+		"volumen_sala_m3": 400.0,
+		"renovaciones_h": 10.0,
+		"renovaciones_emergencia_h": 30.0,
+		"alarma_ppm": 25.0,
+		"alarma_alta_ppm": 150.0,
+		"valvula_seguridad_bar": 20.0,
+		# Averías: se cambian desde las misiones.
+		"suciedad_condensador": 0.0,
+		"obstruccion_filtro_aceite": 0.0,
+		"nivel_aceite": 1.0,
+		"fuga_kg_h": 0.0,
+	}
+
+
+func _estado_inicial() -> Dictionary:
+	return {
+		"te": -1.0, "tc": 29.0, "ts": -1.0, "capacidad": CAPACIDAD_MINIMA, "automatico": true,
+		"capacidad_manual": 1.0, "carga_refrigerante": 1.0, "hielo": 0.0, "dp_aceite": 0.0,
+		"ppm_sala": 0.0, "ventilacion_emergencia": false, "carga_pescado_kw": 0.0,
+		"bomba_agua_mar": true, "bomba_salmuera": true,
+		"q_kw": 0.0, "w_kw": 0.0, "alarma": "", "valvula_abierta": false,
+	}
+
+
+# --- Lecturas ---
+
+## Presión relativa en bar: succion, descarga o aceite (diferencial de aceite sobre la succión).
+func presion(punto: String) -> float:
+	match punto:
+		"succion":
+			return SimNH3.p_sat_rel(estado["te"])
+		"descarga":
+			return SimNH3.p_sat_rel(estado["tc"])
+		"aceite":
+			return estado["dp_aceite"]
+	push_error("Punto de presión desconocido: %s" % punto)
+	return 0.0
+
+
+func temperatura(punto: String) -> float:
+	match punto:
+		"evaporacion":
+			return estado["te"]
+		"condensacion":
+			return estado["tc"]
+		"salmuera":
+			return estado["ts"]
+		"agua_mar":
+			return params["t_agua_mar"]
+	push_error("Punto de temperatura desconocido: %s" % punto)
+	return 0.0
+
+
+## Fracción de su velocidad nominal a la que gira el compresor.
+func giro_compresor() -> float:
+	var m: SimMotorTrifasico = sim().componente(params["compresor"])
+	return clampf(absf(m.rpm()) / float(m.params["rpm"]), 0.0, 1.0)
+
+
+func compresor_en_marcha() -> bool:
+	return giro_compresor() > 0.5
+
+
+func bomba_en_marcha(nombre: String) -> bool:
+	var id: String = params[nombre]
+	if id.is_empty():
+		return estado[nombre]
+	var m: SimMotorTrifasico = sim().componente(id)
+	return absf(m.rpm()) > float(m.params["rpm"]) * 0.8
+
+
+# --- Modelo ---
+
+## Capacidad del compresor a estas temperaturas, en kW frigoríficos: la masa aspirada sigue a la
+## densidad del vapor de succión, y el rendimiento volumétrico baja con la relación de presiones.
+func capacidad_kw(te: float, tc: float) -> float:
+	var giro := giro_compresor()
+	if giro <= 0.0:
+		return 0.0
+	var densidad := _densidad_relativa(te) / _densidad_relativa(params["te_nominal"])
+	var rendimiento := _rendimiento_volumetrico(te, tc) / _rendimiento_volumetrico(params["te_nominal"], params["tc_nominal"])
+	return params["q_nominal_kw"] * estado["capacidad"] * giro * densidad * rendimiento
+
+
+func _densidad_relativa(te: float) -> float:
+	return SimNH3.p_sat_abs(te) / (te + T_ABSOLUTA)
+
+
+func _rendimiento_volumetrico(te: float, tc: float) -> float:
+	var relacion := SimNH3.p_sat_abs(tc) / SimNH3.p_sat_abs(te)
+	return clampf(1.0 - 0.03 * (relacion - 1.0), 0.2, 1.0)
+
+
+## Con poca carga de refrigerante, el evaporador trabaja medio vacío: tiene menos superficie útil
+## y la succión baja.
+func estado_carga() -> float:
+	return clampf((estado["carga_refrigerante"] - 0.4) / 0.4, 0.1, 1.0)
+
+
+## Potencia en el eje: la del frío entre el COP real, una fracción del de Carnot.
+func potencia_kw(q: float, te: float, tc: float) -> float:
+	if q <= 0.0:
+		return 0.0
+	var cop: float = params["eficiencia_carnot"] * (te + T_ABSOLUTA) / maxf(tc - te, 5.0)
+	return q / cop
+
+
+func avanzar(dt: float, _sol: SimSolver.Solucion) -> void:
+	if sim() == null:
+		return
+	_mover_capacidad(dt)
+	var te: float = estado["te"]
+	var tc: float = estado["tc"]
+	var ts: float = estado["ts"]
+	var q := capacidad_kw(te, tc)
+	var w := potencia_kw(q, te, tc)
+	estado["q_kw"] = q
+	estado["w_kw"] = w
+	_cargar_motor(w)
+	# Evaporador: sin bomba de salmuera casi no hay intercambio, y el hielo aísla los tubos.
+	var ua_e: float = params["ua_evaporador_kw_k"] * estado_carga() / (1.0 + estado["hielo"])
+	if not bomba_en_marcha("bomba_salmuera"):
+		ua_e *= 0.15
+	var q_evaporador := ua_e * (ts - te)
+	estado["te"] = maxf(te + (q_evaporador - q) / params["c_evaporador_kj_k"] * dt, TE_MINIMA)
+	# Condensador: sin agua de mar solo queda la convección natural.
+	var ua_c: float = params["ua_condensador_kw_k"] * (1.0 - params["suciedad_condensador"])
+	if not bomba_en_marcha("bomba_agua_mar"):
+		ua_c *= 0.05
+	var q_condensador := ua_c * (tc - float(params["t_agua_mar"]))
+	estado["tc"] = tc + (q + w - q_condensador) / params["c_condensador_kj_k"] * dt
+	# Salmuera: entra el calor de las cubas y del pescado, sale el que toma el evaporador.
+	var q_cubas: float = params["ua_cubas_kw_k"] * (params["t_ambiente"] - ts) + estado["carga_pescado_kw"]
+	estado["ts"] = ts + (q_cubas - q_evaporador) / params["c_salmuera_kj_k"] * dt
+	_formar_hielo(dt)
+	_aceite(dt)
+	_valvula_seguridad()
+	_fuga(dt)
+
+
+## En automático, la corredera sigue a la temperatura de la salmuera: descarga el compresor al
+## acercarse a la consigna, y también si el motor pasa del 95 % de su potencia, como el limitador
+## de corriente de una planta real. En manual no hay límite. Parado, vuelve al mínimo para el
+## próximo arranque.
+func _mover_capacidad(dt: float) -> void:
+	var objetivo := CAPACIDAD_MINIMA
+	if compresor_en_marcha():
+		if estado["automatico"]:
+			objetivo = clampf(CAPACIDAD_MINIMA + (estado["ts"] - params["consigna_salmuera"]) / params["banda_capacidad_k"], CAPACIDAD_MINIMA, 1.0)
+			var m: SimMotorTrifasico = sim().componente(params["compresor"])
+			if estado["w_kw"] > LIMITE_MOTOR * float(m.params["p_kw"]):
+				objetivo = minf(objetivo, maxf(estado["capacidad"] - 0.02, CAPACIDAD_MINIMA))
+		else:
+			objetivo = clampf(estado["capacidad_manual"], CAPACIDAD_MINIMA, 1.0)
+	var actual: float = estado["capacidad"]
+	if objetivo > actual:
+		estado["capacidad"] = minf(actual + CAPACIDAD_SUBE_S * dt, objetivo)
+	else:
+		estado["capacidad"] = maxf(actual - CAPACIDAD_BAJA_S * dt, objetivo)
+
+
+## El par del motor sigue a la potencia que pide el compresor, más un poco de rozamiento.
+func _cargar_motor(w: float) -> void:
+	var m: SimMotorTrifasico = sim().componente(params["compresor"])
+	var p_motor: float = m.params["p_kw"]
+	m.params["carga"] = clampf((w + 0.05 * p_motor) / p_motor, 0.0, 1.6)
+
+
+## Si la pared de los tubos queda por debajo de la congelación de la salmuera, se forma hielo.
+func _formar_hielo(dt: float) -> void:
+	var pared: float = (estado["te"] + estado["ts"]) / 2.0
+	var margen: float = params["congelacion_salmuera"] - pared
+	if margen > 0.0:
+		estado["hielo"] += 0.002 * margen * dt
+	else:
+		estado["hielo"] = maxf(estado["hielo"] - 0.01 * dt, 0.0)
+
+
+## Presión diferencial de aceite: la da la bomba de aceite del compresor en marcha.
+func _aceite(dt: float) -> void:
+	var objetivo := 0.0
+	if compresor_en_marcha():
+		var nivel := clampf(float(params["nivel_aceite"]) / 0.3, 0.0, 1.0)
+		objetivo = params["dp_aceite_nominal_bar"] * (1.0 - params["obstruccion_filtro_aceite"]) * nivel
+	estado["dp_aceite"] += (objetivo - estado["dp_aceite"]) * (1.0 - exp(-dt / 1.0))
+
+
+## La válvula de seguridad del lado de alta descarga a la atmósfera: limita la presión y pierde
+## refrigerante.
+func _valvula_seguridad() -> void:
+	var tarado: float = params["valvula_seguridad_bar"]
+	if presion("descarga") > tarado:
+		estado["tc"] = SimNH3.t_sat_rel(tarado)
+		estado["carga_refrigerante"] = maxf(estado["carga_refrigerante"] - 0.0005, 0.0)
+		if not estado["valvula_abierta"]:
+			estado["valvula_abierta"] = true
+			avisar("valvula_seguridad", {"bar": tarado})
+	elif presion("descarga") < tarado * 0.9:
+		estado["valvula_abierta"] = false
+
+
+## Una fuga vacía la carga y llena de amoníaco la sala de máquinas, que la ventilación renueva.
+func _fuga(dt: float) -> void:
+	var fuga: float = params["fuga_kg_h"]
+	if fuga > 0.0:
+		estado["carga_refrigerante"] = maxf(estado["carga_refrigerante"] - fuga / params["masa_nh3_kg"] / 3600.0 * dt, 0.0)
+	var volumen: float = params["volumen_sala_m3"]
+	var entra := fuga / 3600.0 * M3_POR_KG_NH3 / volumen * 1e6
+	var renovaciones: float = params["renovaciones_emergencia_h"] if estado["ventilacion_emergencia"] else params["renovaciones_h"]
+	var ppm: float = estado["ppm_sala"]
+	ppm = maxf(ppm + (entra - ppm * renovaciones / 3600.0) * dt, 0.0)
+	estado["ppm_sala"] = ppm
+	var alarma := ""
+	if ppm >= params["alarma_alta_ppm"]:
+		alarma = "alta"
+	elif ppm >= params["alarma_ppm"]:
+		alarma = "aviso"
+	if alarma != estado["alarma"] and not alarma.is_empty():
+		avisar("alarma_nh3_alta" if alarma == "alta" else "alarma_nh3", {"ppm": ppm})
+	estado["alarma"] = alarma

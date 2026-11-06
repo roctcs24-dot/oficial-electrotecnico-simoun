@@ -34,6 +34,8 @@ static func tipos() -> Dictionary:
 		"sincronoscopio": SimSincronoscopio,
 		"monitor_aislamiento": SimMonitorAislamiento,
 		"pms": SimPMS,
+		"planta_frio": SimPlantaFrio,
+		"presostato": SimPresostato,
 	}
 
 
