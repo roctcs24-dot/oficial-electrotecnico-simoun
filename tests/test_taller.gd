@@ -507,3 +507,37 @@ func test_tocar_una_pieza_no_mueve_la_vista() -> String:
 		A.cierto(is_equal_approx(zoom, 1.3), "no debe cambiar el zoom"),
 		A.cierto(pestana, "la pestaña Pieza debe quedar marcada"),
 	])
+
+
+func test_pinza_abraza_cables_en_pantalla() -> String:
+	var raiz := _raiz_taller()
+	var p = raiz.pantalla_actual()
+	p.mesa.vaciar()
+	_montar_directo(p.mesa, "motor_440", true)
+	_arrancar(p.mesa)
+	p.mesa.avanzar(60)
+	p.args["pestana"] = "medir"
+	p._elegir_instrumento("pinza")
+	var fase := -1
+	for i in p.mesa.sim.cables.size():
+		if p.mesa.sim.cables[i][1].ends_with(".U1"):
+			fase = i
+	var cables: int = p.mesa.sim.cables.size()
+	p._al_tocar_cable(fase)
+	p._actualizar_lectura()
+	var lectura: String = p._lectura.text
+	var marcado: bool = p.vista.cables_pinza.has(fase)
+	var sin_cambios: bool = p.mesa.sim.cables.size() == cables and p.args["cable"] == -1
+	p._al_tocar_cable(fase)
+	var soltado: bool = p.args["pinza_cables"].is_empty()
+	p._al_tocar_borne("M1.U1")
+	var sin_puntas: bool = p.args["roja"].is_empty()
+	raiz.free()
+	return A.primero([
+		A.cierto(fase >= 0, "debe haber un cable a U1"),
+		A.cierto(lectura.ends_with(" A") and not lectura.begins_with("0,0"), "debe mostrar la corriente del motor: %s" % lectura),
+		A.cierto(marcado, "la mesa debe dibujar la pinza en el cable"),
+		A.cierto(sin_cambios, "tocar un cable con la pinza no lo cambia ni lo selecciona"),
+		A.cierto(soltado, "tocarlo otra vez lo saca de la pinza"),
+		A.cierto(sin_puntas, "con la pinza, un borne no coloca puntas"),
+	])

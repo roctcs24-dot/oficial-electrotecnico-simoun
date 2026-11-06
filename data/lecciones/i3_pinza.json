@@ -1,0 +1,54 @@
+{
+  "id": "i3_pinza",
+  "titulo": "La pinza amperimétrica",
+  "resumen": "Medir la corriente sin abrir el circuito y valorar el desequilibrio.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Cómo mide",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{pinza}} mide la corriente alterna sin abrir el circuito. Sus mordazas rodean el conductor y forman un {{transformador_corriente}}: el conductor hace de primario, y un devanado dentro de las mordazas da una corriente proporcional a la del cable.\n\n• [b]En alterna[/b] basta ese principio. Para corriente continua hacen falta pinzas con sensor de efecto Hall ([i]verificar las características de la pinza del buque[/i]).\n• [b]Sin contacto eléctrico[/b] con el conductor: se mide con el equipo en servicio, sin desconectar nada.\n• [b]En potencia[/b] es mucho más segura que el multímetro en modo A, que obliga a abrir el circuito e intercalarlo." },
+        {
+          "tipo": "quiz",
+          "tema": "pinza_tres_fases",
+          "pregunta": "Abraza con la pinza el cable completo de un motor trifásico, con sus tres fases. ¿Qué marca?",
+          "opciones": ["La corriente del motor", "Casi cero, porque las tres corrientes se anulan", "El triple de la corriente del motor"],
+          "correcta": 1,
+          "explicacion": "En una carga trifásica equilibrada, las tres corrientes suman cero en cada instante. Hay que abrazar un solo conductor."
+        }
+      ]
+    },
+    {
+      "titulo": "Cómo se usa",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "procedimiento_pinza",
+          "pregunta": "Seleccione en orden los pasos para medir la corriente de un motor con la pinza:",
+          "pasos": ["Colocarse el EPP para trabajar junto a partes en tensión", "Elegir A~ y un rango mayor que la corriente esperada", "Abrazar un solo conductor, centrado en las mordazas", "Leer con el motor en carga estable", "Repetir en las otras dos fases y anotar las tres lecturas"],
+          "explicacion": "La pinza no toca el conductor, pero se usa con el tablero abierto: el EPP va primero. Con un solo conductor centrado, la lectura es fiable."
+        },
+        { "tipo": "texto", "texto": "[b]Precauciones:[/b]\n• Mantenga las manos detrás de la barrera de protección de la pinza.\n• Compruebe que la categoría de medida de la pinza, como CAT III o CAT IV, es adecuada para el punto ([i]verificar según IEC 61010[/i]).\n• Cierre bien las mordazas: abiertas o sucias, la lectura es menor que la real.\n\n[b]Práctica:[/b] en el Taller, con un motor en marcha, elija Pinza en la pestaña Medir y toque un cable. Pruebe a abrazar también las otras dos fases." }
+      ]
+    },
+    {
+      "titulo": "Cómo se interpreta",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Comparación con la placa:[/b] en carga normal, ninguna fase debe pasar de la corriente nominal.\n• [b]Desequilibrio:[/b] se calcula con la mayor diferencia respecto del promedio. Con 24, 25 y 28 A, el promedio es 25,7 A, la mayor diferencia 2,3 A, y el {{desequilibrio}}, 2,3 ÷ 25,7 = 9 %.\n• [b]Límite:[/b] lo fija el fabricante del motor. Como orientación, más de un 10 % merece revisarse ([i]valor orientativo — verificar[/i]).\n• [b]Causas habituales:[/b] tensiones desiguales, un borne flojo, un contacto picado o un devanado dañado." },
+        {
+          "tipo": "quiz",
+          "tema": "desequilibrio_calculo",
+          "pregunta": "Un motor da 20, 20 y 23 A en sus tres fases. ¿Qué desequilibrio de corriente tiene?",
+          "opciones": ["Un 3 %", "Un 9,5 %", "Un 15 %"],
+          "correcta": 1,
+          "explicacion": "Promedio: 63 ÷ 3 = 21 A. Mayor diferencia: 23 − 21 = 2 A. Desequilibrio: 2 ÷ 21 ≈ 9,5 %."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61010-2-032: seguridad de las pinzas amperimétricas.",
+    "NEMA MG 1: desequilibrio de tensión en motores de inducción.",
+    "NFPA 70E: seguridad eléctrica en el trabajo."
+  ]
+}

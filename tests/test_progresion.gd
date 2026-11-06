@@ -387,7 +387,7 @@ func test_todo_el_contenido_alcanza_el_rango_mas_alto() -> String:
 	var progreso_ok: bool = raiz.pantalla_actual() != null
 	raiz.free()
 	return A.primero([
-		A.cierto(lecciones_completas == publicadas and publicadas == 25, "deben completarse las 25 lecciones: %d de %d" % [lecciones_completas, publicadas]),
+		A.cierto(lecciones_completas == publicadas and publicadas == 26, "deben completarse las 26 lecciones: %d de %d" % [lecciones_completas, publicadas]),
 		A.cierto(misiones.is_empty(), "misiones: %s" % ", ".join(misiones)),
 		A.cierto(errores == 0, "un recorrido sin fallos no debe dejar errores: %d" % errores),
 		A.cierto(rango == rangos[-1]["nombre"], "debe alcanzar %s: %s con %d puntos" % [rangos[-1]["nombre"], rango, puntos]),

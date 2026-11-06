@@ -179,3 +179,69 @@ func test_ruido_es_pequeño_y_fluctua() -> String:
 		A.cerca(a, 440.0, 0.02, "lectura con ruido"),
 		A.cierto(a != b, "dos lecturas no deben ser idénticas"),
 	])
+
+
+## Arranque directo con el motor en marcha y a su carga.
+func _motor_en_marcha() -> SimSimulacion:
+	var sim := A.circuito("arranque_directo")
+	sim.componente("Q1").accionar(true)
+	sim.avanzar_tiempo(0.1)
+	A.pulsar(sim, "S1", 0.3)
+	sim.avanzar_tiempo(4.0)
+	return sim
+
+
+func _indice_cable(sim: SimSimulacion, a: String, b: String) -> int:
+	for i in sim.cables.size():
+		if sim.cables[i][0] == a and sim.cables[i][1] == b:
+			return i
+	return -1
+
+
+func test_pinza_mide_la_corriente_de_una_fase() -> String:
+	var sim := _motor_en_marcha()
+	var pinza := SimPinza.new()
+	pinza.ruido = 0.0
+	var rele: SimReleTermico = sim.componente("F2")
+	var esperado := rele.corriente(sim.solucion, 0)
+	var l1: Dictionary = pinza.medir(sim, [_indice_cable(sim, "K1.2", "F2.1")])
+	return A.primero([
+		A.cierto(esperado > 10.0, "el motor debe estar en marcha: %.1f A" % esperado),
+		A.cerca(l1["valor"], esperado, 0.01, "la pinza en L1 marca la corriente de la fase"),
+		A.cierto(not l1["fuera_de_rango"] and l1["averia"].is_empty(), "lectura válida"),
+	])
+
+
+func test_pinza_con_tres_fases_marca_casi_cero() -> String:
+	var sim := _motor_en_marcha()
+	var pinza := SimPinza.new()
+	var fases := [_indice_cable(sim, "K1.2", "F2.1"), _indice_cable(sim, "K1.4", "F2.3"), _indice_cable(sim, "K1.6", "F2.5")]
+	var una: float = pinza.medir(sim, [fases[0]])["valor"]
+	var tres: float = pinza.medir(sim, fases)["valor"]
+	return A.primero([
+		A.cierto(una > 10.0, "una fase: %.1f A" % una),
+		A.cierto(tres < 0.2, "las tres fases juntas deben sumar casi cero: %.2f A" % tres),
+	])
+
+
+## En delta, por el puente de la bornera pasa la corriente de un devanado: la de línea ÷ √3.
+func test_pinza_en_el_puente_delta() -> String:
+	var sim := _motor_en_marcha()
+	var pinza := SimPinza.new()
+	pinza.ruido = 0.0
+	var linea: float = pinza.medir(sim, [_indice_cable(sim, "F2.2", "M1.U1")])["valor"]
+	var puente: float = pinza.medir(sim, [_indice_cable(sim, "M1.U1", "M1.W2")])["valor"]
+	return A.cerca(puente, linea / sqrt(3.0), 0.03, "corriente de devanado en el puente")
+
+
+func test_pinza_no_cambia_el_circuito_ni_mide_sin_corriente() -> String:
+	var sim := A.circuito("arranque_directo")
+	var pinza := SimPinza.new()
+	var parado: Dictionary = pinza.medir(sim, [_indice_cable(sim, "K1.2", "F2.1")])
+	var vacia: Dictionary = pinza.medir(sim, [])
+	var cables := sim.cables.size()
+	return A.primero([
+		A.cierto(parado["valor"] == 0.0, "sin tensión debe marcar cero: %.2f" % parado["valor"]),
+		A.cierto(vacia["averia"] == "sin_conductor", "sin conductor no mide"),
+		A.cierto(sim.cables.size() == cables, "medir no quita cables"),
+	])

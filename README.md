@@ -2,18 +2,18 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v1.4**, la v1 completa y el contenido de la v2 casi completo. Incluye:
+Estado: **v2.0**, con la v1 y la v2 completas. Incluye:
 
-- 17 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
+- 18 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - Fichas de los equipos de los sistemas 1 y 3, entre ellas la del generador de emergencia, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con tres generadores, sincronización, PMS, protecciones, lámparas de tierra y cuadro de emergencia con su generador.
-- Taller con multímetro y megóhmetro.
+- Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
 - Exámenes de la v1 y de la v2, rangos, repaso de errores y traspaso de partida.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, avanza por etapas: falta la pinza amperimétrica.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, está completa. La siguiente es la v3, de refrigeración por amoníaco.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -44,7 +44,7 @@ El ejecutor carga cada `tests/test_*.gd`. Cada método `test_*` devuelve `""` si
 
 Si añades una clase con `class_name`, repite primero el `--import`.
 
-El ejecutor aborta con error si tarda más de 300 s, incluso si una prueba entra en un bucle infinito. El límite se cambia con la variable `LIMITE_PRUEBAS_S`. En Windows, `tools\correr_pruebas.ps1` añade un segundo límite desde fuera y guarda la salida en `build\pruebas\`:
+El ejecutor aborta con error si tarda más de 300 s, incluso si una prueba entra en un bucle infinito. El límite se cambia con la variable `LIMITE_PRUEBAS_S`; en GitHub Actions es de 600 s. En Windows, `tools\correr_pruebas.ps1` añade un segundo límite desde fuera, de 600 s por defecto, y guarda la salida en `build\pruebas\`. Con el PC normal, las pruebas tardan unos 150 s:
 
 ```bash
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\correr_pruebas.ps1
@@ -237,7 +237,7 @@ Para añadir un componente, crea una clase que herede de `SimComponente` en `sim
   - `carga_trifasica`, esencial o no, con una falla a tierra opcional.
   - `sincronoscopio`.
   - `monitor_aislamiento`.
-- **Instrumento:** el secuencímetro `SimSecuencimetro`.
+- **Instrumentos:** el secuencímetro `SimSecuencimetro` y la pinza amperimétrica `SimPinza`. La pinza mide la corriente de los cables que abraza resolviendo la red con esos cables sustituidos por una impedancia mínima (`SimSimulacion.resolver` con `excluir`), y suma sus corrientes: con las tres fases de un circuito marca casi cero.
 
 El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout. Con `"sincronizador": false` arranca la reserva pero no la cierra.
 

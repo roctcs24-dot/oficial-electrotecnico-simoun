@@ -235,6 +235,10 @@ func registrar_medicion(instrumento: String, modo: String, a: String, b: String,
 	if instrumento == "multimetro" and modo == "vac":
 		if float(r["valor"]) >= V_PRESENCIA and not hechos.has("epp"):
 			_falta("sin_epp")
+	elif instrumento == "pinza":
+		# La pinza no toca el conductor, pero se usa con el tablero abierto y en tensión.
+		if float(r["valor"]) > 0.0 and not hechos.has("epp"):
+			_falta("sin_epp")
 	elif (instrumento == "megohmetro" or modo in ["ohm", "continuidad", "diodo"]) and not bloqueado():
 		_falta("medir_sin_bloqueo")
 

@@ -85,11 +85,13 @@ func hubo_evento(tipo: String, id := "") -> bool:
 	return false
 
 
-## Resuelve la red con su estado actual. extra añade elementos, como un instrumento.
-func resolver(dc := false, extra := Callable()) -> SimSolver.Solucion:
+## Resuelve la red con su estado actual. extra añade elementos, como un instrumento. Los cables
+## de excluir (índices) no se unen: así extra puede ponerles una impedancia y medir su corriente.
+func resolver(dc := false, extra := Callable(), excluir: Array = []) -> SimSolver.Solucion:
 	var e := SimEstampa.new(dc)
-	for cable in cables:
-		e.enlace(cable[0], cable[1])
+	for i in cables.size():
+		if not excluir.has(i):
+			e.enlace(cables[i][0], cables[i][1])
 	for c: SimComponente in componentes.values():
 		c.estampar(e)
 	if extra.is_valid():

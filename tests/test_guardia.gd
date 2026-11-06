@@ -699,3 +699,22 @@ func test_pantalla_firma_y_registra_la_mision() -> String:
 		A.cierto(int(datos.get("estrellas", 0)) == 3, "debe guardar las estrellas: %s" % str(datos)),
 		A.cierto(puntos == Partida.PUNTOS_MISION + 3 * Partida.PUNTOS_ESTRELLA, "puntos: %d" % puntos),
 	])
+
+
+func test_pinza_con_corriente_sin_epp_es_falta() -> String:
+	var m := _mision("g2_termico_dispara")
+	_pulsar_marcha(m)
+	m.mesa.avanzar(60)
+	var r := SimPinza.new().medir(m.mesa.sim, [0])
+	m.registrar_medicion("pinza", "a", m.mesa.sim.cables[0][0], m.mesa.sim.cables[0][1], r)
+	var temas := m.faltas.map(func(f: Dictionary) -> String: return f["tema"])
+	var n := _mision("g2_termico_dispara")
+	n.colocar_epp()
+	_pulsar_marcha(n)
+	n.mesa.avanzar(60)
+	n.registrar_medicion("pinza", "a", n.mesa.sim.cables[0][0], n.mesa.sim.cables[0][1], SimPinza.new().medir(n.mesa.sim, [0]))
+	return A.primero([
+		A.cierto(float(r["valor"]) > 1.0, "el motor debe tener corriente: %.1f A" % r["valor"]),
+		A.cierto(temas.has("sin_epp"), "sin EPP debe ser falta: %s" % str(temas)),
+		A.cierto(n.faltas.is_empty(), "con EPP no hay falta: %s" % str(n.faltas)),
+	])

@@ -1,6 +1,9 @@
 # Runs the tests with a hard time limit and direct file output, so no pipe holds the text back.
-# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File tools\correr_pruebas.ps1 [-Limite 270]
-param([int]$Limite = 270)
+# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File tools\correr_pruebas.ps1 [-Limite 600]
+param([int]$Limite = 600)
+
+# The runner's own limit stays just below this one, so it reports the timeout itself.
+$env:LIMITE_PRUEBAS_S = [string]([Math]::Max($Limite - 20, 60))
 
 $g = "$env:LOCALAPPDATA\Programs\Godot\Godot_v4.7.2-stable_win64_console.exe"
 $proyecto = Split-Path $PSScriptRoot -Parent

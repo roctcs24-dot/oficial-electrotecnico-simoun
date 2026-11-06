@@ -52,7 +52,7 @@
       "zona": [598, 264, 116, 76],
       "modos": {
         "aprender": {
-          "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "i1_multimetro", "i2_megohmetro"],
+          "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "i1_multimetro", "i2_megohmetro", "i3_pinza"],
           "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]
         },
         "taller": {},

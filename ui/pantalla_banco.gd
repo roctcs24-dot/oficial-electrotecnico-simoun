@@ -32,7 +32,7 @@ func _mostrar_panel(_id: String) -> void:
 
 
 func _opciones_instrumento() -> Array:
-	return [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"], ["no", "Cablear"]]
+	return [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"], ["pinza", "Pinza"], ["no", "Cablear"]]
 
 
 ## Una lectura ya tomada. Las misiones la registran como evidencia.
@@ -53,6 +53,8 @@ func _iniciar_banco(nueva_mesa: MesaTaller, pestana: String, medicion := "") -> 
 	args["pestana"] = pestana
 	args["multimetro"] = SimMultimetro.new()
 	args["megohmetro"] = SimMegohmetro.new()
+	args["pinza"] = SimPinza.new()
+	args["pinza_cables"] = []
 	args["modo"] = "vac"
 	args["v_prueba"] = 500
 	args["pieza"] = ""
@@ -239,9 +241,12 @@ func _panel_medir() -> void:
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 4)
 	_panel.add_child(fila)
-	for i: Array in _opciones_instrumento():
+	var opciones := _opciones_instrumento()
+	for i: Array in opciones:
 		var b := _boton(i[1], _elegir_instrumento.bind(i[0]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
+		if opciones.size() > 3:
+			_apretar_pestana(b)
 		b.toggle_mode = true
 		b.button_group = grupo
 		b.set_pressed_no_signal(args["medicion"] == i[0] or (args["medicion"] == "" and i[0] == "no"))
@@ -251,6 +256,8 @@ func _panel_medir() -> void:
 		_panel_multimetro()
 	elif args["medicion"] == "megohmetro":
 		_panel_megohmetro()
+	elif args["medicion"] == "pinza":
+		_panel_pinza()
 	else:
 		_panel.add_child(_etiqueta("Elija un instrumento. Después, toque dos bornes para colocar las puntas.", "Nota"))
 
@@ -260,6 +267,7 @@ func _elegir_instrumento(id: String) -> void:
 	args["primer_borne"] = ""
 	args["roja"] = ""
 	args["negra"] = ""
+	args["pinza_cables"] = []
 	_actualizar_marcas()
 	_reconstruir_panel()
 
@@ -332,6 +340,41 @@ func _panel_megohmetro() -> void:
 	_panel.add_child(_etiqueta("Devanados de menos de 1 kV: mínimo 5 MΩ según IEEE 43. Verificar el criterio del buque.", "Nota"))
 
 
+func _panel_pinza() -> void:
+	_pantalla_instrumento()
+	var abrazados: Array = args["pinza_cables"]
+	if abrazados.is_empty():
+		_panel.add_child(_etiqueta("Toque un cable de la mesa para abrazarlo con la pinza.", "Nota"))
+	else:
+		var nombres := PackedStringArray()
+		for i: int in abrazados:
+			nombres.append("%s — %s" % mesa.sim.cables[i])
+		_panel.add_child(_etiqueta("Abraza: %s" % ", ".join(nombres)))
+		_panel.add_child(_boton("Soltar la pinza", _soltar_pinza))
+	_panel.add_child(_etiqueta("Abrace un solo conductor. Con las tres fases de un mismo circuito, las corrientes se anulan y la pinza marca casi cero. Rango de 400 A y resolución de 0,1 A: valores típicos, verificar con la pinza del buque.", "Nota"))
+
+
+## Tocar un cable lo añade a la pinza; tocarlo de nuevo lo saca.
+func _abrazar_cable(indice: int) -> void:
+	var abrazados: Array = args["pinza_cables"]
+	if abrazados.has(indice):
+		abrazados.erase(indice)
+	else:
+		abrazados.append(indice)
+	_hasta_lectura = 0.0
+	if args["pestana"] != "medir":
+		_elegir_pestana("medir")
+	else:
+		_reconstruir_panel()
+	_actualizar_marcas()
+
+
+func _soltar_pinza() -> void:
+	args["pinza_cables"] = []
+	_reconstruir_panel()
+	_actualizar_marcas()
+
+
 func _elegir_v_prueba(v: int) -> void:
 	args["v_prueba"] = v
 
@@ -361,6 +404,9 @@ func medir_aislamiento() -> void:
 
 
 func _actualizar_lectura() -> void:
+	if args["medicion"] == "pinza" and _lectura != null:
+		_actualizar_lectura_pinza()
+		return
 	if args["medicion"] != "multimetro" or _lectura == null:
 		return
 	if args["roja"].is_empty() or args["negra"].is_empty():
@@ -382,7 +428,24 @@ func _actualizar_lectura() -> void:
 		_reconstruir_panel()
 
 
+func _actualizar_lectura_pinza() -> void:
+	var abrazados: Array = args["pinza_cables"]
+	if abrazados.is_empty():
+		_lectura.text = "Abrace un cable"
+		return
+	var r: Dictionary = args["pinza"].medir(mesa.sim, abrazados)
+	var primero: Array = mesa.sim.cables[abrazados[0]]
+	_tras_medir("pinza", "a" if abrazados.size() == 1 else "a_varios", primero[0], primero[1], r)
+	if r["fuera_de_rango"]:
+		_lectura.text = "OL"
+	else:
+		_lectura.text = "%s A" % TextoTecnico.numero(r["valor"], 1)
+
+
 func _al_tocar_borne(nodo: String) -> void:
+	if args["medicion"] == "pinza":
+		_estado.text = "La pinza no tiene puntas: se coloca abrazando un cable."
+		return
 	if args["medicion"] != "":
 		_colocar_punta(nodo)
 	else:
@@ -408,6 +471,9 @@ func _al_tocar_pieza(id: String) -> void:
 
 
 func _al_tocar_cable(indice: int) -> void:
+	if args["medicion"] == "pinza":
+		_abrazar_cable(indice)
+		return
 	args["cable"] = indice
 	args["pieza"] = ""
 	_elegir_pestana("pieza")
@@ -428,6 +494,7 @@ func _actualizar_marcas() -> void:
 	vista.punta_negra = args["negra"]
 	vista.pieza_marcada = args["pieza"]
 	vista.cable_marcado = args["cable"]
+	vista.cables_pinza = args.get("pinza_cables", [])
 	vista.queue_redraw()
 
 

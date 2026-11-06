@@ -5,7 +5,7 @@ extends PantallaBanco
 const PESTANAS := [["reporte", "Reporte"], ["proceso", "Proceso"], ["pieza", "Equipo"], ["medir", "Medir"], ["libro", "Libro"]]
 const LIMITE_OBSERVACION_MS := 6
 const MINUTO_S := 60.0
-const INSTRUMENTOS := [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"]]
+const INSTRUMENTOS := [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"], ["pinza", "Pinza"]]
 ## En vertical, el procedimiento necesita más alto que la mesa.
 const PROPORCION_VISTA_VERTICAL := 0.8
 
@@ -55,9 +55,10 @@ func _tras_medir(instrumento: String, modo: String, a: String, b: String, result
 	mision.registrar_medicion(instrumento, modo, a, b, resultado)
 
 
-## En una misión la mesa no se recablea: un cable tocado no abre ninguna opción.
-func _al_tocar_cable(_indice: int) -> void:
-	pass
+## En una misión la mesa no se recablea: un cable tocado solo sirve para abrazarlo con la pinza.
+func _al_tocar_cable(indice: int) -> void:
+	if args["medicion"] == "pinza":
+		_abrazar_cable(indice)
 
 
 ## La lectura se ve en la pestaña Medir: se abre al colocar una punta desde otra.

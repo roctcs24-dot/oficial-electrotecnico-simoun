@@ -41,6 +41,8 @@ var punta_roja := ""
 var punta_negra := ""
 var pieza_marcada := ""
 var cable_marcado := -1
+## Cables abrazados por la pinza amperimétrica.
+var cables_pinza: Array = []
 
 static var _texturas := {}
 
@@ -248,6 +250,9 @@ func _draw() -> void:
 		var mango := a_pantalla(mesa.mango_cable(cable_marcado))
 		draw_circle(mango, RADIO_MANGO, Tema.ACENTO)
 		draw_arc(mango, RADIO_MANGO, 0.0, TAU, 24, Color.WHITE, 2.0, true)
+	for i: int in cables_pinza:
+		if i < mesa.sim.cables.size():
+			_dibujar_pinza(i)
 	_dibujar_punta(punta_roja, Color("d8322a"))
 	_dibujar_punta(punta_negra, Color("111214"))
 	for e: Dictionary in efectos:
@@ -342,6 +347,16 @@ func _dibujar_estado(id: String, r: Rect2) -> void:
 		texto = id
 	var color := Color("ff8a7a") if mesa.danada(id) else Tema.TEXTO
 	draw_string(fuente, r.position + Vector2(0.0, -6.0), texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t, color)
+
+
+## Las mordazas de la pinza, cerradas sobre el punto medio del cable.
+func _dibujar_pinza(i: int) -> void:
+	var puntos := mesa.puntos_cable(i)
+	var centro := a_pantalla(puntos[puntos.size() / 2] if puntos.size() % 2 == 1 else (puntos[puntos.size() / 2 - 1] + puntos[puntos.size() / 2]) / 2.0)
+	var radio := RADIO_MANGO + 4.0
+	draw_arc(centro, radio, 0.0, TAU, 32, Color("1f2326"), 9.0, true)
+	draw_arc(centro, radio, 0.0, TAU, 32, Color("e0b324"), 5.0, true)
+	draw_line(centro + Vector2(radio, 0.0), centro + Vector2(radio * 2.2, radio * 1.2), Color("e0b324"), 6.0, true)
 
 
 func _dibujar_cable(i: int) -> void:
