@@ -1,0 +1,63 @@
+{
+  "id": "bomba_achique",
+  "nombre": "Bomba de achique de sentina",
+  "nota": "Programa de ejemplo para aprender. Direcciones IEC 61131-3 genéricas; a bordo, verificar el modelo de autómata, su programa y sus direcciones.",
+  "etiquetas": {
+    "%I0.0": "S1 · Marcha",
+    "%I0.1": "S0 · Parada (pulsador NC)",
+    "%I0.2": "F2 · Relé térmico (contacto NC 95-96)",
+    "%I0.3": "B1 · Nivel alto de sentina",
+    "%I0.4": "S2 · Reponer contador",
+    "%Q0.0": "K1 · Bomba en marcha",
+    "%Q0.1": "H1 · Disparo del térmico",
+    "%Q0.2": "H2 · Presión alta",
+    "%Q0.3": "H3 · Revisión: 5 arranques",
+    "%M0.0": "Marcha manual con retención",
+    "%T0": "Retardo de nivel alto, 3 s",
+    "%C0": "Arranques de la bomba",
+    "%IW0": "PT1 · Presión de descarga, bar",
+    "%AE0": "PT1 · Error del lazo de 4–20 mA"
+  },
+  "programa": [
+    {
+      "comentario": "Marcha manual: S1 arranca y la marca se retiene; S0, que es NC, la suelta al abrir.",
+      "logica": [{ "paralelo": [[{ "na": "%I0.0" }], [{ "na": "%M0.0" }]] }, { "na": "%I0.1" }],
+      "salidas": [{ "bobina": "%M0.0" }]
+    },
+    {
+      "comentario": "Arranque automático: el nivel alto debe mantenerse 3 s, para no arrancar por un golpe de mar.",
+      "logica": [{ "na": "%I0.3" }],
+      "salidas": [{ "ton": "%T0", "ms": 3000 }]
+    },
+    {
+      "comentario": "La bomba arranca a mano o por nivel, siempre que el relé térmico no haya disparado.",
+      "logica": [{ "paralelo": [[{ "na": "%M0.0" }], [{ "na": "%T0" }]] }, { "na": "%I0.2" }],
+      "salidas": [{ "bobina": "%Q0.0" }]
+    },
+    {
+      "comentario": "Luz de disparo del térmico: su contacto NC se abrió.",
+      "logica": [{ "nc": "%I0.2" }],
+      "salidas": [{ "bobina": "%Q0.1" }]
+    },
+    {
+      "comentario": "Presión alta en la descarga, o lazo de 4–20 mA en fallo.",
+      "logica": [{ "paralelo": [[{ "cmp": ">=", "a": "%IW0", "b": 8.0 }], [{ "na": "%AE0" }]] }],
+      "salidas": [{ "bobina": "%Q0.2" }]
+    },
+    {
+      "comentario": "Cuenta los arranques de la bomba; a los 5 pide revisión.",
+      "logica": [{ "flanco": "%Q0.0" }],
+      "salidas": [{ "ctu": "%C0", "pv": 5 }]
+    },
+    {
+      "comentario": "Aviso de revisión.",
+      "logica": [{ "na": "%C0" }],
+      "salidas": [{ "bobina": "%Q0.3" }]
+    },
+    {
+      "comentario": "S2 repone el contador después de la revisión.",
+      "logica": [{ "na": "%I0.4" }],
+      "salidas": [{ "rst": "%C0" }]
+    }
+  ]
+}

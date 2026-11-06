@@ -47,6 +47,8 @@ func _capturar() -> void:
 		await _capturar_planta(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "guardia_planta":
 		await _capturar_guardia_planta(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "plc":
+		await _capturar_plc(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -263,6 +265,33 @@ func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
 		raiz.reconstruir()
 		await _guardar(carpeta, "mision_cuadro_incidente", tam)
 		raiz.volver()
+
+## PLC de la bomba de achique: el equipo, y el programa con la bomba en marcha y un contacto
+## seleccionado para editarlo.
+func _capturar_plc(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("plc")
+		var p = raiz.pantalla_actual()
+		p._pulsar("S1", true)
+		for _i in 8:
+			p.sim.paso()
+		p._pulsar("S1", false)
+		p.sim.componente("PT1").params["valor"] = 8.5
+		for _i in 4:
+			p.sim.paso()
+		p._comprobar_firma()
+		await _guardar(carpeta, "plc_equipo", tam)
+		if raiz.vertical:
+			p._elegir_pestana("programa")
+		await _guardar(carpeta, "plc_programa", tam)
+		p._seleccionar([0, "logica", 1])
+		await _esperar()
+		p._desplazables[-1].scroll_vertical = 1400
+		await _guardar(carpeta, "plc_edicion", tam)
+		raiz.volver()
+
 
 ## Misiones de la planta de frío: la lista, la pestaña Misión, la sala con amoníaco y el informe.
 func _capturar_guardia_planta(raiz: Raiz, carpeta: String) -> void:

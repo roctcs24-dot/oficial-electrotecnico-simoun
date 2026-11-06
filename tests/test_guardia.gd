@@ -95,11 +95,11 @@ func test_las_misiones_estan_bien_formadas() -> String:
 		var m := _mision(id)
 		for p in m.pasos_verificacion():
 			for nodo: String in [p["a"], p["b"]]:
-				if not m.mesa.bornes(nodo.get_slice(".", 0)).has(nodo.get_slice(".", 1)):
+				if not m.mesa.bornes(nodo.get_slice(".", 0)).has(MesaTaller.borne_de(nodo)):
 					return "%s: el punto %s no existe" % [id, nodo]
 		for cable: Array in m.mesa.sim.cables:
 			for nodo: String in cable:
-				if not m.mesa.bornes(nodo.get_slice(".", 0)).has(nodo.get_slice(".", 1)):
+				if not m.mesa.bornes(nodo.get_slice(".", 0)).has(MesaTaller.borne_de(nodo)):
 					return "%s: el borne %s no está en el dibujo" % [id, nodo]
 		var correctas := 0
 		for o: Dictionary in m.datos["diagnostico"]["opciones"]:

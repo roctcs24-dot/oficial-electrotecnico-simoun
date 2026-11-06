@@ -97,6 +97,20 @@ func mision(id: String) -> Dictionary:
 	return leer("misiones/%s.json" % id)
 
 
+## Un PLC del circuito con "programa_de" carga el programa de data/plc/<id>.json.
 func circuito(nombre: String) -> SimSimulacion:
 	var datos := leer("circuitos/%s.json" % nombre)
-	return null if datos.is_empty() else SimSimulacion.desde_dict(datos)
+	if datos.is_empty():
+		return null
+	datos = datos.duplicate(true)
+	for c: Dictionary in datos.get("componentes", []):
+		var p: Dictionary = c.get("params", {})
+		if p.has("programa_de"):
+			var programa := plc(p["programa_de"])
+			p["programa"] = programa.get("programa", [])
+			p["etiquetas"] = programa.get("etiquetas", {})
+	return SimSimulacion.desde_dict(datos)
+
+
+func plc(id: String) -> Dictionary:
+	return leer("plc/%s.json" % id)

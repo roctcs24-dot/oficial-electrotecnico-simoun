@@ -286,4 +286,12 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Multímetro:** `vdc` con signo, `diodo` con la caída real, y `ma`, miliamperios en continua en serie. La entrada de mA tiene un fusible de 0,4 A. En serie, el multímetro cierra el circuito y los componentes reajustan su estado, como un transmisor que empieza a regular.
 - Las pruebas están en `tests/test_sim_electronica.gd`.
 
+**PLC (v4, en desarrollo):**
+
+- **Componente** `plc` (`sim/components/plc.gd`): alimentación L+ y M, entradas I0.0 a I0.7 con su común 1M (`"entradas": "pnp"` o `"npn"`), salidas Q0.0 a Q0.5 a relé con su común 1L o a transistor (`"salidas"`), y entrada analógica AI0 de 4–20 mA escalada a `%IW0` con `analogica`. En cada paso hace un scan: lee entradas, ejecuta el programa y escribe salidas. En STOP o con menos de 19 V abre las salidas.
+- **Lenguaje ladder** (`sim/plc/ladder.gd`, `SimLadder`), con direcciones IEC 61131-3 genéricas: contactos `na`, `nc`, `flanco` y `cmp`, ramas en `paralelo`, y salidas `bobina`, `set`, `reset`, `ton`, `tof`, `ctu` y `rst`. El formato está descrito al principio del archivo.
+- **Programas** en `data/plc/<id>.json`: `programa` y `etiquetas` (el nombre de cada dirección; el texto antes de « · » es el del dispositivo, como «S1»). En un circuito, `"programa_de": "<id>"` en los params del PLC carga ese programa.
+- **Pantalla** `ui/screens/plc.gd`: el frente del PLC con sus LEDs, los mandos de campo y el programa en vivo (`EsquemaLadder`), con la señal en verde. El editor (`game/editor_ladder.gd`, `EditorLadder`) cambia un borrador; se transfiere con el PLC en STOP, como en un autómata real.
+- Las pruebas están en `tests/test_plc.gd`. Con `plc` detrás de la carpeta, el comando de capturas guarda la pantalla del PLC.
+
 **Números y unidades:** `TextoTecnico.unir_unidades()` pone un espacio que no se parte entre un número y su unidad (`16 bar`, `−21 °C`, `100 %`), para que no queden en líneas distintas. Se aplica a los textos de lecciones y fichas y a las preguntas. Una unidad nueva se añade a su expresión regular.

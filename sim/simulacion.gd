@@ -47,6 +47,7 @@ static func tipos() -> Dictionary:
 		"transmisor_4_20": SimTransmisor420,
 		"pt100": SimPT100,
 		"termocupla": SimTermocupla,
+		"plc": SimPLC,
 	}
 
 

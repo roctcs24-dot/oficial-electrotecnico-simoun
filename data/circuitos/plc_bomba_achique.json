@@ -1,0 +1,31 @@
+{
+  "nombre": "PLC de la bomba de achique",
+  "nota": "Cuadro de mando genérico con PLC, fuente de 24 V DC, pulsadores, sensor de nivel PNP y transmisor de presión de 4–20 mA. La bomba la arranca el relé de interfaz K1. Valores típicos — verificar a bordo.",
+  "componentes": [
+    { "id": "F", "tipo": "fuente_dc", "params": { "entrada": "ninguna" } },
+    { "id": "PLC", "tipo": "plc", "params": { "programa_de": "bomba_achique", "entradas": "pnp", "salidas": "rele", "analogica": { "min": 0.0, "max": 10.0, "unidad": "bar" } } },
+    { "id": "S1", "tipo": "pulsador", "params": { "contacto": "NA" } },
+    { "id": "S0", "tipo": "pulsador", "params": { "contacto": "NC" } },
+    { "id": "F2", "tipo": "pulsador", "params": { "contacto": "NC" } },
+    { "id": "S2", "tipo": "pulsador", "params": { "contacto": "NA" } },
+    { "id": "B1", "tipo": "sensor_proximidad", "params": { "deteccion": "capacitivo", "salida": "pnp", "contacto": "NA" } },
+    { "id": "PT1", "tipo": "transmisor_4_20", "params": { "min": 0.0, "max": 10.0, "unidad": "bar", "valor": 3.0 } },
+    { "id": "K1", "tipo": "rele_dc" },
+    { "id": "H1", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 480.0 } },
+    { "id": "H2", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 480.0 } },
+    { "id": "H3", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 480.0 } }
+  ],
+  "cables": [
+    ["F.+", "PLC.L+"], ["F.-", "PLC.M"], ["F.-", "PLC.1M"], ["F.+", "PLC.1L"],
+    ["F.+", "S1.13"], ["S1.14", "PLC.I0.0"],
+    ["F.+", "S0.21"], ["S0.22", "PLC.I0.1"],
+    ["F.+", "F2.21"], ["F2.22", "PLC.I0.2"],
+    ["F.+", "B1.BN"], ["B1.BU", "F.-"], ["B1.BK", "PLC.I0.3"],
+    ["F.+", "S2.13"], ["S2.14", "PLC.I0.4"],
+    ["F.+", "PT1.+"], ["PT1.-", "PLC.AI0+"], ["PLC.AI0-", "F.-"],
+    ["PLC.Q0.0", "K1.A1"], ["K1.A2", "F.-"],
+    ["PLC.Q0.1", "H1.X1"], ["H1.X2", "F.-"],
+    ["PLC.Q0.2", "H2.X1"], ["H2.X2", "F.-"],
+    ["PLC.Q0.3", "H3.X1"], ["H3.X2", "F.-"]
+  ]
+}

@@ -140,6 +140,8 @@ func _recorrer(raiz: Raiz) -> String:
 			pasos.append(["mision_planta", {"id": id, "pestana_inicial": pestana}])
 	pasos.append(["examen", {"id": 4}])
 	pasos.append(["prueba_examen", {"id": "v3"}])
+	pasos.append(["plc", {}])
+	pasos.append(["plc", {"pestana": "programa"}])
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])

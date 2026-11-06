@@ -79,7 +79,7 @@ func test_plantillas_se_colocan_con_todos_sus_bornes() -> String:
 				var id := nodo.get_slice(".", 0)
 				if not mesa.piezas.has(id):
 					return "%s: pieza inexistente %s" % [p["id"], id]
-				if not mesa.bornes(id).has(nodo.get_slice(".", 1)):
+				if not mesa.bornes(id).has(MesaTaller.borne_de(nodo)):
 					return "%s: el borne %s no está en el dibujo" % [p["id"], nodo]
 		mesa.avanzar(1)
 	return ""

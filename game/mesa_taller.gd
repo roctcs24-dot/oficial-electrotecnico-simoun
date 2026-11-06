@@ -108,11 +108,16 @@ func tamano_pieza(id: String) -> Vector2:
 	return Vector2(t[0], t[1])
 
 
-## Posición en la mesa de un nodo "K1.A1".
+## Posición en la mesa de un nodo "K1.A1". El borne puede llevar puntos, como "PLC.I0.0":
+## solo el primero separa la pieza del borne.
 func posicion_borne(nodo: String) -> Vector2:
-	var partes := nodo.split(".")
-	var b: Array = bornes(partes[0])[partes[1]]
-	return posicion_pieza(partes[0]) + Vector2(b[0], b[1])
+	var id := nodo.get_slice(".", 0)
+	var b: Array = bornes(id)[borne_de(nodo)]
+	return posicion_pieza(id) + Vector2(b[0], b[1])
+
+
+static func borne_de(nodo: String) -> String:
+	return nodo.substr(nodo.find(".") + 1)
 
 
 ## Borne más cercano dentro del radio, o "".
@@ -244,7 +249,7 @@ func cable_en(punto: Vector2, tolerancia: float) -> int:
 func color_cable(indice: int) -> Color:
 	var c: Array = sim.cables[indice]
 	for nodo: String in c:
-		var borne := nodo.get_slice(".", 1)
+		var borne := borne_de(nodo)
 		var es_potencia: bool = entrada(piezas[nodo.get_slice(".", 0)]["tipo"]).get("potencia", false)
 		if es_potencia and COLOR_FASE.has(borne):
 			return COLOR_FASE[borne]
