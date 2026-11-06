@@ -1,0 +1,55 @@
+{
+  "id": "gen6_reparto",
+  "titulo": "Reparto de carga: kW y kVAr",
+  "resumen": "La velocidad reparte los kW y la excitación reparte los kVAr.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Dos mandos, dos potencias",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con dos grupos en paralelo hay que repartir dos cosas por separado:\n\n• [b]La {{potencia_activa}}, en kW,[/b] la da el diésel. Se reparte con el mando de velocidad. Para pasar kW de G1 a G2 sin cambiar la frecuencia, suba la velocidad de G2 y baje la de G1 lo mismo.\n• [b]La {{potencia_reactiva}}, en kVAr,[/b] depende de la excitación. Se reparte con el mando de tensión. Si se sube la tensión de G2, G2 toma kVAr y G1 los cede, y apenas cambian los kW.\n\nLa {{potencia_aparente}} de cada grupo, en kVA, resulta de las dos y fija su corriente.\n\nSi las excitaciones son distintas, circula entre los grupos una {{corriente_circulante}}: los amperímetros marcan más corriente de la que piden las cargas y los cos φ salen distintos. Un buen {{reparto_carga}} deja los kW en proporción a la potencia de cada grupo y cos φ parecidos en todos." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_kw_con_velocidad",
+          "pregunta": "Para pasar kW de G1 a G2 sin cambiar la frecuencia, ¿qué se ajusta?",
+          "opciones": ["La tensión de G2", "La velocidad: subir la de G2 y bajar la de G1", "El ajuste del relé de potencia inversa"],
+          "correcta": 1,
+          "explicacion": "Los kW los da el combustible, que regula el gobernador. Subir uno y bajar el otro lo mismo mantiene la frecuencia y traspasa la carga."
+        }
+      ]
+    },
+    {
+      "titulo": "Práctica con la simulación",
+      "bloques": [
+        { "tipo": "texto", "texto": "G1 y G2 están en paralelo y G1 lleva casi toda la carga, 320 kW.\n\n1. Reparta los kW hasta que los dos lleven unos 160 kW, manteniendo los 60 Hz.\n2. Suba varias veces la tensión de G2 y observe los kVAr de cada grupo.\n3. Baje mucho la velocidad de G2 y espere unos segundos: verá actuar la protección de potencia inversa." },
+        {
+          "tipo": "animacion",
+          "id": "banco_generadores",
+          "params": { "escenario": "reparto" },
+          "pie": "Simulación del cuadro principal: dos grupos de 450 kW con estatismo del 4 %. Valores típicos: verificar a bordo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "gen_cos_distinto",
+          "pregunta": "Dos grupos iguales llevan los mismos kW, pero G1 marca cos φ 0,95 y G2 marca 0,70. ¿Qué ocurre?",
+          "opciones": ["G2 está sobreexcitado y lleva la mayor parte de los kVAr", "G2 recibe menos combustible", "Es normal y no requiere ajuste"],
+          "correcta": 0,
+          "explicacion": "Con los mismos kW, el cos φ bajo de G2 indica que lleva muchos más kVAr. Baje la tensión de G2, o suba la de G1, hasta igualar los cos φ."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "gen_frecuencia_carga",
+          "pregunta": "Dos grupos en estatismo, sin PMS. Entra una carga grande. ¿Qué ocurre?",
+          "opciones": ["La frecuencia baja algo y los dos toman parte de la carga nueva", "Solo la toma el grupo que entró primero", "La frecuencia sube"],
+          "correcta": 0,
+          "explicacion": "Con estatismo, la frecuencia baja hasta que los dos gobernadores dan el combustible necesario. Después, el operador sube las dos consignas para volver a 60 Hz."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas eléctricos en buques.",
+    "ISO 8528-5: grupos electrógenos, funcionamiento en paralelo.",
+    "Manual del sistema de gestión de potencia del buque."
+  ]
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="360" viewBox="0 0 300 360">
+  <defs>
+    <linearGradient id="marco" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b4044"/><stop offset="1" stop-color="#1f2326"/>
+    </linearGradient>
+    <linearGradient id="tecla" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5c6267"/><stop offset="1" stop-color="#363a3e"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+  </defs>
+  <rect x="26" y="16" width="248" height="328" rx="10" fill="url(#marco)"/>
+  <circle cx="44" cy="34" r="6" fill="url(#acero)"/><circle cx="256" cy="34" r="6" fill="url(#acero)"/>
+  <circle cx="44" cy="326" r="6" fill="url(#acero)"/><circle cx="256" cy="326" r="6" fill="url(#acero)"/>
+  <!-- Escala -->
+  <rect x="46" y="42" width="208" height="154" rx="4" fill="#eef0ec"/>
+  <path d="M73,156 A90,90 0 0 1 227,156" fill="none" stroke="#20242a" stroke-width="2.5"/>
+  <path d="M180.3,117.9 A90,90 0 0 1 227.1,156.2" fill="none" stroke="#c0392b" stroke-width="7"/>
+  <g stroke="#20242a" stroke-width="2.5" stroke-linecap="round">
+    <path d="M72.9,156.2 L81.4,161.4 M93,133 L99.4,140.7 M119.7,117.9 L123,127.3 M150,112.6 V122.6 M180.3,117.9 L177,127.3 M207,133 L200.6,140.7 M227.1,156.2 L218.6,161.4"/>
+  </g>
+  <!-- Aguja: aislamiento alto -->
+  <path d="M150,190 L108,128" stroke="#20242a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="150" cy="190" r="7" fill="#20242a"/>
+  <!-- Luces y pulsadores -->
+  <circle cx="104" cy="222" r="8" fill="#3fbf5a"/><circle cx="196" cy="222" r="8" fill="#5a1c1c"/>
+  <rect x="62" y="270" width="80" height="38" rx="6" fill="url(#tecla)"/>
+  <rect x="158" y="270" width="80" height="38" rx="6" fill="url(#tecla)"/>
+</svg>

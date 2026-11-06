@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="400" viewBox="0 0 300 400">
+  <defs>
+    <linearGradient id="caja" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a9aeb1"/><stop offset="0.1" stop-color="#cfd3d5"/><stop offset="0.9" stop-color="#c6cacc"/><stop offset="1" stop-color="#9da2a5"/>
+    </linearGradient>
+    <linearGradient id="frente" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3f44"/><stop offset="1" stop-color="#25292d"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+    <radialGradient id="hueco" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0.55" stop-color="#050506"/><stop offset="1" stop-color="#26282b"/>
+    </radialGradient>
+    <g id="borne">
+      <circle r="14" fill="#2b2e31"/><circle r="12.6" fill="url(#hueco)"/>
+      <circle r="8.2" fill="url(#acero)"/>
+      <path d="M-4.6,0 H4.6 M0,-4.6 V4.6" stroke="#33373a" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+    <g id="dial">
+      <circle r="32" fill="#15191c"/><circle r="26" fill="url(#acero)"/>
+      <path d="M-22,22 L-26,26 M-31,0 H-36 M-22,-22 L-26,-26 M0,-31 V-36 M22,-22 L26,-26 M31,0 H36 M22,22 L26,26" stroke="#d8dcd8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <rect x="36" y="20" width="228" height="360" rx="10" fill="url(#caja)"/>
+  <use xlink:href="#borne" x="78" y="48"/><use xlink:href="#borne" x="126" y="48"/><use xlink:href="#borne" x="174" y="48"/><use xlink:href="#borne" x="222" y="48"/>
+  <use xlink:href="#borne" x="78" y="352"/><use xlink:href="#borne" x="126" y="352"/><use xlink:href="#borne" x="174" y="352"/><use xlink:href="#borne" x="222" y="352"/>
+  <rect x="58" y="86" width="184" height="226" rx="6" fill="url(#frente)"/>
+  <use xlink:href="#dial" x="106" y="172"/><path d="M106,172 L88,158" stroke="#33373a" stroke-width="4" stroke-linecap="round"/>
+  <use xlink:href="#dial" x="194" y="172"/><path d="M194,172 L208,154" stroke="#33373a" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="100" cy="262" r="8" fill="#3fbf5a"/><circle cx="150" cy="262" r="8" fill="#5a4a1c"/><circle cx="200" cy="262" r="8" fill="#5a1c1c"/>
+</svg>

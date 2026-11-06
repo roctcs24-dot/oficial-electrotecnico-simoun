@@ -1,0 +1,74 @@
+{
+  "id": "avr",
+  "titulo": "Regulador automático de tensión (AVR)",
+  "resumen": "Mantiene los 440 V y reparte los kVAr entre grupos en paralelo.",
+  "dibujo": {
+    "svg": "res://art/equipos/avr.svg",
+    "tamano": [360, 320],
+    "nota": "AVR genérico. La numeración de bornes y los ajustes cambian con cada fabricante: siga el manual del instalado. U, V, W: medida y alimentación. F+ y F−: campo de la excitatriz. S1 y S2: transformador de corriente del estatismo. R1 y R2: mando remoto de tensión.",
+    "etiquetas": [
+      { "texto": "AVR", "x": 180, "y": 64, "tam": 24 },
+      { "texto": "ON", "x": 288, "y": 84, "tam": 11 },
+      { "texto": "VOLT", "x": 82, "y": 146, "tam": 12 },
+      { "texto": "STAB", "x": 131, "y": 146, "tam": 12 },
+      { "texto": "DROOP", "x": 180, "y": 146, "tam": 12 },
+      { "texto": "UFRO", "x": 229, "y": 146, "tam": 12 },
+      { "texto": "EXC", "x": 278, "y": 146, "tam": 12 },
+      { "texto": "U", "x": 54, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "V", "x": 85, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "W", "x": 116, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "F+", "x": 147, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "F−", "x": 178, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "S1", "x": 209, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "S2", "x": 240, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "R1", "x": 271, "y": 232, "tam": 12, "color": "#20242a" },
+      { "texto": "R2", "x": 302, "y": 232, "tam": 12, "color": "#20242a" }
+    ]
+  },
+  "simbolos": {
+    "nota": "El AVR no tiene un símbolo normalizado propio: en los esquemas es un bloque rotulado AVR junto al generador y al transformador de corriente del estatismo. Verificar contra la norma.",
+    "lista": ["generador", "transformador_corriente"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{avr}} mantiene constante la tensión del alternador. Mide la tensión de salida, la compara con su consigna y regula la corriente de campo de la {{excitatriz}}. Con grupos en paralelo, además reparte la {{potencia_reactiva}} mediante el estatismo reactivo."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Circuito de medida[/b] de la tensión entre fases.\n• [b]Etapa de potencia[/b], con tiristores o transistores, que entrega la corriente continua al campo de la excitatriz.\n• [b]Alimentación:[/b] desde los bornes principales en los autoexcitados, o desde un {{gip}}.\n• [b]Potenciómetros de ajuste[/b] y, en los digitales, un puerto de configuración.\n• [b]Protecciones internas[/b] de baja frecuencia y de sobreexcitación."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "([i]Bornes de un AVR genérico — verificar con el manual[/i])\n• [b]U, V, W:[/b] medida y alimentación desde los bornes del alternador.\n• [b]F+ y F−:[/b] campo de la excitatriz. Respete la polaridad.\n• [b]S1 y S2:[/b] secundario del {{transformador_corriente}} del estatismo, en la fase que indique el fabricante. Su sentido importa: invertido, el estatismo actúa al revés y los kVAr se desequilibran.\n• [b]R1 y R2:[/b] mando de tensión del cuadro.\n\nSi desconecta el AVR con el grupo en carga, puentee antes S1 con S2: el secundario abierto de un transformador de corriente genera una tensión peligrosa."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Ajuste con el manual y anote la posición inicial de cada potenciómetro:\n1. [b]VOLT:[/b] con el grupo en vacío, a velocidad nominal y con el mando remoto en el centro de su recorrido, lleve la tensión a 440 V.\n2. [b]STAB:[/b] busque la respuesta más rápida sin oscilaciones al conectar y desconectar carga.\n3. [b]DROOP:[/b] con grupos en paralelo, ajuste hasta que los kVAr se repartan en proporción a la potencia. Es típico un 3 a 5 % de caída a plena carga reactiva ([i]verificar[/i]).\n4. [b]UFRO y EXC:[/b] vienen ajustados de fábrica. No los cambie sin motivo.\n\nUn AVR de repuesto debe ser del mismo modelo, o uno compatible con la excitatriz y la tensión del alternador."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Tensión de salida[/b] con el multímetro en V AC entre fases: 440 V en vacío, y estable al entrar carga.\n• [b]Tensión de campo[/b] en F+ y F− con el multímetro en V DC: unos pocos voltios en vacío y más en carga. Compare con la placa ([i]verificar[/i]).\n• [b]Respuesta:[/b] conecte un motor grande y observe cuánto cae la tensión y cuánto tarda en recuperarse.\n• [b]Con el grupo parado y bloqueado:[/b] continuidad del campo de la excitatriz en F+ y F−, con el AVR desconectado. Fuera de rango indica un bobinado abierto."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sin tensión al arrancar:[/b] magnetismo remanente perdido, fusible del AVR fundido o AVR averiado.\n• [b]Tensión al máximo:[/b] medida interrumpida o etapa de potencia en corto. Si actúa la protección de sobreexcitación, la tensión cae después a cero.\n• [b]Tensión que oscila:[/b] estabilidad mal ajustada o gobernador inestable.\n• [b]kVAr mal repartidos en paralelo:[/b] estatismo desajustado, o transformador de corriente invertido o en otra fase."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo[/i]):\n• Cada 6 meses: apriete de bornes, limpieza de polvo y aceite, y estado de los cables de medida.\n• Cada año: comprobación de la respuesta ante carga y del reparto de kVAr en paralelo.\n\n[b]Correctivo:[/b] cambie el AVR completo por uno del mismo modelo y ajústelo de nuevo. Conviene tener a bordo un repuesto ya configurado."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-16-1: sistemas de excitación de máquinas síncronas.",
+    "IEC 60092-301: generadores y motores en buques.",
+    "Manual del AVR instalado a bordo."
+  ]
+}

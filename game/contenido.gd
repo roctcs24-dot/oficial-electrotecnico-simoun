@@ -60,8 +60,12 @@ func ficha(id: String) -> Dictionary:
 	return leer("fichas/%s.json" % id)
 
 
-func simbolos() -> Array:
-	return leer("simbolos.json").get("simbolos", [])
+## Con sistema >= 0, solo los símbolos de ese sistema del buque.
+func simbolos(sistema := -1) -> Array:
+	var todos: Array = leer("simbolos.json").get("simbolos", [])
+	if sistema < 0:
+		return todos
+	return todos.filter(func(s: Dictionary) -> bool: return int(s.get("sistema", -1)) == sistema)
 
 
 func simbolo(id: String) -> Dictionary:

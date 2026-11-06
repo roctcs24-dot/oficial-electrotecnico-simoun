@@ -318,13 +318,15 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 
 
 ## Recorrido de toda la v1 sin errores: lecciones, símbolos, misiones y examen.
-func test_v1_completa_alcanza_el_rango_mas_alto() -> String:
+func test_todo_el_contenido_alcanza_el_rango_mas_alto() -> String:
 	var raiz := _raiz()
 	var l = load("res://tests/test_lecciones.gd").new()
-	for s in [0, 3]:
-		for id: String in raiz.contenido.sistema(s)["modos"]["aprender"]["lecciones"]:
+	var publicadas := 0
+	for s: Dictionary in raiz.contenido.sistemas():
+		for id: String in s["modos"].get("aprender", {}).get("lecciones", []):
 			l._completar(raiz, id, false)
 			raiz.volver()
+			publicadas += 1
 	var lecciones_completas := 0
 	for id: String in raiz.partida.datos["lecciones"]:
 		lecciones_completas += 1
@@ -349,7 +351,7 @@ func test_v1_completa_alcanza_el_rango_mas_alto() -> String:
 	var progreso_ok: bool = raiz.pantalla_actual() != null
 	raiz.free()
 	return A.primero([
-		A.cierto(lecciones_completas == 17, "deben completarse las 17 lecciones: %d" % lecciones_completas),
+		A.cierto(lecciones_completas == publicadas and publicadas == 25, "deben completarse las 25 lecciones: %d de %d" % [lecciones_completas, publicadas]),
 		A.cierto(misiones.is_empty(), "misiones: %s" % ", ".join(misiones)),
 		A.cierto(errores == 0, "un recorrido sin fallos no debe dejar errores: %d" % errores),
 		A.cierto(rango == rangos[-1]["nombre"], "debe alcanzar %s: %s con %d puntos" % [rangos[-1]["nombre"], rango, puntos]),

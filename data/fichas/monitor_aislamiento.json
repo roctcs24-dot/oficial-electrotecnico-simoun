@@ -1,0 +1,67 @@
+{
+  "id": "monitor_aislamiento",
+  "titulo": "Monitor de aislamiento",
+  "resumen": "Vigila la resistencia de la red aislada contra el casco, con la red en servicio.",
+  "dibujo": {
+    "svg": "res://art/equipos/monitor_aislamiento.svg",
+    "tamano": [300, 360],
+    "nota": "Monitor de aislamiento genérico de cuadro, con escala en MΩ. Los modelos digitales muestran el valor en una pantalla. Ajuste de alarma según el buque: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "INSULATION MONITOR", "x": 150, "y": 58, "tam": 12, "color": "#20242a" },
+      { "texto": "∞", "x": 60, "y": 150, "tam": 16, "color": "#20242a" },
+      { "texto": "1", "x": 150, "y": 100, "tam": 13, "color": "#20242a" },
+      { "texto": "0", "x": 240, "y": 150, "tam": 13, "color": "#20242a" },
+      { "texto": "MΩ", "x": 194, "y": 178, "tam": 14, "color": "#20242a" },
+      { "texto": "ON", "x": 104, "y": 244, "tam": 11 },
+      { "texto": "ALARM", "x": 196, "y": 244, "tam": 11 },
+      { "texto": "TEST", "x": 102, "y": 289, "tam": 13 },
+      { "texto": "RESET", "x": 198, "y": 289, "tam": 13 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Función 64 en ANSI (IEEE C37.2), detección de falla a tierra. Verificar contra la norma.",
+    "lista": ["monitor_aislamiento"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{monitor_aislamiento}} mide de forma continua la resistencia de aislamiento entre la red de 440 V y el casco, con la red en servicio. En un {{sistema_aislado}} la primera {{falla_tierra}} no dispara ninguna protección, así que este equipo es el que avisa. Suele haber uno en la red de 440 V y otros en las de 220 V y 24 V DC ([i]verificar a bordo[/i])."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Generador de señal de medida[/b], que aplica una pequeña tensión continua o pulsada entre la red y el casco.\n• [b]Circuito de medida[/b] de la corriente que vuelve a través del aislamiento.\n• [b]Indicador[/b] analógico o pantalla, en kΩ o MΩ.\n• [b]Relé de alarma[/b] hacia el sistema de alarmas de máquinas.\n• [b]Pulsadores TEST y RESET.[/b]"
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Un borne a la red, a través de su fusible, en el punto que indique el fabricante.\n• Otro borne al casco, con un cable propio y bien apretado. Si se suelta, el monitor deja de medir. Muchos modelos vigilan esta conexión.\n• El contacto de alarma al sistema de alarmas.\n\nEn una red aislada solo debe haber un monitor conectado a la vez. Dos monitores en la misma red se miden entre sí y dan lecturas falsas. Al unir dos secciones de barras, debe quedar uno solo ([i]verificar el procedimiento del buque[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Umbral de alarma:[/b] en el simulador, 1 MΩ ([i]verificar el ajuste del buque y lo que pide la sociedad de clasificación[/i]). Muchos modelos tienen dos umbrales: aviso previo y alarma.\n• [b]Retardo[/b] de la alarma, para no avisar por perturbaciones breves.\n• [b]Memoria de falla:[/b] si está activada, la alarma permanece hasta pulsar RESET.\n\nUn repuesto debe ser apto para redes aisladas, para la tensión de la red y para su capacidad contra el casco."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Pulsador TEST:[/b] simula una falla y debe dar alarma local y en el sistema de alarmas.\n• [b]Prueba con resistencia:[/b] con autorización, EPP y según el manual, conecte entre una fase y el casco una resistencia de prueba de valor conocido, por debajo del umbral. El monitor debe indicarla y dar la alarma.\n• [b]Comparación:[/b] cuando da alarma, las lámparas de tierra deben señalar la misma fase.\n\nEl monitor vigila la red en servicio. No sustituye a la medida con {{megohmetro}}, que se hace con el circuito aislado y sin tensión."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Alarma real:[/b] falla a tierra en algún equipo. Localícela abriendo salidas una a una.\n• [b]Lectura siempre infinita:[/b] conexión al casco o a la red suelta, o fusible fundido. El monitor no detectaría ninguna falla.\n• [b]Lectura baja al unir barras:[/b] dos monitores conectados a la vez.\n• [b]Lecturas que bajan con la humedad:[/b] aislamiento degradado en motores de cubierta o en cajas de conexión mal cerradas."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo[/i]): prueba con TEST cada semana y anotación de la lectura en el registro para ver su tendencia, y apriete de las conexiones a la red y al casco cada 6 meses.\n\n[b]Correctivo:[/b] sustituya el equipo por uno del mismo tipo y tensión, ajuste su umbral y compruebe la alarma."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61557-8: dispositivos de vigilancia del aislamiento en redes IT.",
+    "IEC 60092-202: diseño de sistemas, vigilancia del aislamiento.",
+    "IEEE 45: prácticas recomendadas para instalaciones eléctricas a bordo."
+  ]
+}

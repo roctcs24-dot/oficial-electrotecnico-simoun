@@ -1,0 +1,72 @@
+{
+  "id": "rele_potencia_inversa",
+  "titulo": "Relé de potencia inversa",
+  "resumen": "Desconecta el generador que empieza a trabajar como motor.",
+  "dibujo": {
+    "svg": "res://art/equipos/rele_potencia_inversa.svg",
+    "tamano": [300, 400],
+    "nota": "Relé genérico de potencia inversa. Bornes y rangos de ajuste según el fabricante: verificar a bordo. L1 a L3: medida de tensión. S1 y S2: transformador de corriente. 11-12-14: contacto conmutado de disparo.",
+    "etiquetas": [
+      { "texto": "L1", "x": 78, "y": 74, "tam": 13, "color": "#20242a" },
+      { "texto": "L2", "x": 126, "y": 74, "tam": 13, "color": "#20242a" },
+      { "texto": "L3", "x": 174, "y": 74, "tam": 13, "color": "#20242a" },
+      { "texto": "S1", "x": 222, "y": 74, "tam": 13, "color": "#20242a" },
+      { "texto": "S2", "x": 78, "y": 326, "tam": 13, "color": "#20242a" },
+      { "texto": "11", "x": 126, "y": 326, "tam": 13, "color": "#20242a" },
+      { "texto": "12", "x": 174, "y": 326, "tam": 13, "color": "#20242a" },
+      { "texto": "14", "x": 222, "y": 326, "tam": 13, "color": "#20242a" },
+      { "texto": "32   REVERSE POWER", "x": 150, "y": 108, "tam": 13 },
+      { "texto": "P %", "x": 106, "y": 222, "tam": 12 },
+      { "texto": "t (s)", "x": 194, "y": 222, "tam": 12 },
+      { "texto": "ON", "x": 100, "y": 286, "tam": 11 },
+      { "texto": "START", "x": 150, "y": 286, "tam": 11 },
+      { "texto": "TRIP", "x": 200, "y": 286, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Función 32 en ANSI (IEEE C37.2). Verificar contra la norma.",
+    "lista": ["rele_potencia_inversa"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{rele_proteccion}} de {{potencia_inversa}} vigila el sentido de la potencia activa del generador. Si el grupo absorbe potencia de las barras por encima de su ajuste y durante más tiempo que su retardo, ordena abrir su interruptor. Así evita que el diésel sea arrastrado como un motor y que los demás grupos se sobrecarguen. En muchos buques esta función está dentro del controlador del generador ([i]verificar a bordo[/i])."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Entradas de tensión[/b] de las fases.\n• [b]Entrada de corriente[/b] desde un {{transformador_corriente}}.\n• [b]Medidor de potencia[/b] que calcula P = V × I × cos φ con su signo.\n• [b]Temporizador[/b] y contacto de salida hacia la bobina de disparo del interruptor.\n• [b]LED[/b] de alimentación, de arranque de la temporización y de disparo."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• L1, L2 y L3 desde el lado del generador del interruptor.\n• S1 y S2 desde el transformador de corriente de la fase indicada por el fabricante, respetando el sentido P1-P2 del esquema.\n• El contacto de disparo, 11-14 en este ejemplo, en el circuito de la bobina de disparo del interruptor.\n\nLa polaridad del transformador de corriente decide el signo de la potencia. Con S1 y S2 cruzados, el relé ve potencia inversa cuando el grupo entrega carga, y dispara en cuanto la toma."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Ajustes típicos para un diésel ([i]verificar con el fabricante del motor y el estudio de protecciones[/i]):\n• [b]Potencia:[/b] del 8 al 15 % de la potencia nominal. En el simulador, el 8 % de 450 kW, es decir 36 kW.\n• [b]Retardo:[/b] de 3 a 10 s. En el simulador, 5 s, para no disparar con las oscilaciones breves de la sincronización.\n\nUn ajuste demasiado bajo provoca disparos al sincronizar. Uno demasiado alto deja al diésel trabajando como motor."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con maleta de inyección:[/b] aplique tensión y corriente con el sentido de la potencia invertido y compruebe el umbral y el tiempo de disparo.\n• [b]Funcional en servicio:[/b] con dos grupos en paralelo y autorización del jefe de máquinas, baje despacio la velocidad de uno hasta que su vatímetro marque potencia negativa. El relé debe arrancar la temporización al pasar el ajuste y disparar al cumplirse el retardo. Hágalo solo según el procedimiento del buque.\n• [b]Polaridad:[/b] con el grupo en carga normal, el relé no debe indicar arranque."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Dispara al tomar carga:[/b] transformador de corriente invertido.\n• [b]Dispara al sincronizar:[/b] ajuste muy bajo o retardo muy corto, o un entrante que cierra más lento que las barras.\n• [b]No dispara:[/b] circuito de corriente abierto, o contacto de salida o bobina de disparo averiados.\n• [b]Disparos repetidos de un grupo:[/b] suelen indicar falta de combustible o un gobernador averiado, no una falla del relé."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar el plan del buque y la sociedad de clasificación[/i]): prueba funcional cada año, apriete de bornes y comprobación del circuito de disparo.\n\n[b]Correctivo:[/b] sustituya el relé por otro del mismo modelo e introduzca de nuevo los ajustes. Registre los ajustes y la prueba en el libro."
+    }
+  ],
+  "para_saber_mas": [
+    "IEEE C37.2: función 32, relé direccional de potencia.",
+    "IEC 60255: relés de medida y equipos de protección.",
+    "IEC 60092-202: diseño de sistemas, protección."
+  ]
+}

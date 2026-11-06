@@ -29,7 +29,10 @@
       "estado": "activo",
       "zona": [478, 264, 116, 76],
       "modos": {
-        "taller": { "pantalla": "cuadro", "detalle": "Cuadro principal: arranque, sincronización y reparto de carga" }
+        "aprender": { "lecciones": ["gen1_alternador", "gen2_avr", "gen3_gobernador", "gen4_cuadro", "gen5_sincronizacion", "gen6_reparto", "gen7_blackout", "gen8_aislamiento"],
+          "fichas": ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento"] },
+        "taller": { "pantalla": "cuadro", "detalle": "Cuadro principal: arranque, sincronización y reparto de carga" },
+        "examen": { "minijuegos": ["simbolos_generacion"] }
       }
     },
     {

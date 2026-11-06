@@ -1,0 +1,61 @@
+{
+  "id": "gen7_blackout",
+  "titulo": "Blackout y emergencia",
+  "resumen": "Por qué se pierde la planta, cómo se evita y cómo se recupera.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Por qué ocurre y cómo se evita",
+      "bloques": [
+        { "tipo": "texto", "texto": "Un {{blackout}} deja sin tensión las barras principales: se paran las bombas, los compresores, los ventiladores y el alumbrado normal. Las causas habituales:\n\n• Sobrecarga, que dispara el interruptor o cala el diésel.\n• Combustible: filtros obstruidos, agua o aire en el combustible.\n• Una sincronización mal hecha, o un grupo que pasa a potencia inversa y deja la carga a los demás.\n• Un cortocircuito mal despejado, o una avería del gobernador o del AVR.\n\nPara evitar la sobrecarga, el cuadro tiene {{disparo_preferente}}: si la corriente del generador supera su ajuste durante unos segundos, desconecta las cargas no esenciales, por ejemplo climatización, cocina o lavandería ([i]verificar la lista y los escalones a bordo[/i]). Las {{cargas_esenciales}}, como el gobierno, la lubricación y la refrigeración de los motores, siguen alimentadas." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_preferente",
+          "pregunta": "¿Para qué sirve el disparo preferente?",
+          "opciones": ["Para desconectar cargas no esenciales y no perder los generadores por sobrecarga", "Para disparar el generador más viejo", "Para separar el cuadro de emergencia"],
+          "correcta": 0,
+          "explicacion": "Sacrifica servicios prescindibles para que los generadores en barras no se disparen ni se calen. Se reconectan cuando hay otro grupo en paralelo."
+        }
+      ]
+    },
+    {
+      "titulo": "El generador de emergencia",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{generador_emergencia}} está fuera de la sala de máquinas, en un local propio, y alimenta el {{cuadro_emergencia}}: alumbrado de emergencia, luces de navegación, comunicaciones, bomba de incendio de emergencia y otros servicios de seguridad ([i]verificar la lista del buque[/i]).\n\n• En servicio normal, el cuadro de emergencia se alimenta desde el cuadro principal.\n• Si faltan las barras principales, el generador de emergencia arranca solo y cierra sobre el cuadro de emergencia.\n• Mientras tanto, las baterías de 24 V mantienen los servicios más críticos.\n\nSOLAS (II-1, regla 43) exige que en los buques de carga el generador de emergencia arranque y se conecte de forma automática en 45 segundos como máximo. Un buque pesquero se rige por otras normas, como el Acuerdo de Ciudad del Cabo y las de su bandera ([i]verificar la normativa aplicable al Vía Simoun[/i]).\n\nEn el simulador, el grupo de emergencia es de 75 kW ([i]valor típico — verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_emergencia_45",
+          "pregunta": "Según SOLAS, en un buque de carga, ¿en cuánto tiempo debe conectarse automáticamente el generador de emergencia?",
+          "opciones": ["En 45 segundos como máximo", "En 5 minutos", "Lo conecta el oficial a mano"],
+          "correcta": 0,
+          "explicacion": "SOLAS II-1, regla 43, fija 45 segundos para buques de carga. Para un pesquero, compruebe lo que exige su normativa."
+        }
+      ]
+    },
+    {
+      "titulo": "Recuperar la planta",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con el {{pms}} en automático, tras un blackout se arranca un grupo disponible, se cierra sobre las barras sin tensión y se rearrancan los motores en el orden previsto. Ese {{rearranque_secuencial}} evita que todas las corrientes de arranque lleguen a la vez y vuelvan a disparar el grupo.\n\nEn manual, el oficial sigue el mismo orden. Antes de rearmar, mire qué alarma provocó el blackout. Si fue un cortocircuito o una falla del grupo, cerrar de nuevo puede repetirla." },
+        {
+          "tipo": "ordenar",
+          "tema": "gen_recuperar",
+          "pregunta": "Seleccione en orden la recuperación manual de un blackout:",
+          "pasos": [
+            "Leer las alarmas del cuadro para conocer la causa",
+            "Arrancar un grupo disponible y esperar su tensión y frecuencia",
+            "Cerrar su interruptor sobre las barras sin tensión",
+            "Reconectar los servicios esenciales uno a uno",
+            "Poner otro grupo en paralelo antes de reconectar las cargas no esenciales",
+            "Anotar el suceso en el libro de registro"
+          ],
+          "explicacion": "Primero se conoce la causa y se recupera la tensión con un grupo. Los motores se reconectan de uno en uno, esenciales primero, y los no esenciales solo cuando hay potencia de reserva."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS, capítulo II-1, reglas 42 y 43: fuente de energía de emergencia.",
+    "Acuerdo de Ciudad del Cabo de 2012 sobre la seguridad de los buques pesqueros.",
+    "IEC 60092-201 y 60092-202: diseño de sistemas eléctricos en buques."
+  ]
+}

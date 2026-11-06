@@ -71,7 +71,9 @@ func tiene(tema: String) -> bool:
 ## Devuelve un elemento listo para preguntar, con tipo y tema.
 func pregunta(tema: String, azar: RandomNumberGenerator) -> Dictionary:
 	if tema.begins_with("simbolo_"):
-		var r := JuegoSimbolos.crear_ronda(tema.trim_prefix("simbolo_"), contenido.simbolos(), azar)
+		var id := tema.trim_prefix("simbolo_")
+		# Las opciones falsas salen del mismo sistema, como en el examen y el minijuego.
+		var r := JuegoSimbolos.crear_ronda(id, contenido.simbolos(int(contenido.simbolo(id).get("sistema", -1))), azar)
 		r["tipo"] = "simbolo"
 		r["tema"] = tema
 		return r

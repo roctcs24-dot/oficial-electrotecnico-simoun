@@ -1,6 +1,6 @@
 extends SceneTree
 ## Guarda imágenes de las pantallas tal como las dibuja el juego, para revisarlas:
-##   godot --path . --script res://tests/capturar.gd -- <carpeta de salida> [lecciones]
+##   godot --path . --script res://tests/capturar.gd -- <carpeta de salida> [lecciones|fichas] [sistema]
 ## No usa --headless porque necesita dibujar. Se excluye de las versiones exportadas.
 
 const TAMANOS := [Vector2i(1280, 720), Vector2i(432, 960), Vector2i(960, 432)]
@@ -58,11 +58,18 @@ func _capturar_general(raiz: Raiz, carpeta: String) -> void:
 		raiz.volver()
 
 
+## El tercer argumento elige el sistema; sin él, los de la v1.
+func _sistemas(por_defecto: Array) -> Array:
+	var argumentos := OS.get_cmdline_user_args()
+	return [int(argumentos[2])] if argumentos.size() > 2 else por_defecto
+
+
 func _capturar_fichas(raiz: Raiz, carpeta: String) -> void:
+	var sistema: int = _sistemas([3])[0]
 	for tam: Vector2i in TAMANOS_LECCIONES:
 		root.size = tam
 		await _esperar()
-		for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"]:
+		for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["fichas"]:
 			var vistas := ["real", "simbolos"]
 			for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
 				vistas.append("extra_%d" % n)
@@ -70,13 +77,13 @@ func _capturar_fichas(raiz: Raiz, carpeta: String) -> void:
 				raiz.ir_a("ficha", {"id": id, "vista": vista})
 				await _guardar(carpeta, "%s_%s" % [id, vista], tam)
 				raiz.volver()
-		raiz.ir_a("minijuego_simbolos")
+		raiz.ir_a("minijuego_simbolos", {"sistema": sistema})
 		await _guardar(carpeta, "minijuego", tam)
 		var p = raiz.pantalla_actual()
 		p._al_responder(true, int(p.args["rondas"][0]["correcta"]), 0, p.args["rondas"][0])
 		await _guardar(carpeta, "minijuego_respondido", tam)
 		raiz.volver()
-		for s: Dictionary in raiz.contenido.simbolos():
+		for s: Dictionary in raiz.contenido.simbolos(sistema):
 			var r := {"id": s["id"], "norma": "iec", "opciones": [s["id"]], "correcta": 0}
 			raiz.ir_a("minijuego_simbolos", {"rondas": [r], "indice": 0, "respuestas": {0: 0}})
 			await _guardar(carpeta, "simbolo_%s" % s["id"], tam)
@@ -236,7 +243,7 @@ func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("glosario")
 		await _guardar(carpeta, "glosario", tam)
 		raiz.volver()
-		for sistema in [0, 3]:
+		for sistema: int in _sistemas([0, 3]):
 			for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
 				for n in raiz.contenido.leccion(id)["paginas"].size():
 					raiz.ir_a("leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}})

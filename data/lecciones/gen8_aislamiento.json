@@ -1,0 +1,60 @@
+{
+  "id": "gen8_aislamiento",
+  "titulo": "Red aislada y fallas a tierra",
+  "resumen": "Por qué la primera falla no dispara y cómo se localiza.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La red aislada",
+      "bloques": [
+        { "tipo": "texto", "texto": "La red de 440 V del buque es un {{sistema_aislado}}: el neutro de los generadores no está unido al casco ([i]lo habitual en buques mercantes y pesqueros — verificar a bordo[/i]).\n\n• [b]Primera {{falla_tierra}}:[/b] una fase toca el casco. Casi no circula corriente, porque no hay camino de vuelta, y no dispara nada. Los servicios esenciales siguen funcionando.\n• [b]Segunda falla en otra fase:[/b] las dos fases quedan unidas a través del casco. Es un cortocircuito y disparan las protecciones de las dos salidas.\n\nAdemás, con una fase a masa, las otras dos quedan a 440 V contra el casco en lugar de 254 V. Por eso la primera falla debe localizarse y repararse cuanto antes." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_primera_falla",
+          "pregunta": "¿Qué ocurre con la primera falla a tierra en una red aislada?",
+          "opciones": ["Da alarma, pero no dispara ninguna protección", "Dispara el interruptor del generador", "Funde los fusibles de esa salida"],
+          "correcta": 0,
+          "explicacion": "Sin neutro a tierra no hay camino para una corriente de falla grande. El monitor de aislamiento avisa, y la falla debe localizarse antes de que aparezca una segunda."
+        }
+      ]
+    },
+    {
+      "titulo": "Cómo se detecta",
+      "bloques": [
+        { "tipo": "texto", "texto": "[b]{{Lamparas_tierra}}:[/b] tres lámparas, cada una entre una fase y el casco. Sin falla brillan igual, a media luz. Con una fase a masa, su lámpara se apaga o se atenúa y las otras dos brillan más.\n\n[b]{{Monitor_aislamiento}}:[/b] aplica una pequeña señal de medida entre la red y el casco y muestra de forma continua la resistencia de aislamiento de toda la red. Da alarma cuando baja de su ajuste. En el simulador, el ajuste es de 1 MΩ ([i]verificar el ajuste del monitor del buque[/i]).\n\nEl monitor vigila la red en servicio. No sustituye a la medida con megóhmetro, que se hace con el circuito sin tensión y aislado." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_lamparas_tierra",
+          "pregunta": "En las lámparas de tierra, la de L2 está apagada y las de L1 y L3 brillan más que de costumbre. ¿Qué indica?",
+          "opciones": ["Falla a tierra en la fase L2", "Lámpara de L2 fundida, sin importancia", "Falla a tierra en L1 y L3"],
+          "correcta": 0,
+          "explicacion": "La fase con falla queda al potencial del casco y su lámpara no recibe tensión. Las otras dos quedan a la tensión de línea contra el casco y brillan más. Para descartar una lámpara fundida, el monitor de aislamiento debe dar también la alarma."
+        }
+      ]
+    },
+    {
+      "titulo": "Localizar la falla",
+      "bloques": [
+        { "tipo": "texto", "texto": "Para localizar una falla a tierra se desconectan las salidas una a una mientras se observa el monitor. Cuando la lectura se recupera, la falla está en la última salida abierta.\n\nCortar una salida deja sin servicio sus equipos. Coordine cada corte con el jefe de máquinas y con el puente, y no corte el servomotor del timón ni otros servicios esenciales sin un plan." },
+        {
+          "tipo": "ordenar",
+          "tema": "gen_localizar_tierra",
+          "pregunta": "Seleccione en orden los pasos para localizar una falla a tierra:",
+          "pasos": [
+            "Anotar la lectura del monitor y la fase afectada",
+            "Informar al jefe de máquinas y al puente antes de cortar servicios",
+            "Abrir una a una las salidas, empezando por las no esenciales, y observar el monitor",
+            "Al recuperarse la lectura, reconectar las demás salidas y seguir buscando dentro de esa",
+            "Aislar el circuito con bloqueo y etiquetado y medir con megóhmetro hasta hallar el equipo"
+          ],
+          "explicacion": "Se anota la situación y se coordina antes de cortar nada. El corte selectivo encuentra la salida, y la medida con megóhmetro, con el circuito aislado, encuentra el equipo."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas, vigilancia del aislamiento.",
+    "IEC 61557-8: dispositivos de vigilancia del aislamiento en redes IT.",
+    "IEEE 45: prácticas recomendadas para instalaciones eléctricas a bordo."
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "id": "gen5_sincronizacion",
+  "titulo": "Sincronización y puesta en paralelo",
+  "resumen": "Las cuatro condiciones, el sincronoscopio y el momento de cerrar.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Las cuatro condiciones",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{puesta_paralelo}} conecta un grupo a unas barras que ya alimenta otro. Antes de cerrar su interruptor, la {{sincronizacion}} debe cumplir cuatro condiciones:\n\n1. [b]Misma {{secuencia_fases}}.[/b] Se comprueba con un {{secuencimetro}} al instalar el grupo o tras cualquier trabajo en sus cables. También antes de una {{conexion_puerto}}: una secuencia invertida haría girar al revés todos los motores.\n2. [b]Misma tensión[/b], que se iguala con el mando de tensión del AVR.\n3. [b]Casi la misma frecuencia.[/b] Conviene que el entrante vaya algo más rápido, con una {{frecuencia_deslizamiento}} de 0,1 a 0,2 Hz ([i]valor típico — verificar[/i]).\n4. [b]Mismo ángulo:[/b] las tensiones deben pasar por su máximo a la vez en el instante del cierre." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_entrante_rapido",
+          "pregunta": "¿Por qué conviene que el grupo entrante vaya algo más rápido que las barras al cerrar?",
+          "opciones": ["Para que tome algo de carga al cerrar y no pase a potencia inversa", "Para que el sincronoscopio gire más deprisa", "Para que suba la tensión de las barras"],
+          "correcta": 0,
+          "explicacion": "Si el entrante va algo más rápido, al cerrar empuja y toma carga. Si va más lento, absorbe potencia y puede disparar por potencia inversa."
+        }
+      ]
+    },
+    {
+      "titulo": "El sincronoscopio y las lámparas",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{sincronoscopio}} compara el entrante con las barras:\n\n• [b]La posición de la aguja[/b] es la diferencia de ángulo. A las doce, las tensiones están en fase.\n• [b]El sentido del giro[/b] dice quién va más rápido. Horario, hacia RÁPIDO, si el entrante va más rápido.\n• [b]La rapidez del giro[/b] es el deslizamiento. Una vuelta cada 10 s equivale a 0,1 Hz.\n\nCierre cuando la aguja gire despacio en sentido rápido, unos grados antes de las doce: el interruptor tarda unas decenas de milisegundos en cerrar ([i]verificar el tiempo de cierre del ACB[/i]).\n\nLas {{lamparas_sincronismo}} se conectan entre cada fase del entrante y la misma fase de las barras. Se apagan a la vez cuando las tensiones coinciden. Si se apagan una tras otra, en rotación, la secuencia de fases está invertida: no cierre.\n\nMuchos cuadros añaden un {{verificador_sincronismo}}, la función 25, que no deja cerrar fuera de la ventana." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_aguja_lenta",
+          "pregunta": "La aguja gira en sentido antihorario, hacia LENTO, una vuelta cada 5 s. ¿Qué debe hacer?",
+          "opciones": ["Cerrar cuando pase por las doce", "Subir la velocidad del entrante hasta que la aguja gire despacio en sentido rápido", "Bajar la tensión del entrante"],
+          "correcta": 1,
+          "explicacion": "El entrante va 0,2 Hz más lento que las barras. Cerrar así lo dejaría en potencia inversa. Suba su velocidad hasta que la aguja gire despacio en sentido horario."
+        }
+      ]
+    },
+    {
+      "titulo": "Práctica con la simulación",
+      "bloques": [
+        { "tipo": "texto", "texto": "G1 alimenta las barras y G2 está en marcha, sin conectar. Baje la velocidad de G2 hasta que la aguja gire despacio en sentido rápido y cierre Q2 poco antes de las doce. Pruebe también a cerrar con la aguja abajo, para ver lo que ocurre." },
+        {
+          "tipo": "animacion",
+          "id": "banco_generadores",
+          "params": { "escenario": "sincronizar" },
+          "pie": "Simulación del cuadro principal con dos grupos de 450 kW y valores típicos: verificar a bordo."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "gen_secuencia_sincronizar",
+          "pregunta": "Seleccione en orden los pasos de la sincronización manual:",
+          "pasos": [
+            "Arrancar el diésel del entrante y esperar su tensión y frecuencia nominales",
+            "Seleccionar el entrante en el panel de sincronización",
+            "Igualar su tensión con la de las barras",
+            "Ajustar su velocidad hasta que la aguja gire despacio en sentido rápido",
+            "Cerrar el interruptor poco antes de las doce",
+            "Repartir la carga entre los grupos"
+          ],
+          "explicacion": "La tensión y la frecuencia se igualan antes de mirar el ángulo. El cierre se da con la aguja en movimiento lento, justo antes de las doce, y después se reparte la carga."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas eléctricos en buques.",
+    "IEEE C37.2: función 25, verificación de sincronismo.",
+    "Manual del sincronizador y del cuadro principal del buque."
+  ]
+}

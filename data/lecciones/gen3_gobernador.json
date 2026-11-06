@@ -1,0 +1,55 @@
+{
+  "id": "gen3_gobernador",
+  "titulo": "El gobernador y la frecuencia",
+  "resumen": "Velocidad del diésel, estatismo y modo isócrono.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Qué hace el gobernador",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{gobernador}} mide la velocidad del diésel y mueve la cremallera del combustible para mantenerla. Como la frecuencia depende de la velocidad, el gobernador controla los 60 Hz y también los kW que entrega el grupo.\n\n• Al entrar una carga, el diésel frena un instante y el gobernador le da más combustible.\n• Al salir una carga, el diésel se acelera y el gobernador le quita combustible.\n\nPuede ser mecánico-hidráulico o electrónico, con un captador magnético en el volante y un actuador sobre la cremallera ([i]verificar el tipo a bordo[/i]). Desde el cuadro se sube o se baja su consigna con el mando de velocidad.\n\nLa {{sobrevelocidad}} la vigila un dispositivo independiente, que para el diésel en torno al 110–115 % de la velocidad nominal ([i]valor típico — verificar con el fabricante[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_gobernador_funcion",
+          "pregunta": "¿Qué ajusta el gobernador para mantener la frecuencia?",
+          "opciones": ["La excitación del alternador", "El combustible que recibe el diésel", "La corriente del campo principal"],
+          "correcta": 1,
+          "explicacion": "El gobernador actúa sobre el combustible del diésel. La excitación la ajusta el AVR."
+        }
+      ]
+    },
+    {
+      "titulo": "Estatismo e isócrono",
+      "bloques": [
+        { "tipo": "texto", "texto": "[b]Con {{estatismo}}[/b], la velocidad cae un poco al aumentar la carga. Un estatismo del 4 % ([i]valor típico — verificar[/i]) significa que, de vacío a plena carga, la frecuencia baja el 4 % de 60 Hz, es decir 2,4 Hz.\n\nEjemplo: un grupo de 450 kW solo en barras, con consigna en vacío de 61,2 Hz:\n• En vacío: 61,2 Hz.\n• A 225 kW, media carga: 61,2 − 1,2 = 60,0 Hz.\n• A 450 kW: 58,8 Hz.\n\nPor eso, cuando cambia la carga, el operador corrige la consigna para volver a 60 Hz.\n\n[b]En modo {{isocrono}}[/b], el gobernador mantiene 60 Hz con cualquier carga. Sirve para un grupo solo, o para varios si sus controladores están unidos por líneas de reparto o por el {{pms}}." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_estatismo_calculo",
+          "pregunta": "Un grupo de 450 kW con 4 % de estatismo tiene la consigna en vacío en 61,2 Hz. ¿Qué frecuencia tiene con 450 kW?",
+          "opciones": ["60,0 Hz", "61,2 Hz", "58,8 Hz"],
+          "correcta": 2,
+          "explicacion": "El 4 % de 60 Hz son 2,4 Hz de vacío a plena carga: 61,2 − 2,4 = 58,8 Hz."
+        }
+      ]
+    },
+    {
+      "titulo": "Por qué el estatismo permite el paralelo",
+      "bloques": [
+        { "tipo": "texto", "texto": "Dos grupos en paralelo tienen por fuerza la misma frecuencia, la de las barras. Con estatismo, cada uno toma la carga que corresponde a su consigna a esa frecuencia:\n\n• Con consignas y estatismos iguales, se reparten la carga a partes iguales.\n• Si se sube la consigna de uno, ese grupo toma más carga y el otro menos.\n\nSi los dos estuvieran en isócrono sin nada que los coordine, cada uno intentaría llevar la frecuencia a su consigna. El más rápido tiende a quedarse con toda la carga y el otro puede pasar a {{potencia_inversa}}." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_dos_isocronos",
+          "pregunta": "¿Qué ocurre con dos grupos en paralelo en modo isócrono sin líneas de reparto ni PMS?",
+          "opciones": ["Se reparten la carga por igual", "Uno tiende a tomar toda la carga y el otro puede pasar a potencia inversa", "La frecuencia baja hasta 58 Hz"],
+          "correcta": 1,
+          "explicacion": "Las consignas nunca son exactamente iguales. Sin coordinación, el gobernador que pide más frecuencia carga con todo, y el otro se descarga hasta absorber potencia."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 8528-5: grupos electrógenos, comportamiento ante cambios de carga.",
+    "IEC 60092-301: generadores en buques.",
+    "Manual del gobernador y del motor diésel instalados a bordo."
+  ]
+}

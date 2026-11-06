@@ -1,0 +1,83 @@
+{
+  "id": "alternador",
+  "titulo": "Alternador del diésel-generador",
+  "resumen": "Generador síncrono trifásico sin escobillas: partes, pruebas y mantenimiento.",
+  "dibujo": {
+    "svg": "res://art/equipos/alternador.svg",
+    "tamano": [480, 340],
+    "nota": "Ilustración sin marca de un diésel-generador típico de atunero. La disposición real del Vía Simoun puede variar: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "MOTOR DIÉSEL", "x": 130, "y": 196, "tam": 16 },
+      { "texto": "ALTERNADOR", "x": 346, "y": 168, "tam": 15 },
+      { "texto": "CAJA DE BORNES", "x": 346, "y": 24, "tam": 13 },
+      { "texto": "EXCITATRIZ", "x": 444, "y": 110, "tam": 12 },
+      { "texto": "PLACA", "x": 365, "y": 242, "tam": 12 },
+      { "texto": "BANCADA", "x": 130, "y": 283, "tam": 13 },
+      { "texto": "ACOPLAMIENTO", "x": 246, "y": 326, "tam": 12 }
+    ]
+  },
+  "dibujos_extra": [
+    {
+      "titulo": "Placa",
+      "svg": "res://art/equipos/placa_alternador.svg",
+      "tamano": [480, 300],
+      "nota": "Placa ilustrativa con valores típicos de un atunero cerquero. Los datos de excitación cambian mucho entre fabricantes: verificar con la placa real del Vía Simoun.",
+      "etiquetas": [
+        { "texto": "SYNCHRONOUS GENERATOR · BRUSHLESS", "x": 240, "y": 42, "tam": 17, "color": "#20242a" },
+        { "texto": "3 ~   60 Hz   1800 r/min", "x": 240, "y": 80, "tam": 16, "color": "#20242a" },
+        { "texto": "562.5 kVA   p.f. 0.8   450 kW", "x": 240, "y": 117, "tam": 16, "color": "#20242a" },
+        { "texto": "440 V   738 A   Y", "x": 240, "y": 153, "tam": 16, "color": "#20242a" },
+        { "texto": "Exc. 45 V DC   2.5 A", "x": 240, "y": 189, "tam": 16, "color": "#20242a" },
+        { "texto": "Ins. class H   IP23   S1", "x": 240, "y": 225, "tam": 16, "color": "#20242a" },
+        { "texto": "Amb. 45 °C   IEC 60034-1", "x": 240, "y": 260, "tam": 16, "color": "#20242a" }
+      ]
+    }
+  ],
+  "simbolos": {
+    "nota": "Generador síncrono trifásico. Verificar contra la norma.",
+    "lista": ["generador"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{alternador}} convierte la energía mecánica del diésel en energía eléctrica trifásica a 440 V y 60 Hz. Es un {{generador_sincrono}}: su frecuencia la fija la velocidad del diésel, y su tensión, la {{excitacion}}. Tres grupos iguales alimentan las barras del cuadro principal, solos o en paralelo ([i]número y potencia típicos — verificar a bordo[/i])."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Estator:[/b] carcasa con el devanado trifásico principal, conectado en estrella. Sus extremos salen a la caja de bornes.\n• [b]Rotor:[/b] polos con el {{campo}}, alimentado con corriente continua.\n• {{Excitatriz}} y {{diodos_giratorios}}, en el extremo opuesto al acoplamiento, en los alternadores {{sin_escobillas}}.\n• {{Avr}}, en la caja de bornes o en el cuadro.\n• [b]Rodamientos:[/b] uno o dos. En los de un solo rodamiento, el lado del acoplamiento descansa en el volante del diésel.\n• [b]Ventilador[/b] en el eje y resistencias de caldeo anticondensación.\n• [b]Sondas de temperatura[/b] en devanados y rodamientos, según el modelo."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Potencia:[/b] U, V y W de la caja de bornes al lado del generador de su interruptor, con cables dimensionados para la corriente nominal. Respete la {{secuencia_fases}}: un grupo con las fases cruzadas no puede ponerse en paralelo.\n• [b]Neutro:[/b] en la red aislada del buque no se une al casco ([i]verificar a bordo[/i]).\n• [b]Medida:[/b] el AVR mide la tensión entre fases en los bornes, y un {{transformador_corriente}} en una fase le da la corriente para el estatismo reactivo.\n• [b]Auxiliares:[/b] sondas de temperatura hacia el controlador, y caldeo alimentado con el grupo parado."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "El alternador no tiene ajustes propios: la tensión la fija el AVR y la frecuencia, el gobernador. En el controlador del grupo se configuran los límites que lo protegen: corriente nominal, sobrecarga, temperaturas de devanados y rodamientos y potencia inversa. Tómelos de la placa y del manual del fabricante.\n\nUn alternador de repuesto debe coincidir en kVA, tensión, frecuencia, velocidad, conexión y tipo de acoplamiento."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]Con el grupo parado y bloqueado contra arranque, el interruptor abierto y extraído, y ausencia de tensión verificada:[/b]\n• [b]Aislamiento del estator[/b] con {{megohmetro}} a 500 V DC, entre fases y masa, con el AVR y las sondas desconectados. IEEE 43 recomienda al menos 5 MΩ para devanados de menos de 1 kV. Un valor más bajo exige secar o limpiar antes de arrancar ([i]aplicar el criterio del fabricante y del buque[/i]).\n• [b]Resistencia de los devanados[/b] con un óhmetro de baja resistencia: las tres fases deben coincidir. El multímetro común no resuelve fracciones de ohmio.\n• [b]Diodos giratorios[/b] con el multímetro en prueba de diodo, desconectados uno a uno: conducen en un sentido y bloquean en el otro.\n\n[b]En marcha:[/b] tensión de las tres fases, corriente por fase con {{pinza}} y temperaturas."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Gira pero no da tensión:[/b] {{magnetismo_remanente}} perdido, AVR averiado, o diodos o varistor del rotor averiados.\n• [b]Tensión baja o que oscila:[/b] AVR mal ajustado, diodo abierto, velocidad baja o conexión floja en la medida.\n• [b]Sobretensión:[/b] medida del AVR interrumpida o AVR averiado.\n• [b]Bajo aislamiento:[/b] condensación en paradas largas, aceite o suciedad en los devanados.\n• [b]Calentamiento:[/b] sobrecarga, desequilibrio entre fases, filtros de aire obstruidos o ventilación insuficiente de la sala.\n• [b]Ruido y vibración:[/b] rodamiento desgastado o desalineación con el diésel."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento del buque[/i]):\n• Cada guardia: lecturas de tensión, corriente, kW y temperaturas en el registro.\n• Cada mes: limpieza exterior y de rejillas, y comprobación del caldeo.\n• Cada 6 meses o según horas: apriete de bornes, inspección de la caja de bornes y medida de aislamiento.\n• Según horas: engrase o cambio de rodamientos y revisión de los diodos giratorios.\n\n[b]Correctivo:[/b] secado de devanados húmedos con el caldeo o con aire caliente, cambio de diodos o del varistor y recuperación del magnetismo según el manual del fabricante."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-1: máquinas eléctricas rotativas, valores nominales.",
+    "IEEE 43: resistencia de aislamiento de máquinas rotativas.",
+    "IEC 60092-301: generadores y motores en buques.",
+    "Manual del fabricante del alternador instalado a bordo."
+  ]
+}

@@ -79,8 +79,9 @@ func test_lecciones_bien_formadas() -> String:
 
 func test_todas_las_lecciones_estan_publicadas() -> String:
 	var c := Contenido.new()
-	var publicadas: Array = c.sistema(0)["modos"]["aprender"]["lecciones"].duplicate()
-	publicadas.append_array(c.sistema(3)["modos"]["aprender"]["lecciones"])
+	var publicadas: Array = []
+	for s: Dictionary in c.sistemas():
+		publicadas.append_array(s["modos"].get("aprender", {}).get("lecciones", []))
 	for l in _lecciones():
 		if not publicadas.has(l["id"]):
 			return "%s no aparece en ningún sistema" % l["id"]
@@ -227,6 +228,102 @@ func test_banco_estrella_triangulo_reduce_el_pico() -> String:
 		A.cierto(delta, "tras el retardo debe quedar en delta"),
 		A.cierto(rpm > 1700.0, "debe llegar a su velocidad: %.0f" % rpm),
 		A.cierto(not disparo, "un arranque normal no debe disparar protecciones"),
+	])
+
+
+func _banco_generadores(escenario: String) -> Node:
+	var b: Node = load("res://ui/animaciones/banco_generadores.gd").new()
+	b.iniciar({"escenario": escenario}, Contenido.new())
+	return b
+
+
+## Avanza hasta que la aguja del sincronoscopio entre en [desde, hasta] grados.
+func _esperar_angulo(b: Node, desde: float, hasta: float) -> bool:
+	for _i in 2000:
+		b.avanzar_pasos(1)
+		var a: float = absf(b.sim.componente("SY").estado["angulo"])
+		if a >= desde and a <= hasta:
+			return true
+	return false
+
+
+func test_practica_sincronizar_bien() -> String:
+	var b := _banco_generadores("sincronizar")
+	var abierto_al_empezar: bool = not b.sim.componente("Q2").cerrado()
+	var f_barras: float = b.sim.componente("G1").frecuencia()
+	b.velocidad(-1.0)
+	b.velocidad(-1.0)
+	b.avanzar_pasos(100)
+	var desliz: float = b.sim.componente("SY").estado["deslizamiento_hz"]
+	var llego := _esperar_angulo(b, 0.0, 5.0)
+	b.alternar_q2()
+	var cerrado: bool = b.sim.componente("Q2").cerrado()
+	var bien: bool = b.sim.hubo_evento("cierre_sincronizado")
+	var mensaje: String = b._mensaje.text
+	b.free()
+	return A.primero([
+		A.cierto(abierto_al_empezar, "G2 debe empezar fuera de barras"),
+		A.cerca(f_barras, 60.0, 0.005, "las barras deben quedar a 60 Hz"),
+		A.cerca(desliz, 0.1, 0.3, "dos toques dejan 0,1 Hz de deslizamiento"),
+		A.cierto(llego, "la aguja debe pasar por las doce"),
+		A.cierto(cerrado and bien, "cerrar en la ventana debe ser un cierre sincronizado"),
+		A.cierto(mensaje.begins_with("Cierre sincronizado"), "debe explicar el resultado: %s" % mensaje),
+	])
+
+
+func test_practica_sincronizar_fuera_de_fase() -> String:
+	var b := _banco_generadores("sincronizar")
+	var llego := _esperar_angulo(b, 150.0, 180.0)
+	b.alternar_q2()
+	var disparo: bool = b.sim.hubo_evento("cierre_fuera_de_fase")
+	var abierto: bool = not b.sim.componente("Q2").cerrado()
+	b.free()
+	return A.primero([
+		A.cierto(llego, "la aguja debe pasar por las seis"),
+		A.cierto(disparo and abierto, "cerrar en oposición debe disparar Q2"),
+	])
+
+
+func test_practica_reparto_de_carga() -> String:
+	var b := _banco_generadores("reparto")
+	var g1: SimGenerador = b.sim.componente("G1")
+	var g2: SimGenerador = b.sim.componente("G2")
+	var en_paralelo: bool = b.sim.componente("Q2").cerrado()
+	var g2_antes: float = g2.estado["p_kw"]
+	var q2_antes: float = g2.estado["q_kvar"]
+	for _i in 8:
+		b.velocidad(1.0)
+		b.velocidad(-1.0, "G1")
+	b.avanzar_pasos(300)
+	var f: float = g1.frecuencia()
+	var g1_kw: float = g1.estado["p_kw"]
+	var g2_kw: float = g2.estado["p_kw"]
+	for _i in 3:
+		b.tension(1.0)
+	b.avanzar_pasos(200)
+	var q2_despues: float = g2.estado["q_kvar"]
+	b.free()
+	return A.primero([
+		A.cierto(en_paralelo, "G2 debe quedar en paralelo al empezar"),
+		A.cierto(absf(g2_antes) < 40.0, "G2 debe empezar casi sin carga: %.0f kW" % g2_antes),
+		A.cierto(g2_kw > 100.0 and g1_kw < 250.0, "subir la velocidad de G2 debe pasarle carga: G1 %.0f, G2 %.0f kW" % [g1_kw, g2_kw]),
+		A.cerca(g1_kw + g2_kw, 320.0, 0.08, "la carga total no cambia"),
+		A.cerca(f, 60.0, 0.005, "subir uno y bajar el otro no cambia la frecuencia"),
+		A.cierto(q2_despues > q2_antes + 30.0, "subir la tensión de G2 debe pasarle kVAr: %.0f → %.0f" % [q2_antes, q2_despues]),
+	])
+
+
+func test_practica_potencia_inversa() -> String:
+	var b := _banco_generadores("reparto")
+	for _i in 8:
+		b.velocidad(-1.0)
+	b.avanzar_pasos(400)
+	var disparo: bool = b.sim.hubo_evento("disparo_potencia_inversa")
+	var mensaje: String = b._mensaje.text
+	b.free()
+	return A.primero([
+		A.cierto(disparo, "bajar mucho la velocidad de G2 en paralelo debe disparar por potencia inversa"),
+		A.cierto(mensaje.begins_with("Disparo por potencia inversa"), "debe explicarlo: %s" % mensaje),
 	])
 
 

@@ -9,7 +9,8 @@ func _datos() -> Dictionary:
 func _crear_items() -> Array:
 	var azar := RandomNumberGenerator.new()
 	azar.randomize()
-	return ExamenTeorico.crear(_datos(), raiz.contenido.simbolos(), azar)
+	var datos := _datos()
+	return ExamenTeorico.crear(datos, raiz.contenido.simbolos(int(datos.get("sistema_simbolos", -1))), azar)
 
 
 func _titulo() -> String:

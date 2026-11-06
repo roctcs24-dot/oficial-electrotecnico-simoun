@@ -2,16 +2,18 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v1.0**. Incluye:
+Estado: **v1.2**, la v1 completa y la v2 en curso. Incluye:
 
 - 17 lecciones de fundamentos, seguridad, motores, arrancadores e instrumentos.
-- Fichas de los equipos de la v1, con simbología IEC y ANSI, y minijuego de símbolos.
+- 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
+- Fichas de los equipos de los sistemas 1 y 3, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
+- Cuadro principal con tres generadores, sincronización, PMS y protecciones.
 - Taller con multímetro y megóhmetro.
 - 3 misiones de Guardia.
 - Examen de la v1, rangos, repaso de errores y traspaso de partida.
 - Glosario y plano del barco.
 
-Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La hoja de ruta sigue con la v2: generadores, paneles y cuadro principal.
+Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores, paneles y cuadro principal, avanza por etapas: faltan sus misiones y su examen.
 
 > Es material de formación. No sustituye los procedimientos ni los manuales del barco. Los datos marcados `"verificar": true` son valores típicos que hay que comprobar a bordo. El estado del contenido de seguridad está en [docs/revision_seguridad.md](docs/revision_seguridad.md).
 
@@ -52,6 +54,8 @@ Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este c
 ```bash
 godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
 ```
+
+Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion` o `cuadro` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
 
 ## Exportar
 
@@ -134,13 +138,13 @@ Para corregir un dato del barco, edita `data/barco_via_simoun.json` y vuelve a e
 
 Los pasos de `ordenar` se escriben en su orden correcto: el juego los mezcla. No se puede avanzar de página sin contestar, y los fallos se guardan por `tema` para el repaso.
 
-Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fasores`, `estrella` y `escala_corriente`. Para crear otra, añade `<id>.gd` heredando de `Animacion`.
+Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fasores`, `estrella`, `escala_corriente`, `conexion_motor`, `banco_arranque` y `banco_generadores`. Esta última usa la simulación del cuadro principal con `"params": { "escenario": "sincronizar" }` o `"reparto"`. Para crear otra, añade `<id>.gd` heredando de `Animacion`.
 
 **Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
 
 Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera del motor. Sus `simbolos` pueden ser `iec` y `ansi` propios, o una `lista` de ids de `data/simbolos.json`.
 
-**Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `similares` y sus dibujos `iec` y `ansi`. El minijuego los usa todos. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
+**Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `sistema`, `similares` y sus dibujos `iec` y `ansi`. Cada minijuego pregunta los de su sistema, y un examen solo los del sistema de su `sistema_simbolos`. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
 
 **Taller:** `data/taller.json` define el catálogo del cajón, con el tipo de componente, su dibujo y la posición de cada borne, además de las plantillas y las explicaciones de cada consecuencia. Cada evento nuevo del motor de simulación necesita su explicación en `consecuencias`. La forma de cada cable (curva, ángulos o recta, y su acomodo) se guarda con el circuito, pero no afecta a la simulación. Los circuitos del jugador se guardan en `user://circuitos/`, con sus daños incluidos, y la última mesa en `user://taller_ultimo.json`.
 

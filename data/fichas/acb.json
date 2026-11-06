@@ -1,0 +1,79 @@
+{
+  "id": "acb",
+  "titulo": "Interruptor del generador (ACB)",
+  "resumen": "Interruptor de bastidor abierto que conecta el generador a las barras y lo protege.",
+  "dibujo": {
+    "svg": "res://art/equipos/acb.svg",
+    "tamano": [360, 460],
+    "nota": "Frente típico de un interruptor de bastidor abierto extraíble, sin marca. Los colores de los pulsadores, la unidad de disparo y los rótulos cambian con el fabricante: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Ir 738 A", "x": 131, "y": 86, "tam": 15, "color": "#1d2a1a" },
+      { "texto": "Ir", "x": 88, "y": 166, "tam": 11, "color": "#20242a" },
+      { "texto": "Isd", "x": 131, "y": 166, "tam": 11, "color": "#20242a" },
+      { "texto": "Ii", "x": 174, "y": 166, "tam": 11, "color": "#20242a" },
+      { "texto": "UNIDAD DE DISPARO", "x": 131, "y": 196, "tam": 11 },
+      { "texto": "ACB 800 A", "x": 264, "y": 72, "tam": 12, "color": "#20242a" },
+      { "texto": "690 V~", "x": 264, "y": 88, "tam": 11, "color": "#20242a" },
+      { "texto": "Icu 50 kA", "x": 264, "y": 104, "tam": 11, "color": "#20242a" },
+      { "texto": "I", "x": 96, "y": 232, "tam": 30, "color": "#eef3f7" },
+      { "texto": "O", "x": 264, "y": 232, "tam": 30, "color": "#eef3f7" },
+      { "texto": "ON", "x": 96, "y": 276, "tam": 12 },
+      { "texto": "OFF", "x": 264, "y": 276, "tam": 12 },
+      { "texto": "ESTADO", "x": 180, "y": 270, "tam": 11 },
+      { "texto": "CHARGED", "x": 180, "y": 303, "tam": 12, "color": "#20242a" },
+      { "texto": "MUELLE", "x": 180, "y": 334, "tam": 11 },
+      { "texto": "CONNECTED", "x": 268, "y": 303, "tam": 11, "color": "#20242a" },
+      { "texto": "POSICIÓN", "x": 268, "y": 334, "tam": 11 },
+      { "texto": "CARGA", "x": 95, "y": 410, "tam": 11 },
+      { "texto": "EXTRACCIÓN", "x": 268, "y": 400, "tam": 11 }
+    ],
+    "indicador": { "x": 150, "y": 212, "ancho": 60, "alto": 40 }
+  },
+  "simbolos": {
+    "nota": "El interruptor y su protección de sobrecorriente. En ANSI, función 52 para el interruptor y 51 para la sobrecorriente con retardo (IEEE C37.2). Verificar contra la norma.",
+    "lista": ["interruptor_potencia", "rele_sobrecorriente", "rele_minima_tension"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{acb}} conecta cada generador a las barras del cuadro principal y lo separa ante una falla. Debe llevar la corriente nominal del grupo, 738 A ([i]valor típico — verificar[/i]), y cortar la corriente de cortocircuito de toda la planta. También es el punto de la sincronización: cierra en milisegundos cuando lo ordena el operador, el sincronizador o el {{pms}}."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Polos[/b] con contactos principales y de arco, y cámaras apagachispas.\n• {{Muelle_cierre}}: lo carga un motor o la palanca frontal. El indicador CHARGED confirma que está listo para cerrar.\n• [b]Bobina de cierre[/b] y {{bobina_disparo}}, para el mando a distancia.\n• {{Bobina_minima}}: abre si falta tensión e impide cerrar un grupo sin tensión.\n• {{Unidad_disparo}}, con transformadores de corriente internos.\n• [b]Contactos auxiliares[/b] de abierto y cerrado, para el controlador y el PMS.\n• [b]Chasis extraíble[/b] con posiciones de servicio, prueba y desconectado."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Potencia:[/b] la entrada viene del generador y la salida va a las barras. Los dos lados pueden tener tensión: el del generador con el grupo en marcha, y el de las barras con otros grupos en servicio.\n• [b]Mando:[/b] bobinas, motor de carga y auxiliares, a la tensión de mando del cuadro ([i]por ejemplo 24 V DC o 110 V AC — verificar en el esquema[/i]).\n• [b]Protecciones externas:[/b] el relé de potencia inversa, el controlador y el disparo preferente actúan sobre la bobina de disparo.\n\n[b]Para trabajar en él,[/b] llévelo a la posición de desconectado, aplique bloqueo y etiquetado y verifique ausencia de tensión en los dos lados."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Los ajustes de la unidad de disparo deben seguir el estudio de coordinación del buque ([i]valores del simulador — verificar los reales[/i]):\n• [b]Ir, largo retardo:[/b] cerca de la corriente nominal del generador. Protege contra sobrecarga.\n• [b]Isd y tsd, corto retardo:[/b] 2,5 × In durante 0,2 s. Deja actuar primero a los interruptores de las salidas.\n• [b]Ii, instantáneo:[/b] 10 × In.\n\nAnote los ajustes encontrados antes de tocar nada, y no los cambie sin autorización del jefe de máquinas. Un repuesto debe coincidir en calibre, poder de corte, tensión de mando y tipo de chasis."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Maniobras en posición de prueba:[/b] cierre y apertura eléctricos y manuales, carga del muelle y señal de los auxiliares, con el circuito principal desconectado.\n• [b]Bobina de mínima tensión:[/b] sin tensión, el interruptor no debe cerrar.\n• [b]Unidad de disparo:[/b] con su maleta de pruebas o su función de prueba, según el fabricante.\n• [b]Aislamiento[/b] entre polos y a masa con {{megohmetro}}, con el interruptor extraído.\n• [b]Resistencia de contactos[/b] con un microóhmetro, si lo hay a bordo: los tres polos deben dar valores parecidos."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No cierra:[/b] muelle sin cargar, bobina de mínima sin tensión, enclavamiento activo, interruptor disparado sin rearmar o fuera de la posición de servicio.\n• [b]Se abre solo:[/b] actuación de una protección. Lea la causa en la unidad de disparo antes de rearmar. También puede ser un falso contacto en la bobina de mínima.\n• [b]El motor no carga el muelle:[/b] falta tensión de mando o motor averiado. Cárguelo con la palanca.\n• [b]Calentamiento:[/b] contactos desgastados o conexiones flojas en las barras. Se detecta con termografía."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar con el fabricante y el plan de mantenimiento[/i]):\n• Cada 6 meses: maniobras de prueba, limpieza y comprobación de los indicadores.\n• Cada año, extraído: estado de contactos y cámaras apagachispas, engrase del mecanismo según el manual, apriete de conexiones y prueba de la unidad de disparo.\n• Termografía del cuadro en carga.\n\n[b]Correctivo:[/b] cambio de contactos, cámaras, bobinas o motor por repuestos originales. Tras un disparo por cortocircuito, inspeccione los contactos antes de volver a cerrar."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-2: interruptores automáticos.",
+    "IEC 60092-202: diseño de sistemas, protección.",
+    "IEEE C37.2: números de función de los dispositivos.",
+    "Manual del interruptor instalado a bordo."
+  ]
+}

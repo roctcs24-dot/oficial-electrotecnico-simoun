@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="360" height="320" viewBox="0 0 360 320">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b8bec1"/><stop offset="1" stop-color="#868d91"/>
+    </linearGradient>
+    <linearGradient id="tapa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3f44"/><stop offset="1" stop-color="#1b1e21"/>
+    </linearGradient>
+    <linearGradient id="regleta" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9d3c0"/><stop offset="1" stop-color="#b1aa94"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+    <g id="tornillo">
+      <circle r="9" fill="#0a0a0b"/><circle r="8.2" fill="url(#acero)"/>
+      <path d="M-4.6,0 H4.6 M0,-4.6 V4.6" stroke="#33373a" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+    <g id="potenciometro">
+      <circle r="17" fill="#111315"/><circle r="15" fill="url(#acero)"/>
+      <path d="M0,-11 V11" stroke="#33373a" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <rect x="16" y="16" width="328" height="288" rx="8" fill="url(#base)"/>
+  <circle cx="34" cy="34" r="7" fill="#4b5155"/><circle cx="326" cy="34" r="7" fill="#4b5155"/>
+  <circle cx="34" cy="286" r="7" fill="#4b5155"/><circle cx="326" cy="286" r="7" fill="#4b5155"/>
+  <rect x="50" y="38" width="260" height="168" rx="6" fill="url(#tapa)"/>
+  <circle cx="288" cy="62" r="6" fill="#3fbf5a"/>
+  <use xlink:href="#potenciometro" x="82" y="112"/><use xlink:href="#potenciometro" x="131" y="112"/>
+  <use xlink:href="#potenciometro" x="180" y="112"/><use xlink:href="#potenciometro" x="229" y="112"/>
+  <use xlink:href="#potenciometro" x="278" y="112"/>
+  <rect x="38" y="218" width="284" height="60" rx="3" fill="url(#regleta)" stroke="#8a836d" stroke-width="1.5"/>
+  <path d="M69,220 V276 M100,220 V276 M131,220 V276 M162,220 V276 M193,220 V276 M224,220 V276 M255,220 V276 M286,220 V276" stroke="#8a836d" stroke-width="1.5"/>
+  <use xlink:href="#tornillo" x="54" y="258"/><use xlink:href="#tornillo" x="85" y="258"/><use xlink:href="#tornillo" x="116" y="258"/>
+  <use xlink:href="#tornillo" x="147" y="258"/><use xlink:href="#tornillo" x="178" y="258"/><use xlink:href="#tornillo" x="209" y="258"/>
+  <use xlink:href="#tornillo" x="240" y="258"/><use xlink:href="#tornillo" x="271" y="258"/><use xlink:href="#tornillo" x="302" y="258"/>
+</svg>

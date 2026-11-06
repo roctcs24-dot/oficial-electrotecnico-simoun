@@ -42,7 +42,7 @@ func construir() -> void:
 func _empezar() -> void:
 	var azar := RandomNumberGenerator.new()
 	azar.randomize()
-	args["rondas"] = JuegoSimbolos.crear_rondas(raiz.contenido.simbolos(), RONDAS, azar)
+	args["rondas"] = JuegoSimbolos.crear_rondas(raiz.contenido.simbolos(args.get("sistema", -1)), RONDAS, azar)
 	args["indice"] = 0
 	args["respuestas"] = {}
 
@@ -105,7 +105,7 @@ func _construir_final() -> void:
 				falladas.append("• %s" % nombre)
 	var estrellas := JuegoSimbolos.estrellas(aciertos, rondas.size())
 	if not args.has("ganados"):
-		args["ganados"] = raiz.partida.registrar_minijuego("simbolos", estrellas)
+		args["ganados"] = raiz.partida.registrar_minijuego(args.get("registro", "simbolos"), estrellas)
 	_cabecera("Identificación de símbolos", "Resultado")
 	var desplazable := _desplazable()
 	add_child(desplazable)

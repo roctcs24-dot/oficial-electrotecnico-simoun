@@ -1,0 +1,61 @@
+{
+  "id": "gen4_cuadro",
+  "titulo": "El cuadro principal y sus protecciones",
+  "resumen": "Paneles, instrumentos, ACB y protecciones del generador.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Los paneles",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{cuadro_principal}} reúne los generadores y reparte su energía. Unas {{barras}} de cobre recorren todos los paneles ([i]disposición típica — verificar a bordo[/i]):\n\n• [b]Un panel por generador:[/b] voltímetro y amperímetro con selector de fases, vatímetro en kW, frecuencímetro, cos φ, luces de marcha y de interruptor, mandos de velocidad y de tensión y el interruptor del grupo.\n• [b]Panel de sincronización:[/b] sincronoscopio, lámparas y selector del grupo entrante.\n• [b]Paneles de distribución:[/b] las salidas de 440 V hacia bombas, compresores y transformadores.\n• [b]Panel de conexión a tierra[/b], para alimentar el buque desde puerto.\n\nLos amperímetros y relés no ven los 738 A: los miden a través de un {{transformador_corriente}}, por ejemplo 800/5 A ([i]verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_tc_abierto",
+          "pregunta": "¿Por qué no se abre nunca el secundario de un transformador de corriente con corriente en el primario?",
+          "opciones": ["Porque aparece una tensión peligrosa en el secundario", "Porque solo se apaga el amperímetro", "Porque dispara el interruptor del generador"],
+          "correcta": 0,
+          "explicacion": "Sin carga en el secundario, el TC intenta mantener la corriente y genera una tensión muy alta, peligrosa para las personas y para su aislamiento. Antes de desconectar un instrumento, cortocircuite el secundario con su puente."
+        }
+      ]
+    },
+    {
+      "titulo": "El interruptor del generador",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cada grupo entra en barras por un {{acb}}. Sus partes principales:\n\n• {{Muelle_cierre}}, que carga un motor o una palanca. El cierre es instantáneo y no depende de la fuerza del operador.\n• Bobina de cierre y {{bobina_disparo}}, para mandarlo desde el cuadro, el controlador o el PMS.\n• {{Bobina_minima}}: sin tensión en el generador, el interruptor no cierra. Así nunca se conecta un grupo parado a las barras.\n• {{Unidad_disparo}} electrónica, con tres zonas: largo retardo para sobrecarga, corto retardo y disparo instantáneo para cortocircuito.\n• Posiciones de servicio, prueba y desconectado, en los modelos extraíbles.\n\n[b]Protecciones del generador en el simulador[/b] ([i]valores típicos — verificar los ajustes reales a bordo[/i]):\n• Sobrecarga: por encima de la corriente nominal, con retardo largo.\n• Corto retardo: 2,5 × In durante 0,2 s.\n• Instantáneo: 10 × In.\n• Potencia inversa: 8 % de la potencia nominal durante 5 s.\n• Mínima tensión: por debajo del 70 % durante 1 s." },
+        {
+          "tipo": "quiz",
+          "tema": "gen_bobina_minima",
+          "pregunta": "El diésel del generador 2 está parado. ¿Por qué no cierra su interruptor?",
+          "opciones": ["Porque su bobina de mínima tensión no tiene tensión", "Porque falta cargar el relé de potencia inversa", "Porque el sincronoscopio está apagado"],
+          "correcta": 0,
+          "explicacion": "La bobina de mínima tensión se alimenta del lado del generador. Sin tensión, impide cerrar: un grupo parado conectado a las barras trabajaría como motor."
+        }
+      ]
+    },
+    {
+      "titulo": "Potencia inversa",
+      "bloques": [
+        { "tipo": "texto", "texto": "Si un grupo en paralelo pierde combustible, o el operador le baja demasiado la velocidad, deja de empujar y pasa a absorber {{potencia_inversa}} de las barras: el alternador trabaja como motor y arrastra al diésel. Además, los demás grupos cargan con su parte y con la que él consume.\n\nEl {{rele_proteccion}} de potencia inversa, función 32 en la numeración IEEE C37.2, abre su interruptor cuando la potencia entrante supera el ajuste durante el retardo.\n\nAl sacar un grupo de servicio, descárguelo hasta dejarlo con poca carga y abra su interruptor antes de llegar a potencia inversa." },
+        {
+          "tipo": "ordenar",
+          "tema": "gen_desconectar",
+          "pregunta": "Seleccione en orden los pasos para sacar un grupo de las barras:",
+          "pasos": [
+            "Comprobar que los grupos que quedan pueden llevar toda la carga",
+            "Bajar la velocidad del saliente y subir la de los que quedan hasta dejarlo con poca carga",
+            "Abrir su interruptor antes de que llegue a potencia inversa",
+            "Dejarlo en vacío el tiempo de enfriamiento del fabricante",
+            "Parar el diésel"
+          ],
+          "explicacion": "Primero se asegura la potencia que queda y se traspasa la carga. Abrir con carga produce un escalón para los demás grupos, y esperar demasiado lleva el grupo a potencia inversa."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas, protección.",
+    "IEC 60947-2: interruptores automáticos.",
+    "IEEE C37.2: números de función de los dispositivos de protección.",
+    "Reglas de la sociedad de clasificación del buque."
+  ]
+}

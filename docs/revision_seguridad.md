@@ -67,7 +67,14 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
 - Explicaciones de consecuencias del Taller, en `data/taller.json`.
 - Banco del examen, en `data/examenes/v1.json`, y preguntas de repaso de `data/guardia.json`. Se redactaron a partir de las lecciones, sin contrastarlos por separado.
 - Misiones de Guardia y sus informes de accidente, en `data/misiones/` y `data/guardia.json`: reportes, averías, secuencia del procedimiento, y el secado de devanados. El umbral de 30 V para considerar que hay tensión es un criterio del juego.
-- Los 12 símbolos de `data/simbolos.json`. No se pudo abrir la comparativa de referencia entre NEMA e IEC, y la simbología ANSI del guardamotor varía según el fabricante.
+- Los 12 símbolos de la v1 en `data/simbolos.json`. No se pudo abrir la comparativa de referencia entre NEMA e IEC, y la simbología ANSI del guardamotor varía según el fabricante.
+
+- Las 8 lecciones y las 7 fichas de generación (sistema 1), redactadas sin fuentes consultadas en esta etapa. Lo más sensible:
+  - Los ajustes típicos de potencia inversa (8–15 %, 3–10 s), de sobrevelocidad (110–115 %), de estatismo (4 %) y del estatismo reactivo del AVR (3–5 %).
+  - El plazo de 45 s de SOLAS II-1/43 para buques de carga, y qué norma aplica a un pesquero de la bandera del Vía Simoun.
+  - El procedimiento para localizar fallas a tierra, la secuencia de recuperación de un blackout y la de sacar un grupo de barras.
+  - Los nombres de bornes y ajustes del AVR y del controlador, que son genéricos.
+- Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.
 

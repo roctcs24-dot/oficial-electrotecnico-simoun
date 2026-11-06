@@ -1,5 +1,6 @@
 {
   "id": "v1",
+  "sistema_simbolos": 3,
   "titulo": "Examen de la v1",
   "resumen": "20 preguntas al azar: conceptos, casos prácticos, secuencias y símbolos.",
   "minimo": 80,

@@ -1,0 +1,75 @@
+{
+  "id": "controlador_generador",
+  "titulo": "Controlador del generador",
+  "resumen": "Mando, medida y protección digitales de un diésel-generador.",
+  "dibujo": {
+    "svg": "res://art/equipos/controlador_generador.svg",
+    "tamano": [420, 340],
+    "nota": "Frente de un controlador de grupo genérico. Los modelos reales, como DEIF, ComAp o Woodward, cambian teclas, menús y nombres: verificar el modelo instalado y su manual. GB: interruptor del generador (generator breaker).",
+    "etiquetas": [
+      { "texto": "G2   AUTO   RUN", "x": 154, "y": 62, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "440 V    60.0 Hz", "x": 154, "y": 88, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "P 225 kW   PF 0.80", "x": 154, "y": 114, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "I 369 A   Q 169 kVAr", "x": 154, "y": 140, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "ALARM", "x": 324, "y": 56, "tam": 10 },
+      { "texto": "WARN", "x": 322, "y": 82, "tam": 10 },
+      { "texto": "READY", "x": 324, "y": 108, "tam": 10 },
+      { "texto": "ENT", "x": 370, "y": 139, "tam": 11 },
+      { "texto": "ACK", "x": 309, "y": 147, "tam": 11 },
+      { "texto": "I", "x": 64, "y": 246, "tam": 26, "color": "#eef3f7" },
+      { "texto": "O", "x": 134, "y": 246, "tam": 26, "color": "#eef3f7" },
+      { "texto": "A/M", "x": 352, "y": 246, "tam": 14 },
+      { "texto": "START", "x": 64, "y": 292, "tam": 11 },
+      { "texto": "STOP", "x": 134, "y": 292, "tam": 11 },
+      { "texto": "GB ON", "x": 206, "y": 292, "tam": 11 },
+      { "texto": "GB OFF", "x": 272, "y": 292, "tam": 11 },
+      { "texto": "MODE", "x": 352, "y": 292, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "El controlador no tiene un símbolo propio: en los esquemas es un bloque que mide el generador y manda su interruptor, con las protecciones que incorpora. Verificar contra la norma.",
+    "lista": ["generador", "interruptor_potencia", "rele_potencia_inversa"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{controlador_generador}} reúne el mando, la medida y la protección de un {{grupo_electrogeno}}: arranca y para el diésel, abre y cierra su interruptor, mide tensión, corriente, kW, kVAr y frecuencia, y vigila las alarmas del motor y del alternador. Con el {{pms}}, los controladores de todos los grupos se comunican para repartir la carga y arrancar o parar grupos según la demanda."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Pantalla[/b] con las medidas, el estado y la lista de alarmas.\n• [b]Teclas de mando:[/b] START, STOP, cierre y apertura del interruptor y selección de modo.\n• [b]Teclas de navegación[/b] por los menús y de reconocimiento de alarmas, ACK.\n• [b]Entradas de medida:[/b] tensiones del generador y de las barras, y corrientes desde transformadores de corriente.\n• [b]Entradas y salidas digitales[/b] para el motor de arranque, el solenoide de combustible, las señales del interruptor y las alarmas.\n• [b]Salidas al gobernador y al AVR[/b] para subir o bajar velocidad y tensión, y puerto de comunicación con los demás controladores."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "([i]Conexionado típico — verificar en el esquema del buque[/i])\n• [b]Alimentación:[/b] 24 V DC desde baterías, para que siga funcionando en un blackout.\n• [b]Medida:[/b] tensiones del lado del generador y de las barras, con fusibles, y secundarios de 5 A o 1 A de los transformadores de corriente.\n• [b]Motor:[/b] captador de velocidad, presión de aceite, temperatura de agua y paradas de emergencia.\n• [b]Interruptor:[/b] órdenes de cierre y disparo, y señal de posición.\n• [b]Comunicación:[/b] bus con los demás controladores y con el PMS, normalmente CAN o Modbus."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Los parámetros se agrupan por menús, protegidos con contraseña ([i]nombres y valores genéricos — verificar en el manual[/i]):\n• [b]Datos nominales:[/b] 450 kW, 562,5 kVA, 440 V, 738 A, 60 Hz y relación de los transformadores de corriente.\n• [b]Protecciones:[/b] sobrecarga, potencia inversa, sobretensión y mínima tensión, sobrefrecuencia y mínima frecuencia, cada una con su retardo.\n• [b]Sincronización:[/b] ventana de ángulo, de deslizamiento y de tensión.\n• [b]Reparto de carga:[/b] estatismo o isócrono, y límites para arrancar y parar grupos.\n\nAntes de cambiar nada, guarde o fotografíe la configuración vigente."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Comparación de medidas:[/b] la tensión, la corriente y la frecuencia de la pantalla deben coincidir con las de los instrumentos del cuadro y con las de un multímetro y una {{pinza}}.\n• [b]Alarmas y paradas del motor:[/b] simule cada señal según el manual, con el grupo fuera de servicio.\n• [b]Protecciones:[/b] con maleta de inyección o con la función de prueba del equipo.\n• [b]Historial:[/b] tras cualquier disparo, revise el registro de eventos. Indica qué protección actuó y con qué valores."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Pantalla apagada:[/b] falta la alimentación de 24 V DC o su fusible está fundido.\n• [b]Medidas erróneas:[/b] fusible de tensión fundido, relación de transformador mal configurada o transformador de corriente invertido.\n• [b]No reparte la carga:[/b] fallo del bus de comunicación o salida al gobernador sin conectar.\n• [b]No cierra el interruptor:[/b] condiciones de sincronismo no cumplidas, enclavamiento activo o alarma sin reconocer."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo[/i]): copia de seguridad de la configuración, revisión del historial de alarmas, apriete de bornes y prueba de las paradas de seguridad según el plan del buque.\n\n[b]Correctivo:[/b] sustituya el controlador por uno del mismo modelo y versión, cargue la configuración guardada y repita las pruebas antes de ponerlo en servicio."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas eléctricos en buques.",
+    "IEC 60092-504: automatización, control e instrumentación en buques.",
+    "Manual del controlador instalado a bordo."
+  ]
+}

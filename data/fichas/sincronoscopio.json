@@ -1,0 +1,64 @@
+{
+  "id": "sincronoscopio",
+  "titulo": "Sincronoscopio y lámparas de sincronismo",
+  "resumen": "Indican cuándo puede cerrarse un generador sobre las barras.",
+  "dibujo": {
+    "svg": "res://art/equipos/sincronoscopio.svg",
+    "tamano": [360, 440],
+    "nota": "Sincronoscopio de cuadro de 144 mm y lámparas de sincronismo, sin marca. La aguja gira hacia FAST si el entrante va más rápido. El sector verde marca la ventana de cierre: verificar el modelo a bordo.",
+    "etiquetas": [
+      { "texto": "SYNCHROSCOPE", "x": 180, "y": 303, "tam": 12 },
+      { "texto": "FAST", "x": 258, "y": 252, "tam": 16 },
+      { "texto": "SLOW", "x": 102, "y": 252, "tam": 16 },
+      { "texto": "L1", "x": 100, "y": 410, "tam": 12 },
+      { "texto": "L2", "x": 180, "y": 410, "tam": 12 },
+      { "texto": "L3", "x": 260, "y": 410, "tam": 12 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Instrumentos del panel de sincronización. Verificar contra la norma.",
+    "lista": ["sincronoscopio", "voltimetro", "frecuencimetro"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{sincronoscopio}} indica si un generador puede cerrarse sobre las barras. Su aguja muestra la diferencia de ángulo entre las tensiones del entrante y de las barras, y su giro, la {{frecuencia_deslizamiento}}. Junto a él suelen montarse un voltímetro y un frecuencímetro dobles y las {{lamparas_sincronismo}}."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Instrumento de cuadro[/b] con dos circuitos de medida: uno del entrante y otro de las barras.\n• [b]Aguja de giro continuo[/b], sin topes, sobre una escala circular con la ventana de cierre arriba.\n• [b]Rótulos FAST y SLOW[/b], en inglés en la mayoría de los cuadros.\n• [b]Tres lámparas[/b], una por fase, entre el entrante y las barras.\n• [b]Selector[/b] del grupo que se va a sincronizar, para no necesitar un sincronoscopio por grupo."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• El circuito del entrante se toma del lado del generador de su interruptor, y el de las barras, de las barras, los dos entre las mismas fases. Por ejemplo, L1-L2.\n• El selector conecta al instrumento el generador elegido. Solo debe medir uno a la vez.\n• Cada lámpara va entre una fase del entrante y la misma fase de las barras. Con las fases bien conectadas, se apagan a la vez.\n\nSi se cambian cables de un generador, compruebe su {{secuencia_fases}} con el {{secuencimetro}} antes de sincronizar."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "El sincronoscopio no tiene ajustes. Se ajustan el {{verificador_sincronismo}} o el sincronizador automático, si existen ([i]valores del simulador — verificar a bordo[/i]):\n• Ventana de ángulo: 8° en el sincronizador automático. Por encima de 15° el cierre es brusco.\n• Deslizamiento máximo: 0,25 Hz.\n• Diferencia de tensión máxima: 5 %.\n\nUn instrumento de repuesto debe ser de la misma tensión de medida y frecuencia."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con un solo grupo[/b] seleccionado y su interruptor cerrado, el instrumento mide el grupo contra sus propias barras: la aguja debe quedar quieta a las doce y las lámparas, apagadas.\n• [b]Tras cambiar cables o el instrumento,[/b] antes del primer cierre: compare el sincronoscopio con las lámparas, y mida con el multímetro la tensión entre la misma fase del entrante y de las barras. Con la aguja cerca de las doce debe ser casi 0 V.\n• [b]Lámparas:[/b] cambie las fundidas. Con una lámpara fundida, el método de las lámparas no es fiable."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Aguja quieta en cualquier posición:[/b] falta una de las dos tensiones, fusible de medida fundido o selector en mala posición.\n• [b]Aguja a las doce con lámparas encendidas:[/b] instrumento mal conectado, o fases distintas en los dos circuitos. No cierre hasta aclararlo.\n• [b]Lámparas que se apagan en rotación:[/b] secuencia de fases invertida.\n• [b]Aguja que vibra o salta:[/b] gobernador inestable o falso contacto en la medida."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo[/i]): observación en cada sincronización, apriete de bornes y revisión de los fusibles de medida cada 6 meses, y lámparas de repuesto a bordo.\n\n[b]Correctivo:[/b] sustituya el instrumento y verifíquelo como se indica en «Cómo se prueba» antes de usarlo."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-202: diseño de sistemas eléctricos en buques.",
+    "IEC 60051: instrumentos de medida eléctricos analógicos.",
+    "IEEE C37.2: función 25, verificación de sincronismo."
+  ]
+}

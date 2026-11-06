@@ -135,6 +135,18 @@ func test_componentes_de_la_v1_tienen_ficha_y_simbolo() -> String:
 	return A.cierto(extras.size() >= 3, "el motor debe mostrar placa y bornera en estrella y delta")
 
 
+func test_equipos_de_generacion_tienen_ficha_y_simbolo() -> String:
+	var c := Contenido.new()
+	var publicadas: Array = c.sistema(1)["modos"]["aprender"]["fichas"]
+	for id in ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento"]:
+		if not publicadas.has(id):
+			return "falta publicar la ficha %s" % id
+	for id in ["generador", "interruptor_potencia", "rele_potencia_inversa", "sincronoscopio", "monitor_aislamiento"]:
+		if c.simbolo(id).is_empty():
+			return "falta el símbolo %s" % id
+	return A.cierto(c.ficha("alternador").get("dibujos_extra", []).size() >= 1, "el alternador debe mostrar su placa")
+
+
 func test_rondas_del_minijuego_son_validas() -> String:
 	var c := Contenido.new()
 	var azar := RandomNumberGenerator.new()
@@ -166,6 +178,30 @@ func test_el_minijuego_cubre_los_simbolos_sin_repetir() -> String:
 	for r: Dictionary in JuegoSimbolos.crear_rondas(c.simbolos(), 10, azar):
 		ids[r["id"]] = true
 	return A.cierto(ids.size() == 10, "10 rondas no deben repetir símbolos: %d distintos" % ids.size())
+
+
+## Cada minijuego pregunta los símbolos de su sistema, y el examen de la v1 solo los de la v1.
+func test_simbolos_separados_por_sistema() -> String:
+	var c := Contenido.new()
+	for s: Dictionary in c.simbolos():
+		if not int(s.get("sistema", -1)) in [1, 3]:
+			return "el símbolo %s no indica su sistema" % s["id"]
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 5
+	for sistema in [1, 3]:
+		var ids := {}
+		for r: Dictionary in JuegoSimbolos.crear_rondas(c.simbolos(sistema), 10, azar):
+			ids[r["id"]] = true
+			for o: String in r["opciones"]:
+				if int(c.simbolo(o)["sistema"]) != sistema:
+					return "el minijuego del sistema %d ofrece %s" % [sistema, o]
+		if ids.size() != 10:
+			return "el sistema %d debe tener 10 símbolos distintos: %d" % [sistema, ids.size()]
+	var examen := ExamenTeorico.crear(c.leer("examenes/v1.json"), c.simbolos(3), azar)
+	for item: Dictionary in examen:
+		if item["tipo"] == "simbolo" and int(c.simbolo(item["id"])["sistema"]) != 3:
+			return "el examen de la v1 pregunta un símbolo de generación: %s" % item["id"]
+	return ""
 
 
 func test_estrellas_del_minijuego() -> String:

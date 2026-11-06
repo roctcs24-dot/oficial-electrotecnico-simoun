@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="340" viewBox="0 0 480 340">
+  <defs>
+    <linearGradient id="diesel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f6b5a"/><stop offset="0.5" stop-color="#3d5a4a"/><stop offset="1" stop-color="#22352a"/>
+    </linearGradient>
+    <linearGradient id="alternador" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8592a0"/><stop offset="0.45" stop-color="#6c7a86"/><stop offset="1" stop-color="#3a444d"/>
+    </linearGradient>
+    <linearGradient id="bancada" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4f54"/><stop offset="1" stop-color="#25282b"/>
+    </linearGradient>
+    <linearGradient id="chapa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2e4e1"/><stop offset="1" stop-color="#b3b8b6"/>
+    </linearGradient>
+    <radialGradient id="turbo" cx="0.4" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#c3c7c9"/><stop offset="1" stop-color="#5c6164"/>
+    </radialGradient>
+  </defs>
+  <!-- Bancada común -->
+  <rect x="18" y="268" width="444" height="30" rx="3" fill="url(#bancada)"/>
+  <rect x="30" y="298" width="36" height="12" fill="#1c1e20"/><rect x="414" y="298" width="36" height="12" fill="#1c1e20"/>
+  <rect x="222" y="298" width="36" height="12" fill="#1c1e20"/>
+  <!-- Motor diésel -->
+  <rect x="30" y="122" width="200" height="146" rx="6" fill="url(#diesel)"/>
+  <rect x="44" y="90" width="172" height="36" rx="4" fill="#355043"/>
+  <rect x="54" y="70" width="152" height="24" rx="8" fill="#2a3f34"/>
+  <path d="M70,82 H190" stroke="#4f6b5a" stroke-width="3"/>
+  <circle cx="44" cy="102" r="22" fill="url(#turbo)"/><circle cx="44" cy="102" r="9" fill="#2b2e31"/>
+  <rect x="40" y="236" width="180" height="26" rx="4" fill="#2a3f34"/>
+  <path d="M60,140 V226 M95,140 V226 M130,140 V226 M165,140 V226 M200,140 V226" stroke="#2f473a" stroke-width="4"/>
+  <!-- Volante y acoplamiento -->
+  <path d="M230,132 L262,142 V250 L230,260 Z" fill="#2f3337"/>
+  <!-- Alternador -->
+  <rect x="262" y="120" width="170" height="148" rx="16" fill="url(#alternador)"/>
+  <path d="M292,126 V262 M322,126 V262 M352,126 V262 M382,126 V262 M412,126 V262" stroke="#4f5b65" stroke-width="2"/>
+  <rect x="268" y="232" width="40" height="28" rx="3" fill="#2d343a"/>
+  <path d="M272,239 H304 M272,246 H304 M272,253 H304" stroke="#6c7a86" stroke-width="2"/>
+  <!-- Excitatriz, lado opuesto al acoplamiento -->
+  <rect x="430" y="140" width="28" height="110" rx="9" fill="#4a555e"/>
+  <path d="M436,160 H452 M436,180 H452 M436,200 H452 M436,220 H452" stroke="#36404a" stroke-width="2"/>
+  <!-- Caja de bornes -->
+  <rect x="300" y="78" width="92" height="44" rx="4" fill="#59656f"/>
+  <rect x="306" y="84" width="80" height="32" rx="3" fill="none" stroke="#3e4850" stroke-width="2"/>
+  <circle cx="318" cy="74" r="7" fill="#2b2e31"/><circle cx="346" cy="74" r="7" fill="#2b2e31"/><circle cx="374" cy="74" r="7" fill="#2b2e31"/>
+  <path d="M318,67 V40 M346,67 V40 M374,67 V40" stroke="#1a1a1a" stroke-width="8" stroke-linecap="round"/>
+  <!-- Placa de datos -->
+  <rect x="326" y="186" width="78" height="42" rx="3" fill="url(#chapa)" stroke="#5b6164" stroke-width="1.5"/>
+  <path d="M334,200 H396 M334,210 H396 M334,220 H380" stroke="#7d8386" stroke-width="1.5"/>
+  <!-- Línea del acoplamiento -->
+  <path d="M246,262 V314" stroke="#8d989f" stroke-width="1.5"/>
+</svg>

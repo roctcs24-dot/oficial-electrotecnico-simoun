@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="460" viewBox="0 0 360 460">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2f3337"/><stop offset="0.08" stop-color="#4a4f54"/><stop offset="0.5" stop-color="#555a5f"/><stop offset="0.92" stop-color="#474c51"/><stop offset="1" stop-color="#2c3034"/>
+    </linearGradient>
+    <linearGradient id="frente" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#43484d"/><stop offset="1" stop-color="#30353a"/>
+    </linearGradient>
+    <linearGradient id="unidad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3e5e3"/><stop offset="1" stop-color="#c3c7c6"/>
+    </linearGradient>
+    <linearGradient id="verde" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4fae6a"/><stop offset="1" stop-color="#22703a"/>
+    </linearGradient>
+    <linearGradient id="rojo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2574a"/><stop offset="1" stop-color="#a0231a"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+    <radialGradient id="hueco" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0.55" stop-color="#050506"/><stop offset="1" stop-color="#26282b"/>
+    </radialGradient>
+  </defs>
+  <rect x="16" y="16" width="328" height="428" rx="8" fill="url(#cuerpo)"/>
+  <rect x="36" y="36" width="288" height="388" rx="6" fill="url(#frente)" stroke="#202326" stroke-width="2"/>
+  <!-- Unidad de disparo -->
+  <rect x="56" y="56" width="150" height="126" rx="5" fill="url(#unidad)" stroke="#6a7073" stroke-width="1.5"/>
+  <rect x="68" y="68" width="126" height="36" rx="3" fill="#a9c6a0" stroke="#3d4a3a" stroke-width="2"/>
+  <circle cx="88" cy="138" r="13" fill="url(#acero)" stroke="#33373a" stroke-width="1.5"/><path d="M88,128 V138" stroke="#33373a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="131" cy="138" r="13" fill="url(#acero)" stroke="#33373a" stroke-width="1.5"/><path d="M131,138 L139,132" stroke="#33373a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="174" cy="138" r="13" fill="url(#acero)" stroke="#33373a" stroke-width="1.5"/><path d="M174,138 L166,130" stroke="#33373a" stroke-width="3" stroke-linecap="round"/>
+  <!-- Placa de características -->
+  <rect x="222" y="56" width="84" height="58" rx="3" fill="url(#unidad)" stroke="#6a7073" stroke-width="1.5"/>
+  <!-- Pulsadores de cierre y apertura -->
+  <circle cx="96" cy="232" r="30" fill="#1b1d20"/><circle cx="96" cy="232" r="24" fill="url(#verde)"/>
+  <circle cx="264" cy="232" r="30" fill="#1b1d20"/><circle cx="264" cy="232" r="24" fill="url(#rojo)"/>
+  <!-- Ventana de estado abierto / cerrado -->
+  <rect x="146" y="208" width="68" height="48" rx="4" fill="#111315"/>
+  <!-- Ventana del muelle de cierre -->
+  <rect x="146" y="288" width="68" height="30" rx="3" fill="#111315"/>
+  <rect x="150" y="292" width="60" height="22" rx="2" fill="#e3c84f"/>
+  <!-- Palanca de carga del muelle -->
+  <rect x="64" y="292" width="62" height="104" rx="8" fill="#1d1f22"/>
+  <rect x="84" y="304" width="22" height="80" rx="6" fill="#2e3236"/>
+  <!-- Indicador de posición y orificio de extracción -->
+  <rect x="228" y="288" width="80" height="30" rx="3" fill="url(#unidad)" stroke="#6a7073" stroke-width="1.5"/>
+  <circle cx="268" cy="370" r="16" fill="#1b1d20"/><circle cx="268" cy="370" r="12" fill="url(#hueco)"/>
+  <rect x="262" y="364" width="12" height="12" fill="#5f6568"/>
+</svg>
