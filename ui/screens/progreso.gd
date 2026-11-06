@@ -61,11 +61,13 @@ func _seccion_avance(columna: VBoxContainer) -> void:
 	columna.add_child(_rotulo("Avance"))
 	columna.add_child(_etiqueta("Lecciones: %d de %d" % [hechas, lecciones]))
 	columna.add_child(_etiqueta("Misiones de Guardia: %d de %d, con %d de %d estrellas" % [completadas, misiones, estrellas, misiones * 3]))
-	var e: Dictionary = p.datos["examenes"].get("v1", {})
-	if e.is_empty():
-		columna.add_child(_etiqueta("Examen de la v1: sin presentar"))
-	else:
-		columna.add_child(_etiqueta("Examen de la v1: %s, mejor nota %d %%" % ["aprobado" if e["aprobado"] else "no aprobado", roundi(e["mejor"])]))
+	for id: String in raiz.contenido.examenes():
+		var titulo: String = raiz.contenido.examen(id).get("titulo", id)
+		var e: Dictionary = p.datos["examenes"].get(id, {})
+		if e.is_empty():
+			columna.add_child(_etiqueta("%s: sin presentar" % titulo))
+		else:
+			columna.add_child(_etiqueta("%s: %s, mejor nota %d %%" % [titulo, "aprobado" if e["aprobado"] else "no aprobado", roundi(e["mejor"])]))
 	var accidentes := 0
 	for r: Dictionary in p.datos["misiones"].values():
 		accidentes += int(r.get("accidentes", 0))

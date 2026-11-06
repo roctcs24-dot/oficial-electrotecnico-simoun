@@ -42,7 +42,8 @@ func construir() -> void:
 	for s: Dictionary in c.sistemas():
 		filas.add_child(_fila_sistema(s))
 	filas.add_child(_rotulo("Progreso"))
-	filas.add_child(_fila_examen())
+	for id: String in c.examenes():
+		filas.add_child(_fila_examen(id))
 	filas.add_child(_fila_repaso())
 	filas.add_child(_fila("Mi progreso", "Rango, estadísticas y traspaso de la partida", raiz.ir_a.bind("progreso"), "progreso"))
 	filas.add_child(_rotulo("Consulta"))
@@ -86,13 +87,13 @@ func _crear_rango() -> Control:
 	return rango
 
 
-func _fila_examen() -> FilaMenu:
-	var e := raiz.contenido.leer("examenes/v1.json")
-	var r: Dictionary = raiz.partida.datos["examenes"].get("v1", {})
+func _fila_examen(id: String) -> FilaMenu:
+	var e := raiz.contenido.examen(id)
+	var r: Dictionary = raiz.partida.datos["examenes"].get(id, {})
 	var estado := ""
 	if not r.is_empty():
 		estado = "%d de 3 estrellas" % int(r["estrellas"]) if r["aprobado"] else "No aprobado"
-	return _fila(e.get("titulo", "Examen"), e.get("resumen", ""), raiz.ir_a.bind("prueba_examen", {"id": "v1"}), "examen", estado)
+	return _fila(e.get("titulo", "Examen"), e.get("resumen", ""), raiz.ir_a.bind("prueba_examen", {"id": id}), "examen", estado)
 
 
 func _fila_repaso() -> FilaMenu:

@@ -1,0 +1,69 @@
+{
+  "id": "generador_emergencia",
+  "titulo": "Generador de emergencia",
+  "resumen": "Grupo independiente que alimenta el cuadro de emergencia cuando falta el principal.",
+  "dibujo": {
+    "svg": "res://art/equipos/generador_emergencia.svg",
+    "tamano": [480, 340],
+    "nota": "Grupo de emergencia genérico refrigerado por radiador, con su panel local. En el simulador es de 75 kW: valor típico — verificar a bordo la potencia, el modelo y su ubicación.",
+    "etiquetas": [
+      { "texto": "EMERGENCY GEN.", "x": 384, "y": 31, "tam": 11, "color": "#20242a" },
+      { "texto": "440 V 60 Hz", "x": 352, "y": 63, "tam": 11, "color": "#9fe3b5" },
+      { "texto": "AUTO", "x": 428, "y": 43, "tam": 9, "color": "#20242a" },
+      { "texto": "MAN", "x": 404, "y": 88, "tam": 9, "color": "#20242a" },
+      { "texto": "OFF", "x": 452, "y": 88, "tam": 9, "color": "#20242a" },
+      { "texto": "RUN", "x": 330, "y": 126, "tam": 9, "color": "#20242a" },
+      { "texto": "ALARM", "x": 366, "y": 126, "tam": 9, "color": "#20242a" },
+      { "texto": "Radiador", "x": 67, "y": 326, "tam": 13 },
+      { "texto": "Motor diésel", "x": 201, "y": 326, "tam": 13 },
+      { "texto": "Alternador", "x": 362, "y": 326, "tam": 13 },
+      { "texto": "Escape", "x": 222, "y": 46, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "En los esquemas se dibuja como cualquier generador, unido a las barras de emergencia por su interruptor. Verificar contra la norma.",
+    "lista": ["generador", "interruptor_potencia"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{generador_emergencia}} alimenta el {{cuadro_emergencia}} cuando faltan las barras principales, por ejemplo tras un {{blackout}}. De ese cuadro dependen el alumbrado de emergencia, el servomotor del timón, las comunicaciones y las alarmas, y en muchos buques la bomba contraincendios de emergencia ([i]verificar a bordo qué cargas alimenta[/i]). Está fuera de la sala de máquinas, para que un incendio o una inundación allí no lo dejen también fuera de servicio."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Motor diésel[/b] con su propio tanque de combustible, independiente del de la sala de máquinas.\n• [b]Radiador[/b] refrigerado por aire, sin depender de las bombas de agua salada del buque.\n• [b]Alternador[/b] síncrono con su AVR, igual que los principales pero más pequeño.\n• [b]Arranque[/b] por baterías propias, con un segundo medio de arranque independiente ([i]verificar a bordo[/i]).\n• [b]Panel local[/b] con el selector AUTO, MAN y OFF, las luces de marcha y de alarma, y la parada de emergencia.\n• [b]Interruptor del generador, QE[/b], que lo conecta a las barras de emergencia."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• En servicio normal, el cuadro de emergencia se alimenta del principal por el {{interruptor_enlace}}, QT.\n• QE une el generador con las barras de emergencia. QT y QE están enclavados: nunca cierran a la vez, porque el generador de emergencia no trabaja en paralelo con los principales.\n• El panel vigila la tensión de las barras de emergencia. Si falta, arranca el diésel y, con la tensión ya formada, cierra QE.\n• Las baterías de arranque se cargan con un cargador alimentado desde el propio cuadro de emergencia."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "([i]Valores del simulador — verificar a bordo[/i])\n• [b]Selector:[/b] en AUTO durante el servicio normal. En el simulador, AUTO habilita a la vez el arranque y el cierre automático de QE.\n• [b]Retardo de arranque:[/b] 3 s sin tensión en las barras de emergencia, para no arrancar por una caída breve.\n• [b]Tiempo hasta tener tensión:[/b] SOLAS fija 45 s para buques de carga; qué plazo aplica a un pesquero de la bandera del buque está por confirmar.\n• [b]Vuelta al principal:[/b] en el simulador es manual. Con GE en manual, se abre QE, se cierra QT, se para GE y se vuelve a AUTO. En algunos cuadros la vuelta es automática."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Arranque en vacío:[/b] con el selector en MAN, arranque el grupo y compruebe tensión, frecuencia, presión de aceite y temperatura.\n• [b]Prueba de arranque automático:[/b] con autorización y avisando al puente, abra QT para dejar sin tensión las barras de emergencia. El grupo debe arrancar solo y QE debe cerrar en el tiempo exigido. Mida ese tiempo y anótelo.\n• [b]Con carga:[/b] compruebe que el alumbrado de emergencia y los servicios del cuadro funcionan con el grupo.\n• [b]Baterías:[/b] tensión en reposo y durante el arranque, y estado del cargador."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No arranca en un blackout:[/b] selector en MAN u OFF, baterías descargadas, cargador averiado o falta de combustible.\n• [b]Arranca pero no toma la carga:[/b] QE no cierra porque la tensión no llega al valor de cierre, o porque QT sigue cerrado y lo enclava.\n• [b]Se para con carga:[/b] sobrecarga del grupo, o una protección del diésel como la de temperatura del agua.\n• [b]Sigue en marcha tras recuperar el principal:[/b] en un cuadro con vuelta manual es normal; alguien debe hacer la transferencia y dejarlo de nuevo en AUTO."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar el plan del buque[/i]): arranque en vacío cada semana, prueba de arranque automático con carga cada mes, revisión de baterías, combustible, aceite y refrigerante, y registro de cada prueba en el libro.\n\n[b]Correctivo:[/b] repare la causa y repita la prueba de arranque automático antes de dar el grupo por disponible. Mientras esté fuera de servicio, avise al capitán: el buque queda sin su fuente de energía de emergencia."
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS, capítulo II-1, reglas 42 y 43: fuente de energía eléctrica de emergencia (verificar qué aplica a un buque pesquero).",
+    "Acuerdo de Ciudad del Cabo de 2012 sobre la seguridad de los buques pesqueros (verificar su aplicación al buque).",
+    "IEC 60092-201: diseño de sistemas eléctricos en buques."
+  ]
+}

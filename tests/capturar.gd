@@ -3,8 +3,9 @@ extends SceneTree
 ##   godot --path . --script res://tests/capturar.gd -- <carpeta de salida> [lecciones|fichas] [sistema]
 ## No usa --headless porque necesita dibujar. Se excluye de las versiones exportadas.
 
-const TAMANOS := [Vector2i(1280, 720), Vector2i(432, 960), Vector2i(960, 432)]
-const TAMANOS_LECCIONES := [Vector2i(432, 960), Vector2i(1280, 720)]
+## La variable CAPTURA_TAMANOS, como "800x1280,1280x800", cambia los tamaños de todas las capturas.
+var TAMANOS := [Vector2i(1280, 720), Vector2i(432, 960), Vector2i(960, 432)]
+var TAMANOS_LECCIONES := [Vector2i(432, 960), Vector2i(1280, 720)]
 
 var _empezado := false
 
@@ -17,6 +18,12 @@ func _process(_delta: float) -> bool:
 
 
 func _capturar() -> void:
+	var pedidos := OS.get_environment("CAPTURA_TAMANOS")
+	if not pedidos.is_empty():
+		TAMANOS = []
+		for par in pedidos.split(","):
+			TAMANOS.append(Vector2i(par.get_slice("x", 0).to_int(), par.get_slice("x", 1).to_int()))
+		TAMANOS_LECCIONES = TAMANOS
 	var argumentos := OS.get_cmdline_user_args()
 	var carpeta: String = argumentos[0] if argumentos.size() > 0 else OS.get_user_data_dir()
 	var raiz: Raiz = load("res://ui/raiz.tscn").instantiate()
@@ -227,6 +234,17 @@ func _capturar_guardia_cuadro(raiz: Raiz, carpeta: String) -> void:
 		p = raiz.pantalla_actual()
 		p._elegir_pestana("G1")
 		await _guardar(carpeta, "mision_cuadro_alarma_g1", tam)
+		if raiz.vertical:
+			p._elegir_pestana("barras")
+		await _esperar()
+		p._desplazables[0].scroll_vertical = 2600
+		await _guardar(carpeta, "mision_cuadro_emergencia", tam)
+		raiz.volver()
+		raiz.ir_a("examen", {"id": 1})
+		await _guardar(carpeta, "examen_sistema_1", tam)
+		raiz.volver()
+		raiz.ir_a("ficha", {"id": "generador_emergencia"})
+		await _guardar(carpeta, "ficha_generador_emergencia", tam)
 		raiz.volver()
 		raiz.ir_a("mision_cuadro", {"id": "gen1_paralelo"})
 		p = raiz.pantalla_actual()

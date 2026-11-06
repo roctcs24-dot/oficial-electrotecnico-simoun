@@ -9,6 +9,10 @@ const DPI_BASE_MOVIL := 160.0
 const DPI_BASE_PC := 96.0
 const LADO_CORTO_MIN := 360.0
 const LADO_CORTO_MAX := 600.0
+## Una tableta con una densidad creíble puede pasar de 600 puntos de lado corto. Por debajo de
+## DPI_CREIBLE se supone una densidad mal informada y se mantiene el límite de un celular.
+const LADO_CORTO_MAX_TABLETA := 900.0
+const DPI_CREIBLE := 200.0
 const ANCHO_MIN_HORIZONTAL := 720.0
 
 var contenido := Contenido.new()
@@ -95,14 +99,19 @@ func _calcular_vertical() -> bool:
 func _ajustar_escala() -> void:
 	var ventana := get_window()
 	var movil := OS.has_feature("mobile")
-	var escala := DisplayServer.screen_get_dpi() / (DPI_BASE_MOVIL if movil else DPI_BASE_PC)
+	var dpi := float(DisplayServer.screen_get_dpi())
+	var escala := dpi / (DPI_BASE_MOVIL if movil else DPI_BASE_PC)
 	if movil:
 		# Algunos celulares informan mal su densidad: el tamaño físico pone los límites.
 		var lado_corto := float(mini(ventana.size.x, ventana.size.y))
-		escala = clampf(escala, lado_corto / LADO_CORTO_MAX, lado_corto / LADO_CORTO_MIN)
+		escala = clampf(escala, lado_corto / lado_corto_maximo(dpi), lado_corto / LADO_CORTO_MIN)
 	escala = maxf(escala, 1.0)
 	if not is_equal_approx(ventana.content_scale_factor, escala):
 		ventana.content_scale_factor = escala
+
+
+static func lado_corto_maximo(dpi: float) -> float:
+	return LADO_CORTO_MAX_TABLETA if dpi >= DPI_CREIBLE else LADO_CORTO_MAX
 
 
 func _ajustar_margenes() -> void:

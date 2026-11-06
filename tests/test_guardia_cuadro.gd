@@ -138,6 +138,14 @@ func completar(m: MisionCuadro) -> void:
 			m.avanzar(20.0)
 			m.alternar_carga("C2")
 			m.avanzar(20.0)
+			m.alternar_arranque_automatico("GE")
+			m.alternar_interruptor_id("QE")
+			m.avanzar(1.0)
+			m.rearmar_id("QT")
+			m.alternar_interruptor_id("QT")
+			m.alternar_diesel("GE")
+			m.alternar_arranque_automatico("GE")
+			m.avanzar(5.0)
 		"gen3_falla_tierra":
 			m.dar_paso("aviso")
 			m.alternar_carga("C3")
@@ -256,7 +264,7 @@ func test_paralelo_empieza_con_g1_solo() -> String:
 	return A.primero([
 		A.cierto(m.operador.interruptor_de("G1").cerrado() and not m.operador.interruptor_de("G2").cerrado(), "G1 solo en barras"),
 		A.cerca(_f_barras(m), 60.0, 0.003, "frecuencia inicial"),
-		A.cerca(m.operador.generador("G1").estado["p_kw"], 320.0, 0.05, "carga de G1"),
+		A.cerca(m.operador.generador("G1").estado["p_kw"], 360.0, 0.05, "carga de G1, con el cuadro de emergencia"),
 		A.cierto(not m.operador.pms().automatico(), "PMS en manual"),
 	])
 
@@ -378,6 +386,44 @@ func test_un_grupo_bloqueado_no_arranca_ni_lo_usa_el_pms() -> String:
 		A.cierto(not m.operador.generador("G3").en_marcha(), "el PMS no debe arrancar G3, bloqueado"),
 		A.cierto(not m.operador.generador("G1").en_marcha(), "ni G1, parado por alarma"),
 		A.cierto(m.operador.generador("G2").en_marcha(), "debe arrancar G2"),
+	])
+
+
+func test_blackout_arranca_el_generador_de_emergencia() -> String:
+	var m := _mision("gen2_blackout")
+	var ge := m.generador("GE")
+	var v_be := m.tension_emergencia()
+	var qt := m.interruptor("QT")
+	var cerrar_qt := m.alternar_interruptor_id("QT")
+	return A.primero([
+		A.cierto(ge.en_marcha() and m.interruptor("QE").cerrado(), "GE en marcha y QE cerrado al empezar"),
+		A.cerca(v_be, 440.0, 0.05, "el cuadro de emergencia con tensión"),
+		A.cierto(qt.estado["causa"] == "disparo_minima_tension", "el enlace abrió por mínima tensión: %s" % qt.estado["causa"]),
+		A.cierto(cerrar_qt["tipo"] == "aviso" and not qt.cerrado(), "disparado y enclavado, el enlace no cierra"),
+	])
+
+
+func test_en_servicio_normal_la_emergencia_espera() -> String:
+	for id: String in ["gen1_paralelo", "gen3_falla_tierra", "gen4_potencia_inversa"]:
+		var m := _mision(id)
+		m.avanzar(5.0)
+		if not m.interruptor("QT").cerrado() or m.interruptor("QE").cerrado() or m.generador("GE").en_marcha():
+			return "%s: el cuadro de emergencia debe estar alimentado desde el principal" % id
+		if not m.generador("GE").params["arranque_automatico"]:
+			return "%s: GE debe quedar en automático" % id
+		if m.tension_emergencia() < 400.0:
+			return "%s: barras de emergencia sin tensión" % id
+	return ""
+
+
+func test_blackout_provocado_tambien_arranca_la_emergencia() -> String:
+	var m := _mision("gen1_paralelo")
+	m.alternar_interruptor("G1")
+	m.avanzar(1.0)
+	m.sim.avanzar_tiempo(24.0)
+	return A.primero([
+		A.cierto(m.fin == "accidente", "el blackout termina la misión"),
+		A.cierto(m.generador("GE").en_marcha() and m.interruptor("QE").cerrado(), "la emergencia toma el cuadro de emergencia"),
 	])
 
 
@@ -594,6 +640,10 @@ func test_pantalla_muestra_el_procedimiento_y_los_objetivos() -> String:
 	p._bloquear("C4")
 	var despues: Array[String] = []
 	_botones(raiz.pantalla_actual(), despues)
+	if raiz.vertical:
+		p._elegir_pestana("barras")
+	var barras: Array[String] = []
+	_botones(raiz.pantalla_actual(), barras)
 	raiz.free()
 	return A.primero([
 		A.cierto(textos.has("Avisar al puente y al jefe de máquinas de la búsqueda de la falla"), "debe estar el aviso"),
@@ -601,6 +651,7 @@ func test_pantalla_muestra_el_procedimiento_y_los_objetivos() -> String:
 		A.cierto(marcas == 8 and primera.begins_with("✓"), "objetivos con su marca: %d, %s" % [marcas, primera]),
 		A.cierto(despues.has("Verificar ausencia de tensión en C4"), "bloqueada, debe ofrecer la verificación"),
 		A.cierto(not textos.has("Reiniciar la práctica"), "en una misión no se reinicia la práctica"),
+		A.cierto(barras.has("Abrir el enlace QT") and barras.has("GE en automático: pasar a manual"), "debe estar el cuadro de emergencia: %s" % str(barras)),
 	])
 
 

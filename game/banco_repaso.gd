@@ -3,7 +3,6 @@ extends RefCounted
 ## Encuentra la pregunta de repaso de cada tema fallado: lecciones, examen, faltas de las
 ## misiones y símbolos. Un tema sin pregunta no se ofrece, pero sigue en las estadísticas.
 
-const EXAMEN := "examenes/v1.json"
 
 var contenido: Contenido
 var _indice := {}
@@ -17,8 +16,9 @@ func _init(contenido_juego: Contenido) -> void:
 			_agregar_leccion(contenido.leccion(id))
 		for id: String in modos.get("guardia", {}).get("misiones", []):
 			_agregar_mision(contenido.mision(id))
-	for p: Dictionary in contenido.leer(EXAMEN).get("preguntas", []):
-		_indice[p["tema"]] = p
+	for id: String in contenido.examenes():
+		for p: Dictionary in contenido.examen(id).get("preguntas", []):
+			_indice[p["tema"]] = p
 	var preguntas: Dictionary = contenido.leer("guardia.json").get("preguntas", {})
 	for tema: String in preguntas:
 		var q: Dictionary = preguntas[tema].duplicate()

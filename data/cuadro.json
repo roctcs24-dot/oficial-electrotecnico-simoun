@@ -1,5 +1,5 @@
 {
-  "nota": "Práctica libre del cuadro principal. Tres grupos de 450 kW sobre barras de 440 V, valores típicos de atuneros cerqueros: verificar a bordo.",
+  "nota": "Práctica libre del cuadro principal. Tres grupos de 450 kW sobre barras de 440 V, valores típicos de atuneros cerqueros: verificar a bordo. El buque empieza sin tensión: con las barras principales recuperadas, cierre el enlace QT y deje el generador de emergencia en automático.",
   "circuito": "cuadro_principal",
   "generadores": [
     { "id": "G1", "interruptor": "Q1", "nombre": "Generador nº 1" },
@@ -10,6 +10,14 @@
     { "id": "C1", "nombre": "Servicios esenciales" },
     { "id": "C2", "nombre": "Servicios no esenciales" }
   ],
+  "emergencia": {
+    "generador": "GE",
+    "interruptor": "QE",
+    "enlace": "QT",
+    "barras": "BE",
+    "cargas": [{ "id": "CE", "nombre": "Alumbrado de emergencia, servomotor y comunicaciones" }],
+    "nota": "Generador de emergencia de 75 kW: valor típico — verificar a bordo. En servicio normal, QT está cerrado, QE abierto y GE parado en automático. Si las barras de emergencia se quedan sin tensión, GE arranca solo y QE cierra en unos segundos. QT y QE están enclavados: nunca cierran a la vez. Para volver al principal, pase GE a manual, abra QE, cierre QT, pare GE y vuélvalo a automático. En algunos cuadros la vuelta al principal es automática: verificar a bordo."
+  },
   "paso_velocidad_hz": 0.1,
   "paso_tension_v": 2.0,
   "consecuencias": {

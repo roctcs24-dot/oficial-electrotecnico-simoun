@@ -1,6 +1,6 @@
 {
-  "nombre": "Cuadro principal con tres generadores",
-  "nota": "Tres diésel-generadores de 450 kW (562,5 kVA, cos φ 0,8, 738 A) sobre barras de 440 V, una salida esencial y otra no esencial. Potencias, corrientes y ajustes de protección son valores típicos de atuneros cerqueros: verificar a bordo.",
+  "nombre": "Cuadro principal con tres generadores y cuadro de emergencia",
+  "nota": "Tres diésel-generadores de 450 kW (562,5 kVA, cos φ 0,8, 738 A) sobre barras de 440 V, una salida esencial y otra no esencial. El cuadro de emergencia se alimenta del principal por el interruptor de enlace QT, y si falta tensión, del generador de emergencia GE, de 75 kW. Potencias, corrientes y ajustes de protección son valores típicos de atuneros cerqueros: verificar a bordo.",
   "componentes": [
     { "id": "G1", "tipo": "generador" },
     { "id": "G2", "tipo": "generador" },
@@ -13,7 +13,12 @@
     { "id": "C2", "tipo": "carga_trifasica", "params": { "p_kw": 120, "q_kvar": 90, "esencial": false } },
     { "id": "SY", "tipo": "sincronoscopio" },
     { "id": "MA", "tipo": "monitor_aislamiento" },
-    { "id": "PMS", "tipo": "pms" }
+    { "id": "PMS", "tipo": "pms" },
+    { "id": "GE", "tipo": "generador", "params": { "s_kva": 94, "p_kw": 75, "vigilar": ["BE.L1", "BE.L2"] } },
+    { "id": "QE", "tipo": "interruptor_generador", "params": { "in_a": 123, "p_kw_nominal": 75, "enclavados": ["QT"] } },
+    { "id": "QT", "tipo": "interruptor_generador", "params": { "in_a": 200, "p_kw_nominal": 100, "enclavados": ["QE"] } },
+    { "id": "BE", "tipo": "barras" },
+    { "id": "CE", "tipo": "carga_trifasica", "params": { "p_kw": 40, "q_kvar": 20, "esencial": true } }
   ],
   "cables": [
     ["G1.L1", "Q1.1"], ["G1.L2", "Q1.3"], ["G1.L3", "Q1.5"],
@@ -25,6 +30,11 @@
     ["C1.L1", "BP.L1"], ["C1.L2", "BP.L2"], ["C1.L3", "BP.L3"],
     ["C2.L1", "BP.L1"], ["C2.L2", "BP.L2"], ["C2.L3", "BP.L3"],
     ["SY.G1", "G2.L1"], ["SY.G2", "G2.L2"], ["SY.B1", "BP.L1"], ["SY.B2", "BP.L2"],
-    ["MA.L", "BP.L1"]
+    ["MA.L", "BP.L1"],
+    ["GE.L1", "QE.1"], ["GE.L2", "QE.3"], ["GE.L3", "QE.5"],
+    ["QE.2", "BE.L1"], ["QE.4", "BE.L2"], ["QE.6", "BE.L3"],
+    ["QT.1", "BP.L1"], ["QT.3", "BP.L2"], ["QT.5", "BP.L3"],
+    ["QT.2", "BE.L1"], ["QT.4", "BE.L2"], ["QT.6", "BE.L3"],
+    ["CE.L1", "BE.L1"], ["CE.L2", "BE.L2"], ["CE.L3", "BE.L3"]
   ]
 }

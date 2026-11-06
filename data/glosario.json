@@ -118,6 +118,7 @@
     "cargas_esenciales": { "es": "cargas esenciales", "en": "essential loads", "def": "Servicios necesarios para la propulsión, el gobierno y la seguridad del buque." },
     "generador_emergencia": { "es": "generador de emergencia", "en": "emergency generator", "def": "Generador independiente, fuera de la sala de máquinas, que alimenta los servicios de emergencia." },
     "cuadro_emergencia": { "es": "cuadro de emergencia", "en": "emergency switchboard", "def": "Tablero de los servicios de emergencia, alimentado desde el cuadro principal o por el generador de emergencia." },
+    "interruptor_enlace": { "es": "interruptor de enlace", "en": "bus-tie breaker", "def": "Interruptor que une dos juegos de barras, como el cuadro principal con el de emergencia." },
     "rearranque_secuencial": { "es": "rearranque secuencial", "en": "sequential restart", "def": "Reconexión escalonada de los motores tras un blackout para no repetir la sobrecarga." },
     "conexion_puerto": { "es": "conexión a tierra", "en": "shore connection", "def": "Alimentación del buque desde la red eléctrica del puerto." },
     "monitor_aislamiento": { "es": "monitor de aislamiento", "en": "insulation monitoring device", "def": "Equipo que mide de forma continua la resistencia de una red aislada contra el casco." },

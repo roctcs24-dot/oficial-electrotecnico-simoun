@@ -6,7 +6,7 @@
   "equipo": "Cuadro principal: generadores nº 1 y nº 2",
   "reporte": {
     "de": "Oficial de guardia de máquinas",
-    "texto": "Navegando hacia la zona de pesca, a las 03:40, hubo un {{blackout}}: se paró G1, que estaba solo en barras con el PMS en manual. El {{generador_emergencia}} arrancó y alimenta el {{cuadro_emergencia}}. G3 está en mantenimiento, con el arranque bloqueado por los mecánicos: no lo toque. Recupere las barras principales, averigüe por qué se paró G1, haga que lo reparen y deje G1 y G2 en paralelo con el PMS en automático y todas las salidas conectadas.",
+    "texto": "Navegando hacia la zona de pesca, a las 03:40, hubo un {{blackout}}: se paró G1, que estaba solo en barras con el PMS en manual. El {{generador_emergencia}} arrancó y alimenta el {{cuadro_emergencia}}, con el interruptor de enlace QT abierto. G3 está en mantenimiento, con el arranque bloqueado por los mecánicos: no lo toque. Recupere las barras principales, averigüe por qué se paró G1, haga que lo reparen y deje G1 y G2 en paralelo con el PMS en automático y todas las salidas conectadas. Devuelva después el cuadro de emergencia al principal, con el generador de emergencia parado y en automático.",
     "nota": "Grupos de 450 kW a 440 V y 60 Hz. Cargas, alarmas y procedimiento: valores típicos — verificar a bordo."
   },
   "cuadro": {
@@ -19,9 +19,10 @@
     { "op": "arrancar", "id": "G1" },
     { "op": "avanzar", "s": 10 },
     { "op": "cerrar", "id": "G1" },
+    { "op": "normalizar_emergencia" },
     { "op": "centrar" },
     { "op": "parada", "id": "G1", "alarma": "LOW FUEL PRESSURE: baja presión de combustible" },
-    { "op": "avanzar", "s": 20 },
+    { "op": "avanzar", "s": 25 },
     { "op": "estado", "id": "G3", "clave": "bloqueado", "valor": true }
   ],
   "pasos": [
@@ -29,12 +30,12 @@
   ],
   "bloqueables": ["G1"],
   "reglas": [
-    { "evento": "cierre_barra_muerta", "si_conectada": "C2", "falta": "restablecer_con_toda_la_carga" }
+    { "evento": "cierre_barra_muerta", "componentes": ["Q1", "Q2", "Q3"], "si_conectada": "C2", "falta": "restablecer_con_toda_la_carga" }
   ],
   "pistas": [
     "Mire el panel de G1: la línea «Alarma» del controlador dice por qué se paró. El disparo de Q1 por mínima tensión es una consecuencia, no la causa.",
     "Antes de cerrar un grupo sobre las barras sin tensión, desconecte C2, que no es esencial. Arranque G2 y cierre Q2: con las barras muertas no hace falta sincronizar.",
-    "Para que el mecánico cambie los filtros de G1, avise y bloquee antes el arranque de G1. Después quite el bloqueo, rearme Q1, arranque G1, sincronícelo, pase el PMS a automático y conecte C2."
+    "Para que el mecánico cambie los filtros de G1, avise y bloquee antes el arranque de G1. Después quite el bloqueo, rearme Q1, arranque G1, sincronícelo, pase el PMS a automático y conecte C2. Para volver al principal, pase GE a manual, abra QE, rearme y cierre el enlace QT, pare GE y vuélvalo a automático."
   ],
   "diagnostico": {
     "pregunta": "¿Por qué se produjo el blackout?",
@@ -67,14 +68,18 @@
       { "c": "reparto", "ids": ["G1", "G2"], "pct": 15, "texto": "Carga repartida entre G1 y G2, ±15 %" },
       { "c": "frecuencia", "min": 59.7, "max": 60.3, "texto": "Frecuencia de barras entre 59,7 y 60,3 Hz" },
       { "c": "pms", "automatico": true, "texto": "PMS en automático" },
-      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" },
+      { "c": "cerrado", "interruptor": "QT", "texto": "Cuadro de emergencia alimentado desde el principal: enlace QT cerrado" },
+      { "c": "parado", "id": "GE", "texto": "Generador de emergencia parado" },
+      { "c": "param", "id": "GE", "clave": "arranque_automatico", "min": 1, "texto": "Generador de emergencia en automático" }
     ]
   },
   "libro": {
     "campos": [
       { "etiqueta": "Causa del blackout", "opciones": ["Sobrecarga de G1", "Parada de G1 por baja presión de combustible, sin reserva en automático", "Falla a tierra en las barras"], "correcta": 1, "explicacion": "G1 se paró por baja presión de combustible, con el filtro obstruido, y el PMS en manual no arrancó la reserva." },
       { "etiqueta": "Orden de recuperación", "opciones": ["Desconectar las no esenciales, cerrar G2 sobre las barras sin tensión y reconectar por prioridad", "Cerrar G2 con toda la carga conectada", "Esperar a que G1 vuelva a arrancar"], "correcta": 0, "explicacion": "Tras un blackout se recupera primero lo esencial con un grupo disponible, y se reconecta el resto cuando hay potencia." },
-      { "etiqueta": "PMS al entregar la guardia", "opciones": ["En manual", "En automático"], "correcta": 1, "explicacion": "Con el PMS en automático, si un grupo se para, la reserva arranca y toma la carga. En manual eso no ocurre." }
+      { "etiqueta": "PMS al entregar la guardia", "opciones": ["En manual", "En automático"], "correcta": 1, "explicacion": "Con el PMS en automático, si un grupo se para, la reserva arranca y toma la carga. En manual eso no ocurre." },
+      { "etiqueta": "Cuadro de emergencia al terminar", "opciones": ["Alimentado por el generador de emergencia", "Alimentado desde el principal por QT, con el generador de emergencia parado y en automático", "Sin tensión"], "correcta": 1, "explicacion": "Recuperadas las barras principales, el cuadro de emergencia vuelve a alimentarse por el enlace, y el generador de emergencia queda listo para arrancar solo." }
     ]
   },
   "para_saber_mas": [

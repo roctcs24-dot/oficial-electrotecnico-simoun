@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="340" viewBox="0 0 480 340">
+  <defs>
+    <linearGradient id="motor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f6b5a"/><stop offset="1" stop-color="#2c3f34"/>
+    </linearGradient>
+    <linearGradient id="alternador" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a7186"/><stop offset="0.5" stop-color="#3e5366"/><stop offset="1" stop-color="#26343f"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9ced1"/><stop offset="1" stop-color="#9aa1a5"/>
+    </linearGradient>
+    <linearGradient id="bancada" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b4044"/><stop offset="1" stop-color="#1f2326"/>
+    </linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+  </defs>
+  <!-- Bancada con antivibratorios -->
+  <rect x="20" y="288" width="420" height="20" rx="3" fill="url(#bancada)"/>
+  <rect x="44" y="280" width="18" height="10" fill="#151719"/><rect x="200" y="280" width="18" height="10" fill="#151719"/><rect x="380" y="280" width="18" height="10" fill="#151719"/>
+  <!-- Radiador refrigerado por aire -->
+  <rect x="28" y="112" width="78" height="170" rx="4" fill="#2a2e31"/>
+  <rect x="36" y="122" width="62" height="150" fill="#14171a"/>
+  <g stroke="#4a5055" stroke-width="2">
+    <path d="M36,132 H98 M36,142 H98 M36,152 H98 M36,162 H98 M36,172 H98 M36,182 H98 M36,192 H98 M36,202 H98 M36,212 H98 M36,222 H98 M36,232 H98 M36,242 H98 M36,252 H98 M36,262 H98"/>
+  </g>
+  <rect x="58" y="100" width="20" height="14" rx="2" fill="url(#acero)"/>
+  <!-- Motor diésel -->
+  <rect x="106" y="150" width="190" height="132" rx="6" fill="url(#motor)"/>
+  <rect x="118" y="118" width="166" height="34" rx="5" fill="#3a5446"/>
+  <rect x="126" y="108" width="150" height="14" rx="4" fill="#6c7f74"/>
+  <g fill="url(#acero)">
+    <circle cx="146" cy="115" r="4"/><circle cx="186" cy="115" r="4"/><circle cx="226" cy="115" r="4"/><circle cx="266" cy="115" r="4"/>
+  </g>
+  <path d="M130,170 H282 M130,196 H282" stroke="#22322a" stroke-width="3"/>
+  <rect x="140" y="212" width="54" height="40" rx="4" fill="#22322a"/>
+  <circle cx="246" cy="236" r="22" fill="#22322a"/><circle cx="246" cy="236" r="12" fill="url(#acero)"/>
+  <!-- Escape con su aislamiento -->
+  <path d="M244,108 V60 H272 V30" fill="none" stroke="#b9b4a6" stroke-width="16" stroke-linejoin="round"/>
+  <path d="M244,108 V60 H272 V30" fill="none" stroke="#8d887b" stroke-width="16" stroke-dasharray="3 9" stroke-linejoin="round"/>
+  <!-- Alternador -->
+  <rect x="296" y="170" width="132" height="112" rx="10" fill="url(#alternador)"/>
+  <rect x="296" y="170" width="16" height="112" fill="#2b3a46"/>
+  <g stroke="#26343f" stroke-width="3"><path d="M330,182 V270 M352,182 V270 M374,182 V270 M396,182 V270"/></g>
+  <rect x="330" y="146" width="66" height="26" rx="3" fill="#3e5366"/>
+  <g fill="url(#acero)"><circle cx="344" cy="159" r="4"/><circle cx="363" cy="159" r="4"/><circle cx="382" cy="159" r="4"/></g>
+  <!-- Panel local del grupo -->
+  <rect x="306" y="14" width="156" height="120" rx="6" fill="url(#panel)"/>
+  <rect x="318" y="42" width="68" height="34" rx="3" fill="#0f1a14" stroke="#2d4a38" stroke-width="2"/>
+  <!-- Selector AUTO / MAN / OFF -->
+  <circle cx="428" cy="64" r="16" fill="#1f2326"/><circle cx="428" cy="64" r="11" fill="url(#acero)"/>
+  <path d="M428,64 L420,53" stroke="#1f2326" stroke-width="5" stroke-linecap="round"/>
+  <!-- Luces y parada de emergencia -->
+  <circle cx="330" cy="104" r="9" fill="#8e9496"/><circle cx="330" cy="104" r="6.5" fill="#5dff8f"/>
+  <circle cx="366" cy="104" r="9" fill="#8e9496"/><circle cx="366" cy="104" r="6.5" fill="#1d3a28"/>
+  <circle cx="432" cy="110" r="14" fill="#e0b324"/><circle cx="432" cy="110" r="10" fill="#c8312a"/>
+  <!-- Cable del alternador al panel -->
+  <path d="M396,152 C440,152 448,140 448,134" fill="none" stroke="#1b1e21" stroke-width="6"/>
+</svg>

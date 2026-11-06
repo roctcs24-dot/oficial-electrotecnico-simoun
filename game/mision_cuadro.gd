@@ -43,6 +43,8 @@ func _init(contenido_juego: Contenido, id_mision: String) -> void:
 	panel = contenido.leer("cuadro.json").duplicate(true)
 	var cuadro: Dictionary = datos["cuadro"]
 	panel["cargas"] = cuadro["cargas"]
+	# La nota de la práctica libre no vale en una misión: se muestra la del reporte.
+	panel["nota"] = datos["reporte"]["nota"]
 	sim = SimSimulacion.desde_dict(_circuito(cuadro))
 	operador = OperadorCuadro.new(sim, panel)
 	_aplicar(datos.get("preparar", []))
@@ -51,19 +53,27 @@ func _init(contenido_juego: Contenido, id_mision: String) -> void:
 	_con_tension = operador.tension_barras() > _v_nominal() * BARRAS_CON_TENSION
 
 
-## El cuadro de tres generadores con las salidas y los ajustes propios de la misión.
+## El cuadro de tres generadores con las salidas y los ajustes propios de la misión. Las salidas
+## de las barras principales se sustituyen por las de la misión; las de emergencia se quedan.
 func _circuito(cuadro: Dictionary) -> Dictionary:
 	var base: Dictionary = contenido.leer("circuitos/%s.json" % cuadro.get("circuito", "cuadro_principal")).duplicate(true)
-	var quitadas := {}
-	var componentes := []
+	var cargas := {}
 	for c: Dictionary in base["componentes"]:
 		if c["tipo"] == "carga_trifasica":
-			quitadas[c["id"]] = true
-		else:
+			cargas[c["id"]] = true
+	var quitadas := {}
+	for cable: Array in base["cables"]:
+		for i in 2:
+			var id: String = cable[i].get_slice(".", 0)
+			if cargas.has(id) and cable[1 - i].begins_with("BP."):
+				quitadas[id] = true
+	var componentes := []
+	for c: Dictionary in base["componentes"]:
+		if not quitadas.has(c["id"]):
 			componentes.append(c)
 	var cables := []
 	for cable: Array in base["cables"]:
-		if not quitadas.has(cable[0].get_slice(".", 0)):
+		if not quitadas.has(cable[0].get_slice(".", 0)) and not quitadas.has(cable[1].get_slice(".", 0)):
 			cables.append(cable)
 	for c: Dictionary in cuadro["cargas"]:
 		componentes.append({"id": c["id"], "tipo": "carga_trifasica", "params": c.get("params", {}), "estado": c.get("estado", {})})
@@ -114,6 +124,18 @@ func tensiones_a_tierra() -> Array[float]:
 	return operador.tensiones_a_tierra()
 
 
+func emergencia() -> Dictionary:
+	return operador.emergencia()
+
+
+func interruptor(id_interruptor: String) -> SimInterruptorGenerador:
+	return operador.interruptor(id_interruptor)
+
+
+func tension_emergencia() -> float:
+	return operador.tension_emergencia()
+
+
 # --- Mandos del cuadro: los mismos que OperadorCuadro ---
 
 func alternar_diesel(id_grupo: String) -> Dictionary:
@@ -150,6 +172,18 @@ func cancelar_sincronizacion() -> Dictionary:
 
 func alternar_pms() -> Dictionary:
 	return _tras_mando(operador.alternar_pms())
+
+
+func alternar_interruptor_id(id_interruptor: String) -> Dictionary:
+	return _tras_mando(operador.alternar_interruptor_id(id_interruptor))
+
+
+func rearmar_id(id_interruptor: String) -> Dictionary:
+	return _tras_mando(operador.rearmar_id(id_interruptor))
+
+
+func alternar_arranque_automatico(id_grupo: String) -> Dictionary:
+	return _tras_mando(operador.alternar_arranque_automatico(id_grupo))
 
 
 ## Antes de cortar una salida se comprueban las reglas de la misión, como avisar al puente.
@@ -235,6 +269,8 @@ func _anotar_eventos() -> void:
 		for r: Dictionary in datos.get("reglas", []):
 			if r.get("evento", "") != e["tipo"]:
 				continue
+			if r.has("componentes") and not r["componentes"].has(e["componente"]):
+				continue
 			if r.has("si_conectada") and not operador.carga(r["si_conectada"]).estado["conectada"]:
 				continue
 			_falta_pendiente(r["falta"])
@@ -271,9 +307,9 @@ func _todas(condiciones: Array) -> bool:
 func condicion(c: Dictionary) -> bool:
 	match c["c"]:
 		"cerrado":
-			return operador.interruptor_de(c["id"]).cerrado()
+			return _interruptor_condicion(c).cerrado()
 		"abierto":
-			return not operador.interruptor_de(c["id"]).cerrado()
+			return not _interruptor_condicion(c).cerrado()
 		"en_marcha":
 			return operador.generador(c["id"]).en_marcha()
 		"parado":
@@ -298,6 +334,11 @@ func condicion(c: Dictionary) -> bool:
 			return _entre(float(sim.componente(c["id"]).params[c["clave"]]), c)
 	push_error("Condición de misión desconocida: %s" % c["c"])
 	return false
+
+
+## Con "interruptor", uno por su id, como el enlace; con "id", el del generador.
+func _interruptor_condicion(c: Dictionary) -> SimInterruptorGenerador:
+	return operador.interruptor(c["interruptor"]) if c.has("interruptor") else operador.interruptor_de(c["id"])
 
 
 func _entre(valor: float, c: Dictionary) -> bool:
@@ -520,6 +561,8 @@ func _aplicar(operaciones: Array) -> void:
 				_sincronizar_ya(op["id"])
 			"centrar":
 				_centrar_frecuencia()
+			"normalizar_emergencia":
+				_normalizar_emergencia()
 			"conectar":
 				operador.carga(op["id"]).conectar()
 			"desconectar":
@@ -547,6 +590,26 @@ func _centrar_frecuencia() -> void:
 				var g := operador.generador(d["id"])
 				g.ajustar_velocidad(SimPMS.F_NOMINAL - g.frecuencia())
 	sim.avanzar_tiempo(5.0)
+
+
+## Servicio normal del cuadro de emergencia: alimentado desde el principal por el enlace, con
+## el generador de emergencia parado y en automático. Necesita las barras principales con tensión.
+func _normalizar_emergencia() -> void:
+	var e := operador.emergencia()
+	var ge := operador.generador(e["generador"])
+	operador.interruptor(e["interruptor"]).abrir()
+	ge.parar()
+	ge.estado.merge({"f": 0.0, "e_pu": 0.0, "pm_pu": 0.0}, true)
+	# Si un grupo acaba de cerrar sobre las barras, su tensión tarda en recuperarse.
+	sim.avanzar_tiempo(2.0)
+	var qt := operador.interruptor(e["enlace"])
+	qt.rearmar()
+	var motivo := qt.cerrar()
+	if not motivo.is_empty():
+		push_error("No se pudo cerrar el enlace al preparar la misión: %s" % motivo)
+	ge.params["arranque_automatico"] = true
+	operador.interruptor(e["interruptor"]).params["cierre_automatico"] = true
+	sim.avanzar_tiempo(1.0)
 
 
 ## Con el sincronizador del PMS, hasta que el grupo queda en barras.

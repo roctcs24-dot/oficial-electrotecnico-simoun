@@ -138,7 +138,7 @@ func test_componentes_de_la_v1_tienen_ficha_y_simbolo() -> String:
 func test_equipos_de_generacion_tienen_ficha_y_simbolo() -> String:
 	var c := Contenido.new()
 	var publicadas: Array = c.sistema(1)["modos"]["aprender"]["fichas"]
-	for id in ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento"]:
+	for id in ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento", "generador_emergencia"]:
 		if not publicadas.has(id):
 			return "falta publicar la ficha %s" % id
 	for id in ["generador", "interruptor_potencia", "rele_potencia_inversa", "sincronoscopio", "monitor_aislamiento"]:
@@ -180,7 +180,7 @@ func test_el_minijuego_cubre_los_simbolos_sin_repetir() -> String:
 	return A.cierto(ids.size() == 10, "10 rondas no deben repetir símbolos: %d distintos" % ids.size())
 
 
-## Cada minijuego pregunta los símbolos de su sistema, y el examen de la v1 solo los de la v1.
+## Cada minijuego y cada examen preguntan solo los símbolos de su sistema.
 func test_simbolos_separados_por_sistema() -> String:
 	var c := Contenido.new()
 	for s: Dictionary in c.simbolos():
@@ -197,10 +197,13 @@ func test_simbolos_separados_por_sistema() -> String:
 					return "el minijuego del sistema %d ofrece %s" % [sistema, o]
 		if ids.size() != 10:
 			return "el sistema %d debe tener 10 símbolos distintos: %d" % [sistema, ids.size()]
-	var examen := ExamenTeorico.crear(c.leer("examenes/v1.json"), c.simbolos(3), azar)
-	for item: Dictionary in examen:
-		if item["tipo"] == "simbolo" and int(c.simbolo(item["id"])["sistema"]) != 3:
-			return "el examen de la v1 pregunta un símbolo de generación: %s" % item["id"]
+	for par in [["v1", 3], ["v2", 1]]:
+		var datos := c.examen(par[0])
+		if int(datos["sistema_simbolos"]) != par[1]:
+			return "el examen %s debe preguntar los símbolos del sistema %d" % par
+		for item: Dictionary in ExamenTeorico.crear(datos, c.simbolos(par[1]), azar):
+			if item["tipo"] == "simbolo" and int(c.simbolo(item["id"])["sistema"]) != par[1]:
+				return "el examen %s pregunta un símbolo de otro sistema: %s" % [par[0], item["id"]]
 	return ""
 
 

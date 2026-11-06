@@ -8,6 +8,7 @@ const COLOR_LCD := Color("0f1a14")
 const BORDE_LCD := Color("2d4a38")
 const TEXTO_LCD := Color("9fe3b5")
 const PROPORCION_GENERADOR := 1.3
+const ANCHO_NOMBRES_LARGOS := 1200.0
 const LAMPARA_TIERRA_APAGADA := Color("2e2f2c")
 const LAMPARA_TIERRA_ENCENDIDA := Color("fff1cc")
 
@@ -77,8 +78,10 @@ func _construir_cuerpo() -> void:
 	derecha.size_flags_stretch_ratio = PROPORCION_GENERADOR
 	cuerpo.add_child(derecha)
 	var pestanas := _pestanas_extra()
+	# En una tableta o un celular apaisados, «Generador nº 1» no cabe junto a las demás pestañas.
+	var largos: bool = raiz.size.x >= ANCHO_NOMBRES_LARGOS
 	for g: Dictionary in datos["generadores"]:
-		pestanas.append([g["id"], g["nombre"]])
+		pestanas.append([g["id"], g["nombre"] if largos else g["id"]])
 	derecha.add_child(_fila_pestanas(pestanas))
 	_zonas.append([_agregar_zona(derecha, 1.0), args["pestana"]])
 
@@ -222,8 +225,76 @@ func _panel_barras(columna: VBoxContainer) -> void:
 		var b := _boton("Desconectar" if carga.estado["conectada"] else "Conectar", _alternar_carga.bind(c["id"]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
 		linea.add_child(b)
+	_panel_emergencia(columna)
 	columna.add_child(_etiqueta(datos["nota"], "Nota"))
 	_pie_barras(columna)
+
+
+## Cuadro de emergencia: enlace con el principal, generador de emergencia y su interruptor.
+func _panel_emergencia(columna: VBoxContainer) -> void:
+	var e: Dictionary = operador.emergencia()
+	if e.is_empty():
+		return
+	var ge: SimGenerador = sim.componente(e["generador"])
+	var qe: SimInterruptorGenerador = sim.componente(e["interruptor"])
+	var qt: SimInterruptorGenerador = sim.componente(e["enlace"])
+	columna.add_child(_rotulo("Cuadro de emergencia"))
+	_instrumentos["be_v"] = InstrumentoAguja.new().configurar("Tensión", "V", 0.0, 600.0, 484.0)
+	var fila := HFlowContainer.new()
+	fila.add_theme_constant_override("h_separation", 8)
+	fila.add_child(_instrumentos["be_v"])
+	columna.add_child(fila)
+	_textos["emergencia"] = _etiqueta("")
+	columna.add_child(_textos["emergencia"])
+	columna.add_child(_luz_con_texto("ge_marcha", "Generador de emergencia en marcha", LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
+	var mandos := GridContainer.new()
+	mandos.columns = 2
+	mandos.add_theme_constant_override("h_separation", 6)
+	mandos.add_theme_constant_override("v_separation", 6)
+	columna.add_child(mandos)
+	var lista: Array = [
+		["Abrir el enlace %s" % qt.id if qt.cerrado() else "Cerrar el enlace %s" % qt.id, _alternar_interruptor_id.bind(qt.id)],
+		["Parar %s" % ge.id if ge.en_marcha() else "Arrancar %s" % ge.id, _alternar_diesel.bind(ge.id)],
+		["Abrir %s" % qe.id if qe.cerrado() else "Cerrar %s" % qe.id, _alternar_interruptor_id.bind(qe.id)],
+		["%s en automático: pasar a manual" % ge.id if ge.params["arranque_automatico"] else "%s en manual: pasar a automático" % ge.id, _alternar_arranque_automatico.bind(ge.id)],
+	]
+	for q: SimInterruptorGenerador in [qt, qe]:
+		if q.estado["disparado"]:
+			lista.append(["Rearmar %s" % q.id, _rearmar_id.bind(q.id)])
+	for m: Array in lista:
+		var b := _boton(m[0], m[1])
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		mandos.add_child(b)
+	for c: Dictionary in e["cargas"]:
+		var carga: SimCargaTrifasica = sim.componente(c["id"])
+		columna.add_child(_etiqueta("%s %s (esencial): %s kW" % [c["id"], c["nombre"], TextoTecnico.numero(carga.params["p_kw"], 0)]))
+	columna.add_child(_etiqueta(e["nota"], "Nota"))
+
+
+func _alternar_interruptor_id(id: String) -> void:
+	_atender(operador.alternar_interruptor_id(id))
+
+
+func _rearmar_id(id: String) -> void:
+	_atender(operador.rearmar_id(id))
+
+
+func _alternar_arranque_automatico(id: String) -> void:
+	_atender(operador.alternar_arranque_automatico(id))
+
+
+func _actualizar_emergencia() -> void:
+	var e: Dictionary = operador.emergencia()
+	var ge: SimGenerador = sim.componente(e["generador"])
+	var v: float = operador.tension_emergencia()
+	_instrumentos["be_v"].valor = v
+	_luces["ge_marcha"].encendida = ge.en_marcha()
+	var origen := "sin tensión"
+	if (sim.componente(e["enlace"]) as SimInterruptorGenerador).cerrado() and v > 30.0:
+		origen = "alimentadas desde el cuadro principal por %s" % e["enlace"]
+	elif (sim.componente(e["interruptor"]) as SimInterruptorGenerador).cerrado() and v > 30.0:
+		origen = "alimentadas por el generador de emergencia, %s kW" % TextoTecnico.numero(maxf(ge.estado["p_kw"], 0.0), 0)
+	_textos["emergencia"].text = "Barras de emergencia: %s." % origen
 
 
 func _pie_barras(columna: VBoxContainer) -> void:
@@ -434,6 +505,8 @@ func _actualizar() -> void:
 		_textos["luz_aislamiento"].text = "%s · alarma por debajo de %s MΩ" % [lectura, TextoTecnico.numero(ma.params["alarma_mohm"], 1)]
 		var pms: SimPMS = operador.pms()
 		_textos["pms"].text = "%s. %s" % ["Automático" if pms.automatico() else "Manual", pms.estado["mensaje"]]
+		if _instrumentos.has("be_v"):
+			_actualizar_emergencia()
 	if _instrumentos.has("g_v"):
 		_actualizar_generador(_zonas[-1][1])
 
@@ -520,6 +593,13 @@ func _calcular_firma() -> String:
 		partes.append("%s%s" % [estado["conectada"], estado["bloqueada"]])
 	var pms: SimPMS = operador.pms()
 	partes.append("%s%s" % [pms.automatico(), pms.sincronizando()])
+	var e: Dictionary = operador.emergencia()
+	if not e.is_empty():
+		var ge: SimGenerador = sim.componente(e["generador"])
+		partes.append("%s%s" % [ge.en_marcha(), ge.params["arranque_automatico"]])
+		for q: String in [e["interruptor"], e["enlace"]]:
+			var i: SimInterruptorGenerador = sim.componente(q)
+			partes.append("%s%s" % [i.cerrado(), i.estado["disparado"]])
 	return "|".join(partes)
 
 

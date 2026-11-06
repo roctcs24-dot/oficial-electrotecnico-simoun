@@ -25,7 +25,8 @@
     { "op": "avanzar", "s": 10 },
     { "op": "pms", "automatico": true },
     { "op": "sincronizar", "id": "G2" },
-    { "op": "avanzar", "s": 20 }
+    { "op": "avanzar", "s": 20 },
+    { "op": "normalizar_emergencia" }
   ],
   "pasos": [
     { "id": "aviso", "boton": "Avisar al puente y al jefe de máquinas de la búsqueda de la falla", "pone": ["aviso"] }

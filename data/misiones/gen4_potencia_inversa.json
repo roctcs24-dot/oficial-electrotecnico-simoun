@@ -20,6 +20,7 @@
     { "op": "arrancar", "id": "G1" },
     { "op": "avanzar", "s": 10 },
     { "op": "cerrar", "id": "G1" },
+    { "op": "normalizar_emergencia" },
     { "op": "centrar" },
     { "op": "disparado", "id": "G2", "causa": "disparo_potencia_inversa" }
   ],

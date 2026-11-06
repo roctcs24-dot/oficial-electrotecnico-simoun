@@ -33,8 +33,19 @@ func _azar(semilla: int) -> RandomNumberGenerator:
 
 
 func test_banco_del_examen_bien_formado() -> String:
-	var datos: Dictionary = Contenido.new().leer("examenes/v1.json")
+	var c := Contenido.new()
 	var temas := {}
+	if c.examenes() != ["v1", "v2"]:
+		return "deben publicarse los exámenes v1 y v2: %s" % str(c.examenes())
+	for id: String in c.examenes():
+		var motivo := _revisar_examen(c.examen(id), temas)
+		if not motivo.is_empty():
+			return "%s: %s" % [id, motivo]
+	return ""
+
+
+## temas se comparte entre exámenes: ningún tema se repite en otro.
+func _revisar_examen(datos: Dictionary, temas: Dictionary) -> String:
 	var por_tipo := {}
 	for p: Dictionary in datos["preguntas"]:
 		if temas.has(p["tema"]):
@@ -66,18 +77,26 @@ func test_el_banco_no_repite_temas_de_las_lecciones() -> String:
 				for b: Dictionary in pagina["bloques"]:
 					if b.has("tema"):
 						lecciones[b["tema"]] = true
-	for p: Dictionary in c.leer("examenes/v1.json")["preguntas"]:
-		if lecciones.has(p["tema"]):
-			return "el tema %s ya está en una lección" % p["tema"]
+	for id: String in c.examenes():
+		for p: Dictionary in c.examen(id)["preguntas"]:
+			if lecciones.has(p["tema"]):
+				return "el tema %s ya está en una lección" % p["tema"]
 	return ""
 
 
 func test_examen_respeta_la_composicion_y_no_repite() -> String:
 	var c := Contenido.new()
-	var datos: Dictionary = c.leer("examenes/v1.json")
 	var azar := _azar(7)
+	for id: String in c.examenes():
+		var motivo := _revisar_composicion(c, c.examen(id), azar)
+		if not motivo.is_empty():
+			return "%s: %s" % [id, motivo]
+	return ""
+
+
+func _revisar_composicion(c: Contenido, datos: Dictionary, azar: RandomNumberGenerator) -> String:
 	for _i in 20:
-		var items := ExamenTeorico.crear(datos, c.simbolos(), azar)
+		var items := ExamenTeorico.crear(datos, c.simbolos(int(datos["sistema_simbolos"])), azar)
 		var cuenta := {}
 		var temas := {}
 		for item: Dictionary in items:
@@ -218,9 +237,10 @@ func test_todos_los_temas_tienen_pregunta_de_repaso() -> String:
 	for s: Dictionary in c.simbolos():
 		if not banco.tiene("simbolo_%s" % s["id"]):
 			return "falta el símbolo %s" % s["id"]
-	for p: Dictionary in c.leer("examenes/v1.json")["preguntas"]:
-		if not banco.tiene(p["tema"]):
-			return "falta el tema del examen %s" % p["tema"]
+	for id: String in c.examenes():
+		for p: Dictionary in c.examen(id)["preguntas"]:
+			if not banco.tiene(p["tema"]):
+				return "falta el tema del examen %s" % p["tema"]
 	return A.cierto(not banco.tiene("no_existe"), "un tema desconocido no debe tener pregunta")
 
 
@@ -256,7 +276,11 @@ func _puntos_maximos(c: Contenido) -> Dictionary:
 						lecciones += Partida.PUNTOS_ACIERTO
 		for _id: String in modos.get("guardia", {}).get("misiones", []):
 			misiones += Partida.PUNTOS_MISION + 3 * Partida.PUNTOS_ESTRELLA
-	var evaluaciones := Partida.PUNTOS_EXAMEN + 6 * Partida.PUNTOS_ESTRELLA
+	var evaluaciones := 0
+	for s: Dictionary in c.sistemas():
+		var examen: Dictionary = s.get("modos", {}).get("examen", {})
+		evaluaciones += examen.get("minijuegos", []).size() * 3 * Partida.PUNTOS_ESTRELLA
+	evaluaciones += c.examenes().size() * (Partida.PUNTOS_EXAMEN + 3 * Partida.PUNTOS_ESTRELLA)
 	return {"lecciones": lecciones, "misiones": misiones, "evaluaciones": evaluaciones, "total": lecciones + misiones + evaluaciones}
 
 
@@ -350,10 +374,11 @@ func test_todo_el_contenido_alcanza_el_rango_mas_alto() -> String:
 	raiz.reconstruir()
 	raiz.volver()
 	var misiones := _completar_misiones(raiz)
-	raiz.ir_a("prueba_examen", {"id": "v1"})
-	var examen = raiz.pantalla_actual()
-	_responder_todo(examen, examen.args["items"].size())
-	raiz.volver()
+	for id: String in raiz.contenido.examenes():
+		raiz.ir_a("prueba_examen", {"id": id})
+		var examen = raiz.pantalla_actual()
+		_responder_todo(examen, examen.args["items"].size())
+		raiz.volver()
 	var rangos := raiz.contenido.rangos()
 	var rango := raiz.partida.rango(rangos)
 	var puntos: int = raiz.partida.datos["puntos"]

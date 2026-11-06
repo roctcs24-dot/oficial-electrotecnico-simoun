@@ -150,3 +150,31 @@ func test_recorre_pestanas_en_ambas_orientaciones() -> String:
 			p._actualizar()
 	raiz.free()
 	return ""
+
+
+func test_cuadro_de_emergencia_en_la_practica() -> String:
+	var raiz := _raiz()
+	var p = raiz.pantalla_actual()
+	var textos: Array[String] = []
+	_botones(p, textos)
+	p._alternar_diesel("G1")
+	p.sim.avanzar_tiempo(10.0)
+	p._alternar_acb("G1")
+	p.sim.avanzar_tiempo(1.0)
+	p._alternar_interruptor_id("QT")
+	p._alternar_arranque_automatico("GE")
+	p.sim.avanzar_tiempo(2.0)
+	p._actualizar()
+	var v_be: float = p._instrumentos["be_v"].valor
+	var texto: String = p._textos["emergencia"].text
+	p._alternar_acb("G1")
+	p.sim.avanzar_tiempo(25.0)
+	p._actualizar()
+	var por_ge: String = p._textos["emergencia"].text
+	raiz.free()
+	return A.primero([
+		A.cierto(textos.has("Cerrar el enlace QT") and textos.has("Arrancar GE") and textos.has("GE en manual: pasar a automático"), "mandos de emergencia: %s" % str(textos)),
+		A.cerca(v_be, 440.0, 0.05, "con QT cerrado, el cuadro de emergencia tiene tensión"),
+		A.cierto(texto.contains("desde el cuadro principal"), "debe decir de dónde se alimenta: %s" % texto),
+		A.cierto(por_ge.contains("generador de emergencia"), "tras perder el principal, lo alimenta GE: %s" % por_ge),
+	])

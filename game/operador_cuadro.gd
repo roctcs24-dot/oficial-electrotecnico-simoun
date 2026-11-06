@@ -97,6 +97,53 @@ func alternar_pms() -> Dictionary:
 	return _aviso("hecho", "", "")
 
 
+# --- Cuadro de emergencia ---
+
+## {generador, interruptor, enlace, barras, cargas} de cuadro.json, o vacío si no hay.
+func emergencia() -> Dictionary:
+	return datos.get("emergencia", {})
+
+
+func interruptor(id_interruptor: String) -> SimInterruptorGenerador:
+	return sim.componente(id_interruptor)
+
+
+## Para los interruptores que no son de un generador del cuadro principal, como el enlace.
+func alternar_interruptor_id(id_interruptor: String) -> Dictionary:
+	var q := interruptor(id_interruptor)
+	if q.cerrado():
+		q.abrir()
+		return _aviso("hecho", "", "")
+	var motivo := q.cerrar()
+	return _aviso("aviso", "No cierra", motivo) if not motivo.is_empty() else _aviso("hecho", "", "")
+
+
+func rearmar_id(id_interruptor: String) -> Dictionary:
+	interruptor(id_interruptor).rearmar()
+	return _aviso("hecho", "", "")
+
+
+## Selector AUTO del generador de emergencia: arranca solo si faltan las barras que vigila, y su
+## interruptor cierra solo sobre ellas. En manual no hace ninguna de las dos cosas.
+func alternar_arranque_automatico(id_grupo: String) -> Dictionary:
+	var g := generador(id_grupo)
+	var automatico: bool = not g.params["arranque_automatico"]
+	g.params["arranque_automatico"] = automatico
+	var e := emergencia()
+	if not e.is_empty() and e["generador"] == id_grupo:
+		interruptor(e["interruptor"]).params["cierre_automatico"] = automatico
+	return _aviso("hecho", "", "")
+
+
+func tension_emergencia() -> float:
+	var e := emergencia()
+	if e.is_empty():
+		return 0.0
+	if sim.solucion == null:
+		sim.paso()
+	return sim.solucion.entre(e["barras"] + ".L1", e["barras"] + ".L2").modulo()
+
+
 ## Tensión entre L1 y L2 de las barras principales.
 func tension_barras() -> float:
 	if sim.solucion == null:

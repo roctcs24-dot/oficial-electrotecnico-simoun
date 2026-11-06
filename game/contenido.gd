@@ -79,6 +79,20 @@ func leccion(id: String) -> Dictionary:
 	return leer("lecciones/%s.json" % id)
 
 
+## Ids de los exámenes publicados en algún sistema, sin repetir y en orden.
+func examenes() -> Array[String]:
+	var lista: Array[String] = []
+	for s: Dictionary in sistemas():
+		for id: String in s.get("modos", {}).get("examen", {}).get("examenes", []):
+			if not lista.has(id):
+				lista.append(id)
+	return lista
+
+
+func examen(id: String) -> Dictionary:
+	return leer("examenes/%s.json" % id)
+
+
 func mision(id: String) -> Dictionary:
 	return leer("misiones/%s.json" % id)
 

@@ -129,6 +129,8 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["examen", {"id": 3}])
 	pasos.append(["examen", {"id": 0}])
 	pasos.append(["prueba_examen", {"id": "v1"}])
+	pasos.append(["examen", {"id": 1}])
+	pasos.append(["prueba_examen", {"id": "v2"}])
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])

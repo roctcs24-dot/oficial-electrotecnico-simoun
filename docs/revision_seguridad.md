@@ -81,6 +81,11 @@ Lo siguiente se redactó sin contrastarlo con fuentes y lleva marcas de "verific
   - El aislamiento de una salida sana, 150 MΩ, y el umbral del monitor, 1 MΩ: valores del simulador.
   - El tiempo de parada de un diésel sin combustible, unos 15 s en el simulador.
   - Las cargas de cada salida y la potencia de los compresores de frío.
+- El generador de emergencia: su ficha, su modelo en el cuadro y la secuencia de vuelta al principal. Lo más sensible:
+  - Los 45 s de SOLAS para buques de carga, y el Acuerdo de Ciudad del Cabo para pesqueros: qué aplica al buque está por confirmar.
+  - Las cargas del cuadro de emergencia, la potencia de 75 kW y el retardo de arranque de 3 s.
+  - Que la vuelta al principal sea manual y se haga con el grupo en manual. En algunos cuadros es automática.
+- El examen de la v2, `data/examenes/v2.json`, redactado a partir de las lecciones de generación.
 - Los 10 símbolos de generación, dibujados sin la norma delante. Los que más dudas dejan son el sincronoscopio IEC y el monitor de aislamiento. Los números ANSI (25, 27, 32, 51, 52 y 64) siguen IEEE C37.2.
 
 Solo la forma de los equipos se comparó con fotos de productos reales.
