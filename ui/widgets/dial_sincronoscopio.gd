@@ -41,8 +41,10 @@ func _draw() -> void:
 		var a := arriba + TAU * i / 12.0
 		draw_line(centro + Vector2.from_angle(a) * radio * 0.92, centro + Vector2.from_angle(a) * radio * 0.8, MARCA, 2.0, true)
 	var t := 12
-	draw_string(fuente, centro + Vector2(radio * 0.3, radio * 0.55), "RÁPIDO", HORIZONTAL_ALIGNMENT_LEFT, -1, t, MARCA)
-	draw_string(fuente, centro + Vector2(-radio * 0.85, radio * 0.55), "LENTO", HORIZONTAL_ALIGNMENT_LEFT, -1, t, MARCA)
+	# Centrados a cada lado, dentro del aro y lejos de las marcas de las cuatro y las ocho.
+	var ancho := radio * 0.7
+	draw_string(fuente, centro + Vector2(radio * 0.38 - ancho / 2.0, radio * 0.62), "RÁPIDO", HORIZONTAL_ALIGNMENT_CENTER, ancho, t, MARCA)
+	draw_string(fuente, centro + Vector2(-radio * 0.38 - ancho / 2.0, radio * 0.62), "LENTO", HORIZONTAL_ALIGNMENT_CENTER, ancho, t, MARCA)
 	if valido:
 		var a := arriba + deg_to_rad(angulo)
 		draw_line(centro - Vector2.from_angle(a) * radio * 0.2, centro + Vector2.from_angle(a) * radio * 0.88, AGUJA, 4.0, true)

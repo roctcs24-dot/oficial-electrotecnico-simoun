@@ -27,7 +27,7 @@ Los requisitos completos están en [CLAUDE.md](CLAUDE.md). La v2, de generadores
 
 - **En PC:** ejecute `OficialElectrotecnico.exe`. No necesita instalación ni conexión.
 - **En Android:** instale `OficialElectrotecnico.apk`. Es un APK arm64 firmado con un keystore de depuración, así que Android pedirá permitir la instalación desde esa fuente. No pide ningún permiso, ni siquiera internet.
-- **Tabletas:** el mismo APK sirve para tabletas Android. La interfaz se mide en puntos según la densidad de la pantalla: en una tableta con una densidad creíble (200 ppp o más) el lado corto puede llegar a 900 puntos; si la densidad parece mal informada, se limita a 600, como en un celular. Se revisó con capturas de 600×960, 960×600, 800×1280 y 1280×800, no en una tableta real.
+- **Tabletas:** el mismo APK sirve para tabletas Android. La interfaz se mide en puntos según la densidad de la pantalla: en una tableta con una densidad creíble (200 ppp o más) el lado corto puede llegar a 900 puntos; si la densidad parece mal informada, se limita a 600, como en un celular. Se revisó con capturas de 600×960, 960×600, 800×1280 y 1280×800, y de 900×1440 y 1440×900, que es lo que corresponde a una Lenovo Yoga Tab Plus (2944×1840, unos 273 ppp). No se ha probado en una tableta real.
 - **Partida:** para pasarla de un dispositivo a otro, abra **Mi progreso** en la pantalla de inicio.
 
 ## Pruebas
