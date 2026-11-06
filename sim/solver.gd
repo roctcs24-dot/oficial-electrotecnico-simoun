@@ -12,6 +12,9 @@ class Solucion:
 	var _indice: Dictionary = {}
 	var _re: PackedFloat64Array
 	var _im: PackedFloat64Array
+	## El punto de trabajo en continua, cuando la red tiene electrónica de continua. La
+	## tensión real de un nodo es la suma de las dos partes: v() es solo la alterna.
+	var dc: Solucion
 
 	## Tensión del nodo respecto a tierra. Un nodo sin conexiones vale cero.
 	func v(nodo: String) -> Cx:
@@ -22,6 +25,13 @@ class Solucion:
 
 	func entre(a: String, b: String) -> Cx:
 		return v(a).menos(v(b))
+
+	## Tensión continua del nodo respecto a tierra, con signo.
+	func vdc(nodo: String) -> float:
+		return dc.v(nodo).re if dc != null else 0.0
+
+	func entre_dc(a: String, b: String) -> float:
+		return vdc(a) - vdc(b)
 
 
 static func resolver(e: SimEstampa) -> Solucion:

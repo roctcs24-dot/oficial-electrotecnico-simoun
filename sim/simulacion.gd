@@ -11,6 +11,7 @@ var cables: Array = []
 var eventos: Array = []
 var tiempo := 0.0
 var solucion: SimSolver.Solucion
+var _con_continua := false
 
 
 static func tipos() -> Dictionary:
@@ -36,6 +37,16 @@ static func tipos() -> Dictionary:
 		"pms": SimPMS,
 		"planta_frio": SimPlantaFrio,
 		"presostato": SimPresostato,
+		"fuente_dc": SimFuenteDC,
+		"diodo": SimDiodo,
+		"led": SimLed,
+		"puente_rectificador": SimPuenteRectificador,
+		"rele_dc": SimReleDC,
+		"rele_estado_solido": SimReleEstadoSolido,
+		"sensor_proximidad": SimSensorProximidad,
+		"transmisor_4_20": SimTransmisor420,
+		"pt100": SimPT100,
+		"termocupla": SimTermocupla,
 	}
 
 
@@ -60,7 +71,15 @@ func a_dict() -> Dictionary:
 func agregar(c: SimComponente) -> SimComponente:
 	c.sim_ref = weakref(self)
 	componentes[c.id] = c
+	if c.usa_continua():
+		_con_continua = true
 	return c
+
+
+## True si algún componente trabaja en continua: entonces cada resolución calcula también
+## el punto de trabajo en continua. Los circuitos de solo alterna no pagan ese cálculo.
+func con_continua() -> bool:
+	return _con_continua
 
 
 func conectar(a: String, b: String) -> void:
@@ -90,7 +109,23 @@ func hubo_evento(tipo: String, id := "") -> bool:
 ## Resuelve la red con su estado actual. extra añade elementos, como un instrumento. Los cables
 ## de excluir (índices) no se unen: así extra puede ponerles una impedancia y medir su corriente.
 func resolver(dc := false, extra := Callable(), excluir: Array = []) -> SimSolver.Solucion:
-	var e := SimEstampa.new(dc)
+	return _resolver(SimEstampa.new(dc), extra, excluir)
+
+
+## Punto de trabajo en continua: las fuentes de continua inyectan y las de alterna no.
+func resolver_continua(extra := Callable(), excluir: Array = []) -> SimSolver.Solucion:
+	return _resolver(SimEstampa.new(true, true), extra, excluir)
+
+
+## La alterna y, si hay electrónica, la continua en solucion.dc.
+func resolver_completa() -> SimSolver.Solucion:
+	var sol := resolver()
+	if _con_continua:
+		sol.dc = resolver_continua()
+	return sol
+
+
+func _resolver(e: SimEstampa, extra: Callable, excluir: Array) -> SimSolver.Solucion:
 	for i in cables.size():
 		if not excluir.has(i):
 			e.enlace(cables[i][0], cables[i][1])
@@ -135,7 +170,7 @@ func avanzar_tiempo(segundos: float) -> void:
 
 func _asentar() -> void:
 	for _i in MAX_ASENTADOS:
-		solucion = resolver()
+		solucion = resolver_completa()
 		var cambio := false
 		for c: SimComponente in componentes.values():
 			if c.asentar(solucion):

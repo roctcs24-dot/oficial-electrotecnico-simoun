@@ -3,7 +3,7 @@ extends Pantalla
 ## Base del Taller y de las misiones: la mesa con sus piezas, las pestañas laterales y los
 ## instrumentos. El estado vive en args para sobrevivir al giro del celular.
 
-const MODOS_MULTIMETRO := [["vac", "V~"], ["vdc", "V="], ["ohm", "Ω"], ["continuidad", "Cont."], ["diodo", "Diodo"], ["a", "A"]]
+const MODOS_MULTIMETRO := [["vac", "V~"], ["vdc", "V="], ["ohm", "Ω"], ["continuidad", "Cont."], ["diodo", "Diodo"], ["a", "A"], ["ma", "mA="]]
 const LECTURAS_POR_SEGUNDO := 4.0
 ## La vista tarda unos cuadros en tomar su tamaño final: mientras tanto se repite el encuadre.
 const CUADROS_ENCUADRE := 4
@@ -285,13 +285,17 @@ func _pantalla_instrumento() -> Label:
 func _panel_multimetro() -> void:
 	_pantalla_instrumento()
 	var grupo := ButtonGroup.new()
-	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 4)
+	# Siete modos no caben en una línea de un celular vertical: pasan a la siguiente.
+	var fila := HFlowContainer.new()
+	fila.add_theme_constant_override("h_separation", 4)
+	fila.add_theme_constant_override("v_separation", 4)
 	_panel.add_child(fila)
 	for m: Array in MODOS_MULTIMETRO:
 		var b := _boton(m[1], _elegir_modo.bind(m[0]))
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
 		_apretar_pestana(b)
+		# Sin recortar: cada modo ocupa su ancho y los que no caben bajan de línea.
+		b.clip_text = false
 		b.toggle_mode = true
 		b.button_group = grupo
 		b.set_pressed_no_signal(args["modo"] == m[0])
@@ -421,7 +425,7 @@ func _actualizar_lectura() -> void:
 	elif r["fuera_de_rango"]:
 		_lectura.text = "OL"
 	else:
-		var decimales := 3 if float(r["valor"]) < 10.0 else 1
+		var decimales := 3 if absf(float(r["valor"])) < 10.0 else 1
 		var pita := "  · continuidad" if r.get("pita", false) else ""
 		_lectura.text = "%s %s%s" % [TextoTecnico.numero(r["valor"], decimales), r["unidad"], pita]
 	if estaba_bien and not (m.fusible_ok and not m.destruido):

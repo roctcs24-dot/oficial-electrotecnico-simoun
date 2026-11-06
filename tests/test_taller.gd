@@ -413,7 +413,8 @@ func test_las_consecuencias_se_ven_en_la_mesa() -> String:
 
 func test_todas_las_consecuencias_tienen_explicacion() -> String:
 	var textos: Dictionary = Contenido.new().leer("taller.json")["consecuencias"]
-	for e in ["disparo_magnetico", "disparo_termico", "disparo_rele_termico", "disparo_barras", "arco_contactos_soldados", "bobina_quemada", "motor_quemado", "fusible_fundido", "lampara_quemada", "vibracion_mando", "multimetro_destruido", "fusible_multimetro", "megohmetro_destruido"]:
+	for e in ["disparo_magnetico", "disparo_termico", "disparo_rele_termico", "disparo_barras", "arco_contactos_soldados", "bobina_quemada", "motor_quemado", "fusible_fundido", "lampara_quemada", "vibracion_mando", "multimetro_destruido", "fusible_multimetro", "megohmetro_destruido",
+			"fuente_sobrecarga", "diodo_quemado", "led_quemado", "puente_quemado", "ssr_quemado", "sensor_cortocircuito", "sensor_averiado"]:
 		if not textos.has(e) or textos[e]["texto"].is_empty():
 			return "falta explicar el evento %s" % e
 	return ""
