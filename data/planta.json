@@ -1,9 +1,9 @@
 {
-  "nota": "Práctica libre de la planta de frío del buque: recirculación por bombas desde la botella de baja, y compresores de pistón Vilter o de tornillo MYCOM. Potencias, capacidades y ajustes: valores típicos — verificar a bordo. La salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.",
+  "nota": "Práctica libre de la planta de frío del buque: recirculación por bombas desde la botella de baja, y compresores de pistón Vilter VMC 450 XL o MYCOM 6WB. Potencias, capacidades y ajustes: valores típicos — verificar a bordo. La salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.",
   "circuito": "planta_frio",
   "compresores": [
     { "circuito": "planta_frio_vilter", "nombre": "Nº 5 · Vilter de pistón" },
-    { "circuito": "planta_frio", "nombre": "Nº 3 · MYCOM de tornillo" }
+    { "circuito": "planta_frio", "nombre": "Nº 3 · MYCOM 6WB de pistón" }
   ],
   "paso_capacidad": 0.1,
   "aceleracion": 10,

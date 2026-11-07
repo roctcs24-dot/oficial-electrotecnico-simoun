@@ -13,7 +13,7 @@
     { "op": "param", "id": "PLANTA", "clave": "congelacion_salmuera", "valor": -12.0 },
     { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -11.0 },
     { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -18.0 },
-    { "op": "estado", "id": "PLANTA", "clave": "hielo", "valor": 1.2 },
+    { "op": "estado", "id": "PLANTA", "clave": "hielo", "valor": 1.8 },
     { "op": "marcha" },
     { "op": "avanzar", "s": 20 }
   ],

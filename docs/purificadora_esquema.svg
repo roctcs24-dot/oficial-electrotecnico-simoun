@@ -1,0 +1,264 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="2050" viewBox="0 0 1000 2050" font-family="Segoe UI, Roboto, Arial, sans-serif">
+<defs><marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#20242a"/></marker></defs>
+<rect x="0" y="0" width="1000" height="2050" rx="0" fill="#ffffff" stroke="#ffffff" stroke-width="0"/>
+<text x="40" y="50" font-size="26" text-anchor="start" fill="#20242a" font-weight="bold">Purificadora Alfa Laval — esquema de formación</text>
+<text x="40" y="80" font-size="16" text-anchor="start" fill="#5a6270" font-weight="normal">B/P Vía Simoun · separadora centrífuga con su bomba de alimentación</text>
+<rect x="40" y="96" width="920" height="62" rx="6" fill="#fff4e0" stroke="#b26b00" stroke-width="1.5"/>
+<text x="56" y="122" font-size="14" text-anchor="start" fill="#b26b00" font-weight="bold">Esquema genérico hecho a partir de las fotos del tablero y de las placas de los motores.</text>
+<text x="56" y="144" font-size="14" text-anchor="start" fill="#b26b00" font-weight="normal">No es el plano de Alfa Laval. Antes de trabajar, compruebe bornes y ajustes con el esquema real del tablero.</text>
+<text x="40" y="205" font-size="20" text-anchor="start" fill="#20242a" font-weight="bold">1. Circuito de potencia (unifilar)</text>
+<text x="500" y="240" font-size="14" text-anchor="middle" fill="#5a6270" font-weight="normal">Desde el cuadro: 380 V · 3~ · 50 Hz · red aislada</text>
+<line x1="500" y1="250" x2="500" y2="280" stroke="#20242a" stroke-width="2"/>
+<line x1="492" y1="264" x2="508" y2="256" stroke="#20242a" stroke-width="1.5"/>
+<line x1="492" y1="271" x2="508" y2="263" stroke="#20242a" stroke-width="1.5"/>
+<line x1="492" y1="278" x2="508" y2="270" stroke="#20242a" stroke-width="1.5"/>
+<line x1="500" y1="280" x2="500" y2="292" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="292" x2="480" y2="324" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="326" x2="500" y2="336" stroke="#20242a" stroke-width="2"/>
+<line x1="494" y1="326" x2="506" y2="326" stroke="#20242a" stroke-width="2"/>
+<text x="520" y="305" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">Q0 interruptor general</text>
+<text x="520" y="325" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">mando giratorio 0-OFF / I-ON (punto de LOTO)</text>
+<line x1="500" y1="336" x2="500" y2="370" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="370" x2="800" y2="370" stroke="#20242a" stroke-width="3"/>
+<circle cx="500" cy="370" r="4" fill="#20242a"/>
+<circle cx="200" cy="370" r="4" fill="#20242a"/>
+<line x1="200" y1="370" x2="200" y2="400" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="400" x2="200" y2="412" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="412" x2="180" y2="444" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="446" x2="200" y2="456" stroke="#20242a" stroke-width="2"/>
+<line x1="194" y1="446" x2="206" y2="446" stroke="#20242a" stroke-width="2"/>
+<rect x="214" y="410" width="34" height="34" rx="0" fill="none" stroke="#20242a" stroke-width="2"/>
+<text x="231" y="433" font-size="12" text-anchor="middle" fill="#20242a" font-weight="normal">I&gt; ⊐</text>
+<text x="258" y="422" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">Q1 guardamotor</text>
+<text x="258" y="442" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">ajuste ≈ 5,9 A (placa)</text>
+<line x1="200" y1="456" x2="200" y2="490" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="490" x2="200" y2="502" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="502" x2="180" y2="530" stroke="#20242a" stroke-width="2"/>
+<line x1="200" y1="532" x2="200" y2="544" stroke="#20242a" stroke-width="2"/>
+<path d="M193,532 a7,7 0 0,0 14,0" fill="none" stroke="#20242a" stroke-width="2"/>
+<text x="258" y="522" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">KM1</text>
+<line x1="200" y1="544" x2="200" y2="580" stroke="#20242a" stroke-width="2"/>
+<line x1="192" y1="562" x2="208" y2="554" stroke="#20242a" stroke-width="1.5"/>
+<line x1="192" y1="569" x2="208" y2="561" stroke="#20242a" stroke-width="1.5"/>
+<line x1="192" y1="576" x2="208" y2="568" stroke="#20242a" stroke-width="1.5"/>
+<circle cx="200" cy="612" r="32" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<text x="200" y="610" font-size="18" text-anchor="middle" fill="#20242a" font-weight="bold">M</text>
+<text x="200" y="628" font-size="13" text-anchor="middle" fill="#20242a" font-weight="normal">3~</text>
+<text x="246" y="602" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">M1 separadora</text>
+<text x="246" y="622" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">ABB M3BP 100LKA 2 · 3 kW</text>
+<text x="246" y="640" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">400Y/230Δ → a 380 V en Y · 2 polos</text>
+<line x1="500" y1="370" x2="500" y2="400" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="400" x2="500" y2="412" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="412" x2="480" y2="444" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="446" x2="500" y2="456" stroke="#20242a" stroke-width="2"/>
+<line x1="494" y1="446" x2="506" y2="446" stroke="#20242a" stroke-width="2"/>
+<rect x="514" y="410" width="34" height="34" rx="0" fill="none" stroke="#20242a" stroke-width="2"/>
+<text x="531" y="433" font-size="12" text-anchor="middle" fill="#20242a" font-weight="normal">I&gt; ⊐</text>
+<text x="558" y="422" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">Q2 guardamotor</text>
+<text x="558" y="442" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">ajuste ≈ 4,8 A (placa)</text>
+<line x1="500" y1="456" x2="500" y2="490" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="490" x2="500" y2="502" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="502" x2="480" y2="530" stroke="#20242a" stroke-width="2"/>
+<line x1="500" y1="532" x2="500" y2="544" stroke="#20242a" stroke-width="2"/>
+<path d="M493,532 a7,7 0 0,0 14,0" fill="none" stroke="#20242a" stroke-width="2"/>
+<text x="558" y="522" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">KM2</text>
+<line x1="500" y1="544" x2="500" y2="580" stroke="#20242a" stroke-width="2"/>
+<line x1="492" y1="562" x2="508" y2="554" stroke="#20242a" stroke-width="1.5"/>
+<line x1="492" y1="569" x2="508" y2="561" stroke="#20242a" stroke-width="1.5"/>
+<line x1="492" y1="576" x2="508" y2="568" stroke="#20242a" stroke-width="1.5"/>
+<circle cx="500" cy="612" r="32" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<text x="500" y="610" font-size="18" text-anchor="middle" fill="#20242a" font-weight="bold">M</text>
+<text x="500" y="628" font-size="13" text-anchor="middle" fill="#20242a" font-weight="normal">3~</text>
+<text x="546" y="602" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">M2 bomba alimentación</text>
+<text x="546" y="622" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">Hoyer HMA3 100L1-4 · 2,2 kW</text>
+<text x="546" y="640" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">380Δ/660Y → a 380 V en Δ · 4,81 A</text>
+<circle cx="800" cy="370" r="4" fill="#20242a"/>
+<line x1="800" y1="370" x2="800" y2="400" stroke="#20242a" stroke-width="2"/>
+<rect x="792" y="400" width="16" height="36" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="800" y1="400" x2="800" y2="436" stroke="#20242a" stroke-width="1.5"/>
+<text x="816" y="422" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">F0</text>
+<line x1="800" y1="436" x2="800" y2="470" stroke="#20242a" stroke-width="2"/>
+<circle cx="800" cy="486" r="16" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<circle cx="800" cy="512" r="16" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<text x="824" y="494" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">T1</text>
+<text x="824" y="514" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">380 / 230 V</text>
+<line x1="800" y1="528" x2="800" y2="560" stroke="#20242a" stroke-width="2"/>
+<text x="800" y="580" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">al circuito de mando</text>
+<text x="800" y="598" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">(tensión: verificar)</text>
+<text x="40" y="690" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">Los motores no llevan neutro: la red es aislada. Las rayas sobre la línea indican tres fases.</text>
+<text x="40" y="740" font-size="20" text-anchor="start" fill="#20242a" font-weight="bold">2. Circuito de mando (lo habitual en estas purificadoras)</text>
+<line x1="70" y1="790" x2="70" y2="1570" stroke="#20242a" stroke-width="3"/>
+<line x1="930" y1="790" x2="930" y2="1570" stroke="#20242a" stroke-width="3"/>
+<text x="70" y="778" font-size="14" text-anchor="middle" fill="#20242a" font-weight="bold">L 230 V</text>
+<text x="930" y="778" font-size="14" text-anchor="middle" fill="#20242a" font-weight="bold">N</text>
+<line x1="70" y1="840" x2="90" y2="840" stroke="#20242a" stroke-width="2"/>
+<line x1="90" y1="840" x2="102" y2="840" stroke="#20242a" stroke-width="2"/>
+<rect x="102" y="833" width="36" height="14" rx="0" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="102" y1="840" x2="138" y2="840" stroke="#20242a" stroke-width="1.5"/>
+<line x1="138" y1="840" x2="150" y2="840" stroke="#20242a" stroke-width="2"/>
+<text x="120" y="826" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">F1</text>
+<line x1="150" y1="840" x2="165" y2="840" stroke="#20242a" stroke-width="2"/>
+<line x1="165" y1="840" x2="200" y2="828" stroke="#20242a" stroke-width="2"/>
+<line x1="195" y1="840" x2="210" y2="840" stroke="#20242a" stroke-width="2"/>
+<line x1="195" y1="840" x2="195" y2="826" stroke="#20242a" stroke-width="2"/>
+<text x="180" y="864" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">S0</text>
+<text x="180" y="880" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">parada de emergencia</text>
+<line x1="210" y1="840" x2="250" y2="840" stroke="#20242a" stroke-width="2"/>
+<circle cx="250" cy="840" r="4" fill="#20242a"/>
+<line x1="250" y1="840" x2="250" y2="1530" stroke="#20242a" stroke-width="2"/>
+<line x1="250" y1="930" x2="270" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="270" y1="930" x2="285" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="285" y1="930" x2="314" y2="914" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="930" x2="330" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="930" x2="315" y2="922" stroke="#20242a" stroke-width="2"/>
+<text x="300" y="954" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">S1</text>
+<text x="300" y="970" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">selector</text>
+<line x1="330" y1="930" x2="360" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="360" y1="930" x2="375" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="375" y1="930" x2="404" y2="914" stroke="#20242a" stroke-width="2"/>
+<line x1="405" y1="930" x2="420" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="405" y1="930" x2="405" y2="922" stroke="#20242a" stroke-width="2"/>
+<text x="390" y="954" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">Q1</text>
+<text x="390" y="970" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">13-14</text>
+<line x1="410" y1="930" x2="600" y2="930" stroke="#20242a" stroke-width="2"/>
+<circle cx="600" cy="930" r="4" fill="#20242a"/>
+<line x1="600" y1="930" x2="780" y2="930" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="930" x2="795" y2="930" stroke="#20242a" stroke-width="2"/>
+<rect x="795" y="918" width="34" height="24" rx="0" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="829" y1="930" x2="844" y2="930" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="912" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">KM1</text>
+<line x1="844" y1="930" x2="930" y2="930" stroke="#20242a" stroke-width="2"/>
+<text x="270" y="900" font-size="14" text-anchor="start" fill="#5a6270" font-weight="bold">Separadora</text>
+<line x1="600" y1="930" x2="600" y2="1080" stroke="#20242a" stroke-width="2"/>
+<circle cx="600" cy="1000" r="4" fill="#20242a"/>
+<line x1="600" y1="1000" x2="780" y2="1000" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="1000" x2="798" y2="1000" stroke="#20242a" stroke-width="2"/>
+<circle cx="812" cy="1000" r="14" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="802" y1="990" x2="822" y2="1010" stroke="#20242a" stroke-width="1.5"/>
+<line x1="802" y1="1010" x2="822" y2="990" stroke="#20242a" stroke-width="1.5"/>
+<line x1="826" y1="1000" x2="844" y2="1000" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="980" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">H1</text>
+<text x="812" y="1032" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">Separator indicator</text>
+<line x1="844" y1="1000" x2="930" y2="1000" stroke="#20242a" stroke-width="2"/>
+<line x1="600" y1="1080" x2="780" y2="1080" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="1080" x2="798" y2="1080" stroke="#20242a" stroke-width="2"/>
+<circle cx="812" cy="1080" r="14" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1085" font-size="14" text-anchor="middle" fill="#20242a" font-weight="bold">h</text>
+<line x1="826" y1="1080" x2="844" y2="1080" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1060" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">P1</text>
+<line x1="844" y1="1080" x2="930" y2="1080" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1114" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">Separator operational hours</text>
+<line x1="250" y1="1210" x2="270" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="270" y1="1210" x2="285" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="285" y1="1210" x2="314" y2="1194" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1210" x2="330" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1210" x2="315" y2="1202" stroke="#20242a" stroke-width="2"/>
+<text x="300" y="1234" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">S2</text>
+<text x="300" y="1250" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">selector</text>
+<line x1="330" y1="1210" x2="360" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="360" y1="1210" x2="375" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="375" y1="1210" x2="404" y2="1194" stroke="#20242a" stroke-width="2"/>
+<line x1="405" y1="1210" x2="420" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="405" y1="1210" x2="405" y2="1202" stroke="#20242a" stroke-width="2"/>
+<text x="390" y="1234" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">KM1</text>
+<text x="390" y="1250" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">13-14</text>
+<line x1="420" y1="1210" x2="450" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="450" y1="1210" x2="465" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="465" y1="1210" x2="494" y2="1194" stroke="#20242a" stroke-width="2"/>
+<line x1="495" y1="1210" x2="510" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="495" y1="1210" x2="495" y2="1202" stroke="#20242a" stroke-width="2"/>
+<text x="480" y="1234" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">Q2</text>
+<text x="480" y="1250" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">13-14</text>
+<line x1="510" y1="1210" x2="600" y2="1210" stroke="#20242a" stroke-width="2"/>
+<circle cx="600" cy="1210" r="4" fill="#20242a"/>
+<line x1="600" y1="1210" x2="780" y2="1210" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="1210" x2="795" y2="1210" stroke="#20242a" stroke-width="2"/>
+<rect x="795" y="1198" width="34" height="24" rx="0" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="829" y1="1210" x2="844" y2="1210" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1192" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">KM2</text>
+<line x1="844" y1="1210" x2="930" y2="1210" stroke="#20242a" stroke-width="2"/>
+<text x="270" y="1180" font-size="14" text-anchor="start" fill="#5a6270" font-weight="bold">Bomba de alimentación</text>
+<line x1="600" y1="1210" x2="600" y2="1280" stroke="#20242a" stroke-width="2"/>
+<line x1="600" y1="1280" x2="780" y2="1280" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="1280" x2="798" y2="1280" stroke="#20242a" stroke-width="2"/>
+<circle cx="812" cy="1280" r="14" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="802" y1="1270" x2="822" y2="1290" stroke="#20242a" stroke-width="1.5"/>
+<line x1="802" y1="1290" x2="822" y2="1270" stroke="#20242a" stroke-width="1.5"/>
+<line x1="826" y1="1280" x2="844" y2="1280" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1260" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">H2</text>
+<text x="812" y="1312" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">Pump indicator</text>
+<line x1="844" y1="1280" x2="930" y2="1280" stroke="#20242a" stroke-width="2"/>
+<text x="270" y="1380" font-size="14" text-anchor="start" fill="#5a6270" font-weight="bold">Alarma</text>
+<line x1="250" y1="1410" x2="270" y2="1410" stroke="#20242a" stroke-width="2"/>
+<line x1="270" y1="1410" x2="285" y2="1410" stroke="#20242a" stroke-width="2"/>
+<line x1="285" y1="1410" x2="314" y2="1394" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1410" x2="330" y2="1410" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1410" x2="315" y2="1402" stroke="#20242a" stroke-width="2"/>
+<text x="300" y="1434" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">Q1</text>
+<text x="300" y="1450" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">disparo</text>
+<line x1="330" y1="1410" x2="420" y2="1410" stroke="#20242a" stroke-width="2"/>
+<line x1="250" y1="1480" x2="270" y2="1480" stroke="#20242a" stroke-width="2"/>
+<circle cx="250" cy="1480" r="4" fill="#20242a"/>
+<line x1="270" y1="1480" x2="285" y2="1480" stroke="#20242a" stroke-width="2"/>
+<line x1="285" y1="1480" x2="314" y2="1464" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1480" x2="330" y2="1480" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1480" x2="315" y2="1472" stroke="#20242a" stroke-width="2"/>
+<text x="300" y="1504" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">Q2</text>
+<text x="300" y="1520" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">disparo</text>
+<line x1="330" y1="1480" x2="420" y2="1480" stroke="#20242a" stroke-width="2"/>
+<circle cx="420" cy="1480" r="4" fill="#20242a"/>
+<line x1="250" y1="1550" x2="270" y2="1550" stroke="#20242a" stroke-width="2"/>
+<circle cx="250" cy="1550" r="4" fill="#20242a"/>
+<line x1="270" y1="1550" x2="285" y2="1550" stroke="#20242a" stroke-width="2"/>
+<line x1="285" y1="1550" x2="314" y2="1534" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1550" x2="330" y2="1550" stroke="#20242a" stroke-width="2"/>
+<line x1="315" y1="1550" x2="315" y2="1542" stroke="#20242a" stroke-width="2"/>
+<text x="300" y="1574" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">B1</text>
+<text x="300" y="1590" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">falla separadora (?)</text>
+<line x1="330" y1="1550" x2="420" y2="1550" stroke="#20242a" stroke-width="2"/>
+<circle cx="420" cy="1550" r="4" fill="#20242a"/>
+<line x1="420" y1="1410" x2="420" y2="1550" stroke="#20242a" stroke-width="2"/>
+<line x1="420" y1="1410" x2="780" y2="1410" stroke="#20242a" stroke-width="2"/>
+<line x1="780" y1="1410" x2="798" y2="1410" stroke="#20242a" stroke-width="2"/>
+<circle cx="812" cy="1410" r="14" fill="#ffffff" stroke="#20242a" stroke-width="2"/>
+<line x1="802" y1="1400" x2="822" y2="1420" stroke="#20242a" stroke-width="1.5"/>
+<line x1="802" y1="1420" x2="822" y2="1400" stroke="#20242a" stroke-width="1.5"/>
+<line x1="826" y1="1410" x2="844" y2="1410" stroke="#20242a" stroke-width="2"/>
+<text x="812" y="1390" font-size="13" text-anchor="middle" fill="#20242a" font-weight="bold">H3</text>
+<text x="812" y="1442" font-size="11" text-anchor="middle" fill="#5a6270" font-weight="normal">Alarm (roja)</text>
+<line x1="844" y1="1410" x2="930" y2="1410" stroke="#20242a" stroke-width="2"/>
+<text x="40" y="1610" font-size="14" text-anchor="start" fill="#20242a" font-weight="normal">• S1 y S2: selectores 0-1 START. Q1/Q2 13-14: contacto auxiliar del guardamotor, cerrado si está armado.</text>
+<text x="40" y="1634" font-size="14" text-anchor="start" fill="#20242a" font-weight="normal">• S0 es un contacto cerrado (NC): pulsar la seta corta todo el mando.</text>
+<text x="40" y="1658" font-size="14" text-anchor="start" fill="#20242a" font-weight="normal">• El contacto KM1 13-14 en la rama de la bomba impide alimentar si la separadora está parada.</text>
+<text x="40" y="1682" font-size="14" text-anchor="start" fill="#20242a" font-weight="normal">• Arranque la bomba solo cuando el tambor llegue a su velocidad, tras varios minutos.</text>
+<text x="40" y="1706" font-size="14" text-anchor="start" fill="#20242a" font-weight="normal">• La separadora arranca despacio por la inercia del tambor: su protección suele ser de clase 20 o 30.</text>
+<text x="40" y="1770" font-size="20" text-anchor="start" fill="#20242a" font-weight="bold">3. Recorrido del fluido</text>
+<rect x="40" y="1800" width="200" height="64" rx="8" fill="#f1f1ef" stroke="#20242a" stroke-width="1.5"/>
+<text x="140.0" y="1826" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Tanque sedimentación</text>
+<text x="140.0" y="1846" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">fluido sucio</text>
+<line x1="240" y1="1832" x2="280" y2="1832" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<rect x="280" y="1800" width="200" height="64" rx="8" fill="#e1f5ee" stroke="#20242a" stroke-width="1.5"/>
+<text x="380.0" y="1826" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Bomba alimentación</text>
+<text x="380.0" y="1846" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">caudal constante</text>
+<line x1="480" y1="1832" x2="520" y2="1832" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<rect x="520" y="1800" width="180" height="64" rx="8" fill="#faece7" stroke="#20242a" stroke-width="1.5"/>
+<text x="610.0" y="1826" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Calentador</text>
+<text x="610.0" y="1846" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">si existe: verificar</text>
+<line x1="700" y1="1832" x2="740" y2="1832" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<rect x="740" y="1800" width="220" height="64" rx="8" fill="#eeedfe" stroke="#20242a" stroke-width="1.5"/>
+<text x="850.0" y="1826" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Separadora centrífuga</text>
+<text x="850.0" y="1846" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">Alfa Laval</text>
+<line x1="790" y1="1864" x2="470" y2="1920" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<line x1="850" y1="1864" x2="680" y2="1920" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<line x1="910" y1="1864" x2="880" y2="1920" stroke="#20242a" stroke-width="2" marker-end="url(#f)"/>
+<rect x="380" y="1920" width="180" height="60" rx="8" fill="#eaf3de" stroke="#20242a" stroke-width="1.5"/>
+<text x="470.0" y="1946" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Fluido limpio</text>
+<text x="470.0" y="1966" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">tanque de servicio</text>
+<rect x="590" y="1920" width="180" height="60" rx="8" fill="#e6f1fb" stroke="#20242a" stroke-width="1.5"/>
+<text x="680.0" y="1946" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Agua</text>
+<text x="680.0" y="1966" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">salida de agua</text>
+<rect x="800" y="1920" width="160" height="60" rx="8" fill="#faeeda" stroke="#20242a" stroke-width="1.5"/>
+<text x="880.0" y="1946" font-size="16" text-anchor="middle" fill="#20242a" font-weight="bold">Lodos</text>
+<text x="880.0" y="1966" font-size="13" text-anchor="middle" fill="#5a6270" font-weight="normal">tanque de lodos</text>
+<text x="40" y="2020" font-size="12" text-anchor="start" fill="#5a6270" font-weight="normal">Oficial Electrotécnico: B/P Vía Simoun · material de formación · noviembre de 2026</text>
+</svg>

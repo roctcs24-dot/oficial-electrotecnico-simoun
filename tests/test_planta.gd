@@ -116,15 +116,20 @@ func test_capacidad_en_manual() -> String:
 	var raiz := _raiz(false, "mando")
 	var p = raiz.pantalla_actual()
 	var planta: SimPlantaFrio = p.operador.planta()
-	var en_auto: Dictionary = p.operador.capacidad(1.0)
+	# Los compresores del buque son de pistón: en manual, cada selector mueve una solenoide.
+	var en_auto: Dictionary = p.operador.alternar_solenoide("solenoide_75")
 	p._atender_orden(p.operador.alternar_automatico)
-	p._atender_orden(p.operador.capacidad.bind(1.0))
-	var manual: float = planta.estado["capacidad_manual"]
+	p._atender_orden(p.operador.alternar_solenoide.bind("solenoide_75"))
+	var solenoide: bool = planta.estado["solenoide_75"]
+	var textos: Array[String] = []
+	_botones(p, textos)
 	raiz.free()
 	return A.primero([
-		A.cierto(en_auto["titulo"] == "Corredera en automático", "en automático no se mueve a mano"),
+		A.cierto(planta.piston(), "el MYCOM del buque es de pistón"),
+		A.cierto(en_auto["titulo"] == "Capacidad en automático", "en automático no se mueve a mano"),
 		A.cierto(not planta.estado["automatico"], "debe pasar a manual"),
-		A.cerca(manual, 0.2, 0.01, "un toque sube un 10 % sobre el mínimo"),
+		A.cierto(solenoide, "el selector activa la solenoide 1"),
+		A.cierto(textos.has("Solenoide 1 · 67 %: desactivar"), "la solenoide 1 del MYCOM carga a dos tercios: %s" % str(textos)),
 	])
 
 

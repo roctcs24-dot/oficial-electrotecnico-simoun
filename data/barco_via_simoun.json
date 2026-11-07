@@ -7,13 +7,15 @@
     "imo": { "valor": 7809285, "unidad": "", "verificar": true },
     "senal_llamada": { "valor": "HC2913", "unidad": "", "verificar": true },
     "construccion": { "valor": "Francia, 1980", "unidad": "", "verificar": true },
-    "eslora": { "valor": 69, "unidad": "m", "verificar": true },
-    "manga": { "valor": 12.8, "unidad": "m", "verificar": true },
-    "puntal": { "valor": 8.33, "unidad": "m", "verificar": true },
+    "eslora": { "valor": 69, "unidad": "m (eslora total con plataforma, según el plano de seguridad)", "verificar": true },
+    "manga": { "valor": 12.8, "unidad": "m (manga moldeada, según el plano de seguridad)", "verificar": true },
+    "puntal": { "valor": 8.5, "unidad": "m a la cubierta superior; 6,0 m a la principal (plano de seguridad)", "verificar": true },
     "arqueo": { "valor": 1559.79, "unidad": "", "verificar": true },
     "motor_principal": { "valor": 4000, "unidad": "hp", "verificar": true },
     "capacidad_bodega": { "valor": 1324, "unidad": "m3", "verificar": true },
-    "tripulacion": { "valor": 24, "unidad": "personas", "verificar": true }
+    "tripulacion": { "valor": 24, "unidad": "personas", "verificar": true },
+    "motor_principal_modelo": { "valor": "Wabtec (GE) 16V250, panel MEC2+ y consola Marinsa, reductora Reintjes WAF, mando de propulsión Kobelt", "unidad": "", "verificar": true },
+    "bodegas": { "valor": 9, "unidad": "bodegas con cubas a babor y estribor (17 cubas en el registrador Lauburu)", "verificar": true }
   },
   "red_principal": {
     "tension_v": { "valor": 380, "unidad": "V", "verificar": false, "fuente": "placa del alternador Stamford HCI534F y de los motores" },
@@ -45,23 +47,23 @@
     "disparo_preferente": { "valor": "1,0 × In durante 5 s", "unidad": "", "verificar": true }
   },
   "tensiones_secundarias": {
-    "alumbrado_y_servicios_v": { "valor": [220, 110], "unidad": "V", "verificar": true },
-    "corriente_continua_v": { "valor": 24, "unidad": "V DC", "verificar": true },
+    "alumbrado_y_servicios_v": { "valor": [220, 110], "unidad": "V (220 V trifásico aislado L1-L2-L3 y 110 V de habitabilidad R-S-T, ambos con lámparas de tierra y pulsador de test)", "verificar": false },
+    "corriente_continua_v": { "valor": 24, "unidad": "V DC (2 bancos de baterías Motorex de 12 V en serie, 8D de 175 Ah; cargadores Exxel Power 24 V 70 A, flotación 27,5 V)", "verificar": false },
     "mando_v": { "valor": 110, "unidad": "V AC (los horómetros de los tableros son de 230 V)", "verificar": true }
   },
   "refrigeracion": {
     "refrigerante": { "valor": "amoníaco (NH3, R-717)", "unidad": "", "verificar": false },
     "sistema": { "valor": "congelación del atún en salmuera, en cubas; recirculación por bombas desde botellas de baja (roja y azul)", "unidad": "", "verificar": false },
-    "compresores": { "valor": "5 compresores: nº 1, nº 2 y nº 5 de pistón Vilter VMC 450 XL (solenoides de capacidad 75 % y 100 %, cabezas refrigeradas con agua salada); nº 3 y nº 4 de tornillo Mayekawa MYCOM con pantalla Omron", "unidad": "", "verificar": false },
+    "compresores": { "valor": "5 compresores de pistón: nº 1, nº 2 y nº 5 Vilter VMC 450 XL (solenoides de capacidad 75 % y 100 %); nº 3 y nº 4 Mayekawa MYCOM 6WB de 6 cilindros (solenoides de descarga 1 y 2, pantalla Omron). Todos con cabezas refrigeradas por agua salada y presostatos Penn", "unidad": "", "verificar": false },
     "motor_compresor_vilter": { "valor": "WEG W40, 75 kW (100 HP), 380 V Δ, 138 A, 1480 rpm, 50 Hz", "unidad": "", "verificar": false },
     "bombas_amoniaco": { "valor": 3, "unidad": "con alarma de baja presión", "verificar": false },
     "bombas_condensador": { "valor": 3, "unidad": "", "verificar": false },
     "bombas_circuladoras_salmuera": { "valor": 17, "unidad": "centro, estribor 2 a 9 y babor 2 a 9", "verificar": false },
     "control_nivel": { "valor": "interruptores de nivel de flotador Parker LLSS y solenoides de líquido (principal, nivel bajo, nivel medio)", "unidad": "", "verificar": false },
     "presostatos": { "valor": "Penn (Johnson Controls), aptos para amoníaco, en cada compresor", "unidad": "", "verificar": false },
-    "etapa_base_piston": { "valor": 50, "unidad": "% de capacidad sin solenoides", "verificar": true },
-    "capacidad_por_compresor_kw": { "valor": 220, "unidad": "kW frigoríficos a −25/+35 °C (MYCOM; el Vilter, 160 kW)", "verificar": true },
-    "motor_compresor_kw": { "valor": 110, "unidad": "kW (MYCOM; sin placa fotografiada)", "verificar": true },
+    "etapa_base_piston": { "valor": 50, "unidad": "% de capacidad sin solenoides en el Vilter (en el MYCOM 6WB, un tercio)", "verificar": true },
+    "capacidad_por_compresor_kw": { "valor": 190, "unidad": "kW frigoríficos a −25/+35 °C (MYCOM 6WB; el Vilter, 160 kW)", "verificar": true },
+    "motor_compresor_kw": { "valor": 90, "unidad": "kW (MYCOM)", "verificar": true },
     "consigna_salmuera_c": { "valor": -15, "unidad": "°C", "verificar": true },
     "congelacion_salmuera_c": { "valor": -21, "unidad": "°C (salmuera de NaCl bien concentrada)", "verificar": true },
     "temperatura_agua_mar_c": { "valor": 29, "unidad": "°C", "verificar": true },
@@ -70,6 +72,26 @@
     "presostato_baja_bar": { "valor": 0.3, "unidad": "bar relativos, rearme automático", "verificar": true },
     "presostato_aceite_bar": { "valor": 1.0, "unidad": "bar diferenciales, 45 s de retardo", "verificar": true },
     "valvula_seguridad_bar": { "valor": 20, "unidad": "bar relativos", "verificar": true },
-    "alarmas_nh3_ppm": { "valor": [25, 150], "unidad": "ppm en la sala de máquinas", "verificar": true }
+    "alarmas_nh3_ppm": { "valor": [25, 150], "unidad": "ppm en la sala de máquinas", "verificar": true },
+    "motor_compresor_mycom": { "valor": "WEG W22, 90 kW, 220Δ/380Y 50 Hz, 299/173 A: a 380 V en estrella (fotografiado en la sala; que sea el del MYCOM está sin confirmar)", "unidad": "", "verificar": true }
+  },
+  "servotimon": {
+    "tipo": { "valor": "Kongsberg SR 662 FCP-240, presión máxima 125 bar, prueba 234 bar", "unidad": "", "verificar": false },
+    "bombas": { "valor": "2 bombas con motor Hoyer HMA2 132M1-4, 7,5 kW, Δ380 V 50 Hz, 15,2 A, 1460 rpm, cos φ 0,85, IP55, clase F", "unidad": "", "verificar": false },
+    "variadores": { "valor": "Danfoss VLT AutomationDrive, uno por bomba, 380 V AC; en reposo indican «Auto Remote DC Stop» y unos 7,5 A (calentamiento del motor parado: verificar)", "unidad": "", "verificar": true },
+    "mando_local": { "valor": "Selector Kraus & Naimer 1 control remoto / 2 stop / 3 control local, luces RUN PUMP, HEATING ON y blanca, pulsadores de gobierno de emergencia babor y estribor, interruptor general Schneider", "unidad": "", "verificar": false },
+    "sensor_angulo": { "valor": "Simrad RF45X, 12/24 V DC (piloto automático)", "unidad": "", "verificar": false }
+  },
+  "alarmas": {
+    "sistema_general": { "valor": "Pantalla Siemens SIMATIC HMI «Alarmas generales», 32 señales", "unidad": "", "verificar": false },
+    "temperatura_estator": { "valor": "Controladores Hanyoung Nux AX4, uno por generador", "unidad": "", "verificar": false },
+    "temperatura_bodegas": { "valor": "Registrador Lauburu", "unidad": "", "verificar": false }
+  },
+  "otros_equipos": {
+    "purificadoras": { "valor": "2 separadoras Alfa Laval; motor ABB M3BP 100LKA 2, 3 kW; bomba de alimentación de husillo con motor Hoyer HMA3 100L1-4, 2,2 kW", "unidad": "", "verificar": false },
+    "agua_dulce": { "valor": "Planta de ósmosis inversa y generador de agua dulce Gefico", "unidad": "", "verificar": false },
+    "antiincrustante": { "valor": "Gefico IONPAC (unos 122 A en la foto)", "unidad": "", "verificar": false },
+    "separador_sentinas": { "valor": "BOSS 2.2T-107, 0,5 m³/h, monitor BilgMon 488 de 15 ppm", "unidad": "", "verificar": false },
+    "central_hidraulica": { "valor": "Motor diésel Caterpillar propio, 11 circuitos de 65 a 160 bar (winches y power block)", "unidad": "", "verificar": true }
   }
 }

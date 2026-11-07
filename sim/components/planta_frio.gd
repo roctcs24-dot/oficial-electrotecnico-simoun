@@ -4,9 +4,9 @@ extends SimComponente
 ## evaporador sumergido en la salmuera de las cubas. No tiene bornes: el compresor es un motor del
 ## circuito (params compresor), y los presostatos leen sus presiones.
 ##
-## Dos tipos de compresor, como a bordo: de tornillo con corredera de capacidad continua (los
-## MYCOM) o de pistón por etapas, con solenoides de descarga de cilindros y cabezas refrigeradas
-## por agua (los Vilter). Dos formas de alimentar el evaporador: con válvula de expansión, o por
+## Dos tipos de compresor: de pistón por etapas, con solenoides de descarga de cilindros y cabezas
+## refrigeradas por agua, como todos los del buque (los Vilter VMC 450 XL y los MYCOM 6WB), o de
+## tornillo con corredera de capacidad continua, que el buque no tiene pero se ve en otras plantas. Dos formas de alimentar el evaporador: con válvula de expansión, o por
 ## recirculación con bombas, como en el buque: una botella de baja separa el líquido, una
 ## solenoide controlada por interruptores de nivel la rellena y una bomba de amoníaco lo envía al
 ## evaporador.
@@ -25,8 +25,9 @@ const CAPACIDAD_MINIMA := 0.1
 const CAPACIDAD_SUBE_S := 0.01
 const CAPACIDAD_BAJA_S := 0.05
 const LIMITE_MOTOR := 0.95
-## Pistón: con las dos solenoides sin tensión trabaja con la mitad de los cilindros. Etapas del
-## Vilter del buque (75 % y 100 %); la base del 50 % es un valor típico: verificar a bordo.
+## Pistón: con las dos solenoides sin tensión trabaja solo con los cilindros sin descargador.
+## Valores por defecto del Vilter del buque (75 % y 100 %); la base del 50 % es un valor típico.
+## Cada compresor puede cambiarlos con los params etapa_base y etapa_media: verificar a bordo.
 const ETAPA_BASE := 0.5
 const ETAPA_75 := 0.75
 ## Histéresis del automático del pistón, en grados de salmuera por encima de la consigna.
@@ -93,6 +94,9 @@ func _params_por_defecto() -> Dictionary:
 		"nivel_medio": 0.5,
 		"nivel_alto": 0.8,
 		"t_cabezas_max": 120.0,
+		# Pistón: capacidad con las solenoides sin tensión y con la primera solenoide activada.
+		"etapa_base": ETAPA_BASE,
+		"etapa_media": ETAPA_75,
 		# Averías: solenoide de nivel cerrada o abierta (pegada).
 		"averia_solenoide_nivel": "",
 	}
@@ -181,6 +185,15 @@ func temperatura_tuberia(punto: String) -> float:
 
 func piston() -> bool:
 	return params["tipo_compresor"] == "piston"
+
+
+## Capacidad de la etapa base (solenoides sin tensión) y de la intermedia (primera solenoide).
+func etapa_base() -> float:
+	return float(params["etapa_base"])
+
+
+func etapa_media() -> float:
+	return float(params["etapa_media"])
 
 
 func bombeo() -> bool:
@@ -306,7 +319,7 @@ func _mover_capacidad(dt: float) -> void:
 		estado["capacidad"] = maxf(actual - CAPACIDAD_BAJA_S * dt, objetivo)
 
 
-## Pistón: en automático las solenoides de 75 % y 100 % cargan cilindros de una en una según la
+## Pistón: en automático las dos solenoides (75 % y 100 % en el Vilter) cargan cilindros de una en una según la
 ## salmuera, con un retardo entre etapas como el temporizador del control real. Solo carga una
 ## etapa si el motor la soporta, y la descarga enseguida si pasa del 95 % de su potencia. En manual
 ## las fija el operador con los selectores. Parado, arranca siempre descargado, con la base.
@@ -316,7 +329,7 @@ func _etapas(dt: float) -> void:
 			estado["solenoide_75"] = false
 			estado["solenoide_100"] = false
 		estado["etapa_s"] = 0.0
-		estado["capacidad"] = ETAPA_BASE
+		estado["capacidad"] = etapa_base()
 		return
 	estado["etapa_s"] = estado.get("etapa_s", 0.0) + dt
 	if estado["automatico"]:
@@ -324,18 +337,18 @@ func _etapas(dt: float) -> void:
 		var m: SimMotorTrifasico = sim().componente(params["compresor"])
 		var limite: float = LIMITE_MOTOR * float(m.params["p_kw"])
 		var cap: float = estado["capacidad"]
-		if estado["w_kw"] > limite and cap > ETAPA_BASE:
+		if estado["w_kw"] > limite and cap > etapa_base():
 			_cambiar_etapa(-1)
 		elif estado["etapa_s"] >= ETAPA_RETARDO_S:
-			var deseada := ETAPA_BASE
+			var deseada := etapa_base()
 			if exceso > ETAPA_100_K:
 				deseada = 1.0
 			elif exceso > ETAPA_75_K:
-				deseada = ETAPA_75
-			elif cap > ETAPA_BASE and exceso > ETAPA_75_K - 1.0:
-				deseada = minf(cap, ETAPA_75)
+				deseada = etapa_media()
+			elif cap > etapa_base() and exceso > ETAPA_75_K - 1.0:
+				deseada = minf(cap, etapa_media())
 			if deseada > cap:
-				var siguiente := ETAPA_75 if cap < ETAPA_75 else 1.0
+				var siguiente := etapa_media() if cap < etapa_media() else 1.0
 				if estado["w_kw"] * siguiente / cap < limite * 0.97:
 					_cambiar_etapa(1)
 			elif deseada < cap:
@@ -343,9 +356,9 @@ func _etapas(dt: float) -> void:
 	if estado["solenoide_100"]:
 		estado["capacidad"] = 1.0
 	elif estado["solenoide_75"]:
-		estado["capacidad"] = ETAPA_75
+		estado["capacidad"] = etapa_media()
 	else:
-		estado["capacidad"] = ETAPA_BASE
+		estado["capacidad"] = etapa_base()
 
 
 ## Sube o baja una etapa: base, 75 % y 100 %.

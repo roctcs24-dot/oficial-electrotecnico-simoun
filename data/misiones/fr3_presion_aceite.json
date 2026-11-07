@@ -35,20 +35,20 @@
     "pregunta": "¿Cuál es la causa de la baja presión de aceite?",
     "opciones": [
       { "texto": "El filtro de aceite está obstruido", "correcta": true, "explicacion": "El nivel es normal y antes del filtro la bomba da presión, pero después del filtro cae casi toda. A los cojinetes y a las bielas llega poco aceite, y la presión diferencial se queda por debajo de 1 bar." },
-      { "texto": "Falta aceite en el compresor", "explicacion": "El visor del separador marca el nivel normal." },
+      { "texto": "Falta aceite en el compresor", "explicacion": "El visor del cárter marca el nivel normal." },
       { "texto": "La bomba de aceite está gastada", "explicacion": "Antes del filtro la presión es normal: la bomba da presión. Se pierde en el filtro." },
       { "texto": "El presostato de aceite está averiado", "explicacion": "El manómetro de aceite confirma la presión baja: el presostato dice la verdad." }
     ]
   },
   "acciones": [
-    { "id": "mirar_nivel", "boton": "Mirar el nivel de aceite en el visor del separador", "titulo": "Nivel normal", "texto": "El visor del separador de aceite marca el nivel entre las marcas de mínimo y máximo.", "medicion": true },
+    { "id": "mirar_nivel", "boton": "Mirar el nivel de aceite en el visor del cárter", "titulo": "Nivel normal", "texto": "El visor del cárter marca el nivel entre las marcas de mínimo y máximo.", "medicion": true },
     { "id": "medir_filtro", "boton": "Comparar los manómetros antes y después del filtro de aceite", "requiere": [{ "c": "en_marcha", "si_no": "Arranque el compresor: la caída en el filtro solo se ve con el aceite circulando. Tiene 45 s antes de que pare PO." }], "titulo": "Filtro obstruido", "texto": "Antes del filtro, el aceite está unos 3 bar por encima de la succión, como debe. Después del filtro, solo {aceite} bar: el filtro se come casi toda la presión.", "medicion": true },
     { "id": "aislar_filtro", "boton": "Cerrar las válvulas de aislamiento del filtro de aceite y vaciar el tramo", "requiere": [{ "c": "parado", "si_no": "Pare antes el compresor." }], "impide": ["aislado"], "si_impide": "El filtro ya está aislado y vacío.", "titulo": "Filtro aislado", "texto": "Se cerraron las válvulas antes y después del filtro, y se vació el tramo hacia el cárter por la purga hasta que el manómetro marcó cero.", "pone": ["aislado"] },
     { "id": "cambiar_filtro", "boton": "Abrir el filtro y cambiar el cartucho", "bloqueo": "Q1", "abre_circuito": true, "titulo": "Filtro cambiado", "texto": "El cartucho estaba colmatado de lodos y de partículas metálicas finas. Se cambió por uno nuevo del pañol con junta nueva, y se tomó una muestra de aceite para analizarla.", "efecto": [{ "op": "param", "id": "PLANTA", "clave": "obstruccion_filtro_aceite", "valor": 0.0 }] },
     { "id": "abrir_filtro", "boton": "Abrir las válvulas de aislamiento del filtro de aceite", "necesita": ["aislado"], "si_falta": "Las válvulas del filtro ya están abiertas.", "titulo": "Filtro en servicio", "texto": "Se abrieron las válvulas del filtro despacio y se comprobó que la tapa no pierde.", "quita": ["aislado"] },
     { "id": "alargar_retardo", "boton": "Alargar el retardo del presostato de aceite PO a 120 s", "titulo": "Protección desajustada", "texto": "Con un retardo de 2 minutos el compresor gira sin lubricación suficiente antes de que PO lo pare. No corrige la avería.", "innecesaria": true, "tema": "ajuste_presostato", "pone": ["retardo_alterado"], "efecto": [{ "op": "param", "id": "PO", "clave": "retardo_s", "valor": 120.0 }] },
     { "id": "restituir_retardo", "boton": "Restituir el retardo del presostato de aceite PO a 45 s", "necesita": ["retardo_alterado"], "si_falta": "PO ya está en su ajuste: 45 s de retardo.", "titulo": "Ajuste restituido", "texto": "El presostato de aceite vuelve a su retardo de 45 s.", "quita": ["retardo_alterado"], "efecto": [{ "op": "param", "id": "PO", "clave": "retardo_s", "valor": 45.0 }] },
-    { "id": "anadir_aceite", "boton": "Añadir aceite al separador", "titulo": "Aceite innecesario", "texto": "El nivel era normal. Con aceite de más, el compresor arrastra más aceite al circuito y se ensucian el condensador y el evaporador.", "innecesaria": true }
+    { "id": "anadir_aceite", "boton": "Añadir aceite al cárter", "titulo": "Aceite innecesario", "texto": "El nivel era normal. Con aceite de más, el compresor arrastra más aceite al circuito y se ensucian el condensador y el evaporador.", "innecesaria": true }
   ],
   "accidentes": {
     "sin_bloqueo": {
@@ -79,7 +79,7 @@
   },
   "para_saber_mas": [
     "Lecciones de compresores y de control y protecciones.",
-    "Ficha del compresor de tornillo y del presostato.",
+    "Fichas del compresor de pistón y del presostato.",
     "Manual del compresor: análisis de aceite y cambio de filtros.",
     "Este material es de formación. A bordo prevalecen los procedimientos del buque."
   ]

@@ -1,11 +1,11 @@
 {
   "id": "compresor_piston",
-  "titulo": "Compresor de pistón Vilter",
-  "resumen": "Los nº 1, nº 2 y nº 5 del buque: Vilter VMC 450 XL con capacidad por etapas y cabezas refrigeradas.",
+  "titulo": "Compresores de pistón Vilter y MYCOM",
+  "resumen": "Los cinco compresores del buque: Vilter VMC 450 XL (nº 1, nº 2 y nº 5) y Mayekawa MYCOM 6WB (nº 3 y nº 4), con capacidad por etapas y cabezas refrigeradas.",
   "dibujo": {
     "svg": "res://art/equipos/compresor_piston.svg",
     "tamano": [480, 320],
-    "nota": "Grupo compresor de pistón dibujado de forma esquemática, con la disposición general de un Vilter VMC 450 XL: motor, cárter, bloque de cilindros con cabezas de seguridad, solenoides de capacidad y bomba de aceite. Número y disposición de los cilindros y posición de cada pieza: verificar a bordo.",
+    "nota": "Grupo compresor de pistón dibujado de forma esquemática, con la disposición general de un Vilter VMC 450 XL: motor, cárter, bloque de cilindros con cabezas de seguridad, solenoides de capacidad y bomba de aceite. El MYCOM 6WB tiene la misma disposición general, con 6 cilindros y las solenoides rotuladas «1» y «2». Número y disposición de los cilindros y posición de cada pieza: verificar a bordo.",
     "etiquetas": [
       { "texto": "Motor WEG 75 kW", "x": 90, "y": 206, "tam": 12 },
       { "texto": "Agua de cabezas", "x": 92, "y": 64, "tam": 11 },
@@ -26,27 +26,27 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{compresor_piston}} aspira el vapor de la {{botella_baja}} y lo comprime hasta la presión de condensación. El buque tiene tres, el nº 1, el nº 2 y el nº 5, todos Vilter VMC 450 XL (Emerson). Trabajan junto a los dos de tornillo, el nº 3 y el nº 4, y se arrancan o se paran según la carga de las cubas."
+      "texto": "El {{compresor_piston}} aspira el vapor de la {{botella_baja}} y lo comprime hasta la presión de condensación. Los cinco compresores del buque son de pistón:\n• [b]Nº 1, nº 2 y nº 5:[/b] Vilter VMC 450 XL (Emerson).\n• [b]Nº 3 y nº 4:[/b] Mayekawa MYCOM 6WB, de 6 cilindros.\n\nEn el buque no hay compresores de tornillo. Los compresores se arrancan o se paran según la carga de las cubas."
     },
     {
       "id": "partes",
       "titulo": "Cómo funciona por dentro",
-      "texto": "• [b]Cárter y cigüeñal[/b], con bielas y pistones que suben y bajan en los cilindros.\n• [b]Válvulas de aspiración y de descarga[/b] en cada cilindro ([i]tipo: verificar en el manual Vilter[/i]).\n• [b]{{Cabeza_seguridad}}:[/b] tapa de cilindro con la marca «Caution spring loaded». Un resorte sujeta el conjunto de descarga y cede si entra líquido, para que el golpe no rompa la biela ni el cigüeñal.\n• [b]{{Descargador}}:[/b] mantiene abiertas las válvulas de aspiración de un grupo de cilindros, que así no comprimen. Lo mandan la solenoide del 75 % y la del 100 %.\n• [b]Bomba de aceite[/b] movida por el cigüeñal, con filtro y visor de nivel en el cárter.\n• [b]Camisas de agua[/b] en las cabezas, por las que circula agua salada de la bomba de enfriamiento de cabezas.\n• [b]Motor eléctrico[/b] WEG W40 de 75 kW (100 HP), acoplado directamente."
+      "texto": "• [b]Cárter y cigüeñal[/b], con bielas y pistones que suben y bajan en los cilindros.\n• [b]Válvulas de aspiración y de descarga[/b] en cada cilindro ([i]tipo: verificar en el manual de cada compresor[/i]).\n• [b]{{Cabeza_seguridad}}:[/b] en el Vilter, tapa de cilindro con la marca «Caution spring loaded». Un resorte sujeta el conjunto de descarga y cede si entra líquido, para que el golpe no rompa la biela ni el cigüeñal ([i]en el MYCOM: verificar en su manual[/i]).\n• [b]{{Descargador}}:[/b] mantiene abiertas las válvulas de aspiración de un grupo de cilindros, que así no comprimen. Lo mandan dos solenoides: en el Vilter, la del 75 % y la del 100 %; en el MYCOM, las rotuladas «1» y «2».\n• [b]Bomba de aceite[/b] movida por el cigüeñal, con filtro y visor de nivel en el cárter.\n• [b]Camisas de agua[/b] en las cabezas, por las que circula agua salada de la bomba de enfriamiento de cabezas. Las tienen los dos modelos.\n• [b]Motor eléctrico[/b] acoplado directamente: en el Vilter, un WEG W40 de 75 kW (100 HP). En el MYCOM, el simulador usa un WEG W22 de 90 kW fotografiado en la sala ([i]que sea el motor del MYCOM: verificar a bordo[/i]).\n• [b]Pantalla Omron del MYCOM:[/b] capacidad (CAP %), presiones de succión, descarga y aceite (SP, DP y OP, en kgf/cm²; 1 kgf/cm² son 0,98 bar) y cuatro temperaturas en °C (SH, ST, DT y OT; [i]significado de cada sigla: verificar en el manual MYCOM[/i])."
     },
     {
       "id": "conexion",
       "titulo": "Cómo se conecta",
-      "texto": "• [b]Succión[/b] desde la botella de baja, y [b]descarga[/b] hacia el separador de aceite y el condensador ([i]verificar el circuito del buque[/i]).\n• [b]Motor:[/b] 380 V en delta, 138 A y 1480 rpm, a 50 Hz. Circuito de potencia con guardamotor, contactor y {{rele_termico}} ajustado a 138 A.\n• [b]Mando:[/b] la bobina del contactor pasa por los presostatos de alta, baja y aceite y por el {{interruptor_nivel}} que vigila el nivel alto de la botella.\n• [b]Tablero del nº 5:[/b] controlador Siemens LOGO! 8, selector de operación, marcha y paro, luces de presostato de alta, de baja y de baja presión de aceite, selector «botella roja / off / azul» y selectores de las solenoides del 75 % y del 100 %.\n• [b]Agua de cabezas:[/b] entrada y salida de agua salada en las camisas, con su bomba."
+      "texto": "• [b]Succión[/b] desde la botella de baja, y [b]descarga[/b] hacia el separador de aceite y el condensador ([i]verificar el circuito del buque[/i]).\n• [b]Motor del Vilter:[/b] 380 V en delta, 138 A y 1480 rpm, a 50 Hz. Circuito de potencia con guardamotor, contactor y {{rele_termico}} ajustado a 138 A.\n• [b]Motor del MYCOM:[/b] el WEG W22 tiene placa 220Δ/380Y, 50 Hz, 299/173 A. A 380 V va en estrella, con el relé térmico ajustado a la corriente de 380 V, 173 A. Como ya trabaja en estrella, no admite arranque estrella-triángulo ([i]motor y forma de arranque del MYCOM: verificar a bordo[/i]).\n• [b]Mando:[/b] la bobina del contactor pasa por los presostatos Penn de alta, baja y aceite y por el {{interruptor_nivel}} que vigila el nivel alto de la botella.\n• [b]Tablero del nº 5:[/b] controlador Siemens LOGO! 8, selector de operación, marcha y paro, luces de presostato de alta, de baja y de baja presión de aceite, selector «botella roja / off / azul» y selectores de las solenoides del 75 % y del 100 %.\n• [b]Agua de cabezas:[/b] entrada y salida de agua salada en las camisas, con su bomba."
     },
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "([i]Valores del simulador — verificar con el manual Vilter y el tablero[/i])\n• [b]Etapas:[/b] sin tensión en las solenoides trabaja con la etapa base, del 50 % ([i]valor típico — verificar a bordo[/i]); con la del 75 %, a tres cuartos; con la del 100 %, a plena carga.\n• [b]Automático:[/b] el control carga la etapa del 75 % cuando la salmuera pasa 1 K de la consigna, y la del 100 % a 2,5 K, con unos 20 s entre etapas. Descarga si el motor pasa del 95 % de su potencia.\n• [b]Manual:[/b] los selectores del tablero fijan las solenoides. Con la salmuera caliente, cargar a mano puede sobrecargar el motor.\n• [b]Arranque:[/b] siempre descargado, con la etapa base.\n• [b]Aceite:[/b] corte a 1 bar diferencial con 45 s de retardo."
+      "texto": "([i]Valores del simulador — verificar con los manuales Vilter y MYCOM y con los tableros[/i])\n• [b]Etapas del Vilter:[/b] sin tensión en las solenoides trabaja con la etapa base, del 50 % ([i]valor típico — verificar a bordo[/i]); con la del 75 %, a tres cuartos; con la del 100 %, a plena carga.\n• [b]Etapas del MYCOM 6WB:[/b] un tercio de la capacidad con las dos solenoides sin tensión, dos tercios con la 1 y el 100 % con las dos ([i]valores típicos — verificar a bordo[/i]). En el simulador da unos 190 kW frigoríficos a −25/+35 °C, y el Vilter unos 160 kW ([i]valores típicos — verificar[/i]).\n• [b]Automático:[/b] el control carga la primera etapa (75 % en el Vilter, solenoide 1 en el MYCOM) cuando la salmuera pasa 1 K de la consigna, y la del 100 % a 2,5 K, con unos 20 s entre etapas. Descarga si el motor pasa del 95 % de su potencia.\n• [b]Manual:[/b] los selectores del tablero fijan las solenoides. Con la salmuera caliente, cargar a mano puede sobrecargar el motor.\n• [b]Arranque:[/b] siempre descargado, con la etapa base.\n• [b]Aceite:[/b] corte a 1 bar diferencial con 45 s de retardo."
     },
     {
       "id": "pruebas",
       "titulo": "Cómo se prueba",
-      "texto": "• [b]En marcha:[/b] anote succión, descarga, presión de aceite, temperaturas de descarga y de cabezas, corriente del motor y etapa de capacidad. Compare con los registros anteriores.\n• [b]Solenoides de capacidad:[/b] en manual, cada etapa debe cambiar la corriente del motor. Si no cambia, mida con el {{multimetro}} la tensión en la bobina: con tensión, fallan la bobina o el descargador; sin tensión, el fallo está en el mando.\n• [b]Bobina:[/b] con el mando sin tensión y la bobina desconectada, mida su resistencia. Abierta indica una bobina cortada.\n• [b]Motor:[/b] corriente de las tres fases con la {{pinza}}, sin pasar de 138 A, y aislamiento con el {{megohmetro}} con el motor bloqueado.\n• [b]Agua de cabezas:[/b] compare con el termómetro la temperatura del agua a la entrada y a la salida."
+      "texto": "• [b]En marcha:[/b] anote succión, descarga, presión de aceite, temperaturas de descarga y de cabezas, corriente del motor y etapa de capacidad. Compare con los registros anteriores.\n• [b]Solenoides de capacidad:[/b] en manual, cada etapa debe cambiar la corriente del motor. Si no cambia, mida con el {{multimetro}} la tensión en la bobina: con tensión, fallan la bobina o el descargador; sin tensión, el fallo está en el mando.\n• [b]Bobina:[/b] con el mando sin tensión y la bobina desconectada, mida su resistencia. Abierta indica una bobina cortada.\n• [b]Motor:[/b] corriente de las tres fases con la {{pinza}}, sin pasar de la de placa (138 A en el Vilter; 173 A si el MYCOM lleva el W22 en estrella — verificar a bordo), y aislamiento con el {{megohmetro}} con el motor bloqueado.\n• [b]Agua de cabezas:[/b] compare con el termómetro la temperatura del agua a la entrada y a la salida."
     },
     {
       "id": "fallas",
@@ -56,12 +56,14 @@
     {
       "id": "mantenimiento",
       "titulo": "Mantenimiento",
-      "texto": "[b]Preventivo[/b] ([i]periodos según el manual Vilter y las horas de marcha — verificar[/i]): registro diario de presiones, temperaturas y corriente; cambio de filtros y de aceite, como recuerda la nota del tablero del nº 5; revisión de válvulas y descargadores; limpieza de las camisas de agua; alineación del acoplamiento, apriete de bornes del motor y prueba de las protecciones.\n\n[b]Correctivo:[/b] con el compresor parado, bloqueado y aislado del circuito, y el amoníaco del compresor vaciado según el procedimiento del buque. Las cabezas de seguridad tienen el resorte comprimido: se desmontan aflojando los tornillos de forma alterna, como indica el manual."
+      "texto": "[b]Preventivo[/b] ([i]periodos según los manuales Vilter y MYCOM y las horas de marcha — verificar[/i]): registro diario de presiones, temperaturas y corriente; cambio de filtros y de aceite, como recuerda la nota del tablero del nº 5; revisión de válvulas y descargadores; limpieza de las camisas de agua; alineación del acoplamiento, apriete de bornes del motor y prueba de las protecciones.\n\n[b]Correctivo:[/b] con el compresor parado, bloqueado y aislado del circuito, y el amoníaco del compresor vaciado según el procedimiento del buque. Las cabezas de seguridad tienen el resorte comprimido: se desmontan aflojando los pernos de forma alterna, como indica el manual."
     }
   ],
   "para_saber_mas": [
     "Manual del compresor Vilter VMC 450 XL (Emerson).",
+    "Manual del compresor Mayekawa MYCOM 6WB y de su pantalla Omron.",
     "Placa del motor WEG W40 y esquema del tablero del compresor nº 5.",
+    "Placa del motor WEG W22 de 90 kW fotografiado en la sala (verificar a bordo a qué compresor pertenece).",
     "IIAR: compresores para amoníaco.",
     "ISO 5149-2: diseño, construcción, ensayos y documentación."
   ]

@@ -7,7 +7,7 @@
     {
       "titulo": "Potencia",
       "bloques": [
-        { "tipo": "texto", "texto": "El Vilter nº 5 lo mueve un motor WEG W40 de 75 kW (100 HP), 380 V en delta, 138 A y 1480 rpm, según su placa. Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nComo trabaja en delta a la tensión de la red, admite arranque estrella-triángulo; a bordo puede arrancar así o con arrancador suave ([i]verificar el esquema del buque[/i]). En el simulador arranca en directo, descargado. Del motor de los MYCOM no hay placa: el simulador usa 110 kW ([i]verificar a bordo[/i])." },
+        { "tipo": "texto", "texto": "El Vilter nº 5 lo mueve un motor WEG W40 de 75 kW (100 HP), 380 V en delta, 138 A y 1480 rpm, según su placa. Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nComo trabaja en delta a la tensión de la red, admite arranque estrella-triángulo; a bordo puede arrancar así o con arrancador suave ([i]verificar el esquema del buque[/i]). En el simulador arranca en directo, descargado. El MYCOM, en cambio, usa en el simulador un WEG W22 de 90 kW con placa 220Δ/380Y: a 380 V va en estrella y no admite arranque estrella-triángulo ([i]que sea el motor del MYCOM: verificar a bordo[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_ajuste_termico_compresor",

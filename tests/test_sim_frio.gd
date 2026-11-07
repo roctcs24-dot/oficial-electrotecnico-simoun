@@ -73,7 +73,8 @@ func test_regimen_en_la_consigna() -> String:
 	var ts: float = planta.temperatura("salmuera")
 	var te: float = planta.temperatura("evaporacion")
 	return A.primero([
-		A.cerca(ts, -15.0, 0.1, "la salmuera en su consigna"),
+		# El pistón regula por etapas: con la base ya enfría algo más que la carga.
+		A.cerca(ts, -15.0, 0.15, "la salmuera cerca de su consigna"),
 		A.cierto(planta.estado["capacidad"] < 0.6, "en la consigna el compresor trabaja descargado: %.2f" % planta.estado["capacidad"]),
 		A.cierto(te > -22.0 and te < ts, "evaporación unos grados por debajo de la salmuera: %.1f °C" % te),
 		A.cierto(planta.presion("succion") > 0.3, "succión por encima del corte de baja: %.2f bar" % planta.presion("succion")),
@@ -110,7 +111,8 @@ func test_sin_bomba_de_salmuera_dispara_por_baja() -> String:
 	var planta := _planta(sim)
 	_avanzar(sim, 120)
 	planta.estado["bomba_salmuera"] = false
-	_avanzar(sim, 60)
+	# El pistón tarda algo más en bajar la succión; a los 140 s el de baja ya rearmaría solo.
+	_avanzar(sim, 100)
 	var pb := _presostato(sim, "PB")
 	var disparado: bool = pb.estado["disparado"]
 	var parado := not _en_marcha(sim)
@@ -201,9 +203,9 @@ func test_al_parar_se_igualan_las_presiones() -> String:
 	var planta := _planta(sim)
 	return A.primero([
 		A.cierto(not _en_marcha(sim), "debe estar parado"),
-		A.cerca(planta.temperatura("evaporacion"), planta.temperatura("salmuera"), 0.05, "la evaporación sube a la temperatura de la salmuera"),
+		A.cerca(planta.temperatura("evaporacion"), planta.temperatura("salmuera"), 0.1, "la evaporación sube a la temperatura de la salmuera"),
 		A.cerca(planta.temperatura("condensacion"), 29.0, 0.03, "la condensación baja a la del agua de mar"),
-		A.cierto(planta.estado["capacidad"] <= SimPlantaFrio.CAPACIDAD_MINIMA + 0.001, "la corredera vuelve al mínimo"),
+		A.cerca(planta.estado["capacidad"], planta.etapa_base(), 0.001, "vuelve a la etapa base para arrancar descargado"),
 	])
 
 

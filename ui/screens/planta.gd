@@ -227,7 +227,9 @@ func _panel_mando(columna: VBoxContainer) -> void:
 	_agregar_a(capacidad, _boton("Pasar a manual" if automatico else "Pasar a automático", _atender_orden.bind(operador.alternar_automatico)))
 	if planta.piston():
 		# Como el tablero del compresor nº 5: un selector por cada solenoide de capacidad.
-		for s: Array in [["solenoide_75", "75 %"], ["solenoide_100", "100 %"]]:
+		# El Vilter carga al 75 % y al 100 %; el MYCOM 6WB, a dos tercios y al 100 %.
+		var media := "%d %%" % roundi(planta.etapa_media() * 100.0)
+		for s: Array in [["solenoide_75", "1 · %s" % media], ["solenoide_100", "2 · 100 %"]]:
 			columna.add_child(_luz_con_texto(s[0], "Solenoide de capacidad %s" % s[1], LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
 			var activa: bool = planta.estado[s[0]]
 			_agregar_a(capacidad, _boton("Solenoide %s: %s" % [s[1], "desactivar" if activa else "activar"], _atender_orden.bind(operador.alternar_solenoide.bind(s[0]))))

@@ -50,7 +50,7 @@ func _init(contenido_juego: Contenido, id_mision: String) -> void:
 	super(contenido_juego, id_mision)
 	panel = contenido.leer("planta.json").duplicate(true)
 	panel["nota"] = datos["reporte"]["nota"]
-	# Cada misión elige el compresor del buque: el Vilter de pistón o el MYCOM de tornillo.
+	# Cada misión elige el compresor del buque: el Vilter VMC 450 XL o el MYCOM 6WB, ambos de pistón.
 	panel["circuito"] = datos.get("circuito", panel["circuito"])
 	panel.erase("compresores")
 	sim = contenido.circuito(panel["circuito"])

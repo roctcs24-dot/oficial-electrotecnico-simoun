@@ -39,7 +39,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "• [b]Recalentamiento:[/b] se ajusta para que al compresor llegue solo vapor, con unos pocos grados de margen ([i]valor del fabricante — verificar[/i]). Cada vuelta del tornillo cambia unos grados.\n• [b]Elección:[/b] por capacidad, refrigerante y presiones de trabajo. Una válvula demasiado grande oscila, y una pequeña deja el evaporador medio vacío."
+      "texto": "• [b]Recalentamiento:[/b] se ajusta para que al compresor llegue solo vapor, con unos pocos grados de margen ([i]valor del fabricante — verificar[/i]). Cada vuelta del tornillo de ajuste cambia unos grados.\n• [b]Elección:[/b] por capacidad, refrigerante y presiones de trabajo. Una válvula demasiado grande oscila, y una pequeña deja el evaporador medio vacío."
     },
     {
       "id": "pruebas",

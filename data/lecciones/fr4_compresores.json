@@ -1,27 +1,27 @@
 {
   "id": "fr4_compresores",
-  "titulo": "Compresores de pistón y de tornillo",
-  "resumen": "Los Vilter de pistón y los MYCOM de tornillo del buque: capacidad, arranque y aceite.",
+  "titulo": "Compresores de pistón: Vilter y MYCOM",
+  "resumen": "Los Vilter y los MYCOM del buque, todos de pistón: capacidad por etapas, arranque y aceite.",
   "minutos": 5,
   "paginas": [
     {
       "titulo": "Los compresores del buque",
       "bloques": [
-        { "tipo": "texto", "texto": "El buque tiene cinco compresores de amoníaco, de dos tipos:\n• [b]{{Compresor_piston}}:[/b] el nº 1, el nº 2 y el nº 5 son Vilter VMC 450 XL (Emerson). Un cigüeñal mueve pistones en varios cilindros, cada uno con sus válvulas de aspiración y de descarga. Una bomba de aceite lubrica cojinetes y bielas. Los mueve un motor WEG W40 de 75 kW.\n• [b]{{Compresor_tornillo}}:[/b] el nº 3 y el nº 4 son Mayekawa MYCOM. Dos rotores helicoidales engranados atrapan el vapor y lo comprimen al avanzar. Giran sin vaivén y vibran poco, pero necesitan inyección de aceite para sellar, enfriar y lubricar.\n\nLa pantalla táctil Omron del MYCOM muestra la capacidad (CAP %), las presiones de succión, descarga y aceite (SP, DP y OP, en kgf/cm²; 1 kgf/cm² son 0,98 bar) y cuatro temperaturas en °C (SH, ST, DT y OT; [i]significado de cada sigla: verificar en el manual MYCOM[/i])." },
+        { "tipo": "texto", "texto": "El buque tiene cinco compresores de amoníaco, todos de pistón:\n• [b]Vilter VMC 450 XL (Emerson):[/b] el nº 1, el nº 2 y el nº 5. Los mueve un motor WEG W40 de 75 kW.\n• [b]Mayekawa MYCOM 6WB:[/b] el nº 3 y el nº 4, de 6 cilindros.\n\nEn un {{compresor_piston}}, un cigüeñal mueve pistones en varios cilindros, cada uno con sus válvulas de aspiración y de descarga. Una bomba de aceite lubrica cojinetes y bielas. Los dos modelos tienen las cabezas refrigeradas por agua salada y presostatos Penn.\n\nEn el buque no hay compresores de tornillo. Mayekawa fabrica también compresores de tornillo con la marca MYCOM: el tipo de cada compresor se confirma con el modelo de su placa.\n\nLa pantalla Omron del MYCOM muestra la capacidad (CAP %), las presiones de succión, descarga y aceite (SP, DP y OP, en kgf/cm²; 1 kgf/cm² son 0,98 bar) y cuatro temperaturas en °C (SH, ST, DT y OT; [i]significado de cada sigla: verificar en el manual MYCOM[/i])." },
         {
           "tipo": "quiz",
-          "tema": "frio_aceite_tornillo",
-          "pregunta": "En un compresor de tornillo, ¿para qué se inyecta aceite?",
-          "opciones": ["Solo para lubricar el motor eléctrico", "Para sellar los rotores, enfriar la compresión y lubricar", "Para limpiar el refrigerante"],
-          "correcta": 1,
-          "explicacion": "Sin aceite, el vapor se escapa entre los rotores, la descarga se calienta demasiado y los cojinetes se dañan."
+          "tema": "frio_mycom_es_piston",
+          "pregunta": "¿De qué tipo son los compresores MYCOM nº 3 y nº 4 del buque?",
+          "opciones": ["De pistón, de 6 cilindros, con capacidad por etapas", "De tornillo, con corredera de capacidad", "Centrífugos"],
+          "correcta": 0,
+          "explicacion": "Son Mayekawa MYCOM 6WB de pistón. La marca MYCOM se usa también en compresores de tornillo: por eso el tipo se confirma con el modelo de la placa, no con la marca."
         }
       ]
     },
     {
-      "titulo": "El pistón Vilter",
+      "titulo": "Capacidad por etapas",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]Capacidad por etapas:[/b] cada {{descargador}} mantiene abiertas las válvulas de aspiración de un grupo de cilindros, que así no comprimen. Lo mandan las solenoides de capacidad: sin tensión en ninguna, el compresor trabaja con la etapa base, del 50 % ([i]valor típico — verificar a bordo[/i]); con la del 75 %, a tres cuartos; con la del 100 %, a plena carga.\n• [b]Arranque descargado:[/b] arranca siempre con las dos solenoides sin tensión. El control las carga de una en una, con un retardo, según la temperatura de la salmuera.\n• [b]{{Cabeza_seguridad}}:[/b] las tapas con la marca «Caution spring loaded» sujetan con un resorte el conjunto de descarga. Si entra líquido en un cilindro, ceden y el golpe no rompe la biela. Al desmontarlas, el resorte está comprimido: siga el manual.\n• [b]Cabezas refrigeradas:[/b] una bomba de agua salada enfría las cabezas. Sin agua, la descarga se calienta y el aceite se degrada." },
+        { "tipo": "texto", "texto": "• [b]Capacidad por etapas:[/b] cada {{descargador}} mantiene abiertas las válvulas de aspiración de un grupo de cilindros, que así no comprimen. Lo mandan las solenoides de capacidad.\n• [b]Etapas del Vilter:[/b] sin tensión en ninguna solenoide, el compresor trabaja con la etapa base, del 50 % ([i]valor típico — verificar a bordo[/i]); con la del 75 %, a tres cuartos; con la del 100 %, a plena carga.\n• [b]Etapas del MYCOM 6WB:[/b] sus dos solenoides de descarga de cilindros se rotulan «1» y «2». Con las dos sin tensión trabaja a un tercio; con la 1, a dos tercios; con las dos, al 100 % ([i]valores típicos — verificar a bordo[/i]).\n• [b]Arranque descargado:[/b] los dos modelos arrancan siempre con las dos solenoides sin tensión. El control las carga de una en una, con un retardo, según la temperatura de la salmuera.\n• [b]{{Cabeza_seguridad}}:[/b] en el Vilter, las tapas con la marca «Caution spring loaded» sujetan con un resorte el conjunto de descarga. Si entra líquido en un cilindro, ceden y el golpe no rompe la biela. Al desmontarlas, el resorte está comprimido: siga el manual.\n• [b]Cabezas refrigeradas:[/b] en los dos modelos, una bomba de agua salada enfría las cabezas. Sin agua, la descarga se calienta y el aceite se degrada." },
         {
           "tipo": "quiz",
           "tema": "frio_piston_etapa_base",
@@ -29,34 +29,43 @@
           "opciones": ["Con la etapa base: solo comprimen parte de los cilindros", "Parado: sin solenoides no comprime", "A plena carga"],
           "correcta": 0,
           "explicacion": "Sin tensión, los descargadores dejan sin trabajo parte de los cilindros. Es la etapa con la que arranca, y la que queda si falla el mando de las solenoides."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "frio_mycom_etapas",
+          "pregunta": "El MYCOM nº 3 está en marcha con la solenoide 1 con tensión y la 2 sin tensión. ¿A qué capacidad trabaja?",
+          "opciones": ["A dos tercios", "A un tercio", "Al 100 %"],
+          "correcta": 0,
+          "explicacion": "En el MYCOM 6WB, cada solenoide carga un grupo de cilindros: un tercio sin ninguna, dos tercios con la 1 y el 100 % con las dos (valores típicos — verificar a bordo)."
         }
       ]
     },
     {
-      "titulo": "El tornillo MYCOM y el aceite",
+      "titulo": "Arranque, motor y aceite",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Corredera_capacidad}}:[/b] abre un paso que devuelve parte del vapor a la succión. La capacidad varía de forma continua, del 10 % al 100 % ([i]rango típico — verificar en el manual MYCOM[/i]). Arranca con la corredera al mínimo, y el control no la deja subir si el motor pasa de su corriente nominal.\n• [b]Aceite del tornillo:[/b] sale con el vapor por la descarga. El {{separador_aceite}} lo recoge y, tras el enfriador y el filtro, vuelve a inyectarse.\n• [b]Aceite del pistón:[/b] la bomba de aceite lo toma del cárter, que tiene un visor de nivel, y lo lleva a los cojinetes.\n\nEn los dos, el {{presostato_aceite}} vigila la presión diferencial, la del aceite menos la de succión, con unos 45 s de retardo al arrancar ([i]verificar el ajuste[/i])." },
+        { "tipo": "texto", "texto": "• [b]Aceite:[/b] la bomba de aceite, movida por el cigüeñal, lo toma del cárter, que tiene un visor de nivel, y lo lleva por el filtro a los cojinetes y a las bielas. Desde allí vuelve al cárter.\n• [b]Aceite arrastrado:[/b] una parte sale con el vapor por la descarga. El {{separador_aceite}} lo recoge y lo devuelve ([i]recorrido del retorno: verificar en el circuito del buque[/i]).\n• [b]Motor del MYCOM:[/b] en la sala se fotografió un motor WEG W22 de 90 kW con placa 220Δ/380Y, 50 Hz, 299/173 A. La tensión menor, 220 V, es la que admite cada devanado: en la red de 380 V va en estrella, y su relé térmico se ajusta a 173 A. Como ya trabaja en estrella, no admite arranque estrella-triángulo. El simulador lo usa como motor del MYCOM ([i]que sea ese motor y su forma de arranque: verificar a bordo[/i]).\n\nEn los dos modelos, el {{presostato_aceite}} vigila la presión diferencial, la del aceite menos la de succión, con unos 45 s de retardo al arrancar ([i]verificar el ajuste[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_arranque_descargado",
           "pregunta": "¿Por qué arrancan descargados los compresores del buque?",
           "opciones": ["Para que el motor arranque con poco par y menos tiempo de corriente alta", "Para enfriar antes el aceite", "Porque la botella de baja lo exige"],
           "correcta": 0,
-          "explicacion": "El Vilter arranca con la etapa base y el MYCOM con la corredera al mínimo: el motor arranca con poca carga y el arranque dura menos."
+          "explicacion": "Los dos modelos arrancan con las solenoides sin tensión: el Vilter con la etapa base y el MYCOM a un tercio. El motor arranca con poca carga y el arranque dura menos."
         },
         {
           "tipo": "ordenar",
           "tema": "frio_recorrido_aceite",
-          "pregunta": "Seleccione en orden el recorrido del aceite en un compresor de tornillo:",
-          "pasos": ["Se inyecta en los rotores", "Sale con el vapor por la descarga", "El separador de aceite lo recoge", "Pasa por el enfriador y el filtro", "Vuelve a inyectarse en el compresor"],
-          "explicacion": "Si el separador no retiene bien el aceite, este pasa al condensador y a los recipientes de baja, ensucia los intercambiadores y falta en el compresor."
+          "pregunta": "Seleccione en orden el recorrido del aceite de lubricación en un compresor de pistón:",
+          "pasos": ["La bomba de aceite lo aspira del cárter", "Pasa por el filtro de aceite", "Llega a los cojinetes del cigüeñal y a las bielas", "Vuelve al cárter"],
+          "explicacion": "Si el filtro se obstruye, la presión cae después de él, llega poco aceite a los cojinetes y el presostato de aceite para el compresor."
         }
       ]
     }
   ],
   "para_saber_mas": [
     "Manual del compresor Vilter VMC 450 XL (Emerson): descargadores, cabezas de seguridad y aceite.",
-    "Manual del compresor Mayekawa MYCOM y de su panel de control.",
+    "Manual del compresor Mayekawa MYCOM 6WB y de su pantalla Omron.",
+    "Placas de los motores WEG W40 y W22 de la sala de máquinas.",
     "IIAR: compresores para amoníaco.",
     "ISO 5149-2: diseño, construcción y ensayos de los sistemas de refrigeración."
   ]

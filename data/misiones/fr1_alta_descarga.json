@@ -10,7 +10,7 @@
     "nota": "Presiones, temperaturas y ajustes de la planta: valores típicos — verificar a bordo."
   },
   "preparar": [
-    { "op": "param", "id": "PLANTA", "clave": "suciedad_condensador", "valor": 0.6 },
+    { "op": "param", "id": "PLANTA", "clave": "suciedad_condensador", "valor": 0.8 },
     { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -8.0 },
     { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -9.0 },
     { "op": "estado", "id": "PLANTA", "clave": "tc", "valor": 30.0 },
