@@ -30,7 +30,7 @@
 <rect x="214" y="410" width="34" height="34" rx="0" fill="none" stroke="#20242a" stroke-width="2"/>
 <text x="231" y="433" font-size="12" text-anchor="middle" fill="#20242a" font-weight="normal">I&gt; ⊐</text>
 <text x="258" y="422" font-size="16" text-anchor="start" fill="#20242a" font-weight="bold">Q1 guardamotor</text>
-<text x="258" y="442" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">ajuste ≈ 5,9 A (placa)</text>
+<text x="258" y="442" font-size="13" text-anchor="start" fill="#5a6270" font-weight="normal">ajuste 5,7 A (placa, 380 V Y)</text>
 <line x1="200" y1="456" x2="200" y2="490" stroke="#20242a" stroke-width="2"/>
 <line x1="200" y1="490" x2="200" y2="502" stroke="#20242a" stroke-width="2"/>
 <line x1="200" y1="502" x2="180" y2="530" stroke="#20242a" stroke-width="2"/>

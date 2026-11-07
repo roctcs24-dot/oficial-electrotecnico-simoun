@@ -1,6 +1,6 @@
 {
   "nombre": "Tablero de la purificadora nº 1",
-  "nota": "Tablero de la purificadora Alfa Laval nº 1, separadora MMB 305S-11 con rotor de hasta 9510 rpm (fotos 050, 054, 055 y placa de la separadora): interruptor general con candado, seta de emergencia, selectores 0-1-START de la separadora y de la bomba, luces de indicación, alarma y horómetro. La bomba solo arranca con la separadora en marcha. Separadora con motor ABB de 3 kW, 400Y/230Δ: a 380 V en estrella. Bomba con motor Hoyer de 2,2 kW en triángulo. Esquema genérico de formación: verificar con el plano de Alfa Laval.",
+  "nota": "Tablero de la purificadora Alfa Laval nº 1, separadora MMB 305S-11 con rotor de hasta 9510 rpm (fotos 050, 054, 055 y placa de la separadora): interruptor general con candado, seta de emergencia, selectores 0-1-START de la separadora y de la bomba, luces de indicación, alarma y horómetro. La bomba solo arranca con la separadora en marcha. Separadora con motor ABB M3BP 100LKA 2 de 3 kW (placa: 400Y 5,4 A 2896 rpm, 230Δ 9,4 A, 380Y 5,7 A 2877 rpm cos φ 0,92; 460Y y 440Y a 60 Hz): a 380 V en estrella, con la fila de 380 V de la placa y el relé F1 ajustado a 5,7 A. Bomba con motor Hoyer de 2,2 kW en triángulo. Esquema genérico de formación: verificar con el plano de Alfa Laval.",
   "componentes": [
     {"id": "B", "tipo": "fuente_trifasica", "params": {"v_linea": 380}},
     {"id": "Q0", "tipo": "seccionador", "estado": {"cerrado": false}},
@@ -9,8 +9,8 @@
     {"id": "SE", "tipo": "seta"},
     {"id": "Q1", "tipo": "guardamotor", "params": {"ajuste_a": 7.6}, "estado": {"encendido": true}},
     {"id": "K1", "tipo": "contactor", "params": {"v_bobina": 230.0, "r_bobina": 1574.0, "x_bobina": 5027.0}},
-    {"id": "F1", "tipo": "rele_termico", "params": {"ajuste_a": 5.9}},
-    {"id": "M1", "tipo": "motor_trifasico", "params": {"p_kw": 3.0, "v_delta": 230, "v_estrella": 400, "i_delta": 10.2, "i_estrella": 5.9, "fp": 0.86, "rpm": 2896, "polos": 2, "arranque_s": 8.0}},
+    {"id": "F1", "tipo": "rele_termico", "params": {"ajuste_a": 5.7}},
+    {"id": "M1", "tipo": "motor_trifasico", "params": {"p_kw": 3.0, "v_delta": 220, "v_estrella": 380, "i_delta": 9.9, "i_estrella": 5.7, "fp": 0.92, "rpm": 2877, "polos": 2, "arranque_s": 8.0}},
     {"id": "S1", "tipo": "selector", "params": {"posiciones": ["0", "1", "START"], "contactos": {"13-14": ["1", "START"], "23-24": ["START"]}, "retorno": ["START"], "inicial": "0"}},
     {"id": "H1", "tipo": "lampara", "params": {"v_nominal": 230, "r": 16000}},
     {"id": "Q2", "tipo": "guardamotor", "params": {"ajuste_a": 6.2}, "estado": {"encendido": true}},
