@@ -5,18 +5,18 @@
   "equipo": "Ventilador de sala de máquinas nº 2",
   "reporte": {
     "de": "Oficial de guardia",
-    "texto": "Tras baldear la sala de máquinas, el monitor de aislamiento de la red de 440 V da alarma cada vez que arranca el ventilador nº 2. Al pararlo, la alarma desaparece. El ventilador nº 1 cubre la ventilación por ahora. El mando de este arrancador se alimenta aparte, desde Q2.",
-    "nota": "Motor de 15 kW, 440 V en delta, 25 A. Alarma del monitor en 1 MΩ: valor típico — verificar a bordo."
+    "texto": "Tras baldear la sala de máquinas, el monitor de aislamiento de la red de 380 V da alarma cada vez que arranca el ventilador nº 2. Al pararlo, la alarma desaparece. El ventilador nº 1 cubre la ventilación por ahora. El mando de este arrancador se alimenta aparte, desde Q2.",
+    "nota": "Motor de 15 kW, 380 V en delta, 29,5 A. Alarma del monitor en 1 MΩ: valor típico — verificar a bordo."
   },
   "monitor": { "resto_mohm": 25 },
   "circuito": {
     "componentes": [
-      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
-      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 32 }, "estado": { "encendido": true } },
+      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
+      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 38 }, "estado": { "encendido": true } },
       { "id": "Q2", "tipo": "guardamotor", "params": { "ajuste_a": 6 }, "estado": { "encendido": true } },
       { "id": "K1", "tipo": "contactor" },
-      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 25 } },
-      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5, "carga": 0.8, "aislamiento_mohm": [0.4, 60, 55], "entre_devanados_mohm": 80 } },
+      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 29.5 } },
+      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 380, "v_estrella": 660, "i_delta": 29.5, "i_estrella": 17, "carga": 0.8, "aislamiento_mohm": [0.4, 60, 55], "entre_devanados_mohm": 80 } },
       { "id": "PE1", "tipo": "masa" },
       { "id": "T1", "tipo": "transformador_mando" },
       { "id": "F1", "tipo": "fusible" },
@@ -88,10 +88,10 @@
   "acciones": [
     { "id": "retirar_puentes", "boton": "Abrir la bornera y retirar los puentes", "titulo": "Bornera abierta", "texto": "Se retiraron los tres puentes de la conexión en delta. Cada devanado se puede medir por separado. Hay condensación en el interior de la caja de bornes.", "impide": ["bornera_abierta"], "si_impide": "La bornera ya está abierta y sin puentes.", "pone": { "bornera_abierta": true }, "efecto": [{ "op": "desconectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
     { "id": "secar_devanado", "boton": "Secar el devanado con calor controlado", "titulo": "Devanado seco", "texto": "Se limpió y secó el devanado con aire caliente a temperatura controlada, sin superar la del aislamiento (valor según el fabricante — verificar). El secado es una reparación provisional si el agua vuelve a entrar: revise la junta de la caja de bornes.", "necesita": ["bornera_abierta"], "si_falta": "Abra primero la bornera y retire los puentes para llegar a los devanados.", "efecto": [{ "op": "param", "id": "M1", "clave": "aislamiento_mohm", "valor": [25, 60, 55] }] },
-    { "id": "reponer_puentes", "boton": "Reponer los puentes en delta y cerrar la bornera", "titulo": "Bornera cerrada", "texto": "Se repusieron los tres puentes según la placa, conexión en delta para 440 V. Se reapretaron los bornes y se cerró la tapa.", "necesita": ["bornera_abierta"], "si_falta": "La bornera ya está cerrada.", "pone": { "bornera_abierta": false }, "efecto": [{ "op": "conectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
+    { "id": "reponer_puentes", "boton": "Reponer los puentes en delta y cerrar la bornera", "titulo": "Bornera cerrada", "texto": "Se repusieron los tres puentes según la placa, conexión en delta para 380 V. Se reapretaron los bornes y se cerró la tapa.", "necesita": ["bornera_abierta"], "si_falta": "La bornera ya está cerrada.", "pone": { "bornera_abierta": false }, "efecto": [{ "op": "conectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
     { "id": "cambiar_motor", "boton": "Cambiar el motor completo", "titulo": "Motor innecesario", "texto": "Un aislamiento bajo por humedad suele recuperarse con limpieza y secado. Pruebe esa solución antes de sustituir un motor.", "innecesaria": true }
   ],
-  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 120, "rpm_min": 1700 },
+  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 120, "rpm_min": 1400 },
   "libro": {
     "campos": [
       { "etiqueta": "Aislamiento de U a masa antes del secado", "opciones": ["Unos 0,4 MΩ", "Unos 25 MΩ", "Fuera de rango"], "correcta": 0, "explicacion": "Revise el historial: antes del secado, el devanado U marcó unos 0,4 MΩ." },

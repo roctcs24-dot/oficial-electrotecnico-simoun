@@ -104,6 +104,8 @@ func completar(m: MisionPlanta) -> void:
 			m.ejecutar("medir_filtro")
 			m.ejecutar("mirar_nivel")
 			_esperar_disparo(m, "PO", 60.0)
+			# El contactor suelta un instante después de abrirse la cadena de seguridades.
+			_esperar(m, 2.0)
 			m.diagnosticar(_opcion_correcta(m))
 			m.dar_paso("aviso")
 			m.alternar_guardamotor()

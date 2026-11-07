@@ -7,12 +7,12 @@
     {
       "titulo": "Efectos de la corriente",
       "bloques": [
-        { "tipo": "texto", "texto": "La lesión la produce la corriente que atraviesa el cuerpo; la tensión es lo que la impulsa. Por la ley de Ohm, con una resistencia corporal de unos 1 000 Ω ([i]valor orientativo: varía mucho con la piel y la humedad[/i]), 440 V producirían unos 440 mA.\n\nMueva el control para ver los efectos. Los umbrales son orientativos: el daño depende de la persona, del tiempo de exposición y del recorrido por el cuerpo. La causa de muerte más habitual es la {{fibrilacion}}." },
+        { "tipo": "texto", "texto": "La lesión la produce la corriente que atraviesa el cuerpo; la tensión es lo que la impulsa. Por la ley de Ohm, con una resistencia corporal de unos 1 000 Ω ([i]valor orientativo: varía mucho con la piel y la humedad[/i]), 380 V producirían unos 380 mA.\n\nMueva el control para ver los efectos. Los umbrales son orientativos: el daño depende de la persona, del tiempo de exposición y del recorrido por el cuerpo. La causa de muerte más habitual es la {{fibrilacion}}." },
         {
           "tipo": "animacion",
           "id": "escala_corriente",
           "params": {
-            "inicial": 440,
+            "inicial": 380,
             "niveles": [
               { "ma": 0.5, "texto": "Por debajo de 0,5 mA: normalmente imperceptible." },
               { "ma": 1, "texto": "Alrededor de 1 mA: hormigueo perceptible." },
@@ -27,24 +27,24 @@
         {
           "tipo": "quiz",
           "tema": "corriente_cuerpo",
-          "pregunta": "Con unos 1 000 Ω de resistencia corporal y 440 V, ¿qué corriente circularía aproximadamente?",
-          "opciones": ["0,44 mA: apenas perceptible", "44 mA: dolor intenso", "440 mA: riesgo mortal"],
+          "pregunta": "Con unos 1 000 Ω de resistencia corporal y 380 V, ¿qué corriente circularía aproximadamente?",
+          "opciones": ["0,38 mA: apenas perceptible", "38 mA: dolor intenso", "380 mA: riesgo mortal"],
           "correcta": 2,
-          "explicacion": "I = 440 ÷ 1 000 = 0,44 A = 440 mA, muy por encima del umbral de fibrilación."
+          "explicacion": "I = 380 ÷ 1 000 = 0,38 A = 380 mA, muy por encima del umbral de fibrilación."
         }
       ]
     },
     {
       "titulo": "Factores de riesgo a bordo",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]Humedad y salinidad:[/b] la piel mojada reduce la resistencia corporal, y el casco de acero es un conductor de gran tamaño bajo sus pies.\n• [b]{{Falla_tierra}}:[/b] en un sistema aislado no dispara ninguna protección. Las fases sanas quedan a la tensión de línea (440 V) respecto al casco. Si además falla la conexión a masa de una carcasa, esa carcasa puede quedar con tensión mientras el equipo sigue funcionando.\n• [b]{{Arco_electrico}}:[/b] un cortocircuito en un tablero libera calor y presión en un instante. Puede causar quemaduras graves sin contacto directo.\n• [b]{{Energia_almacenada}}:[/b] los condensadores de un variador permanecen cargados varios minutos después de la desconexión ([i]consultar el tiempo indicado en el equipo[/i]).\n• [b]Espacios reducidos:[/b] las vías de escape en una sala de máquinas son limitadas." },
+        { "tipo": "texto", "texto": "• [b]Humedad y salinidad:[/b] la piel mojada reduce la resistencia corporal, y el casco de acero es un conductor de gran tamaño bajo sus pies.\n• [b]{{Falla_tierra}}:[/b] en un sistema aislado no dispara ninguna protección. Las fases sanas quedan a la tensión de línea (380 V) respecto al casco. Si además falla la conexión a masa de una carcasa, esa carcasa puede quedar con tensión mientras el equipo sigue funcionando.\n• [b]{{Arco_electrico}}:[/b] un cortocircuito en un tablero libera calor y presión en un instante. Puede causar quemaduras graves sin contacto directo.\n• [b]{{Energia_almacenada}}:[/b] los condensadores de un variador permanecen cargados varios minutos después de la desconexión ([i]consultar el tiempo indicado en el equipo[/i]).\n• [b]Espacios reducidos:[/b] las vías de escape en una sala de máquinas son limitadas." },
         {
           "tipo": "quiz",
           "tema": "riesgo_aislado",
           "pregunta": "En una red aislada, una carcasa de motor queda en contacto con una fase. ¿Qué es lo más probable?",
           "opciones": ["El breaker dispara de inmediato", "El motor sigue funcionando y la falla pasa inadvertida si no se consulta el monitor de aislamiento", "El motor se detiene por seguridad"],
           "correcta": 1,
-          "explicacion": "La primera falla a tierra no crea un camino de retorno de baja impedancia, por lo que no dispara, y las fases sanas quedan a 440 V respecto al casco. Solo el monitor de aislamiento o las lámparas de tierra la detectan."
+          "explicacion": "La primera falla a tierra no crea un camino de retorno de baja impedancia, por lo que no dispara, y las fases sanas quedan a 380 V respecto al casco. Solo el monitor de aislamiento o las lámparas de tierra la detectan."
         }
       ]
     },

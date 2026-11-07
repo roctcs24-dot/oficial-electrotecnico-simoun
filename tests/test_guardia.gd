@@ -334,7 +334,7 @@ func test_g2_dispara_a_los_pocos_minutos() -> String:
 	_observar(m, 600.0)
 	var tiempo := m.mesa.sim.tiempo - inicio
 	return A.primero([
-		A.cerca(i[0], 34.7, 0.05, "debe consumir más que la nominal"),
+		A.cerca(i[0], 40.3, 0.05, "debe consumir más que la nominal"),
 		A.cerca(i[0], i[1], 0.02, "las fases deben ser iguales"),
 		A.cierto(tiempo > 180.0 and tiempo < 330.0, "debe disparar entre 3 y 5,5 min: %.0f s" % tiempo),
 		A.cierto(m.rele().estado["disparado"], "debe disparar el relé"),
@@ -379,7 +379,7 @@ func test_g2_completa_con_rodamiento() -> String:
 		A.cierto(aislamiento["aceptable"], "el aislamiento debe ser bueno"),
 		A.cierto(sin_girar["tipo"] == "aviso", "antes hay que girar el eje"),
 		A.cierto(d["tipo"] == "hecho", "el diagnóstico debe confirmarse: %s" % str(d)),
-		A.cierto(i < 25.0, "la corriente debe bajar de la nominal: %.1f" % i),
+		A.cierto(i < 29.5, "la corriente debe bajar de la nominal: %.1f" % i),
 		A.cierto(prueba["titulo"] == "Prueba superada", "debe superar la prueba: %s" % str(prueba)),
 		A.cierto(m.estrellas() == 3, "deben ser 3 estrellas: %d %s" % [m.estrellas(), str(m.faltas)]),
 	])
@@ -464,7 +464,7 @@ func test_g3_completa() -> String:
 		A.cierto(d["tipo"] == "hecho", "el diagnóstico debe confirmarse: %s" % str(d)),
 		A.cierto(seco["aceptable"], "tras secar debe ser aceptable: %s" % str(seco)),
 		A.cierto(monitor > 1.0, "el monitor debe salir de alarma: %.1f" % monitor),
-		A.cierto(m.motor().rpm() > 1700.0, "con los puentes repuestos debe funcionar: %.0f" % m.motor().rpm()),
+		A.cierto(m.motor().rpm() > 1400.0, "con los puentes repuestos debe funcionar: %.0f" % m.motor().rpm()),
 		A.cierto(prueba["titulo"] == "Prueba superada", "debe superar la prueba: %s" % str(prueba)),
 		A.cierto(m.estrellas() == 3, "deben ser 3 estrellas: %d %s" % [m.estrellas(), str(m.faltas)]),
 	])
@@ -549,7 +549,7 @@ func test_paso_rapido_coincide_con_el_normal() -> String:
 
 func test_masa_permite_medir_contra_tierra_en_el_taller() -> String:
 	var mesa := MesaTaller.new(Contenido.new())
-	mesa.agregar("motor_440", Vector2.ZERO)
+	mesa.agregar("motor_380", Vector2.ZERO)
 	mesa.agregar("masa", Vector2(600.0, 0.0))
 	mesa.sim.componente("M1").params["aislamiento_mohm"] = [2.0, 300.0, 300.0]
 	mesa.avanzar(1)

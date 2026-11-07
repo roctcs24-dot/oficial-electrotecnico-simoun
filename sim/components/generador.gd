@@ -4,13 +4,13 @@ extends SimComponente
 ## con gobernador de velocidad y regulador de tensión (AVR). Bornes L1, L2, L3 y N.
 ##
 ## La frecuencia sale del balance entre la potencia del motor diésel y la eléctrica, y el
-## ángulo de la fuerza electromotriz avanza con la diferencia respecto de 60 Hz. Así el reparto
+## ángulo de la fuerza electromotriz avanza con la diferencia respecto de la frecuencia nominal. Así el reparto
 ## de carga en paralelo, la potencia inversa y la sincronización salen de la propia red.
 ## La reactancia es un valor intermedio entre la transitoria y la síncrona, elegido para que el
 ## paralelo sea estable con el paso de la simulación. Modelo simplificado para enseñar.
 
 const ANGULOS := {"L1": 0.0, "L2": -120.0, "L3": 120.0}
-const F_NOMINAL := 60.0
+const F_NOMINAL := SimRed.F_HZ
 const PASO_MAXIMO_S := 0.05
 ## El AVR excita solo por encima de esta fracción de la velocidad nominal.
 const F_EXCITACION := 0.9
@@ -39,9 +39,9 @@ func tipo() -> String:
 
 func _params_por_defecto() -> Dictionary:
 	return {
-		"s_kva": 562.5,
-		"p_kw": 450.0,
-		"v_linea": 440.0,
+		"s_kva": 565.0,
+		"p_kw": 452.0,
+		"v_linea": SimRed.V_LINEA,
 		"r_pu": 0.01,
 		"x_pu": 0.5,
 		"h_s": 2.0,
@@ -175,7 +175,7 @@ func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 
 
 ## La frecuencia de la red se deduce de cómo gira la tensión de los bornes respecto del propio
-## rotor. Medida respecto de 60 Hz, una frecuencia muy baja avanzaría más de media vuelta por
+## rotor. Medida respecto de la frecuencia nominal, una frecuencia muy baja avanzaría más de media vuelta por
 ## paso y no se podría leer. El amortiguamiento actúa sobre la diferencia entre las dos.
 func _medir_frecuencia_red(v12: Cx, dt: float) -> void:
 	if v12.modulo() < params["v_linea"] * 0.1:

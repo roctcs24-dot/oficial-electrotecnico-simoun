@@ -56,7 +56,7 @@ func _sincronizar_a_mano(m: MisionCuadro, id: String) -> bool:
 	return false
 
 
-## Con los mandos de velocidad, hasta que los grupos llevan la misma fracción a 60 Hz. Mueve
+## Con los mandos de velocidad, hasta que los grupos llevan la misma fracción a 50 Hz. Mueve
 ## un grupo cada vez, el que corrige también la frecuencia: un toque cambia el reparto un 4 %.
 func _repartir(m: MisionCuadro, ids: Array) -> bool:
 	var a: String = ids[0]
@@ -66,16 +66,16 @@ func _repartir(m: MisionCuadro, ids: Array) -> bool:
 		var gb := m.operador.generador(b)
 		var diferencia: float = ga.estado["p_kw"] / ga.params["p_kw"] - gb.estado["p_kw"] / gb.params["p_kw"]
 		var f := _f_barras(m)
-		if absf(diferencia) <= 0.03 and absf(f - 60.0) <= 0.08:
+		if absf(diferencia) <= 0.03 and absf(f - 50.0) <= 0.08:
 			return true
 		if absf(diferencia) > 0.03:
 			var cargado := a if diferencia > 0.0 else b
 			var descargado := b if diferencia > 0.0 else a
-			if f > 60.0:
+			if f > 50.0:
 				m.velocidad(cargado, -1.0)
 			else:
 				m.velocidad(descargado, 1.0)
-		elif f < 60.0:
+		elif f < 50.0:
 			m.velocidad(a, 1.0)
 			m.velocidad(b, 1.0)
 		else:
@@ -87,7 +87,7 @@ func _repartir(m: MisionCuadro, ids: Array) -> bool:
 
 func _subir_hasta_60(m: MisionCuadro, id: String) -> void:
 	for _i in 60:
-		if _f_barras(m) >= 59.95:
+		if _f_barras(m) >= 49.95:
 			return
 		m.velocidad(id, 1.0)
 		m.avanzar(1.0)
@@ -263,7 +263,7 @@ func test_paralelo_empieza_con_g1_solo() -> String:
 	var m := _mision("gen1_paralelo")
 	return A.primero([
 		A.cierto(m.operador.interruptor_de("G1").cerrado() and not m.operador.interruptor_de("G2").cerrado(), "G1 solo en barras"),
-		A.cerca(_f_barras(m), 60.0, 0.003, "frecuencia inicial"),
+		A.cerca(_f_barras(m), 50.0, 0.003, "frecuencia inicial"),
 		A.cerca(m.operador.generador("G1").estado["p_kw"], 360.0, 0.05, "carga de G1, con el cuadro de emergencia"),
 		A.cierto(not m.operador.pms().automatico(), "PMS en manual"),
 	])
@@ -397,7 +397,7 @@ func test_blackout_arranca_el_generador_de_emergencia() -> String:
 	var cerrar_qt := m.alternar_interruptor_id("QT")
 	return A.primero([
 		A.cierto(ge.en_marcha() and m.interruptor("QE").cerrado(), "GE en marcha y QE cerrado al empezar"),
-		A.cerca(v_be, 440.0, 0.05, "el cuadro de emergencia con tensión"),
+		A.cerca(v_be, 380.0, 0.05, "el cuadro de emergencia con tensión"),
 		A.cierto(qt.estado["causa"] == "disparo_minima_tension", "el enlace abrió por mínima tensión: %s" % qt.estado["causa"]),
 		A.cierto(cerrar_qt["tipo"] == "aviso" and not qt.cerrado(), "disparado y enclavado, el enlace no cierra"),
 	])
@@ -411,7 +411,7 @@ func test_en_servicio_normal_la_emergencia_espera() -> String:
 			return "%s: el cuadro de emergencia debe estar alimentado desde el principal" % id
 		if not m.generador("GE").params["arranque_automatico"]:
 			return "%s: GE debe quedar en automático" % id
-		if m.tension_emergencia() < 400.0:
+		if m.tension_emergencia() < 340.0:
 			return "%s: barras de emergencia sin tensión" % id
 	return ""
 
@@ -440,10 +440,10 @@ func test_falla_a_tierra_se_ve_en_monitor_y_lamparas() -> String:
 	return A.primero([
 		A.cierto(mohm < 0.1, "el monitor debe marcar menos de 0,1 MΩ: %.3f" % mohm),
 		A.cierto(v[2] < 30.0, "la lámpara de L3 apagada: %.0f V" % v[2]),
-		A.cerca(v[0], 440.0, 0.05, "L1 a tierra con la falla"),
-		A.cerca(v[1], 440.0, 0.05, "L2 a tierra con la falla"),
+		A.cerca(v[0], 380.0, 0.05, "L1 a tierra con la falla"),
+		A.cerca(v[1], 380.0, 0.05, "L2 a tierra con la falla"),
 		A.cierto(sin_c4 > 10.0, "al abrir C4 el monitor vuelve a normal: %.1f" % sin_c4),
-		A.cerca(v_sin_c4[2], 254.0, 0.05, "sin la falla, cada fase a 254 V del casco"),
+		A.cerca(v_sin_c4[2], 219.4, 0.05, "sin la falla, cada fase a 219 V del casco"),
 	])
 
 

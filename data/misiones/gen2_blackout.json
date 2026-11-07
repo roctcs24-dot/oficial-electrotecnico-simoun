@@ -6,8 +6,8 @@
   "equipo": "Cuadro principal: generadores nº 1 y nº 2",
   "reporte": {
     "de": "Oficial de guardia de máquinas",
-    "texto": "Navegando hacia la zona de pesca, a las 03:40, hubo un {{blackout}}: se paró G1, que estaba solo en barras con el PMS en manual. El {{generador_emergencia}} arrancó y alimenta el {{cuadro_emergencia}}, con el interruptor de enlace QT abierto. G3 está en mantenimiento, con el arranque bloqueado por los mecánicos: no lo toque. Recupere las barras principales, averigüe por qué se paró G1, haga que lo reparen y deje G1 y G2 en paralelo con el PMS en automático y todas las salidas conectadas. Devuelva después el cuadro de emergencia al principal, con el generador de emergencia parado y en automático.",
-    "nota": "Grupos de 450 kW a 440 V y 60 Hz. Cargas, alarmas y procedimiento: valores típicos — verificar a bordo."
+    "texto": "Navegando hacia la zona de pesca, a las 03:40, hubo un {{blackout}}: se paró G1, que estaba solo en barras con el PMS en manual. El {{generador_emergencia}} arrancó y alimenta el {{cuadro_emergencia}}, con el interruptor de enlace QT abierto. G3 está en mantenimiento, con el arranque bloqueado por los mecánicos: no lo toque. G4 queda parado en reserva. Recupere las barras principales, averigüe por qué se paró G1, haga que lo reparen y deje G1 y G2 en paralelo con el PMS en automático y todas las salidas conectadas. Devuelva después el cuadro de emergencia al principal, con el generador de emergencia parado y en automático.",
+    "nota": "Grupos Stamford de 452 kW a 380 V y 50 Hz, como los del buque. Cargas, alarmas y procedimiento: valores típicos — verificar a bordo."
   },
   "cuadro": {
     "cargas": [
@@ -30,7 +30,7 @@
   ],
   "bloqueables": ["G1"],
   "reglas": [
-    { "evento": "cierre_barra_muerta", "componentes": ["Q1", "Q2", "Q3"], "si_conectada": "C2", "falta": "restablecer_con_toda_la_carga" }
+    { "evento": "cierre_barra_muerta", "componentes": ["Q1", "Q2", "Q3", "Q4"], "si_conectada": "C2", "falta": "restablecer_con_toda_la_carga" }
   ],
   "pistas": [
     "Mire el panel de G1: la línea «Alarma» del controlador dice por qué se paró. El disparo de Q1 por mínima tensión es una consecuencia, no la causa.",
@@ -41,7 +41,7 @@
     "pregunta": "¿Por qué se produjo el blackout?",
     "opciones": [
       { "texto": "G1 se paró por baja presión de combustible y, con el PMS en manual, ningún grupo tomó la carga", "correcta": true, "explicacion": "El controlador de G1 muestra la alarma de baja presión de combustible, que para el diésel. Q1 disparó después por mínima tensión, como consecuencia. En manual, el PMS no arranca la reserva." },
-      { "texto": "Q1 disparó por sobrecarga", "explicacion": "Q1 muestra un disparo por mínima tensión: abrió porque G1 dejó de dar tensión. G1 llevaba 430 kW, por debajo de sus 450 kW." },
+      { "texto": "Q1 disparó por sobrecarga", "explicacion": "Q1 muestra un disparo por mínima tensión: abrió porque G1 dejó de dar tensión. G1 llevaba 430 kW, por debajo de sus 452 kW." },
       { "texto": "Una falla a tierra en las barras", "explicacion": "En una red aislada, la primera falla a tierra da alarma en el monitor de aislamiento, pero no dispara ningún interruptor ni para un diésel." },
       { "texto": "El generador de emergencia desconectó el cuadro principal", "explicacion": "El generador de emergencia arranca porque falta la tensión de las barras principales. Es la consecuencia del blackout, no la causa." }
     ]
@@ -66,7 +66,7 @@
       { "c": "conectada", "id": "C1", "texto": "C1, servicios esenciales, conectada" },
       { "c": "conectada", "id": "C2", "texto": "C2, frío y habilitación, conectada" },
       { "c": "reparto", "ids": ["G1", "G2"], "pct": 15, "texto": "Carga repartida entre G1 y G2, ±15 %" },
-      { "c": "frecuencia", "min": 59.7, "max": 60.3, "texto": "Frecuencia de barras entre 59,7 y 60,3 Hz" },
+      { "c": "frecuencia", "min": 49.7, "max": 50.3, "texto": "Frecuencia de barras entre 49,7 y 50,3 Hz" },
       { "c": "pms", "automatico": true, "texto": "PMS en automático" },
       { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" },
       { "c": "cerrado", "interruptor": "QT", "texto": "Cuadro de emergencia alimentado desde el principal: enlace QT cerrado" },

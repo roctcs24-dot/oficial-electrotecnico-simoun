@@ -7,7 +7,7 @@
   "reporte": {
     "de": "Jefe de máquinas",
     "texto": "Vamos a enfriar la salmuera de las bodegas para la próxima pesca: hay que conectar los compresores de frío, la salida C3, de 150 kW. Ahora G1 está solo en barras con unos 360 kW, contando los 40 kW del cuadro de emergencia. Ponga en paralelo G2, reparta la carga entre los dos y conecte C3. El sincronizador automático está en revisión: sincronice a mano con el {{sincronoscopio}}. El {{pms}} está en manual.",
-    "nota": "Grupos de 450 kW a 440 V y 60 Hz. Cargas y ajustes: valores típicos — verificar a bordo."
+    "nota": "Grupos Stamford de 452 kW a 380 V y 50 Hz, como los del buque. Cargas y ajustes: valores típicos — verificar a bordo."
   },
   "cuadro": {
     "cargas": [
@@ -27,34 +27,34 @@
   "pistas": [
     "Arranque G2 desde su panel. Cuando llegue a su velocidad, elija G2 como entrante en el panel de barras y mire el sincronoscopio.",
     "Suba la velocidad de G2 hasta que la aguja gire despacio hacia RÁPIDO, una vuelta en varios segundos, y pulse «Cerrar Q2» justo antes de las doce.",
-    "Con Q2 cerrado, suba la velocidad de G2 y baje la de G1 hasta que los dos den los mismos kW a 60 Hz. Después conecte C3 y corrija de nuevo."
+    "Con Q2 cerrado, suba la velocidad de G2 y baje la de G1 hasta que los dos den los mismos kW a 50 Hz. Después conecte C3 y corrija de nuevo."
   ],
   "diagnostico": {
     "pregunta": "¿Por qué hay que poner G2 en paralelo antes de conectar los compresores?",
     "opciones": [
-      { "texto": "Porque G1 debería dar 510 kW, más que sus 450 kW nominales", "correcta": true, "explicacion": "Con G1 solo, los 360 kW actuales más los 150 kW de C3 suman 510 kW. G1 pasaría de su corriente nominal y el disparo preferente cortaría las salidas no esenciales. Con dos grupos, cada uno lleva unos 255 kW." },
+      { "texto": "Porque G1 debería dar 510 kW, más que sus 452 kW nominales", "correcta": true, "explicacion": "Con G1 solo, los 360 kW actuales más los 150 kW de C3 suman 510 kW. G1 pasaría de su corriente nominal y el disparo preferente cortaría las salidas no esenciales. Con dos grupos, cada uno lleva unos 255 kW." },
       { "texto": "Porque los compresores solo funcionan con dos generadores", "explicacion": "Un compresor no distingue cuántos grupos hay en barras. Lo que importa es que haya potencia suficiente." },
-      { "texto": "Porque G1 tiene una avería", "explicacion": "G1 funciona bien. El problema es de potencia: sus 450 kW no bastan para toda la carga." },
+      { "texto": "Porque G1 tiene una avería", "explicacion": "G1 funciona bien. El problema es de potencia: sus 452 kW no bastan para toda la carga." },
       { "texto": "Para que el monitor de aislamiento tenga referencia", "explicacion": "El monitor de aislamiento mide la red contra el casco con cualquier número de grupos. No tiene relación con la potencia disponible." }
     ]
   },
   "prueba": {
     "mantener_s": 30,
-    "superada": "G1 y G2 llevaron la carga repartida a 60 Hz durante 30 s, con el frío de las bodegas conectado.",
+    "superada": "G1 y G2 llevaron la carga repartida a 50 Hz durante 30 s, con el frío de las bodegas conectado.",
     "objetivos": [
       { "c": "cerrado", "id": "G1", "texto": "Q1 cerrado" },
       { "c": "cerrado", "id": "G2", "texto": "Q2 cerrado" },
       { "c": "conectada", "id": "C2", "texto": "C2, habilitación y cocina, conectada" },
       { "c": "conectada", "id": "C3", "texto": "C3, frío de las bodegas, conectada" },
       { "c": "reparto", "ids": ["G1", "G2"], "pct": 10, "texto": "Carga repartida: G1 y G2 con los mismos kW, ±10 %" },
-      { "c": "frecuencia", "min": 59.8, "max": 60.2, "texto": "Frecuencia de barras entre 59,8 y 60,2 Hz" },
-      { "c": "tension", "min": 418, "max": 462, "texto": "Tensión de barras entre 418 y 462 V" }
+      { "c": "frecuencia", "min": 49.8, "max": 50.2, "texto": "Frecuencia de barras entre 49,8 y 50,2 Hz" },
+      { "c": "tension", "min": 361, "max": 399, "texto": "Tensión de barras entre 361 y 399 V" }
     ]
   },
   "libro": {
     "campos": [
       { "etiqueta": "Cierre de Q2", "opciones": ["Manual, con el sincronoscopio", "Con el sincronizador automático", "Directo, sin sincronizar"], "correcta": 0, "explicacion": "El sincronizador automático estaba en revisión: G2 se sincronizó a mano con el sincronoscopio." },
-      { "etiqueta": "Carga de cada grupo al terminar", "opciones": ["510 kW en G1 y nada en G2", "Unos 255 kW por grupo", "450 kW por grupo"], "correcta": 1, "explicacion": "Los 510 kW de las barras, con el cuadro de emergencia, quedaron repartidos por igual: unos 255 kW por grupo." },
+      { "etiqueta": "Carga de cada grupo al terminar", "opciones": ["510 kW en G1 y nada en G2", "Unos 255 kW por grupo", "452 kW por grupo"], "correcta": 1, "explicacion": "Los 510 kW de las barras, con el cuadro de emergencia, quedaron repartidos por igual: unos 255 kW por grupo." },
       { "etiqueta": "Estado del cuadro", "opciones": ["G1 solo, con el frío de las bodegas desconectado", "G2 solo", "G1 y G2 en paralelo, con el frío de las bodegas conectado"], "correcta": 2, "explicacion": "Al terminar quedan G1 y G2 en paralelo, y C3 conectada." }
     ]
   },

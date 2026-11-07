@@ -5,14 +5,14 @@
   "dibujo": {
     "svg": "res://art/equipos/acb.svg",
     "tamano": [360, 460],
-    "nota": "Frente típico de un interruptor de bastidor abierto extraíble, sin marca. Los colores de los pulsadores, la unidad de disparo y los rótulos cambian con el fabricante: verificar a bordo.",
+    "nota": "Frente típico de un interruptor de bastidor abierto extraíble, sin marca. En el Vía Simoun los interruptores de generador son Schneider Compact NS1000 N, de caja moldeada, con unidad de control Micrologic 2.0 E: su aspecto es distinto del dibujo. Los pulsadores, la unidad de disparo y los rótulos cambian con el fabricante.",
     "etiquetas": [
-      { "texto": "Ir 738 A", "x": 131, "y": 86, "tam": 15, "color": "#1d2a1a" },
+      { "texto": "Ir 900 A", "x": 131, "y": 86, "tam": 15, "color": "#1d2a1a" },
       { "texto": "Ir", "x": 88, "y": 166, "tam": 11, "color": "#20242a" },
       { "texto": "Isd", "x": 131, "y": 166, "tam": 11, "color": "#20242a" },
       { "texto": "Ii", "x": 174, "y": 166, "tam": 11, "color": "#20242a" },
       { "texto": "UNIDAD DE DISPARO", "x": 131, "y": 196, "tam": 11 },
-      { "texto": "ACB 800 A", "x": 264, "y": 72, "tam": 12, "color": "#20242a" },
+      { "texto": "ACB 1000 A", "x": 264, "y": 72, "tam": 12, "color": "#20242a" },
       { "texto": "690 V~", "x": 264, "y": 88, "tam": 11, "color": "#20242a" },
       { "texto": "Icu 50 kA", "x": 264, "y": 104, "tam": 11, "color": "#20242a" },
       { "texto": "I", "x": 96, "y": 232, "tam": 30, "color": "#eef3f7" },
@@ -37,7 +37,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{acb}} conecta cada generador a las barras del cuadro principal y lo separa ante una falla. Debe llevar la corriente nominal del grupo, 738 A ([i]valor típico — verificar[/i]), y cortar la corriente de cortocircuito de toda la planta. También es el punto de la sincronización: cierra en milisegundos cuando lo ordena el operador, el sincronizador o el {{pms}}."
+      "texto": "El {{acb}} conecta cada generador a las barras del cuadro principal y lo separa ante una falla. Debe llevar la corriente nominal del grupo, 858 A (en el simulador su largo retardo se ajusta a Ir = 900 A, 0,9 × 1000 A: [i]verificar el ajuste a bordo[/i]), y cortar la corriente de cortocircuito de toda la planta.\n\nEn el Vía Simoun, cada grupo entra en barras por un Schneider Compact NS1000 N, un interruptor de caja moldeada de 1000 A con poder de corte Icu de 50 kA a 380/415 V. Su unidad de control Micrologic 2.0 E protege y además mide: muestra, por ejemplo, la potencia del grupo en MW (0,163 MW). En el cuadro hay también un Compact NS800 N ([i]verificar a bordo qué circuito protege[/i]). Los buques con grupos mayores suelen usar un {{acb}} de bastidor abierto; sus funciones son las mismas. También es el punto de la sincronización: cierra en milisegundos cuando lo ordena el operador, el sincronizador o el {{pms}}."
     },
     {
       "id": "partes",
@@ -52,7 +52,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "Los ajustes de la unidad de disparo deben seguir el estudio de coordinación del buque ([i]valores del simulador — verificar los reales[/i]):\n• [b]Ir, largo retardo:[/b] cerca de la corriente nominal del generador. Protege contra sobrecarga.\n• [b]Isd y tsd, corto retardo:[/b] 2,5 × In durante 0,2 s. Deja actuar primero a los interruptores de las salidas.\n• [b]Ii, instantáneo:[/b] 10 × In.\n\nAnote los ajustes encontrados antes de tocar nada, y no los cambie sin autorización del jefe de máquinas. Un repuesto debe coincidir en calibre, poder de corte, tensión de mando y tipo de chasis."
+      "texto": "Los ajustes de la unidad de disparo deben seguir el estudio de coordinación del buque. En la Micrologic 2.0 E del buque, lea los ajustes en la propia unidad y su significado en el manual de Schneider. Valores del simulador ([i]verificar los reales a bordo[/i]):\n• [b]Ir, largo retardo:[/b] cerca de la corriente nominal del generador. Protege contra sobrecarga.\n• [b]Isd y tsd, corto retardo:[/b] 2,5 × In durante 0,2 s. Deja actuar primero a los interruptores de las salidas.\n• [b]Ii, instantáneo:[/b] 10 × In.\n\nAnote los ajustes encontrados antes de tocar nada, y no los cambie sin autorización del jefe de máquinas. Un repuesto debe coincidir en calibre, poder de corte, tensión de mando y tipo de chasis."
     },
     {
       "id": "pruebas",

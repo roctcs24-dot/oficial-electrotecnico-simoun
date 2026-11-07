@@ -1,12 +1,12 @@
 class_name SimPMS
 extends SimComponente
 ## Sistema de gestión de potencia (PMS) básico. En automático reparte la carga entre los
-## grupos en barras y mantiene 60 Hz, arranca y sincroniza un grupo de reserva cuando la carga
+## grupos en barras y mantiene la frecuencia nominal, arranca y sincroniza un grupo de reserva cuando la carga
 ## es alta, y tras un blackout cierra un grupo sobre las barras muertas.
 ## En manual no actúa: todo depende del operador. No tiene bornes: actúa sobre los equipos.
 ## Ajustes típicos de un PMS genérico: verificar con el del buque.
 
-const F_NOMINAL := 60.0
+const F_NOMINAL := SimRed.F_HZ
 const K_FRECUENCIA := 0.5
 const K_REPARTO := 1.0
 const K_SINCRONIZACION := 1.0
@@ -28,7 +28,7 @@ func _params_por_defecto() -> Dictionary:
 		"interruptores": ["Q1", "Q2", "Q3"],
 		"carga_arranque": 0.85,
 		"carga_arranque_s": 5.0,
-		"v_linea": 440.0,
+		"v_linea": SimRed.V_LINEA,
 		# Sin sincronizador automático, el PMS arranca la reserva pero no la cierra en barras.
 		"sincronizador": true,
 	}
@@ -139,7 +139,7 @@ func _recuperar_barras(sol: SimSolver.Solucion) -> void:
 			return
 
 
-## Reparto isócrono: cada grupo corrige su velocidad para llevar la frecuencia a 60 Hz y su
+## Reparto isócrono: cada grupo corrige su velocidad para llevar la frecuencia a la nominal y su
 ## carga a la misma fracción de su potencia que los demás.
 func _repartir(en_barras: Array[int], dt: float) -> void:
 	var total := 0.0

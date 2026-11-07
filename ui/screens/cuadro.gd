@@ -8,6 +8,9 @@ const COLOR_LCD := Color("0f1a14")
 const BORDE_LCD := Color("2d4a38")
 const TEXTO_LCD := Color("9fe3b5")
 const PROPORCION_GENERADOR := 1.3
+## Alternador Stamford HCI534F de 4 polos: 1500 rpm a 50 Hz.
+const POLOS_ALTERNADOR := 4.0
+const FASES_A_BORDO := {"L1": "R", "L2": "S", "L3": "T"}
 const ANCHO_NOMBRES_LARGOS := 1200.0
 const LAMPARA_TIERRA_APAGADA := Color("2e2f2c")
 const LAMPARA_TIERRA_ENCENDIDA := Color("fff1cc")
@@ -155,9 +158,9 @@ func _panel_barras(columna: VBoxContainer) -> void:
 	fila.add_theme_constant_override("h_separation", 8)
 	fila.add_theme_constant_override("v_separation", 8)
 	columna.add_child(fila)
-	_instrumentos["bp_v"] = InstrumentoAguja.new().configurar("Tensión", "V", 0.0, 600.0, 484.0)
+	_instrumentos["bp_v"] = InstrumentoAguja.new().configurar("Tensión", "V", 0.0, 500.0, 418.0)
 	fila.add_child(_instrumentos["bp_v"])
-	_instrumentos["bp_f"] = InstrumentoAguja.new().configurar("Frecuencia", "Hz", 54.0, 66.0, 63.0, 2)
+	_instrumentos["bp_f"] = InstrumentoAguja.new().configurar("Frecuencia", "Hz", 45.0, 55.0, 52.5, 2)
 	fila.add_child(_instrumentos["bp_f"])
 	columna.add_child(_rotulo("Sincronización"))
 	columna.add_child(_etiqueta("Generador entrante:", "Nota"))
@@ -200,10 +203,11 @@ func _panel_barras(columna: VBoxContainer) -> void:
 		luz.color_encendido = LAMPARA_TIERRA_ENCENDIDA
 		una.add_child(luz)
 		_luces["tierra_" + fase] = luz
-		var nombre := _etiqueta(fase, "Nota")
+		# A bordo las fases se rotulan R, S y T.
+		var nombre := _etiqueta("%s (%s)" % [FASES_A_BORDO[fase], fase], "Nota")
 		nombre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		una.add_child(nombre)
-	columna.add_child(_etiqueta("Lámparas de tierra, de cada fase al casco: con la red sana alumbran igual. Con una fase a masa, su lámpara se apaga y las otras dos brillan más.", "Nota"))
+	columna.add_child(_etiqueta("Lámparas de tierra R-S-T, de cada fase al casco, con su pulsador de prueba en el cuadro: con la red sana alumbran igual. Con una fase a masa, su lámpara se apaga y las otras dos brillan más.", "Nota"))
 	columna.add_child(_rotulo("Gestión de potencia (PMS)"))
 	var pms: SimPMS = operador.pms()
 	columna.add_child(_boton("Pasar a manual" if pms.automatico() else "Pasar a automático", _alternar_pms))
@@ -239,7 +243,7 @@ func _panel_emergencia(columna: VBoxContainer) -> void:
 	var qe: SimInterruptorGenerador = sim.componente(e["interruptor"])
 	var qt: SimInterruptorGenerador = sim.componente(e["enlace"])
 	columna.add_child(_rotulo("Cuadro de emergencia"))
-	_instrumentos["be_v"] = InstrumentoAguja.new().configurar("Tensión", "V", 0.0, 600.0, 484.0)
+	_instrumentos["be_v"] = InstrumentoAguja.new().configurar("Tensión", "V", 0.0, 500.0, 418.0)
 	var fila := HFlowContainer.new()
 	fila.add_theme_constant_override("h_separation", 8)
 	fila.add_child(_instrumentos["be_v"])
@@ -398,7 +402,8 @@ func _panel_generador(columna: VBoxContainer, id: String) -> void:
 	var d := _datos_generador(id)
 	var g: SimGenerador = sim.componente(id)
 	var q: SimInterruptorGenerador = sim.componente(d["interruptor"])
-	columna.add_child(_rotulo(d["nombre"]))
+	columna.add_child(_rotulo("%s · módulo de sincronismo" % d["nombre"]))
+	columna.add_child(_etiqueta("Como en el buque: medidor de red tipo PM2100, controlador tipo InteliGen 200 e interruptor tipo Compact NS1000 N con su unidad Micrologic.", "Nota"))
 	var fila := HFlowContainer.new()
 	fila.add_theme_constant_override("h_separation", 8)
 	fila.add_theme_constant_override("v_separation", 8)
@@ -406,10 +411,10 @@ func _panel_generador(columna: VBoxContainer, id: String) -> void:
 	var i_n: float = q.params["in_a"]
 	var p_n: float = g.params["p_kw"]
 	var escalas := [
-		["g_v", "Tensión", "V", 0.0, 600.0, 484.0, 0],
+		["g_v", "Tensión", "V", 0.0, 500.0, 418.0, 0],
 		["g_a", "Corriente", "A", 0.0, i_n * 1.4, i_n, 0],
 		["g_kw", "Potencia", "kW", -p_n * 0.2, p_n * 1.3, p_n, 0],
-		["g_hz", "Frecuencia", "Hz", 54.0, 66.0, 63.0, 2],
+		["g_hz", "Frecuencia", "Hz", 45.0, 55.0, 52.5, 2],
 	]
 	for e: Array in escalas:
 		var instrumento := InstrumentoAguja.new().configurar(e[1], e[2], e[3], e[4], e[5], e[6])
@@ -424,15 +429,17 @@ func _panel_generador(columna: VBoxContainer, id: String) -> void:
 	lcd.add_child(texto_lcd)
 	_textos["lcd"] = texto_lcd
 	columna.add_child(_luz_con_texto("marcha", "Diésel en marcha", LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
-	columna.add_child(_luz_con_texto("acb", "Interruptor %s cerrado" % d["interruptor"], LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
+	columna.add_child(_luz_con_texto("acb", "Interruptor %s (GCB) cerrado" % d["interruptor"], LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
 	columna.add_child(_luz_con_texto("disparo", "Disparo", LuzPiloto.ROJO_APAGADO, LuzPiloto.ROJO_ENCENDIDO))
+	_textos["micrologic"] = _etiqueta("", "Nota")
+	columna.add_child(_textos["micrologic"])
 	var mandos := GridContainer.new()
 	mandos.columns = 2
 	mandos.add_theme_constant_override("h_separation", 6)
 	mandos.add_theme_constant_override("v_separation", 6)
 	columna.add_child(mandos)
 	var lista: Array = [
-		["Parar el diésel" if g.en_marcha() else "Arrancar el diésel", _alternar_diesel.bind(id)],
+		["STOP: parar el diésel" if g.en_marcha() else "START: arrancar el diésel", _alternar_diesel.bind(id)],
 		["Abrir %s" % d["interruptor"] if q.cerrado() else "Cerrar %s" % d["interruptor"], _alternar_acb.bind(id)],
 		["Velocidad −", _velocidad.bind(id, -1.0)],
 		["Velocidad +", _velocidad.bind(id, 1.0)],
@@ -440,7 +447,7 @@ func _panel_generador(columna: VBoxContainer, id: String) -> void:
 		["Tensión +", _tension.bind(id, 1.0)],
 	]
 	if q.estado["disparado"]:
-		lista.append(["Rearmar %s" % d["interruptor"], _rearmar.bind(id)])
+		lista.append(["RESET: rearmar %s" % d["interruptor"], _rearmar.bind(id)])
 	if g.estado["danado"] and _permite_reparar():
 		lista.append(["Reparar el grupo", _reparar.bind(id)])
 	for m: Array in lista:
@@ -515,7 +522,7 @@ func _actualizar_sincronismo(sol: SimSolver.Solucion) -> void:
 	var sy: SimSincronoscopio = sim.componente("SY")
 	var entrante: String = args["sincronizar"]
 	var brillos: Array[float] = []
-	var v_fase: float = 440.0 / sqrt(3.0)
+	var v_fase: float = SimRed.V_LINEA / sqrt(3.0)
 	for fase in ["L1", "L2", "L3"]:
 		brillos.append(sol.entre("%s.%s" % [entrante, fase], "BP.%s" % fase).modulo() / (2.0 * v_fase))
 	_dial.actualizar(sy.estado["angulo"], sy.estado["valido"], brillos)
@@ -542,15 +549,21 @@ func _actualizar_generador(id: String) -> void:
 	var s := sqrt(e["p_kw"] * e["p_kw"] + e["q_kvar"] * e["q_kvar"])
 	var cos_phi := absf(e["p_kw"]) / s if s > 1.0 else 0.0
 	var pms: SimPMS = sim.componente("PMS")
+	# Visor como el del controlador del buque: modo, estado, interruptor, factor de potencia y
+	# velocidad. Los rótulos del equipo van en inglés.
+	var modos := "OFF  [AUTO]  MAN  TEST" if pms.automatico() else "OFF  AUTO  [MAN]  TEST"
+	var rpm: float = e["f"] * 120.0 / POLOS_ALTERNADOR
+	var inductivo := "L" if e["q_kvar"] > 1.0 else ("C" if e["q_kvar"] < -1.0 else "")
 	var lineas := PackedStringArray([
-		"%s · MODO %s" % [id, "AUTOMÁTICO (PMS)" if pms.automatico() else "MANUAL"],
-		"Estado: %s" % _estado_grupo(g),
-		"f %s Hz   V %s V   I %s A" % [_n(e["f"], 2), _n(e["v"], 0), _n(e["i"], 0)],
-		"P %s kW   Q %s kVAr   cos φ %s" % [_n(e["p_kw"], 0), _n(e["q_kvar"], 0), _n(cos_phi, 2)],
+		"%s   %s" % [id, modos],
+		"%s · %s" % [_estado_controlador(g, q), "GCB ON" if q.cerrado() else "BrksOff"],
+		"%s kW   PF %s%s   RPM %s" % [_n(e["p_kw"], 0), _n(cos_phi, 2), inductivo, _n(rpm, 0)],
+		"%s Hz   %s V   %s A   %s kVAr" % [_n(e["f"], 2), _n(e["v"], 0), _n(e["i"], 0), _n(e["q_kvar"], 0)],
 		"Consignas: %s Hz en vacío · %s V" % [TextoTecnico.numero(e["f_ref"], 2), TextoTecnico.numero(e.get("v_ref", g.params["v_linea"]), 0)],
 		"Alarma: %s" % _alarma(g, q),
 	])
 	_textos["lcd"].text = "\n".join(lineas)
+	_textos["micrologic"].text = "Micrologic de %s: %s MW · %s A" % [q.id, _n(q.estado["p_kw"] / 1000.0, 3), _n(q.estado["i"], 0)]
 
 
 ## Sin "-0": un valor que redondea a cero se muestra como cero.
@@ -569,6 +582,18 @@ func _estado_grupo(g: SimGenerador) -> String:
 	if not g.en_marcha():
 		return "PARADO"
 	return "EN MARCHA" if g.frecuencia() > SimGenerador.F_NOMINAL * SimGenerador.F_EXCITACION else "ARRANCANDO"
+
+
+## Estado del grupo con las palabras del controlador: Ready (listo para arrancar), Starting,
+## Running, Loaded (en barras) o Not ready (bloqueado, parado por alarma o dañado).
+func _estado_controlador(g: SimGenerador, q: SimInterruptorGenerador) -> String:
+	if g.estado["danado"] or g.estado["bloqueado"] or not g.estado["parada"].is_empty():
+		return "Not ready (%s)" % _estado_grupo(g).to_lower()
+	if not g.en_marcha():
+		return "Ready"
+	if g.frecuencia() <= SimGenerador.F_NOMINAL * SimGenerador.F_EXCITACION:
+		return "Starting"
+	return "Loaded" if q.cerrado() else "Running"
 
 
 func _alarma(g: SimGenerador, q: SimInterruptorGenerador) -> String:

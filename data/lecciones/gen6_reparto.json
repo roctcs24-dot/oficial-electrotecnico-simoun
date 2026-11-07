@@ -21,12 +21,12 @@
     {
       "titulo": "Práctica con la simulación",
       "bloques": [
-        { "tipo": "texto", "texto": "G1 y G2 están en paralelo y G1 lleva casi toda la carga, 320 kW.\n\n1. Reparta los kW hasta que los dos lleven unos 160 kW, manteniendo los 60 Hz.\n2. Suba varias veces la tensión de G2 y observe los kVAr de cada grupo.\n3. Baje mucho la velocidad de G2 y espere unos segundos: verá actuar la protección de potencia inversa." },
+        { "tipo": "texto", "texto": "G1 y G2 están en paralelo y G1 lleva casi toda la carga, 320 kW.\n\n1. Reparta los kW hasta que los dos lleven unos 160 kW, manteniendo los 50 Hz.\n2. Suba varias veces la tensión de G2 y observe los kVAr de cada grupo.\n3. Baje mucho la velocidad de G2 y espere unos segundos: verá actuar la protección de potencia inversa." },
         {
           "tipo": "animacion",
           "id": "banco_generadores",
           "params": { "escenario": "reparto" },
-          "pie": "Simulación del cuadro principal: dos grupos de 450 kW con estatismo del 4 %. Valores típicos: verificar a bordo."
+          "pie": "Simulación del cuadro principal: dos grupos de 452 kW con estatismo del 4 %. Estatismo: valor típico — verificar a bordo."
         },
         {
           "tipo": "quiz",
@@ -42,7 +42,7 @@
           "pregunta": "Dos grupos en estatismo, sin PMS. Entra una carga grande. ¿Qué ocurre?",
           "opciones": ["La frecuencia baja algo y los dos toman parte de la carga nueva", "Solo la toma el grupo que entró primero", "La frecuencia sube"],
           "correcta": 0,
-          "explicacion": "Con estatismo, la frecuencia baja hasta que los dos gobernadores dan el combustible necesario. Después, el operador sube las dos consignas para volver a 60 Hz."
+          "explicacion": "Con estatismo, la frecuencia baja hasta que los dos gobernadores dan el combustible necesario. Después, el operador sube las dos consignas para volver a 50 Hz."
         }
       ]
     }

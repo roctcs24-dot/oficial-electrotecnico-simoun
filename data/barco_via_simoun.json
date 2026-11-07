@@ -16,20 +16,25 @@
     "tripulacion": { "valor": 24, "unidad": "personas", "verificar": true }
   },
   "red_principal": {
-    "tension_v": { "valor": 440, "unidad": "V", "verificar": false },
-    "frecuencia_hz": { "valor": 60, "unidad": "Hz", "verificar": false },
-    "fases": { "valor": 3, "unidad": "", "verificar": false }
+    "tension_v": { "valor": 380, "unidad": "V", "verificar": false, "fuente": "placa del alternador Stamford HCI534F y de los motores" },
+    "frecuencia_hz": { "valor": 50, "unidad": "Hz", "verificar": false, "fuente": "placa del alternador; el diésel gira a 1500 rpm" },
+    "fases": { "valor": 3, "unidad": "", "verificar": false },
+    "sistema": { "valor": "aislada de tierra, con lámparas de tierra R-S-T", "unidad": "", "verificar": false }
   },
   "generacion": {
-    "cantidad": { "valor": 3, "unidad": "", "verificar": false },
-    "tipo": { "valor": "diésel-generador en paralelo sobre el cuadro principal", "unidad": "", "verificar": false },
-    "potencia_por_grupo_kw": { "valor": 450, "unidad": "kW", "verificar": true },
-    "potencia_aparente_kva": { "valor": 562.5, "unidad": "kVA", "verificar": true },
-    "factor_potencia": { "valor": 0.8, "unidad": "", "verificar": true },
-    "corriente_nominal_a": { "valor": 738, "unidad": "A", "verificar": true },
-    "velocidad_rpm": { "valor": 1800, "unidad": "rpm", "verificar": true },
+    "cantidad": { "valor": 4, "unidad": "", "verificar": false, "fuente": "módulos de sincronismo G#1 a G#4" },
+    "tipo": { "valor": "diésel-generador Caterpillar con alternador Stamford, en paralelo sobre el cuadro principal", "unidad": "", "verificar": false },
+    "alternador": { "valor": "Stamford HCI534F, conexión en estrella serie, aislamiento H, IP23", "unidad": "", "verificar": false },
+    "potencia_por_grupo_kw": { "valor": 452, "unidad": "kW", "verificar": false },
+    "potencia_aparente_kva": { "valor": 565, "unidad": "kVA", "verificar": false },
+    "factor_potencia": { "valor": 0.8, "unidad": "", "verificar": false },
+    "corriente_nominal_a": { "valor": 858.4, "unidad": "A", "verificar": false },
+    "velocidad_rpm": { "valor": 1500, "unidad": "rpm", "verificar": false },
+    "excitacion": { "valor": "44 V, 2,6 A a plena carga", "unidad": "", "verificar": false },
     "estatismo_gobernador": { "valor": 4, "unidad": "%", "verificar": true },
-    "controlador": { "valor": "genérico: modelo real sin identificar", "unidad": "", "verificar": true },
+    "controlador": { "valor": "ComAp InteliGen 200 por grupo, en reparto de carga en isla (MultIslOp)", "unidad": "", "verificar": false },
+    "medidor": { "valor": "Schneider EasyLogic PM2100 por grupo", "unidad": "", "verificar": false },
+    "interruptor": { "valor": "Schneider Compact NS1000 N con unidad de control Micrologic 2.0 E (también hay un NS800 N)", "unidad": "", "verificar": false },
     "emergencia_kw": { "valor": 75, "unidad": "kW", "verificar": true }
   },
   "protecciones_generador": {
@@ -42,7 +47,7 @@
   "tensiones_secundarias": {
     "alumbrado_y_servicios_v": { "valor": [220, 110], "unidad": "V", "verificar": true },
     "corriente_continua_v": { "valor": 24, "unidad": "V DC", "verificar": true },
-    "mando_v": { "valor": 110, "unidad": "V AC", "verificar": true }
+    "mando_v": { "valor": 110, "unidad": "V AC (los horómetros de los tableros son de 230 V)", "verificar": true }
   },
   "refrigeracion": {
     "refrigerante": { "valor": "amoníaco (NH3, R-717)", "unidad": "", "verificar": false },

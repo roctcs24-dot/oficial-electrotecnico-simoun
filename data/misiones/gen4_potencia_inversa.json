@@ -56,7 +56,7 @@
     "sin_bloqueo": {
       "titulo": "Informe de accidente: trabajo en el controlador sin bloqueo",
       "que_ocurrio": "Se trabajaba dentro del controlador de G2 sin el arranque bloqueado. Desde el cuadro se arrancó el grupo, el panel recibió la tensión del alternador y el oficial recibió una descarga eléctrica en los bornes de medida. Fue atendido por el oficial sanitario.",
-      "causa": "Un grupo parado puede arrancar por una orden del cuadro o del PMS si su arranque no está bloqueado. Con el alternador girando, los bornes de medida del controlador tienen 440 V.",
+      "causa": "Un grupo parado puede arrancar por una orden del cuadro o del PMS si su arranque no está bloqueado. Con el alternador girando, los bornes de medida del controlador tienen 380 V.",
       "como_evitar": "• Pare el grupo y abra su interruptor.\n• Avise y bloquee el arranque con candado y tarjeta.\n• Verifique la ausencia de tensión en los bornes del alternador y de medida antes de trabajar."
     }
   },
@@ -68,7 +68,7 @@
       { "c": "cerrado", "id": "G2", "texto": "Q2 cerrado" },
       { "c": "conectada", "id": "C2", "texto": "C2, habilitación y cocina, conectada" },
       { "c": "reparto", "ids": ["G1", "G2"], "pct": 10, "texto": "Carga repartida: G1 y G2 con los mismos kW, ±10 %" },
-      { "c": "frecuencia", "min": 59.8, "max": 60.2, "texto": "Frecuencia de barras entre 59,8 y 60,2 Hz" },
+      { "c": "frecuencia", "min": 49.8, "max": 50.2, "texto": "Frecuencia de barras entre 49,8 y 50,2 Hz" },
       { "c": "pms", "automatico": false, "texto": "PMS en manual durante la prueba" },
       { "c": "param", "id": "Q2", "clave": "potencia_inversa_pct", "max": 8.0, "texto": "Potencia inversa de Q2 ajustada al 8 %" },
       { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }

@@ -17,17 +17,17 @@
         {
           "tipo": "quiz",
           "tema": "ohm_corriente",
-          "pregunta": "Una resistencia de 22 Ω se conecta a 440 V. ¿Qué corriente circula?",
-          "opciones": ["2 A", "20 A", "220 A", "9 680 A"],
+          "pregunta": "Una resistencia de 19 Ω se conecta a 380 V. ¿Qué corriente circula?",
+          "opciones": ["2 A", "20 A", "200 A", "7 220 A"],
           "correcta": 1,
-          "explicacion": "I = V ÷ R = 440 ÷ 22 = 20 A."
+          "explicacion": "I = V ÷ R = 380 ÷ 19 = 20 A."
         }
       ]
     },
     {
       "titulo": "Cortocircuito",
       "bloques": [
-        { "tipo": "texto", "texto": "Si la resistencia casi desaparece, según I = V ÷ R la corriente aumenta de forma extrema. Esto es un {{cortocircuito}}.\n\nCon 440 V y solo 0,02 Ω en el camino, el cálculo da I = 440 ÷ 0,02 = 22 000 A. El cobre se funde en un instante y se forma un arco. Por este motivo las protecciones deben abrir de inmediato, y una herramienta olvidada sobre una barra constituye un riesgo grave." },
+        { "tipo": "texto", "texto": "Si la resistencia casi desaparece, según I = V ÷ R la corriente aumenta de forma extrema. Esto es un {{cortocircuito}}.\n\nCon 380 V y solo 0,02 Ω en el camino, el cálculo da I = 380 ÷ 0,02 = 19 000 A. El cobre se funde en un instante y se forma un arco. Por este motivo las protecciones deben abrir de inmediato, y una herramienta olvidada sobre una barra constituye un riesgo grave." },
         {
           "tipo": "quiz",
           "tema": "cortocircuito",

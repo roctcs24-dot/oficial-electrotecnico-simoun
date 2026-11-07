@@ -1,8 +1,8 @@
 extends RefCounted
 ## Utilidades de las pruebas del motor. Las comprobaciones devuelven "" o el motivo del fallo.
 
-const PLACA_440D := {"p_kw": 15.0, "v_delta": 440.0, "v_estrella": 760.0, "i_delta": 25.0, "i_estrella": 14.5}
-const PLACA_254D := {"p_kw": 15.0, "v_delta": 254.0, "v_estrella": 440.0, "i_delta": 43.3, "i_estrella": 25.0}
+const PLACA_380D := {"p_kw": 15.0, "v_delta": 380.0, "v_estrella": 660.0, "i_delta": 29.5, "i_estrella": 17.0}
+const PLACA_220D := {"p_kw": 15.0, "v_delta": 220.0, "v_estrella": 380.0, "i_delta": 51.1, "i_estrella": 29.5}
 
 
 static func cerca(valor: float, esperado: float, tolerancia: float, etiqueta: String) -> String:

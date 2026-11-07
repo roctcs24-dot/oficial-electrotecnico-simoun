@@ -5,12 +5,12 @@
   "dibujo": {
     "svg": "res://art/equipos/controlador_generador.svg",
     "tamano": [420, 340],
-    "nota": "Frente de un controlador de grupo genérico. Los modelos reales, como DEIF, ComAp o Woodward, cambian teclas, menús y nombres: verificar el modelo instalado y su manual. GB: interruptor del generador (generator breaker).",
+    "nota": "Frente de un controlador de grupo genérico. En el Vía Simoun cada grupo tiene un ComAp InteliGen 200 en su «Módulo sincronismo G#n»: sus teclas, menús y nombres difieren de este dibujo, siga su manual. GB: interruptor del generador (generator breaker), rotulado GCB en el buque.",
     "etiquetas": [
-      { "texto": "G2   AUTO   RUN", "x": 154, "y": 62, "tam": 14, "color": "#1d2a1a" },
-      { "texto": "440 V    60.0 Hz", "x": 154, "y": 88, "tam": 14, "color": "#1d2a1a" },
-      { "texto": "P 225 kW   PF 0.80", "x": 154, "y": 114, "tam": 14, "color": "#1d2a1a" },
-      { "texto": "I 369 A   Q 169 kVAr", "x": 154, "y": 140, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "G2   AUTO   Loaded", "x": 154, "y": 62, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "380 V    50.0 Hz", "x": 154, "y": 88, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "P 160 kW   PF 0.77L", "x": 154, "y": 114, "tam": 14, "color": "#1d2a1a" },
+      { "texto": "I 316 A   Q 133 kVAr", "x": 154, "y": 140, "tam": 14, "color": "#1d2a1a" },
       { "texto": "ALARM", "x": 324, "y": 56, "tam": 10 },
       { "texto": "WARN", "x": 322, "y": 82, "tam": 10 },
       { "texto": "READY", "x": 324, "y": 108, "tam": 10 },
@@ -34,7 +34,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{controlador_generador}} reúne el mando, la medida y la protección de un {{grupo_electrogeno}}: arranca y para el diésel, abre y cierra su interruptor, mide tensión, corriente, kW, kVAr y frecuencia, y vigila las alarmas del motor y del alternador. Con el {{pms}}, los controladores de todos los grupos se comunican para repartir la carga y arrancar o parar grupos según la demanda."
+      "texto": "El {{controlador_generador}} reúne el mando, la medida y la protección de un {{grupo_electrogeno}}: arranca y para el diésel, abre y cierra su interruptor, mide tensión, corriente, kW, kVAr y frecuencia, y vigila las alarmas del motor y del alternador. Con el {{pms}}, los controladores de todos los grupos se comunican para repartir la carga y arrancar o parar grupos según la demanda.\n\nEn el Vía Simoun, cada grupo tiene en su «Módulo sincronismo G#n» un ComAp InteliGen 200. Su pantalla muestra el modo, el estado y las medidas del grupo, entre ellas kW, PF y RPM. Por ejemplo, con G#2 en carga: 160 kW, PF 0,77 inductivo y 1499 rpm.\n• [b]Modos:[/b] OFF, MAN, AUTO y TEST. En MAN el operador arranca, para y cierra el interruptor con los pulsadores; en AUTO el controlador lo hace según las órdenes recibidas. El comportamiento exacto de TEST depende de la configuración ([i]verificar en el manual[/i]).\n• [b]Estados:[/b] «Ready», grupo parado y listo para arrancar; «Loaded», grupo con el interruptor cerrado y en carga.\n• [b]MultIslOp[/b] ([i]multiple island operation[/i]): varios grupos en paralelo en isla, sin red de tierra, repartiéndose la carga."
     },
     {
       "id": "partes",
@@ -49,7 +49,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "Los parámetros se agrupan por menús, protegidos con contraseña ([i]nombres y valores genéricos — verificar en el manual[/i]):\n• [b]Datos nominales:[/b] 450 kW, 562,5 kVA, 440 V, 738 A, 60 Hz y relación de los transformadores de corriente.\n• [b]Protecciones:[/b] sobrecarga, potencia inversa, sobretensión y mínima tensión, sobrefrecuencia y mínima frecuencia, cada una con su retardo.\n• [b]Sincronización:[/b] ventana de ángulo, de deslizamiento y de tensión.\n• [b]Reparto de carga:[/b] estatismo o isócrono, y límites para arrancar y parar grupos.\n\nAntes de cambiar nada, guarde o fotografíe la configuración vigente."
+      "texto": "Los parámetros se agrupan por menús, protegidos con contraseña ([i]nombres y valores genéricos — verificar en el manual[/i]):\n• [b]Datos nominales,[/b] de la placa del alternador: 452 kW, 565 kVA, 380 V, 858 A, 50 Hz y 1500 rpm, más la relación de los transformadores de corriente.\n• [b]Protecciones:[/b] sobrecarga, potencia inversa, sobretensión y mínima tensión, sobrefrecuencia y mínima frecuencia, cada una con su retardo.\n• [b]Sincronización:[/b] ventana de ángulo, de deslizamiento y de tensión.\n• [b]Reparto de carga:[/b] estatismo o isócrono, y límites para arrancar y parar grupos.\n\nAntes de cambiar nada, guarde o fotografíe la configuración vigente."
     },
     {
       "id": "pruebas",

@@ -15,7 +15,7 @@ func tipo() -> String:
 
 
 func _params_por_defecto() -> Dictionary:
-	return {"v_linea": 440.0}
+	return {"v_linea": SimRed.V_LINEA}
 
 
 func _estado_inicial() -> Dictionary:

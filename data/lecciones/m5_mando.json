@@ -7,7 +7,7 @@
     {
       "titulo": "Potencia y mando",
       "bloques": [
-        { "tipo": "texto", "texto": "Un arrancador tiene dos circuitos:\n\n• {{Circuito_potencia}}: lleva la corriente del motor, a 440 V.\n• {{Circuito_mando}}: gobierna la {{bobina}} del {{contactor}}, normalmente a 110 V AC ([i]valor típico — verificar a bordo[/i]).\n\nUn pulsador solo maneja la pequeña corriente de la bobina. Y esa bobina acciona el contactor, que maneja la corriente grande." },
+        { "tipo": "texto", "texto": "Un arrancador tiene dos circuitos:\n\n• {{Circuito_potencia}}: lleva la corriente del motor, a 380 V.\n• {{Circuito_mando}}: gobierna la {{bobina}} del {{contactor}}, normalmente a 110 V AC ([i]valor típico — verificar a bordo[/i]).\n\nUn pulsador solo maneja la pequeña corriente de la bobina. Y esa bobina acciona el contactor, que maneja la corriente grande." },
         {
           "tipo": "quiz",
           "tema": "potencia_mando",

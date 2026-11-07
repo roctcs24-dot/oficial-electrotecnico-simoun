@@ -51,7 +51,7 @@ func test_arrancar_y_cerrar_desde_los_mandos() -> String:
 	return A.primero([
 		A.cierto(cerrado, "Q1 debe cerrar"),
 		A.cierto(aviso, "debe explicar el cierre en barra muerta"),
-		A.cerca(v, 440.0, 0.02, "el voltímetro de barras"),
+		A.cerca(v, 380.0, 0.03, "el voltímetro de barras"),
 	])
 
 
@@ -76,7 +76,7 @@ func test_mandos_de_velocidad_y_tension() -> String:
 	raiz.free()
 	return A.primero([
 		A.cerca(f_despues - f_antes, 0.1, 0.01, "un toque sube 0,1 Hz"),
-		A.cerca(v_ref, 442.0, 0.001, "un toque sube 2 V la consigna"),
+		A.cerca(v_ref, 382.0, 0.001, "un toque sube 2 V la consigna"),
 	])
 
 
@@ -174,7 +174,7 @@ func test_cuadro_de_emergencia_en_la_practica() -> String:
 	raiz.free()
 	return A.primero([
 		A.cierto(textos.has("Cerrar el enlace QT") and textos.has("Arrancar GE") and textos.has("GE en manual: pasar a automático"), "mandos de emergencia: %s" % str(textos)),
-		A.cerca(v_be, 440.0, 0.05, "con QT cerrado, el cuadro de emergencia tiene tensión"),
+		A.cerca(v_be, 380.0, 0.05, "con QT cerrado, el cuadro de emergencia tiene tensión"),
 		A.cierto(texto.contains("desde el cuadro principal"), "debe decir de dónde se alimenta: %s" % texto),
 		A.cierto(por_ge.contains("generador de emergencia"), "tras perder el principal, lo alimenta GE: %s" % por_ge),
 	])

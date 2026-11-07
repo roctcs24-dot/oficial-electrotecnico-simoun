@@ -194,7 +194,7 @@ func test_la_ruta_sigue_a_la_pieza_y_se_guarda() -> String:
 
 func test_ordenar_cables_y_deshacer() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_440", true)
+	_montar_directo(mesa, "motor_380", true)
 	mesa.ordenar_cables()
 	var estilos := {}
 	var canales := {}
@@ -212,12 +212,12 @@ func test_ordenar_cables_y_deshacer() -> String:
 
 func test_acomodar_no_afecta_a_la_simulacion() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_440", true)
+	_montar_directo(mesa, "motor_380", true)
 	mesa.ordenar_cables()
 	mesa.fijar_estilo_cable(0, "recta")
 	_arrancar(mesa)
 	mesa.avanzar(200)
-	return A.cierto(mesa.sim.componente("M1").rpm() > 1700.0, "el circuito debe funcionar igual")
+	return A.cierto(mesa.sim.componente("M1").rpm() > 1400.0, "el circuito debe funcionar igual")
 
 
 func test_quitar_cable_borra_su_ruta() -> String:
@@ -278,19 +278,19 @@ func test_zoom_mantiene_el_punto_bajo_el_dedo() -> String:
 
 func test_arranque_montado_a_mano_funciona() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_440", true)
+	_montar_directo(mesa, "motor_380", true)
 	_arrancar(mesa)
 	mesa.avanzar(200)
 	return A.primero([
 		A.cierto(mesa.sim.componente("K1").cerrado(), "K1 debe quedar enclavado"),
-		A.cierto(mesa.sim.componente("M1").rpm() > 1700.0, "debe llegar a su velocidad: %.0f" % mesa.sim.componente("M1").rpm()),
+		A.cierto(mesa.sim.componente("M1").rpm() > 1400.0, "debe llegar a su velocidad: %.0f" % mesa.sim.componente("M1").rpm()),
 		A.cierto(mesa.eventos_nuevos().is_empty(), "un montaje correcto no debe generar eventos"),
 	])
 
 
-func test_motor_254_en_delta_dispara_y_avisa() -> String:
+func test_motor_220_en_delta_dispara_y_avisa() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_254", true)
+	_montar_directo(mesa, "motor_220", true)
 	mesa.sim.componente("F1").params["ajuste_a"] = 43.0
 	_arrancar(mesa)
 	mesa.avanzar(1200)
@@ -333,7 +333,7 @@ func test_guardamotor_actua_antes_que_las_barras() -> String:
 
 func test_danos_persisten_y_se_reparan() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_440", true)
+	_montar_directo(mesa, "motor_380", true)
 	mesa.sim.componente("M1").estado["quemado"] = true
 	mesa.sim.componente("K1").estado["soldado"] = true
 	if not mesa.guardar("prueba_danos"):
@@ -373,7 +373,7 @@ func test_archivo_danado_no_cambia_la_mesa() -> String:
 
 func test_instrumentos_sobre_la_mesa() -> String:
 	var mesa := _mesa()
-	_montar_directo(mesa, "motor_440", true)
+	_montar_directo(mesa, "motor_380", true)
 	mesa.avanzar(2)
 	var m := SimMultimetro.new()
 	m.ruido = 0.0
@@ -383,7 +383,7 @@ func test_instrumentos_sobre_la_mesa() -> String:
 	var aislamiento: Dictionary = meg.medir(mesa.sim, "M1.U1", SimSolver.TIERRA, 500)
 	var destruido: Dictionary = m.medir(mesa.sim, "ohm", "B1.L1", "B1.L2")
 	return A.primero([
-		A.cerca(v["valor"], 440.0, 0.01, "tensión de línea"),
+		A.cerca(v["valor"], 380.0, 0.01, "tensión de línea"),
 		A.cierto(float(r["valor"]) < 5.0, "devanado en delta: valor bajo, %.2f" % r["valor"]),
 		A.cierto(aislamiento["aceptable"], "aislamiento sano"),
 		A.cierto(destruido["averia"] == "multimetro_destruido", "ohmios con tensión debe destruirlo"),
@@ -514,7 +514,7 @@ func test_pinza_abraza_cables_en_pantalla() -> String:
 	var raiz := _raiz_taller()
 	var p = raiz.pantalla_actual()
 	p.mesa.vaciar()
-	_montar_directo(p.mesa, "motor_440", true)
+	_montar_directo(p.mesa, "motor_380", true)
 	_arrancar(p.mesa)
 	p.mesa.avanzar(60)
 	p.args["pestana"] = "medir"

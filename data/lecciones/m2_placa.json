@@ -15,10 +15,10 @@
           "etiquetas": [
             { "texto": "MOTOR DE INDUCCIÓN TRIFÁSICO  3~", "x": 278, "y": 44, "tam": 22, "color": "#20242a" },
             { "texto": "Potencia:  15 kW", "x": 161, "y": 98, "tam": 19, "color": "#20242a" },
-            { "texto": "Tensión:  440 Δ / 760 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
-            { "texto": "Corriente:  25,0 / 14,5 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
-            { "texto": "Frecuencia:  60 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
-            { "texto": "Velocidad:  1760 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
+            { "texto": "Tensión:  380 Δ / 660 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
+            { "texto": "Corriente:  29,5 / 17,0 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
+            { "texto": "Frecuencia:  50 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
+            { "texto": "Velocidad:  1460 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
             { "texto": "cos φ:  0,86", "x": 395, "y": 146, "tam": 19, "color": "#20242a" },
             { "texto": "Protección:  IP55", "x": 395, "y": 194, "tam": 19, "color": "#20242a" },
             { "texto": "Aislamiento:  clase F", "x": 395, "y": 242, "tam": 19, "color": "#20242a" },
@@ -26,20 +26,20 @@
           ],
           "pie": "Placa de ejemplo con valores típicos — verificar a bordo."
         },
-        { "tipo": "texto", "texto": "• [b]Potencia:[/b] la mecánica en el eje, no la eléctrica absorbida.\n• [b]Tensión y corriente:[/b] van en parejas y en el mismo orden. 440 Δ corresponde a 25 A, y 760 Y a 14,5 A.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] grado de protección contra sólidos y agua.\n• [b]Clase:[/b] temperatura que admite el aislamiento.\n• [b]S1:[/b] servicio continuo." }
+        { "tipo": "texto", "texto": "• [b]Potencia:[/b] la mecánica en el eje, no la eléctrica absorbida.\n• [b]Tensión y corriente:[/b] van en parejas y en el mismo orden. 380 Δ corresponde a 29,5 A, y 660 Y a 17 A.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] grado de protección contra sólidos y agua.\n• [b]Clase:[/b] temperatura que admite el aislamiento.\n• [b]S1:[/b] servicio continuo.\n\n[b]Placas con varias líneas.[/b] Muchas placas traen datos para más de una red. La del motor Hoyer HMA3 100L1-4 de 2,2 kW del buque indica 380-415Δ/660-690Y a 50 Hz, con 1450 rpm y 4,81 A en Δ, y además 440-480Δ a 60 Hz, con 1760 rpm. Lea solo la línea que corresponde a la red del buque: 380 V y 50 Hz." }
       ]
     },
     {
       "titulo": "Comprobación de la potencia",
       "bloques": [
-        { "tipo": "texto", "texto": "La potencia eléctrica absorbida es:\n\n[center][b]P = √3 × V × I × cos φ[/b][/center]\n\nCon los datos de la placa: 1,732 × 440 × 25 × 0,86 ≈ 16,4 kW. La diferencia con los 15 kW del eje son las pérdidas del motor: su rendimiento es de cerca del 91 %.\n\nEsta cuenta sirve para detectar placas mal leídas, pero la corriente que debe usar para ajustar la protección es la de la placa." },
+        { "tipo": "texto", "texto": "La potencia eléctrica absorbida es:\n\n[center][b]P = √3 × V × I × cos φ[/b][/center]\n\nCon los datos de la placa: 1,732 × 380 × 29,5 × 0,86 ≈ 16,7 kW. La diferencia con los 15 kW del eje son las pérdidas del motor: su rendimiento es de cerca del 90 %.\n\nEsta cuenta sirve para detectar placas mal leídas, pero la corriente que debe usar para ajustar la protección es la de la placa." },
         {
           "tipo": "quiz",
           "tema": "corriente_placa",
-          "pregunta": "En una placa 440Δ/760Y con corrientes 25/14,5 A, conectada en delta a 440 V, ¿cuál es la corriente nominal?",
-          "opciones": ["14,5 A", "25 A", "39,5 A"],
+          "pregunta": "En una placa 380Δ/660Y con corrientes 29,5/17 A, conectada en delta a 380 V, ¿cuál es la corriente nominal?",
+          "opciones": ["17 A", "29,5 A", "46,5 A"],
           "correcta": 1,
-          "explicacion": "La corriente se lee en el mismo orden que la tensión: a 440 V en delta corresponden 25 A."
+          "explicacion": "La corriente se lee en el mismo orden que la tensión: a 380 V en delta corresponden 29,5 A."
         }
       ]
     }

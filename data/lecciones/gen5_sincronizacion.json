@@ -21,7 +21,7 @@
     {
       "titulo": "El sincronoscopio y las lámparas",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{sincronoscopio}} compara el entrante con las barras:\n\n• [b]La posición de la aguja[/b] es la diferencia de ángulo. A las doce, las tensiones están en fase.\n• [b]El sentido del giro[/b] dice quién va más rápido. Horario, hacia RÁPIDO, si el entrante va más rápido.\n• [b]La rapidez del giro[/b] es el deslizamiento. Una vuelta cada 10 s equivale a 0,1 Hz.\n\nCierre cuando la aguja gire despacio en sentido rápido, unos grados antes de las doce: el interruptor tarda unas decenas de milisegundos en cerrar ([i]verificar el tiempo de cierre del ACB[/i]).\n\nLas {{lamparas_sincronismo}} se conectan entre cada fase del entrante y la misma fase de las barras. Se apagan a la vez cuando las tensiones coinciden. Si se apagan una tras otra, en rotación, la secuencia de fases está invertida: no cierre.\n\nMuchos cuadros añaden un {{verificador_sincronismo}}, la función 25, que no deja cerrar fuera de la ventana." },
+        { "tipo": "texto", "texto": "El {{sincronoscopio}} compara el entrante con las barras:\n\n• [b]La posición de la aguja[/b] es la diferencia de ángulo. A las doce, las tensiones están en fase.\n• [b]El sentido del giro[/b] dice quién va más rápido. Horario, hacia RÁPIDO, si el entrante va más rápido.\n• [b]La rapidez del giro[/b] es el deslizamiento. Una vuelta cada 10 s equivale a 0,1 Hz.\n\nCierre cuando la aguja gire despacio en sentido rápido, unos grados antes de las doce: el interruptor tarda unas decenas de milisegundos en cerrar ([i]verificar el tiempo de cierre del ACB[/i]).\n\nLas {{lamparas_sincronismo}} se conectan entre cada fase del entrante y la misma fase de las barras. Se apagan a la vez cuando las tensiones coinciden. Si se apagan una tras otra, en rotación, la secuencia de fases está invertida: no cierre.\n\nMuchos cuadros añaden un {{verificador_sincronismo}}, la función 25, que no deja cerrar fuera de la ventana. En el Vía Simoun, el controlador InteliGen 200 de cada grupo sincroniza y cierra el interruptor por sí mismo en modo AUTO ([i]verificar a bordo los instrumentos de sincronización manual del cuadro[/i])." },
         {
           "tipo": "quiz",
           "tema": "gen_aguja_lenta",
@@ -40,7 +40,7 @@
           "tipo": "animacion",
           "id": "banco_generadores",
           "params": { "escenario": "sincronizar" },
-          "pie": "Simulación del cuadro principal con dos grupos de 450 kW y valores típicos: verificar a bordo."
+          "pie": "Simulación del cuadro principal con dos grupos de 452 kW, 380 V y 50 Hz, como los del buque. Ajustes: valores típicos — verificar a bordo."
         },
         {
           "tipo": "ordenar",

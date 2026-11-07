@@ -6,16 +6,16 @@
   "reporte": {
     "de": "Primer maquinista",
     "texto": "La bomba de agua dulce nº 1 estaba parada para limpiar el filtro. Al pulsar marcha no arranca. La luz de mando está encendida y el guardamotor no ha disparado. Está en servicio la bomba nº 2, de reserva, así que puede aislar la nº 1.",
-    "nota": "Motor de 15 kW, 440 V en delta, 25 A: valor típico — verificar a bordo."
+    "nota": "Motor de 15 kW, 380 V en delta, 29,5 A: valor típico — verificar a bordo."
   },
   "averias_ocultas": ["K1"],
   "circuito": {
     "componentes": [
-      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
-      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 32 }, "estado": { "encendido": true } },
+      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
+      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 38 }, "estado": { "encendido": true } },
       { "id": "K1", "tipo": "contactor", "estado": { "bobina_quemada": true } },
-      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 25 } },
-      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5, "carga": 0.85 } },
+      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 29.5 } },
+      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 380, "v_estrella": 660, "i_delta": 29.5, "i_estrella": 17, "carga": 0.85 } },
       { "id": "PE1", "tipo": "masa" },
       { "id": "T1", "tipo": "transformador_mando" },
       { "id": "F1", "tipo": "fusible" },
@@ -77,7 +77,7 @@
     { "id": "cambiar_f2", "boton": "Cambiar el relé térmico F2", "titulo": "Relé en buen estado", "texto": "El relé retirado no tenía ninguna falla. Se gastó un repuesto sin necesidad: mida antes de cambiar.", "innecesaria": true },
     { "id": "cambiar_s1", "boton": "Cambiar el pulsador S1", "titulo": "Pulsador en buen estado", "texto": "El pulsador retirado cerraba bien. Se gastó un repuesto sin necesidad: mida antes de cambiar.", "innecesaria": true }
   ],
-  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 60, "rpm_min": 1700 },
+  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 60, "rpm_min": 1400 },
   "libro": {
     "campos": [
       { "etiqueta": "Medición A1-A2 de la bobina retirada", "opciones": ["Fuera de rango (abierta)", "Unos 360 Ω", "0 Ω"], "correcta": 0, "explicacion": "Revise el historial de mediciones: entre A1 y A2 el óhmetro marcó fuera de rango antes de cambiar el contactor." },

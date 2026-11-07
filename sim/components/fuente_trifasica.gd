@@ -16,7 +16,7 @@ func tipo() -> String:
 
 
 func _params_por_defecto() -> Dictionary:
-	return {"v_linea": 440.0, "f_hz": 60.0, "r": 0.005, "x": 0.02, "neutro_mohm": 1.0, "i_disparo_a": 3000.0, "secuencia": "directa"}
+	return {"v_linea": SimRed.V_LINEA, "f_hz": SimRed.F_HZ, "r": 0.005, "x": 0.02, "neutro_mohm": 1.0, "i_disparo_a": 3000.0, "secuencia": "directa"}
 
 
 func _estado_inicial() -> Dictionary:

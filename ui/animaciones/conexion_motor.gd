@@ -6,7 +6,7 @@ const PASOS_POR_FOTOGRAMA := 8
 const DURACION_MAXIMA_S := 900.0
 const COLORES := {"correcto": Color("23804a"), "exceso": Color("a8352a"), "defecto": Color("a56a12")}
 
-var _placa := "254_440"
+var _placa := "220_380"
 var _conexion := "estrella"
 var _ensayo: EnsayoConexion
 var _resultado: Label
@@ -18,7 +18,7 @@ func preparar() -> void:
 	lienzo.custom_minimum_size.y = 150.0
 	var grupo_placa := ButtonGroup.new()
 	var grupo_conexion := ButtonGroup.new()
-	add_child(_fila_opciones(grupo_placa, [["254Δ / 440Y", "254_440"], ["440Δ / 760Y", "440_760"]], _elegir_placa, _placa))
+	add_child(_fila_opciones(grupo_placa, [["220Δ / 380Y", "220_380"], ["380Δ / 660Y", "380_660"]], _elegir_placa, _placa))
 	add_child(_fila_opciones(grupo_conexion, [["Estrella (Y)", "estrella"], ["Delta (Δ)", "delta"]], _elegir_conexion, _conexion))
 	_energizar = Button.new()
 	_energizar.text = "Energizar"

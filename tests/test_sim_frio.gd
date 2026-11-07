@@ -58,7 +58,7 @@ func test_arranca_y_enfria_la_salmuera() -> String:
 	return A.primero([
 		A.cierto(_en_marcha(sim), "el compresor debe seguir en marcha"),
 		A.cierto(te < ts_inicial - 5.0, "evapora por debajo de la salmuera: %.1f °C" % te),
-		A.cierto(i_motor < 180.0 * 1.05, "el limitador mantiene la corriente del motor: %.0f A" % i_motor),
+		A.cierto(i_motor < 202.0 * 1.05, "el limitador mantiene la corriente del motor: %.0f A" % i_motor),
 		A.cierto(ts < -10.0, "la salmuera debe bajar de −10 °C en unos minutos: %.1f °C" % ts),
 		A.cierto(tc > 30.0 and tc < 42.0, "condensación típica con agua de mar a 29 °C: %.1f °C" % tc),
 		A.cierto(not sim.hubo_evento("disparo_presostato"), "sin disparos"),

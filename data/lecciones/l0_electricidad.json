@@ -17,7 +17,7 @@
         {
           "tipo": "quiz",
           "tema": "voltaje_sin_corriente",
-          "pregunta": "Un cable conectado a la barra de 440 V no alimenta ninguna carga en este momento. ¿Es seguro tocarlo?",
+          "pregunta": "Un cable conectado a la barra de 380 V no alimenta ninguna carga en este momento. ¿Es seguro tocarlo?",
           "opciones": ["Sí, porque no circula corriente por él", "No, porque tiene tensión aunque no conduzca corriente", "Sí, si el motor está parado"],
           "correcta": 1,
           "explicacion": "La tensión está presente aunque no circule corriente. Su cuerpo cerraría el circuito y la corriente pasaría a través de usted."

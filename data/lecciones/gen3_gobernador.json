@@ -7,7 +7,7 @@
     {
       "titulo": "Qué hace el gobernador",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{gobernador}} mide la velocidad del diésel y mueve la cremallera del combustible para mantenerla. Como la frecuencia depende de la velocidad, el gobernador controla los 60 Hz y también los kW que entrega el grupo.\n\n• Al entrar una carga, el diésel frena un instante y el gobernador le da más combustible.\n• Al salir una carga, el diésel se acelera y el gobernador le quita combustible.\n\nPuede ser mecánico-hidráulico o electrónico, con un captador magnético en el volante y un actuador sobre la cremallera ([i]verificar el tipo a bordo[/i]). Desde el cuadro se sube o se baja su consigna con el mando de velocidad.\n\nLa {{sobrevelocidad}} la vigila un dispositivo independiente, que para el diésel en torno al 110–115 % de la velocidad nominal ([i]valor típico — verificar con el fabricante[/i])." },
+        { "tipo": "texto", "texto": "El {{gobernador}} mide la velocidad del diésel y mueve la cremallera del combustible para mantenerla. Como la frecuencia depende de la velocidad, el gobernador controla los 50 Hz y también los kW que entrega el grupo.\n\n• Al entrar una carga, el diésel frena un instante y el gobernador le da más combustible.\n• Al salir una carga, el diésel se acelera y el gobernador le quita combustible.\n\nPuede ser mecánico-hidráulico o electrónico, con un captador magnético en el volante y un actuador sobre la cremallera ([i]verificar el tipo a bordo[/i]). Desde el cuadro se sube o se baja su consigna con el mando de velocidad.\n\nLa {{sobrevelocidad}} la vigila un dispositivo independiente, que para el diésel en torno al 110–115 % de la velocidad nominal ([i]valor típico — verificar con el fabricante[/i])." },
         {
           "tipo": "quiz",
           "tema": "gen_gobernador_funcion",
@@ -21,14 +21,14 @@
     {
       "titulo": "Estatismo e isócrono",
       "bloques": [
-        { "tipo": "texto", "texto": "[b]Con {{estatismo}}[/b], la velocidad cae un poco al aumentar la carga. Un estatismo del 4 % ([i]valor típico — verificar[/i]) significa que, de vacío a plena carga, la frecuencia baja el 4 % de 60 Hz, es decir 2,4 Hz.\n\nEjemplo: un grupo de 450 kW solo en barras, con consigna en vacío de 61,2 Hz:\n• En vacío: 61,2 Hz.\n• A 225 kW, media carga: 61,2 − 1,2 = 60,0 Hz.\n• A 450 kW: 58,8 Hz.\n\nPor eso, cuando cambia la carga, el operador corrige la consigna para volver a 60 Hz.\n\n[b]En modo {{isocrono}}[/b], el gobernador mantiene 60 Hz con cualquier carga. Sirve para un grupo solo, o para varios si sus controladores están unidos por líneas de reparto o por el {{pms}}." },
+        { "tipo": "texto", "texto": "[b]Con {{estatismo}}[/b], la velocidad cae un poco al aumentar la carga. Un estatismo del 4 % ([i]valor típico — verificar[/i]) significa que, de vacío a plena carga, la frecuencia baja el 4 % de 50 Hz, es decir 2 Hz.\n\nEjemplo: un grupo de 452 kW solo en barras, con consigna en vacío de 51 Hz:\n• En vacío: 51,0 Hz.\n• A 226 kW, media carga: 51 − 1 = 50,0 Hz.\n• A 452 kW: 49,0 Hz.\n\nPor eso, cuando cambia la carga, el operador corrige la consigna para volver a 50 Hz.\n\n[b]En modo {{isocrono}}[/b], el gobernador mantiene 50 Hz con cualquier carga. Sirve para un grupo solo, o para varios si sus controladores están unidos por líneas de reparto o por el {{pms}}." },
         {
           "tipo": "quiz",
           "tema": "gen_estatismo_calculo",
-          "pregunta": "Un grupo de 450 kW con 4 % de estatismo tiene la consigna en vacío en 61,2 Hz. ¿Qué frecuencia tiene con 450 kW?",
-          "opciones": ["60,0 Hz", "61,2 Hz", "58,8 Hz"],
+          "pregunta": "Un grupo de 452 kW con 4 % de estatismo tiene la consigna en vacío en 51 Hz. ¿Qué frecuencia tiene con 452 kW?",
+          "opciones": ["50,0 Hz", "51,0 Hz", "49,0 Hz"],
           "correcta": 2,
-          "explicacion": "El 4 % de 60 Hz son 2,4 Hz de vacío a plena carga: 61,2 − 2,4 = 58,8 Hz."
+          "explicacion": "El 4 % de 50 Hz son 2 Hz de vacío a plena carga: 51 − 2 = 49 Hz."
         }
       ]
     },
@@ -40,7 +40,7 @@
           "tipo": "quiz",
           "tema": "gen_dos_isocronos",
           "pregunta": "¿Qué ocurre con dos grupos en paralelo en modo isócrono sin líneas de reparto ni PMS?",
-          "opciones": ["Se reparten la carga por igual", "Uno tiende a tomar toda la carga y el otro puede pasar a potencia inversa", "La frecuencia baja hasta 58 Hz"],
+          "opciones": ["Se reparten la carga por igual", "Uno tiende a tomar toda la carga y el otro puede pasar a potencia inversa", "La frecuencia baja hasta 48 Hz"],
           "correcta": 1,
           "explicacion": "Las consignas nunca son exactamente iguales. Sin coordinación, el gobernador que pide más frecuencia carga con todo, y el otro se descarga hasta absorber potencia."
         }

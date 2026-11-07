@@ -26,7 +26,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{monitor_aislamiento}} mide de forma continua la resistencia de aislamiento entre la red de 440 V y el casco, con la red en servicio. En un {{sistema_aislado}} la primera {{falla_tierra}} no dispara ninguna protección, así que este equipo es el que avisa. Suele haber uno en la red de 440 V y otros en las de 220 V y 24 V DC ([i]verificar a bordo[/i])."
+      "texto": "El {{monitor_aislamiento}} mide de forma continua la resistencia de aislamiento entre la red de 380 V y el casco, con la red en servicio. En un {{sistema_aislado}} la primera {{falla_tierra}} no dispara ninguna protección, así que este equipo es el que avisa. Suele haber uno en la red de 380 V y otros en las de 220 V y 24 V DC. En el cuadro del Vía Simoun están confirmadas las lámparas de tierra de las fases R, S y T, con su pulsador de prueba; la existencia y el modelo de los monitores de aislamiento están por [i]verificar a bordo[/i]."
     },
     {
       "id": "partes",

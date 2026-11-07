@@ -2,11 +2,11 @@
   "nota": "bornes indica la posición de cada borne en el dibujo. Valores típicos: verificar a bordo.",
   "componentes": [
     {
-      "id": "fuente_trifasica", "tipo": "fuente_trifasica", "prefijo": "B", "nombre": "Barras de 440 V", "potencia": true,
+      "id": "fuente_trifasica", "tipo": "fuente_trifasica", "prefijo": "B", "nombre": "Barras de 380 V", "potencia": true,
       "svg": "res://art/taller/barras.svg", "tamano": [360, 140],
       "bornes": { "L1": [60, 96], "L2": [180, 96], "L3": [300, 96] },
       "etiquetas": [
-        { "texto": "BARRAS 440 V  60 Hz", "x": 180, "y": 30, "tam": 18 },
+        { "texto": "BARRAS 380 V  50 Hz", "x": 180, "y": 30, "tam": 18 },
         { "texto": "L1", "x": 60, "y": 62, "tam": 16 }, { "texto": "L2", "x": 180, "y": 62, "tam": 16 }, { "texto": "L3", "x": 300, "y": 62, "tam": 16 }
       ]
     },
@@ -24,42 +24,42 @@
     },
     {
       "id": "rele_termico", "tipo": "rele_termico", "prefijo": "F", "nombre": "Relé térmico", "potencia": true, "ficha": "rele_termico",
-      "params": { "ajuste_a": 25 },
+      "params": { "ajuste_a": 29.5 },
       "bornes": {
         "1": [108, 12], "3": [180, 12], "5": [252, 12], "2": [110, 380], "4": [180, 380], "6": [250, 380],
         "97": [96, 282], "98": [152, 282], "95": [208, 282], "96": [264, 282]
       }
     },
     {
-      "id": "motor_440", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 440Δ/760Y", "potencia": true,
-      "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5 },
+      "id": "motor_380", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 380Δ/660Y", "potencia": true,
+      "params": { "p_kw": 15, "v_delta": 380, "v_estrella": 660, "i_delta": 29.5, "i_estrella": 17 },
       "svg": "res://art/taller/motor.svg", "tamano": [480, 320],
       "bornes": { "W2": [130, 110], "U2": [240, 110], "V2": [350, 110], "U1": [130, 240], "V1": [240, 240], "W1": [350, 240] },
       "etiquetas": [
-        { "texto": "MOTOR 15 kW  440Δ / 760Y", "x": 240, "y": 30, "tam": 20 },
+        { "texto": "MOTOR 15 kW  380Δ / 660Y", "x": 240, "y": 30, "tam": 20 },
         { "texto": "W2", "x": 94, "y": 110, "tam": 18 }, { "texto": "U2", "x": 204, "y": 110, "tam": 18 }, { "texto": "V2", "x": 314, "y": 110, "tam": 18 },
         { "texto": "U1", "x": 94, "y": 240, "tam": 18 }, { "texto": "V1", "x": 204, "y": 240, "tam": 18 }, { "texto": "W1", "x": 314, "y": 240, "tam": 18 }
       ]
     },
     {
-      "id": "motor_254", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 254Δ/440Y", "potencia": true,
-      "params": { "p_kw": 15, "v_delta": 254, "v_estrella": 440, "i_delta": 43.3, "i_estrella": 25 },
+      "id": "motor_220", "tipo": "motor_trifasico", "prefijo": "M", "nombre": "Motor 15 kW, 220Δ/380Y", "potencia": true,
+      "params": { "p_kw": 15, "v_delta": 220, "v_estrella": 380, "i_delta": 51.1, "i_estrella": 29.5 },
       "svg": "res://art/taller/motor.svg", "tamano": [480, 320],
       "bornes": { "W2": [130, 110], "U2": [240, 110], "V2": [350, 110], "U1": [130, 240], "V1": [240, 240], "W1": [350, 240] },
       "etiquetas": [
-        { "texto": "MOTOR 15 kW  254Δ / 440Y", "x": 240, "y": 30, "tam": 20 },
+        { "texto": "MOTOR 15 kW  220Δ / 380Y", "x": 240, "y": 30, "tam": 20 },
         { "texto": "W2", "x": 94, "y": 110, "tam": 18 }, { "texto": "U2", "x": 204, "y": 110, "tam": 18 }, { "texto": "V2", "x": 314, "y": 110, "tam": 18 },
         { "texto": "U1", "x": 94, "y": 240, "tam": 18 }, { "texto": "V1", "x": 204, "y": 240, "tam": 18 }, { "texto": "W1", "x": 314, "y": 240, "tam": 18 }
       ]
     },
     {
-      "id": "transformador_mando", "tipo": "transformador_mando", "prefijo": "T", "nombre": "Transformador 440/110 V",
+      "id": "transformador_mando", "tipo": "transformador_mando", "prefijo": "T", "nombre": "Transformador 380/110 V",
       "svg": "res://art/taller/transformador.svg", "tamano": [300, 260],
       "bornes": { "H1": [70, 44], "H2": [230, 44], "X1": [70, 216], "X2": [230, 216] },
       "etiquetas": [
         { "texto": "H1", "x": 34, "y": 44, "tam": 16 }, { "texto": "H2", "x": 266, "y": 44, "tam": 16 },
         { "texto": "X1", "x": 34, "y": 216, "tam": 16 }, { "texto": "X2", "x": 266, "y": 216, "tam": 16 },
-        { "texto": "440 / 110 V", "x": 150, "y": 130, "tam": 18 }
+        { "texto": "380 / 110 V", "x": 150, "y": 130, "tam": 18 }
       ]
     },
     {
@@ -109,13 +109,13 @@
     { "id": "muestra_contactor", "nombre": "Banco de prueba del contactor" }
   ],
   "consecuencias": {
-    "disparo_magnetico": { "titulo": "Disparo magnético del guardamotor", "texto": "La corriente superó el umbral magnético: hubo un cortocircuito o una corriente muy alta aguas abajo, como la de un motor 254Δ/440Y conectado en delta a 440 V. Abra el guardamotor, corrija la causa y mida el aislamiento antes de volver a cerrar. Tras un disparo, lleve el mando a apagado antes de cerrar." },
+    "disparo_magnetico": { "titulo": "Disparo magnético del guardamotor", "texto": "La corriente superó el umbral magnético: hubo un cortocircuito o una corriente muy alta aguas abajo, como la de un motor 220Δ/380Y conectado en delta a 380 V. Abra el guardamotor, corrija la causa y mida el aislamiento antes de volver a cerrar. Tras un disparo, lleve el mando a apagado antes de cerrar." },
     "disparo_termico": { "titulo": "Disparo térmico del guardamotor", "texto": "La corriente estuvo por encima del ajuste durante demasiado tiempo. Compruebe la carga, la conexión del motor y que el ajuste coincida con la corriente de la placa. No suba el ajuste para evitar el disparo." },
     "disparo_rele_termico": { "titulo": "Disparo del relé térmico", "texto": "La sobrecarga fue suficiente para cambiar 95-96 y 97-98. Revise la conexión estrella o delta según la placa, la carga y las tres fases. El relé no corta la potencia: si 95-96 no está en serie con la bobina, el motor sigue conectado." },
     "disparo_barras": { "titulo": "Disparo del interruptor de barras", "texto": "Un cortocircuito sin protección cercana hizo disparar el interruptor aguas arriba. A bordo, esto podría dejar sin servicio a muchos otros equipos. Toda salida debe tener su propia protección. Corrija el cableado antes de rearmar." },
     "arco_contactos_soldados": { "titulo": "Arco: contactos soldados", "texto": "La corriente de cortocircuito soldó los polos del contactor, que ya no abrirá aunque su bobina quede sin tensión. Cambie el repuesto. Revise por qué se produjo el cortocircuito: dos contactores que nunca deben cerrar a la vez necesitan enclavamiento." },
     "bobina_quemada": { "titulo": "Bobina quemada", "texto": "La bobina recibió mucha más tensión que la nominal. Compruebe la etiqueta de la bobina y la tensión de mando antes de conectar. Cambie el repuesto." },
-    "motor_quemado": { "titulo": "Motor quemado", "texto": "El devanado superó la temperatura admisible. Las causas habituales son una conexión incorrecta, como un motor 254Δ/440Y en delta a 440 V, o la falta de protección. Cambie el repuesto y corrija la causa." },
+    "motor_quemado": { "titulo": "Motor quemado", "texto": "El devanado superó la temperatura admisible. Las causas habituales son una conexión incorrecta, como un motor 220Δ/380Y en delta a 380 V, o la falta de protección. Cambie el repuesto y corrija la causa." },
     "fusible_fundido": { "titulo": "Fusible fundido", "texto": "La corriente del circuito de mando superó la capacidad del fusible. Busque el cortocircuito o la sobrecarga antes de sustituirlo, y use siempre uno del mismo valor." },
     "lampara_quemada": { "titulo": "Luz piloto quemada", "texto": "La lámpara recibió demasiada tensión. Compruebe que su tensión nominal coincida con la del circuito de mando." },
     "vibracion_mando": { "titulo": "Vibración del contactor", "texto": "La bobina cierra y suelta sin parar, porque se alimenta a través de un contacto que ella misma abre. Revise el mando: el contacto de retención 13-14 es NA y va en paralelo con la marcha." },

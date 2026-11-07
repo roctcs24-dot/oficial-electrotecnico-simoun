@@ -8,7 +8,7 @@
     "nota": "Grupo de emergencia genérico refrigerado por radiador, con su panel local. En el simulador es de 75 kW: valor típico — verificar a bordo la potencia, el modelo y su ubicación.",
     "etiquetas": [
       { "texto": "EMERGENCY GEN.", "x": 384, "y": 31, "tam": 11, "color": "#20242a" },
-      { "texto": "440 V 60 Hz", "x": 352, "y": 63, "tam": 11, "color": "#9fe3b5" },
+      { "texto": "380 V 50 Hz", "x": 352, "y": 63, "tam": 11, "color": "#9fe3b5" },
       { "texto": "AUTO", "x": 428, "y": 43, "tam": 9, "color": "#20242a" },
       { "texto": "MAN", "x": 404, "y": 88, "tam": 9, "color": "#20242a" },
       { "texto": "OFF", "x": 452, "y": 88, "tam": 9, "color": "#20242a" },

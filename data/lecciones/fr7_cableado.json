@@ -7,12 +7,12 @@
     {
       "titulo": "Potencia",
       "bloques": [
-        { "tipo": "texto", "texto": "El motor del compresor es un motor de inducción grande, de unos 110 kW a 440 V en la planta del simulador ([i]verificar la placa a bordo[/i]). Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nCon esa potencia, a bordo suele arrancar en estrella-triángulo o con arrancador suave. En el simulador arranca en directo, con el compresor descargado." },
+        { "tipo": "texto", "texto": "El motor del compresor es un motor de inducción grande, de unos 110 kW a 380 V en la planta del simulador ([i]verificar la placa a bordo[/i]). Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nCon esa potencia, a bordo suele arrancar en estrella-triángulo o con arrancador suave. En el simulador arranca en directo, con el compresor descargado." },
         {
           "tipo": "quiz",
           "tema": "frio_ajuste_termico_compresor",
-          "pregunta": "La placa del motor del compresor dice 180 A en delta. ¿A cuánto se ajusta el relé térmico?",
-          "opciones": ["A 180 A", "A 250 A, para que no dispare al enfriar la salmuera", "Al pico de arranque"],
+          "pregunta": "La placa del motor del compresor dice 202 A en delta. ¿A cuánto se ajusta el relé térmico?",
+          "opciones": ["A 202 A", "A 280 A, para que no dispare al enfriar la salmuera", "Al pico de arranque"],
           "correcta": 0,
           "explicacion": "El relé térmico se ajusta a la corriente de la placa. La carga del arranque con salmuera caliente la limita el control de capacidad, no el relé."
         }

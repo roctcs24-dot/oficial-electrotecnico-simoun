@@ -35,7 +35,7 @@
           "tipo": "animacion",
           "id": "banco_arranque",
           "params": { "circuito": "arranque_directo", "contactores": ["K1"] },
-          "pie": "Motor de 15 kW, 440Δ/760Y, conectado en delta. Valores típicos."
+          "pie": "Motor de 15 kW, 380Δ/660Y, conectado en delta. Valores típicos."
         },
         {
           "tipo": "quiz",

@@ -1,14 +1,14 @@
 {
   "nombre": "Arranque estrella-triángulo",
-  "nota": "Exige un motor 440Δ/760Y en red de 440 V. El relé térmico va en línea con K1 y se ajusta a In/√3. Valores típicos: verificar a bordo.",
+  "nota": "Exige un motor 380Δ/660Y en la red de 380 V. El relé térmico va en línea con K1 y se ajusta a In/√3. Valores típicos: verificar a bordo.",
   "componentes": [
-    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
+    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
     { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 32 } },
     { "id": "K1", "tipo": "contactor" },
     { "id": "K2", "tipo": "contactor" },
     { "id": "K3", "tipo": "contactor" },
-    { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 14.5 } },
-    { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5 } },
+    { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 17 } },
+    { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 380, "v_estrella": 660, "i_delta": 29.5, "i_estrella": 17 } },
     { "id": "T1", "tipo": "transformador_mando" },
     { "id": "F1", "tipo": "fusible" },
     { "id": "S0", "tipo": "pulsador", "params": { "contacto": "NC" } },

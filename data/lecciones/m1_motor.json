@@ -25,14 +25,14 @@
     {
       "titulo": "Campo giratorio y deslizamiento",
       "bloques": [
-        { "tipo": "texto", "texto": "Las tres fases, desfasadas 120°, crean un campo magnético que gira. Su velocidad, llamada de sincronismo, depende de la frecuencia y de los polos:\n\n[center][b]n = 120 × f ÷ polos[/b][/center]\n\nCon 60 Hz y 4 polos, n = 1800 rpm. El rotor siempre gira un poco más lento: esa diferencia es el {{deslizamiento}}. Si girara a la misma velocidad, no se induciría corriente y no habría {{par}}. Por eso la placa indica, por ejemplo, 1760 rpm." },
+        { "tipo": "texto", "texto": "Las tres fases, desfasadas 120°, crean un campo magnético que gira. Su velocidad, llamada de sincronismo, depende de la frecuencia y de los polos:\n\n[center][b]n = 120 × f ÷ polos[/b][/center]\n\nCon 50 Hz y 4 polos, n = 1500 rpm. El rotor siempre gira un poco más lento: esa diferencia es el {{deslizamiento}}. Si girara a la misma velocidad, no se induciría corriente y no habría {{par}}. Por eso la placa indica, por ejemplo, 1460 rpm." },
         {
           "tipo": "quiz",
           "tema": "velocidad_sincronismo",
-          "pregunta": "¿Cuál es la velocidad de sincronismo de un motor de 4 polos a 60 Hz?",
-          "opciones": ["900 rpm", "1500 rpm", "1800 rpm", "3600 rpm"],
-          "correcta": 2,
-          "explicacion": "n = 120 × 60 ÷ 4 = 1800 rpm. A plena carga el rotor gira algo más lento."
+          "pregunta": "¿Cuál es la velocidad de sincronismo de un motor de 4 polos a 50 Hz?",
+          "opciones": ["750 rpm", "1500 rpm", "1800 rpm", "3000 rpm"],
+          "correcta": 1,
+          "explicacion": "n = 120 × 50 ÷ 4 = 1500 rpm. A plena carga el rotor gira algo más lento, por ejemplo a 1460 rpm."
         }
       ]
     },

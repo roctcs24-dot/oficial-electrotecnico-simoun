@@ -15,6 +15,9 @@ const SEPARACION_CANALES := 22.0
 const COLOR_FASE := {"1": Color("7a4a24"), "2": Color("7a4a24"), "3": Color("17181a"), "4": Color("17181a"), "5": Color("8a8f93"), "6": Color("8a8f93"),
 	"L1": Color("7a4a24"), "L2": Color("17181a"), "L3": Color("8a8f93"), "U1": Color("7a4a24"), "V1": Color("17181a"), "W1": Color("8a8f93")}
 const COLOR_MANDO := Color("b02a22")
+## Piezas que cambiaron de nombre al pasar la red a 380 V: los circuitos guardados antes se
+## siguen abriendo.
+const RENOMBRADOS := {"motor_440": "motor_380", "motor_254": "motor_220"}
 
 var contenido: Contenido
 var sim := SimSimulacion.new()
@@ -36,6 +39,7 @@ func catalogo() -> Array:
 
 
 func entrada(id_catalogo: String) -> Dictionary:
+	id_catalogo = RENOMBRADOS.get(id_catalogo, id_catalogo)
 	for e: Dictionary in catalogo():
 		if e["id"] == id_catalogo:
 			return e
@@ -372,7 +376,7 @@ func _catalogo_de(c: SimComponente) -> String:
 		"pulsador":
 			return "pulsador_na" if c.params["contacto"] == "NA" else "pulsador_nc"
 		"motor_trifasico":
-			return "motor_254" if is_equal_approx(c.params["v_delta"], 254.0) else "motor_440"
+			return "motor_220" if is_equal_approx(c.params["v_delta"], 220.0) else "motor_380"
 	return c.tipo()
 
 
@@ -439,7 +443,7 @@ func estado_pieza(id: String) -> String:
 		"temporizador":
 			return "Conmutado" if e["conmutado"] else ("Contando" if e["bobina"] else "En reposo")
 		"transformador_mando":
-			return "440 / 110 V"
+			return "380 / 110 V"
 		"resistencia":
 			return "%s Ω" % TextoTecnico.numero(c.params.get("ohm", 0.0), 0)
 		"masa":

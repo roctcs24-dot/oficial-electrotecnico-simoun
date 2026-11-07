@@ -7,7 +7,7 @@
     {
       "titulo": "Para qué sirve",
       "bloques": [
-        { "tipo": "texto", "texto": "El multímetro mide con muy poca tensión, y un aislamiento dañado puede parecer sano con él. El {{megohmetro}} aplica una tensión de prueba alta, de 250 V, 500 V o 1000 V, y mide la {{aislamiento}} en megaohmios (MΩ).\n\nEn equipos de 440 V es habitual probar a 500 V ([i]valor típico — verificar con el manual del equipo[/i])." },
+        { "tipo": "texto", "texto": "El multímetro mide con muy poca tensión, y un aislamiento dañado puede parecer sano con él. El {{megohmetro}} aplica una tensión de prueba alta, de 250 V, 500 V o 1000 V, y mide la {{aislamiento}} en megaohmios (MΩ).\n\nEn equipos de 380 V es habitual probar a 500 V ([i]valor típico — verificar con el manual del equipo[/i])." },
         {
           "tipo": "quiz",
           "tema": "megger_vs_multimetro",

@@ -7,7 +7,7 @@
     {
       "titulo": "La red aislada",
       "bloques": [
-        { "tipo": "texto", "texto": "La red de 440 V del buque es un {{sistema_aislado}}: el neutro de los generadores no está unido al casco ([i]lo habitual en buques mercantes y pesqueros — verificar a bordo[/i]).\n\n• [b]Primera {{falla_tierra}}:[/b] una fase toca el casco. Casi no circula corriente, porque no hay camino de vuelta, y no dispara nada. Los servicios esenciales siguen funcionando.\n• [b]Segunda falla en otra fase:[/b] las dos fases quedan unidas a través del casco. Es un cortocircuito y disparan las protecciones de las dos salidas.\n\nAdemás, con una fase a masa, las otras dos quedan a 440 V contra el casco en lugar de 254 V. Por eso la primera falla debe localizarse y repararse cuanto antes." },
+        { "tipo": "texto", "texto": "La red de 380 V del buque es un {{sistema_aislado}}: el neutro de los generadores no está unido al casco. El cuadro del Vía Simoun tiene lámparas de tierra en las tres fases, lo propio de una red aislada.\n\n• [b]Primera {{falla_tierra}}:[/b] una fase toca el casco. Casi no circula corriente, porque no hay camino de vuelta, y no dispara nada. Los servicios esenciales siguen funcionando.\n• [b]Segunda falla en otra fase:[/b] las dos fases quedan unidas a través del casco. Es un cortocircuito y disparan las protecciones de las dos salidas.\n\nAdemás, con una fase a masa, las otras dos quedan a 380 V contra el casco en lugar de 219 V. Por eso la primera falla debe localizarse y repararse cuanto antes." },
         {
           "tipo": "quiz",
           "tema": "gen_primera_falla",
@@ -21,7 +21,7 @@
     {
       "titulo": "Cómo se detecta",
       "bloques": [
-        { "tipo": "texto", "texto": "[b]{{Lamparas_tierra}}:[/b] tres lámparas, cada una entre una fase y el casco. Sin falla brillan igual, a media luz. Con una fase a masa, su lámpara se apaga o se atenúa y las otras dos brillan más.\n\n[b]{{Monitor_aislamiento}}:[/b] aplica una pequeña señal de medida entre la red y el casco y muestra de forma continua la resistencia de aislamiento de toda la red. Da alarma cuando baja de su ajuste. En el simulador, el ajuste es de 1 MΩ ([i]verificar el ajuste del monitor del buque[/i]).\n\nEl monitor vigila la red en servicio. No sustituye a la medida con megóhmetro, que se hace con el circuito sin tensión y aislado." },
+        { "tipo": "texto", "texto": "[b]{{Lamparas_tierra}}:[/b] tres lámparas, cada una entre una fase y el casco. Sin falla brillan igual, a media luz. Con una fase a masa, su lámpara se apaga o se atenúa y las otras dos brillan más. En el cuadro del buque, las fases se rotulan R, S y T, y las lámparas tienen un pulsador de prueba; en el simulador se llaman L1, L2 y L3.\n\n[b]{{Monitor_aislamiento}}:[/b] aplica una pequeña señal de medida entre la red y el casco y muestra de forma continua la resistencia de aislamiento de toda la red. Da alarma cuando baja de su ajuste. En el simulador, el ajuste es de 1 MΩ ([i]verificar el ajuste del monitor del buque[/i]).\n\nEl monitor vigila la red en servicio. No sustituye a la medida con megóhmetro, que se hace con el circuito sin tensión y aislado." },
         {
           "tipo": "quiz",
           "tema": "gen_lamparas_tierra",

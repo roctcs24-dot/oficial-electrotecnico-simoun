@@ -5,8 +5,8 @@ extends RefCounted
 ## el contactor.
 
 const PLACAS := {
-	"440_760": {"p_kw": 15.0, "v_delta": 440.0, "v_estrella": 760.0, "i_delta": 25.0, "i_estrella": 14.5, "carga": 1.0},
-	"254_440": {"p_kw": 15.0, "v_delta": 254.0, "v_estrella": 440.0, "i_delta": 43.3, "i_estrella": 25.0, "carga": 1.0},
+	"380_660": {"p_kw": 15.0, "v_delta": 380.0, "v_estrella": 660.0, "i_delta": 29.5, "i_estrella": 17.0, "carga": 1.0},
+	"220_380": {"p_kw": 15.0, "v_delta": 220.0, "v_estrella": 380.0, "i_delta": 51.1, "i_estrella": 29.5, "carga": 1.0},
 }
 
 var sim: SimSimulacion
@@ -60,7 +60,7 @@ func quemado() -> bool:
 ## si es menor: en ese caso el motor no da su par y se sobrecarga.
 static func diagnostico(id_placa: String, tipo_conexion: String) -> String:
 	var v_admisible: float = PLACAS[id_placa]["v_delta"]
-	var v_recibida := 440.0 if tipo_conexion == "delta" else 440.0 / sqrt(3.0)
+	var v_recibida := SimRed.V_LINEA if tipo_conexion == "delta" else SimRed.V_LINEA / sqrt(3.0)
 	if v_recibida > v_admisible * 1.1:
 		return "exceso"
 	if v_recibida < v_admisible * 0.9:

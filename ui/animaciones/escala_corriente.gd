@@ -6,7 +6,7 @@ const MA_MAX := 1000.0
 const SEPARACION_ROTULOS := 26.0
 const SEPARACION_FILAS := 14.0
 
-var _ma := 440.0
+var _ma := 380.0
 var _etiqueta: Label
 var _efecto: Label
 
@@ -22,7 +22,7 @@ static func efecto_de(niveles: Array, ma_consulta: float) -> String:
 
 func preparar() -> void:
 	lienzo.custom_minimum_size.y = 120.0
-	_ma = params.get("inicial", 440.0)
+	_ma = params.get("inicial", 380.0)
 	var inicio := (log(_ma) - log(MA_MIN)) / (log(MA_MAX) - log(MA_MIN))
 	_etiqueta = deslizador(0.0, 1.0, 0.002, inicio, _al_cambiar)
 	_efecto = Label.new()

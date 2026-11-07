@@ -7,14 +7,14 @@
     {
       "titulo": "El principio",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{arranque_yd}} arranca en estrella y pasa a delta:\n\n• En estrella cada devanado recibe 254 V, 1 ÷ √3 de su tensión.\n• La corriente de línea y el {{par}} de arranque se reducen a [b]un tercio[/b].\n\n[b]Requisito:[/b] el motor debe trabajar en delta a la tensión de red. En 440 V hace falta una placa [b]440Δ/760Y[/b]. Un motor 254Δ/440Y no admite este arranque: en delta se quemaría.\n\nComo el par también baja, se usa con cargas que arrancan con poco esfuerzo, como bombas centrífugas o ventiladores." },
+        { "tipo": "texto", "texto": "El {{arranque_yd}} arranca en estrella y pasa a delta:\n\n• En estrella cada devanado recibe 219 V, 1 ÷ √3 de su tensión.\n• La corriente de línea y el {{par}} de arranque se reducen a [b]un tercio[/b].\n\n[b]Requisito:[/b] el motor debe trabajar en delta a la tensión de red. En 380 V hace falta una placa [b]380Δ/660Y[/b]. Un motor 220Δ/380Y no admite este arranque: en delta se quemaría.\n\nComo el par también baja, se usa con cargas que arrancan con poco esfuerzo, como bombas centrífugas o ventiladores." },
         {
           "tipo": "quiz",
           "tema": "requisito_yd",
-          "pregunta": "¿Qué placa debe tener un motor para arrancar en estrella-triángulo en 440 V?",
-          "opciones": ["254Δ/440Y", "440Δ/760Y", "Cualquiera"],
+          "pregunta": "¿Qué placa debe tener un motor para arrancar en estrella-triángulo en 380 V?",
+          "opciones": ["220Δ/380Y", "380Δ/660Y", "Cualquiera"],
           "correcta": 1,
-          "explicacion": "Debe poder trabajar en delta a 440 V. Un motor 254Δ/440Y recibiría √3 veces su tensión en delta."
+          "explicacion": "Debe poder trabajar en delta a 380 V. Un motor 220Δ/380Y recibiría √3 veces su tensión en delta."
         }
       ]
     },
@@ -39,7 +39,7 @@
           ],
           "pie": "Esquema simplificado según IEC 60617: verificar contra los planos del buque. Enclavamiento K2/K3 en la parte inferior derecha."
         },
-        { "tipo": "texto", "texto": "• [b]K1:[/b] conecta la alimentación a U1, V1 y W1.\n• [b]K3:[/b] une W2, U2 y V2: es el punto estrella.\n• [b]K2:[/b] alimenta W2, U2 y V2: forma el delta.\n• [b]KT:[/b] temporizador con retardo a la conexión.\n\n[b]{{Enclavamiento}}:[/b] K2 y K3 no pueden cerrar a la vez, porque sería un cortocircuito entre fases. Por eso la bobina de K3 se alimenta a través del NC 21-22 de K2, y la de K2 a través del NC 21-22 de K3.\n\n[b]Relé térmico:[/b] en línea con K1 circula la corriente de devanado. Ajústelo a In ÷ √3: 25 ÷ 1,732 ≈ 14,4 A." },
+        { "tipo": "texto", "texto": "• [b]K1:[/b] conecta la alimentación a U1, V1 y W1.\n• [b]K3:[/b] une W2, U2 y V2: es el punto estrella.\n• [b]K2:[/b] alimenta W2, U2 y V2: forma el delta.\n• [b]KT:[/b] temporizador con retardo a la conexión.\n\n[b]{{Enclavamiento}}:[/b] K2 y K3 no pueden cerrar a la vez, porque sería un cortocircuito entre fases. Por eso la bobina de K3 se alimenta a través del NC 21-22 de K2, y la de K2 a través del NC 21-22 de K3.\n\n[b]Relé térmico:[/b] en línea con K1 circula la corriente de devanado. Ajústelo a In ÷ √3: 29,5 ÷ 1,732 ≈ 17 A." },
         {
           "tipo": "quiz",
           "tema": "enclavamiento_yd",
@@ -58,7 +58,7 @@
           "tipo": "animacion",
           "id": "banco_arranque",
           "params": { "circuito": "estrella_triangulo", "contactores": ["K1", "K2", "K3"] },
-          "pie": "Motor de 15 kW, 440Δ/760Y. Retardo de 6 s y valores típicos: verificar a bordo."
+          "pie": "Motor de 15 kW, 380Δ/660Y. Retardo de 6 s y valores típicos: verificar a bordo."
         },
         {
           "tipo": "ordenar",

@@ -6,15 +6,15 @@
   "reporte": {
     "de": "Jefe de máquinas",
     "texto": "La bomba de agua salada nº 2 dispara el relé térmico a los 4 o 5 minutos de arrancar. Ya se rearmó dos veces y volvió a disparar. El engrasador comenta que hace un ruido nuevo. Necesitamos esta bomba de reserva: encuentre la causa, no se limite a rearmar.",
-    "nota": "Motor de 15 kW, 440 V en delta, 25 A: valor típico — verificar a bordo."
+    "nota": "Motor de 15 kW, 380 V en delta, 29,5 A: valor típico — verificar a bordo."
   },
   "circuito": {
     "componentes": [
-      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
-      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 32 }, "estado": { "encendido": true } },
+      { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
+      { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 38 }, "estado": { "encendido": true } },
       { "id": "K1", "tipo": "contactor" },
-      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 25 } },
-      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 440, "v_estrella": 760, "i_delta": 25, "i_estrella": 14.5, "carga": 1.5 } },
+      { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 29.5 } },
+      { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 15, "v_delta": 380, "v_estrella": 660, "i_delta": 29.5, "i_estrella": 17, "carga": 1.5 } },
       { "id": "PE1", "tipo": "masa" },
       { "id": "T1", "tipo": "transformador_mando" },
       { "id": "F1", "tipo": "fusible" },
@@ -66,7 +66,7 @@
     "pregunta": "¿Cuál es la causa de los disparos?",
     "opciones": [
       { "texto": "Sobrecarga mecánica por el rodamiento de la bomba", "correcta": true, "explicacion": "Las tres corrientes son iguales y superan la nominal, el aislamiento está bien y el eje gira duro y con ruido. El relé está actuando correctamente: protege al motor de una carga excesiva." },
-      { "texto": "Relé térmico ajustado demasiado bajo", "explicacion": "El ajuste de 25 A coincide con la placa. Además, el amperímetro indica más de 25 A: el relé dispara porque la corriente es realmente alta." },
+      { "texto": "Relé térmico ajustado demasiado bajo", "explicacion": "El ajuste de 29,5 A coincide con la placa. Además, el amperímetro indica más de 29,5 A: el relé dispara porque la corriente es realmente alta." },
       { "texto": "Falta de una fase", "explicacion": "Con una fase perdida, una de las corrientes sería nula y las otras dos muy altas. Aquí las tres son iguales." },
       { "texto": "Bajo aislamiento del devanado", "explicacion": "El megóhmetro indica un aislamiento correcto. Además, un aislamiento bajo no aumenta por igual la corriente de las tres fases." }
     ]
@@ -77,12 +77,12 @@
     { "id": "cambiar_f2", "boton": "Cambiar el relé térmico F2", "titulo": "Relé en buen estado", "texto": "El relé dispara porque la corriente es alta. El repuesto disparará igual: mida antes de cambiar.", "innecesaria": true },
     { "id": "cambiar_k1", "boton": "Cambiar el contactor K1", "titulo": "Contactor en buen estado", "texto": "Los contactos del contactor retirado estaban en buen estado. Se gastó un repuesto sin necesidad: mida antes de cambiar.", "innecesaria": true }
   ],
-  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 360, "rpm_min": 1700 },
+  "prueba": { "motor": "M1", "rele": "F2", "contactor": "K1", "observar_s": 360, "rpm_min": 1400 },
   "libro": {
     "campos": [
-      { "etiqueta": "Corriente antes de la reparación", "opciones": ["Unos 35 A en las tres fases", "Unos 21 A en las tres fases", "35 A en dos fases y 0 A en la otra"], "correcta": 0, "explicacion": "Con la avería, el amperímetro indicaba unos 35 A en las tres fases, por encima de los 25 A de la placa." },
+      { "etiqueta": "Corriente antes de la reparación", "opciones": ["Unos 40 A en las tres fases", "Unos 25 A en las tres fases", "40 A en dos fases y 0 A en la otra"], "correcta": 0, "explicacion": "Con la avería, el amperímetro indicaba unos 40 A en las tres fases, por encima de los 29,5 A de la placa." },
       { "etiqueta": "Trabajo realizado", "opciones": ["Cambio de rodamientos de la bomba", "Subir el ajuste del relé térmico", "Cambio del relé térmico"], "correcta": 0, "explicacion": "Anote el trabajo que resolvió la causa: el cambio de rodamientos de la bomba." },
-      { "etiqueta": "Estado final", "opciones": ["En servicio, unos 21 A, relé en 25 A", "En servicio, relé en 40 A", "Fuera de servicio"], "correcta": 0, "explicacion": "La bomba quedó con unos 21 A y el relé ajustado a la corriente de la placa, 25 A." }
+      { "etiqueta": "Estado final", "opciones": ["En servicio, unos 25 A, relé en 29,5 A", "En servicio, relé en 45 A", "Fuera de servicio"], "correcta": 0, "explicacion": "La bomba quedó con unos 25 A y el relé ajustado a la corriente de la placa, 29,5 A." }
     ]
   },
   "para_saber_mas": [

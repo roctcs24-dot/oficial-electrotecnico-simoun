@@ -18,7 +18,7 @@ func test_dol_arranca_y_se_enclava() -> String:
 	return A.primero([
 		A.cierto(sim.componente("K1").cerrado(), "K1 debe quedar enclavado al soltar S1"),
 		A.cierto(sim.componente("H1").estado["encendida"], "la luz piloto debe encender"),
-		A.cierto(sim.componente("M1").rpm() > 1700.0, "el motor debe llegar a su velocidad"),
+		A.cierto(sim.componente("M1").rpm() > 1400.0, "el motor debe llegar a su velocidad"),
 	])
 
 
@@ -49,7 +49,7 @@ func test_disparo_del_termico_suelta_k1_y_rearma() -> String:
 		A.cierto(solto, "F2 debe soltar K1 por 95-96"),
 		A.cierto(not rearme_caliente, "no debe rearmar en caliente"),
 		A.cierto(rearme_frio, "debe rearmar en frío"),
-		A.cierto(sim.componente("M1").rpm() > 1700.0, "debe volver a arrancar"),
+		A.cierto(sim.componente("M1").rpm() > 1400.0, "debe volver a arrancar"),
 	])
 
 
@@ -66,7 +66,7 @@ func test_baja_tension_suelta_y_no_rearranca_solo() -> String:
 	])
 
 
-func test_bobina_en_440v_se_quema() -> String:
+func test_bobina_en_380v_se_quema() -> String:
 	var sim := A.circuito("arranque_directo")
 	sim.conectar("Q1.2", "K1.A1")
 	sim.conectar("Q1.4", "K1.A2")
@@ -76,7 +76,7 @@ func test_bobina_en_440v_se_quema() -> String:
 	sim.desconectar("K1.A1", "H1.X1")
 	sim.componente("Q1").accionar(true)
 	sim.avanzar_tiempo(5.0)
-	return A.cierto(sim.hubo_evento("bobina_quemada", "K1"), "una bobina de 110 V en 440 V debe quemarse")
+	return A.cierto(sim.hubo_evento("bobina_quemada", "K1"), "una bobina de 110 V en 380 V debe quemarse")
 
 
 func test_cortocircuito_entre_fases_dispara_magnetico() -> String:
@@ -151,13 +151,13 @@ func test_estrella_triangulo_secuencia_completa() -> String:
 	var pico_directo := _pico_directo()
 	return A.primero([
 		A.cierto(estrella_ok, "debe arrancar con K3 (estrella) y sin K2"),
-		A.cerca(v_estrella, 254.0, 0.02, "devanado en estrella"),
+		A.cerca(v_estrella, 219.4, 0.02, "devanado en estrella"),
 		A.cerca(pico_estrella / pico_directo, 1.0 / 3.0, 0.15, "pico de estrella frente a directo"),
 		A.cierto(not ambos, "K2 y K3 nunca deben estar cerrados a la vez"),
 		A.cierto(sim.componente("K2").cerrado(), "al final debe quedar K2 (delta)"),
 		A.cierto(not sim.componente("K3").cerrado(), "al final K3 debe abrir"),
-		A.cerca(v_delta, 440.0, 0.02, "devanado en delta"),
-		A.cierto(sim.componente("M1").rpm() > 1700.0, "debe llegar a su velocidad"),
+		A.cerca(v_delta, 380.0, 0.02, "devanado en delta"),
+		A.cierto(sim.componente("M1").rpm() > 1400.0, "debe llegar a su velocidad"),
 		A.cierto(not sim.hubo_evento("vibracion_mando"), "el mando no debe vibrar"),
 	])
 

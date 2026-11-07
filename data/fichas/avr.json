@@ -1,7 +1,7 @@
 {
   "id": "avr",
   "titulo": "Regulador automático de tensión (AVR)",
-  "resumen": "Mantiene los 440 V y reparte los kVAr entre grupos en paralelo.",
+  "resumen": "Mantiene los 380 V y reparte los kVAr entre grupos en paralelo.",
   "dibujo": {
     "svg": "res://art/equipos/avr.svg",
     "tamano": [360, 320],
@@ -48,12 +48,12 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "Ajuste con el manual y anote la posición inicial de cada potenciómetro:\n1. [b]VOLT:[/b] con el grupo en vacío, a velocidad nominal y con el mando remoto en el centro de su recorrido, lleve la tensión a 440 V.\n2. [b]STAB:[/b] busque la respuesta más rápida sin oscilaciones al conectar y desconectar carga.\n3. [b]DROOP:[/b] con grupos en paralelo, ajuste hasta que los kVAr se repartan en proporción a la potencia. Es típico un 3 a 5 % de caída a plena carga reactiva ([i]verificar[/i]).\n4. [b]UFRO y EXC:[/b] vienen ajustados de fábrica. No los cambie sin motivo.\n\nUn AVR de repuesto debe ser del mismo modelo, o uno compatible con la excitatriz y la tensión del alternador."
+      "texto": "Ajuste con el manual y anote la posición inicial de cada potenciómetro:\n1. [b]VOLT:[/b] con el grupo en vacío, a velocidad nominal y con el mando remoto en el centro de su recorrido, lleve la tensión a 380 V.\n2. [b]STAB:[/b] busque la respuesta más rápida sin oscilaciones al conectar y desconectar carga.\n3. [b]DROOP:[/b] con grupos en paralelo, ajuste hasta que los kVAr se repartan en proporción a la potencia. Es típico un 3 a 5 % de caída a plena carga reactiva ([i]verificar[/i]).\n4. [b]UFRO y EXC:[/b] vienen ajustados de fábrica. No los cambie sin motivo.\n\nUn AVR de repuesto debe ser del mismo modelo, o uno compatible con la excitatriz y la tensión del alternador."
     },
     {
       "id": "pruebas",
       "titulo": "Cómo se prueba",
-      "texto": "• [b]Tensión de salida[/b] con el multímetro en V AC entre fases: 440 V en vacío, y estable al entrar carga.\n• [b]Tensión de campo[/b] en F+ y F− con el multímetro en V DC: unos pocos voltios en vacío y más en carga. Compare con la placa ([i]verificar[/i]).\n• [b]Respuesta:[/b] conecte un motor grande y observe cuánto cae la tensión y cuánto tarda en recuperarse.\n• [b]Con el grupo parado y bloqueado:[/b] continuidad del campo de la excitatriz en F+ y F−, con el AVR desconectado. Fuera de rango indica un bobinado abierto."
+      "texto": "• [b]Tensión de salida[/b] con el multímetro en V AC entre fases: 380 V en vacío, y estable al entrar carga.\n• [b]Tensión de campo[/b] en F+ y F− con el multímetro en V DC: unos pocos voltios en vacío y más en carga. Compare con la placa: en los alternadores del buque, 44 V y 2,6 A a plena carga.\n• [b]Respuesta:[/b] conecte un motor grande y observe cuánto cae la tensión y cuánto tarda en recuperarse.\n• [b]Con el grupo parado y bloqueado:[/b] continuidad del campo de la excitatriz en F+ y F−, con el AVR desconectado. Fuera de rango indica un bobinado abierto."
     },
     {
       "id": "fallas",

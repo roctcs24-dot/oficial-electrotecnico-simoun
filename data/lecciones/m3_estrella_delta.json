@@ -7,14 +7,14 @@
     {
       "titulo": "La regla",
       "bloques": [
-        { "tipo": "texto", "texto": "Una placa indica dos tensiones. [b]La menor es la que admite cada devanado.[/b] Elija la conexión que le entregue a cada devanado esa tensión:\n\n• En {{conexion_estrella}}, cada devanado recibe la tensión de línea ÷ √3.\n• En {{conexion_delta}}, cada devanado recibe la tensión de línea completa.\n\n[b]En red de 440 V:[/b]\n• Placa 254Δ/440Y: cada devanado admite 254 V, así que va en estrella (440 ÷ √3 ≈ 254 V).\n• Placa 440Δ/760Y: cada devanado admite 440 V, así que va en delta." },
+        { "tipo": "texto", "texto": "Una placa indica dos tensiones. [b]La menor es la que admite cada devanado.[/b] Elija la conexión que le entregue a cada devanado esa tensión:\n\n• En {{conexion_estrella}}, cada devanado recibe la tensión de línea ÷ √3.\n• En {{conexion_delta}}, cada devanado recibe la tensión de línea completa.\n\n[b]En red de 380 V:[/b]\n• Placa 220Δ/380Y: cada devanado admite 220 V, así que va en estrella (380 ÷ √3 ≈ 219 V).\n• Placa 380Δ/660Y: cada devanado admite 380 V, así que va en delta. Es el caso del motor Hoyer de 2,2 kW del buque, con placa 380-415Δ/660-690Y." },
         {
           "tipo": "quiz",
           "tema": "regla_conexion",
-          "pregunta": "Placa 440Δ/760Y en una red de 440 V. ¿Qué conexión corresponde?",
-          "opciones": ["Delta, porque cada devanado admite 440 V", "Estrella, porque siempre es la más segura", "Cualquiera de las dos"],
+          "pregunta": "Placa 380Δ/660Y en una red de 380 V. ¿Qué conexión corresponde?",
+          "opciones": ["Delta, porque cada devanado admite 380 V", "Estrella, porque siempre es la más segura", "Cualquiera de las dos"],
           "correcta": 0,
-          "explicacion": "La tensión menor de la placa, 440 V, es la de cada devanado. En delta recibe justo esos 440 V."
+          "explicacion": "La tensión menor de la placa, 380 V, es la de cada devanado. En delta recibe justo esos 380 V."
         }
       ]
     },
@@ -40,14 +40,14 @@
     {
       "titulo": "Consecuencias",
       "bloques": [
-        { "tipo": "texto", "texto": "[b]Tensión de más[/b] (254Δ/440Y en delta): se satura el hierro, la corriente sube mucho y el aislamiento se destruye. Es el error más grave.\n\n[b]Tensión de menos[/b] (440Δ/760Y en estrella): el {{par}} depende del cuadrado de la tensión, así que queda en un tercio. Con poca carga puede arrancar y parecer normal, pero a plena carga se sobrecalienta.\n\nEste segundo caso es el principio del arranque estrella-triángulo: se aprovecha la estrella solo durante el arranque." },
+        { "tipo": "texto", "texto": "[b]Tensión de más[/b] (220Δ/380Y en delta): se satura el hierro, la corriente sube mucho y el aislamiento se destruye. Es el error más grave.\n\n[b]Tensión de menos[/b] (380Δ/660Y en estrella): el {{par}} depende del cuadrado de la tensión, así que queda en un tercio. Con poca carga puede arrancar y parecer normal, pero a plena carga se sobrecalienta.\n\nEste segundo caso es el principio del arranque estrella-triángulo: se aprovecha la estrella solo durante el arranque." },
         {
           "tipo": "quiz",
           "tema": "consecuencia_estrella",
-          "pregunta": "Un motor 440Δ/760Y queda conectado en estrella a 440 V y trabaja a plena carga. ¿Qué ocurre?",
+          "pregunta": "Un motor 380Δ/660Y queda conectado en estrella a 380 V y trabaja a plena carga. ¿Qué ocurre?",
           "opciones": ["Trabaja igual, pero con menos consumo", "El par cae a un tercio, la corriente sube y el relé térmico dispara", "Se quema al instante por exceso de tensión"],
           "correcta": 1,
-          "explicacion": "Recibe 254 V por devanado. Sin par suficiente aumenta el deslizamiento y la corriente, y el motor se sobrecarga."
+          "explicacion": "Recibe 219 V por devanado. Sin par suficiente aumenta el deslizamiento y la corriente, y el motor se sobrecarga."
         }
       ]
     }

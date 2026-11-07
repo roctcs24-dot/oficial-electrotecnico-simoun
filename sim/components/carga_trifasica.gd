@@ -15,7 +15,7 @@ func tipo() -> String:
 
 
 func _params_por_defecto() -> Dictionary:
-	return {"p_kw": 100.0, "q_kvar": 75.0, "v_linea": 440.0, "esencial": true, "falla_mohm": 0.0, "falla_fase": "L1"}
+	return {"p_kw": 100.0, "q_kvar": 75.0, "v_linea": SimRed.V_LINEA, "esencial": true, "falla_mohm": 0.0, "falla_fase": "L1"}
 
 
 func _estado_inicial() -> Dictionary:

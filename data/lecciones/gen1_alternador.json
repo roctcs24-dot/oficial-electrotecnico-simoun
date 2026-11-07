@@ -1,7 +1,7 @@
 {
   "id": "gen1_alternador",
   "titulo": "El alternador síncrono",
-  "resumen": "Cómo convierte el diésel-generador el giro en 440 V a 60 Hz.",
+  "resumen": "Cómo convierte el diésel-generador el giro en 380 V a 50 Hz.",
   "minutos": 5,
   "paginas": [
     {
@@ -12,22 +12,22 @@
           "tipo": "animacion",
           "id": "fasores",
           "params": {},
-          "pie": "Las tres tensiones del estator, una por devanado. En el alternador real giran 60 veces por segundo; aquí, despacio."
+          "pie": "Las tres tensiones del estator, una por devanado. En el alternador real giran 50 veces por segundo; aquí, despacio."
         },
         {
           "tipo": "quiz",
           "tema": "gen_rpm_frecuencia",
-          "pregunta": "Un alternador de 4 polos debe dar 60 Hz. ¿A qué velocidad debe girar?",
-          "opciones": ["3600 rpm", "1800 rpm", "1200 rpm"],
+          "pregunta": "Un alternador de 4 polos debe dar 50 Hz. ¿A qué velocidad debe girar?",
+          "opciones": ["3000 rpm", "1500 rpm", "1000 rpm"],
           "correcta": 1,
-          "explicacion": "n = 120 × f ÷ p = 120 × 60 ÷ 4 = 1800 rpm. Con 6 polos serían 1200 rpm y con 8 polos, 900 rpm."
+          "explicacion": "n = 120 × f ÷ p = 120 × 50 ÷ 4 = 1500 rpm, la velocidad de los grupos Caterpillar del buque. Con 6 polos serían 1000 rpm y con 8 polos, 750 rpm."
         }
       ]
     },
     {
       "titulo": "Excitación sin escobillas",
       "bloques": [
-        { "tipo": "texto", "texto": "La mayoría de los alternadores marinos actuales son {{sin_escobillas}} ([i]verificar en la placa del Vía Simoun[/i]). La corriente del campo principal no entra por anillos: se fabrica en el propio rotor.\n\n[b]La cadena de excitación:[/b]\n1. El {{avr}} alimenta con unos pocos amperios de continua el estator de la {{excitatriz}}.\n2. El rotor de la excitatriz, en el mismo eje, genera corriente alterna.\n3. Los {{diodos_giratorios}}, montados en el rotor, la rectifican.\n4. Esa corriente continua alimenta el campo principal, que induce los 440 V en el estator principal.\n\nEl AVR se alimenta de la propia salida del alternador o de un {{gip}}. En el primer caso, al arrancar, la tensión empieza a crecer gracias al {{magnetismo_remanente}} del hierro. Si ese magnetismo se pierde, el grupo gira pero no da tensión." },
+        { "tipo": "texto", "texto": "La mayoría de los alternadores marinos actuales son {{sin_escobillas}}, como los Stamford HCI534F del Vía Simoun. La corriente del campo principal no entra por anillos: se fabrica en el propio rotor.\n\n[b]La cadena de excitación:[/b]\n1. El {{avr}} alimenta con unos pocos amperios de continua el estator de la {{excitatriz}}. En la placa de los alternadores del buque: 44 V y 2,6 A a plena carga.\n2. El rotor de la excitatriz, en el mismo eje, genera corriente alterna.\n3. Los {{diodos_giratorios}}, montados en el rotor, la rectifican.\n4. Esa corriente continua alimenta el campo principal, que induce los 380 V en el estator principal.\n\nEl AVR se alimenta de la propia salida del alternador o de un {{gip}}. En el primer caso, al arrancar, la tensión empieza a crecer gracias al {{magnetismo_remanente}} del hierro. Si ese magnetismo se pierde, el grupo gira pero no da tensión." },
         {
           "tipo": "quiz",
           "tema": "gen_cadena_excitacion",
@@ -41,14 +41,14 @@
     {
       "titulo": "La placa del alternador",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{placa_datos}} del alternador da, entre otros datos ([i]valores típicos de un atunero cerquero — verificar a bordo[/i]):\n\n• 562,5 kVA, cos φ 0,8, es decir 450 kW.\n• 440 V, 738 A, 60 Hz, 1800 rpm, conexión en estrella.\n• Clase de aislamiento, grado de protección IP y tensión y corriente de excitación a plena carga.\n\n[b]Por qué en kVA:[/b] el calentamiento de los devanados depende de la corriente, no de los kW. El alternador puede dar 738 A con cualquier factor de potencia, pero el diésel solo puede dar 450 kW.\n\nI = S ÷ (√3 × V) = 562 500 ÷ (1,732 × 440) ≈ 738 A." },
+        { "tipo": "texto", "texto": "La {{placa_datos}} de los alternadores Stamford HCI534F del Vía Simoun, uno por cada uno de los cuatro grupos, da:\n\n• 565 kVA, cos φ 0,8, es decir 452 kW.\n• 380 V, 858,4 A, 50 Hz, 1500 rpm, 3 fases, conexión en estrella serie.\n• Aislamiento clase H, grado de protección IP23 y excitación de 44 V y 2,6 A a plena carga.\n• Sobrecarga admisible del 10 % durante 2 h cada 24 h.\n\n[b]Por qué en kVA:[/b] el calentamiento de los devanados depende de la corriente, no de los kW. El alternador puede dar 858 A con cualquier factor de potencia, pero el diésel solo puede dar 452 kW.\n\nI = S ÷ (√3 × V) = 565 000 ÷ (1,732 × 380) ≈ 858 A.\n\nCon 4 polos, n = 120 × 50 ÷ 4 = 1500 rpm." },
         {
           "tipo": "quiz",
           "tema": "gen_kva_kw",
-          "pregunta": "Un alternador de 562,5 kVA trabaja con cos φ 0,8. ¿Cuántos kW entrega a plena carga?",
-          "opciones": ["450 kW", "562,5 kW", "703 kW"],
+          "pregunta": "Un alternador de 565 kVA trabaja con cos φ 0,8. ¿Cuántos kW entrega a plena carga?",
+          "opciones": ["452 kW", "565 kW", "706 kW"],
           "correcta": 0,
-          "explicacion": "P = S × cos φ = 562,5 × 0,8 = 450 kW. Esa es la potencia que debe dar el diésel."
+          "explicacion": "P = S × cos φ = 565 × 0,8 = 452 kW. Esa es la potencia que debe dar el diésel."
         }
       ]
     }

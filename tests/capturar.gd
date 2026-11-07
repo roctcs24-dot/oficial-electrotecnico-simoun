@@ -204,7 +204,7 @@ func _capturar_cuadro(raiz: Raiz, carpeta: String) -> void:
 		p._alternar_diesel("G2")
 		p.sim.avanzar_tiempo(10.0)
 		p._alternar_acb("G1")
-		p.sim.componente("G2").estado["f_ref"] = 58.7
+		p.sim.componente("G2").estado["f_ref"] = 48.9
 		p.sim.avanzar_tiempo(6.0)
 		p._revisar_eventos()
 		for hijo in p._avisos.get_children():

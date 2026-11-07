@@ -1,7 +1,7 @@
 {
   "id": "l0_alterna",
   "titulo": "Corriente continua y alterna",
-  "resumen": "Frecuencia, valor eficaz y valor de pico de la red de 440 V.",
+  "resumen": "Frecuencia, valor eficaz y valor de pico de la red de 380 V.",
   "minutos": 4,
   "paginas": [
     {
@@ -12,19 +12,19 @@
           "tipo": "animacion",
           "id": "onda_alterna",
           "params": { "v_rms": 110 },
-          "pie": "Representación ralentizada. La onda real completa 60 ciclos por segundo."
+          "pie": "Representación ralentizada. La onda real completa 50 ciclos por segundo."
         }
       ]
     },
     {
       "titulo": "Frecuencia",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{frecuencia}} es el número de ciclos completos por segundo, en hercios (Hz). La red del Vía Simoun es de 60 Hz: cada ciclo dura 1 ÷ 60 ≈ 16,7 milisegundos.\n\nLa frecuencia determina la velocidad de los motores. Un motor de 50 Hz en una red de 60 Hz gira un 20 % más rápido, y una bomba puede sobrecargarse. Si una placa indica otra frecuencia, consulte antes de conectar." },
+        { "tipo": "texto", "texto": "La {{frecuencia}} es el número de ciclos completos por segundo, en hercios (Hz). La red del Vía Simoun es de 50 Hz: cada ciclo dura 1 ÷ 50 = 20 milisegundos.\n\nLa frecuencia determina la velocidad de los motores. Un motor de 60 Hz en una red de 50 Hz gira cerca de un 17 % más lento y, si recibe su tensión completa, se satura y se calienta. Si una placa indica otra frecuencia, consulte antes de conectar." },
         {
           "tipo": "quiz",
           "tema": "frecuencia",
-          "pregunta": "¿Qué significa que la red sea de 60 Hz?",
-          "opciones": ["Que hay 60 V entre las fases", "Que la onda completa 60 ciclos por segundo", "Que el motor gira a 60 vueltas por minuto"],
+          "pregunta": "¿Qué significa que la red sea de 50 Hz?",
+          "opciones": ["Que hay 50 V entre las fases", "Que la onda completa 50 ciclos por segundo", "Que el motor gira a 50 vueltas por minuto"],
           "correcta": 1,
           "explicacion": "Hercio significa ciclo por segundo. La velocidad de un motor depende de la frecuencia, pero no es lo mismo."
         }
@@ -33,7 +33,7 @@
     {
       "titulo": "Valor eficaz y valor de pico",
       "bloques": [
-        { "tipo": "texto", "texto": "Como la tensión alterna varía a cada instante, se resume con un solo número: el {{valor_eficaz}}. Es la tensión continua que produciría el mismo calor. Es el valor que indican las placas y que lee el multímetro.\n\nEl {{valor_pico}} es el máximo real de la onda:\n\n[center][b]V pico = V eficaz × √2[/b][/center]\n\nLos 440 V de la red alcanzan 622 V en cada pico. Por eso el aislamiento de los cables y de los guantes debe soportar más que los 440 V nominales." },
+        { "tipo": "texto", "texto": "Como la tensión alterna varía a cada instante, se resume con un solo número: el {{valor_eficaz}}. Es la tensión continua que produciría el mismo calor. Es el valor que indican las placas y que lee el multímetro.\n\nEl {{valor_pico}} es el máximo real de la onda:\n\n[center][b]V pico = V eficaz × √2[/b][/center]\n\nLos 380 V de la red alcanzan 537 V en cada pico. Por eso el aislamiento de los cables y de los guantes debe soportar más que los 380 V nominales." },
         {
           "tipo": "quiz",
           "tema": "valor_pico",

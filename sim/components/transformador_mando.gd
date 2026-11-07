@@ -12,7 +12,7 @@ func tipo() -> String:
 
 func _params_por_defecto() -> Dictionary:
 	return {
-		"v_primario": 440.0,
+		"v_primario": SimRed.V_LINEA,
 		"v_secundario": 110.0,
 		"r_primario": 40.0,
 		"x_primario": 2000.0,

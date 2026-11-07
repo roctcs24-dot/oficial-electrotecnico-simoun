@@ -1,10 +1,11 @@
 {
-  "nota": "Práctica libre del cuadro principal. Tres grupos de 450 kW sobre barras de 440 V, valores típicos de atuneros cerqueros: verificar a bordo. El buque empieza sin tensión: con las barras principales recuperadas, cierre el enlace QT y deje el generador de emergencia en automático.",
+  "nota": "Práctica libre del cuadro principal. Cuatro grupos Stamford HCI534F de 452 kW sobre barras de 380 V y 50 Hz, como los del buque; protecciones y ajustes típicos: verificar a bordo. El buque empieza sin tensión: con las barras principales recuperadas, cierre el enlace QT y deje el generador de emergencia en automático.",
   "circuito": "cuadro_principal",
   "generadores": [
     { "id": "G1", "interruptor": "Q1", "nombre": "Generador nº 1" },
     { "id": "G2", "interruptor": "Q2", "nombre": "Generador nº 2" },
-    { "id": "G3", "interruptor": "Q3", "nombre": "Generador nº 3" }
+    { "id": "G3", "interruptor": "Q3", "nombre": "Generador nº 3" },
+    { "id": "G4", "interruptor": "Q4", "nombre": "Generador nº 4" }
   ],
   "cargas": [
     { "id": "C1", "nombre": "Servicios esenciales" },

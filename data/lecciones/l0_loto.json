@@ -7,7 +7,7 @@
     {
       "titulo": "Antes de intervenir",
       "bloques": [
-        { "tipo": "texto", "texto": "El pulsador de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 440 V, y el equipo puede arrancarse desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del buque ([i]verificar el procedimiento a bordo[/i]). Aplique las reglas siguientes en orden, sin omitir ninguna." },
+        { "tipo": "texto", "texto": "El pulsador de parada [b]no[/b] deja un equipo sin tensión: solo abre el circuito de mando. Después de pulsarlo, los bornes del motor pueden seguir conectados a 380 V, y el equipo puede arrancarse desde otro lugar. Un motor parado no es un motor seguro.\n\nA bordo, el trabajo se autoriza con un {{permiso_trabajo}} cuando lo exige el sistema de gestión de seguridad del buque ([i]verificar el procedimiento a bordo[/i]). Aplique las reglas siguientes en orden, sin omitir ninguna." },
         {
           "tipo": "quiz",
           "tema": "parada_no_es_seguro",

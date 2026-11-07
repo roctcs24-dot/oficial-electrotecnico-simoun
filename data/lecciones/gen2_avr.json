@@ -1,27 +1,27 @@
 {
   "id": "gen2_avr",
   "titulo": "Excitación y regulador de tensión",
-  "resumen": "Cómo mantiene el AVR los 440 V con cualquier carga.",
+  "resumen": "Cómo mantiene el AVR los 380 V con cualquier carga.",
   "minutos": 4,
   "paginas": [
     {
       "titulo": "Qué hace el AVR",
       "bloques": [
-        { "tipo": "texto", "texto": "El {{avr}} mide la tensión de salida entre fases, la compara con su consigna y ajusta la {{excitacion}}:\n\n• Si entra un motor grande o sube la carga inductiva, la tensión cae. El AVR sube la excitación y la devuelve a 440 V en fracciones de segundo.\n• Si se desconecta carga, la tensión sube. El AVR baja la excitación.\n\nEl operador puede retocar la consigna desde el cuadro con el mando de tensión, unos pocos voltios arriba o abajo.\n\n[b]Cuidado con la medida:[/b] si se suelta o se funde un cable de medida, muchos AVR creen que la tensión es cero y suben la excitación al máximo. Por eso suelen llevar una protección por sobreexcitación ([i]verificar con el manual del AVR[/i])." },
+        { "tipo": "texto", "texto": "El {{avr}} mide la tensión de salida entre fases, la compara con su consigna y ajusta la {{excitacion}}:\n\n• Si entra un motor grande o sube la carga inductiva, la tensión cae. El AVR sube la excitación y la devuelve a 380 V en fracciones de segundo.\n• Si se desconecta carga, la tensión sube. El AVR baja la excitación.\n\nEl operador puede retocar la consigna desde el cuadro con el mando de tensión, unos pocos voltios arriba o abajo.\n\n[b]Cuidado con la medida:[/b] si se suelta o se funde un cable de medida, muchos AVR creen que la tensión es cero y suben la excitación al máximo. Por eso suelen llevar una protección por sobreexcitación ([i]verificar con el manual del AVR[/i])." },
         {
           "tipo": "quiz",
           "tema": "gen_avr_sensado",
           "pregunta": "Se suelta un cable de medida del AVR con el grupo en marcha. ¿Qué ocurre en muchos modelos?",
           "opciones": ["La tensión sube hacia el máximo", "La tensión no cambia", "El diésel se para"],
           "correcta": 0,
-          "explicacion": "El AVR mide menos tensión de la real y sube la excitación. Si no tiene protección por sobreexcitación, la tensión del grupo sube muy por encima de 440 V."
+          "explicacion": "El AVR mide menos tensión de la real y sube la excitación. Si no tiene protección por sobreexcitación, la tensión del grupo sube muy por encima de 380 V."
         }
       ]
     },
     {
       "titulo": "Los ajustes del AVR",
       "bloques": [
-        { "tipo": "texto", "texto": "Un AVR típico tiene estos ajustes ([i]nombres y valores de un AVR genérico — verificar con el manual del instalado[/i]):\n\n• [b]Tensión (VOLT):[/b] la consigna, 440 V.\n• [b]Estabilidad (STAB):[/b] la rapidez de respuesta. Demasiado rápida, la tensión oscila; demasiado lenta, cae mucho al entrar una carga.\n• [b]Estatismo reactivo (DROOP):[/b] con un {{transformador_corriente}} en una fase, el AVR baja un poco la tensión cuando el grupo lleva kVAr. Así los grupos en paralelo se reparten la {{potencia_reactiva}}.\n• [b]Protección de baja frecuencia:[/b] si el diésel va lento, reduce la tensión para no sobrecargar la excitatriz.\n• [b]Sobreexcitación:[/b] corta la excitación si se mantiene demasiado alta.\n\nNo toque los ajustes internos sin el manual y sin anotar la posición inicial." },
+        { "tipo": "texto", "texto": "Un AVR típico tiene estos ajustes ([i]nombres y valores de un AVR genérico — verificar con el manual del instalado[/i]):\n\n• [b]Tensión (VOLT):[/b] la consigna, 380 V.\n• [b]Estabilidad (STAB):[/b] la rapidez de respuesta. Demasiado rápida, la tensión oscila; demasiado lenta, cae mucho al entrar una carga.\n• [b]Estatismo reactivo (DROOP):[/b] con un {{transformador_corriente}} en una fase, el AVR baja un poco la tensión cuando el grupo lleva kVAr. Así los grupos en paralelo se reparten la {{potencia_reactiva}}.\n• [b]Protección de baja frecuencia:[/b] si el diésel va lento, reduce la tensión para no sobrecargar la excitatriz.\n• [b]Sobreexcitación:[/b] corta la excitación si se mantiene demasiado alta.\n\nNo toque los ajustes internos sin el manual y sin anotar la posición inicial." },
         {
           "tipo": "quiz",
           "tema": "gen_avr_droop",

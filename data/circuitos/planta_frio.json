@@ -1,12 +1,12 @@
 {
   "nombre": "Planta de frío por amoníaco con un compresor",
-  "nota": "Compresor de tornillo de unos 220 kW frigoríficos a −25/+35 °C, con motor de 110 kW a 440 V, en arranque directo para simplificar: a bordo suele arrancar en estrella-triángulo o con arrancador suave. Presostatos de alta (16 bar, rearme manual), baja (0,3 bar, rearme automático) y aceite (1 bar diferencial, 45 s de retardo, rearme manual) en serie con la bobina del contactor. Potencias, presiones y ajustes: valores típicos — verificar a bordo.",
+  "nota": "Compresor de tornillo de unos 220 kW frigoríficos a −25/+35 °C, con motor de 110 kW a 380 V, en arranque directo para simplificar: a bordo suele arrancar en estrella-triángulo o con arrancador suave. Presostatos de alta (16 bar, rearme manual), baja (0,3 bar, rearme automático) y aceite (1 bar diferencial, 45 s de retardo, rearme manual) en serie con la bobina del contactor. Potencias, presiones y ajustes: valores típicos — verificar a bordo.",
   "componentes": [
-    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
-    { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 200 } },
+    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
+    { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 225 } },
     { "id": "K1", "tipo": "contactor", "params": { "i_soldadura_a": 3000 } },
-    { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 180 } },
-    { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 110, "v_delta": 440, "v_estrella": 760, "i_delta": 180, "i_estrella": 104, "fp": 0.87, "rpm": 1780, "arranque_s": 2.5, "carga": 0.05 } },
+    { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 205 } },
+    { "id": "M1", "tipo": "motor_trifasico", "params": { "p_kw": 110, "v_delta": 380, "v_estrella": 660, "i_delta": 202, "i_estrella": 116, "fp": 0.87, "rpm": 1480, "arranque_s": 2.5, "carga": 0.05 } },
     { "id": "T1", "tipo": "transformador_mando" },
     { "id": "F1", "tipo": "fusible" },
     { "id": "S0", "tipo": "pulsador", "params": { "contacto": "NC" } },

@@ -5,7 +5,7 @@
   "dibujo": {
     "svg": "res://art/equipos/alternador.svg",
     "tamano": [480, 340],
-    "nota": "Ilustración sin marca de un diésel-generador típico de atunero. La disposición real del Vía Simoun puede variar: verificar a bordo.",
+    "nota": "Ilustración genérica de un diésel-generador. En el Vía Simoun, cada uno de los cuatro grupos tiene un diésel Caterpillar a 1500 rpm y un alternador Stamford HCI534F. La disposición real puede variar: verificar a bordo.",
     "etiquetas": [
       { "texto": "MOTOR DIÉSEL", "x": 130, "y": 196, "tam": 16 },
       { "texto": "ALTERNADOR", "x": 346, "y": 168, "tam": 15 },
@@ -21,15 +21,15 @@
       "titulo": "Placa",
       "svg": "res://art/equipos/placa_alternador.svg",
       "tamano": [480, 300],
-      "nota": "Placa ilustrativa con valores típicos de un atunero cerquero. Los datos de excitación cambian mucho entre fabricantes: verificar con la placa real del Vía Simoun.",
+      "nota": "Datos de la placa de los alternadores Stamford HCI534F del Vía Simoun. El dibujo es ilustrativo: la disposición de la placa real es distinta.",
       "etiquetas": [
-        { "texto": "SYNCHRONOUS GENERATOR · BRUSHLESS", "x": 240, "y": 42, "tam": 17, "color": "#20242a" },
-        { "texto": "3 ~   60 Hz   1800 r/min", "x": 240, "y": 80, "tam": 16, "color": "#20242a" },
-        { "texto": "562.5 kVA   p.f. 0.8   450 kW", "x": 240, "y": 117, "tam": 16, "color": "#20242a" },
-        { "texto": "440 V   738 A   Y", "x": 240, "y": 153, "tam": 16, "color": "#20242a" },
-        { "texto": "Exc. 45 V DC   2.5 A", "x": 240, "y": 189, "tam": 16, "color": "#20242a" },
-        { "texto": "Ins. class H   IP23   S1", "x": 240, "y": 225, "tam": 16, "color": "#20242a" },
-        { "texto": "Amb. 45 °C   IEC 60034-1", "x": 240, "y": 260, "tam": 16, "color": "#20242a" }
+        { "texto": "AC GENERATOR · STAMFORD HCI534F", "x": 240, "y": 42, "tam": 17, "color": "#20242a" },
+        { "texto": "3 ~   50 Hz   1500 r/min", "x": 240, "y": 80, "tam": 16, "color": "#20242a" },
+        { "texto": "565 kVA   p.f. 0.8   452 kW", "x": 240, "y": 117, "tam": 16, "color": "#20242a" },
+        { "texto": "380 V   858.4 A   Series star", "x": 240, "y": 153, "tam": 16, "color": "#20242a" },
+        { "texto": "Exc. 44 V   2.6 A", "x": 240, "y": 189, "tam": 16, "color": "#20242a" },
+        { "texto": "Ins. class H   IP23", "x": 240, "y": 225, "tam": 16, "color": "#20242a" },
+        { "texto": "Overload 10 %  2 h in 24 h", "x": 240, "y": 260, "tam": 16, "color": "#20242a" }
       ]
     }
   ],
@@ -41,12 +41,12 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{alternador}} convierte la energía mecánica del diésel en energía eléctrica trifásica a 440 V y 60 Hz. Es un {{generador_sincrono}}: su frecuencia la fija la velocidad del diésel, y su tensión, la {{excitacion}}. Tres grupos iguales alimentan las barras del cuadro principal, solos o en paralelo ([i]número y potencia típicos — verificar a bordo[/i])."
+      "texto": "El {{alternador}} convierte la energía mecánica del diésel en energía eléctrica trifásica a 380 V y 50 Hz. Es un {{generador_sincrono}}: su frecuencia la fija la velocidad del diésel, y su tensión, la {{excitacion}}. En el Vía Simoun, cuatro grupos iguales, G#1 a G#4, cada uno con un alternador Stamford HCI534F de 565 kVA y 452 kW a 1500 rpm, alimentan las barras del cuadro principal, solos o en paralelo."
     },
     {
       "id": "partes",
       "titulo": "Cómo funciona por dentro",
-      "texto": "• [b]Estator:[/b] carcasa con el devanado trifásico principal, conectado en estrella. Sus extremos salen a la caja de bornes.\n• [b]Rotor:[/b] polos con el {{campo}}, alimentado con corriente continua.\n• {{Excitatriz}} y {{diodos_giratorios}}, en el extremo opuesto al acoplamiento, en los alternadores {{sin_escobillas}}.\n• {{Avr}}, en la caja de bornes o en el cuadro.\n• [b]Rodamientos:[/b] uno o dos. En los de un solo rodamiento, el lado del acoplamiento descansa en el volante del diésel.\n• [b]Ventilador[/b] en el eje y resistencias de caldeo anticondensación.\n• [b]Sondas de temperatura[/b] en devanados y rodamientos, según el modelo."
+      "texto": "• [b]Estator:[/b] carcasa con el devanado trifásico principal, conectado en estrella; en el buque, estrella serie según la placa. Sus extremos salen a la caja de bornes.\n• [b]Rotor:[/b] polos con el {{campo}}, alimentado con corriente continua.\n• {{Excitatriz}} y {{diodos_giratorios}}, en el extremo opuesto al acoplamiento, en los alternadores {{sin_escobillas}}.\n• {{Avr}}, en la caja de bornes o en el cuadro.\n• [b]Rodamientos:[/b] uno o dos. En los de un solo rodamiento, el lado del acoplamiento descansa en el volante del diésel.\n• [b]Ventilador[/b] en el eje y resistencias de caldeo anticondensación.\n• [b]Sondas de temperatura[/b] en devanados y rodamientos, según el modelo."
     },
     {
       "id": "conexion",
@@ -56,7 +56,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "El alternador no tiene ajustes propios: la tensión la fija el AVR y la frecuencia, el gobernador. En el controlador del grupo se configuran los límites que lo protegen: corriente nominal, sobrecarga, temperaturas de devanados y rodamientos y potencia inversa. Tómelos de la placa y del manual del fabricante.\n\nUn alternador de repuesto debe coincidir en kVA, tensión, frecuencia, velocidad, conexión y tipo de acoplamiento."
+      "texto": "El alternador no tiene ajustes propios: la tensión la fija el AVR y la frecuencia, el gobernador. En el controlador del grupo se configuran los límites que lo protegen: corriente nominal, sobrecarga, temperaturas de devanados y rodamientos y potencia inversa. Tómelos de la placa y del manual del fabricante. La placa de los alternadores del buque admite un 10 % de sobrecarga durante 2 h cada 24 h.\n\nUn alternador de repuesto debe coincidir en kVA, tensión, frecuencia, velocidad, conexión y tipo de acoplamiento."
     },
     {
       "id": "pruebas",

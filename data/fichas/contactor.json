@@ -5,7 +5,7 @@
   "dibujo": {
     "svg": "res://art/equipos/contactor.svg",
     "tamano": [360, 500],
-    "nota": "Ilustración sin marca con la disposición típica de un contactor de 25 A en carril DIN. Cada fabricante cambia detalles: identifique siempre los bornes por sus marcas.",
+    "nota": "Ilustración sin marca con la disposición típica de un contactor de 32 A en carril DIN. Cada fabricante cambia detalles: identifique siempre los bornes por sus marcas.",
     "etiquetas": [
       { "texto": "1/L1", "x": 110, "y": 39, "tam": 15 },
       { "texto": "3/L2", "x": 180, "y": 39, "tam": 15 },
@@ -13,9 +13,9 @@
       { "texto": "13 NO", "x": 110, "y": 138, "tam": 13 },
       { "texto": "21 NC", "x": 180, "y": 138, "tam": 13 },
       { "texto": "A1", "x": 250, "y": 138, "tam": 15 },
-      { "texto": "CONTACTOR  25 A", "x": 180, "y": 210, "tam": 15, "color": "#20242a" },
-      { "texto": "AC-3   25 A   440 V", "x": 180, "y": 289, "tam": 12 },
-      { "texto": "Bobina / Coil 110 V 60 Hz", "x": 180, "y": 303, "tam": 12 },
+      { "texto": "CONTACTOR  32 A", "x": 180, "y": 210, "tam": 15, "color": "#20242a" },
+      { "texto": "AC-3   32 A   380 V", "x": 180, "y": 289, "tam": 12 },
+      { "texto": "Bobina / Coil 110 V 50 Hz", "x": 180, "y": 303, "tam": 12 },
       { "texto": "14 NO", "x": 110, "y": 364, "tam": 13 },
       { "texto": "22 NC", "x": 180, "y": 364, "tam": 13 },
       { "texto": "A2", "x": 250, "y": 364, "tam": 15 },
@@ -78,7 +78,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "El contactor no tiene ajustes. Se elige por:\n• Su {{categoria_empleo}}: AC-3 para motores de jaula de ardilla que arrancan y paran con normalidad.\n• La corriente de empleo a la tensión de la red, que se lee en la placa.\n• La tensión y frecuencia de la bobina. Una bobina de 50 Hz no siempre sirve en 60 Hz: compruébelo con el fabricante."
+      "texto": "El contactor no tiene ajustes. Se elige por:\n• Su {{categoria_empleo}}: AC-3 para motores de jaula de ardilla que arrancan y paran con normalidad.\n• La corriente de empleo a la tensión de la red, que se lee en la placa.\n• La tensión y frecuencia de la bobina. Una bobina de 60 Hz no siempre sirve en 50 Hz: compruébelo con el fabricante."
     },
     {
       "id": "pruebas",

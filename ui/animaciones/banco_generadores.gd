@@ -162,7 +162,7 @@ func _actualizar_dial() -> void:
 	var sy: SimSincronoscopio = sim.componente("SY")
 	var sol := sim.solucion
 	var brillos: Array[float] = []
-	var v_fase: float = 440.0 / sqrt(3.0)
+	var v_fase: float = SimRed.V_LINEA / sqrt(3.0)
 	for fase in ["L1", "L2", "L3"]:
 		brillos.append(sol.entre("G2.%s" % fase, "BP.%s" % fase).modulo() / (2.0 * v_fase))
 	_dial.actualizar(sy.estado["angulo"], sy.estado["valido"] and not sim.componente("Q2").cerrado(), brillos)

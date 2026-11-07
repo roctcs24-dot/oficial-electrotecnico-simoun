@@ -25,9 +25,9 @@ func tipo() -> String:
 
 func _params_por_defecto() -> Dictionary:
 	return {
-		"in_a": 750.0,
-		"v_linea": 440.0,
-		"p_kw_nominal": 450.0,
+		"in_a": 900.0,
+		"v_linea": SimRed.V_LINEA,
+		"p_kw_nominal": 452.0,
 		"isd_veces": 2.5,
 		"tsd_s": 0.2,
 		"ii_veces": 10.0,

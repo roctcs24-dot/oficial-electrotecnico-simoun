@@ -60,8 +60,8 @@ func test_arranque_en_vacio() -> String:
 	g.arrancar()
 	sim.avanzar_tiempo(10.0)
 	return A.primero([
-		A.cerca(g.frecuencia(), 60.0, 0.005, "frecuencia en vacío"),
-		A.cerca(g.estado["v"], 440.0, 0.01, "tensión en vacío"),
+		A.cerca(g.frecuencia(), 50.0, 0.005, "frecuencia en vacío"),
+		A.cerca(g.estado["v"], 380.0, 0.01, "tensión en vacío"),
 		A.cierto(not sim.hubo_evento("disparo_minima_tension"), "no debe disparar nada"),
 	])
 
@@ -72,13 +72,13 @@ func test_cierre_sobre_barra_muerta_y_estatismo() -> String:
 	var p: float = g.estado["p_kw"]
 	# La fricción también la aporta el diésel: cuenta como carga para el gobernador.
 	var friccion_kw: float = g.params["friccion_pu"] * g.params["s_kva"]
-	var esperada := 60.0 - 0.04 * 60.0 * (p + friccion_kw) / 450.0
+	var esperada := 50.0 - 0.04 * 50.0 * (p + friccion_kw) / 452.0
 	return A.primero([
 		A.cierto(_acb(sim, "Q1").cerrado(), "Q1 debe cerrar sobre barra muerta"),
 		A.cierto(sim.hubo_evento("cierre_barra_muerta"), "debe registrar el cierre en barra muerta"),
 		A.cerca(p, 320.0, 0.05, "potencia de las dos cargas"),
 		A.cerca(g.frecuencia(), esperada, 0.003, "la frecuencia baja con la carga según el estatismo"),
-		A.cerca(g.estado["v"], 440.0, 0.03, "el AVR mantiene la tensión"),
+		A.cerca(g.estado["v"], 380.0, 0.03, "el AVR mantiene la tensión"),
 	])
 
 
@@ -90,7 +90,7 @@ func test_isocrono_mantiene_60_hz() -> String:
 	sim.avanzar_tiempo(10.0)
 	_acb(sim, "Q1").cerrar()
 	sim.avanzar_tiempo(30.0)
-	return A.cerca(g.frecuencia(), 60.0, 0.002, "un gobernador isócrono vuelve a 60 Hz con carga")
+	return A.cerca(g.frecuencia(), 50.0, 0.002, "un gobernador isócrono vuelve a 50 Hz con carga")
 
 
 func test_no_cierra_sin_tension_del_generador() -> String:
@@ -124,8 +124,8 @@ func test_sincronizar_y_repartir_la_carga() -> String:
 	sim.avanzar_tiempo(5.0)
 	var sincronizado := sim.hubo_evento("cierre_sincronizado")
 	# Igualar las consignas de velocidad reparte la carga activa a partes iguales.
-	_gen(sim, "G1").estado["f_ref"] = 61.2
-	_gen(sim, "G2").estado["f_ref"] = 61.2
+	_gen(sim, "G1").estado["f_ref"] = 51.0
+	_gen(sim, "G2").estado["f_ref"] = 51.0
 	sim.avanzar_tiempo(20.0)
 	var p1: float = _gen(sim, "G1").estado["p_kw"]
 	var p2: float = _gen(sim, "G2").estado["p_kw"]
@@ -138,7 +138,7 @@ func test_sincronizar_y_repartir_la_carga() -> String:
 		A.cerca(p1, p2, 0.05, "reparto de kW"),
 		A.cerca(p1 + p2, 320.0, 0.05, "entre los dos dan la carga"),
 		A.cerca(q1, q2, 0.1, "reparto de kVAr"),
-		A.cerca(_gen(sim, "G1").frecuencia(), 60.0, 0.01, "con más velocidad, la frecuencia vuelve a 60 Hz"),
+		A.cerca(_gen(sim, "G1").frecuencia(), 50.0, 0.01, "con más velocidad, la frecuencia vuelve a 50 Hz"),
 		A.cierto(not _acb(sim, "Q1").estado["disparado"] and not _acb(sim, "Q2").estado["disparado"], "no debe disparar nada"),
 	])
 
@@ -258,11 +258,11 @@ func test_blackout_arranca_la_emergencia() -> String:
 	sim.avanzar_tiempo(25.0)
 	var despues := sim.solucion.entre("BE.L1", "BE.L2").modulo()
 	return A.primero([
-		A.cierto(antes > 400.0 and quieto, "con tensión normal, la emergencia debe esperar"),
+		A.cierto(antes > 340.0 and quieto, "con tensión normal, la emergencia debe esperar: %.0f V" % antes),
 		A.cierto(sim.hubo_evento("disparo_minima_tension", "QT"), "el enlace debe abrir por mínima tensión"),
 		A.cierto(sim.hubo_evento("arranque_automatico", "GE"), "la emergencia debe arrancar sola"),
 		A.cierto(_acb(sim, "QE").cerrado(), "QE debe cerrar sobre las barras de emergencia"),
-		A.cerca(despues, 440.0, 0.05, "las barras de emergencia recuperan la tensión"),
+		A.cerca(despues, 380.0, 0.05, "las barras de emergencia recuperan la tensión"),
 	])
 
 
@@ -318,14 +318,14 @@ func _pms(sim: SimSimulacion) -> SimPMS:
 
 func test_pms_reparte_y_mantiene_60_hz() -> String:
 	var sim := _en_paralelo()
-	_gen(sim, "G1").estado["f_ref"] = 61.5
+	_gen(sim, "G1").estado["f_ref"] = 51.25
 	_pms(sim).fijar_automatico(true)
 	sim.avanzar_tiempo(40.0)
 	var p1: float = _gen(sim, "G1").estado["p_kw"]
 	var p2: float = _gen(sim, "G2").estado["p_kw"]
 	return A.primero([
 		A.cerca(p1, p2, 0.05, "reparto de kW"),
-		A.cerca(_gen(sim, "G1").frecuencia(), 60.0, 0.002, "frecuencia"),
+		A.cerca(_gen(sim, "G1").frecuencia(), 50.0, 0.002, "frecuencia"),
 	])
 
 
@@ -355,7 +355,7 @@ func test_pms_recupera_las_barras() -> String:
 	var v: float = sim.solucion.entre("BP.L1", "BP.L2").modulo()
 	return A.primero([
 		A.cierto(primero, "sin grupos, debe arrancar uno y cerrar sobre barra muerta"),
-		A.cerca(v, 440.0, 0.05, "tras el blackout debe recuperar las barras: %.0f V" % v),
+		A.cerca(v, 380.0, 0.05, "tras el blackout debe recuperar las barras: %.0f V" % v),
 	])
 
 

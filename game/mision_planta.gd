@@ -370,7 +370,7 @@ func verificar(id_equipo: String) -> Dictionary:
 	verificados[id_equipo] = true
 	var nombre := "los bornes del motor del compresor" if id_equipo == "Q1" else "los bornes del motor de la bomba"
 	mediciones.append("Ausencia de tensión en %s: 0 V entre fases, multímetro probado antes y después" % nombre)
-	return _aviso("hecho", "Ausencia de tensión verificada", "El multímetro marcó 440 V en la alimentación antes y después, y 0 V entre fases en %s." % nombre)
+	return _aviso("hecho", "Ausencia de tensión verificada", "El multímetro marcó 380 V en la alimentación antes y después, y 0 V entre fases en %s." % nombre)
 
 
 func verificado(id_equipo: String) -> bool:
@@ -380,7 +380,7 @@ func verificado(id_equipo: String) -> bool:
 ## La mayor tensión entre fases en los bornes del motor del equipo.
 func tension_equipo(id_equipo: String) -> float:
 	if id_equipo != "Q1":
-		return 440.0 if planta().estado[id_equipo] else 0.0
+		return SimRed.V_LINEA if planta().estado[id_equipo] else 0.0
 	if sim.solucion == null:
 		sim.paso()
 	var m := sim.componente("M1")

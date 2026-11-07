@@ -31,7 +31,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{rele_proteccion}} de {{potencia_inversa}} vigila el sentido de la potencia activa del generador. Si el grupo absorbe potencia de las barras por encima de su ajuste y durante más tiempo que su retardo, ordena abrir su interruptor. Así evita que el diésel sea arrastrado como un motor y que los demás grupos se sobrecarguen. En muchos buques esta función está dentro del controlador del generador ([i]verificar a bordo[/i])."
+      "texto": "El {{rele_proteccion}} de {{potencia_inversa}} vigila el sentido de la potencia activa del generador. Si el grupo absorbe potencia de las barras por encima de su ajuste y durante más tiempo que su retardo, ordena abrir su interruptor. Así evita que el diésel sea arrastrado como un motor y que los demás grupos se sobrecarguen. En muchos buques esta función está dentro del controlador del generador. En el Vía Simoun la incluye el controlador InteliGen 200 de cada grupo ([i]verificar a bordo su ajuste y si hay además un relé independiente[/i])."
     },
     {
       "id": "partes",
@@ -46,7 +46,7 @@
     {
       "id": "ajuste",
       "titulo": "Cómo se ajusta y se elige",
-      "texto": "Ajustes típicos para un diésel ([i]verificar con el fabricante del motor y el estudio de protecciones[/i]):\n• [b]Potencia:[/b] del 8 al 15 % de la potencia nominal. En el simulador, el 8 % de 450 kW, es decir 36 kW.\n• [b]Retardo:[/b] de 3 a 10 s. En el simulador, 5 s, para no disparar con las oscilaciones breves de la sincronización.\n\nUn ajuste demasiado bajo provoca disparos al sincronizar. Uno demasiado alto deja al diésel trabajando como motor."
+      "texto": "Ajustes típicos para un diésel ([i]verificar con el fabricante del motor y el estudio de protecciones[/i]):\n• [b]Potencia:[/b] del 8 al 15 % de la potencia nominal. En el simulador, el 8 % de 452 kW, es decir unos 36 kW.\n• [b]Retardo:[/b] de 3 a 10 s. En el simulador, 5 s, para no disparar con las oscilaciones breves de la sincronización.\n\nUn ajuste demasiado bajo provoca disparos al sincronizar. Uno demasiado alto deja al diésel trabajando como motor."
     },
     {
       "id": "pruebas",

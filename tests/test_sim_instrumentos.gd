@@ -21,7 +21,7 @@ func _motor_aislado(extra := {}) -> SimSimulacion:
 	var sim := SimSimulacion.new()
 	sim.agregar(SimFuenteTrifasica.new("B"))
 	sim.agregar(SimGuardamotor.new("Q1"))
-	var p := A.PLACA_440D.duplicate()
+	var p := A.PLACA_380D.duplicate()
 	p.merge(extra, true)
 	sim.agregar(SimMotorTrifasico.new("M1", p))
 	for par in [["B.L1", "Q1.1"], ["B.L2", "Q1.3"], ["B.L3", "Q1.5"], ["Q1.2", "M1.U1"], ["Q1.4", "M1.V1"], ["Q1.6", "M1.W1"]]:
@@ -40,8 +40,8 @@ func test_voltimetro_lee_linea_y_nada_en_flotante() -> String:
 	var flotante := m.medir(sim, "vac", "M1.U1", "M1.V1")
 	# Sin retorno, la entrada de 10 MΩ queda en serie con los 100 MΩ de aislamiento del motor.
 	return A.primero([
-		A.cerca(linea["valor"], 440.0, 0.01, "tensión de línea"),
-		A.cerca(abierto["valor"], 254.0 * 10.0 / 110.0, 0.1, "polo abierto sin retorno"),
+		A.cerca(linea["valor"], 380.0, 0.01, "tensión de línea"),
+		A.cerca(abierto["valor"], 219.4 * 10.0 / 110.0, 0.1, "polo abierto sin retorno"),
 		A.cierto(flotante["valor"] < 5.0, "un motor desconectado no debe mostrar tensión: %.1f V" % flotante["valor"]),
 	])
 
@@ -53,7 +53,7 @@ func test_voltimetro_en_polo_abierto_con_retorno() -> String:
 	sim.paso()
 	var abierto := _multimetro().medir(sim, "vac", "Q1.1", "Q1.2")
 	# El punto estrella queda en la mitad de L2-L3: 1,5 veces la tensión de fase.
-	return A.cerca(abierto["valor"], 254.0 * 1.5, 0.02, "polo abierto con retorno por el motor")
+	return A.cerca(abierto["valor"], 219.4 * 1.5, 0.02, "polo abierto con retorno por el motor")
 
 
 func test_ohmetro_lee_el_devanado_y_detecta_abierto() -> String:
@@ -76,7 +76,7 @@ func test_ohmetro_con_tension_se_destruye() -> String:
 	var lectura := m.medir(sim, "ohm", "B.L1", "B.L2")
 	var despues := m.medir(sim, "vac", "B.L1", "B.L2")
 	return A.primero([
-		A.cierto(lectura["averia"] == "multimetro_destruido", "440 V en ohmios destruye el equipo"),
+		A.cierto(lectura["averia"] == "multimetro_destruido", "380 V en ohmios destruye el equipo"),
 		A.cierto(despues["averia"] == "multimetro_destruido", "sigue dañado"),
 		A.cierto(sim.hubo_evento("multimetro_destruido"), "debe quedar registrado"),
 	])
@@ -102,7 +102,7 @@ func test_amperimetro_en_serie_lee_la_corriente() -> String:
 	sim.conectar("B.L1", "R1.A")
 	sim.paso()
 	var lectura := _multimetro().medir(sim, "a", "R1.B", "B.L2")
-	return A.cerca(lectura["valor"], 4.4, 0.01, "corriente en serie")
+	return A.cerca(lectura["valor"], 3.8, 0.01, "corriente en serie")
 
 
 func test_modo_diodo() -> String:
@@ -135,8 +135,8 @@ func test_falta_de_fase_a_la_salida_del_contactor() -> String:
 	var sana: float = m.medir(sim, "vac", "K1.2", "K1.4")["valor"]
 	var otra: float = m.medir(sim, "vac", "K1.4", "K1.6")["valor"]
 	return A.primero([
-		A.cierto(sana > 400.0, "la fase sana: %.0f V" % sana),
-		A.cerca(otra, 220.0, 0.1, "con la fase perdida"),
+		A.cierto(sana > 340.0, "la fase sana: %.0f V" % sana),
+		A.cerca(otra, 190.0, 0.1, "con la fase perdida"),
 		A.cierto(absf(sim.componente("M1").rpm()) < 5.0, "parado no arranca"),
 	])
 
@@ -176,7 +176,7 @@ func test_ruido_es_pequeño_y_fluctua() -> String:
 	var a: float = m.medir(sim, "vac", "B.L1", "B.L2")["valor"]
 	var b: float = m.medir(sim, "vac", "B.L1", "B.L2")["valor"]
 	return A.primero([
-		A.cerca(a, 440.0, 0.02, "lectura con ruido"),
+		A.cerca(a, 380.0, 0.02, "lectura con ruido"),
 		A.cierto(a != b, "dos lecturas no deben ser idénticas"),
 	])
 

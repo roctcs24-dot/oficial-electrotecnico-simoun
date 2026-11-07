@@ -3,11 +3,11 @@
   "tipo": "cuadro",
   "titulo": "Alarma de aislamiento en el cuadro principal",
   "resumen": "El monitor de aislamiento marca menos de 0,1 MΩ tras baldear la cubierta.",
-  "equipo": "Cuadro principal: red de 440 V",
+  "equipo": "Cuadro principal: red de 380 V",
   "reporte": {
     "de": "Oficial de guardia de máquinas",
     "texto": "Salta la alarma del {{monitor_aislamiento}} del cuadro principal: marca menos de 0,1 MΩ. Esta mañana se baldeó la cubierta. Navegamos con G1 y G2 en paralelo y el PMS en automático. Localice la salida que tiene la {{falla_tierra}}, déjela aislada, haga que se repare y devuélvala a servicio.",
-    "nota": "Red aislada de 440 V. Aislamientos y umbral de alarma: valores del simulador — verificar a bordo."
+    "nota": "Red aislada de 380 V. Aislamientos y umbral de alarma: valores del simulador — verificar a bordo."
   },
   "cuadro": {
     "cargas": [

@@ -24,10 +24,10 @@
       "etiquetas": [
         { "texto": "MOTOR DE INDUCCIÓN TRIFÁSICO  3~", "x": 278, "y": 44, "tam": 22, "color": "#20242a" },
         { "texto": "Potencia:  15 kW", "x": 161, "y": 98, "tam": 19, "color": "#20242a" },
-        { "texto": "Tensión:  440 Δ / 760 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
-        { "texto": "Corriente:  25,0 / 14,5 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
-        { "texto": "Frecuencia:  60 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
-        { "texto": "Velocidad:  1760 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
+        { "texto": "Tensión:  380 Δ / 660 Y V", "x": 161, "y": 146, "tam": 19, "color": "#20242a" },
+        { "texto": "Corriente:  29,5 / 17,0 A", "x": 161, "y": 194, "tam": 19, "color": "#20242a" },
+        { "texto": "Frecuencia:  50 Hz", "x": 161, "y": 242, "tam": 19, "color": "#20242a" },
+        { "texto": "Velocidad:  1460 rpm", "x": 395, "y": 98, "tam": 19, "color": "#20242a" },
         { "texto": "cos φ:  0,86", "x": 395, "y": 146, "tam": 19, "color": "#20242a" },
         { "texto": "Protección:  IP55", "x": 395, "y": 194, "tam": 19, "color": "#20242a" },
         { "texto": "Aislamiento:  clase F", "x": 395, "y": 242, "tam": 19, "color": "#20242a" },
@@ -82,17 +82,17 @@
     {
       "id": "partes",
       "titulo": "Cómo funciona por dentro",
-      "texto": "• [b]{{Estator}}:[/b] la parte fija. Aloja el {{devanado}} trifásico, que crea un campo magnético giratorio.\n• [b]{{Rotor_jaula}}:[/b] barras en cortocircuito. El campo induce en ellas una corriente que produce el par.\n• [b]{{Rodamiento}}, ventilador y carcasa con aletas:[/b] sostienen el eje y evacúan el calor.\n\nEl rotor gira un poco más despacio que el campo: esa diferencia es el {{deslizamiento}}. En un motor de 4 polos a 60 Hz, el campo gira a 1800 rpm y el rotor, a unas 1760 rpm.\n\nEl campo depende del orden de las fases. Para invertir el giro, intercambie dos fases de la alimentación."
+      "texto": "• [b]{{Estator}}:[/b] la parte fija. Aloja el {{devanado}} trifásico, que crea un campo magnético giratorio.\n• [b]{{Rotor_jaula}}:[/b] barras en cortocircuito. El campo induce en ellas una corriente que produce el par.\n• [b]{{Rodamiento}}, ventilador y carcasa con aletas:[/b] sostienen el eje y evacúan el calor.\n\nEl rotor gira un poco más despacio que el campo: esa diferencia es el {{deslizamiento}}. En un motor de 4 polos a 50 Hz, el campo gira a 1500 rpm y el rotor, a unas 1460 rpm.\n\nEl campo depende del orden de las fases. Para invertir el giro, intercambie dos fases de la alimentación."
     },
     {
       "id": "conexion",
       "titulo": "Estrella o delta: cómo se conecta",
-      "texto": "La {{placa_datos}} indica dos tensiones. [b]La menor es la que admite cada devanado.[/b]\n\n• [b]Placa 254Δ/440Y en red de 440 V:[/b] conéctelo en {{conexion_estrella}}.\n• [b]Placa 440Δ/760Y en red de 440 V:[/b] conéctelo en {{conexion_delta}}. Es el motor que admite arranque estrella-triángulo.\n\nEn la {{bornera}}, la fila superior suele ser W2, U2, V2 y la inferior U1, V1, W1, de modo que cada {{puente}} queda recto. Compruébelo en el esquema de la tapa de la caja de bornes.\n\n[b]Error grave:[/b] un motor 254Δ/440Y conectado en delta a 440 V recibe √3 veces su tensión por devanado, y se quema."
+      "texto": "La {{placa_datos}} indica dos tensiones. [b]La menor es la que admite cada devanado.[/b]\n\n• [b]Placa 220Δ/380Y en red de 380 V:[/b] conéctelo en {{conexion_estrella}}.\n• [b]Placa 380Δ/660Y en red de 380 V:[/b] conéctelo en {{conexion_delta}}. Es el motor que admite arranque estrella-triángulo.\n\nEn la {{bornera}}, la fila superior suele ser W2, U2, V2 y la inferior U1, V1, W1, de modo que cada {{puente}} queda recto. Compruébelo en el esquema de la tapa de la caja de bornes.\n\n[b]Error grave:[/b] un motor 220Δ/380Y conectado en delta a 380 V recibe √3 veces su tensión por devanado, y se quema."
     },
     {
       "id": "ajuste",
       "titulo": "Cómo leer la placa",
-      "texto": "• [b]Potencia:[/b] la mecánica entregada en el eje.\n• [b]Tensión y corriente:[/b] la primera corriente corresponde a la primera tensión. Con 440Δ son 25 A.\n• [b]Velocidad:[/b] a plena carga, no la del campo.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] protección contra sólidos y agua. IP55 es típico en sala de máquinas ([i]verificar a bordo[/i]).\n• [b]Clase de aislamiento:[/b] temperatura que admite el devanado.\n• [b]Servicio S1:[/b] continuo.\n• [b]Frecuencia:[/b] un motor de 50 Hz en red de 60 Hz gira un 20 % más rápido. Consulte antes de conectarlo.\n\n[b]Motor sin marcas:[/b] con continuidad se identifican los tres pares de devanado. La polaridad se determina con el procedimiento de la lección sobre la bornera."
+      "texto": "• [b]Potencia:[/b] la mecánica entregada en el eje.\n• [b]Tensión y corriente:[/b] la primera corriente corresponde a la primera tensión. Con 380Δ son 29,5 A.\n• [b]Velocidad:[/b] a plena carga, no la del campo.\n• [b]cos φ:[/b] el {{factor_potencia}} a plena carga.\n• [b]IP:[/b] protección contra sólidos y agua. IP55 es típico en sala de máquinas ([i]verificar a bordo[/i]).\n• [b]Clase de aislamiento:[/b] temperatura que admite el devanado.\n• [b]Servicio S1:[/b] continuo.\n• [b]Frecuencia:[/b] un motor de 60 Hz en red de 50 Hz gira cerca de un 17 % más lento y, con su tensión completa, se calienta. Algunas placas traen una línea para cada frecuencia: use la de 50 Hz. Consulte antes de conectarlo.\n\n[b]Motor sin marcas:[/b] con continuidad se identifican los tres pares de devanado. La polaridad se determina con el procedimiento de la lección sobre la bornera."
     },
     {
       "id": "pruebas",

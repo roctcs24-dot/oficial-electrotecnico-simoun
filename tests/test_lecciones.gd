@@ -139,8 +139,8 @@ func test_estrella_lee_del_motor_de_simulacion() -> String:
 	var fase: float = e.lectura("L1", "N")
 	e.free()
 	return A.primero([
-		A.cerca(linea, 440.0, 0.001, "tensión de línea"),
-		A.cerca(fase, 254.03, 0.001, "tensión de fase"),
+		A.cerca(linea, 380.0, 0.001, "tensión de línea"),
+		A.cerca(fase, 219.39, 0.001, "tensión de fase"),
 	])
 
 
@@ -160,27 +160,27 @@ func _ensayar(placa: String, conexion: String, segundos: float) -> EnsayoConexio
 
 
 func test_ensayo_conexion_correcta_no_dispara() -> String:
-	var a := _ensayar("254_440", "estrella", 60.0)
-	var b := _ensayar("440_760", "delta", 60.0)
+	var a := _ensayar("220_380", "estrella", 60.0)
+	var b := _ensayar("380_660", "delta", 60.0)
 	return A.primero([
-		A.cierto(not a.disparo(), "254Δ/440Y en estrella no debe disparar"),
-		A.cierto(not b.disparo(), "440Δ/760Y en delta no debe disparar"),
-		A.cerca(a.v_devanado, 254.0, 0.02, "tensión de devanado en estrella"),
-		A.cerca(b.v_devanado, 440.0, 0.02, "tensión de devanado en delta"),
-		A.cierto(EnsayoConexion.diagnostico("254_440", "estrella") == "correcto", "diagnóstico estrella"),
-		A.cierto(EnsayoConexion.diagnostico("440_760", "delta") == "correcto", "diagnóstico delta"),
+		A.cierto(not a.disparo(), "220Δ/380Y en estrella no debe disparar"),
+		A.cierto(not b.disparo(), "380Δ/660Y en delta no debe disparar"),
+		A.cerca(a.v_devanado, 219.4, 0.02, "tensión de devanado en estrella"),
+		A.cerca(b.v_devanado, 380.0, 0.02, "tensión de devanado en delta"),
+		A.cierto(EnsayoConexion.diagnostico("220_380", "estrella") == "correcto", "diagnóstico estrella"),
+		A.cierto(EnsayoConexion.diagnostico("380_660", "delta") == "correcto", "diagnóstico delta"),
 	])
 
 
 func test_ensayo_conexion_incorrecta_dispara() -> String:
-	var exceso := _ensayar("254_440", "delta", 60.0)
+	var exceso := _ensayar("220_380", "delta", 60.0)
 	# DURACION_MAXIMA_S de la práctica: debe disparar antes de que esta termine.
-	var defecto := _ensayar("440_760", "estrella", 900.0)
+	var defecto := _ensayar("380_660", "estrella", 900.0)
 	return A.primero([
-		A.cierto(exceso.disparo(), "254Δ/440Y en delta debe disparar en 60 s"),
-		A.cierto(defecto.disparo(), "440Δ/760Y en estrella a plena carga debe disparar"),
-		A.cierto(EnsayoConexion.diagnostico("254_440", "delta") == "exceso", "diagnóstico de exceso"),
-		A.cierto(EnsayoConexion.diagnostico("440_760", "estrella") == "defecto", "diagnóstico de defecto"),
+		A.cierto(exceso.disparo(), "220Δ/380Y en delta debe disparar en 60 s"),
+		A.cierto(defecto.disparo(), "380Δ/660Y en estrella a plena carga debe disparar"),
+		A.cierto(EnsayoConexion.diagnostico("220_380", "delta") == "exceso", "diagnóstico de exceso"),
+		A.cierto(EnsayoConexion.diagnostico("380_660", "estrella") == "defecto", "diagnóstico de defecto"),
 	])
 
 
@@ -204,8 +204,8 @@ func test_banco_directo_arranca_con_pico() -> String:
 	b.free()
 	return A.primero([
 		A.cierto(enclavado, "K1 debe quedar enclavado"),
-		A.cierto(rpm > 1700.0, "debe llegar a su velocidad: %.0f" % rpm),
-		A.cerca(pico, 162.5, 0.2, "pico de arranque"),
+		A.cierto(rpm > 1400.0, "debe llegar a su velocidad: %.0f" % rpm),
+		A.cerca(pico, 29.5 * 6.5, 0.2, "pico de arranque"),
 	])
 
 
@@ -224,9 +224,9 @@ func test_banco_estrella_triangulo_reduce_el_pico() -> String:
 	var disparo: bool = b.sim.hubo_evento("disparo_rele_termico") or b.sim.hubo_evento("disparo_termico")
 	b.free()
 	return A.primero([
-		A.cerca(pico_estrella, 162.5 / 3.0, 0.2, "pico en estrella"),
+		A.cerca(pico_estrella, 29.5 * 6.5 / 3.0, 0.2, "pico en estrella"),
 		A.cierto(delta, "tras el retardo debe quedar en delta"),
-		A.cierto(rpm > 1700.0, "debe llegar a su velocidad: %.0f" % rpm),
+		A.cierto(rpm > 1400.0, "debe llegar a su velocidad: %.0f" % rpm),
 		A.cierto(not disparo, "un arranque normal no debe disparar protecciones"),
 	])
 
@@ -263,7 +263,7 @@ func test_practica_sincronizar_bien() -> String:
 	b.free()
 	return A.primero([
 		A.cierto(abierto_al_empezar, "G2 debe empezar fuera de barras"),
-		A.cerca(f_barras, 60.0, 0.005, "las barras deben quedar a 60 Hz"),
+		A.cerca(f_barras, 50.0, 0.005, "las barras deben quedar a 50 Hz"),
 		A.cerca(desliz, 0.1, 0.3, "dos toques dejan 0,1 Hz de deslizamiento"),
 		A.cierto(llego, "la aguja debe pasar por las doce"),
 		A.cierto(cerrado and bien, "cerrar en la ventana debe ser un cierre sincronizado"),
@@ -308,7 +308,7 @@ func test_practica_reparto_de_carga() -> String:
 		A.cierto(absf(g2_antes) < 40.0, "G2 debe empezar casi sin carga: %.0f kW" % g2_antes),
 		A.cierto(g2_kw > 100.0 and g1_kw < 250.0, "subir la velocidad de G2 debe pasarle carga: G1 %.0f, G2 %.0f kW" % [g1_kw, g2_kw]),
 		A.cerca(g1_kw + g2_kw, 320.0, 0.08, "la carga total no cambia"),
-		A.cerca(f, 60.0, 0.005, "subir uno y bajar el otro no cambia la frecuencia"),
+		A.cerca(f, 50.0, 0.005, "subir uno y bajar el otro no cambia la frecuencia"),
 		A.cierto(q2_despues > q2_antes + 30.0, "subir la tensión de G2 debe pasarle kVAr: %.0f → %.0f" % [q2_antes, q2_despues]),
 	])
 

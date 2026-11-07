@@ -23,7 +23,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{sincronoscopio}} indica si un generador puede cerrarse sobre las barras. Su aguja muestra la diferencia de ángulo entre las tensiones del entrante y de las barras, y su giro, la {{frecuencia_deslizamiento}}. Junto a él suelen montarse un voltímetro y un frecuencímetro dobles y las {{lamparas_sincronismo}}."
+      "texto": "El {{sincronoscopio}} indica si un generador puede cerrarse sobre las barras. Su aguja muestra la diferencia de ángulo entre las tensiones del entrante y de las barras, y su giro, la {{frecuencia_deslizamiento}}. Junto a él suelen montarse un voltímetro y un frecuencímetro dobles y las {{lamparas_sincronismo}}.\n\nEn el Vía Simoun, el controlador InteliGen 200 de cada grupo sincroniza y cierra el interruptor por sí mismo en modo AUTO ([i]verificar a bordo qué instrumentos de sincronización manual tiene el cuadro[/i])."
     },
     {
       "id": "partes",
