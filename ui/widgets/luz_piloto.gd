@@ -1,6 +1,6 @@
 class_name LuzPiloto
 extends Control
-## Luz piloto con su aro metálico.
+## Luz piloto de 22 mm con su aro cromado moleteado y lente de Fresnel.
 
 const VERDE_APAGADO := Color("1d3a28")
 const VERDE_ENCENDIDO := Color("5dff8f")
@@ -31,10 +31,6 @@ func _init() -> void:
 
 
 func _draw() -> void:
-	var centro := size / 2.0
-	var r := minf(size.x, size.y) / 2.0
-	draw_circle(centro, r, Color("8e9496"))
-	draw_circle(centro, r * 0.82, Color("2a2d30"))
+	var r := minf(size.x, size.y) / 2.0 - 2.0
 	var luz := brillo if encendida else 0.0
-	draw_circle(centro, r * 0.7, color_apagado.lerp(color_encendido, luz))
-	draw_circle(centro - Vector2(r, r) * 0.22, r * 0.18, Color(1.0, 1.0, 1.0, 0.2 + 0.4 * luz))
+	DibujoInstrumentos.lampara(self, size / 2.0, r, color_apagado, color_encendido, luz)

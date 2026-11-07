@@ -31,26 +31,39 @@ func actualizar(nuevo_angulo: float, es_valido: bool, brillos: Array[float]) -> 
 
 func _draw() -> void:
 	var fuente := get_theme_default_font()
-	var radio := minf(size.x, size.y - 60.0) * 0.45
-	var centro := Vector2(size.x / 2.0, radio + 8.0)
-	draw_circle(centro, radio + 6.0, Color("8e9496"))
-	draw_circle(centro, radio, CARA)
+	var lado := minf(size.x, size.y - 60.0)
+	var marco := Rect2(Vector2((size.x - lado) / 2.0, 0.0), Vector2(lado, lado))
+	var cara := DibujoInstrumentos.marco_cuadrado(self, marco)
+	draw_rect(cara, CARA)
+	var centro := cara.get_center()
+	var radio := cara.size.x * 0.44
 	var arriba := -PI / 2.0
 	draw_arc(centro, radio * 0.85, arriba - deg_to_rad(VENTANA_GRADOS), arriba + deg_to_rad(VENTANA_GRADOS), 12, VENTANA, radio * 0.18, true)
-	for i in 12:
-		var a := arriba + TAU * i / 12.0
-		draw_line(centro + Vector2.from_angle(a) * radio * 0.92, centro + Vector2.from_angle(a) * radio * 0.8, MARCA, 2.0, true)
+	draw_arc(centro, radio * 0.94, 0.0, TAU, 48, MARCA, 1.5, true)
+	for i in 60:
+		var a := arriba + TAU * i / 60.0
+		var largo := 0.14 if i % 5 == 0 else 0.06
+		draw_line(centro + Vector2.from_angle(a) * radio * 0.94, centro + Vector2.from_angle(a) * radio * (0.94 - largo), MARCA, 2.0 if i % 5 == 0 else 1.0, true)
 	var t := 12
 	# Centrados a cada lado, dentro del aro y lejos de las marcas de las cuatro y las ocho.
 	var ancho := radio * 0.7
 	draw_string(fuente, centro + Vector2(radio * 0.38 - ancho / 2.0, radio * 0.62), "RÁPIDO", HORIZONTAL_ALIGNMENT_CENTER, ancho, t, MARCA)
 	draw_string(fuente, centro + Vector2(-radio * 0.38 - ancho / 2.0, radio * 0.62), "LENTO", HORIZONTAL_ALIGNMENT_CENTER, ancho, t, MARCA)
+	# Flechas de sentido: horario hacia RÁPIDO, antihorario hacia LENTO.
+	for lado_flecha: float in [1.0, -1.0]:
+		var a0 := arriba + lado_flecha * deg_to_rad(60.0)
+		var a1 := arriba + lado_flecha * deg_to_rad(95.0)
+		draw_arc(centro, radio * 0.62, minf(a0, a1), maxf(a0, a1), 10, MARCA, 1.5, true)
+		var punta := centro + Vector2.from_angle(a1) * radio * 0.62
+		var tangente := Vector2.from_angle(a1 + lado_flecha * PI / 2.0)
+		var normal := Vector2.from_angle(a1)
+		draw_colored_polygon(PackedVector2Array([punta + tangente * 8.0, punta - normal * 4.0, punta + normal * 4.0]), MARCA)
 	if valido:
-		var a := arriba + deg_to_rad(angulo)
-		draw_line(centro - Vector2.from_angle(a) * radio * 0.2, centro + Vector2.from_angle(a) * radio * 0.88, AGUJA, 4.0, true)
-	draw_circle(centro, 6.0, MARCA)
-	var y := centro.y + radio + 32.0
+		DibujoInstrumentos.aguja(self, centro, arriba + deg_to_rad(angulo), radio * 0.88, AGUJA)
+	else:
+		DibujoInstrumentos.disco(self, centro, radio * 0.07, MARCA, MARCA.darkened(0.5), 4)
+	DibujoInstrumentos.reflejo(self, centro, radio * 1.05)
+	var y := marco.end.y + 32.0
 	for i in 3:
 		var p := Vector2(size.x / 2.0 + (i - 1) * 44.0, y)
-		draw_circle(p, 15.0, Color("8e9496"))
-		draw_circle(p, 12.0, Color(0.15, 0.13, 0.1).lerp(LAMPARA, clampf(lamparas[i], 0.0, 1.0)))
+		DibujoInstrumentos.lampara(self, p, 16.0, Color(0.15, 0.13, 0.1), LAMPARA, clampf(lamparas[i], 0.0, 1.0))

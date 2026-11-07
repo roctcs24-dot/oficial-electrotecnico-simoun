@@ -49,6 +49,8 @@ func _capturar() -> void:
 		await _capturar_guardia_planta(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "plc":
 		await _capturar_plc(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "instrumentos":
+		await _capturar_instrumentos(carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "tablero":
 		await _capturar_tablero(raiz, carpeta)
 	else:
@@ -469,6 +471,54 @@ func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
 func _esperar() -> void:
 	for _i in 12:
 		await process_frame
+
+
+## Hoja de muestra con todos los instrumentos dibujados, a tamaño normal y ampliado.
+func _capturar_instrumentos(carpeta: String) -> void:
+	for nodo in root.get_children():
+		if nodo is Raiz:
+			nodo.visible = false
+	var fondo := ColorRect.new()
+	fondo.color = Tema.FONDO
+	fondo.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.add_child(fondo)
+	var filas := VBoxContainer.new()
+	filas.position = Vector2(16, 16)
+	fondo.add_child(filas)
+	var muestras := [
+		["Tensión", "V", 0.0, 500.0, 418.0, 0, 381.0], ["Corriente", "A", 0.0, 1200.0, 860.0, 0, 596.0],
+		["Potencia", "kW", -90.0, 588.0, 452.0, 0, 312.0], ["Frecuencia", "Hz", 45.0, 55.0, 52.5, 2, 50.02],
+		["NH3", "ppm", 0.0, 300.0, 150.0, 0, 25.0], ["Succión", "bar", -1.0, 6.0, INF, 2, 1.17],
+		["Descarga", "bar", 0.0, 25.0, 16.0, 1, 12.0], ["Aceite (dif.)", "bar", 0.0, 6.0, INF, 1, 2.8],
+		["Salmuera", "°C", -25.0, 10.0, INF, 1, -18.5],
+	]
+	for escala_hoja: float in [1.0, 1.6]:
+		var fila := HBoxContainer.new()
+		fila.add_theme_constant_override("separation", 10)
+		filas.add_child(fila)
+		for m: Array in muestras.slice(0, 9 if escala_hoja == 1.0 else 6):
+			var instrumento := InstrumentoAguja.new().configurar(m[0], m[1], m[2], m[3], m[4], m[5])
+			instrumento.custom_minimum_size *= escala_hoja
+			instrumento.valor = m[6]
+			fila.add_child(instrumento)
+	var abajo := HBoxContainer.new()
+	abajo.add_theme_constant_override("separation", 16)
+	filas.add_child(abajo)
+	var dial := DialSincronoscopio.new()
+	var brillos: Array[float] = [0.1, 0.6, 1.0]
+	dial.actualizar(-30.0, true, brillos)
+	abajo.add_child(dial)
+	for par: Array in [[LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO, true], [LuzPiloto.ROJO_APAGADO, LuzPiloto.ROJO_ENCENDIDO, true],
+			[LuzPiloto.AMBAR_APAGADO, LuzPiloto.AMBAR_ENCENDIDO, true], [LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO, false]]:
+		var luz := LuzPiloto.new()
+		luz.color_apagado = par[0]
+		luz.color_encendido = par[1]
+		luz.encendida = par[2]
+		luz.custom_minimum_size = Vector2(64, 64)
+		abajo.add_child(luz)
+	var tam := Vector2i(1600, 900)
+	root.size = tam
+	await _guardar(carpeta, "instrumentos", tam)
 
 
 func _guardar(carpeta: String, nombre: String, tam: Vector2i) -> void:
