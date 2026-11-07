@@ -1,13 +1,13 @@
 {
   "id": "compresor_tornillo",
-  "titulo": "Compresor de tornillo",
-  "resumen": "Aspira el vapor del evaporador y lo comprime hasta la presión de condensación.",
+  "titulo": "Compresor de tornillo MYCOM",
+  "resumen": "Los nº 3 y nº 4 del buque: Mayekawa MYCOM con corredera de capacidad y pantalla Omron.",
   "dibujo": {
     "svg": "res://art/equipos/compresor_tornillo.svg",
     "tamano": [480, 320],
-    "nota": "Grupo compresor genérico con motor eléctrico, compresor de tornillo y separador de aceite. En el simulador, 220 kW frigoríficos con motor de 110 kW: valores típicos — verificar la placa y el modelo a bordo.",
+    "nota": "Grupo compresor de tornillo genérico con motor eléctrico, compresor y separador de aceite. El buque tiene dos, el nº 3 y el nº 4, Mayekawa MYCOM. No hay foto de la placa del motor: el simulador usa 220 kW frigoríficos y un motor de 110 kW, valores típicos — verificar la placa y el modelo a bordo.",
     "etiquetas": [
-      { "texto": "Motor 110 kW", "x": 90, "y": 206, "tam": 13 },
+      { "texto": "Motor", "x": 90, "y": 206, "tam": 13 },
       { "texto": "Compresor", "x": 253, "y": 176, "tam": 12 },
       { "texto": "Corredera", "x": 253, "y": 248, "tam": 11 },
       { "texto": "Succión", "x": 150, "y": 80, "tam": 12 },
@@ -24,17 +24,17 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "El {{compresor_tornillo}} aspira el vapor que sale del {{evaporador}} y lo comprime hasta la presión de condensación. Es el corazón de la planta: sin él no hay diferencia de presiones y el {{refrigerante}} no circula."
+      "texto": "El {{compresor_tornillo}} aspira el vapor de la {{botella_baja}} y lo comprime hasta la presión de condensación. Es el corazón de la planta: sin él no hay diferencia de presiones y el {{refrigerante}} no circula.\n\nEl buque tiene dos, el nº 3 y el nº 4, Mayekawa MYCOM, que trabajan junto a los tres de pistón Vilter."
     },
     {
       "id": "partes",
       "titulo": "Cómo funciona por dentro",
-      "texto": "• [b]Dos rotores helicoidales[/b], macho y hembra, que atrapan el vapor y reducen su volumen al girar.\n• [b]{{Corredera_capacidad}}[/b], movida por aceite a presión, que regula del 10 % al 100 %.\n• [b]Inyección de aceite[/b] para sellar, enfriar y lubricar los rotores y los cojinetes.\n• [b]{{Separador_aceite}}[/b] a la salida, con su filtro y su enfriador de aceite.\n• [b]Motor eléctrico[/b] acoplado directamente, y cierre mecánico en el eje."
+      "texto": "• [b]Dos rotores helicoidales[/b], macho y hembra, que atrapan el vapor y reducen su volumen al girar.\n• [b]{{Corredera_capacidad}}[/b], movida por aceite a presión, que regula del 10 % al 100 %.\n• [b]Inyección de aceite[/b] para sellar, enfriar y lubricar los rotores y los cojinetes.\n• [b]{{Separador_aceite}}[/b] a la salida, con su filtro y su enfriador de aceite.\n• [b]Motor eléctrico[/b] acoplado directamente, y cierre mecánico en el eje. Potencia y datos del motor de los MYCOM: verificar la placa a bordo.\n• [b]Pantalla táctil Omron[/b] del control: capacidad (CAP %), presiones de succión, descarga y aceite (SP, DP y OP, en kgf/cm²; 1 kgf/cm² son 0,98 bar) y cuatro temperaturas en °C (SH, ST, DT y OT; [i]significado de cada sigla: verificar en el manual MYCOM[/i])."
     },
     {
       "id": "conexion",
       "titulo": "Cómo se conecta",
-      "texto": "• [b]Succión[/b] desde el evaporador, y [b]descarga[/b] hacia el separador de aceite y el condensador.\n• [b]Motor:[/b] circuito de potencia con guardamotor, contactor y relé térmico. A bordo suele arrancar en estrella-triángulo o con arrancador suave ([i]verificar el esquema del buque[/i]).\n• [b]Mando:[/b] la bobina del contactor pasa por los presostatos de alta, baja y aceite, y por los enclavamientos de las bombas.\n• [b]Instrumentos:[/b] manómetros o transmisores de succión, descarga y aceite, y termómetro de descarga."
+      "texto": "• [b]Succión[/b] desde la botella de baja, y [b]descarga[/b] hacia el separador de aceite y el condensador.\n• [b]Motor:[/b] circuito de potencia con guardamotor, contactor y relé térmico. A bordo suele arrancar en estrella-triángulo o con arrancador suave ([i]motor y arranque sin confirmar: verificar la placa y el esquema del buque[/i]).\n• [b]Mando:[/b] la bobina del contactor pasa por los presostatos de alta, baja y aceite, por el {{interruptor_nivel}} que vigila el nivel alto de la botella y por los enclavamientos de las bombas.\n• [b]Instrumentos:[/b] manómetros o transmisores de succión, descarga y aceite, y termómetro de descarga."
     },
     {
       "id": "ajuste",
@@ -49,7 +49,7 @@
     {
       "id": "fallas",
       "titulo": "Fallas típicas",
-      "texto": "• [b]Disparo por aceite:[/b] filtro obstruido, nivel bajo o espuma por refrigerante en el aceite.\n• [b]Descarga muy caliente:[/b] poca inyección de aceite o relación de presiones muy alta.\n• [b]Golpe de líquido:[/b] llega líquido por la succión, con recalentamiento casi nulo. Daña rotores y cojinetes.\n• [b]Motor que dispara por sobrecarga:[/b] capacidad en manual con la salmuera caliente, o tensión baja.\n• [b]Fuga por el cierre del eje:[/b] olor a amoníaco junto al acoplamiento."
+      "texto": "• [b]Disparo por aceite:[/b] filtro obstruido, nivel bajo o espuma por refrigerante en el aceite.\n• [b]Descarga muy caliente:[/b] poca inyección de aceite o relación de presiones muy alta.\n• [b]Golpe de líquido:[/b] llega líquido por la succión, normalmente por un nivel alto en la botella de baja. Daña rotores y cojinetes.\n• [b]Motor que dispara por sobrecarga:[/b] capacidad en manual con la salmuera caliente, o tensión baja.\n• [b]Fuga por el cierre del eje:[/b] olor a amoníaco junto al acoplamiento."
     },
     {
       "id": "mantenimiento",
@@ -58,7 +58,7 @@
     }
   ],
   "para_saber_mas": [
-    "Manual del compresor del buque.",
+    "Manual del compresor Mayekawa MYCOM y de su panel de control.",
     "ISO 5149-2: diseño, construcción, ensayos y documentación.",
     "IIAR: compresores para amoníaco."
   ]

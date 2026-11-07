@@ -21,6 +21,7 @@ const LECTURAS := {
 	"{descarga}": ["presion", "descarga", 1],
 	"{salmuera}": ["temperatura", "salmuera", 1],
 	"{condensacion}": ["temperatura", "condensacion", 1],
+	"{nivel}": ["porcentaje", "nivel_botella", 0],
 }
 
 var sim: SimSimulacion
@@ -49,6 +50,9 @@ func _init(contenido_juego: Contenido, id_mision: String) -> void:
 	super(contenido_juego, id_mision)
 	panel = contenido.leer("planta.json").duplicate(true)
 	panel["nota"] = datos["reporte"]["nota"]
+	# Cada misión elige el compresor del buque: el Vilter de pistón o el MYCOM de tornillo.
+	panel["circuito"] = datos.get("circuito", panel["circuito"])
+	panel.erase("compresores")
 	sim = contenido.circuito(panel["circuito"])
 	operador = OperadorPlanta.new(sim, panel)
 	operador.guardamotor().accionar(true)
@@ -109,6 +113,10 @@ func alternar_automatico() -> Dictionary:
 
 func capacidad(signo: float) -> Dictionary:
 	return _tras_mando(operador.capacidad(signo))
+
+
+func alternar_solenoide(nombre: String) -> Dictionary:
+	return _tras_mando(operador.alternar_solenoide(nombre))
 
 
 func alternar_ventilacion() -> Dictionary:
@@ -468,6 +476,8 @@ func _con_lecturas(texto: String) -> String:
 				valor = p.presion(l[1])
 			"temperatura":
 				valor = p.temperatura(l[1])
+			"porcentaje":
+				valor = float(p.estado[l[1]]) * 100.0
 		texto = texto.replace(clave, TextoTecnico.numero(valor, l[2]))
 	return texto
 

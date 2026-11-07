@@ -78,6 +78,15 @@ func capacidad(signo: float) -> Dictionary:
 	return _aviso("hecho", "", "")
 
 
+## Selector de una solenoide de capacidad del compresor de pistón: solo en manual.
+func alternar_solenoide(nombre: String) -> Dictionary:
+	var p := planta()
+	if p.estado["automatico"]:
+		return _aviso("aviso", "Capacidad en automático", "Pase la capacidad a manual para mover las solenoides con los selectores.")
+	p.estado[nombre] = not p.estado[nombre]
+	return _aviso("hecho", "", "")
+
+
 func alternar_ventilacion() -> Dictionary:
 	var p := planta()
 	p.estado["ventilacion_emergencia"] = not p.estado["ventilacion_emergencia"]

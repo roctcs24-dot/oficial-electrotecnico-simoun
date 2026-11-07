@@ -1,0 +1,87 @@
+{
+  "id": "fr5_nivel_botella",
+  "tipo": "planta",
+  "titulo": "Alto nivel en la botella de baja",
+  "resumen": "El compresor nº 5 se para por el interruptor de nivel alto de la botella y no vuelve a arrancar.",
+  "equipo": "Planta de frío: botella de baja y solenoide de líquido",
+  "circuito": "planta_frio_vilter",
+  "reporte": {
+    "de": "Oficial de guardia de máquinas",
+    "texto": "Ha saltado la alarma de alto nivel de la botella de baja, y el compresor Vilter nº 5 se ha parado por el interruptor de nivel alto, que está en serie con su mando. No arranca. En el visor de la botella se ve el líquido muy alto. La planta trabaja con {{recirculacion}}: la solenoide de líquido rellena la botella y la bomba de amoníaco envía el líquido al evaporador. Averigüe la causa, corríjala y deje el compresor enfriando con el nivel de la botella en su sitio.",
+    "nota": "Niveles, ajustes de los interruptores y procedimiento de trasiego: valores típicos — verificar a bordo."
+  },
+  "preparar": [
+    { "op": "param", "id": "PLANTA", "clave": "averia_solenoide_nivel", "valor": "abierta" },
+    { "op": "estado", "id": "PLANTA", "clave": "nivel_botella", "valor": 0.86 },
+    { "op": "estado", "id": "PLANTA", "clave": "ts", "valor": -9.0 },
+    { "op": "estado", "id": "PLANTA", "clave": "te", "valor": -10.0 },
+    { "op": "avanzar", "s": 2 }
+  ],
+  "repetidos": { "disparo_presostato_nivel_botella": "rearme_sin_causa" },
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que el compresor nº 5 queda fuera de servicio", "pone": ["aviso"] }
+  ],
+  "bloqueables": ["Q1"],
+  "evidencias": [
+    { "accion": "mirar_visor" },
+    { "accion": "comprobar_bobina" }
+  ],
+  "pistas": [
+    "Mire el visor de la botella y la luz de la solenoide de líquido en el panel. Si el nivel está alto, la solenoide debería estar cerrada.",
+    "Compruebe si la bobina de la solenoide tiene tensión. Si no la tiene y aun así pasa líquido, la válvula está pegada abierta.",
+    "Para cambiar la solenoide: pare y bloquee el compresor, aísle el tramo con sus válvulas manuales y vacíelo. Después trasiegue el exceso de líquido de la botella y abra las válvulas antes de arrancar."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué sube el nivel de la botella de baja?",
+    "opciones": [
+      { "texto": "La solenoide de líquido está pegada abierta: sigue rellenando la botella aunque la manden cerrar", "correcta": true, "explicacion": "El interruptor de nivel ordena cerrar y la bobina no tiene tensión, pero el líquido sigue pasando: se oye el paso y la tubería aguas abajo está escarchada. La válvula no cierra por suciedad en el asiento o un núcleo agarrotado." },
+      { "texto": "El interruptor de nivel alto está averiado y da una alarma falsa", "explicacion": "El visor de la botella confirma que el líquido está realmente alto: el interruptor dice la verdad." },
+      { "texto": "La bomba de amoníaco está parada", "explicacion": "La bomba está en marcha. Además, con la bomba parada el nivel de la botella subiría poco: el evaporador también se queda con su líquido." },
+      { "texto": "Sobra carga de amoníaco en la planta", "explicacion": "Con la carga correcta, la solenoide cierra al llegar al nivel medio. El nivel solo sube sin control si la solenoide no cierra." }
+    ]
+  },
+  "acciones": [
+    { "id": "mirar_visor", "boton": "Mirar el nivel en el visor de la botella de baja", "titulo": "Nivel alto confirmado", "texto": "El visor de la botella marca un {nivel} % de nivel, por encima del interruptor de nivel alto. La luz de la solenoide de líquido indica que el control la manda cerrar.", "medicion": true },
+    { "id": "comprobar_bobina", "boton": "Comprobar la tensión de la bobina de la solenoide de líquido y escuchar la válvula", "titulo": "La válvula no cierra", "texto": "La bobina de la solenoide no tiene tensión, como debe con el nivel alto. Aun así se oye pasar el líquido y la tubería después de la válvula está escarchada: la solenoide está pegada abierta.", "medicion": true },
+    { "id": "aislar_solenoide", "boton": "Cerrar las válvulas manuales antes y después de la solenoide de líquido y vaciar el tramo", "requiere": [{ "c": "parado", "si_no": "Pare antes el compresor." }], "impide": ["aislado"], "si_impide": "La solenoide ya está aislada y vacía.", "titulo": "Solenoide aislada", "texto": "Se cerraron las válvulas manuales a uno y otro lado de la solenoide de líquido y se vació el tramo hacia la botella según el procedimiento del buque, hasta que el manómetro marcó la presión de la botella.", "pone": ["aislado"] },
+    { "id": "cambiar_solenoide", "boton": "Cambiar el núcleo y el asiento de la solenoide de líquido", "bloqueo": "Q1", "abre_circuito": true, "titulo": "Solenoide reparada", "texto": "El asiento tenía suciedad incrustada y el núcleo rozaba en su tubo. Se cambiaron el núcleo, el asiento y las juntas por el kit del pañol, y se limpió el filtro de la línea de líquido.", "efecto": [{ "op": "param", "id": "PLANTA", "clave": "averia_solenoide_nivel", "valor": "" }] },
+    { "id": "abrir_solenoide", "boton": "Abrir las válvulas manuales de la solenoide de líquido", "necesita": ["aislado"], "si_falta": "Las válvulas de la solenoide ya están abiertas.", "titulo": "Solenoide en servicio", "texto": "Se abrieron despacio las válvulas manuales. Con la bobina sin tensión, ya no se oye paso de líquido.", "quita": ["aislado"] },
+    { "id": "trasegar", "boton": "Trasegar el exceso de líquido de la botella al recibidor", "titulo": "Nivel corregido", "texto": "Se trasegó el líquido sobrante de la botella hacia el recibidor según el procedimiento del buque, hasta dejar el visor cerca del nivel medio.", "efecto": [{ "op": "estado", "id": "PLANTA", "clave": "nivel_botella", "valor": 0.55 }] },
+    { "id": "puentear_nivel", "boton": "Puentear el interruptor de nivel alto para poder arrancar", "titulo": "Protección anulada", "texto": "Con el interruptor puenteado, el compresor puede aspirar líquido de la botella: un golpe de líquido rompe válvulas, juntas de cabeza o bielas. Las cabezas de seguridad con resorte del Vilter alivian un golpe pequeño, no uno continuo.", "innecesaria": true, "tema": "ajuste_presostato", "pone": ["nivel_puenteado"], "efecto": [{ "op": "estado", "id": "LS", "clave": "puenteado", "valor": true }] },
+    { "id": "quitar_puente", "boton": "Quitar el puente del interruptor de nivel alto", "necesita": ["nivel_puenteado"], "si_falta": "El interruptor de nivel no está puenteado.", "titulo": "Puente retirado", "texto": "El interruptor de nivel alto vuelve a proteger al compresor.", "quita": ["nivel_puenteado"], "efecto": [{ "op": "estado", "id": "LS", "clave": "puenteado", "valor": false }] }
+  ],
+  "accidentes": {
+    "sin_bloqueo": {
+      "titulo": "Informe de accidente: trabajo en la solenoide sin bloqueo",
+      "que_ocurrio": "Se trabajaba en la solenoide de líquido sin bloquear el guardamotor del compresor. Al bajar el nivel, el interruptor rearmó y desde el panel se pulsó marcha: el compresor arrancó y la presión en la línea cambió con la válvula abierta. El oficial recibió una salpicadura de amoníaco en la mano.",
+      "causa": "El interruptor de nivel alto rearma solo. Si el compresor no está bloqueado, puede arrancar mientras alguien trabaja en el circuito.",
+      "como_evitar": "• Pare el compresor y abra su guardamotor.\n• Avise y bloquéelo con candado y tarjeta.\n• Verifique la ausencia de tensión.\n• Aísle y vacíe el tramo antes de abrir."
+    }
+  },
+  "prueba": {
+    "mantener_s": 300,
+    "superada": "El compresor enfrió la salmuera durante 5 minutos con el nivel de la botella controlado por la solenoide y sin paradas.",
+    "objetivos": [
+      { "c": "en_marcha", "texto": "Compresor en marcha" },
+      { "c": "planta", "clave": "nivel_botella", "min": 0.25, "max": 0.7, "texto": "Nivel de la botella entre el 25 % y el 70 %" },
+      { "c": "presostatos", "texto": "Presostatos e interruptor de nivel cerrados" },
+      { "c": "estado", "id": "LS", "clave": "puenteado", "valor": false, "texto": "Interruptor de nivel alto sin puentear" },
+      { "c": "bomba", "nombre": "bomba_amoniaco", "texto": "Bomba de amoníaco en marcha" },
+      { "c": "sin_marca", "marca": "aislado", "texto": "Válvulas de la solenoide abiertas" },
+      { "c": "sin_bloqueos", "texto": "Sin candados de este trabajo" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa de la parada", "opciones": ["Interruptor de nivel alto averiado", "Solenoide de líquido pegada abierta", "Exceso de carga de amoníaco"], "correcta": 1, "explicacion": "La solenoide seguía dejando pasar líquido con la bobina sin tensión." },
+      { "etiqueta": "Reparación", "opciones": ["Cambio del núcleo y del asiento de la solenoide y trasiego del exceso de líquido", "Puente en el interruptor de nivel alto", "Retirada de amoníaco de la planta"], "correcta": 0, "explicacion": "Se reparó la solenoide y se devolvió el nivel a su sitio. La protección no se anula." },
+      { "etiqueta": "Prueba", "opciones": ["Un arranque sin parada", "5 minutos enfriando con el nivel controlado", "Ninguna: la solenoide es nueva"], "correcta": 1, "explicacion": "La prueba comprueba que la solenoide abre y cierra con los interruptores de nivel mientras la planta enfría." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones de componentes del circuito y de control y protecciones.",
+    "Ficha de la válvula solenoide.",
+    "IIAR: recirculación por bombas y control de nivel en recipientes de baja.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

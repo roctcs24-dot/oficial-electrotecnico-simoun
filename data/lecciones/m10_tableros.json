@@ -1,0 +1,76 @@
+{
+  "id": "m10_tableros",
+  "titulo": "Los tableros de bombas del buque",
+  "resumen": "Leer las luces, los selectores y los horómetros de los tableros reales.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Lo que dice cada luz",
+      "bloques": [
+        { "tipo": "texto", "texto": "En el Vía Simoun cada grupo de bombas tiene un tablero con una columna de luces por bomba: los circuladores de salmuera de babor y de estribor, las bombas de transferencia de combustible y de achique, los hidróforos de agua dulce y de agua salada y los compresores de aire.\n\n• [b]Ámbar, «Falla térmica»:[/b] el {{rele_termico}} de esa bomba disparó.\n• [b]Verde, «Encendido» o «Marcha»:[/b] el {{contactor}} está cerrado y la bomba trabaja.\n• [b]Rojo, «Apagado» o «Paro»:[/b] la bomba está parada y lista.\n• [b]Horómetro:[/b] cuenta las horas de marcha, para el mantenimiento. Los del buque son de 230 V." },
+        {
+          "tipo": "imagen", "svg": "res://art/lecciones/tablero_bombas.svg", "tamano": [480, 340], "fondo": "papel",
+          "pie": "Tablero de dos bombas, dibujo esquemático. A la izquierda, una bomba parada; a la derecha, la luz roja de apagado encendida. En el centro, un selector AUT-OFF-MAN.",
+          "etiquetas": [
+            { "texto": "TABLERO DE BOMBAS", "x": 240, "y": 40, "tam": 14, "color": "#20242a" },
+            { "texto": "h", "x": 72, "y": 64, "tam": 13, "color": "#20242a" },
+            { "texto": "h", "x": 408, "y": 64, "tam": 13, "color": "#20242a" },
+            { "texto": "Falla térmica", "x": 140, "y": 165, "tam": 12, "color": "#20242a" },
+            { "texto": "Encendido", "x": 136, "y": 219, "tam": 12, "color": "#20242a" },
+            { "texto": "Apagado", "x": 132, "y": 273, "tam": 12, "color": "#20242a" },
+            { "texto": "AUT", "x": 196, "y": 142, "tam": 12, "color": "#20242a" },
+            { "texto": "OFF", "x": 240, "y": 142, "tam": 12, "color": "#20242a" },
+            { "texto": "MAN", "x": 286, "y": 142, "tam": 12, "color": "#20242a" },
+            { "texto": "Bomba nº 1", "x": 72, "y": 312, "tam": 12, "color": "#20242a" },
+            { "texto": "Bomba nº 2", "x": 408, "y": 312, "tam": 12, "color": "#20242a" }
+          ]
+        },
+        {
+          "tipo": "quiz",
+          "tema": "tablero_falla_termica",
+          "pregunta": "En el tablero de circuladores de babor, la bomba nº 7 tiene encendida la luz ámbar de «Falla térmica». ¿Qué indica?",
+          "opciones": ["Que la bomba trabaja con normalidad", "Que su relé térmico disparó y la bomba está parada", "Que la bomba está en automático"],
+          "correcta": 1,
+          "explicacion": "La luz de falla térmica la enciende el contacto 97-98 del relé térmico. Antes de rearmar, busque la causa de la sobrecarga."
+        }
+      ]
+    },
+    {
+      "titulo": "El selector AUT-OFF-MAN",
+      "bloques": [
+        { "tipo": "texto", "texto": "Los hidróforos y los compresores de aire del buque tienen un selector de tres posiciones:\n\n• [b]AUT:[/b] la bomba arranca y para sola, mandada por un {{presostato}} o por otro automatismo.\n• [b]OFF:[/b] la bomba no arranca de ninguna forma.\n• [b]MAN:[/b] la bomba trabaja mientras el selector siga en esa posición, sin el automatismo. Sirve para probarla o en una emergencia: alguien debe vigilarla.\n\nEn los hidróforos hay además un selector «Bomba nº 1 / OFF / Bomba nº 2» que elige qué bomba trabaja. Así se reparten las horas y se puede sacar una de servicio." },
+        {
+          "tipo": "quiz",
+          "tema": "tablero_aut_off_man",
+          "pregunta": "El hidróforo de agua dulce no arranca aunque baja la presión. El selector está en OFF. ¿Qué ocurre?",
+          "opciones": ["El presostato está averiado", "En OFF la bomba no arranca: pase el selector a AUT", "La bomba tiene falla térmica"],
+          "correcta": 1,
+          "explicacion": "En OFF el automatismo no puede arrancarla. Compruebe siempre la posición del selector antes de buscar una avería."
+        }
+      ]
+    },
+    {
+      "titulo": "Antes de intervenir",
+      "bloques": [
+        { "tipo": "texto", "texto": "El tablero da la primera pista, pero no basta para trabajar:\n\n1. Lea el tablero: qué bomba, qué luz y en qué posición está su selector.\n2. Avise, abra el guardamotor de esa bomba y bloquéelo con candado y tarjeta.\n3. Verifique la ausencia de tensión en los bornes del motor.\n4. Busque la causa: atascos, rodamientos, aislamiento, ajuste del relé.\n\nUna luz apagada puede ser una lámpara fundida. Muchos tableros tienen un pulsador de prueba de luces; si no, compruebe la lámpara antes de dar por buena la lectura." },
+        {
+          "tipo": "ordenar",
+          "tema": "tablero_orden_intervencion",
+          "pregunta": "Seleccione en orden qué hace ante una bomba con la luz de falla térmica encendida:",
+          "pasos": [
+            "Leer en el tablero qué bomba tiene la falla y la posición de su selector",
+            "Avisar y bloquear su guardamotor con candado y tarjeta",
+            "Verificar la ausencia de tensión en los bornes del motor",
+            "Buscar la causa de la sobrecarga antes de rearmar"
+          ],
+          "explicacion": "Primero se identifica la bomba, después se aísla y se verifica, y solo entonces se busca la causa."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60073: colores de las luces de señalización y de los pulsadores.",
+    "IEC 60947-5-1: aparatos de mando y señalización.",
+    "Esquemas eléctricos de los tableros del buque (verificar a bordo)."
+  ]
+}

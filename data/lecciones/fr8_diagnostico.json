@@ -1,13 +1,13 @@
 {
   "id": "fr8_diagnostico",
   "titulo": "Diagnóstico de la planta",
-  "resumen": "Leer manómetros y termómetros para encontrar la causa.",
+  "resumen": "Leer manómetros, termómetros y niveles para encontrar la causa.",
   "minutos": 5,
   "paginas": [
     {
       "titulo": "Descarga alta",
       "bloques": [
-        { "tipo": "texto", "texto": "Compare siempre la temperatura de condensación, la del manómetro de descarga, con la del agua de mar. En una planta sana la diferencia es de unos pocos grados ([i]valor típico — verificar[/i]).\n\n• [b]Diferencia grande y agua normal:[/b] condensador sucio o {{incondensables}}.\n• [b]Salida y entrada de agua casi iguales:[/b] poco caudal. Revise la bomba de agua de mar, las válvulas y el filtro de toma de mar.\n• [b]Todo sube a la vez:[/b] agua de mar más caliente, por ejemplo al entrar en aguas tropicales." },
+        { "tipo": "texto", "texto": "Compare siempre la temperatura de condensación, la del manómetro de descarga, con la del agua de mar. En una planta sana la diferencia es de unos pocos grados ([i]valor típico — verificar[/i]).\n\n• [b]Diferencia grande y agua normal:[/b] condensador sucio o {{incondensables}}.\n• [b]Salida y entrada de agua casi iguales:[/b] poco caudal. Revise la bomba de condensador, las válvulas y el filtro de toma de mar.\n• [b]Todo sube a la vez:[/b] agua de mar más caliente, por ejemplo al entrar en aguas tropicales." },
         {
           "tipo": "quiz",
           "tema": "frio_diag_descarga",
@@ -21,33 +21,47 @@
     {
       "titulo": "Succión baja",
       "bloques": [
-        { "tipo": "texto", "texto": "Compare la temperatura de evaporación con la de la salmuera:\n\n• [b]Diferencia grande y salmuera que no se enfría:[/b] el evaporador toma poco calor. Puede haber hielo en los tubos, la bomba de salmuera parada o poca carga de refrigerante.\n• [b]Recalentamiento alto:[/b] llega poco líquido al evaporador. La causa puede ser falta de carga, una válvula de expansión cerrada o un filtro de líquido obstruido.\n• [b]Recalentamiento casi nulo:[/b] llega demasiado líquido. Hay riesgo de golpe de líquido en el compresor." },
+        { "tipo": "texto", "texto": "Compare la temperatura de evaporación con la de la salmuera. Si la diferencia es grande y la salmuera no se enfría, el evaporador toma poco calor:\n\n• [b]Hielo en los tubos[/b] por salmuera floja, o una bomba circuladora de salmuera parada.\n• [b]Bomba de amoníaco parada:[/b] los evaporadores se quedan sin líquido y la succión cae.\n• [b]Poca carga de refrigerante:[/b] el recibidor se vacía y la botella no se rellena.\n\nCon recirculación, el recalentamiento en la succión es casi nulo aunque la planta funcione bien: no sirve para este diagnóstico. Mire el nivel de la botella." },
         {
           "tipo": "quiz",
           "tema": "frio_diag_succion",
-          "pregunta": "La succión baja poco a poco durante días, el recalentamiento sube y el nivel del recibidor está bajo. ¿Qué indica?",
+          "pregunta": "La succión baja poco a poco durante días, la solenoide de líquido pasa cada vez más tiempo abierta y el nivel del recibidor está bajo. ¿Qué indica?",
           "opciones": ["Falta de refrigerante, probablemente por una fuga", "Condensador sucio", "Salmuera demasiado concentrada"],
           "correcta": 0,
-          "explicacion": "Con poca carga, el evaporador trabaja medio vacío. Antes de reponer amoníaco hay que encontrar la fuga."
+          "explicacion": "Con poca carga, la botella no recupera su nivel aunque la solenoide esté abierta. Antes de reponer amoníaco hay que encontrar la fuga."
+        }
+      ]
+    },
+    {
+      "titulo": "La recirculación",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Nivel alto en la botella:[/b] suena la alarma y el interruptor de nivel alto para el compresor. Si el panel indica la solenoide de líquido cerrada y el nivel sigue subiendo, la solenoide está pegada abierta. Aísle su tramo con las válvulas manuales antes de repararla.\n• [b]Bomba de amoníaco parada por baja presión:[/b] la botella se quedó casi vacía. Si el panel indica la solenoide abierta y el nivel no sube, la solenoide no abre: mida la tensión en su bobina; con tensión, la bobina o la válvula están averiadas, y sin ella, el fallo está en el mando.\n• [b]Cabezas calientes en un Vilter:[/b] compruebe que la bomba de enfriamiento de cabezas está en marcha y que el agua sale tibia de las cabezas. Una toma de mar obstruida o una válvula cerrada dan el mismo síntoma." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_diag_solenoide_pegada",
+          "pregunta": "Suena la alarma de nivel alto de la botella roja y el compresor se para. El panel indica la solenoide de líquido cerrada, pero el nivel sigue subiendo. ¿Qué indica?",
+          "opciones": ["La solenoide está pegada abierta: deja pasar líquido sin orden", "Falta refrigerante en el circuito", "El presostato de alta está mal ajustado"],
+          "correcta": 0,
+          "explicacion": "El control ya ordenó cerrar, pero el líquido sigue entrando. La válvula no obedece a su bobina: está pegada o tiene suciedad en el asiento."
         }
       ]
     },
     {
       "titulo": "Aceite, hielo y fugas",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]Disparo por aceite:[/b] revise el nivel en el separador, el filtro y la temperatura del aceite. No rearme dos veces seguidas sin encontrar la causa.\n• [b]Hielo en el evaporador:[/b] mida la concentración de la salmuera. Si está floja, la planta pierde capacidad aunque el compresor trabaje al máximo.\n• [b]Fugas:[/b] el amoníaco huele desde pocas ppm, mucho antes de ser peligroso. El {{detector_amoniaco}} portátil y el olor ayudan a localizarla; las uniones, los prensaestopas de válvulas y los cierres del compresor son los puntos más habituales." },
+        { "tipo": "texto", "texto": "• [b]Disparo por aceite:[/b] revise el nivel en el separador o en el cárter, el filtro y la temperatura del aceite. No rearme dos veces seguidas sin encontrar la causa.\n• [b]Hielo en el evaporador:[/b] mida la concentración de la salmuera. Si está floja, la planta pierde capacidad aunque los compresores trabajen al máximo.\n• [b]Fugas:[/b] el amoníaco huele desde pocas ppm, mucho antes de ser peligroso. El {{detector_amoniaco}} portátil y el olor ayudan a localizarla; las uniones, los prensaestopas de válvulas y los cierres de los compresores son los puntos más habituales." },
         {
           "tipo": "ordenar",
           "tema": "frio_orden_diagnostico",
           "pregunta": "Seleccione en orden cómo se diagnostica una planta que enfría mal:",
-          "pasos": ["Leer las presiones de succión y descarga y pasarlas a temperatura", "Compararlas con la salmuera y con el agua de mar", "Medir los recalentamientos y subenfriamientos con el termómetro", "Deducir en qué parte del ciclo está el problema"],
+          "pasos": ["Leer las presiones de succión y descarga y pasarlas a temperatura", "Compararlas con la salmuera y con el agua de mar", "Revisar el nivel de la botella, las bombas y las temperaturas de las tuberías", "Deducir en qué parte del ciclo está el problema"],
           "explicacion": "Las presiones y las temperaturas, comparadas con las del agua y la salmuera, dicen dónde mirar antes de tocar nada."
         }
       ]
     }
   ],
   "para_saber_mas": [
-    "IIAR: guías de operación y mantenimiento de plantas de amoníaco.",
+    "IIAR: guías de operación y mantenimiento de plantas de amoníaco con recirculación.",
     "Manual de la planta de frío del buque: localización de averías.",
     "ISO 5149-4: operación, mantenimiento, reparación y recuperación."
   ]

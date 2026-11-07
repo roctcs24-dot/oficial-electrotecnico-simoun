@@ -13,8 +13,8 @@ El jugador empieza **desde cero** (no sabe qué es un voltio) y termina sabiendo
 ## 2. Datos del barco
 
 - Tipo: atunero cerquero (NIRSA, Ecuador).
-- Red principal: **440 V, 60 Hz, trifásica**.
-- Generación: **3 generadores** (diésel-generadores) en paralelo sobre el cuadro principal.
+- Red principal: **380 V, 50 Hz, trifásica aislada** (corregido el 2026-11-06 según las placas de los alternadores Stamford HCI534F y de los motores; el enunciado original decía 440 V y 60 Hz).
+- Generación: **4 generadores** (diésel Caterpillar con alternador Stamford de 565 kVA / 452 kW) en paralelo sobre el cuadro principal, cada uno con controlador ComAp InteliGen 200 (según fotos del buque).
 - Refrigeración: **amoníaco (NH3, R-717)**.
 - No hay planos ni fotos del barco. Para todo lo demás (potencias, tensiones secundarias como 220/110 V y 24 V DC, número de bombas, tipo de compresores, temperaturas de salmuera, etc.) usa **valores típicos de atuneros cerqueros** y márcalos en el contenido como *"valor típico — verificar a bordo"*. Guarda todos esos datos en un archivo de configuración del barco (`data/barco_via_simoun.json`) para que yo los corrija después sin tocar código.
 
@@ -84,13 +84,13 @@ Cada equipo o componente tiene una **ficha** con:
 - **Paneles de generador y controladores digitales**: panel local, instrumentos, pantalla del controlador, parámetros y alarmas. Sistema de gestión de potencia (PMS): arranque y parada automáticos, reparto de carga. Modelos reales: verificar a bordo.
 
 ### Sistema 2 — Distribución, transformadores y alumbrado
-- Transformadores 440/220/110 V: identificación, placa, pruebas de continuidad y aislamiento.
+- Transformadores 380/220/110 V: identificación, placa, pruebas de continuidad y aislamiento.
 - Breakers termomagnéticos, fusibles, diferenciales, guardamotores.
 - Alumbrado normal y de emergencia, baterías y cargadores 24 V DC, UPS.
 
 ### Sistema 3 — Motores y arrancadores (sala de máquinas)
 - Motor de inducción trifásico: partes, placa de datos, rotor jaula de ardilla.
-- **Estrella o delta**: cómo saber cuál usar leyendo la placa (ej. 254Δ/440Y), cómo identificar la bornera U1-V1-W1 / W2-U2-V2, cómo colocar los puentes, cómo identificar terminales de un motor sin marcas (prueba de continuidad y polaridad).
+- **Estrella o delta**: cómo saber cuál usar leyendo la placa (ej. 220Δ/380Y), cómo identificar la bornera U1-V1-W1 / W2-U2-V2, cómo colocar los puentes, cómo identificar terminales de un motor sin marcas (prueba de continuidad y polaridad).
 - Cambio de sentido de giro.
 - Arranque directo (DOL), **estrella-triángulo**, arrancador suave, **variador de frecuencia (VFD)**: conexión y configuración básica de parámetros.
 - Componentes de mando: contactor, relé térmico (ajuste según corriente nominal), guardamotor, pulsadores NA/NC, selectores, luces piloto, temporizadores (on-delay/off-delay), relés auxiliares.

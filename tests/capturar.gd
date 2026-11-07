@@ -348,6 +348,24 @@ func _capturar_planta(raiz: Raiz, carpeta: String) -> void:
 		p._elegir_pestana("mando")
 		await _guardar(carpeta, "planta_disparo", tam)
 		raiz.volver()
+		# El Vilter de pistón, con sus solenoides de capacidad y la botella de baja.
+		raiz.ir_a("planta", {"id": 4, "circuito": "planta_frio_vilter"})
+		p = raiz.pantalla_actual()
+		p._atender_orden(p.operador.alternar_guardamotor)
+		p.sim.avanzar_tiempo(0.1)
+		p._pulsar("S1", true)
+		p.sim.avanzar_tiempo(0.3)
+		p._pulsar("S1", false)
+		for _i in 520:
+			p.sim.paso(1.0)
+		p.args["eventos"] = p.sim.eventos.size()
+		p._comprobar_firma()
+		for id: String in (["esquema", "mando"] if raiz.vertical else ["mando"]):
+			p._elegir_pestana(id)
+			await _guardar(carpeta, "planta_vilter_%s" % id, tam)
+		p._desplazables[-1].scroll_vertical = 900
+		await _guardar(carpeta, "planta_vilter_botella", tam)
+		raiz.volver()
 
 
 func _capturar_progresion(raiz: Raiz, carpeta: String) -> void:

@@ -1,27 +1,36 @@
 {
-  "nota": "Práctica libre de la planta de frío. Un compresor de tornillo con motor de 110 kW enfría la salmuera de las cubas. Valores típicos de atuneros cerqueros: verificar a bordo. La salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.",
+  "nota": "Práctica libre de la planta de frío del buque: recirculación por bombas desde la botella de baja, y compresores de pistón Vilter o de tornillo MYCOM. Potencias, capacidades y ajustes: valores típicos — verificar a bordo. La salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.",
   "circuito": "planta_frio",
+  "compresores": [
+    { "circuito": "planta_frio_vilter", "nombre": "Nº 5 · Vilter de pistón" },
+    { "circuito": "planta_frio", "nombre": "Nº 3 · MYCOM de tornillo" }
+  ],
   "paso_capacidad": 0.1,
   "aceleracion": 10,
   "presostatos": [
     { "id": "PA", "nombre": "Alta presión de descarga" },
     { "id": "PB", "nombre": "Baja presión de succión" },
-    { "id": "PO", "nombre": "Presión de aceite" }
+    { "id": "PO", "nombre": "Presión de aceite" },
+    { "id": "LS", "nombre": "Nivel alto de la botella", "unidad": "nivel" }
   ],
   "tuberias": {
     "descarga": "Descarga del compresor",
     "liquido": "Línea de líquido",
-    "succion": "Succión del compresor",
+    "succion": "Succión del compresor (sale de la botella)",
     "salmuera": "Salmuera de la cuba",
     "agua_mar_entrada": "Entrada de agua de mar",
     "agua_mar_salida": "Salida de agua de mar"
   },
   "consecuencias": {
     "disparo_presostato_descarga": { "titulo": "Disparo por alta presión", "texto": "La presión de descarga pasó del corte del presostato de alta y el compresor se paró. Suele deberse a falta de agua de mar en el condensador, a un condensador sucio o a aire en el circuito. El rearme es manual: busque la causa antes de rearmar." },
-    "disparo_presostato_succion": { "titulo": "Disparo por baja presión", "texto": "La presión de succión bajó del corte del presostato de baja. Suele deberse a falta de circulación de salmuera, hielo en el evaporador, poca carga de refrigerante o una válvula de expansión que no deja pasar líquido. Rearma solo cuando sube la presión, pero el compresor no arranca sin pulsar marcha." },
-    "disparo_presostato_aceite": { "titulo": "Disparo por presión de aceite", "texto": "Pasado el retardo, la presión diferencial de aceite no llegó al mínimo. Sin aceite, los rotores y los cojinetes se dañan en poco tiempo. Revise el nivel, el filtro y la bomba de aceite antes de rearmar." },
+    "disparo_presostato_succion": { "titulo": "Disparo por baja presión", "texto": "La presión de succión bajó del corte del presostato de baja. Suele deberse a falta de circulación de salmuera, hielo en el evaporador, poca carga de refrigerante, la bomba de amoníaco parada o una alimentación de líquido que no llega. Rearma solo cuando sube la presión, pero el compresor no arranca sin pulsar marcha." },
+    "disparo_presostato_aceite": { "titulo": "Disparo por presión de aceite", "texto": "Pasado el retardo, la presión diferencial de aceite no llegó al mínimo. Sin aceite, los cojinetes, los pistones o los rotores se dañan en poco tiempo. Revise el nivel, el filtro y la bomba de aceite antes de rearmar." },
     "valvula_seguridad": { "titulo": "Apertura de la válvula de seguridad", "texto": "La presión de descarga llegó al tarado de la válvula de seguridad, que descarga amoníaco a la atmósfera por el palo de venteo. Es la última protección: nunca debería abrir, porque antes debe actuar el presostato de alta." },
     "alarma_nh3": { "titulo": "Alarma de amoníaco", "texto": "El detector de la sala de máquinas pasó de 25 ppm. Hay una fuga. Avise, colóquese el equipo de protección y localícela sin entrar solo en la sala." },
+    "disparo_presostato_nivel_botella": { "titulo": "Parada por nivel alto en la botella", "texto": "El interruptor de nivel alto de la botella de baja abrió la cadena de seguridades: con la botella tan llena, el compresor podría aspirar líquido y romper válvulas o bielas. Suele deberse a una solenoide de líquido que no cierra o a un interruptor de nivel averiado. Rearma solo cuando baja el nivel; busque antes la causa." },
+    "alto_nivel_botella": { "titulo": "Alarma de alto nivel en la botella", "texto": "El líquido de la botella de baja llegó al interruptor de nivel alto. Si la solenoide de líquido no cierra, el nivel seguirá subiendo." },
+    "baja_presion_bomba_nh3": { "titulo": "Bomba de amoníaco parada por baja presión", "texto": "La botella se quedó casi vacía: la bomba de amoníaco cavitaba, sin presión diferencial, y su protección la paró. Sin ella el evaporador no recibe líquido y la succión cae. Revise la solenoide de líquido y el nivel antes de rearrancarla." },
+    "alta_temperatura_cabezas": { "titulo": "Alta temperatura en las cabezas del compresor", "texto": "Las cabezas del compresor de pistón se calientan sin el agua salada de refrigeración. Con la descarga tan caliente se degrada el aceite y sufren las válvulas. Arranque la bomba de enfriamiento de cabezas o pare el compresor." },
     "alarma_nh3_alta": { "titulo": "Alarma alta de amoníaco", "texto": "La concentración en la sala pasó de 150 ppm. A 300 ppm el amoníaco es inmediatamente peligroso para la vida. Evacúe la sala, arranque la ventilación de emergencia y entre solo con equipo de respiración autónomo y un compañero." }
   }
 }

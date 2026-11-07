@@ -37,6 +37,7 @@ static func tipos() -> Dictionary:
 		"pms": SimPMS,
 		"planta_frio": SimPlantaFrio,
 		"presostato": SimPresostato,
+		"interruptor_nivel": SimInterruptorNivel,
 		"fuente_dc": SimFuenteDC,
 		"diodo": SimDiodo,
 		"led": SimLed,

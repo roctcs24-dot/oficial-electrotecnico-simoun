@@ -23,21 +23,21 @@
     {
       "titulo": "Los cuatro tramos",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]4-1, evaporación:[/b] a presión constante, el refrigerante hierve y gana entalpía. Esa ganancia es el frío útil de cada kilogramo.\n• [b]1-2, compresión:[/b] sube la presión y gana algo más de entalpía: es el trabajo del compresor.\n• [b]2-3, condensación:[/b] a presión constante, cede todo ese calor al agua de mar.\n• [b]3-4, expansión:[/b] baja la presión sin cambiar la entalpía. Es una línea vertical.\n\nEl {{cop}} es el frío útil dividido por el trabajo del compresor. Una planta de salmuera típica da un COP de 2 a 3 ([i]verificar con los datos del fabricante[/i])." },
+        { "tipo": "texto", "texto": "• [b]4-1, evaporación:[/b] a presión constante, el refrigerante hierve y gana entalpía. Esa ganancia es el frío útil de cada kilogramo.\n• [b]1-2, compresión:[/b] sube la presión y gana algo más de entalpía: es el trabajo del compresor.\n• [b]2-3, condensación:[/b] a presión constante, cede todo ese calor al agua de mar.\n• [b]3-4, expansión:[/b] baja la presión sin cambiar la entalpía. Es una línea vertical. En el buque ocurre en las solenoides de líquido que rellenan la botella de baja.\n\nCon recirculación, el punto 1 queda casi sobre la curva de vapor saturado, porque el vapor sale de la botella sin recalentamiento.\n\nEl {{cop}} es el frío útil dividido por el trabajo del compresor. Una planta de salmuera típica da un COP de 2 a 3 ([i]verificar con los datos del fabricante[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_tramo_vertical",
           "pregunta": "¿Qué tramo del ciclo es una línea vertical en el diagrama P–h?",
-          "opciones": ["La compresión", "La expansión en la válvula", "La evaporación"],
+          "opciones": ["La compresión", "La expansión del líquido", "La evaporación"],
           "correcta": 1,
-          "explicacion": "En la válvula de expansión la presión baja sin intercambio de calor ni trabajo: la entalpía no cambia."
+          "explicacion": "En la válvula que alimenta el lado de baja, en el buque la solenoide de líquido de la botella, la presión baja sin intercambio de calor ni trabajo: la entalpía no cambia."
         }
       ]
     },
     {
       "titulo": "Qué lo empeora",
       "bloques": [
-        { "tipo": "texto", "texto": "Cuanto más separadas están las dos presiones, más trabaja el compresor por cada kilovatio de frío:\n• [b]Condensación alta[/b], por agua de mar caliente, condensador sucio o {{incondensables}}: sube la línea 2-3.\n• [b]Evaporación baja[/b], por hielo, falta de refrigerante o salmuera sin circular: baja la línea 4-1.\n\nComo orientación, cada grado de más en la condensación o de menos en la evaporación cuesta unos puntos porcentuales de rendimiento ([i]valor orientativo — verificar[/i])." },
+        { "tipo": "texto", "texto": "Cuanto más separadas están las dos presiones, más trabaja el compresor por cada kilovatio de frío:\n• [b]Condensación alta[/b], por agua de mar caliente, condensador sucio o {{incondensables}}: sube la línea 2-3.\n• [b]Evaporación baja[/b], por hielo, falta de refrigerante, salmuera sin circular o la bomba de amoníaco parada: baja la línea 4-1.\n\nComo orientación, cada grado de más en la condensación o de menos en la evaporación cuesta unos puntos porcentuales de rendimiento ([i]valor orientativo — verificar[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_cop_empeora",

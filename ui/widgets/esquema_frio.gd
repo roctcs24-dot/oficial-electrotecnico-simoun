@@ -44,6 +44,11 @@ var bomba_agua_mar := true
 var bomba_salmuera := true
 var presion_succion := 0.0
 var presion_descarga := 0.0
+## Recirculación por bombas, como en el buque: botella de baja y bomba de amoníaco en lugar de la
+## válvula de expansión.
+var recirculacion := false
+var nivel_botella := 0.5
+var bomba_amoniaco := true
 var punto_marcado := ""
 var _fase := 0.0
 
@@ -201,12 +206,30 @@ func _dibujar_equipos(fuente: Font, t: int, escala: float) -> void:
 	draw_rect(rec, EQUIPO, false, 2.0)
 	draw_rect(Rect2(rec.position + Vector2(0.0, rec.size.y * 0.5), Vector2(rec.size.x, rec.size.y * 0.5)), LIQUIDO.darkened(0.5))
 	_texto(fuente, "Recibidor", Vector2(rec.get_center().x, rec.end.y + t), t - 1, TEXTO)
+	if recirculacion:
+		_dibujar_botella(fuente, t, escala)
+		return
 	# Válvula de expansión.
 	var v := _p(Vector2(0.60, 0.62))
 	var lado := 10.0 * maxf(escala, 1.0)
 	draw_colored_polygon(PackedVector2Array([v + Vector2(-lado, -lado), v + Vector2(lado, -lado), v, ]), EQUIPO)
 	draw_colored_polygon(PackedVector2Array([v + Vector2(-lado, lado), v + Vector2(lado, lado), v]), EQUIPO)
 	_texto(fuente, "Válvula de expansión", v + Vector2(lado + 4.0, 4.0), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
+
+
+## Botella de baja con su nivel de líquido, y la bomba de amoníaco que lo envía al evaporador.
+func _dibujar_botella(fuente: Font, t: int, escala: float) -> void:
+	var caja := Rect2(_p(Vector2(0.54, 0.54)), _p(Vector2(0.66, 0.66)) - _p(Vector2(0.54, 0.54)))
+	draw_rect(caja, OSCURO)
+	var alto := caja.size.y * clampf(nivel_botella, 0.0, 1.0)
+	draw_rect(Rect2(Vector2(caja.position.x, caja.end.y - alto), Vector2(caja.size.x, alto)), BAJA.darkened(0.35))
+	draw_rect(caja, EQUIPO, false, 2.0)
+	_texto(fuente, "Botella de baja %d %%" % roundi(nivel_botella * 100.0), Vector2(caja.end.x + 4.0, caja.position.y + t), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
+	var bomba := _p(Vector2(0.60, 0.71))
+	var r := 8.0 * maxf(escala, 1.0)
+	draw_circle(bomba, r, OSCURO)
+	draw_arc(bomba, r, 0.0, TAU, 20, BAJA if bomba_amoniaco else EQUIPO, 2.0, true)
+	_texto(fuente, "Bomba NH3", bomba + Vector2(r + 4.0, 4.0), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
 
 
 func _texto(fuente: Font, texto: String, posicion: Vector2, t: int, color: Color, alineacion := HORIZONTAL_ALIGNMENT_CENTER) -> void:

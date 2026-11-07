@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <defs>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5f7a6a"/><stop offset="0.5" stop-color="#465d50"/><stop offset="1" stop-color="#2c3b33"/>
+    </linearGradient>
+    <linearGradient id="carter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#52695b"/><stop offset="1" stop-color="#26332c"/>
+    </linearGradient>
+    <linearGradient id="motor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a7186"/><stop offset="0.5" stop-color="#3e5366"/><stop offset="1" stop-color="#26343f"/>
+    </linearGradient>
+    <linearGradient id="cabeza" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9ced1"/><stop offset="0.6" stop-color="#9aa1a5"/><stop offset="1" stop-color="#6b7276"/>
+    </linearGradient>
+    <linearGradient id="filtro" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a5055"/><stop offset="0.5" stop-color="#7a8288"/><stop offset="1" stop-color="#3a3f44"/>
+    </linearGradient>
+    <linearGradient id="bobina" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2a2e31"/><stop offset="0.5" stop-color="#4a5055"/><stop offset="1" stop-color="#1b1e21"/>
+    </linearGradient>
+  </defs>
+  <!-- Bancada -->
+  <rect x="16" y="262" width="448" height="18" rx="3" fill="#2a2e31"/>
+  <!-- Motor eléctrico con aletas y caja de bornes -->
+  <rect x="24" y="150" width="132" height="110" rx="10" fill="url(#motor)"/>
+  <g stroke="#26343f" stroke-width="3"><path d="M48,156 V254 M68,156 V254 M88,156 V254 M108,156 V254 M128,156 V254"/></g>
+  <rect x="64" y="128" width="52" height="24" rx="3" fill="#3e5366"/>
+  <!-- Acoplamiento -->
+  <rect x="156" y="198" width="22" height="34" rx="4" fill="#c8a248"/>
+  <!-- Cárter -->
+  <rect x="178" y="186" width="182" height="76" rx="10" fill="url(#carter)"/>
+  <!-- Visor de aceite del cárter -->
+  <circle cx="220" cy="222" r="12" fill="#e9ebe8" stroke="#8e9496" stroke-width="3"/>
+  <path d="M209,222 H231 A11,11 0 0 1 209,222 Z" fill="#c8a248"/>
+  <!-- Bomba y filtro de aceite -->
+  <rect x="360" y="202" width="26" height="42" rx="4" fill="#2a2e31"/>
+  <rect x="394" y="188" width="24" height="60" rx="8" fill="url(#filtro)"/>
+  <path d="M386,222 H394" stroke="#c8a248" stroke-width="5"/>
+  <!-- Bloque de cilindros -->
+  <rect x="188" y="120" width="162" height="68" rx="6" fill="url(#cuerpo)"/>
+  <!-- Cabezas de seguridad con sus tornillos -->
+  <g fill="url(#cabeza)">
+    <rect x="192" y="92" width="36" height="28" rx="4"/>
+    <rect x="232" y="92" width="36" height="28" rx="4"/>
+    <rect x="272" y="92" width="36" height="28" rx="4"/>
+    <rect x="312" y="92" width="36" height="28" rx="4"/>
+  </g>
+  <g fill="#5f6568">
+    <circle cx="210" cy="106" r="6"/><circle cx="250" cy="106" r="6"/><circle cx="290" cy="106" r="6"/><circle cx="330" cy="106" r="6"/>
+  </g>
+  <g fill="#c8a248">
+    <circle cx="197" cy="97" r="2.5"/><circle cx="223" cy="97" r="2.5"/><circle cx="197" cy="115" r="2.5"/><circle cx="223" cy="115" r="2.5"/>
+    <circle cx="237" cy="97" r="2.5"/><circle cx="263" cy="97" r="2.5"/><circle cx="237" cy="115" r="2.5"/><circle cx="263" cy="115" r="2.5"/>
+    <circle cx="277" cy="97" r="2.5"/><circle cx="303" cy="97" r="2.5"/><circle cx="277" cy="115" r="2.5"/><circle cx="303" cy="115" r="2.5"/>
+    <circle cx="317" cy="97" r="2.5"/><circle cx="343" cy="97" r="2.5"/><circle cx="317" cy="115" r="2.5"/><circle cx="343" cy="115" r="2.5"/>
+  </g>
+  <!-- Agua salada de refrigeración de las cabezas -->
+  <path d="M346,128 H180 V80 H24" fill="none" stroke="#3fb5a3" stroke-width="5"/>
+  <!-- Descarga: colector sobre las cabezas -->
+  <g stroke="#d9534f" stroke-width="8"><path d="M210,92 V66 M250,92 V66 M290,92 V66 M330,92 V66"/></g>
+  <path d="M204,66 H440 V20" fill="none" stroke="#d9534f" stroke-width="12"/>
+  <!-- Succión al bloque -->
+  <path d="M350,150 H404 V110 H470" fill="none" stroke="#5aa0e0" stroke-width="14"/>
+  <!-- Solenoides de capacidad del 75 % y del 100 % -->
+  <rect x="306" y="156" width="18" height="26" rx="3" fill="url(#bobina)"/>
+  <rect x="328" y="156" width="18" height="26" rx="3" fill="url(#bobina)"/>
+  <rect x="309" y="162" width="12" height="8" fill="#e9ebe8"/>
+  <rect x="331" y="162" width="12" height="8" fill="#e9ebe8"/>
+</svg>

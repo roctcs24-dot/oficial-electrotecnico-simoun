@@ -1,11 +1,11 @@
 {
   "id": "valvula_expansion",
   "titulo": "Válvula de expansión termostática",
-  "resumen": "Baja la presión del líquido y dosifica cuánto entra en el evaporador.",
+  "resumen": "Baja la presión del líquido y dosifica cuánto entra en el evaporador. En el buque, el evaporador se alimenta por bombas.",
   "dibujo": {
     "svg": "res://art/equipos/valvula_expansion.svg",
     "tamano": [320, 320],
-    "nota": "Válvula de expansión termostática genérica con bulbo, capilar e igualador externo. En plantas grandes también se usan válvulas manuales, de flotador o electrónicas: verificar a bordo.",
+    "nota": "Válvula de expansión termostática genérica con bulbo, capilar e igualador externo. En plantas grandes también se usan válvulas manuales, de flotador o electrónicas. En el circuito principal del buque no hay válvula de expansión termostática: el evaporador se alimenta por recirculación con bombas desde la botella de baja.",
     "etiquetas": [
       { "texto": "Cabeza termostática", "x": 160, "y": 82, "tam": 12 },
       { "texto": "Capilar", "x": 300, "y": 140, "tam": 11 },
@@ -24,7 +24,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "La {{valvula_expansion}} estrangula el líquido que llega del recibidor: su presión baja y parte de él se evapora. Además dosifica cuánto entra en el {{evaporador}}, para que este trabaje lleno pero sin mandar líquido al compresor."
+      "texto": "La {{valvula_expansion}} estrangula el líquido que llega del recibidor: su presión baja y parte de él se evapora. Además dosifica cuánto entra en el {{evaporador}}, para que este trabaje lleno pero sin mandar líquido al compresor.\n\nEs la forma habitual de alimentar evaporadores en plantas pequeñas. En el B/P Vía Simoun no se usa en el circuito principal: los evaporadores de las cubas se alimentan por {{recirculacion}} desde la {{botella_baja}}, con bombas de amoníaco, y la expansión se hace en las solenoides de líquido que rellenan la botella."
     },
     {
       "id": "partes",

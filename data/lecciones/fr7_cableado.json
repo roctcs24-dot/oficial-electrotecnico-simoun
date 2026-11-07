@@ -1,18 +1,18 @@
 {
   "id": "fr7_cableado",
   "titulo": "Cableado eléctrico del compresor",
-  "resumen": "Potencia, mando, cadena de seguridades y enclavamientos.",
-  "minutos": 4,
+  "resumen": "Potencia, mando, cadena de seguridades, solenoides de capacidad y enclavamientos del compresor nº 5.",
+  "minutos": 5,
   "paginas": [
     {
       "titulo": "Potencia",
       "bloques": [
-        { "tipo": "texto", "texto": "El motor del compresor es un motor de inducción grande, de unos 110 kW a 380 V en la planta del simulador ([i]verificar la placa a bordo[/i]). Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nCon esa potencia, a bordo suele arrancar en estrella-triángulo o con arrancador suave. En el simulador arranca en directo, con el compresor descargado." },
+        { "tipo": "texto", "texto": "El Vilter nº 5 lo mueve un motor WEG W40 de 75 kW (100 HP), 380 V en delta, 138 A y 1480 rpm, según su placa. Su circuito de potencia es como el de cualquier motor:\n• Guardamotor o interruptor con protección magnética.\n• Contactor de línea.\n• {{Rele_termico}} ajustado a la corriente de la placa.\n\nComo trabaja en delta a la tensión de la red, admite arranque estrella-triángulo; a bordo puede arrancar así o con arrancador suave ([i]verificar el esquema del buque[/i]). En el simulador arranca en directo, descargado. Del motor de los MYCOM no hay placa: el simulador usa 110 kW ([i]verificar a bordo[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_ajuste_termico_compresor",
-          "pregunta": "La placa del motor del compresor dice 202 A en delta. ¿A cuánto se ajusta el relé térmico?",
-          "opciones": ["A 202 A", "A 280 A, para que no dispare al enfriar la salmuera", "Al pico de arranque"],
+          "pregunta": "La placa del motor del Vilter nº 5 dice 138 A en delta. ¿A cuánto se ajusta el relé térmico de la línea?",
+          "opciones": ["A 138 A", "A 190 A, para que no dispare con la salmuera caliente", "Al pico de arranque"],
           "correcta": 0,
           "explicacion": "El relé térmico se ajusta a la corriente de la placa. La carga del arranque con salmuera caliente la limita el control de capacidad, no el relé."
         }
@@ -21,20 +21,28 @@
     {
       "titulo": "La cadena de seguridades",
       "bloques": [
-        { "tipo": "texto", "texto": "En el circuito de mando, la bobina del contactor se alimenta a través de una cadena de contactos en serie:\n\n• Contacto 95-96 del relé térmico.\n• Pulsador de parada, normalmente cerrado.\n• Presostatos de alta, de baja y de aceite.\n• Contactos de enclavamiento: bombas de agua de mar y de salmuera en marcha, y parada de emergencia.\n• Pulsador de marcha con su contacto de retención.\n\nSi cualquiera se abre, el contactor suelta y el compresor se para. Para volver a arrancar hay que pulsar marcha: la retención se perdió." },
+        { "tipo": "texto", "texto": "En el circuito de mando, la bobina del contactor se alimenta a través de una cadena de contactos en serie:\n\n• Contacto 95-96 del relé térmico.\n• Pulsador de parada, normalmente cerrado.\n• Presostatos de alta (PA), de baja (PB) y de aceite (PO).\n• Interruptor de nivel alto de la botella (LS).\n• Contactos de enclavamiento y parada de emergencia ([i]verificar cuáles a bordo[/i]).\n• Pulsador de marcha con su contacto de retención.\n\nSi cualquiera se abre, el contactor suelta y el compresor se para. Para volver a arrancar hay que pulsar marcha: la retención se perdió.\n\nLas bobinas de las solenoides de capacidad no van en esta cadena: las manda el control, el LOGO! 8 en el nº 5, o los selectores en manual. Si una falla, el compresor sigue en marcha con menos capacidad." },
         {
           "tipo": "ordenar",
           "tema": "frio_buscar_corte",
           "pregunta": "El compresor no arranca y la luz de mando está encendida. Seleccione en orden cómo se busca el contacto abierto:",
-          "pasos": ["Mirar qué presostato o relé indica disparo", "Medir con el multímetro la tensión a la salida de cada contacto de la cadena", "Localizar el primer punto donde falta la tensión", "Corregir la causa de ese contacto antes de rearmar"],
+          "pasos": ["Mirar qué luz de presostato, de nivel o de relé indica disparo", "Medir con el multímetro la tensión a la salida de cada contacto de la cadena", "Localizar el primer punto donde falta la tensión", "Corregir la causa de ese contacto antes de rearmar"],
           "explicacion": "Siguiendo la tensión por la cadena, el primer punto sin tensión está justo después del contacto abierto. Se mide con el EPP, porque el mando tiene tensión."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "frio_solenoide_capacidad_cortada",
+          "pregunta": "La bobina de la solenoide del 75 % del Vilter nº 5 está cortada. ¿Qué ocurre?",
+          "opciones": ["El compresor sigue en marcha, pero no carga esa etapa", "El compresor se para, como con un presostato", "El relé térmico dispara"],
+          "correcta": 0,
+          "explicacion": "Las solenoides de capacidad no están en la cadena de seguridades. Sin ella, el compresor trabaja con menos cilindros y la salmuera baja más despacio."
         }
       ]
     },
     {
       "titulo": "Enclavamientos y alarmas",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Enclavamiento}} con las bombas:[/b] sin agua de mar en el condensador o sin salmuera en el evaporador, el compresor no debe arrancar. Un contacto auxiliar del contactor de cada bomba va en la cadena.\n• [b]Alarmas:[/b] cada disparo da una señal al sistema de alarmas de máquinas, para que se sepa por qué paró.\n• [b]Detector de amoníaco:[/b] con la alarma alta, el control suele parar el compresor y arrancar la ventilación de emergencia ([i]verificar la lógica del buque[/i])." },
+        { "tipo": "texto", "texto": "• [b]{{Enclavamiento}} con las bombas:[/b] sin agua de mar en el condensador o sin salmuera en los evaporadores, el compresor no debe arrancar. Un contacto auxiliar del contactor de cada bomba puede ir en la cadena.\n• [b]Alarmas:[/b] cada disparo da una luz en el tablero y una señal al sistema de alarmas de máquinas, para que se sepa por qué paró. El tablero del nº 5 tiene luces de presostato de alta, de baja y de baja presión de aceite.\n• [b]Detector de amoníaco:[/b] con la alarma alta, el control suele parar el compresor y arrancar la ventilación de emergencia ([i]verificar la lógica del buque[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_enclavamiento_bombas",
@@ -49,6 +57,7 @@
   "para_saber_mas": [
     "IEC 60204-1: equipo eléctrico de las máquinas, circuitos de mando.",
     "IEC 60092-301: equipos eléctricos de buques.",
-    "Esquema eléctrico de la planta de frío del buque."
+    "Placa del motor WEG W40 y esquema eléctrico del tablero del compresor nº 5.",
+    "Manual del Siemens LOGO! 8."
   ]
 }

@@ -28,11 +28,11 @@
     {
       "titulo": "Usar la relación",
       "bloques": [
-        { "tipo": "texto", "texto": "Con un termómetro sobre la tubería y la temperatura de saturación del manómetro se calculan dos datos:\n• [b]{{Recalentamiento}}:[/b] la temperatura de la succión menos la de evaporación. Unos pocos grados indican que al compresor solo llega vapor.\n• [b]{{Subenfriamiento}}:[/b] la temperatura de condensación menos la del líquido. Indica que a la válvula de expansión llega solo líquido.\n\nUn recalentamiento casi nulo es peligroso: puede llegar líquido al compresor y dañarlo." },
+        { "tipo": "texto", "texto": "Con un termómetro sobre la tubería y la temperatura de saturación del manómetro se calculan dos datos:\n• [b]{{Recalentamiento}}:[/b] la temperatura de la succión menos la de evaporación.\n• [b]{{Subenfriamiento}}:[/b] la temperatura de condensación menos la del líquido. Indica que a la válvula de alimentación llega solo líquido.\n\nEn una planta con válvula de expansión, el recalentamiento se ajusta a unos pocos grados, y uno casi nulo avisa de que puede llegar líquido al compresor. En el buque, con recirculación, el vapor sale saturado de la botella de baja y el recalentamiento en la succión es casi nulo: es lo normal. Allí protege al compresor el interruptor de nivel alto de la botella." },
         {
           "tipo": "quiz",
           "tema": "frio_recalentamiento",
-          "pregunta": "La succión marca una evaporación de −17 °C y el termómetro en la tubería de succión da −11 °C. ¿Cuánto recalentamiento hay?",
+          "pregunta": "En una planta con válvula de expansión, la succión marca una evaporación de −17 °C y el termómetro en la tubería de succión da −11 °C. ¿Cuánto recalentamiento hay?",
           "opciones": ["6 K", "28 K", "0 K"],
           "correcta": 0,
           "explicacion": "Recalentamiento = −11 − (−17) = 6 K: el vapor está 6 grados por encima de su saturación."

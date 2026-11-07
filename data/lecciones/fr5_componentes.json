@@ -1,13 +1,13 @@
 {
   "id": "fr5_componentes",
   "titulo": "Componentes del circuito",
-  "resumen": "Condensador, recibidor, válvulas, evaporador y bombas.",
-  "minutos": 4,
+  "resumen": "Condensador, recibidor, botella de baja, bombas de amoníaco, válvulas y evaporadores.",
+  "minutos": 5,
   "paginas": [
     {
       "titulo": "El lado de alta",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Condensador}}:[/b] casi siempre multitubular. El agua de mar va por los tubos y el amoníaco condensa por fuera. Su enemigo es la suciedad: los tubos sucios suben la presión de descarga.\n• [b]{{Recibidor}}:[/b] depósito de líquido tras el condensador. Absorbe los cambios de carga del circuito. Su nivel se ve en un visor o en un indicador.\n• [b]{{Incondensables}}:[/b] el aire que entra en el circuito se acumula en el condensador y sube la presión. Se purga con un purgador ([i]verificar el procedimiento del buque[/i])." },
+        { "tipo": "texto", "texto": "• [b]{{Condensador}}:[/b] casi siempre multitubular. El agua de mar, impulsada por las tres bombas de condensador, va por los tubos y el amoníaco condensa por fuera. Su enemigo es la suciedad: los tubos sucios suben la presión de descarga.\n• [b]{{Recibidor}}:[/b] depósito de líquido tras el condensador. Absorbe los cambios de carga del circuito. Su nivel se ve en un visor o en un indicador.\n• [b]{{Incondensables}}:[/b] el aire que entra en el circuito se acumula en el condensador y sube la presión. Se purga con un purgador ([i]verificar el procedimiento del buque[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_condensador_sucio",
@@ -19,23 +19,23 @@
       ]
     },
     {
-      "titulo": "Las válvulas",
+      "titulo": "La botella de baja",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Valvula_expansion}}:[/b] estrangula el líquido y regula cuánto entra en el evaporador. Puede ser manual, termostática o electrónica. Si deja pasar poco, la succión baja; si deja pasar mucho, puede llegar líquido al compresor.\n• [b]{{Valvula_solenoide}}:[/b] corta el paso de líquido al parar el compresor, para que el evaporador no se llene. Su bobina va en el circuito de mando.\n• [b]{{Valvula_seguridad}}:[/b] protege los recipientes. Abre a su presión de tarado y descarga a la atmósfera por un palo de venteo. Nunca se tapona ni se aísla." },
+        { "tipo": "texto", "texto": "• [b]{{Botella_baja}}:[/b] el buque tiene dos, la roja y la azul. Recibe la mezcla que vuelve de los evaporadores: el vapor sube hacia la succión de los compresores y el líquido queda en el fondo.\n• [b]{{Bomba_amoniaco}}:[/b] tres bombas toman el líquido del fondo y lo envían a los evaporadores. Si la botella se vacía, la bomba cavita y su protección de baja presión la para.\n• [b]{{Interruptor_nivel}}:[/b] flotadores Parker LLSS. Los de nivel bajo y medio mandan cada {{valvula_solenoide}} de líquido (principal, nivel bajo y nivel medio), que rellena la botella desde el recibidor. En el simulador abre por debajo del 35 % y cierra al 50 %. El de nivel alto, al 80 %, da alarma y para el compresor ([i]valores típicos — verificar a bordo[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_solenoide_parada",
-          "pregunta": "¿Por qué se cierra la válvula solenoide de líquido al parar el compresor?",
-          "opciones": ["Para que el evaporador no se llene de líquido mientras está parado", "Para bajar la presión de descarga", "Para enfriar el aceite"],
+          "pregunta": "¿Por qué la solenoide de líquido debe cerrar al llegar el nivel medio de la botella?",
+          "opciones": ["Para que la botella no se llene hasta mandar líquido al compresor", "Para bajar la presión de descarga", "Para enfriar el aceite"],
           "correcta": 0,
-          "explicacion": "Con el evaporador lleno de líquido, al arrancar el compresor podría aspirarlo: es un golpe de líquido."
+          "explicacion": "Con la botella demasiado llena, el compresor podría aspirar líquido: es un golpe de líquido. Si la solenoide se pega abierta, el interruptor de nivel alto para el compresor."
         }
       ]
     },
     {
-      "titulo": "El evaporador y la salmuera",
+      "titulo": "Válvulas y evaporadores",
       "bloques": [
-        { "tipo": "texto", "texto": "En los atuneros, el {{evaporador}} suele ser un serpentín o un intercambiador por el que circula la {{salmuera}} de las cubas, impulsada por bombas. La salmuera de sal común bien concentrada no se congela hasta unos −21 °C ([i]verificar la concentración del buque[/i]).\n\n• [b]Salmuera floja:[/b] se congela sobre los tubos y forma una capa de hielo que aísla el evaporador.\n• [b]Bomba parada:[/b] el evaporador casi no toma calor y la succión cae enseguida." },
+        { "tipo": "texto", "texto": "• [b]{{Valvula_expansion}}:[/b] en plantas pequeñas alimenta directamente el evaporador y dosifica el líquido para que salga todo evaporado. En el circuito principal del buque no se usa: los evaporadores se alimentan por bombas.\n• [b]{{Valvula_seguridad}}:[/b] protege los recipientes, como el recibidor y las botellas. Abre a su presión de tarado y descarga por un palo de venteo. Nunca se tapona ni se aísla.\n• [b]{{Evaporador}}:[/b] en las cubas de {{salmuera}}. Diecisiete bombas circuladoras (centro, estribor 2 a 9 y babor 2 a 9) mueven la salmuera, cada una con luces de falla térmica, encendido y apagado. La salmuera de sal común bien concentrada no se congela hasta unos −21 °C ([i]verificar la concentración del buque[/i]). Si está floja, se congela sobre los tubos y aísla el evaporador." },
         {
           "tipo": "quiz",
           "tema": "frio_salmuera_floja",
@@ -49,7 +49,8 @@
   ],
   "para_saber_mas": [
     "ISO 5149-2: componentes y recipientes a presión de los sistemas de refrigeración.",
-    "IIAR: válvulas y controles para amoníaco.",
+    "IIAR: válvulas, controles y sistemas de recirculación para amoníaco.",
+    "Hoja técnica del interruptor de nivel Parker LLSS.",
     "Manual de la planta de frío del buque."
   ]
 }

@@ -2,16 +2,16 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v3.0**, con la v1, la v2 y la v3 completas. Incluye:
+Estado: **v3.1**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque. Incluye:
 
-- 19 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores e instrumentos.
+- 20 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores, tableros de bombas e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - 8 lecciones de refrigeración: ciclo de compresión, presión y temperatura del NH3, diagrama presión–entalpía, compresores, componentes, control y protecciones, cableado del compresor y diagnóstico.
 - Fichas de los equipos de los sistemas 1, 3 y 4, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
-- Cuadro principal con tres generadores, sincronización, PMS, protecciones, lámparas de tierra y cuadro de emergencia con su generador.
+- Cuadro principal con los cuatro generadores del buque (380 V, 50 Hz), paneles al estilo de sus módulos de sincronismo, PMS, protecciones, lámparas de tierra R-S-T y cuadro de emergencia con su generador.
 - Taller con multímetro, megóhmetro y pinza amperimétrica.
 - 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
-- 4 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite y fuga de amoníaco con evacuación.
+- 5 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite en el Vilter nº 5, fuga de amoníaco con evacuación y nivel alto en la botella de baja.
 - Exámenes de la v1, la v2 y la v3, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Glosario y plano del barco.
@@ -234,7 +234,7 @@ Los circuitos son JSON con `componentes` y `cables`, igual que lo que se guarda 
 ```json
 {
   "componentes": [
-    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 440 } },
+    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
     { "id": "R1", "tipo": "resistencia", "params": { "ohm": 100 } }
   ],
   "cables": [["B.L1", "R1.A"], ["B.L2", "R1.B"]]
@@ -256,7 +256,7 @@ Para añadir un componente, crea una clase que herede de `SimComponente` en `sim
   - `monitor_aislamiento`.
 - **Instrumentos:** el secuencímetro `SimSecuencimetro` y la pinza amperimétrica `SimPinza`. La pinza mide la corriente de los cables que abraza resolviendo la red con esos cables sustituidos por una impedancia mínima (`SimSimulacion.resolver` con `excluir`), y suma sus corrientes: con las tres fases de un circuito marca casi cero.
 
-El `pms` (gestión de potencia) en automático reparte la carga y mantiene 60 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout. Con `"sincronizador": false` arranca la reserva pero no la cierra.
+El `pms` (gestión de potencia) en automático reparte la carga y mantiene 50 Hz, arranca y sincroniza un grupo de reserva con carga alta, y recupera las barras tras un blackout. Con `"sincronizador": false` arranca la reserva pero no la cierra.
 
 El circuito `cuadro_principal` incluye el cuadro de emergencia: barras `BE`, enlace `QT` desde el principal, generador de emergencia `GE` de 75 kW con su interruptor `QE`, enclavados entre sí, y la salida `CE`. El selector AUTO de GE gobierna a la vez su arranque y el cierre automático de QE. En el circuito empieza en manual, con QT abierto, como al terminar una puesta en marcha.
 
@@ -264,17 +264,20 @@ El circuito `cuadro_principal` incluye el cuadro de emergencia: barras `BE`, enl
 
 La pantalla `ui/screens/cuadro.gd` es la práctica libre del cuadro principal, en el modo Taller del sistema 1. Sus textos, grupos, salidas y explicaciones de cada evento están en `data/cuadro.json`.
 
-Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene tres grupos de 450 kW, con valores típicos a verificar.
+Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide los pasos más largos. El reparto de carga y la potencia inversa salen de la red; no hay reglas escritas aparte. La plantilla `data/circuitos/cuadro_principal.json` tiene los cuatro grupos del buque: alternadores Stamford HCI534F de 565 kVA y 452 kW. Las cargas y los ajustes de protección son típicos, a verificar.
+
+**Red del buque:** `sim/red_buque.gd` (`SimRed`) fija la tensión, 380 V, y la frecuencia, 50 Hz, de las placas del buque. Todos los componentes la toman por defecto, y una prueba comprueba que coincide con `data/barco_via_simoun.json`.
 
 **Refrigeración (v3):**
 
 - **Amoníaco** (`SimNH3`, en `sim/frio/nh3.gd`): presión de saturación según la temperatura y al revés, interpolando el logaritmo de la presión en la tabla de `data/frio/nh3.json`. Da presiones absolutas y relativas, y pasa de bar a psi.
-- **Planta de frío** (`planta_frio`): compresor, condensador de agua de mar, evaporador en la salmuera de las cubas y válvula de expansión, en un modelo concentrado. Las temperaturas de evaporación y de condensación salen de balances de calor, y las presiones son las de saturación a esas temperaturas. El compresor es un motor del circuito, y la planta le pone la carga según la potencia que pide. En automático, la corredera de capacidad sigue a la consigna de la salmuera y limita la potencia del motor al 95 %.
-- **Averías de la planta:** hielo en los tubos con la salmuera floja, falta de refrigerante, filtro de aceite obstruido, condensador sucio, bombas paradas, fugas (con la concentración de NH3 en la sala) y apertura de la válvula de seguridad.
+- **Planta de frío** (`planta_frio`): compresor, condensador de agua de mar y evaporador en la salmuera de las cubas, en un modelo concentrado. Con `tipo_compresor` es de tornillo (corredera continua, como los MYCOM nº 3 y nº 4) o de pistón (etapas del 50, 75 y 100 % con solenoides y cabezas refrigeradas por agua, como los Vilter nº 1, 2 y 5). Con `"alimentacion": "bombeo"` el evaporador se alimenta por recirculación, como en el buque: botella de baja con su nivel, solenoide de líquido mandada por interruptores de nivel y bomba de amoníaco que para por baja presión si la botella se vacía. Las temperaturas de evaporación y de condensación salen de balances de calor, y las presiones son las de saturación a esas temperaturas. El compresor es un motor del circuito, y la planta le pone la carga según la potencia que pide. En automático, la corredera de capacidad sigue a la consigna de la salmuera y limita la potencia del motor al 95 %.
+- **Averías de la planta:** hielo en los tubos con la salmuera floja, falta de refrigerante, filtro de aceite obstruido, condensador sucio, bombas paradas, solenoide de nivel pegada (`averia_solenoide_nivel`), cabezas sin agua, fugas (con la concentración de NH3 en la sala) y apertura de la válvula de seguridad.
 - **Tiempo:** la salmuera se enfría mucho más deprisa que a bordo, para verlo en minutos.
 - **Presostato** (`presostato`): contacto 1-2 que se abre fuera de su corte. Puede ser de alta o de baja, con rearme manual o automático y con retardo. Puede vigilar solo con el compresor en marcha, como el de aceite; ese se rearma con el compresor parado, y su retardo cuenta desde el arranque.
 - **Pantalla** `ui/screens/planta.gd`, en el Taller del sistema 4: esquema del ciclo (`EsquemaFrio`) con el termómetro sobre las tuberías, manómetros, mando eléctrico del compresor con sus presostatos, corredera de capacidad, bombas, diagrama presión–entalpía (`DiagramaPH`, con entalpías esquemáticas) y seguridad de la sala. Sus mandos están en `game/operador_planta.gd`, y sus textos y las explicaciones de cada evento, en `data/planta.json`. El tiempo se puede acelerar ×10.
-- **Circuito** `planta_frio`: arranque directo del compresor con los presostatos de alta, baja y aceite en serie con la bobina del contactor. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.
+- **Interruptor de nivel** (`interruptor_nivel`): un presostato que lee el nivel de la botella. Va en serie con los presostatos y para el compresor con la botella demasiado llena.
+- **Circuitos** `planta_frio` (MYCOM nº 3, de tornillo) y `planta_frio_vilter` (Vilter nº 5, de pistón, con el motor WEG de 75 kW de su placa): arranque directo del compresor con los presostatos de alta, baja y aceite y el interruptor de nivel alto en serie con la bobina del contactor. La pantalla deja elegir el compresor (`compresores` de `data/planta.json`), y cada misión puede fijar el suyo con `"circuito"`. Sus valores coinciden con el apartado `refrigeracion` de `data/barco_via_simoun.json`, y una prueba lo comprueba: al corregir uno, corrija el otro.
 - **Animaciones de las lecciones:** `banco_planta` usa la misma simulación de la planta con el tiempo ×5. El escenario `ciclo` arranca y para el compresor, y `presostatos` deja parar las bombas para ver qué presostato dispara y cómo se rearma. `saturacion_nh3` dibuja la curva de saturación con un deslizador de temperatura.
 - **Símbolos:** los del sistema 4 llevan `"sistema": 4` en `data/simbolos.json`. IEC 60617 no cubre bien los equipos frigoríficos, así que siguen ISO 14617 e ISA 5.1, marcados para verificar.
 

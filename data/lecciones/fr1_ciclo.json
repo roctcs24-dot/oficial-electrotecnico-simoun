@@ -1,13 +1,13 @@
 {
   "id": "fr1_ciclo",
   "titulo": "El ciclo de compresión",
-  "resumen": "Cómo se lleva el calor de la salmuera al agua de mar.",
-  "minutos": 4,
+  "resumen": "Cómo se lleva el calor de la salmuera al agua de mar, y la recirculación por bombas del buque.",
+  "minutos": 5,
   "paginas": [
     {
       "titulo": "La idea",
       "bloques": [
-        { "tipo": "texto", "texto": "Una planta de frío no fabrica frío: saca calor de donde sobra y lo lleva a otro sitio. En el atunero, lo saca de la {{salmuera}} de las cubas y lo tira al agua de mar.\n\nPara eso usa un {{refrigerante}}, aquí el {{amoniaco}}, que hierve a baja temperatura. Al hervir toma mucho calor, y al condensar lo devuelve. El {{ciclo_compresion}} tiene cuatro pasos:\n• [b]Evaporación:[/b] en el {{evaporador}}, el líquido hierve a baja presión y enfría la salmuera.\n• [b]Compresión:[/b] el compresor aspira ese vapor y lo comprime. Sale caliente y a alta presión.\n• [b]Condensación:[/b] en el {{condensador}}, el agua de mar enfría el vapor y lo vuelve líquido.\n• [b]Expansión:[/b] la {{valvula_expansion}} baja la presión del líquido, que vuelve al evaporador." },
+        { "tipo": "texto", "texto": "Una planta de frío no fabrica frío: saca calor de donde sobra y lo lleva a otro sitio. En el atunero, lo saca de la {{salmuera}} de las cubas y lo tira al agua de mar.\n\nPara eso usa un {{refrigerante}}, aquí el {{amoniaco}}, que hierve a baja temperatura. Al hervir toma mucho calor, y al condensar lo devuelve. El {{ciclo_compresion}} tiene cuatro pasos:\n• [b]Evaporación:[/b] en el {{evaporador}}, el líquido hierve a baja presión y enfría la salmuera.\n• [b]Compresión:[/b] el compresor aspira ese vapor y lo comprime. Sale caliente y a alta presión.\n• [b]Condensación:[/b] en el {{condensador}}, el agua de mar enfría el vapor y lo vuelve líquido.\n• [b]Expansión:[/b] el líquido pasa por una válvula que le baja la presión y vuelve al lado de baja." },
         {
           "tipo": "quiz",
           "tema": "frio_donde_va_el_calor",
@@ -19,9 +19,23 @@
       ]
     },
     {
+      "titulo": "La recirculación del buque",
+      "bloques": [
+        { "tipo": "texto", "texto": "El buque alimenta los evaporadores por {{recirculacion}}:\n• [b]{{Botella_baja}}:[/b] hay dos, la roja y la azul. El compresor aspira el vapor de la parte alta; el líquido queda abajo.\n• [b]{{Bomba_amoniaco}}:[/b] tres bombas envían ese líquido a los evaporadores de las cubas, con más caudal del que se evapora. La mezcla de líquido y vapor vuelve a la botella.\n• [b]{{Interruptor_nivel}}:[/b] unos flotadores mandan las solenoides de líquido, que rellenan la botella desde el recibidor. Al pasar por ellas el líquido baja de presión: es la expansión del ciclo. Un interruptor de nivel alto para el compresor si la botella se llena demasiado.\n\nEn plantas pequeñas, una {{valvula_expansion}} alimenta directamente cada evaporador y dosifica el líquido para que salga todo evaporado." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_recirculacion_exceso",
+          "pregunta": "¿Por qué las bombas de amoníaco envían a los evaporadores más líquido del que se evapora?",
+          "opciones": ["Para que los evaporadores trabajen llenos de líquido y el compresor aspire solo vapor de la botella", "Para subir la presión de descarga", "Para refrigerar el motor de la bomba"],
+          "correcta": 0,
+          "explicacion": "El líquido sobrante vuelve a la botella, donde se separa del vapor. Los tubos mojados transmiten mejor el calor, y al compresor solo llega vapor saturado."
+        }
+      ]
+    },
+    {
       "titulo": "Alta y baja presión",
       "bloques": [
-        { "tipo": "texto", "texto": "La planta tiene dos lados:\n• [b]Lado de alta:[/b] desde la descarga del compresor hasta la válvula de expansión. Pasa por el condensador y el recibidor. Presión de unos 11 a 14 bar.\n• [b]Lado de baja:[/b] desde la válvula de expansión hasta la succión del compresor. Pasa por el evaporador. Presión de unos 0,5 a 2 bar.\n\n([i]Valores típicos de una planta de salmuera con agua de mar tropical — verificar a bordo[/i].)\n\nEl compresor y la válvula de expansión son la frontera: uno sube la presión y la otra la baja." },
+        { "tipo": "texto", "texto": "La planta tiene dos lados:\n• [b]Lado de alta:[/b] desde la descarga del compresor hasta las solenoides de líquido. Pasa por el condensador y el recibidor. Presión de unos 11 a 14 bar.\n• [b]Lado de baja:[/b] desde las solenoides hasta la succión del compresor. Pasa por la botella, las bombas de amoníaco y los evaporadores. Presión de unos 0,5 a 2 bar.\n\n([i]Valores típicos de una planta de salmuera con agua de mar tropical — verificar a bordo[/i].)" },
         { "tipo": "animacion", "id": "banco_planta", "params": { "escenario": "ciclo" } }
       ]
     },
@@ -31,23 +45,24 @@
         {
           "tipo": "ordenar",
           "tema": "frio_orden_ciclo",
-          "pregunta": "Seleccione en orden el recorrido del refrigerante, empezando en el evaporador:",
-          "pasos": ["Evaporador: el líquido hierve y toma calor de la salmuera", "Compresor: el vapor se comprime", "Condensador: el vapor cede calor al agua de mar y se vuelve líquido", "Válvula de expansión: el líquido baja de presión"],
-          "explicacion": "Después de la válvula, el refrigerante vuelve al evaporador y el ciclo se repite."
+          "pregunta": "Seleccione en orden el recorrido del amoníaco en el buque, empezando en el evaporador:",
+          "pasos": ["Evaporador: parte del líquido hierve y toma calor de la salmuera", "Botella de baja: el vapor se separa del líquido sobrante", "Compresor: aspira el vapor de la botella y lo comprime", "Condensador: el vapor cede calor al agua de mar y se vuelve líquido", "Solenoide de líquido: el líquido baja de presión y rellena la botella"],
+          "explicacion": "Después, la bomba de amoníaco toma el líquido de la botella y lo envía de nuevo a los evaporadores."
         },
         {
           "tipo": "quiz",
           "tema": "frio_lado_alta",
           "pregunta": "¿Qué equipos están en el lado de alta presión?",
-          "opciones": ["El evaporador y la succión del compresor", "El condensador y el recibidor", "La salmuera y su bomba"],
+          "opciones": ["La botella de baja y las bombas de amoníaco", "El condensador y el recibidor", "Los evaporadores de las cubas"],
           "correcta": 1,
-          "explicacion": "El lado de alta va desde la descarga del compresor hasta la válvula de expansión."
+          "explicacion": "El lado de alta va desde la descarga del compresor hasta las solenoides de líquido que rellenan la botella."
         }
       ]
     }
   ],
   "para_saber_mas": [
     "IIAR: introducción a la refrigeración por amoníaco.",
+    "IIAR: sistemas de recirculación por bombas.",
     "ISO 5149: sistemas de refrigeración, seguridad y medio ambiente.",
     "Manual de la planta de frío del buque."
   ]

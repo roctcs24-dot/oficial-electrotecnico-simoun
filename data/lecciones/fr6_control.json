@@ -1,20 +1,34 @@
 {
   "id": "fr6_control",
   "titulo": "Control y protecciones",
-  "resumen": "Presostatos, termostatos, transmisores de 4–20 mA y válvulas de seguridad.",
+  "resumen": "Presostatos Penn, nivel de la botella, solenoides de capacidad, transmisores de 4–20 mA y válvulas de seguridad.",
   "minutos": 5,
   "paginas": [
     {
       "titulo": "Los presostatos",
       "bloques": [
-        { "tipo": "texto", "texto": "Un {{presostato}} abre o cierra un contacto cuando la presión pasa de su ajuste. Los de seguridad van en serie con la bobina del contactor del compresor: si uno abre, el compresor se para.\n\n([i]Ajustes típicos del simulador — verificar a bordo[/i])\n• [b]{{Presostato_alta}}:[/b] corta a 16 bar de descarga. Rearme manual: alguien debe ver la causa antes de volver a arrancar.\n• [b]{{Presostato_baja}}:[/b] corta a 0,3 bar de succión. Rearme automático: cierra solo al subir la presión. Algunas plantas lo usan también para parar el compresor al llegar a la temperatura.\n• [b]{{Presostato_aceite}}:[/b] corta si la presión diferencial de aceite no llega a 1 bar pasados unos 45 s. Rearme manual." },
+        { "tipo": "texto", "texto": "Un {{presostato}} abre un contacto cuando la presión pasa de su ajuste. Cada compresor del buque tiene los suyos, de la marca Penn (Johnson Controls), aptos para amoníaco, con una botonera local. Van en serie con la bobina del contactor del compresor: si uno abre, el compresor se para.\n\n([i]Ajustes típicos del simulador — verificar a bordo[/i])\n• [b]{{Presostato_alta}}:[/b] corta a 16 bar de descarga. Rearme manual: alguien debe ver la causa antes de volver a arrancar.\n• [b]{{Presostato_baja}}:[/b] corta a 0,3 bar de succión. Rearme automático: cierra solo al subir la presión.\n• [b]{{Presostato_aceite}}:[/b] corta si la presión diferencial de aceite no llega a 1 bar pasados unos 45 s. Rearme manual." },
         { "tipo": "animacion", "id": "banco_planta", "params": { "escenario": "presostatos" } }
+      ]
+    },
+    {
+      "titulo": "Nivel, capacidad y alarmas",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Nivel alto de la botella:[/b] su {{interruptor_nivel}} va en la misma cadena que los presostatos. Con la botella demasiado llena abre y para el compresor, para que no aspire líquido. Rearma solo al bajar el nivel.\n• [b]Solenoides de capacidad:[/b] en los Vilter, el control (en el nº 5, un Siemens LOGO! 8) energiza la del 75 % y después la del 100 % según la salmuera. En manual, las fijan los selectores del tablero.\n• [b]Baja presión de la bomba de amoníaco:[/b] si la botella se vacía, la bomba cavita, pierde presión y su protección la para con alarma.\n• [b]Temperatura de cabezas:[/b] sin el agua salada de refrigeración, las cabezas del pistón se calientan hasta dar alarma, a unos 120 °C en el simulador ([i]valor típico — verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_nivel_alto_cadena",
+          "pregunta": "¿Por qué el interruptor de nivel alto de la botella va en serie con la bobina del contactor del compresor?",
+          "opciones": ["Para que el compresor se pare antes de aspirar líquido", "Para que la bomba de amoníaco arranque sola", "Para cargar la etapa del 100 %"],
+          "correcta": 0,
+          "explicacion": "Con la botella llena, el líquido puede llegar a la succión y romper válvulas o bielas. Al abrir la cadena, el contactor suelta y el compresor se para."
+        }
       ]
     },
     {
       "titulo": "Termostatos y transmisores",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Termostato}}:[/b] actúa por temperatura. Puede parar el compresor al llegar la salmuera a su consigna, o proteger contra una descarga demasiado caliente.\n• [b]{{Transmisor_presion}}:[/b] da una señal proporcional a la presión, normalmente en un {{lazo_4_20}}. El PLC o el controlador de la planta la usa para medir, regular y dar alarmas.\n\nEn un lazo de 4–20 mA, 4 mA es el inicio de la escala y 20 mA el final. Una lectura de 0 mA no es «presión cero»: es un cable cortado o un transmisor sin alimentación." },
+        { "tipo": "texto", "texto": "• [b]{{Termostato}}:[/b] actúa por temperatura. Puede parar el compresor al llegar la salmuera a su consigna, o proteger contra una descarga demasiado caliente.\n• [b]{{Transmisor_presion}}:[/b] da una señal proporcional a la presión, normalmente en un {{lazo_4_20}}. El control de la planta la usa para medir, regular y dar alarmas.\n\nEn un lazo de 4–20 mA, 4 mA es el inicio de la escala y 20 mA el final. Una lectura de 0 mA no es «presión cero»: es un cable cortado o un transmisor sin alimentación." },
         {
           "tipo": "quiz",
           "tema": "frio_lazo_cero",
@@ -36,7 +50,7 @@
     {
       "titulo": "La última protección",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{valvula_seguridad}} solo debe abrir si todo lo demás falla. Si abre, el presostato de alta no actuó o estaba puenteado, y el buque pierde amoníaco a la atmósfera.\n\n• [b]Nunca[/b] se puentea un presostato para que el compresor siga en marcha.\n• [b]Nunca[/b] se sube un ajuste de seguridad para que no dispare.\n• Las válvulas de seguridad se revisan y se cambian según el plan de mantenimiento y lo que pida la sociedad de clasificación ([i]verificar[/i])." },
+        { "tipo": "texto", "texto": "La {{valvula_seguridad}} solo debe abrir si todo lo demás falla. Si abre, el presostato de alta no actuó o estaba puenteado, y el buque pierde amoníaco a la atmósfera.\n\n• [b]Nunca[/b] se puentea un presostato ni un interruptor de nivel para que el compresor siga en marcha.\n• [b]Nunca[/b] se sube un ajuste de seguridad para que no dispare.\n• Las válvulas de seguridad se revisan y se cambian según el plan de mantenimiento y lo que pida la sociedad de clasificación ([i]verificar[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_no_puentear",
@@ -49,8 +63,9 @@
     }
   ],
   "para_saber_mas": [
+    "Hojas técnicas de los presostatos Penn (Johnson Controls) para amoníaco.",
     "ISO 5149-2: dispositivos de protección contra la presión.",
     "IEC 60947-5-1: dispositivos de mando y contactos auxiliares.",
-    "Manual de la planta de frío del buque: ajustes de los presostatos."
+    "Manual de la planta de frío del buque: ajustes de los presostatos y de los niveles."
   ]
 }

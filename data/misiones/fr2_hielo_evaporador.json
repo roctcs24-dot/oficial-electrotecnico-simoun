@@ -37,7 +37,7 @@
     "opciones": [
       { "texto": "La salmuera está floja: se congela sobre los tubos y el hielo aísla el evaporador", "correcta": true, "explicacion": "La densidad corresponde a una congelación hacia −12 °C. Los tubos del evaporador están más fríos que eso, así que la salmuera se congela sobre ellos. El hielo aísla, el evaporador toma poco calor y la succión cae." },
       { "texto": "Falta refrigerante en la planta", "explicacion": "El nivel del recibidor es normal. Con poca carga tampoco se formaría hielo: el evaporador trabajaría medio vacío y más caliente." },
-      { "texto": "La válvula de expansión está obstruida", "explicacion": "Con poco líquido entrando, el evaporador se quedaría más caliente y no se cubriría de hielo." },
+      { "texto": "La bomba de amoníaco no envía líquido al evaporador", "explicacion": "La bomba de amoníaco está en marcha y la botella tiene nivel. Además, con poco líquido entrando, el evaporador se quedaría más caliente y no se cubriría de hielo." },
       { "texto": "El presostato de baja corta antes de su ajuste", "explicacion": "El manómetro de succión baja de verdad hasta 0,3 bar antes del disparo: el presostato actúa en su valor." }
     ]
   },
@@ -65,7 +65,7 @@
   },
   "libro": {
     "campos": [
-      { "etiqueta": "Causa del disparo", "opciones": ["Falta de refrigerante", "Válvula de expansión obstruida", "Salmuera floja congelada sobre el evaporador"], "correcta": 2, "explicacion": "La densidad de la salmuera correspondía a una congelación hacia −12 °C, y los tubos estaban cubiertos de hielo." },
+      { "etiqueta": "Causa del disparo", "opciones": ["Falta de refrigerante", "Bomba de amoníaco sin caudal", "Salmuera floja congelada sobre el evaporador"], "correcta": 2, "explicacion": "La densidad de la salmuera correspondía a una congelación hacia −12 °C, y los tubos estaban cubiertos de hielo." },
       { "etiqueta": "Reparación", "opciones": ["Sal añadida hasta la densidad de la tabla y deshielo del evaporador", "Corte de PB bajado a −0,5 bar", "Carga de amoníaco"], "correcta": 0, "explicacion": "Se corrigió la concentración de la salmuera y se dejó fundir el hielo." },
       { "etiqueta": "Prueba", "opciones": ["Un arranque sin disparo", "5 minutos enfriando con la succión normal y sin hielo", "Ninguna: la densidad ya es correcta"], "correcta": 1, "explicacion": "La prueba se hace con la planta enfriando y el evaporador limpio de hielo." }
     ]

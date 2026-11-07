@@ -3,7 +3,7 @@ extends RefCounted
 ## resultados sobre la simulación real de la planta.
 
 const A := preload("res://tests/ayuda_sim.gd")
-const MISIONES := ["fr1_alta_descarga", "fr2_hielo_evaporador", "fr3_presion_aceite", "fr4_fuga_nh3"]
+const MISIONES := ["fr1_alta_descarga", "fr2_hielo_evaporador", "fr3_presion_aceite", "fr4_fuga_nh3", "fr5_nivel_botella"]
 const RUTA_PARTIDA := "user://pruebas_guardia_planta.json"
 ## Las pruebas avanzan la planta con pasos de un cuarto de segundo: cambia despacio.
 const PASO_S := 0.25
@@ -139,6 +139,22 @@ func completar(m: MisionPlanta) -> void:
 			_esperar(m, 1.0)
 			_marcha(m)
 			m.avanzar(300.0, 0.5)
+		"fr5_nivel_botella":
+			m.dar_paso("aviso")
+			m.ejecutar("mirar_visor")
+			m.ejecutar("comprobar_bobina")
+			m.diagnosticar(_opcion_correcta(m))
+			m.ejecutar("aislar_solenoide")
+			m.alternar_guardamotor()
+			m.bloquear("Q1")
+			m.verificar("Q1")
+			m.ejecutar("cambiar_solenoide")
+			m.ejecutar("abrir_solenoide")
+			m.ejecutar("trasegar")
+			m.desbloquear("Q1")
+			m.alternar_guardamotor()
+			_esperar(m, 3.0)
+			_marcha(m)
 	_terminar(m)
 
 
@@ -455,6 +471,83 @@ func test_sin_reparar_la_ventilacion_no_baja_del_aviso() -> String:
 	m.avanzar(900.0, 0.5)
 	var ppm: float = m.planta().estado["ppm_sala"]
 	return A.cierto(ppm > 25.0 and ppm < 150.0, "con la fuga, la ventilación la contiene pero no la elimina: %.0f ppm" % ppm)
+
+
+# --- Nivel alto en la botella ---
+
+func test_botella_llena_para_el_compresor_y_no_deja_arrancar() -> String:
+	var m := _mision("fr5_nivel_botella")
+	var ls: SimPresostato = m.sim.componente("LS")
+	_marcha(m)
+	var arranca := m.en_marcha()
+	var lectura := m.ejecutar("mirar_visor")
+	return A.primero([
+		A.cierto(ls.estado["disparado"] and not arranca, "con la botella llena el interruptor de nivel no deja arrancar"),
+		A.cierto(lectura["texto"].contains("un 8"), "el visor debe dar el nivel alto: %s" % lectura["texto"]),
+		A.cierto(not m.planta().estado["solenoide_nivel"], "la luz de la solenoide indica la orden de cerrar"),
+	])
+
+
+func test_trasegar_sin_reparar_vuelve_a_llenar_la_botella() -> String:
+	var m := _mision("fr5_nivel_botella")
+	m.ejecutar("trasegar")
+	_esperar(m, 3.0)
+	_marcha(m)
+	var arranca := m.en_marcha()
+	_esperar(m, 300.0)
+	return A.primero([
+		A.cierto(arranca, "con el nivel corregido el compresor arranca"),
+		A.cierto(not m.en_marcha() and m.sim.componente("LS").estado["disparado"], "con la solenoide pegada la botella se vuelve a llenar y para"),
+	])
+
+
+func test_puentear_el_nivel_alto_es_falta() -> String:
+	var m := _mision("fr5_nivel_botella")
+	var aviso := m.ejecutar("puentear_nivel")
+	_marcha(m)
+	return A.primero([
+		A.cierto(aviso["tipo"] == "error" and m.faltas[0]["tema"] == "ajuste_presostato", "debe ser falta: %s" % str(m.faltas)),
+		A.cierto(m.en_marcha(), "puenteado, el compresor arranca con la botella llena"),
+		A.cierto(not m.condicion({"c": "estado", "id": "LS", "clave": "puenteado", "valor": false}), "la prueba exige quitar el puente"),
+	])
+
+
+# --- Vilter: etapas y cabezas ---
+
+func test_vilter_arranca_descargado_y_carga_por_etapas() -> String:
+	var m := _mision("fr3_presion_aceite")
+	var p := m.planta()
+	p.params["obstruccion_filtro_aceite"] = 0.0
+	m.rearmar_presostato("PO")
+	_marcha(m)
+	var al_arrancar: float = p.estado["capacidad"]
+	var maxima := 0.0
+	var corriente := 0.0
+	for _i in 600:
+		_esperar(m, 1.0)
+		maxima = maxf(maxima, p.estado["capacidad"])
+		corriente = maxf(corriente, m.corriente_motor())
+	var motor: SimMotorTrifasico = m.sim.componente("M1")
+	return A.primero([
+		A.cierto(p.piston(), "la misión de aceite es con el Vilter de pistón"),
+		A.cierto(is_equal_approx(al_arrancar, SimPlantaFrio.ETAPA_BASE), "arranca con la etapa base: %.2f" % al_arrancar),
+		A.cierto(maxima >= SimPlantaFrio.ETAPA_75, "en automático debe cargar una etapa: %.2f" % maxima),
+		A.cierto(corriente < float(motor.params["i_delta"]) * 1.05, "el automático no sobrecarga el motor: %.0f A" % corriente),
+	])
+
+
+func test_vilter_sin_agua_en_las_cabezas_da_alarma() -> String:
+	var m := _mision("fr3_presion_aceite")
+	var p := m.planta()
+	p.params["obstruccion_filtro_aceite"] = 0.0
+	p.estado["bomba_cabezas"] = false
+	m.rearmar_presostato("PO")
+	_marcha(m)
+	_esperar(m, 300.0)
+	return A.primero([
+		A.cierto(m.sim.hubo_evento("alta_temperatura_cabezas"), "debe dar la alarma de cabezas"),
+		A.cierto(p.temperatura_tuberia("descarga") > 150.0, "la descarga sale muy caliente: %.0f °C" % p.temperatura_tuberia("descarga")),
+	])
 
 
 # --- Pantalla ---

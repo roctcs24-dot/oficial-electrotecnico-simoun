@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <defs>
+    <linearGradient id="virola" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a5584f"/><stop offset="0.4" stop-color="#8a4740"/><stop offset="1" stop-color="#4f2622"/>
+    </linearGradient>
+    <linearGradient id="acero" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5f6568"/><stop offset="0.5" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/>
+    </linearGradient>
+    <linearGradient id="motor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a7186"/><stop offset="0.5" stop-color="#3e5366"/><stop offset="1" stop-color="#26343f"/>
+    </linearGradient>
+    <linearGradient id="bobina" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2a2e31"/><stop offset="0.5" stop-color="#4a5055"/><stop offset="1" stop-color="#1b1e21"/>
+    </linearGradient>
+    <radialGradient id="carcasa" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#e4e7e8"/><stop offset="0.55" stop-color="#9aa1a5"/><stop offset="1" stop-color="#5f6568"/>
+    </radialGradient>
+  </defs>
+  <!-- Soportes -->
+  <path d="M160,186 L148,234 H196 L184,186 Z M296,186 L284,234 H332 L320,186 Z" fill="#2a2e31"/>
+  <!-- Salida de vapor a la succión de los compresores -->
+  <path d="M200,90 V40 H110" fill="none" stroke="#5aa0e0" stroke-width="14"/>
+  <!-- Retorno de los evaporadores: mezcla de líquido y vapor -->
+  <path d="M470,60 H330 V90" fill="none" stroke="#7fb0d8" stroke-width="12"/>
+  <!-- Válvula de seguridad con su venteo -->
+  <path d="M270,68 V30" stroke="#8e9496" stroke-width="6"/>
+  <rect x="262" y="68" width="16" height="22" fill="#c8312a"/>
+  <!-- Recipiente -->
+  <rect x="120" y="90" width="240" height="100" rx="50" fill="url(#virola)"/>
+  <!-- Líquido en el fondo, dibujado en corte -->
+  <path d="M120.6,148 H359.4 A50,50 0 0 1 310,190 H170 A50,50 0 0 1 120.6,148 Z" fill="#e0a030" opacity="0.6"/>
+  <path d="M120.6,148 H359.4" stroke="#e0a030" stroke-width="2"/>
+  <!-- Columna de nivel -->
+  <path d="M96,100 H142 M96,180 H142" stroke="#8e9496" stroke-width="8"/>
+  <rect x="82" y="84" width="14" height="120" rx="4" fill="url(#acero)"/>
+  <rect x="85" y="148" width="8" height="53" fill="#e0a030"/>
+  <!-- Interruptores de nivel de flotador: alto, medio y bajo -->
+  <g fill="#3a3f44">
+    <rect x="52" y="104" width="30" height="12" rx="3"/>
+    <rect x="52" y="134" width="30" height="12" rx="3"/>
+    <rect x="52" y="149" width="30" height="12" rx="3"/>
+  </g>
+  <g fill="#1b1e21">
+    <rect x="44" y="107" width="8" height="6"/>
+    <rect x="44" y="137" width="8" height="6"/>
+    <rect x="44" y="152" width="8" height="6"/>
+  </g>
+  <!-- Alimentación de líquido desde el recibidor, con su solenoide -->
+  <path d="M476,236 H384 V172 H350" fill="none" stroke="#e0a030" stroke-width="10"/>
+  <rect x="408" y="226" width="40" height="20" rx="4" fill="url(#acero)"/>
+  <rect x="416" y="198" width="24" height="28" rx="3" fill="url(#bobina)"/>
+  <rect x="421" y="204" width="14" height="8" fill="#e9ebe8"/>
+  <!-- Salida de líquido a la bomba de amoníaco -->
+  <path d="M240,190 V244" stroke="#e0a030" stroke-width="10"/>
+  <path d="M222,262 H60" stroke="#e0a030" stroke-width="10"/>
+  <!-- Bomba de amoníaco con su motor -->
+  <rect x="258" y="248" width="60" height="28" rx="5" fill="url(#motor)"/>
+  <g stroke="#26343f" stroke-width="2"><path d="M272,250 V274 M286,250 V274 M300,250 V274"/></g>
+  <circle cx="240" cy="262" r="18" fill="url(#carcasa)"/>
+  <circle cx="240" cy="262" r="6" fill="#5f6568"/>
+</svg>

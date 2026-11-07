@@ -164,6 +164,9 @@ func _actualizar_esquema() -> void:
 	_esquema.en_marcha = planta.compresor_en_marcha()
 	_esquema.presion_succion = planta.presion("succion")
 	_esquema.presion_descarga = planta.presion("descarga")
+	_esquema.recirculacion = planta.bombeo()
+	_esquema.nivel_botella = planta.estado["nivel_botella"]
+	_esquema.bomba_amoniaco = planta.estado["bomba_amoniaco"]
 
 
 func dibujar() -> void:

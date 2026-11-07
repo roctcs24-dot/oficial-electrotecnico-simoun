@@ -5,7 +5,7 @@
   "dibujo": {
     "svg": "res://art/equipos/presostato.svg",
     "tamano": [300, 380],
-    "nota": "Presostato industrial genérico con escalas de corte y diferencial y rearme manual. Modelo, escalas y ajustes: verificar a bordo.",
+    "nota": "Presostato industrial genérico con escalas de corte y diferencial y rearme manual. En el buque son presostatos Penn (Johnson Controls), aptos para amoníaco, con una botonera local en cada compresor. Modelo, escalas y ajustes: verificar a bordo.",
     "etiquetas": [
       { "texto": "CORTE", "x": 150, "y": 60, "tam": 11, "color": "#20242a" },
       { "texto": "16 bar", "x": 192, "y": 80, "tam": 12, "color": "#20242a" },
@@ -24,7 +24,7 @@
     {
       "id": "funcion",
       "titulo": "Para qué sirve",
-      "texto": "Un {{presostato}} abre un contacto cuando la presión pasa de su corte. En la planta de frío hay tres de seguridad, en serie con la bobina del contactor del compresor: el {{presostato_alta}}, el {{presostato_baja}} y el {{presostato_aceite}}. Si uno abre, el compresor se para."
+      "texto": "Un {{presostato}} abre un contacto cuando la presión pasa de su corte. En la planta de frío hay tres de seguridad, en serie con la bobina del contactor del compresor: el {{presostato_alta}}, el {{presostato_baja}} y el {{presostato_aceite}}. Si uno abre, el compresor se para.\n\nEn el buque son de la marca Penn (Johnson Controls), aptos para amoníaco, montados en cada compresor con su botonera local. En la misma cadena va el {{interruptor_nivel}} que vigila el nivel alto de la botella de baja."
     },
     {
       "id": "partes",
@@ -34,7 +34,7 @@
     {
       "id": "conexion",
       "titulo": "Cómo se conecta",
-      "texto": "• [b]Presión:[/b] el de alta, a la descarga antes de cualquier válvula de cierre; el de baja, a la succión; el de aceite, a la salida de la bomba de aceite y a la succión.\n• [b]Eléctrica:[/b] el contacto que se abre al disparar va en serie con la cadena de mando. El otro contacto puede dar la alarma.\n• [b]Nunca[/b] se puentea, ni para probar con el compresor en marcha."
+      "texto": "• [b]Presión:[/b] el de alta, a la descarga antes de cualquier válvula de cierre; el de baja, a la succión; el de aceite, a la salida de la bomba de aceite y a la succión.\n• [b]Eléctrica:[/b] el contacto que se abre al disparar va en serie con la cadena de mando. El otro contacto puede dar la alarma.\n• [b]Nunca[/b] se puentea, ni para probar con el compresor en marcha.\n• [b]Repuesto:[/b] debe ser apto para amoníaco, sin cobre ni latón en contacto con el refrigerante, porque el amoníaco los ataca. Use el mismo modelo Penn o uno equivalente para NH3."
     },
     {
       "id": "ajuste",
@@ -60,6 +60,7 @@
   "para_saber_mas": [
     "ISO 5149-2: dispositivos de limitación de presión.",
     "IEC 60947-5-1: contactos de los dispositivos de mando.",
+    "Hojas técnicas de los presostatos Penn (Johnson Controls).",
     "Manual de la planta de frío del buque."
   ]
 }

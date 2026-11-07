@@ -1,0 +1,72 @@
+{
+  "id": "botella_baja",
+  "titulo": "Botella de baja y recirculación",
+  "resumen": "Separa el vapor del líquido: el compresor aspira el vapor y las bombas de amoníaco llevan el líquido a los evaporadores.",
+  "dibujo": {
+    "svg": "res://art/equipos/botella_baja.svg",
+    "tamano": [480, 320],
+    "nota": "Botella de baja horizontal genérica, dibujada en corte para ver el líquido, con su columna de nivel, tres interruptores de nivel, solenoide de líquido y bomba de amoníaco. El buque tiene dos, la roja y la azul. Forma, tamaño, número de solenoides y posición de cada interruptor: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Al compresor", "x": 150, "y": 22, "tam": 12 },
+      { "texto": "Válvula de seguridad", "x": 262, "y": 18, "tam": 11 },
+      { "texto": "Retorno de los evaporadores", "x": 396, "y": 44, "tam": 11 },
+      { "texto": "Interruptores de nivel", "x": 62, "y": 68, "tam": 10 },
+      { "texto": "Alto", "x": 26, "y": 110, "tam": 10 },
+      { "texto": "Medio", "x": 26, "y": 140, "tam": 10 },
+      { "texto": "Bajo", "x": 26, "y": 155, "tam": 10 },
+      { "texto": "Botella de baja", "x": 240, "y": 110, "tam": 13 },
+      { "texto": "Vapor", "x": 240, "y": 130, "tam": 11 },
+      { "texto": "Líquido", "x": 240, "y": 168, "tam": 11, "color": "#20242a" },
+      { "texto": "Solenoide de líquido", "x": 420, "y": 268, "tam": 11 },
+      { "texto": "A los evaporadores", "x": 82, "y": 246, "tam": 11 },
+      { "texto": "Bomba de amoníaco", "x": 288, "y": 300, "tam": 12 }
+    ]
+  },
+  "simbolos": {
+    "nota": "El juego no tiene todavía un símbolo de recipiente de baja presión ni de interruptor de nivel: se muestra el de la solenoide de líquido. Verificar contra ISO 14617 y los esquemas de la planta.",
+    "lista": ["valvula_solenoide"]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{botella_baja}} es el centro de la {{recirculacion}}: recibe la mezcla de líquido y vapor que vuelve de los evaporadores, entrega el vapor a la succión de los compresores y guarda el líquido para la {{bomba_amoniaco}}. Así el compresor aspira solo vapor y los evaporadores trabajan llenos de líquido. El buque tiene dos botellas, la roja y la azul, y tres bombas de amoníaco."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Recipiente de baja presión[/b], aislado contra la condensación. El vapor ocupa la parte alta y el líquido, la baja.\n• [b]{{Interruptor_nivel}}:[/b] flotadores Parker LLSS en la columna de nivel. Los de nivel bajo y medio mandan las solenoides de líquido; el de nivel alto da la alarma y para el compresor.\n• [b]{{Valvula_solenoide}} de líquido:[/b] rellena la botella desde el recibidor. El buque tiene tres: la principal, la de nivel bajo y la de nivel medio ([i]función exacta de cada una: verificar a bordo[/i]). Al pasar por ella, el líquido baja de presión: es la expansión del ciclo.\n• [b]Bombas de amoníaco:[/b] toman el líquido del fondo y lo envían a los evaporadores de las cubas, con más caudal del que se evapora. Cada una tiene alarma de baja presión.\n• [b]{{Valvula_seguridad}}[/b], manómetro y válvulas de cierre manuales."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Arriba:[/b] el retorno de los evaporadores y la salida de vapor a la succión de los compresores. El selector «botella roja / off / azul» del tablero del nº 5 elige la botella con la que trabaja ese compresor ([i]verificar a bordo[/i]).\n• [b]Abajo:[/b] la salida de líquido a las bombas de amoníaco, con altura suficiente para que no caviten.\n• [b]Interruptor de nivel Parker LLSS:[/b] cuatro hilos, según su etiqueta: gris común, negro normalmente abierto, rojo normalmente cerrado y verde tierra. El de nivel alto usa el contacto que abre al subir el flotador, y va en serie con la bobina del contactor del compresor, junto a los presostatos ([i]estado de referencia de los contactos: verificar en la hoja del fabricante[/i]).\n• [b]Solenoides:[/b] los interruptores de nivel bajo y medio, a través de un relé o del control, abren la solenoide al bajar del nivel bajo y la cierran al llegar al medio ([i]verificar el esquema del buque[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "([i]Valores del simulador — verificar a bordo[/i])\n• [b]Solenoide:[/b] abre por debajo del 35 % del nivel y cierra al 50 %.\n• [b]Nivel alto:[/b] alarma y parada del compresor al 80 %. Rearma solo cuando el nivel baja unos 10 puntos.\n• [b]Bomba de amoníaco:[/b] se para por baja presión si el nivel baja de un 12 % y la bomba cavita.\n• [b]Caudal:[/b] la bomba envía varias veces el líquido que se evapora, de 3 a 4 veces en muchas plantas ([i]valor típico — verificar a bordo[/i]).\n\nLos niveles se fijan por la altura de cada interruptor en la columna: se cambian moviéndolo, no con un ajuste eléctrico."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Interruptor de nivel:[/b] con el mando sin tensión y los hilos desconectados, el {{multimetro}} en continuidad debe pitar entre gris y rojo con el flotador abajo, y entre gris y negro con el flotador arriba ([i]según la etiqueta del LLSS — verificar[/i]). Entre cualquier hilo y el verde no debe haber continuidad.\n• [b]Parada por nivel alto:[/b] según el procedimiento del buque, compruebe que al actuar el interruptor de nivel alto suena la alarma y el compresor se para.\n• [b]Solenoide:[/b] al dar tensión a la bobina debe oírse el clic de apertura, y la tubería de salida se enfría al pasar el líquido.\n• [b]Bomba:[/b] corriente con la {{pinza}} y presión diferencial en su manómetro. Una corriente baja y oscilante indica cavitación.\n• [b]Nivel:[/b] compare el visor o la columna de nivel con lo que indica el panel."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Nivel alto:[/b] solenoide pegada abierta o interruptor de nivel averiado. Suena la alarma y el interruptor de nivel alto para el compresor. Si no actuara, el compresor aspiraría líquido.\n• [b]Botella vacía:[/b] solenoide que no abre, por bobina cortada, falta de tensión o válvula obstruida, o falta de amoníaco en el recibidor. La bomba cavita y se para por baja presión, y la succión cae.\n• [b]Flotador agarrotado[/b] por suciedad o aceite: el contacto no cambia aunque el nivel sí.\n• [b]Aceite en la botella:[/b] el aceite que escapa del separador es más pesado que el amoníaco líquido y se acumula en el fondo de los recipientes de baja. Se purga según el procedimiento del buque."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos según el plan del buque — verificar[/i]): en cada guardia, comprobar el nivel y las alarmas; periódicamente, probar los interruptores de nivel y la parada por nivel alto, purgar el aceite de los recipientes de baja y revisar el aislamiento térmico y las bombas.\n\n[b]Correctivo:[/b] la solenoide o el interruptor se cambian con su tramo aislado con las válvulas manuales y vaciado de amoníaco, el mando bloqueado, el {{detector_amoniaco}} portátil y el equipo de protección que pida el procedimiento."
+    }
+  ],
+  "para_saber_mas": [
+    "Hoja técnica del interruptor de nivel Parker LLSS.",
+    "IIAR: sistemas de recirculación por bombas y recipientes de baja presión.",
+    "ISO 5149-2: recipientes y dispositivos de protección.",
+    "Manual de la planta de frío del buque."
+  ]
+}

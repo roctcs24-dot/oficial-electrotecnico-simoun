@@ -1,13 +1,13 @@
 {
   "id": "fr4_compresores",
-  "titulo": "Compresores de tornillo y de pistón",
-  "resumen": "Cómo comprimen, cómo se regula su capacidad y por qué el aceite es vital.",
-  "minutos": 4,
+  "titulo": "Compresores de pistón y de tornillo",
+  "resumen": "Los Vilter de pistón y los MYCOM de tornillo del buque: capacidad, arranque y aceite.",
+  "minutos": 5,
   "paginas": [
     {
-      "titulo": "Dos tipos",
+      "titulo": "Los compresores del buque",
       "bloques": [
-        { "tipo": "texto", "texto": "• [b]{{Compresor_tornillo}}:[/b] dos rotores helicoidales engranados atrapan el vapor y lo comprimen al avanzar. Gira continuamente, vibra poco y admite mucha capacidad. Necesita inyección de aceite para sellar, enfriar y lubricar.\n• [b]{{Compresor_piston}}:[/b] cilindros con pistones y válvulas, como un motor. Es robusto y fácil de reparar, pero vibra más. Su bomba de aceite lubrica los cojinetes.\n\nEn atuneros grandes son habituales los de tornillo ([i]tipo y marca: verificar a bordo[/i])." },
+        { "tipo": "texto", "texto": "El buque tiene cinco compresores de amoníaco, de dos tipos:\n• [b]{{Compresor_piston}}:[/b] el nº 1, el nº 2 y el nº 5 son Vilter VMC 450 XL (Emerson). Un cigüeñal mueve pistones en varios cilindros, cada uno con sus válvulas de aspiración y de descarga. Una bomba de aceite lubrica cojinetes y bielas. Los mueve un motor WEG W40 de 75 kW.\n• [b]{{Compresor_tornillo}}:[/b] el nº 3 y el nº 4 son Mayekawa MYCOM. Dos rotores helicoidales engranados atrapan el vapor y lo comprimen al avanzar. Giran sin vaivén y vibran poco, pero necesitan inyección de aceite para sellar, enfriar y lubricar.\n\nLa pantalla táctil Omron del MYCOM muestra la capacidad (CAP %), las presiones de succión, descarga y aceite (SP, DP y OP, en kgf/cm²; 1 kgf/cm² son 0,98 bar) y cuatro temperaturas en °C (SH, ST, DT y OT; [i]significado de cada sigla: verificar en el manual MYCOM[/i])." },
         {
           "tipo": "quiz",
           "tema": "frio_aceite_tornillo",
@@ -19,35 +19,44 @@
       ]
     },
     {
-      "titulo": "Capacidad y arranque",
+      "titulo": "El pistón Vilter",
       "bloques": [
-        { "tipo": "texto", "texto": "La {{corredera_capacidad}} del tornillo abre un paso que devuelve parte del vapor a la succión. Así la capacidad va del 10 % al 100 %. En el pistón se descargan cilindros.\n\n• [b]Arranque descargado:[/b] el compresor arranca con la corredera al mínimo. El motor solo tiene que vencer la inercia, y el pico de corriente dura menos.\n• [b]Limitador de corriente:[/b] el control no deja subir la corredera si el motor pasa de su corriente nominal. Pasa al arrancar con la salmuera caliente, cuando la succión está alta.\n• [b]Regulación:[/b] al acercarse la salmuera a la consigna, la corredera baja." },
+        { "tipo": "texto", "texto": "• [b]Capacidad por etapas:[/b] cada {{descargador}} mantiene abiertas las válvulas de aspiración de un grupo de cilindros, que así no comprimen. Lo mandan las solenoides de capacidad: sin tensión en ninguna, el compresor trabaja con la etapa base, del 50 % ([i]valor típico — verificar a bordo[/i]); con la del 75 %, a tres cuartos; con la del 100 %, a plena carga.\n• [b]Arranque descargado:[/b] arranca siempre con las dos solenoides sin tensión. El control las carga de una en una, con un retardo, según la temperatura de la salmuera.\n• [b]{{Cabeza_seguridad}}:[/b] las tapas con la marca «Caution spring loaded» sujetan con un resorte el conjunto de descarga. Si entra líquido en un cilindro, ceden y el golpe no rompe la biela. Al desmontarlas, el resorte está comprimido: siga el manual.\n• [b]Cabezas refrigeradas:[/b] una bomba de agua salada enfría las cabezas. Sin agua, la descarga se calienta y el aceite se degrada." },
         {
           "tipo": "quiz",
-          "tema": "frio_arranque_descargado",
-          "pregunta": "¿Por qué arranca descargado el compresor de tornillo?",
-          "opciones": ["Para que el motor arranque con poco par y menos tiempo de corriente alta", "Para enfriar antes el aceite", "Porque la válvula de expansión lo exige"],
+          "tema": "frio_piston_etapa_base",
+          "pregunta": "El Vilter nº 5 está en marcha con las solenoides del 75 % y del 100 % sin tensión. ¿Cómo trabaja?",
+          "opciones": ["Con la etapa base: solo comprimen parte de los cilindros", "Parado: sin solenoides no comprime", "A plena carga"],
           "correcta": 0,
-          "explicacion": "Con la corredera al mínimo, el motor de 110 kW arranca casi sin carga y el arranque dura menos."
+          "explicacion": "Sin tensión, los descargadores dejan sin trabajo parte de los cilindros. Es la etapa con la que arranca, y la que queda si falla el mando de las solenoides."
         }
       ]
     },
     {
-      "titulo": "El aceite",
+      "titulo": "El tornillo MYCOM y el aceite",
       "bloques": [
-        { "tipo": "texto", "texto": "El aceite sale con el vapor de la descarga. El {{separador_aceite}} lo recoge y lo devuelve al compresor, tras pasar por un enfriador y un filtro.\n\n• [b]Presión diferencial:[/b] la del aceite menos la de succión. Es la que vigila el {{presostato_aceite}}.\n• [b]Retardo:[/b] al arrancar, la presión tarda en subir. El presostato espera unos 45 s antes de parar el compresor ([i]verificar el ajuste[/i]).\n• [b]Causas de baja presión:[/b] filtro obstruido, nivel bajo o espuma por refrigerante disuelto en el aceite." },
+        { "tipo": "texto", "texto": "• [b]{{Corredera_capacidad}}:[/b] abre un paso que devuelve parte del vapor a la succión. La capacidad varía de forma continua, del 10 % al 100 % ([i]rango típico — verificar en el manual MYCOM[/i]). Arranca con la corredera al mínimo, y el control no la deja subir si el motor pasa de su corriente nominal.\n• [b]Aceite del tornillo:[/b] sale con el vapor por la descarga. El {{separador_aceite}} lo recoge y, tras el enfriador y el filtro, vuelve a inyectarse.\n• [b]Aceite del pistón:[/b] la bomba de aceite lo toma del cárter, que tiene un visor de nivel, y lo lleva a los cojinetes.\n\nEn los dos, el {{presostato_aceite}} vigila la presión diferencial, la del aceite menos la de succión, con unos 45 s de retardo al arrancar ([i]verificar el ajuste[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "frio_arranque_descargado",
+          "pregunta": "¿Por qué arrancan descargados los compresores del buque?",
+          "opciones": ["Para que el motor arranque con poco par y menos tiempo de corriente alta", "Para enfriar antes el aceite", "Porque la botella de baja lo exige"],
+          "correcta": 0,
+          "explicacion": "El Vilter arranca con la etapa base y el MYCOM con la corredera al mínimo: el motor arranca con poca carga y el arranque dura menos."
+        },
         {
           "tipo": "ordenar",
           "tema": "frio_recorrido_aceite",
           "pregunta": "Seleccione en orden el recorrido del aceite en un compresor de tornillo:",
           "pasos": ["Se inyecta en los rotores", "Sale con el vapor por la descarga", "El separador de aceite lo recoge", "Pasa por el enfriador y el filtro", "Vuelve a inyectarse en el compresor"],
-          "explicacion": "Si el separador no retiene bien el aceite, este pasa al condensador y al evaporador, ensucia los intercambiadores y falta en el compresor."
+          "explicacion": "Si el separador no retiene bien el aceite, este pasa al condensador y a los recipientes de baja, ensucia los intercambiadores y falta en el compresor."
         }
       ]
     }
   ],
   "para_saber_mas": [
-    "Manual del compresor del buque: aceite, ajustes y mantenimiento.",
+    "Manual del compresor Vilter VMC 450 XL (Emerson): descargadores, cabezas de seguridad y aceite.",
+    "Manual del compresor Mayekawa MYCOM y de su panel de control.",
     "IIAR: compresores para amoníaco.",
     "ISO 5149-2: diseño, construcción y ensayos de los sistemas de refrigeración."
   ]

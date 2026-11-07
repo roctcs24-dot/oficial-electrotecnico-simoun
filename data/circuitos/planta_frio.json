@@ -1,6 +1,6 @@
 {
-  "nombre": "Planta de frío por amoníaco con un compresor",
-  "nota": "Compresor de tornillo de unos 220 kW frigoríficos a −25/+35 °C, con motor de 110 kW a 380 V, en arranque directo para simplificar: a bordo suele arrancar en estrella-triángulo o con arrancador suave. Presostatos de alta (16 bar, rearme manual), baja (0,3 bar, rearme automático) y aceite (1 bar diferencial, 45 s de retardo, rearme manual) en serie con la bobina del contactor. Potencias, presiones y ajustes: valores típicos — verificar a bordo.",
+  "nombre": "Compresor nº 3, MYCOM de tornillo",
+  "nota": "Compresor de tornillo Mayekawa MYCOM, como el nº 3 y el nº 4 del buque, con recirculación por bombas: botella de baja, solenoide de nivel, interruptor de nivel alto y bomba de amoníaco. Unos 220 kW frigoríficos a −25/+35 °C, con motor de 110 kW a 380 V (potencia y motor sin confirmar), en arranque directo para simplificar: a bordo suele arrancar en estrella-triángulo o con arrancador suave. Presostatos de alta (16 bar, rearme manual), baja (0,3 bar, rearme automático) y aceite (1 bar diferencial, 45 s de retardo, rearme manual), e interruptor de nivel alto de la botella, en serie con la bobina del contactor. Potencias, presiones y ajustes: valores típicos — verificar a bordo.",
   "componentes": [
     { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 380 } },
     { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 225 } },
@@ -15,7 +15,8 @@
     { "id": "PA", "tipo": "presostato", "params": { "punto": "descarga", "tipo": "alta", "corte_bar": 16.0, "diferencial_bar": 2.0, "rearme": "manual" } },
     { "id": "PB", "tipo": "presostato", "params": { "punto": "succion", "tipo": "baja", "corte_bar": 0.3, "diferencial_bar": 0.7, "rearme": "automatico" } },
     { "id": "PO", "tipo": "presostato", "params": { "punto": "aceite", "tipo": "baja", "corte_bar": 1.0, "diferencial_bar": 0.5, "rearme": "manual", "retardo_s": 45.0, "solo_en_marcha": true } },
-    { "id": "PLANTA", "tipo": "planta_frio", "params": { "compresor": "M1" } }
+    { "id": "LS", "tipo": "interruptor_nivel" },
+    { "id": "PLANTA", "tipo": "planta_frio", "params": { "compresor": "M1", "tipo_compresor": "tornillo", "alimentacion": "bombeo" } }
   ],
   "cables": [
     ["B.L1", "Q1.1"], ["B.L2", "Q1.3"], ["B.L3", "Q1.5"],
@@ -26,7 +27,8 @@
     ["Q1.2", "T1.H1"], ["Q1.4", "T1.H2"],
     ["T1.X1", "F1.1"], ["F1.2", "F2.95"], ["F2.96", "S0.21"],
     ["S0.22", "PA.1"], ["PA.2", "PB.1"], ["PB.2", "PO.1"],
-    ["PO.2", "S1.13"], ["PO.2", "K1.13"],
+    ["PO.2", "LS.1"],
+    ["LS.2", "S1.13"], ["LS.2", "K1.13"],
     ["S1.14", "K1.A1"], ["K1.14", "K1.A1"],
     ["K1.A2", "T1.X2"],
     ["K1.A1", "H1.X1"], ["H1.X2", "T1.X2"]

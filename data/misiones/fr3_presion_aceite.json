@@ -1,12 +1,13 @@
 {
   "id": "fr3_presion_aceite",
   "tipo": "planta",
-  "titulo": "El compresor se para por presión de aceite",
+  "titulo": "El compresor nº 5 se para por presión de aceite",
   "resumen": "El compresor arranca, pero a los 45 s se para por el presostato de aceite.",
-  "equipo": "Planta de frío: compresor y circuito de aceite",
+  "equipo": "Planta de frío: compresor Vilter nº 5 y circuito de aceite",
+  "circuito": "planta_frio_vilter",
   "reporte": {
     "de": "Jefe de máquinas",
-    "texto": "El compresor de frío arranca, pero a los 45 s se para por el {{presostato_aceite}}. Está parado con PO disparado. El aceite se cambió hace dos meses y el nivel parecía correcto. Averigüe la causa, corríjala y deje el compresor en marcha con la presión de aceite normal.",
+    "texto": "El compresor Vilter nº 5, de pistón, arranca, pero a los 45 s se para por el {{presostato_aceite}}. Está parado con PO disparado. El aceite se cambió hace dos meses y el nivel parecía correcto. Averigüe la causa, corríjala y deje el compresor en marcha con la presión de aceite normal.",
     "nota": "Presión de aceite, retardo y ajustes del compresor: valores típicos — verificar a bordo."
   },
   "preparar": [
@@ -33,7 +34,7 @@
   "diagnostico": {
     "pregunta": "¿Cuál es la causa de la baja presión de aceite?",
     "opciones": [
-      { "texto": "El filtro de aceite está obstruido", "correcta": true, "explicacion": "El nivel es normal y antes del filtro la bomba da presión, pero después del filtro cae casi toda. A los rotores y cojinetes llega poco aceite, y la presión diferencial se queda por debajo de 1 bar." },
+      { "texto": "El filtro de aceite está obstruido", "correcta": true, "explicacion": "El nivel es normal y antes del filtro la bomba da presión, pero después del filtro cae casi toda. A los cojinetes y a las bielas llega poco aceite, y la presión diferencial se queda por debajo de 1 bar." },
       { "texto": "Falta aceite en el compresor", "explicacion": "El visor del separador marca el nivel normal." },
       { "texto": "La bomba de aceite está gastada", "explicacion": "Antes del filtro la presión es normal: la bomba da presión. Se pierde en el filtro." },
       { "texto": "El presostato de aceite está averiado", "explicacion": "El manómetro de aceite confirma la presión baja: el presostato dice la verdad." }
