@@ -89,6 +89,7 @@
   },
   "otros_equipos": {
     "purificadoras": { "valor": "2 separadoras Alfa Laval MMB 305S-11 (placa: rotor máx. 9510 rpm, motor 3 kW a 3000 rpm y 50 Hz, densidad máx. de alimentación 1100 kg/m³ y de sedimentos 1600 kg/m³, proceso 0-100 °C; la nº 1 fabricada en 2026/06; sentido de giro del rotor indicado con flecha en la placa); motor ABB M3BP 100LKA 2, 3 kW; bomba de alimentación de husillo con motor Hoyer HMA3 100L1-4, 2,2 kW", "unidad": "", "verificar": false },
+    "presiones_purificadora": { "valor": "Lecturas en servicio de la purificadora nº 1 (fotos del 2026-11-07, manómetros WIKA de glicerina, clase 1,6): bomba de alimentación unos 0,45 bar (45 kPa); salida de aceite limpio de la separadora algo menos de 1 bar (0,09 MPa). Lecturas aproximadas: confirmar los márgenes con el manual de Alfa Laval", "unidad": "bar", "verificar": true },
     "agua_dulce": { "valor": "Planta de ósmosis inversa y generador de agua dulce Gefico", "unidad": "", "verificar": false },
     "antiincrustante": { "valor": "Gefico IONPAC (unos 122 A en la foto)", "unidad": "", "verificar": false },
     "separador_sentinas": { "valor": "BOSS 2.2T-107, 0,5 m³/h, monitor BilgMon 488 de 15 ppm", "unidad": "", "verificar": false },
