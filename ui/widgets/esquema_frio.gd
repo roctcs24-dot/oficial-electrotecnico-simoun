@@ -51,6 +51,7 @@ var nivel_botella := 0.5
 var bomba_amoniaco := true
 var punto_marcado := ""
 var _fase := 0.0
+var _giro := 0.0
 
 
 func _init() -> void:
@@ -61,6 +62,7 @@ func _init() -> void:
 func _process(delta: float) -> void:
 	if en_marcha:
 		_fase = fmod(_fase + delta * VELOCIDAD, SEPARACION_PUNTOS)
+		_giro = fmod(_giro + delta, 100.0)
 		queue_redraw()
 
 
@@ -166,10 +168,10 @@ func _dibujar_cuba(fuente: Font, t: int) -> void:
 	draw_rect(Rect2(a, b - a), SALMUERA)
 	draw_rect(Rect2(a, b - a), EQUIPO, false, 2.0)
 	_texto(fuente, "Cuba de salmuera y evaporador", _p(Vector2(0.61, 0.955)), t, TEXTO)
-	var bomba := _p(Vector2(0.82, 0.80))
-	var r := (b.y - a.y) * 0.14
-	draw_circle(bomba, r, OSCURO)
-	draw_arc(bomba, r, 0.0, TAU, 20, AGUA if bomba_salmuera else EQUIPO, 2.0, true)
+	var bomba := _p(Vector2(0.815, 0.80))
+	var r := (b.y - a.y) * 0.12
+	DibujoEquipos.motor(self, Rect2(bomba + Vector2(r, -r * 0.75), Vector2(r * 2.6, r * 1.5)), DibujoEquipos.PINTURA_MOTOR, false)
+	DibujoEquipos.bomba(self, bomba, r, Color("6d7478"), _giro, en_marcha and bomba_salmuera, AGUA if bomba_salmuera else EQUIPO)
 	_texto(fuente, "Bomba", bomba + Vector2(0.0, r + t), t - 1, TEXTO)
 
 
@@ -180,56 +182,76 @@ func _dibujar_agua_mar(grosor: float) -> void:
 
 
 func _dibujar_equipos(fuente: Font, t: int, escala: float) -> void:
-	# Compresor.
-	var c := _p(Vector2(0.18, 0.30))
-	var r := 0.07 * _marco().size.x * 0.66
-	draw_circle(c, r, OSCURO)
-	draw_arc(c, r, 0.0, TAU, 32, DESCARGA if en_marcha else EQUIPO, 3.0, true)
-	draw_line(c + Vector2(-r * 0.5, r * 0.5), c + Vector2(r * 0.5, -r * 0.5), TEXTO, 2.0, true)
-	_texto(fuente, "Compresor", c + Vector2(r + 6.0 * escala, 4.0), t, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
-	# Separador de aceite.
-	var s := Rect2(_p(Vector2(0.36, 0.06)), _p(Vector2(0.42, 0.20)) - _p(Vector2(0.36, 0.06)))
-	draw_rect(s, OSCURO)
-	draw_rect(s, EQUIPO, false, 2.0)
-	_texto(fuente, "Separador", Vector2(s.get_center().x, s.end.y + t), t - 1, TEXTO)
-	# Condensador con su haz de tubos.
-	var k := Rect2(_p(Vector2(0.62, 0.06)), _p(Vector2(0.88, 0.24)) - _p(Vector2(0.62, 0.06)))
-	draw_rect(k, OSCURO)
-	draw_rect(k, EQUIPO, false, 2.0)
-	for i in 4:
-		var y := k.position.y + k.size.y * (0.2 + 0.2 * i)
-		draw_line(Vector2(k.position.x + 6.0, y), Vector2(k.end.x - 6.0, y), AGUA.darkened(0.3), 1.5, true)
-	_texto(fuente, "Condensador", Vector2(k.get_center().x, k.position.y - 4.0), t, TEXTO)
-	# Recibidor de líquido.
-	var rec := Rect2(_p(Vector2(0.70, 0.36)), _p(Vector2(0.90, 0.46)) - _p(Vector2(0.70, 0.36)))
-	draw_rect(rec, OSCURO)
-	draw_rect(rec, EQUIPO, false, 2.0)
-	draw_rect(Rect2(rec.position + Vector2(0.0, rec.size.y * 0.5), Vector2(rec.size.x, rec.size.y * 0.5)), LIQUIDO.darkened(0.5))
-	_texto(fuente, "Recibidor", Vector2(rec.get_center().x, rec.end.y + t), t - 1, TEXTO)
+	var m := _marco()
+	# Compresor de pistón con su motor: la descarga sale por arriba del bloque y la succión entra
+	# por abajo.
+	var grupo := Rect2(_p(Vector2(0.025, 0.205)), _p(Vector2(0.225, 0.37)) - _p(Vector2(0.025, 0.205)))
+	var bloque := DibujoEquipos.compresor_piston(self, grupo, _giro, en_marcha)
+	# Luz de marcha junto al nombre.
+	var luz := Vector2(bloque.end.x + 10.0 * maxf(escala, 0.7), bloque.get_center().y)
+	draw_circle(luz, 5.0 * maxf(escala, 0.7), Color("101315"))
+	draw_circle(luz, 4.0 * maxf(escala, 0.7), Color("5fd36a") if en_marcha else Color("3a4a3e"))
+	_texto(fuente, "Compresor", Vector2(luz.x + 9.0 * maxf(escala, 0.7), luz.y + 4.0), t, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
+	# Separador de aceite: recipiente vertical sobre patas.
+	var s := Rect2(_p(Vector2(0.36, 0.055)), _p(Vector2(0.42, 0.185)) - _p(Vector2(0.36, 0.055)))
+	var suelo_s := _p(Vector2(0.0, 0.205)).y
+	for x: float in [s.position.x + s.size.x * 0.2, s.end.x - s.size.x * 0.2]:
+		draw_line(Vector2(x, s.end.y - 3.0), Vector2(x, suelo_s), Color("3a3f43"), 3.0)
+	DibujoEquipos.recipiente(self, s, DibujoEquipos.ACERO, false)
+	_texto(fuente, "Separador", Vector2(s.get_center().x, suelo_s + t), t - 1, TEXTO)
+	# Condensador multitubular: carcasa con silletas y cajas de agua en los extremos.
+	var k := Rect2(_p(Vector2(0.63, 0.065)), _p(Vector2(0.87, 0.195)) - _p(Vector2(0.63, 0.065)))
+	draw_line(_p(Vector2(0.80, 0.19)), _p(Vector2(0.80, 0.24)), LIQUIDO.darkened(0.2), maxf(4.0 * escala, 2.0))
+	var alto_silleta := _p(Vector2(0.0, 0.235)).y - k.end.y
+	for x: float in [0.68, 0.84]:
+		DibujoEquipos.silleta(self, Vector2(_p(Vector2(x, 0.0)).x, k.end.y - 2.0), m.size.x * 0.04, alto_silleta + 2.0)
+	DibujoEquipos.cilindro(self, k, DibujoEquipos.ACERO)
+	var caja := m.size.x * 0.025
+	for x: float in [k.position.x - caja, k.end.x]:
+		var cr := Rect2(Vector2(x, k.position.y - 2.0), Vector2(caja, k.size.y + 4.0))
+		DibujoEquipos.cilindro(self, cr, Color("2f6f73"))
+		var brida := cr.end.x if x < k.position.x else cr.position.x
+		draw_line(Vector2(brida, cr.position.y - 1.0), Vector2(brida, cr.end.y + 1.0), Color("101315"), 3.0)
+	_texto(fuente, "Condensador", Vector2(k.get_center().x, k.position.y - 6.0), t, TEXTO)
+	# Recibidor de líquido: recipiente horizontal con mirilla de nivel.
+	var rec := Rect2(_p(Vector2(0.70, 0.36)), _p(Vector2(0.90, 0.44)) - _p(Vector2(0.70, 0.36)))
+	var suelo_r := _p(Vector2(0.0, 0.465)).y
+	for x: float in [0.74, 0.86]:
+		DibujoEquipos.silleta(self, Vector2(_p(Vector2(x, 0.0)).x, rec.end.y - 2.0), m.size.x * 0.03, suelo_r - rec.end.y + 2.0)
+	DibujoEquipos.recipiente(self, rec, DibujoEquipos.ACERO)
+	DibujoEquipos.mirilla(self, Rect2(rec.position + Vector2(rec.size.x * 0.6, rec.size.y * 0.2), Vector2(maxf(rec.size.x * 0.04, 4.0), rec.size.y * 0.6)), 0.5, LIQUIDO)
+	_texto(fuente, "Recibidor", Vector2(rec.get_center().x, suelo_r + t), t - 1, TEXTO)
 	if recirculacion:
 		_dibujar_botella(fuente, t, escala)
 		return
-	# Válvula de expansión.
+	# Válvula de expansión con su bonete y su volante.
 	var v := _p(Vector2(0.60, 0.62))
 	var lado := 10.0 * maxf(escala, 1.0)
-	draw_colored_polygon(PackedVector2Array([v + Vector2(-lado, -lado), v + Vector2(lado, -lado), v, ]), EQUIPO)
+	draw_colored_polygon(PackedVector2Array([v + Vector2(-lado, -lado), v + Vector2(lado, -lado), v]), EQUIPO)
 	draw_colored_polygon(PackedVector2Array([v + Vector2(-lado, lado), v + Vector2(lado, lado), v]), EQUIPO)
+	draw_rect(Rect2(v + Vector2(-lado * 0.2, -lado * 2.0), Vector2(lado * 0.4, lado)), EQUIPO.darkened(0.2))
+	draw_rect(Rect2(v + Vector2(-lado * 0.8, -lado * 2.3), Vector2(lado * 1.6, lado * 0.4)), EQUIPO)
 	_texto(fuente, "Válvula de expansión", v + Vector2(lado + 4.0, 4.0), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
 
 
-## Botella de baja con su nivel de líquido, y la bomba de amoníaco que lo envía al evaporador.
+## Botella de baja: recipiente horizontal con su mirilla de nivel, y la bomba de amoníaco que
+## envía el líquido al evaporador.
 func _dibujar_botella(fuente: Font, t: int, escala: float) -> void:
-	var caja := Rect2(_p(Vector2(0.54, 0.54)), _p(Vector2(0.66, 0.66)) - _p(Vector2(0.54, 0.54)))
-	draw_rect(caja, OSCURO)
-	var alto := caja.size.y * clampf(nivel_botella, 0.0, 1.0)
-	draw_rect(Rect2(Vector2(caja.position.x, caja.end.y - alto), Vector2(caja.size.x, alto)), BAJA.darkened(0.35))
-	draw_rect(caja, EQUIPO, false, 2.0)
-	_texto(fuente, "Botella de baja %d %%" % roundi(nivel_botella * 100.0), Vector2(caja.end.x + 4.0, caja.position.y + t), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
+	var caja := Rect2(_p(Vector2(0.53, 0.555)), _p(Vector2(0.665, 0.635)) - _p(Vector2(0.53, 0.555)))
+	var suelo := _p(Vector2(0.0, 0.655)).y
+	for x: float in [0.555, 0.64]:
+		DibujoEquipos.silleta(self, Vector2(_p(Vector2(x, 0.0)).x, caja.end.y - 2.0), caja.size.x * 0.12, suelo - caja.end.y + 2.0)
+	DibujoEquipos.recipiente(self, caja, Color("8a4b3c"))
+	var mir := Rect2(Vector2(caja.end.x + 4.0, caja.position.y - caja.size.y * 0.1), Vector2(maxf(caja.size.x * 0.06, 4.0), caja.size.y * 1.2))
+	for y: float in [mir.position.y + 2.0, mir.end.y - 2.0]:
+		draw_line(Vector2(caja.end.x - caja.size.x * 0.12, y), Vector2(mir.end.x, y), Color("3a3f43"), 2.0)
+	DibujoEquipos.mirilla(self, mir, nivel_botella, BAJA)
+	_texto(fuente, "Botella de baja %d %%" % roundi(nivel_botella * 100.0), Vector2(mir.end.x + 5.0, caja.position.y + t), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
 	var bomba := _p(Vector2(0.60, 0.71))
-	var r := 8.0 * maxf(escala, 1.0)
-	draw_circle(bomba, r, OSCURO)
-	draw_arc(bomba, r, 0.0, TAU, 20, BAJA if bomba_amoniaco else EQUIPO, 2.0, true)
-	_texto(fuente, "Bomba NH3", bomba + Vector2(r + 4.0, 4.0), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
+	var r := 9.0 * maxf(escala, 0.8)
+	DibujoEquipos.motor(self, Rect2(bomba + Vector2(r, -r * 0.75), Vector2(r * 2.6, r * 1.5)), DibujoEquipos.PINTURA_MOTOR, false)
+	DibujoEquipos.bomba(self, bomba, r, Color("6d7478"), _giro, en_marcha and bomba_amoniaco, BAJA if bomba_amoniaco else EQUIPO)
+	_texto(fuente, "Bomba NH3", bomba + Vector2(r * 3.8, 4.0), t - 1, TEXTO, HORIZONTAL_ALIGNMENT_LEFT)
 
 
 func _texto(fuente: Font, texto: String, posicion: Vector2, t: int, color: Color, alineacion := HORIZONTAL_ALIGNMENT_CENTER) -> void:

@@ -1,17 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="480" height="320" viewBox="0 0 480 320">
   <defs>
-    <linearGradient id="cuerpo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#565b60"/><stop offset="1" stop-color="#34383c"/></linearGradient>
-    <linearGradient id="azul" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f5f79"/><stop offset="1" stop-color="#22394b"/></linearGradient>
-    <linearGradient id="placa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4d50"/><stop offset="1" stop-color="#2f3235"/></linearGradient>
-    <linearGradient id="cromo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fafbfb"/><stop offset="0.5" stop-color="#9ea3a6"/><stop offset="1" stop-color="#e7e9ea"/></linearGradient>
-    <linearGradient id="cobre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a77a"/><stop offset="1" stop-color="#8d4f25"/></linearGradient>
-    <linearGradient id="porcelana" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9bcb6"/><stop offset="0.5" stop-color="#f1f2ee"/><stop offset="1" stop-color="#aeb1ab"/></linearGradient>
-    <radialGradient id="verde" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#2fa84d"/><stop offset="1" stop-color="#0d6a2a"/></radialGradient>
-    <radialGradient id="rojo" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#e2473a"/><stop offset="1" stop-color="#96180f"/></radialGradient>
-    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <linearGradient id="carcasa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a7c97"/><stop offset="0.3" stop-color="#46667f"/><stop offset="0.75" stop-color="#2c4558"/><stop offset="1" stop-color="#1d2f3d"/></linearGradient>
+    <linearGradient id="caja" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a8ca6"/><stop offset="0.45" stop-color="#46667f"/><stop offset="1" stop-color="#253b4c"/></linearGradient>
+    <linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15191c"/><stop offset="0.12" stop-color="#262b2f"/><stop offset="1" stop-color="#2f3438"/></linearGradient>
+    <linearGradient id="regleta" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a4535"/><stop offset="0.5" stop-color="#3e2f25"/><stop offset="1" stop-color="#2a1f19"/></linearGradient>
+    <linearGradient id="nervio" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a1f19"/><stop offset="0.5" stop-color="#6a5240"/><stop offset="1" stop-color="#2a1f19"/></linearGradient>
     <radialGradient id="bronce" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#fbe6a2"/><stop offset="0.5" stop-color="#c9973f"/><stop offset="1" stop-color="#6f4e1a"/></radialGradient>
-    <g id="tornillo"><circle r="12" fill="#0a0a0b"/><circle r="11" fill="url(#acero)"/><path d="M-6,0 H6 M0,-6 V6" stroke="#33373a" stroke-width="2.6" stroke-linecap="round"/></g>
-    <g id="espiga"><path d="M-17,-10 L0,-20 L17,-10 V10 L0,20 L-17,10 Z" fill="url(#bronce)" stroke="#4a3210" stroke-width="1.5"/><circle r="8" fill="#e8c878" stroke="#6f4e1a" stroke-width="1.5"/></g>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="espiga"><circle r="23" fill="#000" opacity="0.35" cx="2" cy="3"/><path d="M-17,-10 L0,-20 L17,-10 V10 L0,20 L-17,10 Z" fill="url(#bronce)" stroke="#4a3210" stroke-width="1.5"/><circle r="8" fill="#e8c878" stroke="#6f4e1a" stroke-width="1.5"/><circle r="3" fill="#8a6a2a"/></g>
+    <g id="taladro"><circle r="6" fill="#16222b"/><circle r="4" fill="url(#acero)"/></g>
   </defs>
-<rect x="4" y="4" width="472" height="312" rx="10" fill="url(#azul)"/><rect x="40" y="60" width="400" height="236" rx="6" fill="url(#placa)"/><use xlink:href="#espiga" x="130" y="110"/><use xlink:href="#espiga" x="240" y="110"/><use xlink:href="#espiga" x="350" y="110"/><use xlink:href="#espiga" x="130" y="240"/><use xlink:href="#espiga" x="240" y="240"/><use xlink:href="#espiga" x="350" y="240"/>
+  <!-- Carcasa del motor con sus aletas de refrigeración -->
+  <rect x="2" y="2" width="476" height="316" rx="12" fill="url(#carcasa)"/>
+  <g stroke="#0f1b24" stroke-opacity="0.55" stroke-width="2">
+    <path d="M8,14 H100 M8,26 H100 M8,38 H100 M380,14 H472 M380,26 H472 M380,38 H472"/>
+    <path d="M6,70 H14 M6,100 H14 M6,130 H14 M6,160 H14 M6,190 H14 M6,220 H14 M6,250 H14 M6,280 H14"/>
+    <path d="M466,70 H474 M466,100 H474 M466,130 H474 M466,160 H474 M466,190 H474 M466,220 H474 M466,250 H474 M466,280 H474"/>
+  </g>
+  <g stroke="#9db8cc" stroke-opacity="0.25" stroke-width="1">
+    <path d="M8,16 H100 M8,28 H100 M8,40 H100 M380,16 H472 M380,28 H472 M380,40 H472"/>
+  </g>
+  <!-- Caja de bornes abierta: paredes de fundición, junta y fondo -->
+  <rect x="16" y="48" width="448" height="264" rx="8" fill="url(#caja)" stroke="#16222b" stroke-width="2"/>
+  <rect x="34" y="60" width="412" height="242" rx="6" fill="none" stroke="#111" stroke-width="5" opacity="0.8"/>
+  <rect x="40" y="64" width="400" height="232" rx="5" fill="url(#fondo)"/>
+  <use xlink:href="#taladro" x="26" y="58"/><use xlink:href="#taladro" x="454" y="58"/>
+  <use xlink:href="#taladro" x="26" y="302"/><use xlink:href="#taladro" x="454" y="302"/>
+  <!-- Regleta de bornes aislante con nervios entre fases -->
+  <rect x="72" y="80" width="336" height="190" rx="8" fill="#000" opacity="0.35" transform="translate(3,4)"/>
+  <rect x="72" y="80" width="336" height="190" rx="8" fill="url(#regleta)" stroke="#1a120d" stroke-width="2"/>
+  <rect x="181" y="84" width="8" height="182" rx="3" fill="url(#nervio)"/>
+  <rect x="291" y="84" width="8" height="182" rx="3" fill="url(#nervio)"/>
+  <path d="M76,175 H404" stroke="#1a120d" stroke-width="2" opacity="0.6"/>
+  <use xlink:href="#espiga" x="130" y="110"/><use xlink:href="#espiga" x="240" y="110"/><use xlink:href="#espiga" x="350" y="110"/>
+  <use xlink:href="#espiga" x="130" y="240"/><use xlink:href="#espiga" x="240" y="240"/><use xlink:href="#espiga" x="350" y="240"/>
+  <!-- Prensaestopas de entrada de cables en la pared inferior -->
+  <rect x="210" y="296" width="60" height="16" rx="3" fill="url(#acero)" stroke="#2b2f32" stroke-width="1.5"/>
+  <path d="M220,296 V312 M232,296 V312 M244,296 V312 M256,296 V312" stroke="#5f6568" stroke-width="1.5"/>
 </svg>
