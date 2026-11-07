@@ -49,6 +49,8 @@ func _capturar() -> void:
 		await _capturar_guardia_planta(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "plc":
 		await _capturar_plc(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "tablero":
+		await _capturar_tablero(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -290,6 +292,36 @@ func _capturar_plc(raiz: Raiz, carpeta: String) -> void:
 		await _esperar()
 		p._desplazables[-1].scroll_vertical = 1400
 		await _guardar(carpeta, "plc_edicion", tam)
+		raiz.volver()
+
+
+## Tablero de bombas de la máquina principal: frente en marcha y con falla, e interior.
+func _capturar_tablero(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("tableros", {"id": 3})
+		await _guardar(carpeta, "tableros_lista", tam)
+		raiz.ir_a("tablero", {"tablero": "bombas_mp"})
+		var p = raiz.pantalla_actual()
+		var sim: SimSimulacion = p.mesa.sim
+		sim.componente("SM1").estado["presionado"] = true
+		sim.avanzar_tiempo(0.3)
+		sim.componente("SM1").estado["presionado"] = false
+		sim.componente("ORD4").poner("ORDEN")
+		sim.componente("M1").params["aislamiento_mohm"] = [0.005, 300.0, 300.0]
+		sim.componente("M2").params["bloqueado"] = true
+		sim.componente("SM2").estado["presionado"] = true
+		sim.avanzar_tiempo(0.3)
+		sim.componente("SM2").estado["presionado"] = false
+		sim.avanzar_tiempo(30.0)
+		sim.componente("ST").estado["presionado"] = true
+		sim.avanzar_tiempo(0.2)
+		p._reconstruir_panel()
+		await _guardar(carpeta, "tablero_frente", tam)
+		p._alternar_puerta()
+		await _guardar(carpeta, "tablero_interior", tam)
+		raiz.volver()
 		raiz.volver()
 
 

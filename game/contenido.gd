@@ -112,5 +112,10 @@ func circuito(nombre: String) -> SimSimulacion:
 	return SimSimulacion.desde_dict(datos)
 
 
+## Un tablero del buque: frente, circuito, posiciones del interior, señales y averías.
+func tablero(id: String) -> Dictionary:
+	return leer("tableros/%s.json" % id)
+
+
 func plc(id: String) -> Dictionary:
 	return leer("plc/%s.json" % id)

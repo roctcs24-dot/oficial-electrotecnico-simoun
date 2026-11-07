@@ -1,0 +1,542 @@
+{
+  "id": "bombas_mp",
+  "titulo": "Tablero de bombas máquina principal",
+  "ubicacion": "Sala de máquinas, junto al motor principal",
+  "foto": "Foto 070 del buque",
+  "circuito": "tablero_bombas_mp",
+  "alimentacion": "Q0",
+  "nota": "Reproduce el frente real. El interior, los motores y los ajustes son típicos: verificar con el esquema del tablero. La lente de APAGADO de la reserva es verde en la foto: según IEC 60073 debería ser roja.",
+  "frente": {
+    "tamano": [
+      1000,
+      1150
+    ],
+    "acabado": "inox",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 70,
+        "texto": "TABLERO DE BOMBAS MAQUINA PRINCIPAL",
+        "tam": 30
+      },
+      {
+        "tipo": "rotulo",
+        "x": 380,
+        "y": 150,
+        "texto": "L1",
+        "tam": 18
+      },
+      {
+        "tipo": "luz",
+        "x": 380,
+        "y": 215,
+        "color": "rojo",
+        "estilo": "domo",
+        "componente": "HT1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 150,
+        "texto": "L2",
+        "tam": 18
+      },
+      {
+        "tipo": "luz",
+        "x": 500,
+        "y": 215,
+        "color": "rojo",
+        "estilo": "domo",
+        "componente": "HT2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 620,
+        "y": 150,
+        "texto": "L3",
+        "tam": 18
+      },
+      {
+        "tipo": "luz",
+        "x": 620,
+        "y": 215,
+        "color": "rojo",
+        "estilo": "domo",
+        "componente": "HT3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 300,
+        "texto": "TEST TIERRA",
+        "tam": 16
+      },
+      {
+        "tipo": "pulsador",
+        "x": 500,
+        "y": 360,
+        "color": "verde",
+        "componente": "ST"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 130,
+        "y": 470,
+        "texto": "BOMBA\nENFRIAMIENTO #1",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 130,
+        "y": 560,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 130,
+        "y": 630,
+        "color": "ambar",
+        "componente": "HF1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 130,
+        "y": 715,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 130,
+        "y": 785,
+        "color": "verde",
+        "componente": "SM1",
+        "luz": "HE1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 130,
+        "y": 870,
+        "texto": "APAGADO",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 130,
+        "y": 940,
+        "color": "rojo",
+        "componente": "SP1",
+        "luz": "HA1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 470,
+        "texto": "BOMBA\nENFRIAMIENTO #2",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 560,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 300,
+        "y": 630,
+        "color": "ambar",
+        "componente": "HF2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 715,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 300,
+        "y": 785,
+        "color": "verde",
+        "componente": "SM2",
+        "luz": "HE2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 870,
+        "texto": "APAGADO",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 300,
+        "y": 940,
+        "color": "rojo",
+        "componente": "SP2",
+        "luz": "HA2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 470,
+        "texto": "BOMBA\nPRELUBRICACION\nREDUCTORA",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 560,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 470,
+        "y": 630,
+        "color": "ambar",
+        "componente": "HF3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 715,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 470,
+        "y": 785,
+        "color": "verde",
+        "componente": "HE3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 870,
+        "texto": "MAN  OFF  AUT",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 470,
+        "y": 945,
+        "color": "verde",
+        "componente": "SEL3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 470,
+        "texto": "BOMBA\nPRELUBRICACION\nMAQUINA PPAL.",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 560,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 640,
+        "y": 630,
+        "color": "ambar",
+        "componente": "HF4"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 715,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 640,
+        "y": 785,
+        "color": "verde",
+        "componente": "HE4"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 870,
+        "texto": "MAN  OFF  AUT",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 640,
+        "y": 945,
+        "color": "verde",
+        "componente": "SEL4"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 470,
+        "texto": "RESERVA",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 560,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 810,
+        "y": 630,
+        "color": "ambar",
+        "componente": ""
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 715,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 810,
+        "y": 785,
+        "color": "verde",
+        "componente": ""
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 870,
+        "texto": "APAGADO",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 810,
+        "y": 940,
+        "color": "verde",
+        "componente": ""
+      },
+      {
+        "tipo": "cerradura",
+        "x": 945,
+        "y": 790
+      }
+    ]
+  },
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "T1": [
+      820,
+      0
+    ],
+    "F0": [
+      1160,
+      0
+    ],
+    "HT1": [
+      1360,
+      0
+    ],
+    "HT2": [
+      1600,
+      0
+    ],
+    "HT3": [
+      1840,
+      0
+    ],
+    "ST": [
+      2080,
+      0
+    ],
+    "PE": [
+      2320,
+      0
+    ],
+    "Q1": [
+      0,
+      700
+    ],
+    "K1": [
+      0,
+      1260
+    ],
+    "F1": [
+      0,
+      1820
+    ],
+    "M1": [
+      0,
+      2340
+    ],
+    "HF1": [
+      540,
+      700
+    ],
+    "HE1": [
+      540,
+      960
+    ],
+    "HA1": [
+      540,
+      1220
+    ],
+    "SP1": [
+      540,
+      1480
+    ],
+    "SM1": [
+      540,
+      1760
+    ],
+    "Q2": [
+      1120,
+      700
+    ],
+    "K2": [
+      1120,
+      1260
+    ],
+    "F2": [
+      1120,
+      1820
+    ],
+    "M2": [
+      1120,
+      2340
+    ],
+    "HF2": [
+      1660,
+      700
+    ],
+    "HE2": [
+      1660,
+      960
+    ],
+    "HA2": [
+      1660,
+      1220
+    ],
+    "SP2": [
+      1660,
+      1480
+    ],
+    "SM2": [
+      1660,
+      1760
+    ],
+    "Q3": [
+      2240,
+      700
+    ],
+    "K3": [
+      2240,
+      1260
+    ],
+    "F3": [
+      2240,
+      1820
+    ],
+    "M3": [
+      2240,
+      2340
+    ],
+    "HF3": [
+      2780,
+      700
+    ],
+    "HE3": [
+      2780,
+      960
+    ],
+    "SEL3": [
+      2780,
+      1220
+    ],
+    "ORD3": [
+      2780,
+      1540
+    ],
+    "Q4": [
+      3360,
+      700
+    ],
+    "K4": [
+      3360,
+      1260
+    ],
+    "F4": [
+      3360,
+      1820
+    ],
+    "M4": [
+      3360,
+      2340
+    ],
+    "HF4": [
+      3900,
+      700
+    ],
+    "HE4": [
+      3900,
+      960
+    ],
+    "SEL4": [
+      3900,
+      1220
+    ],
+    "ORD4": [
+      3900,
+      1540
+    ]
+  },
+  "senales": [
+    {
+      "componente": "ORD3",
+      "texto": "Orden de prelubricación de la reductora"
+    },
+    {
+      "componente": "ORD4",
+      "texto": "Orden de prelubricación de la máquina principal"
+    }
+  ],
+  "averias": [
+    {
+      "id": "masa_m1",
+      "texto": "Falla de aislamiento: devanado U de la bomba de enfriamiento nº 1 a masa",
+      "componente": "M1",
+      "param": "aislamiento_mohm",
+      "valor": [
+        0.005,
+        300.0,
+        300.0
+      ]
+    },
+    {
+      "id": "bloqueo_m2",
+      "texto": "Bomba de enfriamiento nº 2 agarrotada",
+      "componente": "M2",
+      "param": "bloqueado",
+      "valor": true
+    }
+  ]
+}

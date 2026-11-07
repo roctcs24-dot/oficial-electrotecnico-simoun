@@ -12,7 +12,7 @@ func _params_por_defecto() -> Dictionary:
 
 
 func _estado_inicial() -> Dictionary:
-	return {"quemada": false, "encendida": false}
+	return {"quemada": false, "encendida": false, "relacion": 0.0}
 
 
 func estampar(e: SimEstampa) -> void:
@@ -26,6 +26,8 @@ func avanzar(_dt: float, sol: SimSolver.Solucion) -> void:
 	# Una luz piloto de 24 V DC se enciende con la continua.
 	var v := maxf(tension(sol, "X1", "X2"), absf(tension_dc(sol, "X1", "X2")))
 	var relacion: float = v / params["v_nominal"]
+	# Cuánto alumbra respecto a su tensión nominal: las lámparas de tierra se comparan así.
+	estado["relacion"] = relacion
 	estado["encendida"] = relacion >= 0.5
 	if relacion > 1.5:
 		estado["quemada"] = true

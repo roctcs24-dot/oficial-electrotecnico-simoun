@@ -377,6 +377,12 @@ func _catalogo_de(c: SimComponente) -> String:
 			return "pulsador_na" if c.params["contacto"] == "NA" else "pulsador_nc"
 		"motor_trifasico":
 			return "motor_220" if is_equal_approx(c.params["v_delta"], 220.0) else "motor_380"
+		"lampara":
+			# Luces piloto de 230 V en los tableros del buque y lámparas de tierra de 380 V.
+			var v := roundi(float(c.params["v_nominal"]))
+			return "lampara_%d" % v if v in [230, 380] else "lampara"
+		"transformador_mando":
+			return "transformador_230" if is_equal_approx(c.params["v_secundario"], 230.0) else "transformador_mando"
 	return c.tipo()
 
 
@@ -443,7 +449,15 @@ func estado_pieza(id: String) -> String:
 		"temporizador":
 			return "Conmutado" if e["conmutado"] else ("Contando" if e["bobina"] else "En reposo")
 		"transformador_mando":
-			return "380 / 110 V"
+			return "%d / %d V" % [roundi(c.params["v_primario"]), roundi(c.params["v_secundario"])]
+		"selector":
+			return "Posición %s" % (c as SimSelector).nombre_posicion()
+		"seta":
+			return "Enclavada" if e["enclavada"] else "Liberada"
+		"seccionador":
+			return ("Cerrado" if e["cerrado"] else "Abierto") + (" · con candado" if e["candado"] else "")
+		"horometro":
+			return "%s h" % TextoTecnico.numero(e["horas"], 1)
 		"resistencia":
 			return "%s Ω" % TextoTecnico.numero(c.params.get("ohm", 0.0), 0)
 		"masa":

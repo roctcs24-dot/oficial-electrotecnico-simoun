@@ -55,7 +55,7 @@
           "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "m10_tableros", "i1_multimetro", "i2_megohmetro", "i3_pinza"],
           "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]
         },
-        "taller": {},
+        "taller": {"pantalla": "tableros", "detalle": "Banco libre y tableros del buque", "tableros": ["bombas_mp"]},
         "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento"] },
         "examen": { "examenes": ["v1"], "minijuegos": ["simbolos"] }
       }
