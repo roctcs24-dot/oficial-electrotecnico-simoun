@@ -1,8 +1,8 @@
 class_name SimSelector
 extends SimComponente
 ## Selector rotativo de varias posiciones, como el MAN-OFF-AUT de las bombas de prelubricación o el
-## 0-1-START de la purificadora. Tiene dos contactos, 13-14 y 23-24: cada uno cierra en las
-## posiciones que indica params contactos. Una posición de retorno por resorte, como START, vuelve
+## 0-1-START de la purificadora. Tiene hasta tres contactos, 13-14, 23-24 y 33-34: cada uno cierra
+## en las posiciones que indica params contactos. Una posición de retorno por resorte, como START, vuelve
 ## sola a la anterior al soltar el mando.
 
 
@@ -55,7 +55,7 @@ func cerrado(contacto: String) -> bool:
 
 
 func estampar(e: SimEstampa) -> void:
-	for contacto: String in ["13-14", "23-24"]:
+	for contacto: String in params["contactos"]:
 		if cerrado(contacto):
 			var bornes := contacto.split("-")
 			e.enlace(n(bornes[0]), n(bornes[1]))

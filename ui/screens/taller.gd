@@ -38,6 +38,9 @@ func _mostrar_panel(id: String) -> void:
 func _panel_cajon() -> void:
 	_panel.add_child(_etiqueta("Toque un componente para ponerlo en la mesa. Arrastre las piezas para ordenarlas.", "Nota"))
 	for e: Dictionary in mesa.catalogo():
+		# Equipos que solo tienen sentido dentro de un tablero del buque, como el hidróforo.
+		if e.get("oculto", false):
+			continue
 		var b := _boton(e["nombre"], _agregar.bind(e["id"]))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_panel.add_child(b)

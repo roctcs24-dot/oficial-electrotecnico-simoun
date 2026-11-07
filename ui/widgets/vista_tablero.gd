@@ -216,10 +216,20 @@ func _draw() -> void:
 		var e: Dictionary = elementos()[i]
 		var c := a_pantalla(centro(i))
 		match e["tipo"]:
+			"recuadro":
+				var medida := Vector2(float(e["ancho"]), float(e["alto"])) * s
+				draw_rect(Rect2(c - medida / 2.0, medida), Color(str(e.get("color", "#1b1d1f"))))
 			"rotulo":
-				_rotulo(c, str(e["texto"]), float(e.get("tam", 16)) * s)
+				_rotulo(c, str(e["texto"]), float(e.get("tam", 16)) * s, Color(str(e.get("fondo", "#f4f4f0"))), Color(str(e.get("tinta", "#15171a"))))
 			"luz":
 				_luz(c, s, str(e.get("color", "verde")), brillo(str(e.get("componente", ""))), str(e.get("estilo", "plana")))
+				if e.has("texto"):
+					# Rótulo grabado en la lente, como RUN PUMP o HEATING ON.
+					var lineas := str(e["texto"]).split("\n")
+					for j in lineas.size():
+						_texto(c + Vector2(-26.0, (-4.0 + 12.0 * j) * (1.0 if lineas.size() > 1 else 0.0) + 4.0) * s, lineas[j], 9.0 * s, Color(0, 0, 0, 0.55), 52.0 * s, HORIZONTAL_ALIGNMENT_CENTER)
+			"pantalla_vlt":
+				_pantalla_vlt(c, s, e)
 			"pulsador":
 				var comp := _componente(e)
 				var pulsado: bool = comp != null and comp.estado.get("presionado", false)
@@ -232,7 +242,7 @@ func _draw() -> void:
 				_seta(c, s, comp != null and comp.estado.get("enclavada", false))
 			"seccionador":
 				var comp := _componente(e)
-				_seccionador(c, s, comp != null and comp.estado.get("cerrado", false), comp != null and comp.estado.get("candado", false))
+				_seccionador(c, s, comp != null and comp.estado.get("cerrado", false), comp != null and comp.estado.get("candado", false), str(e.get("estilo", "rojo")))
 			"horometro":
 				var comp := _componente(e)
 				_horometro(c, s, float(comp.estado.get("horas", 0.0)) if comp != null else 0.0)
@@ -248,8 +258,11 @@ func _fuente() -> Font:
 ## transformación, así conserva su proporción aunque mida pocos píxeles.
 func _texto(pos: Vector2, texto: String, tam: float, color: Color, ancho := -1.0, alineacion := HORIZONTAL_ALIGNMENT_LEFT) -> void:
 	var k := maxf(tam, 0.5) / float(TAM_BASE)
+	# Se centra a mano: si la caja es más estrecha que el texto, draw_string no lo dibujaría.
+	if alineacion == HORIZONTAL_ALIGNMENT_CENTER and ancho > 0.0:
+		pos.x += (ancho - _ancho_texto(texto, tam)) / 2.0
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(k, k))
-	draw_string(_fuente(), pos / k, texto, alineacion, ancho / k if ancho > 0.0 else -1.0, TAM_BASE, color)
+	draw_string(_fuente(), pos / k, texto, HORIZONTAL_ALIGNMENT_LEFT, -1.0, TAM_BASE, color)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
@@ -265,7 +278,7 @@ func _tornillo(c: Vector2, r: float) -> void:
 
 
 ## Placa blanca de rótulo con letras negras, centrada en c.
-func _rotulo(c: Vector2, texto: String, tam: float) -> void:
+func _rotulo(c: Vector2, texto: String, tam: float, fondo := Color("f4f4f0"), tinta := Color("15171a")) -> void:
 	var fuente := _fuente()
 	var lineas := texto.split("\n")
 	var ancho := 0.0
@@ -276,11 +289,11 @@ func _rotulo(c: Vector2, texto: String, tam: float) -> void:
 	var caja := Vector2(ancho + tam * 0.8, alto_linea * lineas.size() + tam * 0.3)
 	var r := Rect2(c - caja / 2.0, caja)
 	draw_rect(Rect2(r.position + Vector2(1, 2), r.size), Color(0, 0, 0, 0.25))
-	draw_rect(r, Color("f4f4f0"))
+	draw_rect(r, fondo)
 	draw_rect(r, Color("2a2c2e"), false, maxf(1.0, tam * 0.06))
 	for j in lineas.size():
 		var y := r.position.y + tam * 0.15 + alto_linea * j + fuente.get_ascent(TAM_BASE) * k
-		_texto(Vector2(r.position.x, y), lineas[j], tam, Color("15171a"), caja.x, HORIZONTAL_ALIGNMENT_CENTER)
+		_texto(Vector2(r.position.x, y), lineas[j], tam, tinta, caja.x, HORIZONTAL_ALIGNMENT_CENTER)
 
 
 func _bisel(c: Vector2, r: float) -> void:
@@ -367,8 +380,11 @@ func _seta(c: Vector2, s: float, enclavada: bool) -> void:
 		_texto(c + Vector2(-r * 1.2, r * 1.6), "ENCLAVADA", r * 0.32, Color("15171a"), r * 2.4, HORIZONTAL_ALIGNMENT_CENTER)
 
 
-func _seccionador(c: Vector2, s: float, cerrado: bool, candado: bool) -> void:
+func _seccionador(c: Vector2, s: float, cerrado: bool, candado: bool, estilo := "rojo") -> void:
 	var lado := 120.0 * s
+	if estilo == "negro":
+		_seccionador_negro(c, s, cerrado, candado)
+		return
 	var r := Rect2(c - Vector2(lado, lado) / 2.0, Vector2(lado, lado))
 	draw_rect(Rect2(r.position + Vector2(3, 4) * s, r.size), Color(0, 0, 0, 0.3))
 	draw_rect(r, Color("e8bf27"))
@@ -405,7 +421,9 @@ func _horometro(c: Vector2, s: float, horas: float) -> void:
 	for i in 7:
 		var celda := Rect2(r.position + Vector2(caja.x * 0.08 + ancho * i + 1, caja.y * 0.2), Vector2(ancho - 2, caja.y * 0.6))
 		draw_rect(celda, Color("c8231a") if i == 6 else Color("f0f0ee"))
-		_texto(Vector2(celda.position.x, celda.position.y + celda.size.y * 0.8), cifras[i], tam, Color("f0f0ee") if i == 6 else Color("15171a"), celda.size.x, HORIZONTAL_ALIGNMENT_CENTER)
+		# Centrado a mano: con un ancho de caja menor que la cifra, el texto no se dibujaría.
+		var x := celda.get_center().x - _ancho_texto(cifras[i], tam) / 2.0
+		_texto(Vector2(x, celda.position.y + celda.size.y * 0.8), cifras[i], tam, Color("f0f0ee") if i == 6 else Color("15171a"))
 	_texto(r.position + Vector2(caja.x - 18 * s, caja.y - 4 * s), "h", 14.0 * s, Color("f0f0ee"))
 
 
@@ -415,3 +433,65 @@ func _cerradura(c: Vector2, s: float) -> void:
 	draw_circle(c, r * 0.8, Color("9aa0a3"))
 	draw_circle(c, r * 0.6, Color("50565a"))
 	draw_colored_polygon(PackedVector2Array([c + Vector2(-r * 0.25, -r * 0.2), c + Vector2(r * 0.25, -r * 0.2), c + Vector2(0, r * 0.3)]), Color("1b1d1f"))
+
+
+## Interruptor general de mando negro, como el Schneider del servotimón: flecha blanca en el mango.
+func _seccionador_negro(c: Vector2, s: float, cerrado: bool, candado: bool) -> void:
+	var lado := 110.0 * s
+	var r := Rect2(c - Vector2(lado, lado) / 2.0, Vector2(lado, lado))
+	draw_rect(Rect2(r.position + Vector2(3, 4) * s, r.size), Color(0, 0, 0, 0.3))
+	draw_rect(r, Color("1b1d1f"))
+	draw_circle(c, lado * 0.36, Color("2c2f31"))
+	var eje := Vector2(0, -1) if cerrado else Vector2(-0.7, -0.7)
+	var normal := Vector2(eje.y, -eje.x)
+	var puntos := PackedVector2Array([c + eje * lado * 0.42 + normal * lado * 0.09, c + eje * lado * 0.42 - normal * lado * 0.09,
+		c - eje * lado * 0.3 - normal * lado * 0.09, c - eje * lado * 0.3 + normal * lado * 0.09])
+	draw_colored_polygon(puntos, Color("101112"))
+	draw_line(c, c + eje * lado * 0.36, Color("f2f2ee"), maxf(1.5, 5.0 * s))
+	_texto(r.position + Vector2(lado * 0.08, lado * 0.95), "0", 14.0 * s, Color("f2f2ee"))
+	_texto(r.position + Vector2(lado * 0.46, lado * 0.16), "I", 14.0 * s, Color("f2f2ee"))
+	if candado:
+		draw_rect(Rect2(c + Vector2(lado * 0.2, lado * 0.15), Vector2(lado * 0.22, lado * 0.18)), Color("d0281c"))
+
+
+## Teclado y pantalla de un variador Danfoss VLT, como los del servotimón. Lee el contactor que hace
+## de variador, su motor y su horómetro.
+func _pantalla_vlt(c: Vector2, s: float, e: Dictionary) -> void:
+	var medida := Vector2(300, 330) * s
+	var r := Rect2(c - medida / 2.0, medida)
+	draw_rect(Rect2(r.position - Vector2(30, 40) * s, medida + Vector2(60, 70) * s), Color("aab0b4"))
+	draw_rect(r, Color("2a2d30"))
+	_rotulo(r.position + Vector2(medida.x / 2.0, 22 * s), "Danfoss", 14.0 * s, Color("c8231a"), Color("ffffff"))
+	var pantalla := Rect2(r.position + Vector2(30, 44) * s, Vector2(240, 120) * s)
+	var con_tension := sim != null and sim.componentes.has("Q0") and (sim.componente("Q0") as SimSeccionador).cerrado() \
+		and str(sim.componente("Q0").params.get("polo_danado", "")).is_empty()
+	draw_rect(pantalla, Color("ff9a2a") if con_tension else Color("3a2a1a"))
+	if con_tension:
+		var k := sim.componente(str(e.get("componente", ""))) if sim.componentes.has(str(e.get("componente", ""))) else null
+		var m: SimMotorTrifasico = sim.componente(str(e.get("motor", ""))) if sim.componentes.has(str(e.get("motor", ""))) else null
+		var p := sim.componente(str(e.get("horometro", ""))) if sim.componentes.has(str(e.get("horometro", ""))) else null
+		var horas := int(p.estado["horas"]) if p != null else 0
+		var lineas: Array[String] = []
+		if k != null and (k as SimContactor).cerrado() and m != null and absf(m.rpm()) > 100.0:
+			var hz := 50.0 * absf(m.rpm()) / float(m.params["rpm"])
+			var amperios := m.corriente_devanado(0) * sqrt(3.0)
+			lineas = ["Status", "%.1fHz        %.2fkW" % [hz, float(m.params["p_kw"]) * 0.6], "%dh" % horas, "%.2fA" % amperios, "Auto Remote Running"]
+		else:
+			lineas = ["Status", "0.0Hz -0.014  0.06kW", "%dh" % horas, "7.49A", "Auto Remote DC Stop"]
+		for j in lineas.size():
+			var tam := 15.0 * s if j in [2, 3] else 11.0 * s
+			_texto(pantalla.position + Vector2(6 * s, (20 + 23 * j) * s), lineas[j], tam, Color("3a1a00"), pantalla.size.x - 12 * s, HORIZONTAL_ALIGNMENT_CENTER if j in [2, 3] else HORIZONTAL_ALIGNMENT_LEFT)
+	var teclas := ["Status", "Quick", "Main", "Alarm"]
+	for j in 4:
+		var tecla := Rect2(r.position + Vector2(24 + 66 * j, 178) * s, Vector2(56, 30) * s)
+		draw_rect(tecla, Color("c9ccce"))
+		_texto(tecla.position + Vector2(0, 20 * s), teclas[j], 10.0 * s, Color("15171a"), tecla.size.x, HORIZONTAL_ALIGNMENT_CENTER)
+	draw_circle(r.position + Vector2(150, 250) * s, 34 * s, Color("c9ccce"))
+	draw_circle(r.position + Vector2(150, 250) * s, 14 * s, Color("e3e5e6"))
+	var abajo := ["Hand On", "Off", "Auto On", "Reset"]
+	for j in 4:
+		var centro_tecla := r.position + Vector2(48 + 68 * j, 308) * s
+		draw_circle(centro_tecla, 16 * s, Color("c9ccce"))
+		_texto(centro_tecla + Vector2(-20 * s, 4 * s), abajo[j], 8.0 * s, Color("15171a"), 40 * s, HORIZONTAL_ALIGNMENT_CENTER)
+	if con_tension:
+		draw_circle(r.position + Vector2(48 + 68 * 2, 288) * s, 3 * s, Color("ffb020"))

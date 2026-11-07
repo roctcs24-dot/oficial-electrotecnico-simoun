@@ -2,7 +2,7 @@ extends RefCounted
 ## Misiones de Guardia: procedimiento, consecuencias y resultados sobre la simulación real.
 
 const A := preload("res://tests/ayuda_sim.gd")
-const MISIONES := ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento"]
+const MISIONES := ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento", "t1_tierra_bombas_mp", "t2_hidroforo_sin_fase"]
 const RUTA_PARTIDA := "user://pruebas_guardia.json"
 
 

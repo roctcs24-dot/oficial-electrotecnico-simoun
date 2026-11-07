@@ -30,7 +30,17 @@ var _eventos_anotados := 0
 func _init(contenido_juego: Contenido, id_mision: String, danos_previos := {}) -> void:
 	super(contenido_juego, id_mision)
 	mesa = MesaTaller.new(contenido)
-	mesa.cargar_circuito(datos["circuito"], datos["posiciones"])
+	if datos.has("tablero"):
+		# La misión ocurre en un tablero del buque: su circuito y su interior salen de él.
+		var t := contenido.tablero(datos["tablero"])
+		mesa.cargar_circuito(contenido.leer("circuitos/%s.json" % t["circuito"]), t["interior"])
+	else:
+		mesa.cargar_circuito(datos["circuito"], datos["posiciones"])
+	# Averías y estados con que empieza la misión: {"id": {"param": valor}}.
+	for id: String in datos.get("params_iniciales", {}):
+		mesa.sim.componente(id).params.merge(datos["params_iniciales"][id], true)
+	for id: String in datos.get("estado_inicial", {}):
+		mesa.sim.componente(id).estado.merge(datos["estado_inicial"][id], true)
 	for oculta: String in datos.get("averias_ocultas", []):
 		mesa.ocultas[oculta] = true
 	for pieza: String in danos_previos:
@@ -87,8 +97,13 @@ func monitor_mohm() -> float:
 
 # --- Aislamiento y bloqueo ---
 
+## Los guardamotores del circuito, o los que fije la misión con "aisladores": un guardamotor, un
+## interruptor general (seccionador) o la alimentación desde el cuadro (fuente_trifasica).
 func aisladores() -> Array[String]:
 	var lista: Array[String] = []
+	if datos.has("aisladores"):
+		lista.assign(datos["aisladores"])
+		return lista
 	for c: SimComponente in mesa.sim.componentes.values():
 		if c.tipo() == "guardamotor":
 			lista.append(c.id)
@@ -96,7 +111,13 @@ func aisladores() -> Array[String]:
 
 
 func aislador_cerrado(pieza: String) -> bool:
-	return mesa.sim.componente(pieza).estado["encendido"]
+	var c := mesa.sim.componente(pieza)
+	match c.tipo():
+		"seccionador":
+			return c.estado["cerrado"]
+		"fuente_trifasica":
+			return c.estado["activa"]
+	return c.estado["encendido"]
 
 
 func tiene_candado(pieza: String) -> bool:
@@ -125,14 +146,20 @@ func avisar_energizado() -> void:
 func accionar_aislador(pieza: String, cerrar: bool) -> Dictionary:
 	if candados.has(pieza):
 		return _aviso("aviso", "Aislador bloqueado", "No se puede accionar %s con el candado colocado." % pieza)
-	var c: SimGuardamotor = mesa.sim.componente(pieza)
+	var c := mesa.sim.componente(pieza)
 	var resultado := _aviso("hecho", "", "")
 	if cerrar:
 		if hubo_bloqueo and not hechos.has("aviso_energizar"):
 			resultado = _falta("energizar_sin_aviso")
 	elif contactor().cerrado() and absf(motor().rpm()) > 5.0:
 		resultado = _falta("abrir_con_carga")
-	c.accionar(cerrar)
+	match c.tipo():
+		"seccionador":
+			(c as SimSeccionador).accionar(cerrar)
+		"fuente_trifasica":
+			c.estado["activa"] = cerrar
+		_:
+			(c as SimGuardamotor).accionar(cerrar)
 	_reiniciar_verificacion()
 	return resultado
 
@@ -145,6 +172,8 @@ func poner_candado(pieza: String) -> Dictionary:
 		resultado = _falta("sin_aviso")
 		hechos["aviso"] = true
 	candados[pieza] = true
+	if mesa.sim.componente(pieza) is SimSeccionador:
+		mesa.sim.componente(pieza).estado["candado"] = true
 	hubo_bloqueo = true
 	hechos.erase("aviso_energizar")
 	_reiniciar_verificacion()
@@ -158,6 +187,8 @@ func quitar_candado(pieza: String) -> Dictionary:
 	if not _remediciones_hechas():
 		resultado = _falta("sin_remedir")
 	candados.erase(pieza)
+	if mesa.sim.componente(pieza) is SimSeccionador:
+		mesa.sim.componente(pieza).estado["candado"] = false
 	_reiniciar_verificacion()
 	return resultado
 

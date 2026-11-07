@@ -27,6 +27,9 @@ func construir() -> void:
 		_construir_resultado_mision(mision, _repetir)
 		return
 	_cabecera(mision.datos["titulo"], mision.datos["equipo"])
+	if mision.datos.has("tablero"):
+		# La guardia empieza frente al tablero: se leen sus luces y se abre la puerta para medir.
+		tablero = raiz.contenido.tablero(mision.datos["tablero"])
 	_montar_banco()
 
 
@@ -163,7 +166,8 @@ func _seccion_aislamiento() -> void:
 		var fila := HBoxContainer.new()
 		fila.add_theme_constant_override("separation", 6)
 		_panel.add_child(fila)
-		var accionar := _boton("Abrir %s" % a if cerrado else "Cerrar %s" % a, _accionar.bind(a, not cerrado))
+		var nombre: String = mision.datos.get("nombres_aisladores", {}).get(a, a)
+		var accionar := _boton("Abrir %s" % nombre if cerrado else "Cerrar %s" % nombre, _accionar.bind(a, not cerrado))
 		accionar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		fila.add_child(accionar)
 		var con_candado := mision.tiene_candado(a)

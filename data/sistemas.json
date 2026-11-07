@@ -2,7 +2,7 @@
   "plano": {
     "svg": "res://art/barco/plano.svg",
     "tamano": [1000, 420],
-    "etiquetas": [
+    "tableros": [{"id": "servotimon_1", "x": 40, "y": 296}, {"id": "purificadora_1", "x": 500, "y": 356}, {"id": "hidroforo_salada", "x": 560, "y": 356}, {"id": "bombas_mp", "x": 640, "y": 356}, {"id": "habitabilidad_110", "x": 786, "y": 190}, {"id": "distribucion_220", "x": 786, "y": 232}], "etiquetas": [
       { "texto": "Silueta basada en un atunero francés de la misma época. No es el plano real del buque: verificar a bordo.", "x": 500, "y": 400, "tam": 18, "color": "#b1bcc4" },
       { "texto": "Eslora: 69 m (registro WCPFC, verificar)", "x": 490, "y": 378, "tam": 16, "color": "#b1bcc4" },
       { "texto": "POPA", "x": 40, "y": 334, "tam": 16, "color": "#8d989f" },
@@ -55,8 +55,8 @@
           "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "m10_tableros", "i1_multimetro", "i2_megohmetro", "i3_pinza"],
           "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]
         },
-        "taller": {"pantalla": "tableros", "detalle": "Banco libre y tableros del buque", "tableros": ["bombas_mp"]},
-        "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento"] },
+        "taller": {"pantalla": "tableros", "detalle": "Banco libre y tableros del buque", "tableros": ["bombas_mp", "hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220"]},
+        "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento", "t1_tierra_bombas_mp", "t2_hidroforo_sin_fase"] },
         "examen": { "examenes": ["v1"], "minijuegos": ["simbolos"] }
       }
     },

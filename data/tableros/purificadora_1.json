@@ -1,0 +1,246 @@
+{
+  "id": "purificadora_1",
+  "titulo": "Purificadora nº 1",
+  "ubicacion": "Sala de purificadoras",
+  "foto": "Fotos 050, 054 y 055 del buque",
+  "alimentacion": "Q0",
+  "nota": "Esquema genérico de formación hecho a partir de las fotos; no es el plano de Alfa Laval. Para arrancar: cierre el interruptor general, gire la separadora a START y suéltela en 1, espere a que llegue a su velocidad y haga lo mismo con la bomba.",
+  "frente": {
+    "tamano": [
+      1000,
+      900
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 70,
+        "texto": "PURIFICADORA #1",
+        "tam": 30
+      },
+      {
+        "tipo": "rotulo",
+        "x": 250,
+        "y": 180,
+        "texto": "SEPARATOR\nINDICATOR",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 250,
+        "y": 270,
+        "color": "blanco",
+        "componente": "H1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 180,
+        "texto": "PUMP\nINDICATOR",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 500,
+        "y": 270,
+        "color": "blanco",
+        "componente": "H2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 750,
+        "y": 180,
+        "texto": "ALARM",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 750,
+        "y": 270,
+        "color": "rojo",
+        "componente": "H3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 250,
+        "y": 400,
+        "texto": "SEPARATOR",
+        "tam": 15
+      },
+      {
+        "tipo": "rotulo",
+        "x": 250,
+        "y": 440,
+        "texto": "0   1   START",
+        "tam": 13
+      },
+      {
+        "tipo": "selector",
+        "x": 250,
+        "y": 510,
+        "componente": "S1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 400,
+        "texto": "PUMP",
+        "tam": 15
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 440,
+        "texto": "0   1   START",
+        "tam": 13
+      },
+      {
+        "tipo": "selector",
+        "x": 500,
+        "y": 510,
+        "componente": "S2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 750,
+        "y": 400,
+        "texto": "EMERGENCY",
+        "tam": 15
+      },
+      {
+        "tipo": "seta",
+        "x": 750,
+        "y": 510,
+        "componente": "SE"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 660,
+        "texto": "SEPARATOR OPERATIONAL HOURS",
+        "tam": 13
+      },
+      {
+        "tipo": "horometro",
+        "x": 300,
+        "y": 730,
+        "componente": "P1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 720,
+        "y": 640,
+        "texto": "MAIN SWITCH",
+        "tam": 15
+      },
+      {
+        "tipo": "seccionador",
+        "x": 720,
+        "y": 760,
+        "componente": "Q0"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 70,
+        "y": 520
+      }
+    ]
+  },
+  "senales": [],
+  "averias": [
+    {
+      "id": "rodamientos",
+      "texto": "Rodamientos del separador desgastados: el motor trabaja sobrecargado",
+      "componente": "M1",
+      "param": "carga",
+      "valor": 1.35
+    },
+    {
+      "id": "bomba_agarrotada",
+      "texto": "Bomba de alimentación agarrotada",
+      "componente": "M2",
+      "param": "bloqueado",
+      "valor": true
+    }
+  ],
+  "circuito": "tablero_purificadora",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "T1": [
+      820,
+      0
+    ],
+    "F0": [
+      1160,
+      0
+    ],
+    "SE": [
+      1500,
+      0
+    ],
+    "Q1": [
+      0,
+      700
+    ],
+    "K1": [
+      0,
+      1260
+    ],
+    "F1": [
+      0,
+      1820
+    ],
+    "M1": [
+      0,
+      2340
+    ],
+    "S1": [
+      540,
+      700
+    ],
+    "H1": [
+      540,
+      1020
+    ],
+    "Q2": [
+      1120,
+      700
+    ],
+    "K2": [
+      1120,
+      1260
+    ],
+    "F2": [
+      1120,
+      1820
+    ],
+    "M2": [
+      1120,
+      2340
+    ],
+    "S2": [
+      1660,
+      700
+    ],
+    "H2": [
+      1660,
+      1020
+    ],
+    "P1": [
+      2300,
+      700
+    ],
+    "H3": [
+      2300,
+      980
+    ]
+  }
+}

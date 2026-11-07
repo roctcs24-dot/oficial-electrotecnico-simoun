@@ -7,13 +7,6 @@ extends PantallaBanco
 const PESTANAS := [["mando", "Mando"], ["medir", "Medir"], ["pieza", "Equipo"], ["datos", "Datos"]]
 const INSTRUMENTOS := [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"], ["pinza", "Pinza"]]
 
-var tablero := {}
-var frente: VistaTablero
-var _caja_mesa: Control
-var _barra_frente: HBoxContainer
-var _boton_puerta: Button
-
-
 func construir() -> void:
 	tablero = raiz.contenido.tablero(args["tablero"])
 	if not args.has("mesa"):
@@ -38,120 +31,27 @@ func _proporcion_vista() -> float:
 	return 1.8
 
 
-func _crear_vista() -> Control:
-	var caja := VBoxContainer.new()
-	caja.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	caja.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	caja.size_flags_stretch_ratio = _proporcion_vista()
-	caja.add_theme_constant_override("separation", 6)
-	_boton_puerta = _boton("", _alternar_puerta)
-	caja.add_child(_boton_puerta)
-	frente = VistaTablero.new()
-	frente.datos = tablero["frente"]
-	frente.sim = mesa.sim
-	frente.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	frente.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	frente.custom_minimum_size.y = 280.0
-	frente.elemento_tocado.connect(_al_tocar_elemento)
-	frente.elemento_soltado.connect(_al_soltar_elemento)
-	caja.add_child(frente)
-	_barra_frente = HBoxContainer.new()
-	_barra_frente.add_theme_constant_override("separation", 6)
-	caja.add_child(_barra_frente)
-	for d: Array in [["−", 1.0 / 1.25], ["+", 1.25]]:
-		var b := _boton(d[0], func() -> void: frente.cambiar_zoom(d[1], frente.size / 2.0))
-		b.autowrap_mode = TextServer.AUTOWRAP_OFF
-		b.custom_minimum_size.x = 56.0
-		_barra_frente.add_child(b)
-	var todo := _boton("Ver todo", func() -> void: frente.encuadrar())
-	todo.autowrap_mode = TextServer.AUTOWRAP_OFF
-	_barra_frente.add_child(todo)
-	if args.has("frente_zoom"):
-		frente.zoom = args["frente_zoom"]
-		frente.desplazamiento = args["frente_desplazamiento"]
-	_caja_mesa = super._crear_vista()
-	caja.add_child(_caja_mesa)
-	_aplicar_puerta()
-	return caja
+var _lecturas := {}
 
 
-func _alternar_puerta() -> void:
-	args["puerta"] = not args["puerta"]
-	_aplicar_puerta()
-	_reconstruir_panel()
-
-
-func _aplicar_puerta() -> void:
-	var abierta: bool = args["puerta"]
-	_boton_puerta.text = "Cerrar la puerta y ver el frente" if abierta else "Abrir la puerta y ver el interior"
-	frente.visible = not abierta
-	_barra_frente.visible = not abierta
-	_caja_mesa.visible = abierta
-	if abierta:
-		_cuadros_encuadre = CUADROS_ENCUADRE
-
-
-func _al_salir() -> void:
+## Las lecturas del proceso, como la presión del hidróforo o el ángulo del timón, se refrescan
+## con las del instrumento.
+func _actualizar_lectura() -> void:
 	super()
-	args["frente_zoom"] = frente.zoom
-	args["frente_desplazamiento"] = frente.desplazamiento
+	for l: Dictionary in tablero.get("lecturas", []):
+		var etiqueta: Label = _lecturas.get(l["componente"] + l["clave"])
+		if is_instance_valid(etiqueta):
+			etiqueta.text = _texto_lectura(l)
 
 
-func _process(delta: float) -> void:
-	super(delta)
-	if frente != null and frente.visible:
-		frente.queue_redraw()
+func _texto_lectura(l: Dictionary) -> String:
+	var valor: float = mesa.sim.componente(l["componente"]).estado[l["clave"]]
+	return "%s: %s %s" % [l["texto"], TextoTecnico.numero(valor, int(l.get("decimales", 1))), l.get("unidad", "")]
 
 
-# --- Mandos del frente ---
-
-func _elemento(indice: int) -> Dictionary:
-	return tablero["frente"]["elementos"][indice]
-
-
-func _al_tocar_elemento(indice: int, lado: int) -> void:
-	accionar(indice, lado)
-
-
-func _al_soltar_elemento(indice: int) -> void:
-	soltar(indice)
-
-
-## Acción sobre un elemento del frente: pulsar, girar un selector, enclavar o liberar la seta, o
-## maniobrar el interruptor general. Devuelve false si el candado lo impide.
-func accionar(indice: int, lado := 1) -> bool:
-	var e := _elemento(indice)
-	var c := mesa.sim.componente(e["componente"])
-	var hecho := true
-	match e["tipo"]:
-		"pulsador":
-			c.estado["presionado"] = true
-		"selector":
-			(c as SimSelector).girar(lado)
-		"seta":
-			var seta := c as SimSeta
-			if seta.estado["enclavada"]:
-				seta.liberar()
-			else:
-				seta.pulsar()
-		"seccionador":
-			var q := c as SimSeccionador
-			hecho = q.accionar(not q.cerrado())
-			if not hecho:
-				_mostrar_aviso("Interruptor bloqueado", "Tiene puesto el candado de bloqueo y su tarjeta. Solo lo retira quien lo puso, cuando termina el trabajo.")
+func _tras_accionar_frente() -> void:
 	if args["pestana"] == "mando":
 		_reconstruir_panel()
-	return hecho
-
-
-func soltar(indice: int) -> void:
-	var e := _elemento(indice)
-	var c := mesa.sim.componente(e["componente"])
-	match e["tipo"]:
-		"pulsador":
-			c.estado["presionado"] = false
-		"selector":
-			(c as SimSelector).soltar()
 
 
 # --- Paneles ---
@@ -183,6 +83,14 @@ func _panel_mando() -> void:
 		_panel.add_child(_boton("Abrir el interruptor de alimentación" if q.cerrado() else "Cerrar el interruptor de alimentación", _maniobrar_alimentacion))
 		if not q.cerrado():
 			_panel.add_child(_boton("Quitar el candado y la tarjeta" if q.estado["candado"] else "Poner candado y tarjeta de bloqueo", _alternar_candado))
+	var lecturas: Array = tablero.get("lecturas", [])
+	if not lecturas.is_empty():
+		_panel.add_child(_rotulo("Lecturas"))
+		_lecturas = {}
+		for l: Dictionary in lecturas:
+			var etiqueta := _etiqueta(_texto_lectura(l))
+			_lecturas[l["componente"] + l["clave"]] = etiqueta
+			_panel.add_child(etiqueta)
 	var protecciones := false
 	for id: String in mesa.piezas:
 		var c := mesa.sim.componente(id)

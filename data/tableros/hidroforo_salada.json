@@ -1,0 +1,238 @@
+{
+  "id": "hidroforo_salada",
+  "titulo": "Hidróforo de agua salada",
+  "ubicacion": "Sala de máquinas, hidróforos",
+  "foto": "Foto 062 del buque",
+  "alimentacion": "Q0",
+  "nota": "Reproduce el frente del tablero SEBAT. El interior y los motores son típicos: verificar con el esquema del tablero.",
+  "frente": {
+    "tamano": [
+      1000,
+      1000
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 70,
+        "texto": "HIDROFORO AGUA SALADA",
+        "tam": 30
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 170,
+        "texto": "BOMBA #1",
+        "tam": 18
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 250,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 300,
+        "y": 330,
+        "color": "rojo",
+        "componente": "HF1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 420,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 300,
+        "y": 495,
+        "color": "verde",
+        "componente": "HE1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 700,
+        "y": 170,
+        "texto": "BOMBA #2",
+        "tam": 18
+      },
+      {
+        "tipo": "rotulo",
+        "x": 700,
+        "y": 250,
+        "texto": "FALLA\nTERMICA",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 700,
+        "y": 330,
+        "color": "rojo",
+        "componente": "HF2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 700,
+        "y": 420,
+        "texto": "ENCENDIDO",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 700,
+        "y": 495,
+        "color": "verde",
+        "componente": "HE2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 620,
+        "texto": "BOMBA #1   OFF   BOMBA #2",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 500,
+        "y": 700,
+        "componente": "SB"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 820,
+        "texto": "AUT   OFF   MAN",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 500,
+        "y": 900,
+        "componente": "SM"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 930,
+        "y": 520
+      }
+    ]
+  },
+  "lecturas": [
+    {
+      "componente": "TH",
+      "texto": "Presión del tanque",
+      "clave": "presion",
+      "unidad": "bar",
+      "decimales": 1
+    }
+  ],
+  "senales": [],
+  "averias": [
+    {
+      "id": "polo_q0",
+      "texto": "Polo L3 quemado en el interruptor de alimentación (falta de fase)",
+      "componente": "Q0",
+      "param": "polo_danado",
+      "valor": "5-6"
+    },
+    {
+      "id": "presostato_pegado",
+      "texto": "Presostato del tanque pegado: no corta a 4 bar",
+      "componente": "TH",
+      "param": "parada_bar",
+      "valor": 9.0
+    }
+  ],
+  "circuito": "tablero_hidroforo_salada",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "QC": [
+      0,
+      300
+    ],
+    "T1": [
+      820,
+      0
+    ],
+    "F0": [
+      1160,
+      0
+    ],
+    "Q1": [
+      0,
+      700
+    ],
+    "K1": [
+      0,
+      1260
+    ],
+    "F1": [
+      0,
+      1820
+    ],
+    "M1": [
+      0,
+      2340
+    ],
+    "HF1": [
+      540,
+      700
+    ],
+    "HE1": [
+      540,
+      960
+    ],
+    "Q2": [
+      1120,
+      700
+    ],
+    "K2": [
+      1120,
+      1260
+    ],
+    "F2": [
+      1120,
+      1820
+    ],
+    "M2": [
+      1120,
+      2340
+    ],
+    "HF2": [
+      1660,
+      700
+    ],
+    "HE2": [
+      1660,
+      960
+    ],
+    "SM": [
+      2300,
+      700
+    ],
+    "SB": [
+      2300,
+      1020
+    ],
+    "TH": [
+      2300,
+      1340
+    ],
+    "PE": [
+      2300,
+      1720
+    ]
+  }
+}

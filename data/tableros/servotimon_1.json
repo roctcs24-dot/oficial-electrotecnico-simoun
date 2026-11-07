@@ -1,0 +1,233 @@
+{
+  "id": "servotimon_1",
+  "titulo": "Servotimón: controlador nº 1",
+  "ubicacion": "Local del servotimón, a popa",
+  "foto": "Tanda 7 de fotos del buque",
+  "alimentacion": "Q0",
+  "nota": "Procedimiento del cartel del local: 1) selector de la bomba 1 o 2 en 3. LOCAL CONTROL; 2) comunicar con el puente; 3) mover el timón a babor o estribor con los pulsadores hasta el ángulo pedido por el puente.",
+  "frente": {
+    "tamano": [
+      1000,
+      1500
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 60,
+        "texto": "STEERING GEAR\nMOTOR CONTROLLER NO.1",
+        "tam": 22
+      },
+      {
+        "tipo": "rotulo",
+        "x": 880,
+        "y": 60,
+        "texto": "380VAC",
+        "tam": 18,
+        "fondo": "#c8231a",
+        "tinta": "#ffffff"
+      },
+      {
+        "tipo": "recuadro",
+        "x": 690,
+        "y": 520,
+        "ancho": 340,
+        "alto": 620,
+        "color": "#1b1d1f"
+      },
+      {
+        "tipo": "luz",
+        "x": 600,
+        "y": 280,
+        "color": "verde",
+        "componente": "HR",
+        "texto": "RUN\nPUMP"
+      },
+      {
+        "tipo": "luz",
+        "x": 690,
+        "y": 280,
+        "color": "azul",
+        "componente": "HH",
+        "texto": "HEATING\nON"
+      },
+      {
+        "tipo": "luz",
+        "x": 780,
+        "y": 280,
+        "color": "blanco",
+        "componente": "HP"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 690,
+        "y": 380,
+        "texto": "EMERGENCY STEERING\nPORT             STBD",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 610,
+        "y": 480,
+        "color": "rojo",
+        "componente": "SB"
+      },
+      {
+        "tipo": "pulsador",
+        "x": 770,
+        "y": 480,
+        "color": "verde",
+        "componente": "SR"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 690,
+        "y": 590,
+        "texto": "1. REMOTE CONTROL\n2. STOP\n3. LOCAL CONTROL",
+        "tam": 13
+      },
+      {
+        "tipo": "selector",
+        "x": 690,
+        "y": 700,
+        "componente": "S1",
+        "color": "negro"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 210,
+        "y": 830,
+        "texto": "MAIN SWITCH",
+        "tam": 15
+      },
+      {
+        "tipo": "seccionador",
+        "x": 210,
+        "y": 920,
+        "componente": "Q0",
+        "estilo": "negro"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 70,
+        "y": 260
+      },
+      {
+        "tipo": "cerradura",
+        "x": 70,
+        "y": 960
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 1110,
+        "texto": "STEERING GEAR FREQUENCY CONVERTER NO.1",
+        "tam": 15
+      },
+      {
+        "tipo": "pantalla_vlt",
+        "x": 500,
+        "y": 1300,
+        "componente": "K1",
+        "motor": "M1",
+        "horometro": "P1"
+      }
+    ]
+  },
+  "lecturas": [
+    {
+      "componente": "YV",
+      "texto": "Ángulo del timón (+ estribor, − babor)",
+      "clave": "angulo",
+      "unidad": "°",
+      "decimales": 0
+    }
+  ],
+  "senales": [
+    {
+      "componente": "ORD",
+      "texto": "Orden del puente: bomba nº 1 en marcha"
+    }
+  ],
+  "averias": [
+    {
+      "id": "falta_fase",
+      "texto": "Falta de fase en la alimentación del controlador",
+      "componente": "Q0",
+      "param": "polo_danado",
+      "valor": "3-4"
+    }
+  ],
+  "circuito": "tablero_servotimon",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "T1": [
+      820,
+      0
+    ],
+    "F0": [
+      1160,
+      0
+    ],
+    "Q1": [
+      0,
+      700
+    ],
+    "K1": [
+      0,
+      1260
+    ],
+    "F1": [
+      0,
+      1820
+    ],
+    "M1": [
+      0,
+      2340
+    ],
+    "S1": [
+      540,
+      700
+    ],
+    "ORD": [
+      540,
+      1020
+    ],
+    "HR": [
+      1120,
+      700
+    ],
+    "HH": [
+      1120,
+      960
+    ],
+    "HP": [
+      1120,
+      1220
+    ],
+    "P1": [
+      1120,
+      1480
+    ],
+    "SB": [
+      1400,
+      700
+    ],
+    "SR": [
+      1400,
+      980
+    ],
+    "YV": [
+      1700,
+      700
+    ]
+  }
+}

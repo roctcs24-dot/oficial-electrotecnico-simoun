@@ -2,15 +2,15 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v3.2**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque. Incluye:
+Estado: **v3.3**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque. Incluye:
 
 - 20 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores, tableros de bombas e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - 8 lecciones de refrigeración: ciclo de compresión, presión y temperatura del NH3, diagrama presión–entalpía, compresores, componentes, control y protecciones, cableado del compresor y diagnóstico.
 - Fichas de los equipos de los sistemas 1, 3 y 4, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con los cuatro generadores del buque (380 V, 50 Hz), paneles al estilo de sus módulos de sincronismo, PMS, protecciones, lámparas de tierra R-S-T y cuadro de emergencia con su generador.
-- Taller con multímetro, megóhmetro y pinza amperimétrica, y tableros reales del buque que se manejan desde su frente: el de bombas de la máquina principal, con lámparas de tierra, pulsadores luminosos, selectores MAN-OFF-AUT y su interior en la mesa del Taller.
-- 3 misiones de Guardia de motores y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
+- Taller con multímetro, megóhmetro y pinza amperimétrica, y seis tableros reales del buque que se manejan desde su frente, con su interior en la mesa del Taller: bombas de la máquina principal, hidróforo de agua salada, purificadora nº 1, controlador del servotimón nº 1 con su variador Danfoss, y tableros de 110 V de habitabilidad y de 220 V de distribución. Tienen una marca amarilla en su lugar del plano del barco.
+- 5 misiones de Guardia de motores y tableros (dos de ellas frente al tablero: lámpara de tierra apagada e hidróforo sin una fase) y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
 - 5 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite en el Vilter nº 5, fuga de amoníaco con evacuación y nivel alto en la botella de baja.
 - Exámenes de la v1, la v2 y la v3, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
@@ -206,6 +206,8 @@ Las condiciones son `en_marcha`, `parado`, `presion` y `temperatura` (con `punto
 **Tableros:** cada `data/tableros/<id>.json` reproduce un tablero del buque y se publica en `modos.taller.tableros` de un sistema. Lleva `circuito` (un archivo de `data/circuitos/`), `alimentacion` (su interruptor con candado, de tipo `seccionador`), `frente` con su `tamano` en unidades del panel, `acabado` (`inox`, `gris` o `blanco`) y `elementos`, `interior` (posición de cada componente en la mesa), `senales` (órdenes de otros equipos, con un `selector`) y `averias` de práctica (`componente`, `param` y `valor`). Los elementos del frente son `rotulo` (con `
 ` para varias líneas), `luz` (`color` y `estilo` `plana` o `domo`), `pulsador` (con `luz` si es luminoso), `selector`, `seta`, `seccionador`, `horometro` y `cerradura`, con su `x`, `y` y su `componente`. Un elemento sin componente se dibuja apagado, como la reserva. Una prueba comprueba que todo lo que nombra el tablero existe en su circuito.
 
+**Misiones frente a un tablero:** con `"tablero": "<id>"` la misión usa el circuito y el interior de ese tablero, y su pantalla empieza frente a él. `aisladores` fija los puntos de bloqueo (un guardamotor, un `seccionador` o la fuente) y `nombres_aisladores` cómo se llaman en los botones. `params_iniciales` y `estado_inicial` ponen la avería con que empieza, como `{"Q0": {"polo_danado": "5-6"}}` o relés ya disparados.
+
 **Términos:** en los textos se escriben `{{id}}`, con el id definido en `data/glosario.json`. La primera vez que aparece en cada ficha se muestra también en inglés. Al empezar una frase o una viñeta se usa mayúscula inicial: `{{Estator}}`. No se le pegan letras detrás: `{{devanado}}s` queda mal escrito, y una prueba lo detecta.
 
 **Datos sin confirmar:** todo valor típico debe indicar en el texto `valor típico — verificar a bordo`.
@@ -308,3 +310,5 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Lámparas de tierra:** tres lámparas de 380 V en estrella, de cada fase a un punto común que el pulsador TEST une al casco. Alumbran igual a la tensión de fase; con una fase a masa y TEST pulsado, la de esa fase se apaga y las otras ven casi la tensión de línea.
 - **Pantalla** `ui/screens/tablero.gd`: el frente (`VistaTablero`), dibujado con el aspecto del tablero real, con zoom y arrastre; al abrir la puerta, el mismo circuito en la mesa del Taller (`PantallaBanco`), con los instrumentos. Las pestañas Mando (alimentación con candado, protecciones disparadas, señales de otros equipos y averías de práctica), Medir, Equipo (estado y ajustes) y Datos.
 - Las pruebas están en `tests/test_sim_tableros.gd` y `tests/test_tableros.gd`. Con `tablero` detrás de la carpeta, el comando de capturas guarda la lista, el frente y el interior.
+- **Más componentes de tablero:** `hidroforo` (tanque con presostato 13-14 que arranca a 2,5 bar y para a 4 bar; las bombas de `bombas` suben la presión con el cuadrado de su velocidad), `timon` (válvulas de gobierno BR X1-X2 y ER X3-X4; mueven la pala unos 2,6 °/s mientras gira la bomba) y `carga_trifasica` como consumidores con `falla_mohm` a masa. El `seccionador` admite `polo_danado`, un polo quemado que no conduce, y el `selector` hasta tres contactos (13-14, 23-24 y 33-34).
+- **Elementos del frente añadidos:** `recuadro` (placa de fondo), `rotulo` con `fondo` y `tinta` (como la etiqueta roja de 380VAC), `luz` con `texto` grabado en la lente, `seccionador` con `estilo` `negro` y `pantalla_vlt`, el teclado y la pantalla del variador Danfoss, que lee el contactor que hace de variador, su motor y su horómetro. Los tableros pueden mostrar `lecturas` del proceso en la pestaña Mando, como la presión del hidróforo o el ángulo del timón.

@@ -20,6 +20,12 @@ var _acumulado := 0.0
 var _hasta_lectura := 0.0
 var _cuadros_encuadre := 0
 var _botones_pestana := {}
+## Tablero del buque cuyo frente se muestra, si la pantalla lo tiene: data/tableros/<id>.json.
+var tablero := {}
+var frente: VistaTablero
+var _caja_mesa: Control
+var _barra_frente: HBoxContainer
+var _boton_puerta: Button
 
 
 ## Lista de [id, nombre] de las pestañas.
@@ -88,9 +94,16 @@ func _montar_banco() -> void:
 func _al_salir() -> void:
 	args["vista_zoom"] = vista.zoom
 	args["vista_origen"] = vista.origen
+	if frente != null:
+		args["frente_zoom"] = frente.zoom
+		args["frente_desplazamiento"] = frente.desplazamiento
 
 
 func _crear_vista() -> Control:
+	return _crear_vista_mesa() if tablero.is_empty() else _crear_vista_tablero()
+
+
+func _crear_vista_mesa() -> Control:
 	var contenedor := VBoxContainer.new()
 	contenedor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	contenedor.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -124,6 +137,115 @@ func _crear_vista() -> Control:
 	_estado.clip_text = true
 	contenedor.add_child(_estado)
 	return contenedor
+
+
+## Con un tablero, la vista es su frente y, con la puerta abierta, la mesa con su interior.
+func _crear_vista_tablero() -> Control:
+	var caja := VBoxContainer.new()
+	caja.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caja.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	caja.size_flags_stretch_ratio = _proporcion_vista()
+	caja.add_theme_constant_override("separation", 6)
+	_boton_puerta = _boton("", _alternar_puerta)
+	caja.add_child(_boton_puerta)
+	frente = VistaTablero.new()
+	frente.datos = tablero["frente"]
+	frente.sim = mesa.sim
+	frente.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	frente.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	frente.custom_minimum_size.y = 280.0
+	frente.elemento_tocado.connect(_al_tocar_elemento)
+	frente.elemento_soltado.connect(_al_soltar_elemento)
+	caja.add_child(frente)
+	_barra_frente = HBoxContainer.new()
+	_barra_frente.add_theme_constant_override("separation", 6)
+	caja.add_child(_barra_frente)
+	for d: Array in [["−", 1.0 / 1.25], ["+", 1.25]]:
+		var b := _boton(d[0], func() -> void: frente.cambiar_zoom(d[1], frente.size / 2.0))
+		b.autowrap_mode = TextServer.AUTOWRAP_OFF
+		b.custom_minimum_size.x = 56.0
+		_barra_frente.add_child(b)
+	var todo := _boton("Ver todo", func() -> void: frente.encuadrar())
+	todo.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_barra_frente.add_child(todo)
+	if args.has("frente_zoom"):
+		frente.zoom = args["frente_zoom"]
+		frente.desplazamiento = args["frente_desplazamiento"]
+	_caja_mesa = _crear_vista_mesa()
+	caja.add_child(_caja_mesa)
+	_aplicar_puerta()
+	return caja
+
+
+func _alternar_puerta() -> void:
+	args["puerta"] = not args.get("puerta", false)
+	_aplicar_puerta()
+	_reconstruir_panel()
+
+
+func _aplicar_puerta() -> void:
+	var abierta: bool = args.get("puerta", false)
+	_boton_puerta.text = "Cerrar la puerta y ver el frente" if abierta else "Abrir la puerta y ver el interior"
+	frente.visible = not abierta
+	_barra_frente.visible = not abierta
+	_caja_mesa.visible = abierta
+	if abierta:
+		_cuadros_encuadre = CUADROS_ENCUADRE
+
+
+# --- Mandos del frente ---
+
+func _elemento(indice: int) -> Dictionary:
+	return tablero["frente"]["elementos"][indice]
+
+
+func _al_tocar_elemento(indice: int, lado: int) -> void:
+	accionar(indice, lado)
+
+
+func _al_soltar_elemento(indice: int) -> void:
+	soltar(indice)
+
+
+## Acción sobre un elemento del frente: pulsar, girar un selector, enclavar o liberar la seta, o
+## maniobrar el interruptor general. Devuelve false si el candado lo impide.
+func accionar(indice: int, lado := 1) -> bool:
+	var e := _elemento(indice)
+	var c := mesa.sim.componente(e["componente"])
+	var hecho := true
+	match e["tipo"]:
+		"pulsador":
+			c.estado["presionado"] = true
+		"selector":
+			(c as SimSelector).girar(lado)
+		"seta":
+			var seta := c as SimSeta
+			if seta.estado["enclavada"]:
+				seta.liberar()
+			else:
+				seta.pulsar()
+		"seccionador":
+			var q := c as SimSeccionador
+			hecho = q.accionar(not q.cerrado())
+			if not hecho:
+				_mostrar_aviso("Interruptor bloqueado", "Tiene puesto el candado de bloqueo y su tarjeta. Solo lo retira quien lo puso, cuando termina el trabajo.")
+	_tras_accionar_frente()
+	return hecho
+
+
+## Para que cada pantalla refresque su panel tras tocar un mando del frente.
+func _tras_accionar_frente() -> void:
+	pass
+
+
+func soltar(indice: int) -> void:
+	var e := _elemento(indice)
+	var c := mesa.sim.componente(e["componente"])
+	match e["tipo"]:
+		"pulsador":
+			c.estado["presionado"] = false
+		"selector":
+			(c as SimSelector).soltar()
 
 
 func ordenar_cables() -> void:
@@ -509,6 +631,8 @@ func _process(delta: float) -> void:
 		_cuadros_encuadre -= 1
 		vista.encuadrar()
 	_avanzar_simulacion(delta)
+	if frente != null and frente.visible:
+		frente.queue_redraw()
 	_hasta_lectura -= delta
 	if _hasta_lectura <= 0.0:
 		_hasta_lectura = 1.0 / LECTURAS_POR_SEGUNDO

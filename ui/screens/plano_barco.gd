@@ -28,6 +28,8 @@ func construir() -> void:
 		plano.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		plano.size_flags_stretch_ratio = 1.6
 		plano.sistema_tocado.connect(_abrir_sistema)
+		plano.tableros = plano_datos.get("tableros", [])
+		plano.tablero_tocado.connect(func(id: String) -> void: raiz.ir_a("tablero", {"tablero": id}))
 		if raiz.vertical:
 			plano.custom_minimum_size.y = maxf(170.0, raiz.size.x * ALTO_PLANO_POR_ANCHO)
 		else:

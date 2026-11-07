@@ -1,10 +1,10 @@
 {
-  "nota": "Calibrados con el contenido de la v1, la v2 y la v3. Para el rango más alto hacen falta lecciones, misiones y exámenes. Subir estos valores al añadir contenido.",
+  "nota": "Calibrados con el contenido de la v1, la v2, la v3 y los tableros del buque. Para el rango más alto hacen falta lecciones, misiones y exámenes. Subir estos valores al añadir contenido.",
   "rangos": [
     { "nombre": "Cadete", "puntos": 0 },
     { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 450 },
     { "nombre": "Oficial Electrotécnico de 2da", "puntos": 900 },
     { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 1450 },
-    { "nombre": "Jefe Electrotécnico", "puntos": 2300 }
+    { "nombre": "Jefe Electrotécnico", "puntos": 2450 }
   ]
 }

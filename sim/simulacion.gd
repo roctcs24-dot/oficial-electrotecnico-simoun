@@ -53,6 +53,8 @@ static func tipos() -> Dictionary:
 		"seta": SimSeta,
 		"seccionador": SimSeccionador,
 		"horometro": SimHorometro,
+		"hidroforo": SimHidroforo,
+		"timon": SimTimon,
 	}
 
 

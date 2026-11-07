@@ -1,0 +1,29 @@
+{
+  "nombre": "Tablero de 110 V",
+  "nota": "Tablero de 110 V trifásico aislado (foto 160 del buque), con lámparas de tierra R-S-T y pulsador de prueba. La carga de alumbrado y tomas de los camarotes se resume en una carga trifásica de 6 kW. Lámparas, carga y tensión de los transformadores: valores típicos — verificar a bordo.",
+  "componentes": [
+    {"id": "B", "tipo": "fuente_trifasica", "params": {"v_linea": 110}},
+    {"id": "Q0", "tipo": "seccionador", "estado": {"cerrado": true}},
+    {"id": "HT1", "tipo": "lampara", "params": {"v_nominal": 110, "r": 16000}},
+    {"id": "HT2", "tipo": "lampara", "params": {"v_nominal": 110, "r": 16000}},
+    {"id": "HT3", "tipo": "lampara", "params": {"v_nominal": 110, "r": 16000}},
+    {"id": "ST", "tipo": "pulsador", "params": {"contacto": "NA"}},
+    {"id": "PE", "tipo": "masa"},
+    {"id": "CA", "tipo": "carga_trifasica", "params": {"p_kw": 6.0, "q_kvar": 1.0, "v_linea": 110, "esencial": false}}
+  ],
+  "cables": [
+    ["B.L1", "Q0.1"],
+    ["B.L2", "Q0.3"],
+    ["B.L3", "Q0.5"],
+    ["Q0.2", "HT1.X1"],
+    ["Q0.4", "HT2.X1"],
+    ["Q0.6", "HT3.X1"],
+    ["HT1.X2", "HT2.X2"],
+    ["HT2.X2", "HT3.X2"],
+    ["HT3.X2", "ST.13"],
+    ["ST.14", "PE.PE"],
+    ["Q0.2", "CA.L1"],
+    ["Q0.4", "CA.L2"],
+    ["Q0.6", "CA.L3"]
+  ]
+}

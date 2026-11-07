@@ -1,0 +1,72 @@
+{
+  "id": "t2_hidroforo_sin_fase",
+  "titulo": "Las dos bombas del hidróforo en falla",
+  "resumen": "Hidróforo de agua salada: las dos luces de FALLA TERMICA encendidas y no hay agua.",
+  "equipo": "Tablero del hidróforo de agua salada",
+  "tablero": "hidroforo_salada",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "No hay agua salada en los servicios de cubierta. En el tablero del hidróforo de agua salada están encendidas las dos luces de FALLA TERMICA, de la bomba nº 1 y de la nº 2. El marinero rearmó los relés una vez y volvieron a disparar al poco tiempo. Averigüe la causa, repárela y deje el hidróforo funcionando.",
+    "nota": "Motores de las bombas: 4 kW, 380 V en delta, 8,2 A. El tablero se alimenta desde el cuadro principal: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "Q0": { "polo_danado": "5-6" } },
+  "estado_inicial": { "F1": { "disparado": true }, "F2": { "disparado": true }, "TH": { "presion": 1.2, "pide": true } },
+  "aisladores": ["QC"],
+  "nombres_aisladores": { "QC": "el interruptor QC del cuadro principal que alimenta el tablero" },
+  "verificacion": {
+    "fuente_conocida": ["B.L1", "B.L2"],
+    "puntos": [
+      { "texto": "Entrada de Q0: L1-L2", "a": "Q0.1", "b": "Q0.3" },
+      { "texto": "Entrada de Q0: L2-L3", "a": "Q0.3", "b": "Q0.5" },
+      { "texto": "Entrada de Q0: L3-L1", "a": "Q0.5", "b": "Q0.1" },
+      { "texto": "L1 a masa", "a": "Q0.1", "b": "PE.PE" },
+      { "texto": "L2 a masa", "a": "Q0.3", "b": "PE.PE" },
+      { "texto": "L3 a masa", "a": "Q0.5", "b": "PE.PE" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se empezó a desmontar el interruptor general Q0 con su lado de entrada todavía alimentado desde el cuadro principal. El destornillador tocó dos bornes de entrada y se produjo un arco que quemó la mano del oficial.",
+      "causa": "Abrir Q0 deja sin tensión su salida, no su entrada. Para cambiarlo hay que abrir y bloquear la alimentación en el cuadro principal.",
+      "como_evitar": "• Abra y bloquee QC, el interruptor del cuadro principal que alimenta el tablero.\n• Verifique la ausencia de tensión en la entrada de Q0, entre fases y a masa.\n• Pruebe el detector en una fuente conocida antes y después."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "multimetro", "modos": ["vac"], "a": "Q0.2", "b": "Q0.6" },
+    { "instrumento": "multimetro", "modos": ["vac"], "a": "Q0.4", "b": "Q0.6" }
+  ],
+  "remediciones": [],
+  "pistas": [
+    "Dos protecciones que disparan a la vez suelen tener una causa común. Mire qué comparten las dos bombas: la alimentación del tablero.",
+    "Con el multímetro en V~, abra la puerta y mida entre fases a la salida de Q0: Q0.2-Q0.4, Q0.4-Q0.6 y Q0.6-Q0.2. Sin una fase, el motor no arranca, se calienta y dispara el relé.",
+    "Q0 está cerrado pero no da una de sus fases: un polo quemado. Para cambiarlo, bloquee la alimentación en el cuadro principal y verifique la ausencia de tensión en la entrada de Q0.",
+    "Tras el cambio, rearme los relés térmicos y pruebe la bomba nº 1 con el selector en MAN durante dos minutos."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué disparan los relés térmicos de las dos bombas?",
+    "opciones": [
+      { "texto": "Un polo quemado en el interruptor general Q0: falta una fase y los motores no arrancan", "correcta": true, "explicacion": "Entre Q0.6 y las otras fases no hay tensión, aunque Q0 está cerrado. Con dos fases, el motor trifásico no arranca: queda frenado con una corriente varias veces la nominal hasta que su relé dispara. La causa es común a las dos bombas." },
+      { "texto": "Los dos motores se quemaron a la vez", "explicacion": "Sería muy raro que fallaran los dos a la vez. Además, el multímetro muestra que falta una fase a la salida de Q0, antes de los motores." },
+      { "texto": "Los relés térmicos están mal ajustados", "explicacion": "Sus ajustes coinciden con la placa, 8,2 A. Un ajuste bajo no explica que falte tensión entre dos fases." },
+      { "texto": "El presostato del tanque está pegado", "explicacion": "Un presostato pegado haría trabajar las bombas sin parar, pero no las haría disparar. Aquí ni siquiera arrancan." }
+    ]
+  },
+  "acciones": [
+    { "id": "cambiar_q0", "boton": "Cambiar el interruptor general Q0", "titulo": "Interruptor cambiado", "texto": "Se desmontó Q0: el polo 5-6 tenía los contactos quemados y no cerraba. Se montó un interruptor nuevo del mismo modelo, se reapretaron los bornes de entrada y de salida y se comprobó la continuidad de los tres polos con el óhmetro.", "efecto": [{ "op": "param", "id": "Q0", "clave": "polo_danado", "valor": "" }] },
+    { "id": "cambiar_reles", "boton": "Cambiar los dos relés térmicos", "titulo": "Relés innecesarios", "texto": "Los relés hicieron su trabajo: dispararon porque los motores no podían arrancar sin una fase. Rearmarlos basta cuando se corrige la causa.", "innecesaria": true },
+    { "id": "cambiar_motores", "boton": "Cambiar los motores de las dos bombas", "titulo": "Motores innecesarios", "texto": "Los motores están sanos: el relé los protegió antes de que se calentaran. La causa está en la alimentación común.", "innecesaria": true }
+  ],
+  "prueba": { "motor": "M1", "rele": "F1", "contactor": "K1", "observar_s": 120, "rpm_min": 1400 },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Tensión entre Q0.4 y Q0.6 antes de la reparación", "opciones": ["Mucho menor que 380 V: falta una fase", "380 V", "No se midió"], "correcta": 0, "explicacion": "La fase de Q0.6 no llegaba: el polo 5-6 de Q0 no cerraba." },
+      { "etiqueta": "Causa", "opciones": ["Polo 5-6 de Q0 quemado", "Motores quemados", "Relés mal ajustados"], "correcta": 0, "explicacion": "Anote la causa común a las dos bombas: el polo quemado del interruptor general." },
+      { "etiqueta": "Trabajo realizado", "opciones": ["Cambio de Q0 y rearme de los relés", "Cambio de los relés", "Cambio de los motores"], "correcta": 0, "explicacion": "Se cambió el interruptor general y se rearmaron los relés térmicos." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones del motor trifásico, de las protecciones y de los tableros de bombas.",
+    "IEC 60947-4-1: protección de motores contra la falta de fase.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

@@ -167,3 +167,111 @@ func test_horometro_cuenta_y_uno_de_60_hz_atrasa() -> String:
 		A.cerca(bien.estado["horas"], 0.01, 0.03, "36 s son 0,01 h"),
 		A.cerca(de_60.estado["horas"], bien.estado["horas"] * 50.0 / 60.0, 0.03, "el de 60 Hz cuenta 50/60"),
 	])
+
+
+func test_hidroforo_en_aut_arranca_y_para_con_el_presostato() -> String:
+	var sim := A.circuito("tablero_hidroforo_salada")
+	var th: SimHidroforo = sim.componente("TH")
+	th.estado["presion"] = 2.6
+	var arranco := false
+	var paro_lleno := false
+	for _i in 200:
+		sim.avanzar_tiempo(0.5)
+		if sim.componente("K1").cerrado():
+			arranco = true
+		elif arranco and th.estado["presion"] >= 3.9:
+			paro_lleno = true
+			break
+	return A.primero([
+		A.cierto(arranco, "al bajar de 2,5 bar la bomba nº 1 debe arrancar"),
+		A.cierto(paro_lleno, "al llegar a 4 bar debe parar: %.2f bar" % th.estado["presion"]),
+		A.cierto(not sim.componente("K2").cerrado(), "con el selector en BOMBA #1, la nº 2 no trabaja"),
+	])
+
+
+func test_hidroforo_sin_una_fase_dispara_el_termico() -> String:
+	var sim := A.circuito("tablero_hidroforo_salada")
+	sim.componente("Q0").params["polo_danado"] = "5-6"
+	(sim.componente("SM") as SimSelector).poner("MAN")
+	var disparo := false
+	for _i in 240:
+		sim.avanzar_tiempo(0.5)
+		if sim.componente("F1").estado["disparado"] or not sim.componente("Q1").cerrado():
+			disparo = true
+			break
+	sim.avanzar_tiempo(0.5)
+	return A.primero([
+		A.cierto(disparo, "con una fase perdida el motor no arranca y dispara su protección"),
+		A.cierto(not sim.componente("K1").cerrado(), "la bomba queda parada"),
+	])
+
+
+func test_purificadora_arranca_en_orden_y_la_seta_lo_para_todo() -> String:
+	var sim := A.circuito("tablero_purificadora")
+	(sim.componente("Q0") as SimSeccionador).accionar(true)
+	var s1: SimSelector = sim.componente("S1")
+	var s2: SimSelector = sim.componente("S2")
+	s2.poner("START")
+	sim.avanzar_tiempo(0.3)
+	s2.soltar()
+	sim.avanzar_tiempo(0.5)
+	var bomba_sin_separadora: bool = sim.componente("K2").cerrado()
+	s1.poner("START")
+	sim.avanzar_tiempo(0.3)
+	s1.soltar()
+	sim.avanzar_tiempo(10.0)
+	var separadora: bool = sim.componente("K1").cerrado() and sim.componente("M1").rpm() > 2700.0
+	s2.poner("START")
+	sim.avanzar_tiempo(0.3)
+	s2.soltar()
+	sim.avanzar_tiempo(2.0)
+	var bomba: bool = sim.componente("K2").cerrado() and sim.componente("H2").estado["encendida"]
+	var horas: float = sim.componente("P1").estado["horas"]
+	(sim.componente("SE") as SimSeta).pulsar()
+	sim.avanzar_tiempo(0.5)
+	return A.primero([
+		A.cierto(not bomba_sin_separadora, "la bomba no arranca con la separadora parada"),
+		A.cierto(separadora, "START y soltar en 1: la separadora arranca y se enclava"),
+		A.cierto(bomba, "con la separadora en marcha arranca la bomba"),
+		A.cierto(horas > 1824.6, "el horómetro cuenta con la separadora en marcha"),
+		A.cierto(not sim.componente("K1").cerrado() and not sim.componente("K2").cerrado(), "la seta para las dos"),
+	])
+
+
+func test_servotimon_en_local_mueve_el_timon_con_los_pulsadores() -> String:
+	var sim := A.circuito("tablero_servotimon")
+	sim.avanzar_tiempo(6.0)
+	var en_remoto: bool = sim.componente("K1").cerrado() and sim.componente("HR").estado["encendida"]
+	var yv: SimTimon = sim.componente("YV")
+	sim.componente("SB").estado["presionado"] = true
+	sim.avanzar_tiempo(3.0)
+	var remoto_no_mueve: bool = absf(yv.estado["angulo"]) < 0.1
+	sim.componente("SB").estado["presionado"] = false
+	(sim.componente("S1") as SimSelector).poner("2. STOP")
+	sim.avanzar_tiempo(1.0)
+	var calefaccion: bool = sim.componente("HH").estado["encendida"] and not sim.componente("K1").cerrado()
+	(sim.componente("S1") as SimSelector).poner("3. LOCAL")
+	sim.avanzar_tiempo(6.0)
+	sim.componente("SB").estado["presionado"] = true
+	sim.avanzar_tiempo(5.0)
+	sim.componente("SB").estado["presionado"] = false
+	var a_babor: float = yv.estado["angulo"]
+	return A.primero([
+		A.cierto(en_remoto, "en remoto, con la orden del puente, la bomba trabaja"),
+		A.cierto(remoto_no_mueve, "en remoto los pulsadores de emergencia no actúan"),
+		A.cierto(calefaccion, "parada, se enciende HEATING ON"),
+		A.cierto(a_babor < -10.0 and a_babor > -16.0, "en local, 5 s a babor mueven unos 13°: %.1f°" % a_babor),
+	])
+
+
+func test_habitabilidad_fase_a_masa_con_test() -> String:
+	var sim := A.circuito("tablero_habitabilidad_110")
+	sim.componente("CA").params["falla_mohm"] = 0.0005
+	sim.componente("ST").estado["presionado"] = true
+	sim.avanzar_tiempo(0.3)
+	var r1: float = sim.componente("HT1").estado["relacion"]
+	var r2: float = sim.componente("HT2").estado["relacion"]
+	return A.primero([
+		A.cierto(r1 < 0.2, "la lámpara R se apaga: %.2f" % r1),
+		A.cierto(r2 > 0.85 and not sim.componente("HT2").estado["quemada"], "S brilla más sin quemarse: %.2f" % r2),
+	])

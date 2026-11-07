@@ -1,0 +1,77 @@
+{
+  "id": "t1_tierra_bombas_mp",
+  "titulo": "Lámpara de tierra apagada",
+  "resumen": "Tablero de bombas de la máquina principal: al pulsar TEST, la lámpara L1 se apaga.",
+  "equipo": "Tablero de bombas máquina principal",
+  "tablero": "bombas_mp",
+  "reporte": {
+    "de": "Oficial de guardia",
+    "texto": "Tras baldear la sala de máquinas, en el tablero de bombas de la máquina principal la lámpara de tierra L1 se apaga al pulsar TEST cuando trabaja la bomba de enfriamiento nº 1, y las lámparas L2 y L3 brillan más. Con la bomba nº 1 parada, las tres alumbran igual. La bomba nº 2 cubre el servicio. Averigüe qué consumidor tiene la fase a masa y repárelo.",
+    "nota": "Red de 380 V aislada. Motores de las bombas de enfriamiento: 7,5 kW, 380 V en delta, 15,2 A; alarma del monitor de aislamiento en 1 MΩ: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "M1": { "aislamiento_mohm": [0.02, 60.0, 55.0] } },
+  "monitor": { "resto_mohm": 25 },
+  "aisladores": ["Q1"],
+  "nombres_aisladores": { "Q1": "el guardamotor Q1 de la bomba nº 1" },
+  "verificacion": {
+    "fuente_conocida": ["Q0.2", "Q0.4"],
+    "puntos": [
+      { "texto": "Salida de Q1: L1-L2", "a": "Q1.2", "b": "Q1.4" },
+      { "texto": "Salida de Q1: L2-L3", "a": "Q1.4", "b": "Q1.6" },
+      { "texto": "Salida de Q1: L3-L1", "a": "Q1.6", "b": "Q1.2" },
+      { "texto": "L1 a masa", "a": "Q1.2", "b": "PE.PE" },
+      { "texto": "L2 a masa", "a": "Q1.4", "b": "PE.PE" },
+      { "texto": "L3 a masa", "a": "Q1.6", "b": "PE.PE" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se abrió la caja de bornes del motor de la bomba nº 1 sin bloquear su guardamotor. Otro tripulante pulsó ENCENDIDO en el tablero para dar agua a la máquina, y el oficial recibió una descarga en los bornes. Fue atendido por el oficial sanitario.",
+      "causa": "El motor seguía conectado al tablero a través de Q1 y K1. Cualquiera podía arrancarlo desde el frente.",
+      "como_evitar": "• Abra el guardamotor Q1 y coloque su candado y su tarjeta.\n• Verifique la ausencia de tensión en la salida de Q1, entre fases y a masa.\n• Avise en el tablero de que la bomba está en mantenimiento."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "megohmetro", "a": "M1.U1", "b": "PE.PE", "despues_de": "retirar_puentes" },
+    { "instrumento": "megohmetro", "a": "M1.V1", "b": "PE.PE", "despues_de": "retirar_puentes" },
+    { "instrumento": "megohmetro", "a": "M1.W1", "b": "PE.PE", "despues_de": "retirar_puentes" }
+  ],
+  "remediciones": [
+    { "instrumento": "megohmetro", "a": "M1.U1", "b": "PE.PE", "despues_de": "secar_devanado" }
+  ],
+  "pistas": [
+    "En el frente, pulse TEST con la bomba nº 1 parada y en marcha, y compare las tres lámparas. Una lámpara que se apaga señala la fase a masa.",
+    "La falla solo aparece con la bomba nº 1 conectada: está en su motor o en su cable. Bloquee Q1 y verifique la ausencia de tensión.",
+    "Abra la puerta, abra la bornera del motor y retire los puentes. Con el megóhmetro a 500 V, mida M1.U1, M1.V1 y M1.W1 contra la masa PE.",
+    "Después del secado, mida de nuevo antes de reponer los puentes. IEEE 43 recomienda al menos 5 MΩ en devanados de menos de 1 kV: verifique el criterio del buque."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Cuál es la causa de que se apague la lámpara L1?",
+    "opciones": [
+      { "texto": "Humedad en el devanado U del motor de la bomba nº 1: la fase L1 tiene un camino a masa", "correcta": true, "explicacion": "El devanado U marca unos 0,02 MΩ a masa, mientras que V y W superan los 50 MΩ. Con la bomba conectada, la fase L1 queda unida al casco por esa fuga: al pulsar TEST su lámpara casi no tiene tensión y las otras dos ven la tensión de línea." },
+      { "texto": "La lámpara L1 está fundida", "explicacion": "Con la bomba nº 1 parada, L1 alumbra igual que las otras. Una lámpara fundida no alumbraría nunca." },
+      { "texto": "Falta la fase L1 en el tablero", "explicacion": "Las bombas trabajan con normalidad y, con la nº 1 parada, las tres lámparas alumbran igual. La tensión entre fases es correcta." },
+      { "texto": "El pulsador TEST está averiado", "explicacion": "El pulsador une el centro de las lámparas al casco. Si estuviera averiado no cambiaría ninguna lámpara, y aquí solo cambia L1 cuando trabaja la bomba nº 1." }
+    ]
+  },
+  "acciones": [
+    { "id": "retirar_puentes", "boton": "Abrir la bornera del motor nº 1 y retirar los puentes", "titulo": "Bornera abierta", "texto": "Se retiraron los tres puentes de la conexión en delta. Cada devanado se puede medir por separado. La caja de bornes tiene agua del baldeo y la junta de la tapa está cuarteada.", "impide": ["bornera_abierta"], "si_impide": "La bornera ya está abierta y sin puentes.", "pone": { "bornera_abierta": true }, "efecto": [{ "op": "desconectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
+    { "id": "secar_devanado", "boton": "Secar el devanado y cambiar la junta de la caja de bornes", "titulo": "Devanado seco", "texto": "Se limpió y secó el devanado con aire caliente a temperatura controlada, sin superar la del aislamiento (valor según el fabricante — verificar), y se cambió la junta cuarteada de la tapa.", "necesita": ["bornera_abierta"], "si_falta": "Abra primero la bornera y retire los puentes para llegar a los devanados.", "efecto": [{ "op": "param", "id": "M1", "clave": "aislamiento_mohm", "valor": [30, 60, 55] }] },
+    { "id": "reponer_puentes", "boton": "Reponer los puentes en delta y cerrar la bornera", "titulo": "Bornera cerrada", "texto": "Se repusieron los tres puentes según la placa, conexión en delta para 380 V. Se reapretaron los bornes y se cerró la tapa con su junta nueva.", "necesita": ["bornera_abierta"], "si_falta": "La bornera ya está cerrada.", "pone": { "bornera_abierta": false }, "efecto": [{ "op": "conectar", "cables": [["M1.U1", "M1.W2"], ["M1.V1", "M1.U2"], ["M1.W1", "M1.V2"]] }] },
+    { "id": "cambiar_lampara", "boton": "Cambiar la lámpara de tierra L1", "titulo": "Lámpara innecesaria", "texto": "La lámpara L1 alumbra con la bomba nº 1 parada: no está fundida. La lámpara solo muestra la fuga; la causa está en un consumidor.", "innecesaria": true }
+  ],
+  "prueba": { "motor": "M1", "rele": "F1", "contactor": "K1", "observar_s": 120, "rpm_min": 1400 },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Aislamiento de U a masa antes del secado", "opciones": ["Unos 0,02 MΩ", "Unos 30 MΩ", "Fuera de rango"], "correcta": 0, "explicacion": "Revise el historial: antes del secado, el devanado U marcó unos 0,02 MΩ." },
+      { "etiqueta": "Aislamiento de U a masa después del secado", "opciones": ["Por encima de 5 MΩ, aceptable", "Por debajo de 5 MΩ", "No se midió"], "correcta": 0, "explicacion": "Después del secado, el devanado U marcó muy por encima del mínimo de 5 MΩ." },
+      { "etiqueta": "Trabajo realizado", "opciones": ["Secado del devanado U y cambio de la junta de la bornera", "Cambio de la lámpara L1", "Desconexión de las lámparas de tierra"], "correcta": 0, "explicacion": "Anote el trabajo que resolvió la avería: el secado del devanado y la junta nueva, que evita que vuelva a entrar agua." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones de la red aislada, de los tableros de bombas y del megóhmetro.",
+    "IEC 60092-502 y SOLAS II-1, regla 45: vigilancia del aislamiento en redes aisladas.",
+    "IEEE 43: medición de la resistencia de aislamiento en máquinas rotativas.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

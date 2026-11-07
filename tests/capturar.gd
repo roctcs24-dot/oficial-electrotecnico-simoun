@@ -323,6 +323,18 @@ func _capturar_tablero(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "tablero_interior", tam)
 		raiz.volver()
 		raiz.volver()
+		for id: String in ["hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220"]:
+			raiz.ir_a("tablero", {"tablero": id})
+			var t = raiz.pantalla_actual()
+			var s2: SimSimulacion = t.mesa.sim
+			if id == "purificadora_1":
+				(s2.componente("Q0") as SimSeccionador).accionar(true)
+				(s2.componente("S1") as SimSelector).poner("1")
+				s2.componente("K1").estado["energizada"] = true
+			s2.avanzar_tiempo(6.0)
+			await _guardar(carpeta, "tablero_" + id, tam)
+			raiz.volver()
+		await _guardar(carpeta, "plano_con_tableros", tam)
 
 
 ## Misiones de la planta de frío: la lista, la pestaña Misión, la sala con amoníaco y el informe.

@@ -1,0 +1,135 @@
+{
+  "id": "distribucion_220",
+  "titulo": "Tablero de 220 V de distribución",
+  "ubicacion": "Pasillo de habitabilidad, cubierta superior",
+  "foto": "Foto 162 del buque",
+  "alimentacion": "Q0",
+  "nota": "Con la red sana las tres lámparas alumbran igual. Si una fase toca masa en algún consumidor, al pulsar TEST su lámpara se apaga y las otras brillan más.",
+  "frente": {
+    "tamano": [
+      1000,
+      900
+    ],
+    "acabado": "blanco",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 80,
+        "texto": "TABLERO DISTRIBUCION\n220 V",
+        "tam": 26
+      },
+      {
+        "tipo": "rotulo",
+        "x": 330,
+        "y": 180,
+        "texto": "L1",
+        "tam": 16
+      },
+      {
+        "tipo": "luz",
+        "x": 330,
+        "y": 250,
+        "color": "rojo",
+        "componente": "HT1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 180,
+        "texto": "L2",
+        "tam": 16
+      },
+      {
+        "tipo": "luz",
+        "x": 500,
+        "y": 250,
+        "color": "rojo",
+        "componente": "HT2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 670,
+        "y": 180,
+        "texto": "L3",
+        "tam": 16
+      },
+      {
+        "tipo": "luz",
+        "x": 670,
+        "y": 250,
+        "color": "rojo",
+        "componente": "HT3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 350,
+        "texto": "PULSADOR\nDE TEST TIERRA",
+        "tam": 15
+      },
+      {
+        "tipo": "pulsador",
+        "x": 500,
+        "y": 440,
+        "color": "verde",
+        "componente": "ST"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 910,
+        "y": 600
+      },
+      {
+        "tipo": "cerradura",
+        "x": 910,
+        "y": 160
+      }
+    ]
+  },
+  "senales": [],
+  "averias": [
+    {
+      "id": "masa_fase1",
+      "texto": "Fase L1 a masa en un enchufe de camarote (agua en la caja)",
+      "componente": "CA",
+      "param": "falla_mohm",
+      "valor": 0.0005
+    }
+  ],
+  "circuito": "tablero_distribucion_220",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "HT1": [
+      900,
+      0
+    ],
+    "HT2": [
+      1140,
+      0
+    ],
+    "HT3": [
+      1380,
+      0
+    ],
+    "ST": [
+      1620,
+      0
+    ],
+    "PE": [
+      1860,
+      0
+    ],
+    "CA": [
+      440,
+      700
+    ]
+  }
+}

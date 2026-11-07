@@ -458,6 +458,13 @@ func estado_pieza(id: String) -> String:
 			return ("Cerrado" if e["cerrado"] else "Abierto") + (" · con candado" if e["candado"] else "")
 		"horometro":
 			return "%s h" % TextoTecnico.numero(e["horas"], 1)
+		"carga_trifasica":
+			return "Conectada · %s kW" % TextoTecnico.numero(c.params["p_kw"], 0) if e["conectada"] else "Desconectada"
+		"hidroforo":
+			return "%s bar · presostato %s" % [TextoTecnico.numero(e["presion"], 1), "cerrado: pide agua" if e["pide"] else "abierto"]
+		"timon":
+			var a: float = e["angulo"]
+			return "Timón a la vía" if absf(a) < 0.5 else "Timón %s° a %s" % [TextoTecnico.numero(absf(a), 0), "estribor" if a > 0.0 else "babor"]
 		"resistencia":
 			return "%s Ω" % TextoTecnico.numero(c.params.get("ohm", 0.0), 0)
 		"masa":

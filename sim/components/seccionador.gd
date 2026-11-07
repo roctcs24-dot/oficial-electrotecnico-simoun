@@ -9,6 +9,11 @@ func tipo() -> String:
 	return "seccionador"
 
 
+## Avería: un polo quemado no conduce aunque el interruptor esté cerrado ("1-2", "3-4" o "5-6").
+func _params_por_defecto() -> Dictionary:
+	return {"polo_danado": ""}
+
+
 func _estado_inicial() -> Dictionary:
 	return {"cerrado": false, "candado": false}
 
@@ -36,5 +41,6 @@ func poner_candado(poner: bool) -> bool:
 func estampar(e: SimEstampa) -> void:
 	if estado["cerrado"]:
 		for polo: Array in [["1", "2"], ["3", "4"], ["5", "6"]]:
-			e.impedancia(n(polo[0]), n(polo[1]), R_CONTACTO)
+			if params["polo_danado"] != "%s-%s" % [polo[0], polo[1]]:
+				e.impedancia(n(polo[0]), n(polo[1]), R_CONTACTO)
 		e.enlace(n("13"), n("14"))
