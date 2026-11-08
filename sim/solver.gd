@@ -135,6 +135,12 @@ static func _eliminar(
 		var d_re := a_re[c * n + c]
 		var d_im := a_im[c * n + c]
 		var d := d_re * d_re + d_im * d_im
+		# La matriz de un circuito es casi toda ceros: solo se recorren las columnas que la fila
+		# del pivote tiene ocupadas.
+		var columnas := PackedInt32Array()
+		for j in range(c + 1, n):
+			if a_re[c * n + j] != 0.0 or a_im[c * n + j] != 0.0:
+				columnas.append(j)
 		for f in range(c + 1, n):
 			var x_re := a_re[f * n + c]
 			var x_im := a_im[f * n + c]
@@ -142,7 +148,7 @@ static func _eliminar(
 				continue
 			var k_re := (x_re * d_re + x_im * d_im) / d
 			var k_im := (x_im * d_re - x_re * d_im) / d
-			for j in range(c + 1, n):
+			for j in columnas:
 				var y_re := a_re[c * n + j]
 				var y_im := a_im[c * n + j]
 				a_re[f * n + j] -= k_re * y_re - k_im * y_im

@@ -325,7 +325,7 @@ func _capturar_tablero(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "tablero_interior", tam)
 		raiz.volver()
 		raiz.volver()
-		for id: String in ["hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220"]:
+		for id: String in ["hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220", "compresores_nh3"]:
 			raiz.ir_a("tablero", {"tablero": id})
 			var t = raiz.pantalla_actual()
 			var s2: SimSimulacion = t.mesa.sim
@@ -333,8 +333,20 @@ func _capturar_tablero(raiz: Raiz, carpeta: String) -> void:
 				(s2.componente("Q0") as SimSeccionador).accionar(true)
 				(s2.componente("S1") as SimSelector).poner("1")
 				s2.componente("K1").estado["energizada"] = true
+			if id == "compresores_nh3":
+				# El nº 3 en marcha tras su rampa, el nº 4 arrancando y la bomba nº 2 en marcha.
+				(s2.componente("ORDC3") as SimSelector).poner("ORDEN")
+				s2.componente("SM2").estado["presionado"] = true
+				s2.avanzar_tiempo(0.3)
+				s2.componente("SM2").estado["presionado"] = false
+				s2.avanzar_tiempo(20.0)
+				(s2.componente("ORDC4") as SimSelector).poner("ORDEN")
+				s2.avanzar_tiempo(0.0)
 			s2.avanzar_tiempo(6.0)
 			await _guardar(carpeta, "tablero_" + id, tam)
+			if id == "compresores_nh3":
+				t._alternar_puerta()
+				await _guardar(carpeta, "tablero_compresores_nh3_interior", tam)
 			raiz.volver()
 		await _guardar(carpeta, "plano_con_tableros", tam)
 

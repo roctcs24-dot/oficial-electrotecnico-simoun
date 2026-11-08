@@ -587,7 +587,7 @@ func test_guardia_del_sistema_4_abre_la_mision_de_la_planta() -> String:
 	var abierta: bool = raiz.pantalla_actual().get_script().resource_path.ends_with("mision_planta.gd")
 	raiz.free()
 	return A.primero([
-		A.cierto(filas.size() == MISIONES.size(), "deben listarse las misiones: %d" % filas.size()),
+		A.cierto(filas.size() == Contenido.new().sistema(4)["modos"]["guardia"]["misiones"].size(), "deben listarse las misiones: %d" % filas.size()),
 		A.cierto(abierta, "debe abrir la pantalla de misión de la planta"),
 	])
 

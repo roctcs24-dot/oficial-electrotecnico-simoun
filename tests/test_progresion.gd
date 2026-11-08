@@ -353,6 +353,8 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
 	var planta = load("res://tests/test_guardia_planta.gd").new()
 	for id: String in raiz.contenido.sistema(4)["modos"]["guardia"]["misiones"]:
+		if raiz.contenido.mision(id).get("tipo", "") != "planta":
+			continue
 		var m := MisionPlanta.new(raiz.contenido, id)
 		planta.completar(m)
 		if m.fin != "completada" or m.estrellas() != 3:

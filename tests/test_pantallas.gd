@@ -136,6 +136,11 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["prueba_examen", {"id": "v2"}])
 	pasos.append(["guardia", {"id": 4}])
 	for id: String in raiz.contenido.sistema(4)["modos"]["guardia"]["misiones"]:
+		if raiz.contenido.mision(id).get("tipo", "") != "planta":
+			# Las misiones frente a un tablero usan la mesa de trabajo.
+			for pestana: String in ["reporte", "proceso", "medir", "libro"]:
+				pasos.append(["mision", {"id": id, "pestana_inicial": pestana}])
+			continue
 		for pestana: String in ["mision", "mando"]:
 			pasos.append(["mision_planta", {"id": id, "pestana_inicial": pestana}])
 	pasos.append(["examen", {"id": 4}])

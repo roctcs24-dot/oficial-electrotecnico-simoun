@@ -2,7 +2,7 @@ extends RefCounted
 ## Pantallas de los tableros del buque: datos coherentes, frente que se toca y puerta que se abre.
 
 const RUTA_PARTIDA := "user://pruebas_tableros.json"
-const TIPOS_CON_COMPONENTE := ["luz", "pulsador", "selector", "seta", "seccionador", "horometro"]
+const TIPOS_CON_COMPONENTE := ["luz", "pulsador", "selector", "seta", "seccionador", "horometro", "amperimetro"]
 
 
 func _raiz(vertical := true) -> Raiz:

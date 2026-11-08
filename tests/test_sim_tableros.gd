@@ -275,3 +275,59 @@ func test_habitabilidad_fase_a_masa_con_test() -> String:
 		A.cierto(r1 < 0.2, "la lámpara R se apaga: %.2f" % r1),
 		A.cierto(r2 > 0.85 and not sim.componente("HT2").estado["quemada"], "S brilla más sin quemarse: %.2f" % r2),
 	])
+
+
+# --- Tablero de compresores NH3 ---
+
+func _compresores() -> SimSimulacion:
+	var sim := A.circuito("tablero_compresores_nh3")
+	sim.avanzar_tiempo(0.5)
+	return sim
+
+
+func test_bomba_de_amoniaco_marcha_y_paro_con_sus_luces() -> String:
+	var sim := _compresores()
+	var paro_al_inicio: bool = _luz(sim, "HA1") and not _luz(sim, "HE1")
+	A.pulsar(sim, "SM1", 0.3)
+	sim.avanzar_tiempo(5.0)
+	var en_marcha: bool = sim.componente("K1").cerrado() and sim.componente("M1").rpm() > 2800.0
+	var luces_marcha: bool = _luz(sim, "HE1") and not _luz(sim, "HA1")
+	A.pulsar(sim, "SP1", 0.3)
+	sim.avanzar_tiempo(1.0)
+	return A.primero([
+		A.cierto(paro_al_inicio, "parada: luz de PARO encendida y MARCHA apagada"),
+		A.cierto(en_marcha, "MARCHA arranca la bomba: %.0f rpm" % sim.componente("M1").rpm()),
+		A.cierto(luces_marcha, "en marcha se enciende la verde y se apaga la roja"),
+		A.cierto(not sim.componente("K1").cerrado() and _luz(sim, "HA1"), "PARO la detiene"),
+	])
+
+
+func test_compresor_3_arranca_con_el_arrancador_suave() -> String:
+	var sim := _compresores()
+	(sim.componente("ORDC3") as SimSelector).girar(1)
+	sim.avanzar_tiempo(3.0)
+	var as3: SimArrancadorSuave = sim.componente("AS3")
+	var en_rampa := as3.fase() == "arranque"
+	var limitada := as3.corriente() <= 3.5 * 173.0 * 1.1
+	sim.avanzar_tiempo(25.0)
+	return A.primero([
+		A.cierto(en_rampa, "a los 3 s debe estar en rampa: %s" % as3.fase()),
+		A.cierto(limitada, "la corriente de arranque no pasa del límite: %.0f A" % as3.corriente()),
+		A.cierto(as3.fase() == "bypass", "termina en bypass: %s" % as3.fase()),
+		A.cierto(as3.corriente() < 173.0, "en marcha, por debajo de Ie: %.0f A" % as3.corriente()),
+		A.cierto(sim.componente("PC3").estado["contando"], "el horómetro cuenta"),
+		A.cierto(not sim.componente("KC4").cerrado(), "el nº 4 sigue parado"),
+	])
+
+
+func test_bobina_en_corto_funde_el_fusible_y_apaga_las_dos_luces() -> String:
+	var sim := _compresores()
+	sim.componente("K1").params["espiras_en_corto"] = true
+	A.pulsar(sim, "SM1", 0.3)
+	sim.avanzar_tiempo(1.0)
+	return A.primero([
+		A.cierto(sim.componente("FM1").estado["fundido"], "el fusible de mando FM1 debe fundirse"),
+		A.cierto(not sim.componente("K1").cerrado(), "K1 no cierra con la bobina en corto"),
+		A.cierto(not _luz(sim, "HE1") and not _luz(sim, "HA1"), "las dos luces de la bomba nº 1 quedan apagadas"),
+		A.cierto(_luz(sim, "HA2") and not sim.componente("FM2").estado["fundido"], "la bomba nº 2 no se entera"),
+	])

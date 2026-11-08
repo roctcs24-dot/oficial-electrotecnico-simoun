@@ -1,0 +1,530 @@
+{
+  "id": "compresores_nh3",
+  "titulo": "Tablero de compresores NH3",
+  "ubicacion": "Sala de compresores de amoníaco",
+  "foto": "Fotos del tablero de compresores de amoníaco del buque",
+  "alimentacion": "Q0",
+  "nota": "Reproduce la parte del frente real que corresponde a los compresores nº 3 y nº 4 y a las bombas de amoníaco: amperímetros con escala hasta 600 A, selectores ROJO/AZUL de la botella de aspiración, horómetros y pulsadores luminosos verdes de marcha y rojos de paro. En el buque, el mismo tablero lleva además los compresores nº 1 y nº 2 y las bombas de condensador, de enfriamiento de cabezas y de agua salada de cabezas, y las faltas térmicas están en un panel de alarmas aparte con pilotos verdes (según IEC 60073, una alarma debería ser roja o ámbar). Aquí el selector ROJO/AZUL solo se indica: la botella se elige con válvulas. Interior, motores y ajustes: valores típicos — verificar con el esquema del tablero.",
+  "frente": {
+    "tamano": [
+      1000,
+      1160
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 62,
+        "texto": "TABLERO COMPRESORES NH3",
+        "tam": 30
+      },
+      {
+        "tipo": "rotulo",
+        "x": 280,
+        "y": 140,
+        "texto": "COMPRESOR NH3 #3",
+        "tam": 18
+      },
+      {
+        "tipo": "amperimetro",
+        "x": 280,
+        "y": 280,
+        "componente": "AS3",
+        "fondo": 600,
+        "nominal": 173,
+        "lado": 190
+      },
+      {
+        "tipo": "rotulo",
+        "x": 280,
+        "y": 420,
+        "texto": "ROJO      AZUL",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 280,
+        "y": 495,
+        "color": "negro",
+        "componente": "SBC3"
+      },
+      {
+        "tipo": "horometro",
+        "x": 280,
+        "y": 600,
+        "componente": "PC3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 720,
+        "y": 140,
+        "texto": "COMPRESOR NH3 #4",
+        "tam": 18
+      },
+      {
+        "tipo": "amperimetro",
+        "x": 720,
+        "y": 280,
+        "componente": "AS4",
+        "fondo": 600,
+        "nominal": 173,
+        "lado": 190
+      },
+      {
+        "tipo": "rotulo",
+        "x": 720,
+        "y": 420,
+        "texto": "ROJO      AZUL",
+        "tam": 15
+      },
+      {
+        "tipo": "selector",
+        "x": 720,
+        "y": 495,
+        "color": "negro",
+        "componente": "SBC4"
+      },
+      {
+        "tipo": "horometro",
+        "x": 720,
+        "y": 600,
+        "componente": "PC4"
+      },
+      {
+        "tipo": "recuadro",
+        "x": 500,
+        "y": 672,
+        "ancho": 900,
+        "alto": 6,
+        "color": "#8c8e8a"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 190,
+        "y": 730,
+        "texto": "B. AMONIACO #1",
+        "tam": 17
+      },
+      {
+        "tipo": "pulsador",
+        "x": 120,
+        "y": 840,
+        "color": "verde",
+        "componente": "SM1",
+        "luz": "HE1"
+      },
+      {
+        "tipo": "pulsador",
+        "x": 260,
+        "y": 840,
+        "color": "rojo",
+        "componente": "SP1",
+        "luz": "HA1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 120,
+        "y": 925,
+        "texto": "MARCHA",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 260,
+        "y": 925,
+        "texto": "PARO",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 190,
+        "y": 1000,
+        "texto": "FALLA TERMICA",
+        "tam": 13
+      },
+      {
+        "tipo": "luz",
+        "x": 190,
+        "y": 1075,
+        "color": "verde",
+        "componente": "HF1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 730,
+        "texto": "B. AMONIACO #2",
+        "tam": 17
+      },
+      {
+        "tipo": "pulsador",
+        "x": 430,
+        "y": 840,
+        "color": "verde",
+        "componente": "SM2",
+        "luz": "HE2"
+      },
+      {
+        "tipo": "pulsador",
+        "x": 570,
+        "y": 840,
+        "color": "rojo",
+        "componente": "SP2",
+        "luz": "HA2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 430,
+        "y": 925,
+        "texto": "MARCHA",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 570,
+        "y": 925,
+        "texto": "PARO",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 1000,
+        "texto": "FALLA TERMICA",
+        "tam": 13
+      },
+      {
+        "tipo": "luz",
+        "x": 500,
+        "y": 1075,
+        "color": "verde",
+        "componente": "HF2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 730,
+        "texto": "B. AMONIACO #3",
+        "tam": 17
+      },
+      {
+        "tipo": "pulsador",
+        "x": 740,
+        "y": 840,
+        "color": "verde",
+        "componente": "SM3",
+        "luz": "HE3"
+      },
+      {
+        "tipo": "pulsador",
+        "x": 880,
+        "y": 840,
+        "color": "rojo",
+        "componente": "SP3",
+        "luz": "HA3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 740,
+        "y": 925,
+        "texto": "MARCHA",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 880,
+        "y": 925,
+        "texto": "PARO",
+        "tam": 13
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 1000,
+        "texto": "FALLA TERMICA",
+        "tam": 13
+      },
+      {
+        "tipo": "luz",
+        "x": 810,
+        "y": 1075,
+        "color": "verde",
+        "componente": "HF3"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 955,
+        "y": 640
+      }
+    ]
+  },
+  "lecturas": [
+    {
+      "componente": "AS3",
+      "texto": "Corriente del compresor nº 3",
+      "clave": "i",
+      "unidad": "A",
+      "decimales": 0
+    },
+    {
+      "componente": "AS4",
+      "texto": "Corriente del compresor nº 4",
+      "clave": "i",
+      "unidad": "A",
+      "decimales": 0
+    }
+  ],
+  "senales": [
+    {
+      "componente": "ORDC3",
+      "texto": "Orden de marcha del compresor nº 3 (botonera local y presostatos)"
+    },
+    {
+      "componente": "ORDC4",
+      "texto": "Orden de marcha del compresor nº 4 (botonera local y presostatos)"
+    }
+  ],
+  "averias": [
+    {
+      "id": "espiras_k1",
+      "texto": "Bobina del contactor K1 de la bomba de amoníaco nº 1 con espiras en corto",
+      "componente": "K1",
+      "param": "espiras_en_corto",
+      "valor": true
+    },
+    {
+      "id": "limite_as3",
+      "texto": "Límite de corriente del arrancador nº 3 demasiado bajo (1,5 × Ie)",
+      "componente": "AS3",
+      "param": "limite_corriente",
+      "valor": 1.5
+    },
+    {
+      "id": "polo_q0",
+      "texto": "Polo L3 quemado en el interruptor general (falta de fase)",
+      "componente": "Q0",
+      "param": "polo_danado",
+      "valor": "5-6"
+    }
+  ],
+  "circuito": "tablero_compresores_nh3",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "T1": [
+      820,
+      0
+    ],
+    "F0": [
+      1160,
+      0
+    ],
+    "PE": [
+      1360,
+      0
+    ],
+    "QC3": [
+      0,
+      700
+    ],
+    "KC3": [
+      0,
+      1260
+    ],
+    "AS3": [
+      0,
+      1820
+    ],
+    "FC3": [
+      0,
+      2420
+    ],
+    "MC3": [
+      0,
+      2900
+    ],
+    "ORDC3": [
+      540,
+      700
+    ],
+    "SBC3": [
+      540,
+      1020
+    ],
+    "PC3": [
+      540,
+      1340
+    ],
+    "QC4": [
+      1120,
+      700
+    ],
+    "KC4": [
+      1120,
+      1260
+    ],
+    "AS4": [
+      1120,
+      1820
+    ],
+    "FC4": [
+      1120,
+      2420
+    ],
+    "MC4": [
+      1120,
+      2900
+    ],
+    "ORDC4": [
+      1660,
+      700
+    ],
+    "SBC4": [
+      1660,
+      1020
+    ],
+    "PC4": [
+      1660,
+      1340
+    ],
+    "Q1": [
+      2240,
+      700
+    ],
+    "K1": [
+      2240,
+      1260
+    ],
+    "F1": [
+      2240,
+      1820
+    ],
+    "M1": [
+      2240,
+      2340
+    ],
+    "QM1": [
+      2780,
+      700
+    ],
+    "FM1": [
+      2780,
+      1180
+    ],
+    "HE1": [
+      2780,
+      1460
+    ],
+    "HA1": [
+      2780,
+      1720
+    ],
+    "HF1": [
+      2780,
+      1980
+    ],
+    "SM1": [
+      3020,
+      1460
+    ],
+    "SP1": [
+      3020,
+      1720
+    ],
+    "Q2": [
+      3360,
+      700
+    ],
+    "K2": [
+      3360,
+      1260
+    ],
+    "F2": [
+      3360,
+      1820
+    ],
+    "M2": [
+      3360,
+      2340
+    ],
+    "QM2": [
+      3900,
+      700
+    ],
+    "FM2": [
+      3900,
+      1180
+    ],
+    "HE2": [
+      3900,
+      1460
+    ],
+    "HA2": [
+      3900,
+      1720
+    ],
+    "HF2": [
+      3900,
+      1980
+    ],
+    "SM2": [
+      4140,
+      1460
+    ],
+    "SP2": [
+      4140,
+      1720
+    ],
+    "Q3": [
+      4480,
+      700
+    ],
+    "K3": [
+      4480,
+      1260
+    ],
+    "F3": [
+      4480,
+      1820
+    ],
+    "M3": [
+      4480,
+      2340
+    ],
+    "QM3": [
+      5020,
+      700
+    ],
+    "FM3": [
+      5020,
+      1180
+    ],
+    "HE3": [
+      5020,
+      1460
+    ],
+    "HA3": [
+      5020,
+      1720
+    ],
+    "HF3": [
+      5020,
+      1980
+    ],
+    "SM3": [
+      5260,
+      1460
+    ],
+    "SP3": [
+      5260,
+      1720
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "m11_arrancador_suave",
+  "titulo": "Arrancador suave",
+  "resumen": "Rampa de tensión, límite de corriente y bypass, como en los compresores nº 3 y nº 4.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Para qué sirve",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{arrancador_suave}} es un arrancador electrónico. En cada fase lleva dos {{tiristores}} en antiparalelo. Recortando la onda, sube la tensión del motor en una {{rampa_tension}} y no deja pasar más corriente que su {{limite_corriente}}. Cuando el motor llega a su velocidad, un contactor interno de {{bypass}} lo deja conectado en directo y los tiristores dejan de trabajar." },
+        { "tipo": "texto", "texto": "A bordo del Vía Simoun, los compresores de amoníaco nº 3 y nº 4 arrancan con arrancador suave Siemens SIRIUS. Sus motores de 90 kW tienen placa 220Δ/380Y: a 380 V van en estrella, así que el arranque estrella-triángulo no es posible ([i]verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "suave_para_que",
+          "pregunta": "¿Por qué el motor del compresor nº 3 no puede arrancar en estrella-triángulo?",
+          "opciones": ["Porque es demasiado pequeño", "Porque su placa es 220Δ/380Y y en la red de 380 V ya trabaja en estrella", "Porque los compresores no admiten arranques suaves"],
+          "correcta": 1,
+          "explicacion": "El estrella-triángulo necesita que el motor trabaje en delta a la tensión de la red: placa 380Δ/660Y en una red de 380 V. Un motor 220Δ/380Y en delta a 380 V se quemaría."
+        }
+      ]
+    },
+    {
+      "titulo": "Práctica con la simulación",
+      "bloques": [
+        { "tipo": "texto", "texto": "1. Cierre Q1.\n2. Mantenga pulsado S1 un instante y suéltelo.\n3. Observe la gráfica: la corriente sube hasta el límite, unos 600 A, y se mantiene mientras el motor acelera.\n4. Al final de la rampa cierra el bypass y la corriente baja a la de carga.\n5. Pulse S0 para parar." },
+        {
+          "tipo": "animacion",
+          "id": "banco_arranque",
+          "params": { "circuito": "arranque_suave", "contactores": ["K1"] },
+          "pie": "Motor de 90 kW, 220Δ/380Y, en estrella, con contactor de línea K1 y arrancador suave AS1: tensión inicial 40 %, rampa de 10 s, límite de 3,5 × Ie. Valores típicos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "suave_corriente",
+          "pregunta": "Con el límite en 3,5 × Ie y una Ie de 173 A, ¿cuánta corriente pide el motor durante el arranque?",
+          "opciones": ["Unos 1100 A, como en directo", "Unos 600 A, el límite", "Nunca más de 173 A"],
+          "correcta": 1,
+          "explicacion": "3,5 × 173 A son unos 600 A. Es mucho más que la corriente nominal, pero bastante menos que los cerca de 1100 A de un arranque directo de este motor."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajustes y fallos",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Tensión inicial[/b]: si es muy baja, el motor no despega al principio de la rampa.\n• [b]Tiempo de rampa[/b]: más largo, arranque más suave pero más calor en los tiristores.\n• [b]Límite de corriente[/b]: si es demasiado bajo, el par no basta, el motor no llega a la velocidad y el arrancador da fallo por tiempo de arranque.\n• [b]Falta de fase[/b]: el arrancador se para y muestra el fallo. Su contacto 95-96 abre el mando, como el del relé térmico.\n\nEl par del motor crece con el cuadrado de la tensión: por eso el compresor debe arrancar descargado." },
+        {
+          "tipo": "quiz",
+          "tema": "suave_limite_bajo",
+          "pregunta": "Tras cambiar un parámetro, el arrancador del compresor da «Tiempo de arranque excedido». ¿Qué es lo más probable?",
+          "opciones": ["El límite de corriente quedó demasiado bajo y el motor no tiene par para acelerar", "El bypass cerró demasiado pronto", "Falta el neutro del motor"],
+          "correcta": 0,
+          "explicacion": "Con poca corriente, el par no alcanza para vencer la carga y el motor se queda a media velocidad. Revise el límite, la tensión inicial y que el compresor arranque descargado."
+        },
+        { "tipo": "texto", "texto": "El {{megohmetro}} no se aplica al arrancador: para medir el aislamiento del motor y del cable, desconéctelos en 2/T1, 4/T2 y 6/T3." }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-2: arrancadores de motor de semiconductores.",
+    "Manual del Siemens SIRIUS 3RW55 (verificar el modelo y los parámetros a bordo).",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

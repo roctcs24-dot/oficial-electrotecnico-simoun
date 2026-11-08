@@ -246,6 +246,8 @@ func _draw() -> void:
 			"horometro":
 				var comp := _componente(e)
 				_horometro(c, s, float(comp.estado.get("horas", 0.0)) if comp != null else 0.0)
+			"amperimetro":
+				_amperimetro(c, s, e)
 			"cerradura":
 				_cerradura(c, s)
 
@@ -425,6 +427,34 @@ func _horometro(c: Vector2, s: float, horas: float) -> void:
 		var x := celda.get_center().x - _ancho_texto(cifras[i], tam) / 2.0
 		_texto(Vector2(x, celda.position.y + celda.size.y * 0.8), cifras[i], tam, Color("f0f0ee") if i == 6 else Color("15171a"))
 	_texto(r.position + Vector2(caja.x - 18 * s, caja.y - 4 * s), "h", 14.0 * s, Color("f0f0ee"))
+
+
+## Amperímetro de cuadro de 240°, en marco DIN, con la línea roja desde la corriente nominal. Lee
+## la corriente del arrancador suave o del relé térmico que indique el elemento.
+func _amperimetro(c: Vector2, s: float, e: Dictionary) -> void:
+	var lado := float(e.get("lado", 180.0)) * s
+	var cara := DibujoInstrumentos.marco_cuadrado(self, Rect2(c - Vector2(lado, lado) / 2.0, Vector2(lado, lado)))
+	var h := cara.size.y
+	var centro := Vector2(cara.get_center().x, cara.position.y + h * 0.5)
+	var radio := h * 0.4
+	var fondo := float(e.get("fondo", 100.0))
+	var tam := maxi(int(radio * 0.24), 6)
+	DibujoInstrumentos.escala(self, _fuente(), centro, radio, 0.0, fondo, 240.0, float(e.get("nominal", INF)), DibujoInstrumentos.TINTA, tam)
+	var t_unidad := maxi(int(h * 0.14), 7)
+	var ancho := _fuente().get_string_size("A", HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad).x
+	draw_string(_fuente(), Vector2(centro.x - ancho / 2.0, cara.end.y - h * 0.1), "A", HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad, DibujoInstrumentos.TINTA)
+	var a := DibujoInstrumentos.angulo_escala(_corriente(e), 0.0, fondo, 240.0)
+	DibujoInstrumentos.aguja(self, centro, a, radio * 0.98, Color("15171a"))
+	DibujoInstrumentos.reflejo(self, cara.get_center(), h * 0.5)
+
+
+func _corriente(e: Dictionary) -> float:
+	var comp := _componente(e)
+	if comp is SimArrancadorSuave:
+		return (comp as SimArrancadorSuave).corriente()
+	if comp is SimReleTermico and sim.solucion != null:
+		return (comp as SimReleTermico).corriente(sim.solucion, 0)
+	return 0.0
 
 
 func _cerradura(c: Vector2, s: float) -> void:

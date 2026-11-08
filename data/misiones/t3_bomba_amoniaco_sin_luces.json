@@ -1,0 +1,74 @@
+{
+  "id": "t3_bomba_amoniaco_sin_luces",
+  "titulo": "Bomba de amoníaco nº 1 sin luces",
+  "resumen": "Tablero de compresores NH3: la bomba de amoníaco nº 1 tiene apagadas la luz de MARCHA y la de PARO, y no arranca.",
+  "equipo": "Bomba de amoníaco nº 1, tablero de compresores NH3",
+  "tablero": "compresores_nh3",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "En el tablero de compresores NH3, la bomba de amoníaco nº 1 tiene apagadas las dos luces: la verde de MARCHA y la roja de PARO. Al pulsar MARCHA no pasa nada. Las bombas nº 2 y nº 3 funcionan. Sin la nº 1 trabajamos sin reserva. Averigüe la causa, repárela y deje la bomba nº 1 en servicio.",
+    "nota": "Situación de práctica basada en una foto del tablero del buque, en la que las dos luces de la bomba nº 1 estaban apagadas; la causa real no se conoce. Motor de la bomba: 5,5 kW, 380 V en delta, 10,5 A. Mando a 230 V con interruptor QM y fusible FM por bomba. Valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "K1": { "espiras_en_corto": true } },
+  "estado_inicial": { "FM1": { "fundido": true } },
+  "aisladores": ["Q1", "QM1"],
+  "nombres_aisladores": { "Q1": "el guardamotor Q1 de la bomba nº 1, que corta la potencia", "QM1": "el interruptor de mando QM1 de la bomba nº 1, que corta los 230 V del mando" },
+  "verificacion": {
+    "fuente_conocida": ["Q0.2", "Q0.4"],
+    "puntos": [
+      { "texto": "Salida de Q1: L1-L2", "a": "Q1.2", "b": "Q1.4" },
+      { "texto": "Salida de Q1: L2-L3", "a": "Q1.4", "b": "Q1.6" },
+      { "texto": "Salida de Q1: L3-L1", "a": "Q1.6", "b": "Q1.2" },
+      { "texto": "Mando después de QM1", "a": "QM1.2", "b": "QM1.4" },
+      { "texto": "Bobina de K1: A1-A2", "a": "K1.A1", "b": "K1.A2" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se empezó a cambiar el contactor K1 con el mando todavía alimentado. Al soltar el cable de A2, que sigue unido a la vuelta del transformador de mando, el destornillador tocó la chapa y el oficial recibió una descarga de 230 V.",
+      "causa": "Con el fusible FM1 fundido parecía que el mando de la bomba nº 1 no tenía tensión, pero A2 sigue unido al otro polo del transformador. Un fusible fundido no es un punto de corte seguro.",
+      "como_evitar": "• Abra y bloquee el guardamotor Q1 (potencia) y el interruptor de mando QM1 (230 V del mando).\n• Verifique la ausencia de tensión en la salida de Q1, después de QM1 y en la bobina.\n• Pruebe el detector en una fuente conocida antes y después."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "multimetro", "modos": ["vac"], "a": "FM1.1", "b": "FM1.2" },
+    { "instrumento": "multimetro", "modos": ["ohm", "continuidad"], "a": "K1.A1", "b": "K1.A2" }
+  ],
+  "remediciones": [
+    { "instrumento": "multimetro", "modos": ["ohm", "continuidad"], "a": "K1.A1", "b": "K1.A2", "despues_de": "cambiar_k1" }
+  ],
+  "pistas": [
+    "Si se apagan a la vez la luz de MARCHA y la de PARO, falta lo que las dos comparten: la tensión de mando de esa bomba. Las bombas nº 2 y nº 3 tienen luz, así que el transformador y F0 están bien.",
+    "Con el multímetro en V~ y el EPP puesto, mida entre los dos bornes del fusible FM1: si lee los 230 V del mando, el fusible está abierto.",
+    "Un fusible de mando no se funde solo. Antes de cambiarlo, busque el cortocircuito: bloquee Q1 y QM1, verifique la ausencia de tensión y mida en Ω la bobina de K1 entre A1 y A2. Una bobina sana de 230 V mide del orden de un kilohmio; unos pocos ohmios indican espiras en corto.",
+    "Cambie el contactor y el fusible, vuelva a medir la bobina, quite el bloqueo avisando, y pruebe la bomba con MARCHA durante dos minutos."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué la bomba de amoníaco nº 1 no tiene luces ni arranca?",
+    "opciones": [
+      { "texto": "El fusible de mando FM1 está fundido porque la bobina del contactor K1 tiene espiras en corto", "correcta": true, "explicacion": "Entre los bornes de FM1 aparecen los 230 V del mando: el fusible está abierto, y sin él no llega tensión a las luces ni a la bobina. La bobina de K1 mide unos pocos ohmios en vez de cerca de un kilohmio: al pulsar MARCHA hace cortocircuito y funde el fusible. Si solo se cambia el fusible, vuelve a fundirse en la siguiente marcha." },
+      { "texto": "Las dos lámparas están fundidas", "explicacion": "Sería muy raro que se fundieran las dos a la vez, y no explicaría que la bomba no arranque. El multímetro muestra tensión entre los bornes del fusible: el problema está antes de las lámparas." },
+      { "texto": "Disparó el guardamotor Q1 de la bomba", "explicacion": "Con Q1 disparado se apaga la luz de MARCHA, pero la de PARO sigue encendida, porque la alimenta el contacto 21-22 de K1 directamente desde el mando. Aquí faltan las dos." },
+      { "texto": "El motor de la bomba está quemado", "explicacion": "Un motor quemado haría disparar Q1 o el relé térmico y encendería FALLA TERMICA, pero no apagaría las luces de mando." }
+    ]
+  },
+  "acciones": [
+    { "id": "cambiar_k1", "boton": "Cambiar el contactor K1 de la bomba nº 1", "titulo": "Contactor cambiado", "texto": "Se desmontó K1: la bobina estaba oscurecida y olía a barniz quemado. Se montó un contactor del mismo calibre y con bobina de 230 V 50 Hz, se pasaron los cables uno a uno con sus marcas y se reapretaron los bornes.", "efecto": [{ "op": "param", "id": "K1", "clave": "espiras_en_corto", "valor": false }] },
+    { "id": "cambiar_lamparas", "boton": "Cambiar las lámparas de MARCHA y de PARO", "titulo": "Lámparas innecesarias", "texto": "Las lámparas están sanas: se apagaron porque no les llega la tensión de mando. Antes de cambiar piezas, mida dónde se pierde la tensión.", "innecesaria": true },
+    { "id": "cambiar_motor", "boton": "Cambiar el motor de la bomba nº 1", "titulo": "Motor innecesario", "texto": "El motor no tiene que ver con unas luces de mando apagadas: ni siquiera llegó a recibir tensión. La avería está en el circuito de mando.", "innecesaria": true }
+  ],
+  "prueba": { "motor": "M1", "rele": "F1", "contactor": "K1", "observar_s": 120, "rpm_min": 2800 },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Tensión entre los bornes de FM1 antes de la reparación", "opciones": ["Unos 230 V: fusible abierto", "0 V", "No se midió"], "correcta": 0, "explicacion": "Con el fusible abierto, la tensión del mando aparece entre sus bornes a través de la lámpara de PARO." },
+      { "etiqueta": "Resistencia de la bobina de K1", "opciones": ["Unos pocos ohmios: espiras en corto", "Del orden de un kilohmio: normal", "Infinita: bobina abierta"], "correcta": 0, "explicacion": "La bobina con espiras en corto casi no tiene resistencia ni reactancia: al recibir tensión funde el fusible." },
+      { "etiqueta": "Trabajo realizado", "opciones": ["Cambio de K1 y del fusible FM1", "Cambio del fusible FM1", "Cambio de las lámparas"], "correcta": 0, "explicacion": "Hay que cambiar la causa, el contactor, y la consecuencia, el fusible." }
+    ]
+  },
+  "para_saber_mas": [
+    "Fichas del contactor y del arrancador suave, y lección de los tableros del buque.",
+    "IEC 60947-4-1: contactores. IEC 60269: fusibles.",
+    "IEC 60073: colores de los indicadores luminosos.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

@@ -196,3 +196,66 @@ func test_pantalla_de_mision_muestra_el_frente() -> String:
 		A.cierto(con_frente, "la misión empieza frente al tablero"),
 		A.cierto(abierta, "al abrir la puerta se ve la mesa para medir"),
 	])
+
+
+# --- t3: bomba de amoníaco nº 1 sin luces ---
+
+func _medir_ohm(m: MisionGuardia, a: String, b: String) -> Dictionary:
+	var r := _medidor().medir(m.mesa.sim, "ohm", a, b)
+	m.registrar_medicion("multimetro", "ohm", a, b, r)
+	return r
+
+
+func test_t3_empieza_sin_luces_y_con_tension_en_el_fusible() -> String:
+	var m := _mision("t3_bomba_amoniaco_sin_luces")
+	m.colocar_epp()
+	var sim := m.mesa.sim
+	var apagadas: bool = not sim.componente("HE1").estado["encendida"] and not sim.componente("HA1").estado["encendida"]
+	var otra: bool = sim.componente("HA2").estado["encendida"]
+	var fusible := _medir_vac(m, "FM1.1", "FM1.2")
+	return A.primero([
+		A.cierto(apagadas, "las luces de MARCHA y PARO de la bomba nº 1 deben empezar apagadas"),
+		A.cierto(otra, "la bomba nº 2 conserva su luz de PARO"),
+		A.cierto(float(fusible["valor"]) > 180.0, "entre los bornes de FM1 debe leerse la tensión del mando: %s" % str(fusible)),
+	])
+
+
+func test_t3_cambiar_solo_el_fusible_no_basta() -> String:
+	var m := _mision("t3_bomba_amoniaco_sin_luces")
+	_bloquear_y_verificar(m)
+	m.cambiar_repuesto("FM1")
+	_quitar_bloqueo_y_energizar(m)
+	var luz_paro: bool = m.mesa.sim.componente("HA1").estado["encendida"]
+	_pulsar(m, "SM1")
+	m.mesa.avanzar(20)
+	return A.primero([
+		A.cierto(luz_paro, "con el fusible nuevo vuelve la luz de PARO"),
+		A.cierto(m.mesa.sim.componente("FM1").estado["fundido"], "al pulsar MARCHA, la bobina en corto vuelve a fundirlo"),
+		A.cierto(not m.mesa.sim.componente("K1").cerrado(), "la bomba no arranca"),
+	])
+
+
+func test_t3_completa() -> String:
+	var m := _mision("t3_bomba_amoniaco_sin_luces")
+	m.colocar_epp()
+	_medir_vac(m, "FM1.1", "FM1.2")
+	_bloquear_y_verificar(m)
+	var verificado := m.verificado()
+	var bobina := _medir_ohm(m, "K1.A1", "K1.A2")
+	var d := m.diagnosticar(_opcion_correcta(m))
+	m.ejecutar("cambiar_k1")
+	m.cambiar_repuesto("FM1")
+	var sana := _medir_ohm(m, "K1.A1", "K1.A2")
+	_quitar_bloqueo_y_energizar(m)
+	_pulsar(m, "SM1")
+	m.mesa.avanzar(100)
+	var prueba := _observar(m, m.tiempo_de_prueba())
+	m.firmar(_respuestas_correctas(m))
+	return A.primero([
+		A.cierto(verificado, "bloquear Q1 y QM1 y verificar debe bastar"),
+		A.cierto(float(bobina["valor"]) < 20.0, "la bobina en corto mide pocos ohmios: %s" % str(bobina)),
+		A.cierto(d["tipo"] == "hecho", "el diagnóstico debe confirmarse: %s" % str(d)),
+		A.cierto(float(sana["valor"]) > 500.0, "la bobina nueva mide del orden de un kilohmio: %s" % str(sana)),
+		A.cierto(prueba["titulo"] == "Prueba superada", "debe superar la prueba: %s" % str(prueba)),
+		A.cierto(m.estrellas() == 3, "deben ser 3 estrellas: %d %s" % [m.estrellas(), str(m.faltas)]),
+	])

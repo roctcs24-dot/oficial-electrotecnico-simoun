@@ -4,6 +4,7 @@ extends SimComponente
 ## Una corriente muy alta suelda los polos: el contactor queda cerrado hasta cambiarlo.
 ## Cierra en cuanto la bobina tiene tensión, pero la armadura tarda en soltar: así un hueco
 ## de tensión durante un corto no lo abre antes de que el arco actúe.
+## Avería espiras_en_corto: la bobina mide unos pocos ohmios, no cierra y funde el fusible de mando.
 
 const POLOS := [["1", "2"], ["3", "4"], ["5", "6"]]
 const AUX_NA := [["13", "14"], ["43", "44"]]
@@ -33,6 +34,7 @@ func _params_por_defecto() -> Dictionary:
 		"x_bobina": 1150.0,
 		"i_soldadura_a": 700.0,
 		"r_contacto": [0.0, 0.0, 0.0],
+		"espiras_en_corto": false,
 	}
 
 
@@ -45,7 +47,9 @@ func cerrado() -> bool:
 
 
 func estampar(e: SimEstampa) -> void:
-	if not estado["bobina_quemada"]:
+	if params.get("espiras_en_corto", false):
+		e.impedancia(n("A1"), n("A2"), 3.0, 1.0)
+	elif not estado["bobina_quemada"]:
 		e.impedancia(n("A1"), n("A2"), params["r_bobina"], params["x_bobina"])
 	var pares := AUX_NA if cerrado() else AUX_NC
 	for par in pares:
@@ -68,7 +72,7 @@ func asentar(sol: SimSolver.Solucion) -> bool:
 			estado["energizada"] = false
 			return true
 		return false
-	if estado["energizada"] or tension(sol, "A1", "A2") / params["v_bobina"] < CIERRA:
+	if estado["energizada"] or params.get("espiras_en_corto", false) or tension(sol, "A1", "A2") / params["v_bobina"] < CIERRA:
 		return false
 	estado["energizada"] = true
 	_contar_cierre()
