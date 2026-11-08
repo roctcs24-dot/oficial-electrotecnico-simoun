@@ -19,6 +19,7 @@ static func tipos() -> Dictionary:
 		"fuente_trifasica": SimFuenteTrifasica,
 		"transformador_mando": SimTransformadorMando,
 		"guardamotor": SimGuardamotor,
+		"interruptor_automatico": SimInterruptorAutomatico,
 		"fusible": SimFusible,
 		"contactor": SimContactor,
 		"rele_termico": SimReleTermico,

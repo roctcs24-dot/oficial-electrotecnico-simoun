@@ -162,12 +162,12 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])
-	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"]:
+	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"] + raiz.contenido.sistema(2)["modos"]["aprender"]["fichas"]:
 		pasos.append(["ficha", {"id": id}])
 		pasos.append(["ficha", {"id": id, "vista": "simbolos"}])
 		for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
 			pasos.append(["ficha", {"id": id, "vista": "extra_%d" % n}])
-	for sistema in [0, 3, 6]:
+	for sistema in [0, 2, 3, 6]:
 		for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
 			for n in raiz.contenido.leccion(id)["paginas"].size():
 				pasos.append(["leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}}])

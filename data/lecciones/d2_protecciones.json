@@ -1,0 +1,58 @@
+{
+  "id": "d2_protecciones",
+  "titulo": "Interruptores automáticos, fusibles y diferenciales",
+  "resumen": "Disparo térmico y magnético, curvas B, C y D, poder de corte, selectividad y el diferencial en una red aislada.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Térmico y magnético",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cada circuito de un tablero de distribución sale por su {{interruptor_automatico}}. Lleva dos disparos:\n• [b]Térmico:[/b] una lámina bimetálica que se curva con el calor. Abre tanto más rápido cuanto mayor es la sobrecarga.\n• [b]Magnético:[/b] una bobina que abre al instante con una corriente muy alta, como la de un cortocircuito.\n\nLa {{curva_disparo}} dice en qué corriente actúa el magnético (IEC 60898-1):\n• [b]B:[/b] entre 3 y 5 × In. Alumbrado y cables largos.\n• [b]C:[/b] entre 5 y 10 × In. Uso general y tomas de corriente.\n• [b]D:[/b] entre 10 y 20 × In. Motores y transformadores, con corrientes de arranque grandes." },
+        { "tipo": "texto", "texto": "Pruébelo: mueva la corriente y cambie de curva." },
+        { "tipo": "animacion", "id": "curva_disparo", "params": {}, "pie": "Banda de disparo de un interruptor de curva B, C o D. Forma de la banda térmica: aproximada; consulte la del fabricante." },
+        {
+          "tipo": "quiz",
+          "tema": "curva_c_corto",
+          "pregunta": "Un interruptor C16 recibe 250 A por un cortocircuito. ¿Cómo dispara?",
+          "opciones": ["Térmico, en unos minutos", "Magnético, al instante: 250 A son más de 10 × 16 A", "No dispara"],
+          "correcta": 1,
+          "explicacion": "La curva C dispara por magnético entre 80 y 160 A. Con 250 A abre al instante."
+        }
+      ]
+    },
+    {
+      "titulo": "Poder de corte, fusibles y selectividad",
+      "bloques": [
+        { "tipo": "texto", "texto": "• El {{poder_corte}} es la corriente de corto que el interruptor puede abrir sin destruirse. Cerca de los generadores, la corriente de corto es grande: un interruptor de poco poder de corte puede explotar.\n• El {{fusible}} protege igual que un interruptor, pero se destruye al actuar. Se cambia por otro idéntico: calibre, tipo (gG uso general, aM motores) y poder de corte. Nunca se puentea ni se cambia por uno mayor.\n• La {{selectividad}} hace que ante una falla abra solo la protección más cercana. Si un corto en un camarote dispara el interruptor general del tablero, todo el pasillo queda a oscuras: las protecciones están mal coordinadas." },
+        {
+          "tipo": "quiz",
+          "tema": "fusible_mayor",
+          "pregunta": "Un fusible de 10 A de un circuito de alumbrado se funde varias veces. No hay de 10 A en el pañol. ¿Qué hace?",
+          "opciones": ["Pone uno de 16 A hasta que lleguen repuestos", "Busca la causa con el circuito aislado y repone un fusible de 10 A del mismo tipo cuando lo tenga; mientras, el circuito queda fuera de servicio", "Lo puentea con un hilo"],
+          "correcta": 1,
+          "explicacion": "Un fusible mayor deja que el cable se caliente por encima de lo que aguanta. Un fusible que se funde varias veces señala una falla que hay que buscar."
+        }
+      ]
+    },
+    {
+      "titulo": "El diferencial en una red aislada",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{diferencial}} compara la corriente que va por un conductor con la que vuelve por el otro. Si falta corriente, se ha ido a tierra por algún sitio, quizá por una persona, y abre. Uno de 30 mA protege a las personas.\n\n[b]En la red aislada del buque es distinto:[/b] como ningún conductor está unido al casco, una primera falla a masa casi no hace circular corriente. El diferencial no la ve y no abre; la detectan las {{lamparas_tierra}} y el {{monitor_aislamiento}}. Una segunda falla en otra fase sí produce un corto entre fases, que dispara los interruptores.\n\nPor eso, en un buque con red aislada, los diferenciales solo protegen donde la red tiene un punto unido a tierra, como un transformador de separación con el secundario puesto a tierra para las tomas de cubierta ([i]verificar la instalación del buque[/i]). Pulse su botón de prueba T periódicamente." },
+        {
+          "tipo": "quiz",
+          "tema": "diferencial_red_aislada",
+          "pregunta": "En el tablero de 110 V, aislado, una fase toca la carcasa metálica de una lámpara de camarote. ¿Qué ocurre?",
+          "opciones": ["Dispara el diferencial al instante", "Casi no circula corriente: el diferencial no actúa, pero la lámpara de tierra de esa fase se apaga al pulsar TEST", "Se funde el fusible del circuito"],
+          "correcta": 1,
+          "explicacion": "Sin un punto unido al casco, la primera falla no cierra un circuito. Hay que buscarla con las lámparas de tierra antes de que aparezca una segunda en otra fase."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60898-1 (interruptores automáticos), IEC 60947-2 (interruptores industriales), IEC 61008 y 61009 (diferenciales).",
+    "IEC 60269: fusibles de baja tensión.",
+    "IEC 60092-202: diseño de sistemas, protección.",
+    "Curvas y tablas de selectividad del fabricante de cada interruptor."
+  ]
+}

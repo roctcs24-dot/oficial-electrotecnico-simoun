@@ -1,0 +1,39 @@
+{
+  "id": "interruptor_automatico",
+  "titulo": "Interruptor automático magnetotérmico",
+  "resumen": "Protege cada circuito de distribución contra sobrecargas y cortocircuitos, y sirve para abrirlo.",
+  "dibujo": {
+    "svg": "res://art/equipos/interruptor_automatico.svg",
+    "tamano": [260, 380],
+    "nota": "Interruptor automático de carril DIN de 2 polos, dibujado de forma general. Marca, curva y calibre de cada circuito del buque: verificar a bordo en el tablero y en su esquema.",
+    "etiquetas": [
+      { "texto": "C16", "x": 130, "y": 116, "tam": 22, "color": "#20242a" },
+      { "texto": "Maneta", "x": 130, "y": 222, "tam": 12, "color": "#20242a" },
+      { "texto": "I / ON", "x": 130, "y": 146, "tam": 11, "color": "#20242a" },
+      { "texto": "6000 · 230/400 V~", "x": 130, "y": 288, "tam": 11, "color": "#20242a" },
+      { "texto": "1", "x": 80, "y": 82, "tam": 12, "color": "#20242a" },
+      { "texto": "3", "x": 180, "y": 82, "tam": 12, "color": "#20242a" },
+      { "texto": "2", "x": 80, "y": 302, "tam": 12, "color": "#20242a" },
+      { "texto": "4", "x": 180, "y": 302, "tam": 12, "color": "#20242a" }
+    ]
+  },
+  "simbolos": {
+    "nota": "Interruptor automático según IEC 60617 (contacto con la marca de interruptor y los disparos térmico y magnético) y ANSI/IEEE 315 (arco del interruptor). Verificar contra la norma.",
+    "lista": ["interruptor_automatico"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "El {{interruptor_automatico}} protege el cable y el consumidor de cada circuito: abre ante una sobrecarga y ante un cortocircuito, y sirve para abrir el circuito a mano. A diferencia del {{fusible}}, se rearma después de disparar." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Disparo térmico:[/b] una lámina bimetálica por la que pasa la corriente. Con una sobrecarga se calienta, se curva y libera el mecanismo, tanto más rápido cuanto mayor es la corriente.\n• [b]Disparo magnético:[/b] una bobina con un núcleo móvil que abre al instante con una corriente muy alta.\n• [b]Cámara de arco:[/b] unas placas que enfrían y cortan el arco al abrir.\n• [b]Mecanismo de disparo libre:[/b] aunque se sujete la maneta en ON, el interruptor abre si hay falla." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• La alimentación llega a los bornes superiores 1, 3, 5 y el circuito sale por los inferiores 2, 4, 6 ([i]verificar en el esquema del tablero[/i]).\n• En la red aislada se cortan todos los conductores activos: en un circuito de 110 V entre dos fases, los dos polos.\n• Apriete los bornes al par del fabricante: un borne flojo se calienta y puede provocar disparos o quemarse." },
+    { "id": "ajuste", "titulo": "Cómo se elige", "texto": "• [b]Calibre In[/b] menor o igual que la corriente que admite el cable, y mayor que la del consumidor.\n• [b]{{Curva_disparo}}:[/b] B (3–5 × In) para alumbrado y cables largos; C (5–10 × In) para uso general; D (10–20 × In) para motores y transformadores.\n• [b]{{Poder_corte}}[/b] mayor que la corriente de cortocircuito del punto donde se instala.\n• [b]{{Selectividad}}[/b] con el interruptor aguas arriba, según las tablas del fabricante.\n\nLos interruptores de mayor tamaño (de caja moldeada) tienen el disparo térmico y el magnético ajustables." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "• [b]Continuidad[/b] con el circuito aislado: en ON, unos pocos miliohmios entre entrada y salida de cada polo; en OFF, abierto.\n• [b]Caída de tensión[/b] en servicio entre entrada y salida de un polo: unos pocos milivoltios. Si es mayor, los contactos están gastados.\n• [b]Temperatura[/b] con el termómetro infrarrojo: un polo mucho más caliente que los otros indica borne flojo o contacto dañado.\n• Los interruptores de caja moldeada se prueban con inyección de corriente según el fabricante." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]Dispara al conectar:[/b] cortocircuito en el circuito, o curva demasiado sensible para la corriente de conexión del consumidor.\n• [b]Dispara al cabo de un rato:[/b] sobrecarga, o borne flojo que calienta el térmico.\n• [b]No rearma:[/b] la falla sigue presente, o el mecanismo está dañado.\n• [b]Rearmar varias veces seguidas sin buscar la causa[/b] daña el interruptor y el circuito: después de un disparo, mida antes de volver a cerrar." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada año: reapriete de bornes, limpieza del tablero y maniobra de cada interruptor para que su mecanismo no se agarrote.\n• Termografía de los tableros en servicio.\n\n[b]Correctivo:[/b] un interruptor con la carcasa quemada, que se calienta o que no rearma se cambia por otro del mismo calibre, curva y poder de corte." }
+  ],
+  "para_saber_mas": [
+    "IEC 60898-1 e IEC 60947-2: interruptores automáticos.",
+    "IEC 60092-202: protección de las instalaciones eléctricas de los buques.",
+    "Lección Interruptores automáticos, fusibles y diferenciales.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

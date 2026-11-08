@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="420" height="400" viewBox="0 0 420 400">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2e5e4"/><stop offset="1" stop-color="#a7acaf"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4f53"/><stop offset="1" stop-color="#202326"/></linearGradient>
+    <linearGradient id="cobre" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a3f14"/><stop offset="0.35" stop-color="#d9894a"/><stop offset="0.7" stop-color="#b8692e"/><stop offset="1" stop-color="#6b3510"/></linearGradient>
+    <linearGradient id="chapa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6366"/><stop offset="0.5" stop-color="#8a9094"/><stop offset="1" stop-color="#4f5457"/></linearGradient>
+    <linearGradient id="blanco" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbfbf8"/><stop offset="1" stop-color="#d5d8d6"/></linearGradient>
+    <linearGradient id="bateria" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c1e20"/><stop offset="0.15" stop-color="#3a3e42"/><stop offset="0.85" stop-color="#33373b"/><stop offset="1" stop-color="#17191b"/></linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="borne"><rect x="-15" y="-14" width="30" height="28" rx="3" fill="#2b2f32"/><circle r="8" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-4,0 H4" stroke="#3b4043" stroke-width="2.2" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="20" y="370" width="380" height="24" rx="3" fill="#3a3f43"/>
+  <rect x="40" y="70" width="340" height="40" fill="url(#chapa)"/>
+  <rect x="40" y="320" width="340" height="40" fill="url(#chapa)"/>
+  <rect x="82" y="110" width="36" height="210" fill="url(#chapa)"/>
+  <rect x="52" y="122" width="96" height="186" rx="10" fill="url(#cobre)"/>
+  <path d="M54,140 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,158 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,176 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,194 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,212 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,230 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,248 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,266 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M54,284 H146" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <rect x="70" y="122" width="60" height="186" rx="6" fill="#2f5d8a" opacity="0.85"/>
+  <use xlink:href="#borne" x="80" y="46"/>
+  <use xlink:href="#borne" x="120" y="46"/>
+  <path d="M80,60 V122 M120,60 V122" stroke="#1b1d1f" stroke-width="4"/>
+  <rect x="192" y="110" width="36" height="210" fill="url(#chapa)"/>
+  <rect x="162" y="122" width="96" height="186" rx="10" fill="url(#cobre)"/>
+  <path d="M164,140 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,158 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,176 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,194 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,212 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,230 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,248 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,266 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M164,284 H256" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <rect x="180" y="122" width="60" height="186" rx="6" fill="#2f5d8a" opacity="0.85"/>
+  <use xlink:href="#borne" x="190" y="46"/>
+  <use xlink:href="#borne" x="230" y="46"/>
+  <path d="M190,60 V122 M230,60 V122" stroke="#1b1d1f" stroke-width="4"/>
+  <rect x="302" y="110" width="36" height="210" fill="url(#chapa)"/>
+  <rect x="272" y="122" width="96" height="186" rx="10" fill="url(#cobre)"/>
+  <path d="M274,140 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,158 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,176 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,194 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,212 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,230 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,248 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,266 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <path d="M274,284 H366" stroke="#6b3510" stroke-width="1.6" opacity="0.6"/>
+  <rect x="290" y="122" width="60" height="186" rx="6" fill="#2f5d8a" opacity="0.85"/>
+  <use xlink:href="#borne" x="300" y="46"/>
+  <use xlink:href="#borne" x="340" y="46"/>
+  <path d="M300,60 V122 M340,60 V122" stroke="#1b1d1f" stroke-width="4"/>
+  <rect x="150" y="334" width="120" height="30" rx="2" fill="#d8dcd9" stroke="#6c7276" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,55 @@
+{
+  "id": "d3_alumbrado",
+  "titulo": "Alumbrado normal y de emergencia",
+  "resumen": "Fuentes principal, de emergencia y transitoria, tipos de lámparas, luces de navegación y pruebas.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Tres fuentes de alumbrado",
+      "bloques": [
+        { "tipo": "texto", "texto": "El alumbrado del buque tiene tres niveles:\n• [b]Normal:[/b] desde el cuadro principal, a través de los transformadores y los tableros de 220 V y 110 V.\n• [b]{{Alumbrado_emergencia}}:[/b] desde el cuadro de emergencia, que alimenta el generador de emergencia si cae la red principal. Alumbra vías de escape, botes y balsas, puestos de control, cámara de máquinas y sala del generador de emergencia.\n• [b]Transitorio:[/b] la {{fuente_transitoria}}, una batería, mantiene parte de ese alumbrado mientras arranca el generador de emergencia ([i]SOLAS II-1, reglas 42 y 43; autonomías y circuitos: verificar a bordo[/i]).\n\nAdemás, las luminarias autónomas con batería propia señalizan las salidas aunque falle todo." },
+        {
+          "tipo": "quiz",
+          "tema": "alumbrado_transitorio",
+          "pregunta": "Se produce un blackout por la noche. ¿Qué mantiene encendida parte del alumbrado los primeros segundos?",
+          "opciones": ["El generador de emergencia, que arranca al instante", "La fuente transitoria de baterías y las luminarias autónomas", "Nada: el buque queda a oscuras hasta recuperar la red"],
+          "correcta": 1,
+          "explicacion": "El generador de emergencia tarda unos segundos en arrancar y tomar carga. Mientras, alumbran la fuente transitoria y las luminarias con batería propia."
+        }
+      ]
+    },
+    {
+      "titulo": "Lámparas y luces de navegación",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]LED:[/b] poco consumo y larga vida. Su driver electrónico es lo que suele fallar, a menudo por sobretensión o calor.\n• [b]Fluorescentes:[/b] con balasto y cebador, o con balasto electrónico. Parpadeo al encender: cebador o tubo agotado.\n• [b]Reflectores de descarga[/b] de cubierta (halogenuros metálicos o sodio): tardan minutos en dar toda su luz y, si se apagan en caliente, no vuelven a encender hasta enfriarse. No los apague y encienda seguidos durante la maniobra de pesca.\n• [b]Luces de navegación:[/b] se alimentan desde su propio panel, con alimentación principal y de emergencia, y alarma de lámpara fundida ([i]COLREG y SOLAS V; panel: verificar a bordo[/i]). Una luz de navegación apagada se repara de inmediato o se sustituye por la de respeto." },
+        {
+          "tipo": "quiz",
+          "tema": "reflector_reencendido",
+          "pregunta": "Un reflector de halogenuros metálicos de cubierta se apagó por un microcorte y no vuelve a encender aunque tiene tensión. ¿Qué es lo más probable?",
+          "opciones": ["La lámpara está fundida", "La lámpara está caliente: debe enfriarse unos minutos antes de volver a encender", "El interruptor del circuito ha disparado"],
+          "correcta": 1,
+          "explicacion": "Las lámparas de descarga necesitan enfriarse para reencenderse, salvo las de reencendido en caliente. Espere unos minutos antes de cambiar nada."
+        }
+      ]
+    },
+    {
+      "titulo": "Pruebas del alumbrado de emergencia",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Semanal:[/b] prueba del generador de emergencia y comprobación de que el alumbrado de emergencia enciende ([i]periodicidad según SOLAS y el plan del buque — verificar[/i]).\n• [b]Luminarias autónomas:[/b] pulse su botón de prueba o corte su alimentación y compruebe que encienden y aguantan el tiempo previsto.\n• [b]Baterías de la fuente transitoria:[/b] tensión, nivel de electrolito si son abiertas y estado del cargador.\n• Anote cada prueba en el libro y repare de inmediato una luminaria de una vía de escape." },
+        {
+          "tipo": "ordenar",
+          "tema": "orden_prueba_emergencia",
+          "pregunta": "Seleccione en orden la prueba de una luminaria autónoma de emergencia:",
+          "pasos": ["Comprobar que el piloto de carga está encendido", "Cortar su alimentación o pulsar su botón de prueba", "Comprobar que enciende con su batería", "Mantenerla el tiempo previsto y ver que sigue encendida", "Reponer la alimentación y anotar la prueba"],
+          "explicacion": "La prueba comprueba la batería y la lámpara. Si se apaga antes de tiempo, la batería está agotada y se cambia."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS II-1, reglas 42 y 43: fuente de energía eléctrica de emergencia en buques de pasaje y de carga.",
+    "IEC 60092-306: alumbrado de buques.",
+    "COLREG, anexo I: luces de navegación.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

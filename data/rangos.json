@@ -4,7 +4,7 @@
     { "nombre": "Cadete", "puntos": 0 },
     { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 450 },
     { "nombre": "Oficial Electrotécnico de 2da", "puntos": 900 },
-    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 1600 },
-    { "nombre": "Jefe Electrotécnico", "puntos": 3100 }
+    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 1700 },
+    { "nombre": "Jefe Electrotécnico", "puntos": 3200 }
   ]
 }

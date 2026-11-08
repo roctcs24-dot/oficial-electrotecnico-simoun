@@ -6,6 +6,7 @@ const NOMBRES := {
 	"simbolos": ["minijuego_simbolos", "Identificación de símbolos", "Motores y mando, IEC 60617 y ANSI/IEEE 315", "simbolos", 3],
 	"simbolos_generacion": ["minijuego_simbolos", "Símbolos de generación", "Generadores, cuadro y protecciones, IEC 60617 y ANSI/IEEE 315", "simbolos", 1],
 	"simbolos_frio": ["minijuego_simbolos", "Símbolos de refrigeración", "Planta de frío y presostatos, IEC 60617 e ISA 5.1", "simbolos", 4],
+	"simbolos_distribucion": ["minijuego_simbolos", "Símbolos de distribución", "Transformadores, protecciones y alumbrado, IEC 60617 y ANSI/IEEE 315", "simbolos", 2],
 	"simbolos_electronica": ["minijuego_simbolos", "Símbolos de electrónica", "Componentes, sensores y sondas, IEC 60617 y ANSI/IEEE 315", "simbolos", 6],
 }
 

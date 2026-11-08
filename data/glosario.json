@@ -201,6 +201,22 @@
     "silenciar_bocina": { "es": "silenciar la bocina", "en": "silence, mute", "def": "Apagar el aviso acústico sin reconocer la alarma." },
     "falla_comunicacion": { "es": "falla de comunicación", "en": "communication failure, comms fault", "def": "Alarma que da el maestro cuando un esclavo deja de contestar a varias peticiones seguidas." },
     "retardo_alarma": { "es": "retardo de la alarma", "en": "alarm delay, time delay", "def": "Tiempo que la condición debe mantenerse antes de dar la alarma, para no avisar por picos breves." },
-    "extension_alarmas": { "es": "extensión de alarmas", "en": "alarm extension, watch call system", "def": "Envío de las alarmas no reconocidas a los camarotes y espacios comunes de los oficiales de máquinas." }
+    "extension_alarmas": { "es": "extensión de alarmas", "en": "alarm extension, watch call system", "def": "Envío de las alarmas no reconocidas a los camarotes y espacios comunes de los oficiales de máquinas." },
+    "transformador": { "es": "transformador", "en": "transformer", "def": "Máquina sin partes móviles que cambia la tensión alterna con dos devanados sobre un núcleo de chapa." },
+    "relacion_transformacion": { "es": "relación de transformación", "en": "turns ratio, voltage ratio", "def": "Cociente entre la tensión del primario y la del secundario en vacío, igual al de sus espiras." },
+    "tension_cortocircuito": { "es": "tensión de cortocircuito", "en": "impedance voltage, uk", "def": "Tensión, en % de la nominal, que hace circular la corriente nominal con el secundario en cortocircuito. Limita la corriente de un corto." },
+    "grupo_conexion": { "es": "grupo de conexión", "en": "vector group", "def": "Forma de conectar los devanados de un transformador trifásico y desfase entre sus tensiones, como Dyn11 o Dd0." },
+    "interruptor_automatico": { "es": "interruptor automático", "en": "circuit breaker, MCB, MCCB", "def": "Interruptor que abre solo ante una sobrecarga, con su disparo térmico, o un cortocircuito, con su disparo magnético." },
+    "curva_disparo": { "es": "curva de disparo", "en": "tripping curve", "def": "Gráfica del tiempo que tarda un interruptor en abrir según la corriente. Las curvas B, C y D difieren en su disparo magnético." },
+    "poder_corte": { "es": "poder de corte", "en": "breaking capacity, Icu, Icn", "def": "Corriente de cortocircuito máxima que un interruptor puede abrir sin destruirse, en kA." },
+    "selectividad": { "es": "selectividad", "en": "selectivity, discrimination", "def": "Coordinación de protecciones para que ante una falla abra solo la más cercana, y el resto de la instalación siga con servicio." },
+    "fusible": { "es": "fusible", "en": "fuse", "def": "Protección con un hilo calibrado que se funde con una sobrecorriente. Se cambia por otro igual: mismo calibre, tipo y poder de corte." },
+    "diferencial": { "es": "interruptor diferencial", "en": "residual current device, RCD, RCCB", "def": "Interruptor que abre cuando la corriente que sale por un conductor no vuelve por los otros: una fuga a tierra." },
+    "alumbrado_emergencia": { "es": "alumbrado de emergencia", "en": "emergency lighting", "def": "Alumbrado que alimenta la fuente de emergencia del buque cuando falla la principal, en vías de escape, puestos de control y cámaras de máquinas." },
+    "fuente_transitoria": { "es": "fuente transitoria de emergencia", "en": "transitional source of emergency power", "def": "Batería que mantiene el alumbrado y servicios esenciales mientras arranca el generador de emergencia." },
+    "bateria_plomo": { "es": "batería de plomo-ácido", "en": "lead-acid battery", "def": "Batería de celdas de 2 V con placas de plomo en ácido sulfúrico. Desprende hidrógeno al cargarse." },
+    "cargador_baterias": { "es": "cargador de baterías", "en": "battery charger", "def": "Rectificador que carga las baterías y mantiene su tensión de flotación; a menudo alimenta también los consumos de 24 V DC." },
+    "tension_flotacion": { "es": "tensión de flotación", "en": "float voltage", "def": "Tensión que el cargador mantiene en una batería ya cargada para compensar su autodescarga, unos 2,25 V por celda en plomo-ácido." },
+    "ups": { "es": "sistema de alimentación ininterrumpida (SAI)", "en": "uninterruptible power supply, UPS", "def": "Equipo con baterías e inversor que mantiene la alimentación de equipos críticos durante un corte." }
   }
 }

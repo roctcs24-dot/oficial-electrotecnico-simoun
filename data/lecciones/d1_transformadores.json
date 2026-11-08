@@ -1,0 +1,57 @@
+{
+  "id": "d1_transformadores",
+  "titulo": "Transformadores de 380/220/110 V",
+  "resumen": "Relación de transformación, placa de datos, red aislada en el secundario y pruebas.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Cómo cambia la tensión",
+      "bloques": [
+        { "tipo": "texto", "texto": "Los servicios de habitabilidad no trabajan a 380 V. Un {{transformador}} baja la tensión a 220 V para cocina, lavandería y talleres, y a 110 V para alumbrado y tomas de los camarotes ([i]tensiones de los tableros del buque; potencia y número de transformadores: verificar a bordo[/i]).\n\n• Dos devanados de cobre sobre un núcleo de chapa magnética: el primario recibe la tensión y el secundario la entrega.\n• No tiene partes móviles: el campo alterno del núcleo induce la tensión en el secundario.\n• La {{relacion_transformacion}} es la de sus espiras: un 380/110 V tiene unas 3,45 veces más espiras en el primario.\n• La potencia es casi la misma a los dos lados: si la tensión baja, la corriente sube en la misma relación." },
+        { "tipo": "texto", "texto": "Pruébelo: cambie la carga y la tensión del secundario y compare las corrientes." },
+        { "tipo": "animacion", "id": "transformador_relacion", "params": {}, "pie": "Transformador monofásico con un rendimiento del 97 %. Valores típicos." },
+        {
+          "tipo": "quiz",
+          "tema": "trafo_corriente_secundario",
+          "pregunta": "Un transformador de 380/110 V alimenta 3300 W. ¿Qué corriente circula por el secundario?",
+          "opciones": ["Unos 8,7 A", "Unos 30 A", "Unos 3,3 A"],
+          "correcta": 1,
+          "explicacion": "I = P / V = 3300 / 110 = 30 A. Por el primario circulan unos 9 A: la corriente sube en la misma relación en que baja la tensión."
+        }
+      ]
+    },
+    {
+      "titulo": "Placa y conexión",
+      "bloques": [
+        { "tipo": "texto", "texto": "La placa de un transformador indica:\n• [b]Potencia[/b] en kVA, no en kW: el transformador no sabe el factor de potencia de su carga.\n• [b]Tensiones[/b] del primario y del secundario, y frecuencia: 50 Hz en este buque.\n• [b]Corrientes[/b] nominales de cada lado.\n• [b]{{Grupo_conexion}}[/b] en los trifásicos, como Dd0 o Dyn11. Dos transformadores solo trabajan en paralelo con el mismo grupo, la misma relación y una {{tension_cortocircuito}} parecida.\n• [b]Tensión de cortocircuito[/b], uk, en %: con un 4 %, un corto franco en el secundario hace circular unas 25 veces la corriente nominal.\n• [b]Clase de aislamiento[/b] y temperatura admisible.\n\nEn la red aislada del buque, el secundario también se deja aislado: por eso los tableros de 220 V y de 110 V tienen sus propias lámparas de tierra." },
+        {
+          "tipo": "quiz",
+          "tema": "trafo_kva",
+          "pregunta": "¿Por qué la potencia de un transformador se da en kVA y no en kW?",
+          "opciones": ["Por costumbre de los fabricantes", "Porque lo que lo calienta es la corriente, sea cual sea el factor de potencia de la carga", "Porque los kVA son más pequeños"],
+          "correcta": 1,
+          "explicacion": "Los devanados se calientan con la corriente total. Una carga con mal factor de potencia pide más corriente para los mismos kW: lo que limita es la potencia aparente."
+        }
+      ]
+    },
+    {
+      "titulo": "Pruebas y mantenimiento",
+      "bloques": [
+        { "tipo": "texto", "texto": "Con el transformador aislado por los dos lados, bloqueado y con ausencia de tensión verificada:\n• [b]Continuidad y resistencia[/b] de cada devanado con el multímetro: valores bajos e iguales en las tres fases. El primario mide más que el secundario.\n• [b]Aislamiento[/b] con el {{megohmetro}} a 500 V DC: primario a masa, secundario a masa y primario a secundario. Un fallo entre primario y secundario lleva 380 V a la red de 110 V.\n• [b]Relación[/b]: en servicio, mida las tensiones de línea de los dos lados y compruebe que su cociente es el de la placa.\n• [b]En marcha:[/b] corrientes con la pinza, temperatura con el termómetro infrarrojo y ruido. Un zumbido mayor de lo normal indica chapas sueltas o sobretensión.\n\nMantenimiento ([i]periodos típicos — verificar en el plan de mantenimiento[/i]): limpieza del polvo, que tapa la ventilación, y reapriete de bornes una vez al año; aislamiento en cada parada larga." },
+        {
+          "tipo": "quiz",
+          "tema": "trafo_aislamiento_primario_secundario",
+          "pregunta": "¿Por qué se mide el aislamiento entre el primario y el secundario de un transformador de 380/110 V?",
+          "opciones": ["Para conocer la relación de transformación", "Porque una falla entre devanados llevaría 380 V a los enchufes y luces de 110 V", "Porque el secundario no tiene masa"],
+          "correcta": 1,
+          "explicacion": "Es la falla más peligrosa del transformador: la tensión alta pasa a una red que la gente toca a diario."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60076: transformadores de potencia; IEC 60076-11: transformadores secos.",
+    "IEC 60092-303: transformadores para buques.",
+    "Placa y manual de cada transformador del buque."
+  ]
+}

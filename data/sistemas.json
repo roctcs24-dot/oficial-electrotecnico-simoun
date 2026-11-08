@@ -40,9 +40,14 @@
       "id": 2,
       "nombre": "Distribución y alumbrado",
       "resumen": "Transformadores, breakers, alumbrado de emergencia y baterías de 24 V.",
-      "estado": "proximamente",
+      "estado": "activo",
       "zona": [472, 210, 124, 44],
-      "modos": {}
+      "modos": {
+        "aprender": { "lecciones": ["d1_transformadores", "d2_protecciones", "d3_alumbrado", "d4_baterias_24v"],
+          "fichas": ["transformador", "interruptor_automatico", "diferencial", "baterias_24v"] },
+        "taller": { "pantalla": "tableros", "detalle": "Tableros de 220 V y 110 V del buque y banco libre", "tableros": ["distribucion_220", "habitabilidad_110"] },
+        "examen": { "minijuegos": ["simbolos_distribucion"] }
+      }
     },
     {
       "id": 3,

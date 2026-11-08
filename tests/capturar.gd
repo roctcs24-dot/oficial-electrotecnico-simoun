@@ -481,7 +481,32 @@ func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
 				for n in raiz.contenido.leccion(id)["paginas"].size():
 					raiz.ir_a("leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}})
 					await _guardar(carpeta, "%s_%d" % [id, n], tam)
+					# Si la página tiene una animación, otra captura con ella a la vista.
+					var anim := _buscar_animacion(raiz)
+					if anim != null:
+						var s := _scroll_de(anim)
+						if s != null:
+							s.ensure_control_visible(anim)
+							await _esperar()
+							await _guardar(carpeta, "%s_%d_animacion" % [id, n], tam)
 					raiz.volver()
+
+
+func _buscar_animacion(nodo: Node) -> Animacion:
+	if nodo is Animacion:
+		return nodo
+	for hijo in nodo.get_children():
+		var a := _buscar_animacion(hijo)
+		if a != null:
+			return a
+	return null
+
+
+func _scroll_de(nodo: Node) -> ScrollContainer:
+	var padre := nodo.get_parent()
+	while padre != null and not padre is ScrollContainer:
+		padre = padre.get_parent()
+	return padre
 
 
 func _esperar() -> void:

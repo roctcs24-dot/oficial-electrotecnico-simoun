@@ -1,0 +1,55 @@
+{
+  "id": "d4_baterias_24v",
+  "titulo": "Baterías y cargadores de 24 V DC, UPS",
+  "resumen": "Bancos de 24 V, tensiones de carga y flotación, densidad, seguridad con el hidrógeno y SAI.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El banco de 24 V",
+      "bloques": [
+        { "tipo": "texto", "texto": "Muchos servicios críticos trabajan a 24 V DC: alarmas, mandos de generadores, comunicaciones, alumbrado transitorio y arranque de motores auxiliares. En el buque hay bancos de dos baterías Motorex de 12 V en serie y cargadores Exxel de 24 V y 70 A, ajustados a 27,5 V ([i]según las fotos del buque; capacidad y servicios de cada banco: verificar a bordo[/i]).\n\n• En serie se suman las tensiones: dos de 12 V dan 24 V con la misma capacidad en Ah.\n• En paralelo se suman las capacidades con la misma tensión.\n• Una {{bateria_plomo}} de 12 V tiene seis celdas de 2 V." },
+        {
+          "tipo": "quiz",
+          "tema": "bateria_serie",
+          "pregunta": "Dos baterías de 12 V y 200 Ah en serie, ¿qué dan?",
+          "opciones": ["12 V y 400 Ah", "24 V y 200 Ah", "24 V y 400 Ah"],
+          "correcta": 1,
+          "explicacion": "En serie se suman las tensiones y la capacidad es la de una sola batería."
+        }
+      ]
+    },
+    {
+      "titulo": "Carga, flotación y estado",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{cargador_baterias}} trabaja en dos etapas:\n• [b]Carga:[/b] tras una descarga entrega corriente hasta llegar a unos 2,35–2,4 V por celda (28,2–28,8 V en 24 V).\n• [b]Flotación:[/b] después mantiene la {{tension_flotacion}}, unos 2,25–2,3 V por celda (27–27,6 V en 24 V), que compensa la autodescarga sin gastar agua ([i]valores del fabricante de cada batería — verificar[/i]).\n\nEstado de carga de una batería de plomo en reposo, al menos dos horas sin carga ni consumo:\n• 12,7 V o más: cargada. 12,4 V: a medias. 12,0 V o menos: descargada.\n• En baterías abiertas, la densidad del electrolito con el densímetro: unos 1,26–1,28 g/cm³ cargada.\n\nUna celda que mide mucho menos que las demás está en cortocircuito o sulfatada: la batería se cambia." },
+        {
+          "tipo": "quiz",
+          "tema": "bateria_flotacion",
+          "pregunta": "El cargador de un banco de 24 V mantiene 31 V de forma permanente. ¿Qué ocurre?",
+          "opciones": ["Nada: las baterías estarán más cargadas", "Las baterías se sobrecargan: gastan agua, desprenden hidrógeno y se calientan", "Los equipos de 24 V funcionarán más rápido"],
+          "correcta": 1,
+          "explicacion": "31 V son unos 2,6 V por celda, muy por encima de la flotación. Ajuste o repare el cargador."
+        }
+      ]
+    },
+    {
+      "titulo": "Seguridad y UPS",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Hidrógeno:[/b] al cargarse, las baterías de plomo desprenden hidrógeno, explosivo en el aire. El local de baterías se ventila y en él no se fuma ni se hacen chispas. Desconecte el cargador antes de soltar un borne.\n• [b]Ácido:[/b] gafas y guantes al medir la densidad o rellenar con agua destilada.\n• [b]Cortocircuito:[/b] una llave sobre los dos bornes descarga cientos de amperios: se pone al rojo y quema. Use herramientas aisladas y quítese anillos y relojes.\n• [b]Orden:[/b] al desconectar, primero el negativo; al conectar, el negativo el último.\n\nEl {{ups}} mantiene sin corte equipos que no admiten ni un instante sin tensión, como ordenadores de navegación o del puesto de alarmas: rectificador, baterías e inversor. Compruebe su alarma de batería y pruébelo según el fabricante." },
+        {
+          "tipo": "ordenar",
+          "tema": "orden_cambio_bateria",
+          "pregunta": "Seleccione en orden cómo cambiar una batería de un banco de 24 V:",
+          "pasos": ["Apagar el cargador y avisar de que los servicios de 24 V quedan con el otro banco o sin respaldo", "Soltar primero el borne negativo y después el positivo", "Cambiar la batería, comprobando que es del mismo tipo y capacidad", "Conectar primero el positivo y después el negativo, con los bornes limpios y apretados", "Encender el cargador y comprobar las tensiones de carga y de cada batería"],
+          "explicacion": "Empezar y terminar por el negativo evita que una herramienta haga corto entre el positivo y la masa."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-305: baterías de acumuladores en buques.",
+    "IEC 62040: sistemas de alimentación ininterrumpida.",
+    "Manuales del cargador Exxel y de las baterías del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "transformador",
+  "titulo": "Transformador de distribución",
+  "resumen": "Baja los 380 V de la red principal a 220 V y 110 V para habitabilidad, cocina y alumbrado.",
+  "dibujo": {
+    "svg": "res://art/equipos/transformador.svg",
+    "tamano": [420, 400],
+    "nota": "Transformador seco trifásico abierto, dibujado de forma general: núcleo de chapa con tres columnas, devanados de baja tensión por dentro y de alta por fuera, y bornes del primario arriba. En el buque, su potencia, su grupo de conexión, si son trifásicos o bancos de tres monofásicos, y su envolvente: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Bornes del primario 380 V", "x": 210, "y": 14, "tam": 13 },
+      { "texto": "Yugo de chapa", "x": 210, "y": 90, "tam": 12, "color": "#f4f4f0" },
+      { "texto": "Devanado", "x": 100, "y": 214, "tam": 12, "color": "#f4f4f0" },
+      { "texto": "Placa", "x": 210, "y": 349, "tam": 12 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Transformador monofásico y trifásico según IEC 60617 (círculos) y ANSI/IEEE 315 (bobinas con núcleo). Verificar contra la norma.",
+    "lista": ["transformador", "transformador_trifasico"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "El {{transformador}} cambia la tensión alterna sin partes móviles. A bordo baja los 380 V del cuadro principal a 220 V y 110 V para los tableros de habitabilidad, cocina, lavandería, talleres y alumbrado. También separa galvánicamente las dos redes: una falla a masa en la red de 110 V no afecta al aislamiento de la de 380 V." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Núcleo[/b] de chapas de acero al silicio, aisladas entre sí para reducir las corrientes parásitas.\n• [b]Devanado primario[/b], de más espiras e hilo más fino, y [b]secundario[/b], de menos espiras e hilo más grueso.\n• La corriente alterna del primario crea un flujo alterno en el núcleo, que induce la tensión en el secundario.\n• La {{relacion_transformacion}} es la de las espiras. La potencia es casi la misma a los dos lados: si la tensión baja, la corriente sube." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• Primario desde un interruptor del cuadro principal, con su protección de sobrecorriente; secundario hacia el interruptor general del tablero de 220 V o de 110 V.\n• En los trifásicos, el {{grupo_conexion}} de la placa dice cómo se unen los devanados, como Dd0 o Dyn11.\n• En la red aislada del buque, el secundario se deja también aislado, con sus propias lámparas de tierra.\n• Dos transformadores solo se ponen en paralelo con la misma relación, el mismo grupo y una {{tension_cortocircuito}} parecida." },
+    { "id": "ajuste", "titulo": "Cómo se ajusta", "texto": "Algunos transformadores tienen tomas en el primario, como ±2,5 % y ±5 %, para corregir una tensión de secundario alta o baja. Se cambian solo con el transformador desconectado, bloqueado y con ausencia de tensión verificada, y siempre la misma toma en las tres fases.\n\nLa protección del primario se ajusta para soportar la corriente de conexión, que puede llegar a 10 o más veces la nominal durante unos milisegundos ([i]valor del fabricante — verificar[/i])." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "Con el transformador aislado por los dos lados, bloqueado y con ausencia de tensión verificada:\n• [b]Resistencia de devanados[/b] con el {{multimetro}} o un óhmetro de baja resistencia: valores bajos e iguales en las tres fases.\n• [b]Aislamiento[/b] con el {{megohmetro}} a 500 V DC: primario a masa, secundario a masa y primario a secundario. Valores típicos de varios cientos de MΩ en un equipo limpio y seco ([i]criterio del fabricante y del buque[/i]).\n• [b]En servicio:[/b] tensiones de línea de los dos lados, corrientes con la {{pinza}}, temperatura y ruido." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]Sobrecalentamiento[/b] por sobrecarga o por polvo que tapa la ventilación: olor, decoloración del barniz.\n• [b]Aislamiento bajo[/b] por humedad o suciedad, sobre todo tras una parada larga.\n• [b]Espiras en cortocircuito:[/b] una fase se calienta más y su tensión de secundario baja.\n• [b]Bornes flojos:[/b] calentamiento, marcas de arco, tensión que oscila.\n• [b]Falla entre primario y secundario:[/b] lleva 380 V a la red de 110 V. Es la más peligrosa." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada mes: temperatura con el termómetro infrarrojo y ruido.\n• Cada año: limpieza con aire seco y aspirador, reapriete de bornes y comprobación del aislamiento.\n\n[b]Correctivo:[/b] secado de un devanado húmedo con calor controlado, o rebobinado en taller si hay espiras en cortocircuito." }
+  ],
+  "para_saber_mas": [
+    "IEC 60076 y 60076-11: transformadores de potencia y transformadores secos.",
+    "IEC 60092-303: transformadores para buques.",
+    "Lección Transformadores de 380/220/110 V.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

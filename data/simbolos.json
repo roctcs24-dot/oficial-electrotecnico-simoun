@@ -306,6 +306,76 @@
         { "texto": "BN", "x": 266, "y": 30, "tam": 18 }, { "texto": "BK", "x": 266, "y": 262, "tam": 18 }, { "texto": "B1", "x": 372, "y": 145, "tam": 20 } ] },
       "ansi": { "svg": "res://art/simbolos/ansi/sensor_proximidad.svg", "tamano": [400, 290], "etiquetas": [
         { "texto": "PRS", "x": 120, "y": 205, "tam": 18 }, { "texto": "NO", "x": 250, "y": 145, "tam": 18 } ] }
+    },
+    {
+      "id": "transformador", "nombre": "Transformador monofásico", "sistema": 2, "similares": ["transformador_trifasico"],
+      "iec": { "svg": "res://art/simbolos/iec/transformador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "T1", "x": 176, "y": 100, "tam": 20 }, { "texto": "380 V", "x": 176, "y": 46, "tam": 14 }, { "texto": "110 V", "x": 176, "y": 156, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/transformador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "T1", "x": 120, "y": 188, "tam": 18 }, { "texto": "H1", "x": 46, "y": 30, "tam": 14 }, { "texto": "X1", "x": 196, "y": 30, "tam": 14 } ] }
+    },
+    {
+      "id": "transformador_trifasico", "nombre": "Transformador trifásico Dyn11", "sistema": 2, "similares": ["transformador"],
+      "iec": { "svg": "res://art/simbolos/iec/transformador_trifasico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "T1", "x": 176, "y": 100, "tam": 20 }, { "texto": "Dyn11", "x": 184, "y": 130, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/transformador_trifasico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "T1", "x": 120, "y": 188, "tam": 18 }, { "texto": "Δ", "x": 28, "y": 140, "tam": 14 }, { "texto": "Y", "x": 212, "y": 140, "tam": 14 } ] }
+    },
+    {
+      "id": "interruptor_automatico", "nombre": "Interruptor automático magnetotérmico", "sistema": 2, "similares": ["diferencial"],
+      "iec": { "svg": "res://art/simbolos/iec/interruptor_automatico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "Q1", "x": 168, "y": 110, "tam": 20 }, { "texto": "C16", "x": 168, "y": 136, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/interruptor_automatico.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "CB", "x": 176, "y": 100, "tam": 20 }, { "texto": "C16", "x": 176, "y": 124, "tam": 14 } ] }
+    },
+    {
+      "id": "diferencial", "nombre": "Interruptor diferencial", "sistema": 2, "similares": ["interruptor_automatico"],
+      "iec": { "svg": "res://art/simbolos/iec/diferencial.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "Q2", "x": 206, "y": 60, "tam": 20 }, { "texto": "IΔn 30 mA", "x": 190, "y": 192, "tam": 12 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/diferencial.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "GFCI", "x": 196, "y": 100, "tam": 13 } ] }
+    },
+    {
+      "id": "lampara_alumbrado", "nombre": "Lámpara de alumbrado", "sistema": 2, "similares": ["luminaria_emergencia"],
+      "iec": { "svg": "res://art/simbolos/iec/lampara_alumbrado.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "E1", "x": 120, "y": 52, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/lampara_alumbrado.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "E1", "x": 120, "y": 30, "tam": 18 } ] }
+    },
+    {
+      "id": "luminaria_emergencia", "nombre": "Luminaria autónoma de emergencia", "sistema": 2, "similares": ["lampara_alumbrado"],
+      "iec": { "svg": "res://art/simbolos/iec/luminaria_emergencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "EM", "x": 120, "y": 30, "tam": 16 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/luminaria_emergencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "EM", "x": 120, "y": 30, "tam": 16 } ] }
+    },
+    {
+      "id": "rectificador", "nombre": "Rectificador o cargador", "sistema": 2, "similares": ["inversor"],
+      "iec": { "svg": "res://art/simbolos/iec/rectificador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "G1", "x": 120, "y": 170, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/rectificador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "CHG", "x": 120, "y": 170, "tam": 16 } ] }
+    },
+    {
+      "id": "inversor", "nombre": "Inversor", "sistema": 2, "similares": ["rectificador"],
+      "iec": { "svg": "res://art/simbolos/iec/inversor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "U1", "x": 120, "y": 170, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/inversor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "INV", "x": 120, "y": 170, "tam": 16 } ] }
+    },
+    {
+      "id": "toma_corriente", "nombre": "Toma de corriente", "sistema": 2, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/toma_corriente.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "X1", "x": 176, "y": 100, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/toma_corriente.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "X1", "x": 176, "y": 100, "tam": 18 } ] }
+    },
+    {
+      "id": "masa_casco", "nombre": "Masa al casco", "sistema": 2, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/masa_casco.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PE", "x": 150, "y": 60, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/masa_casco.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "PE", "x": 150, "y": 60, "tam": 18 } ] }
     }
   ]
 }

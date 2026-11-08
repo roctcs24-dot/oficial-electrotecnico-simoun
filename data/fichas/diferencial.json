@@ -1,0 +1,37 @@
+{
+  "id": "diferencial",
+  "titulo": "Interruptor diferencial",
+  "resumen": "Abre cuando una parte de la corriente se va a tierra. Protege a las personas donde la red tiene un punto a tierra.",
+  "dibujo": {
+    "svg": "res://art/equipos/diferencial.svg",
+    "tamano": [260, 380],
+    "nota": "Interruptor diferencial de carril DIN de 2 polos con su botón de prueba T, dibujado de forma general. Que haya diferenciales en el buque y dónde: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "IΔn 30 mA", "x": 130, "y": 116, "tam": 18, "color": "#20242a" },
+      { "texto": "T", "x": 186, "y": 192, "tam": 18, "color": "#20242a" },
+      { "texto": "Prueba", "x": 186, "y": 226, "tam": 11, "color": "#20242a" },
+      { "texto": "40 A · tipo A", "x": 130, "y": 288, "tam": 11, "color": "#20242a" },
+      { "texto": "L", "x": 80, "y": 82, "tam": 12, "color": "#20242a" },
+      { "texto": "N", "x": 180, "y": 82, "tam": 12, "color": "#20242a" }
+    ]
+  },
+  "simbolos": {
+    "nota": "Interruptor diferencial según IEC 60617 (interruptor con el transformador toroidal y el enlace del disparo) y ANSI/IEEE 315 (interruptor con dispositivo de falla a tierra). Verificar contra la norma.",
+    "lista": ["diferencial"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "El {{diferencial}} abre cuando la corriente que sale por un conductor no vuelve completa por los otros: la diferencia se ha ido a tierra, quizá a través de una persona. Uno de 30 mA protege contra la electrocución; uno de 300 mA, contra incendios por fugas.\n\nNo protege contra sobrecargas ni cortocircuitos entre conductores: para eso está el {{interruptor_automatico}}." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Transformador toroidal[/b] por el que pasan todos los conductores activos. Si las corrientes suman cero, no hay flujo.\n• [b]Bobina de detección[/b] en el toroide: una fuga a tierra produce un flujo y una tensión en ella.\n• [b]Relé de disparo[/b] que libera el mecanismo y abre todos los polos.\n• [b]Botón de prueba T[/b], que crea una fuga interna para comprobar que dispara." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• Todos los conductores activos del circuito pasan por él; el de protección (tierra) nunca.\n• [b]En la red aislada del buque[/b] una primera falla a masa casi no hace circular corriente: el diferencial no la ve. Allí la detectan las {{lamparas_tierra}} y el {{monitor_aislamiento}}.\n• Solo es eficaz donde la red tiene un punto unido a tierra, como el secundario de un transformador de separación puesto a tierra para tomas de cubierta o de taller ([i]verificar la instalación del buque[/i])." },
+    { "id": "ajuste", "titulo": "Cómo se elige", "texto": "• [b]Sensibilidad IΔn:[/b] 30 mA para protección de personas; 300 mA para protección contra incendios.\n• [b]Tipo:[/b] AC para corriente alterna senoidal; A, también para fugas con continua pulsante de equipos electrónicos; F o B para variadores de frecuencia.\n• [b]Calibre[/b] igual o mayor que el del interruptor automático que lo acompaña." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "• [b]Botón T[/b] periódicamente, con el circuito en servicio: debe disparar al instante. Avise antes: el circuito se queda sin tensión.\n• Con un comprobador de diferenciales se mide la corriente y el tiempo de disparo reales: debe abrir con IΔn en menos de 300 ms ([i]IEC 61008 — verificar el valor del fabricante[/i]).\n• Si dispara sin motivo, mida el aislamiento de cada consumidor con el {{megohmetro}}, con el circuito aislado." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]Disparos sin causa aparente:[/b] suma de pequeñas fugas de muchos equipos electrónicos, humedad en una toma de cubierta o un conductor de tierra conectado por error al neutro después del diferencial.\n• [b]No dispara al pulsar T:[/b] mecanismo o relé averiado. Se cambia: un diferencial que no dispara no protege.\n• [b]Tipo equivocado[/b] para un variador: no detecta fugas con continua." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Prueba con el botón T cada mes y con el comprobador cada año.\n• Reapriete de bornes y limpieza del tablero.\n\n[b]Correctivo:[/b] se cambia por otro de la misma sensibilidad, tipo y calibre." }
+  ],
+  "para_saber_mas": [
+    "IEC 61008 e IEC 61009: interruptores diferenciales.",
+    "IEC 60092-202 y 60092-507: protección en buques.",
+    "Lección Interruptores automáticos, fusibles y diferenciales.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}
