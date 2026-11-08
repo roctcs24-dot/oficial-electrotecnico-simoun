@@ -49,6 +49,8 @@ func _capturar() -> void:
 		await _capturar_guardia_planta(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "plc":
 		await _capturar_plc(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "sensores":
+		await _capturar_sensores(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "instrumentos":
 		await _capturar_instrumentos(carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "tablero":
@@ -483,6 +485,25 @@ func _capturar_lecciones(raiz: Raiz, carpeta: String) -> void:
 func _esperar() -> void:
 	for _i in 12:
 		await process_frame
+
+
+## Banco de sensores y PLC del sistema 6 en la mesa del Taller, con la pieza delante.
+func _capturar_sensores(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("tableros", {"id": 6})
+		await _guardar(carpeta, "sensores_taller_sistema6", tam)
+		raiz.ir_a("taller", {"plantilla": "banco_sensores"})
+		var p = raiz.pantalla_actual()
+		for id in ["B1", "B2"]:
+			p.mesa.sim.componente(id).estado["objeto"] = true
+		p.mesa.avanzar(6)
+		p.args["pieza"] = "PLC"
+		p._elegir_pestana("pieza")
+		await _guardar(carpeta, "sensores_banco", tam)
+		raiz.volver()
+		raiz.volver()
 
 
 ## Hoja de muestra con todos los instrumentos dibujados, a tamaño normal y ampliado.

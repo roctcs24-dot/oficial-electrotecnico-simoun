@@ -58,7 +58,13 @@ func agregar(id_catalogo: String, posicion: Vector2) -> String:
 	var e := entrada(id_catalogo)
 	var id := _id_libre(e["prefijo"])
 	var clase: GDScript = SimSimulacion.tipos()[e["tipo"]]
-	sim.agregar(clase.new(id, e.get("params", {}).duplicate(true)))
+	var params: Dictionary = e.get("params", {}).duplicate(true)
+	if params.has("programa_de"):
+		# Un PLC del cajón llega con su programa de prueba cargado.
+		var programa := contenido.plc(params["programa_de"])
+		params["programa"] = programa.get("programa", [])
+		params["etiquetas"] = programa.get("etiquetas", {})
+	sim.agregar(clase.new(id, params))
 	piezas[id] = {"tipo": id_catalogo, "x": posicion.x, "y": posicion.y}
 	return id
 
@@ -380,9 +386,11 @@ func _catalogo_de(c: SimComponente) -> String:
 		"lampara":
 			# Luces piloto de 230 V en los tableros del buque y lámparas de tierra de 380 V.
 			var v := roundi(float(c.params["v_nominal"]))
-			return "lampara_%d" % v if v in [230, 380] else "lampara"
+			return "lampara_%d" % v if v in [24, 230, 380] else "lampara"
 		"transformador_mando":
 			return "transformador_230" if is_equal_approx(c.params["v_secundario"], 230.0) else "transformador_mando"
+		"sensor_proximidad":
+			return "sensor_npn" if c.params["salida"] == "npn" else "sensor_pnp"
 	return c.tipo()
 
 
@@ -403,7 +411,7 @@ func danada(id: String) -> bool:
 		return false
 	var e: Dictionary = sim.componente(id).estado
 	return e.get("quemado", false) or e.get("soldado", false) or e.get("bobina_quemada", false) \
-		or e.get("fundido", false) or e.get("quemada", false)
+		or e.get("fundido", false) or e.get("quemada", false) or e.get("averiado", false) or e.get("averiada", false)
 
 
 func reparar(id: String) -> void:
@@ -469,6 +477,32 @@ func estado_pieza(id: String) -> String:
 			return "Timón a la vía" if absf(a) < 0.5 else "Timón %s° a %s" % [TextoTecnico.numero(absf(a), 0), "estribor" if a > 0.0 else "babor"]
 		"resistencia":
 			return "%s Ω" % TextoTecnico.numero(c.params.get("ohm", 0.0), 0)
+		"fuente_dc":
+			if e["averiada"]:
+				return "Averiada"
+			if e["protegida"]:
+				return "Salida cortada por sobrecarga"
+			return "%s V · %s A" % [TextoTecnico.numero((c as SimFuenteDC).v_salida(), 1), TextoTecnico.numero(e["i_salida"], 2)] if (c as SimFuenteDC).activa() else "Sin alimentación"
+		"sensor_proximidad":
+			if e["averiado"]:
+				return "Averiado"
+			var pieza := "pieza delante" if e["objeto"] else "sin pieza"
+			if not e["alimentado"]:
+				return "%s · sin alimentación" % pieza
+			return "%s · salida %s" % [pieza, "activa" if e["activa"] else "inactiva"]
+		"rele_dc":
+			if e["bobina_quemada"]:
+				return "Bobina quemada"
+			return "Activado" if e["energizado"] else "En reposo"
+		"plc":
+			var plc := c as SimPLC
+			if not e["alimentado"]:
+				return "Sin alimentación"
+			var activas := PackedStringArray()
+			for i in SimPLC.ENTRADAS:
+				if plc.entrada_activa(i):
+					activas.append(SimPLC.entrada(i))
+			return "%s · entradas %s · %s" % [e["modo"], plc.params["entradas"].to_upper(), ", ".join(activas) if not activas.is_empty() else "ninguna activa"]
 		"masa":
 			return "Casco"
 	return ""

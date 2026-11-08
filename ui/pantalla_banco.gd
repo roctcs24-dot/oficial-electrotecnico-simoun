@@ -364,6 +364,39 @@ func _rearmar_arrancador(id: String) -> void:
 	_reconstruir_panel()
 
 
+## Acercar o retirar la pieza metálica delante de un sensor de proximidad.
+func _agregar_objeto_sensor(c: SimComponente) -> void:
+	var delante: bool = c.estado["objeto"]
+	_panel.add_child(_boton("Retirar la pieza metálica" if delante else "Acercar una pieza metálica", _alternar_objeto.bind(c.id)))
+
+
+func _alternar_objeto(id: String) -> void:
+	var c := mesa.sim.componente(id)
+	c.estado["objeto"] = not c.estado["objeto"]
+	_reconstruir_panel()
+
+
+## RUN/STOP y tipo de entradas del PLC. El tipo debe coincidir con los sensores y con el común 1M.
+func _agregar_mandos_plc(c: SimComponente) -> void:
+	var plc := c as SimPLC
+	_panel.add_child(_boton("Pasar a STOP" if plc.estado["modo"] == "RUN" else "Pasar a RUN", _alternar_modo_plc.bind(c.id)))
+	var tipo: String = plc.params["entradas"]
+	_panel.add_child(_etiqueta("Entradas para sensores %s: el común 1M va al %s." % [tipo.to_upper(), "−" if tipo == "pnp" else "+"], "Nota"))
+	_panel.add_child(_boton("Configurar entradas %s" % ("NPN" if tipo == "pnp" else "PNP"), _alternar_entradas_plc.bind(c.id)))
+
+
+func _alternar_modo_plc(id: String) -> void:
+	var plc := mesa.sim.componente(id) as SimPLC
+	plc.cambiar_modo("STOP" if plc.estado["modo"] == "RUN" else "RUN")
+	_reconstruir_panel()
+
+
+func _alternar_entradas_plc(id: String) -> void:
+	var plc := mesa.sim.componente(id) as SimPLC
+	plc.params["entradas"] = "npn" if plc.params["entradas"] == "pnp" else "pnp"
+	_reconstruir_panel()
+
+
 ## Botón de rearme del arrancador suave, solo si está en fallo.
 func _agregar_rearme_arrancador(c: SimComponente) -> void:
 	if c.estado.get("fase", "") == "fallo":

@@ -1,0 +1,15 @@
+{
+  "id": "espejo_entradas",
+  "nombre": "Prueba de entradas",
+  "nota": "Programa de prueba: cada salida repite su entrada, para comprobar el cableado de los sensores. Direcciones IEC 61131-3 genéricas.",
+  "etiquetas": {
+    "%I0.0": "B1 · Sensor inductivo PNP",
+    "%I0.1": "B2 · Sensor inductivo NPN",
+    "%Q0.0": "H1 · Repite I0.0",
+    "%Q0.1": "H2 · Repite I0.1"
+  },
+  "programa": [
+    { "comentario": "Q0.0 sigue a la entrada I0.0.", "logica": [{ "na": "%I0.0" }], "salidas": [{ "bobina": "%Q0.0" }] },
+    { "comentario": "Q0.1 sigue a la entrada I0.1.", "logica": [{ "na": "%I0.1" }], "salidas": [{ "bobina": "%Q0.1" }] }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "e1_sensores_proximidad",
+  "titulo": "Sensores de proximidad",
+  "resumen": "Inductivos y capacitivos, hilos y colores, PNP o NPN, NA o NC.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Detectar sin tocar",
+      "bloques": [
+        { "tipo": "texto", "texto": "Un {{sensor_proximidad}} detecta una pieza sin tocarla. No tiene contactos que se gasten ni chispas, y aguanta millones de maniobras.\n\n• El {{sensor_inductivo}} crea un campo magnético alterno en su cara activa y detecta solo metales: posiciones de válvulas, finales de carrera, dientes de una rueda.\n• El {{sensor_capacitivo}} detecta también plástico, madera o líquidos: nivel en un depósito, a veces a través de la pared." },
+        { "tipo": "texto", "texto": "La {{distancia_conmutacion}} Sn del catálogo es para una pieza de acero. Con aluminio, cobre o inoxidable hay que acercar más la pieza. Para tener margen, la pieza debe quedar a menos del 80 % de Sn ([i]factores en el catálogo — verificar[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "sensor_inductivo_material",
+          "pregunta": "Hay que detectar el nivel de agua dulce a través de la pared de un depósito de plástico. ¿Qué sensor sirve?",
+          "opciones": ["Uno inductivo", "Uno capacitivo", "Cualquiera de los dos"],
+          "correcta": 1,
+          "explicacion": "El inductivo solo ve metales. El capacitivo detecta el cambio de capacidad que produce el agua, también a través de una pared que no sea metálica."
+        }
+      ]
+    },
+    {
+      "titulo": "Tres hilos: PNP o NPN",
+      "bloques": [
+        { "tipo": "texto", "texto": "Los sensores de tres hilos tienen colores normalizados (IEC 60947-5-2):\n• [b]Marrón BN:[/b] + 24 V DC.\n• [b]Azul BU:[/b] − (0 V).\n• [b]Negro BK:[/b] salida.\n\nLa salida es un transistor:\n• Con {{salida_pnp}}, al detectar, el negro da el +: la carga va entre el negro y el −.\n• Con {{salida_npn}}, al detectar, el negro se une al −: la carga va entre el + y el negro.\n\nPNP es lo habitual en equipos europeos; NPN, en muchos equipos asiáticos. Antes de cambiar un sensor, lea la etiqueta del viejo." },
+        {
+          "tipo": "quiz",
+          "tema": "sensor_pnp_tension",
+          "pregunta": "Con el multímetro en V DC entre negro y azul de un sensor PNP alimentado, ¿qué lee con la pieza delante?",
+          "opciones": ["Unos 24 V", "Casi 0 V", "Unos 230 V"],
+          "correcta": 0,
+          "explicacion": "El PNP activo une el negro al marrón, al +: entre negro y azul aparecen los 24 V de la alimentación. Sin pieza, casi 0 V."
+        }
+      ]
+    },
+    {
+      "titulo": "NA o NC, y dos hilos",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]NA[/b] (normalmente abierto): la salida se activa con la pieza delante.\n• [b]NC[/b] (normalmente cerrado): la salida está activa sin pieza y se desactiva al detectarla. Se usa para señales de seguridad: si el cable se corta, el PLC lo ve como alarma.\n\nEl {{dos_hilos}} va en serie con la carga, como un interruptor. Activo, consume unos voltios; inactivo, deja pasar una fuga de alrededor de 1 mA. Con una carga muy pequeña, como la entrada de algunos PLC, esa fuga puede bastar para dejarla activada." },
+        {
+          "tipo": "quiz",
+          "tema": "sensor_nc_cable",
+          "pregunta": "¿Por qué una señal de seguridad suele usar un sensor NC?",
+          "opciones": ["Porque consume menos", "Porque un cable cortado se ve igual que la alarma, y no queda oculto", "Porque detecta a más distancia"],
+          "correcta": 1,
+          "explicacion": "Con un NC, la entrada está activa en condiciones normales. Si el cable se corta o falta la alimentación, la entrada cae y el sistema reacciona como ante la alarma."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-2: detectores de proximidad.",
+    "Ficha del sensor de proximidad.",
+    "Catálogo del fabricante de cada sensor: distancia de conmutación y factores de corrección."
+  ]
+}

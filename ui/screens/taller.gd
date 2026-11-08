@@ -8,7 +8,11 @@ const TAMANO_CENTRADO := Vector2(300.0, 300.0)
 func construir() -> void:
 	if not args.has("mesa"):
 		var nueva := MesaTaller.new(raiz.contenido)
-		nueva.recuperar_autoguardado()
+		# Desde el Taller de un sistema se puede abrir con una plantilla ya montada.
+		if args.has("plantilla"):
+			nueva.cargar_plantilla(args["plantilla"])
+		else:
+			nueva.recuperar_autoguardado()
 		_iniciar_banco(nueva, "cajon")
 	_cabecera("Taller", "Toque dos bornes para unirlos con un cable")
 	_montar_banco()
@@ -93,6 +97,10 @@ func _panel_pieza() -> void:
 			_agregar_pulsador(id)
 		"arrancador_suave":
 			_agregar_rearme_arrancador(c)
+		"sensor_proximidad":
+			_agregar_objeto_sensor(c)
+		"plc":
+			_agregar_mandos_plc(c)
 		"motor_trifasico":
 			_agregar_carga(c)
 	if mesa.danada(id):

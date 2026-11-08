@@ -10,8 +10,12 @@ func construir() -> void:
 	var columna := _columna(8)
 	columna.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	desplazable.add_child(columna)
+	var taller: Dictionary = s.get("modos", {}).get("taller", {})
+	# Prácticas preparadas del sistema, como el banco de sensores o el PLC.
+	for p: Dictionary in taller.get("practicas", []):
+		columna.add_child(_fila(p["titulo"], p.get("detalle", ""), raiz.ir_a.bind(p["pantalla"], p.get("args", {}).duplicate(true)), "taller"))
 	columna.add_child(_fila("Banco libre", "Monte sus propios circuitos pieza a pieza y pruébelos", raiz.ir_a.bind("taller", {}), "taller"))
-	var ids: Array = s.get("modos", {}).get("taller", {}).get("tableros", [])
+	var ids: Array = taller.get("tableros", [])
 	if ids.is_empty():
 		return
 	columna.add_child(_rotulo("Tableros del buque"))

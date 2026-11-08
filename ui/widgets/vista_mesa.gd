@@ -329,8 +329,36 @@ func _dibujar_pieza(id: String) -> void:
 		draw_rect(r.grow(3.0), Tema.ACENTO, false, 2.0)
 
 
+## LED de un equipo: un punto de color con su brillo, en coordenadas de la pieza.
+func _led(r: Rect2, p: Vector2, color: Color, encendido: bool) -> void:
+	var c := r.position + p * zoom
+	var radio := maxf(6.0 * zoom, 2.0)
+	if encendido:
+		draw_circle(c, radio * 2.0, Color(color, 0.3))
+	draw_circle(c, radio, color if encendido else color.darkened(0.75))
+
+
+func _dibujar_leds(c: SimComponente, r: Rect2) -> void:
+	match c.tipo():
+		"sensor_proximidad":
+			_led(r, Vector2(200.0, 74.0), Color("ffb020"), c.estado["activa"])
+		"fuente_dc":
+			_led(r, Vector2(60.0, 193.0), Color("5dff8f"), (c as SimFuenteDC).activa())
+		"rele_dc":
+			_led(r, Vector2(200.0, 92.0), Color("ff5a4a"), c.estado["energizado"])
+		"plc":
+			var plc := c as SimPLC
+			_led(r, Vector2(78.0, 140.0), Color("5dff8f"), plc.en_marcha())
+			_led(r, Vector2(78.0, 166.0), Color("ffb020"), plc.estado["alimentado"] and plc.estado["modo"] != "RUN")
+			for i in SimPLC.ENTRADAS:
+				_led(r, Vector2(190.0 + 54.0 * i, 96.0), Color("5dff8f"), plc.entrada_activa(i))
+			for i in SimPLC.SALIDAS:
+				_led(r, Vector2(120.0 + 64.0 * i, 214.0), Color("5dff8f"), plc.salida_activa(i))
+
+
 func _dibujar_estado(id: String, r: Rect2) -> void:
 	var c := mesa.sim.componente(id)
+	_dibujar_leds(c, r)
 	if c.tipo() == "lampara" and c.estado["encendida"]:
 		draw_circle(r.position + Vector2(100.0, 66.0) * zoom, 40.0 * zoom, Color("5dff8f"))
 	if c.tipo() == "motor_trifasico":

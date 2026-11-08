@@ -1,0 +1,81 @@
+{
+  "id": "sensor_proximidad",
+  "titulo": "Sensor de proximidad",
+  "resumen": "Detecta una pieza sin tocarla y conmuta una salida PNP o NPN de 24 V DC hacia el PLC o un relé.",
+  "dibujo": {
+    "svg": "res://art/taller/sensor.svg",
+    "tamano": [340, 200],
+    "nota": "Ilustración de un sensor inductivo cilíndrico M18 con cable de tres hilos. El LED amarillo junto al cable se enciende cuando la salida está activa. Los colores de los hilos siguen la norma IEC 60947-5-2; los modelos con conector M12 numeran los pines: 1 marrón, 3 azul y 4 negro.",
+    "etiquetas": [
+      { "texto": "Cara activa", "x": 40, "y": 150, "tam": 13 },
+      { "texto": "M18 × 1", "x": 105, "y": 40, "tam": 13 },
+      { "texto": "LED", "x": 200, "y": 52, "tam": 13 },
+      { "texto": "BN +", "x": 276, "y": 40, "tam": 13 },
+      { "texto": "BK salida", "x": 276, "y": 118, "tam": 13 },
+      { "texto": "BU −", "x": 276, "y": 160, "tam": 13 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Contacto de cierre accionado por proximidad, con el rombo del detector y la marca de detección inductiva, según la práctica de IEC 60617; en la columna ANSI, interruptor de proximidad NA. Verificar contra la norma y el esquema del fabricante.",
+    "iec": {
+      "titulo": "IEC 60617",
+      "svg": "res://art/simbolos/iec/sensor_proximidad.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "BN", "x": 266, "y": 30, "tam": 18 }, { "texto": "BK", "x": 266, "y": 262, "tam": 18 },
+        { "texto": "B1", "x": 372, "y": 145, "tam": 20 }
+      ]
+    },
+    "ansi": {
+      "titulo": "ANSI/IEEE 315 (NEMA)",
+      "svg": "res://art/simbolos/ansi/sensor_proximidad.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "PRS", "x": 120, "y": 205, "tam": 18 }, { "texto": "NO", "x": 250, "y": 145, "tam": 18 }
+      ]
+    }
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "Un {{sensor_proximidad}} detecta una pieza sin contacto, sin desgaste y sin chispas. A bordo indica posiciones (una válvula abierta o cerrada, una compuerta, un final de carrera de un winche), cuenta vueltas o detecta nivel.\n\n• El {{sensor_inductivo}} solo detecta metales.\n• El {{sensor_capacitivo}} detecta también plástico, madera o líquidos, incluso a través de la pared de un depósito de plástico."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cara activa:[/b] en el inductivo, una bobina con núcleo de ferrita crea un campo alterno. Un metal cerca absorbe energía y el oscilador se amortigua; en el capacitivo, la pieza cambia la capacidad entre dos electrodos.\n• [b]Comparador:[/b] decide cuándo hay pieza.\n• [b]Etapa de salida:[/b] un transistor que conmuta el hilo negro.\n• [b]LED amarillo:[/b] indica la salida activa; algunos llevan otro verde de alimentación.\n\nLa {{distancia_conmutacion}} Sn se da para una pieza patrón de acero. Con acero inoxidable, aluminio o cobre es menor: hay que acercar más la pieza ([i]factores en el catálogo del fabricante[/i])."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "Sensor de tres hilos (IEC 60947-5-2):\n• [b]Marrón BN:[/b] + 24 V DC.\n• [b]Azul BU:[/b] − (0 V).\n• [b]Negro BK:[/b] salida.\n\n• Con {{salida_pnp}}, al detectar, el negro da +24 V: la carga o la entrada del PLC va entre el negro y el −. Es lo habitual en equipos europeos.\n• Con {{salida_npn}}, al detectar, el negro se une al −: la carga va entre el + y el negro.\n\nEn el {{plc}}, la {{entrada_digital}} para sensores PNP tiene su común 1M al −; para NPN, al +. Un sensor del tipo equivocado conmuta, su LED se enciende, pero la entrada no cambia.\n\nEl {{dos_hilos}} va en serie con la carga: con la salida inactiva deja pasar una pequeña fuga, de alrededor de 1 mA."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Montaje:[/b] los enrasables (blindados) pueden quedar a ras del metal; los no enrasables necesitan un espacio libre alrededor de la cara. Respete la distancia mínima entre dos sensores, o se interfieren.\n• [b]Distancia:[/b] coloque la pieza a menos del 80 % de Sn, para tener margen con la temperatura y las vibraciones. Fije la tuerca con el sensor en su posición.\n• [b]Capacitivos:[/b] llevan un potenciómetro de sensibilidad. Ajústelo para que detecte el líquido y no la espuma ni la suciedad de la pared.\n• [b]Al cambiarlo:[/b] mismo tipo de salida (PNP o NPN), misma función (NA o NC), misma forma y tensión. Lea la referencia del sensor viejo antes de pedir el repuesto."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "Con el circuito en tensión de 24 V y EPP:\n• Acerque una pieza metálica: el LED amarillo debe encenderse y el LED de la entrada del PLC también.\n• Con el {{multimetro}} en V DC, entre BN y BU: unos 24 V. Si no hay, el problema es la alimentación o el cable.\n• Entre BK y BU, en un PNP: unos 24 V con la pieza delante y casi 0 V sin ella. En un NPN, mida entre BN y BK.\n• LED del sensor encendido y LED del PLC apagado: tipo de salida equivocado, común mal conectado o cable del negro cortado.\n• Ningún LED: falta alimentación o la pieza está fuera de la distancia de conmutación."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sensor de repuesto del tipo equivocado[/b]: un NPN en lugar de un PNP conmuta, pero el PLC no lo ve.\n• [b]Cable dañado[/b] por roce o por el agua: falta la señal de forma intermitente, sobre todo en cubierta.\n• [b]Distancia excesiva[/b] tras un golpe o una vibración que movió el sensor.\n• [b]Cara sucia[/b] de virutas metálicas (inductivo) o de suciedad y humedad (capacitivo): detecta sin pieza.\n• [b]Salida en cortocircuito[/b]: el sensor se protege y deja de conmutar hasta que se elimina el corto.\n• [b]Sobretensión[/b], por ejemplo conectado por error a 230 V: queda destruido."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo y en el plan de mantenimiento[/i]):\n• Cada 3 meses, en cubierta: limpieza de la cara, estado del cable y de los prensaestopas, y apriete de la tuerca.\n• En cada parada: prueba de cada sensor con su LED y el del PLC.\n\n[b]Correctivo:[/b] cambie el sensor por uno del mismo tipo y ajuste la distancia. Si un sensor se avería a menudo, revise la protección mecánica y la estanqueidad del conector."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-2: detectores de proximidad.",
+    "IEC 61131-2: entradas y salidas de los autómatas programables.",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

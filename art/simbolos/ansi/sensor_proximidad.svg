@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="290" viewBox="0 0 400 290">
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Contacto NA de interruptor de proximidad -->
+    <path d="M200,30 V120 M200,170 V260 M178,120 H222 M178,170 H222"/>
+    <!-- Rombo de proximidad -->
+    <path d="M90,145 L120,115 L150,145 L120,175 Z"/>
+  </g>
+  <path d="M150,145 H190" fill="none" stroke="#20242a" stroke-width="2" stroke-dasharray="7 5"/>
+</svg>

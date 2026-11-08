@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="660" height="310" viewBox="0 0 660 310">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9dcdb"/><stop offset="1" stop-color="#9ea3a6"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4f53"/><stop offset="1" stop-color="#26292c"/></linearGradient>
+    <linearGradient id="laton" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d7a4c"/><stop offset="0.3" stop-color="#e9d9a6"/><stop offset="0.6" stop-color="#b79e5c"/><stop offset="1" stop-color="#5e4f2b"/></linearGradient>
+    <linearGradient id="cable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b7075"/><stop offset="0.4" stop-color="#3b3f43"/><stop offset="1" stop-color="#1c1e20"/></linearGradient>
+    <linearGradient id="lcd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7d6c0"/><stop offset="1" stop-color="#9fb497"/></linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="borne"><rect x="-16" y="-15" width="32" height="30" rx="3" fill="#2b2f32"/><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-5,0 H5" stroke="#3b4043" stroke-width="2.4" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="6" y="6" width="648" height="298" rx="8" fill="url(#gris)" stroke="#6c7276" stroke-width="2"/>
+  <rect x="16" y="18" width="628" height="40" rx="4" fill="#3a4044"/>
+  <rect x="16" y="252" width="628" height="40" rx="4" fill="#3a4044"/>
+  <use xlink:href="#borne" x="36" y="38"/>
+  <use xlink:href="#borne" x="86" y="38"/>
+  <use xlink:href="#borne" x="136" y="38"/>
+  <use xlink:href="#borne" x="190" y="38"/>
+  <use xlink:href="#borne" x="244" y="38"/>
+  <use xlink:href="#borne" x="298" y="38"/>
+  <use xlink:href="#borne" x="352" y="38"/>
+  <use xlink:href="#borne" x="406" y="38"/>
+  <use xlink:href="#borne" x="460" y="38"/>
+  <use xlink:href="#borne" x="514" y="38"/>
+  <use xlink:href="#borne" x="568" y="38"/>
+  <use xlink:href="#borne" x="56" y="272"/>
+  <use xlink:href="#borne" x="120" y="272"/>
+  <use xlink:href="#borne" x="184" y="272"/>
+  <use xlink:href="#borne" x="248" y="272"/>
+  <use xlink:href="#borne" x="312" y="272"/>
+  <use xlink:href="#borne" x="376" y="272"/>
+  <use xlink:href="#borne" x="440" y="272"/>
+  <use xlink:href="#borne" x="540" y="272"/>
+  <use xlink:href="#borne" x="600" y="272"/>
+  <rect x="150" y="108" width="210" height="96" rx="6" fill="#2f3438"/>
+  <rect x="162" y="120" width="186" height="72" rx="3" fill="url(#lcd)"/>
+  <g fill="#5a6064"><rect x="390" y="118" width="40" height="30" rx="5"/><rect x="440" y="118" width="40" height="30" rx="5"/><rect x="390" y="160" width="40" height="30" rx="5"/><rect x="440" y="160" width="40" height="30" rx="5"/><rect x="500" y="118" width="54" height="72" rx="6"/></g>
+  <rect x="30" y="118" width="96" height="70" rx="6" fill="#2f3438"/>
+</svg>

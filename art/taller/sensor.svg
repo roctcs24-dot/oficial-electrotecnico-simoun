@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="340" height="200" viewBox="0 0 340 200">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9dcdb"/><stop offset="1" stop-color="#9ea3a6"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4f53"/><stop offset="1" stop-color="#26292c"/></linearGradient>
+    <linearGradient id="laton" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d7a4c"/><stop offset="0.3" stop-color="#e9d9a6"/><stop offset="0.6" stop-color="#b79e5c"/><stop offset="1" stop-color="#5e4f2b"/></linearGradient>
+    <linearGradient id="cable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b7075"/><stop offset="0.4" stop-color="#3b3f43"/><stop offset="1" stop-color="#1c1e20"/></linearGradient>
+    <linearGradient id="lcd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7d6c0"/><stop offset="1" stop-color="#9fb497"/></linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="borne"><rect x="-16" y="-15" width="32" height="30" rx="3" fill="#2b2f32"/><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-5,0 H5" stroke="#3b4043" stroke-width="2.4" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="14" y="58" width="20" height="64" rx="4" fill="#3a6f9a"/>
+  <rect x="30" y="54" width="150" height="72" rx="4" fill="url(#laton)"/>
+  <g stroke="#6e5d33" stroke-width="2" opacity="0.7"><path d="M46,56 L40,124"/><path d="M55,56 L49,124"/><path d="M64,56 L58,124"/><path d="M73,56 L67,124"/><path d="M82,56 L76,124"/><path d="M91,56 L85,124"/><path d="M100,56 L94,124"/><path d="M109,56 L103,124"/><path d="M118,56 L112,124"/><path d="M127,56 L121,124"/><path d="M136,56 L130,124"/><path d="M145,56 L139,124"/><path d="M154,56 L148,124"/><path d="M163,56 L157,124"/><path d="M172,56 L166,124"/></g>
+  <rect x="62" y="48" width="22" height="84" rx="3" fill="url(#acero)" stroke="#4f5559" stroke-width="1.5"/>
+  <rect x="130" y="48" width="22" height="84" rx="3" fill="url(#acero)" stroke="#4f5559" stroke-width="1.5"/>
+  <rect x="180" y="66" width="40" height="48" rx="6" fill="#2b2f32"/>
+  <path d="M220,82 H246 M220,98 H246" stroke="#1c1e20" stroke-width="2"/>
+  <rect x="220" y="80" width="30" height="20" rx="8" fill="url(#cable)"/>
+  <path d="M250,84 C272,84 278,60 300,60" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M250,90 C272,90 278,100 300,100" stroke="#1b1c1d" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M250,96 C272,96 278,140 300,140" stroke="#2a5fb0" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <use xlink:href="#borne" x="310" y="60"/>
+  <use xlink:href="#borne" x="310" y="100"/>
+  <use xlink:href="#borne" x="310" y="140"/>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "nombre": "Banco de sensores y PLC",
+  "nota": "Fuente de 24 V DC, un sensor inductivo PNP en I0.0 y uno NPN en I0.1 de un PLC con entradas para sensores PNP (común 1M al −). Las salidas a relé repiten las entradas y encienden dos luces de 24 V. Para el sensor NPN, el común 1M debe ir al +. Valores típicos.",
+  "componentes": [
+    { "id": "G1", "tipo": "fuente_dc", "params": { "entrada": "ninguna" } },
+    { "id": "B1", "tipo": "sensor_proximidad", "params": { "salida": "pnp" } },
+    { "id": "B2", "tipo": "sensor_proximidad", "params": { "salida": "npn" } },
+    { "id": "PLC", "tipo": "plc", "params": { "entradas": "pnp", "salidas": "rele", "programa_de": "espejo_entradas" } },
+    { "id": "H1", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 1200.0 } },
+    { "id": "H2", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 1200.0 } }
+  ],
+  "cables": [
+    ["G1.+", "PLC.L+"], ["G1.-", "PLC.M"],
+    ["G1.+", "B1.BN"], ["G1.-", "B1.BU"], ["B1.BK", "PLC.I0.0"],
+    ["G1.+", "B2.BN"], ["G1.-", "B2.BU"], ["B2.BK", "PLC.I0.1"],
+    ["PLC.1M", "G1.-"],
+    ["G1.+", "PLC.1L"],
+    ["PLC.Q0.0", "H1.X1"], ["H1.X2", "G1.-"],
+    ["PLC.Q0.1", "H2.X1"], ["H2.X2", "G1.-"]
+  ]
+}

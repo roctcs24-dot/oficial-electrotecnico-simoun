@@ -173,6 +173,16 @@
     "tiristores": { "es": "tiristores", "en": "thyristors, SCR", "def": "Semiconductores que conducen desde que reciben un impulso en la puerta hasta que la corriente pasa por cero. En antiparalelo regulan la tensión alterna." },
     "bypass": { "es": "bypass", "en": "bypass contactor", "def": "Contactor que puentea los tiristores del arrancador suave cuando el motor ya está en velocidad." },
     "rampa_tension": { "es": "rampa de tensión", "en": "voltage ramp", "def": "Subida progresiva de la tensión del motor desde la tensión inicial hasta la plena durante el tiempo de rampa." },
+    "sensor_proximidad": { "es": "sensor de proximidad", "en": "proximity sensor, proximity switch", "def": "Sensor que detecta un objeto sin tocarlo y conmuta una salida electrónica." },
+    "sensor_inductivo": { "es": "sensor inductivo", "en": "inductive sensor", "def": "Sensor de proximidad que detecta metales con un campo magnético alterno en su cara activa." },
+    "sensor_capacitivo": { "es": "sensor capacitivo", "en": "capacitive sensor", "def": "Sensor de proximidad que detecta cualquier material, también líquidos y plásticos, por el cambio de capacidad en su cara." },
+    "salida_pnp": { "es": "salida PNP", "en": "PNP output, sourcing", "def": "Salida de sensor que, al activarse, conecta su hilo negro al + de la alimentación." },
+    "salida_npn": { "es": "salida NPN", "en": "NPN output, sinking", "def": "Salida de sensor que, al activarse, conecta su hilo negro al − de la alimentación." },
+    "dos_hilos": { "es": "sensor de dos hilos", "en": "two-wire sensor", "def": "Sensor que va en serie con la carga como un interruptor; deja pasar una pequeña fuga cuando está inactivo." },
+    "distancia_conmutacion": { "es": "distancia de conmutación", "en": "switching distance, Sn", "def": "Distancia a la que el sensor detecta la pieza patrón. Con otros materiales es menor." },
+    "plc": { "es": "autómata programable (PLC)", "en": "programmable logic controller, PLC", "def": "Equipo que lee entradas, ejecuta un programa y gobierna salidas, ciclo tras ciclo." },
+    "entrada_digital": { "es": "entrada digital", "en": "digital input", "def": "Entrada del PLC que solo distingue dos estados: con señal o sin señal." },
+    "fuente_conmutada": { "es": "fuente conmutada", "en": "switch-mode power supply, SMPS", "def": "Fuente que convierte la alterna en una continua estable, como los 24 V DC de mando, conmutando a alta frecuencia." },
     "limite_corriente": { "es": "límite de corriente", "en": "current limit", "def": "Corriente máxima que el arrancador suave deja pasar durante el arranque, en veces la corriente del motor." }
   }
 }

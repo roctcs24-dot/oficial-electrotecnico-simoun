@@ -2,12 +2,13 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v3.4**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque. Incluye:
+Estado: **v3.5**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque, y la v4 en curso. Incluye:
 
 - 21 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores (también el arrancador suave), tableros de bombas e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - 8 lecciones de refrigeración: ciclo de compresión, presión y temperatura del NH3, diagrama presión–entalpía, compresores, componentes, control y protecciones, cableado del compresor y diagnóstico.
-- Fichas de los equipos de los sistemas 1, 3 y 4, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
+- Sistema 6, electrónica y PLC (en desarrollo): 2 lecciones de sensores de proximidad PNP y NPN y de su cableado al PLC, con un banco animado; la ficha del sensor; en el Taller, el banco de sensores con PLC y el PLC de la bomba de achique; y en el cajón, fuente de 24 V DC, sensores PNP y NPN, relé de 24 V, luz de 24 V y PLC.
+- Fichas de los equipos de los sistemas 1, 3, 4 y 6, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con los cuatro generadores del buque (380 V, 50 Hz), paneles al estilo de sus módulos de sincronismo, PMS, protecciones, lámparas de tierra R-S-T y cuadro de emergencia con su generador.
 - Taller con multímetro, megóhmetro y pinza amperimétrica, y siete tableros reales del buque que se manejan desde su frente, con su interior en la mesa del Taller: bombas de la máquina principal, hidróforo de agua salada, purificadora nº 1, controlador del servotimón nº 1 con su variador Danfoss, tableros de 110 V de habitabilidad y de 220 V de distribución, y el de compresores NH3, con los compresores nº 3 y nº 4 y su arrancador suave, amperímetros de aguja y las tres bombas de amoníaco. Tienen una marca amarilla en su lugar del plano del barco.
 - 5 misiones de Guardia de motores y tableros (dos de ellas frente al tablero: lámpara de tierra apagada e hidróforo sin una fase) y 4 del cuadro principal: puesta en paralelo, blackout, falla a tierra y potencia inversa.
@@ -292,9 +293,10 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Componentes no lineales:** diodos, LEDs, sensores y transmisores eligen su tramo en `asentar`, como las bobinas: la simulación vuelve a resolver hasta que ninguno cambia. Con la corriente de prueba del óhmetro usan `ajustar_prueba` y `terminar_prueba`, así el multímetro mide la caída de un diodo.
 - **Componentes:** `fuente_dc` (24 V, con entrada de alterna o `"entrada": "ninguna"`, limitación de corriente y `tension_pu` para una fuente degradada), `diodo`, `led`, `puente_rectificador` (modelado por su efecto, con o sin `filtro`), `rele_dc`, `rele_estado_solido`, `sensor_proximidad` (inductivo o capacitivo; PNP, NPN o de dos hilos; NA o NC), `transmisor_4_20`, `pt100` y `termocupla`. Los transmisores y sondas pueden leer un proceso con `origen`: `{"id": "PLANTA", "lectura": "presion", "punto": "succion"}`. Las luces piloto también se encienden en continua.
 - **Multímetro:** `vdc` con signo, `diodo` con la caída real, y `ma`, miliamperios en continua en serie. La entrada de mA tiene un fusible de 0,4 A. En serie, el multímetro cierra el circuito y los componentes reajustan su estado, como un transmisor que empieza a regular.
-- Las pruebas están en `tests/test_sim_electronica.gd`.
+- Las pruebas están en `tests/test_sim_electronica.gd` y, para el banco de sensores con PLC (`data/circuitos/banco_sensores.json`, programa `data/plc/espejo_entradas.json`), en `tests/test_sim_sensores.gd`. Con `sensores` detrás de la carpeta, el comando de capturas guarda el Taller del sistema 6 y el banco.
+- **Taller del sistema 6:** `modos.taller.practicas` lista prácticas preparadas, cada una con `titulo`, `detalle`, `pantalla` y `args`; el Taller acepta `{"plantilla": "<id>"}` para abrir con una plantilla montada. En el cajón, un PLC llega con el programa de `programa_de`. En la mesa se ven los LEDs del sensor, de la fuente, del relé y de las entradas y salidas del PLC, y la pestaña Pieza acerca la pieza al sensor y cambia el PLC a RUN o STOP y sus entradas a PNP o NPN.
 
-**PLC (v4, en desarrollo):**
+**PLC (v4, en desarrollo; se abre desde el Taller del sistema 6):**
 
 - **Componente** `plc` (`sim/components/plc.gd`): alimentación L+ y M, entradas I0.0 a I0.7 con su común 1M (`"entradas": "pnp"` o `"npn"`), salidas Q0.0 a Q0.5 a relé con su común 1L o a transistor (`"salidas"`), y entrada analógica AI0 de 4–20 mA escalada a `%IW0` con `analogica`. En cada paso hace un scan: lee entradas, ejecuta el programa y escribe salidas. En STOP o con menos de 19 V abre las salidas.
 - **Lenguaje ladder** (`sim/plc/ladder.gd`, `SimLadder`), con direcciones IEC 61131-3 genéricas: contactos `na`, `nc`, `flanco` y `cmp`, ramas en `paralelo`, y salidas `bobina`, `set`, `reset`, `ton`, `tof`, `ctu` y `rst`. El formato está descrito al principio del archivo.

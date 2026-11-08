@@ -86,9 +86,16 @@
       "id": 6,
       "nombre": "Electrónica, PLC y alarmas",
       "resumen": "Componentes, sensores, PLC, HMI, SCADA, alarmas de sala de máquinas e incendio.",
-      "estado": "proximamente",
+      "estado": "activo",
       "zona": [602, 166, 148, 40],
-      "modos": {}
+      "modos": {
+        "aprender": { "lecciones": ["e1_sensores_proximidad", "e2_sensores_plc"], "fichas": ["sensor_proximidad"] },
+        "taller": { "pantalla": "tableros", "detalle": "Banco de sensores, PLC y banco libre",
+          "practicas": [
+            { "titulo": "Sensores PNP y NPN con PLC", "detalle": "Fuente de 24 V, dos sensores y un PLC en la mesa del Taller", "pantalla": "taller", "args": { "plantilla": "banco_sensores" } },
+            { "titulo": "PLC: bomba de achique de sentina", "detalle": "Entradas, salidas y programa ladder en vivo", "pantalla": "plc", "args": { "circuito": "plc_bomba_achique" } }
+          ] }
+      }
     }
   ]
 }

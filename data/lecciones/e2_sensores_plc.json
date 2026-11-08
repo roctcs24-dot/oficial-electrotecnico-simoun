@@ -1,0 +1,61 @@
+{
+  "id": "e2_sensores_plc",
+  "titulo": "Sensores en las entradas del PLC",
+  "resumen": "Fuente de 24 V, común de las entradas, diagnóstico por LEDs y el repuesto equivocado.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La alimentación de 24 V",
+      "bloques": [
+        { "tipo": "texto", "texto": "Los sensores y el {{plc}} se alimentan de una {{fuente_conmutada}} de 24 V DC. Si un cable de un sensor hace cortocircuito, la fuente limita la corriente y corta la salida: se apagan a la vez todos los sensores y el PLC. Por eso, cuando muchas señales fallan juntas, se mide primero la fuente." },
+        {
+          "tipo": "quiz",
+          "tema": "fuente_24v_todo_cae",
+          "pregunta": "De repente se apagan los LEDs de todos los sensores de un tablero y el PLC se para. ¿Qué mide primero?",
+          "opciones": ["La salida de la fuente de 24 V", "Cada sensor con el megóhmetro", "La tensión de las barras de 380 V"],
+          "correcta": 0,
+          "explicacion": "Una causa común a todas las señales está en lo que comparten: la fuente de 24 V. Si está cortada por un corto, busque el cable o el sensor que lo provoca."
+        }
+      ]
+    },
+    {
+      "titulo": "El común de las entradas",
+      "bloques": [
+        { "tipo": "texto", "texto": "Cada {{entrada_digital}} mide la tensión entre su borne, I0.0, I0.1…, y el común 1M:\n• Para sensores PNP, 1M va al −: el sensor activo lleva el + a la entrada.\n• Para sensores NPN, 1M va al +: el sensor activo lleva el − a la entrada.\n\nPruébelo: acerque la pieza y mire los LEDs de los sensores y los del PLC. Después cambie el tipo de entradas." },
+        {
+          "tipo": "animacion",
+          "id": "banco_sensores",
+          "params": { "circuito": "banco_sensores" },
+          "pie": "PLC con entradas a 24 V DC, un sensor inductivo PNP en I0.0 y uno NPN en I0.1. Valores típicos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "sensor_tipo_equivocado",
+          "pregunta": "Tras cambiar un sensor averiado, su LED amarillo se enciende con la pieza delante, pero la entrada del PLC no. Las demás entradas funcionan. ¿Qué es lo más probable?",
+          "opciones": ["El PLC está en STOP", "El repuesto es NPN y la entrada es para PNP, o al revés", "La fuente de 24 V está cortada"],
+          "correcta": 1,
+          "explicacion": "El sensor conmuta, porque su LED se enciende, pero da el polo que la entrada no espera. Con la fuente cortada, ningún LED se encendería; y en STOP los LEDs de entrada siguen indicando."
+        }
+      ]
+    },
+    {
+      "titulo": "Diagnóstico por LEDs y multímetro",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]LED del sensor y LED del PLC apagados:[/b] mida entre marrón y azul en el sensor. Sin 24 V, el problema es la alimentación o el cable.\n• [b]LED del sensor encendido y del PLC apagado:[/b] tipo de salida equivocado, común mal conectado o hilo negro cortado. Mida entre la entrada y el común en el PLC.\n• [b]LED del PLC encendido y la salida no actúa:[/b] el problema está en el programa o en la salida, no en el sensor.\n\nTrabaje con EPP: aunque 24 V DC no es peligroso, en el mismo tablero suele haber 230 V o 380 V." },
+        {
+          "tipo": "quiz",
+          "tema": "plc_entrada_sin_led",
+          "pregunta": "El sensor PNP da 24 V entre negro y azul con la pieza delante, pero el LED de su entrada en el PLC no se enciende. ¿Dónde sigue midiendo?",
+          "opciones": ["Entre la entrada del PLC y su común 1M", "En la fuente de 24 V", "En el motor que gobierna la salida"],
+          "correcta": 0,
+          "explicacion": "El sensor funciona. Si entre la entrada y 1M no llegan los 24 V, el hilo negro está cortado o mal conectado; si llegan, falta el común o la entrada está averiada."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61131-2: entradas digitales de 24 V de los autómatas.",
+    "IEC 60947-5-2: detectores de proximidad.",
+    "Manual del autómata del equipo (a bordo, el Siemens LOGO! 8 del compresor nº 5: verificar)."
+  ]
+}
