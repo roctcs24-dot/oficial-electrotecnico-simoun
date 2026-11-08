@@ -37,8 +37,8 @@ func test_banco_del_examen_bien_formado() -> String:
 	var temas := {}
 	var publicados := c.examenes()
 	publicados.sort()
-	if publicados != ["v1", "v2", "v3", "v4"]:
-		return "deben publicarse los exámenes v1, v2, v3 y v4: %s" % str(c.examenes())
+	if publicados != ["v1", "v2", "v3", "v4", "v5"]:
+		return "deben publicarse los exámenes v1 a v5: %s" % str(c.examenes())
 	for id: String in c.examenes():
 		var motivo := _revisar_examen(c.examen(id), temas)
 		if not motivo.is_empty():
@@ -364,6 +364,14 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 	var gt = load("res://tests/test_guardia_tableros.gd").new()
 	for id: String in raiz.contenido.sistema(2)["modos"]["guardia"]["misiones"]:
 		var m: MisionGuardia = dist.resolver(id)
+		gt._observar(m, m.tiempo_de_prueba())
+		m.firmar(gt._respuestas_correctas(m))
+		if m.fin != "completada" or m.estrellas() != 3:
+			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
+		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
+	var cub = load("res://tests/test_guardia_cubierta.gd").new()
+	for id: String in raiz.contenido.sistema(5)["modos"]["guardia"]["misiones"]:
+		var m: MisionGuardia = cub.resolver(id)
 		gt._observar(m, m.tiempo_de_prueba())
 		m.firmar(gt._respuestas_correctas(m))
 		if m.fin != "completada" or m.estrellas() != 3:

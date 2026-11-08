@@ -1,0 +1,55 @@
+{
+  "id": "e6_deteccion_incendio",
+  "titulo": "Detección y alarma de incendios",
+  "resumen": "Detectores de humo, de calor y de llama, central de incendios, lazos, averías y pruebas.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Detectores",
+      "bloques": [
+        { "tipo": "texto", "texto": "El sistema fijo de detección y alarma de incendios vigila la cámara de máquinas, la habitabilidad y los puestos de control ([i]Código SSCI, capítulo 9; zonas y equipos del buque: verificar a bordo[/i]):\n• [b]Humo óptico:[/b] una cámara con un LED y un fotodiodo; el humo dispersa la luz. Habitabilidad, pasillos, salas de control.\n• [b]Calor:[/b] de temperatura fija, como 57 °C o 78 °C, o termovelocimétrico, que avisa por una subida rápida. Cocinas, lavanderías y lugares con vapor o humo normal.\n• [b]Llama:[/b] ve la radiación infrarroja o ultravioleta de una llama. Cerca de los motores y de las purificadoras.\n• [b]Pulsadores manuales[/b] en las vías de escape.\n\nUn detector mal elegido da falsas alarmas: un detector de humo en la cocina avisará con cada fritura." },
+        {
+          "tipo": "quiz",
+          "tema": "detector_cocina",
+          "pregunta": "¿Qué detector es el adecuado para la cocina?",
+          "opciones": ["De humo óptico", "De calor", "De llama ultravioleta"],
+          "correcta": 1,
+          "explicacion": "En la cocina hay humo y vapor normales: un detector de calor evita las falsas alarmas."
+        }
+      ]
+    },
+    {
+      "titulo": "Central y lazos",
+      "bloques": [
+        { "tipo": "texto", "texto": "La central de incendios, en el puente o en el puesto de control, recibe los detectores agrupados por zonas o, en los sistemas direccionables, con la dirección de cada uno.\n• [b]Alarma de incendio:[/b] luz roja, bocina y la zona o el detector. Activa las alarmas generales y puede parar ventiladores y cerrar puertas cortafuegos.\n• [b]Avería:[/b] luz ámbar. Un detector quitado, un cable cortado o un cortocircuito en el lazo. La central vigila el lazo con una resistencia de final de línea o con su comunicación: una avería no es una alarma, pero deja una zona sin vigilancia.\n• [b]Alimentación:[/b] principal y de emergencia, con baterías de respaldo, y alarma si falla cualquiera de ellas." },
+        {
+          "tipo": "quiz",
+          "tema": "incendio_averia",
+          "pregunta": "La central de incendios marca «Avería» en la zona de la cámara de máquinas. ¿Qué significa?",
+          "opciones": ["Que hay fuego en la cámara de máquinas", "Que la zona puede no detectar un incendio: cable, detector o resistencia de final de línea", "Que el sistema funciona bien"],
+          "correcta": 1,
+          "explicacion": "Una avería deja la zona sin vigilancia fiable. Se repara de inmediato y, mientras, se refuerzan las rondas."
+        }
+      ]
+    },
+    {
+      "titulo": "Pruebas y trabajos",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Pruebas periódicas[/b] de los detectores con el aerosol o el calentador de prueba del fabricante, de los pulsadores y de las alarmas ([i]periodicidad según SOLAS y el plan del buque — verificar[/i]).\n• [b]Antes de trabajos con calor o polvo[/b] en una zona, como soldar, se inhibe su zona en la central con autorización del capitán o del jefe de máquinas, se pone vigilancia contra incendios y se rehabilita al terminar. Anótelo en el libro.\n• [b]Nunca[/b] se tapa un detector con una bolsa para que no moleste, ni se deja una zona inhibida.\n• Limpie los detectores de humo según el fabricante: el polvo los hace más sensibles o los deja ciegos." },
+        {
+          "tipo": "ordenar",
+          "tema": "orden_inhibir_zona",
+          "pregunta": "Seleccione en orden cómo preparar una soldadura en una zona con detectores de humo:",
+          "pasos": ["Obtener el permiso de trabajo en caliente", "Avisar al puente e inhibir solo esa zona en la central, con autorización", "Poner un vigilante con extintor durante el trabajo y después", "Rehabilitar la zona al terminar y comprobar que la central no marca avería", "Anotar la inhibición y la rehabilitación en el libro"],
+          "explicacion": "La zona inhibida se compensa con vigilancia, y se rehabilita en cuanto termina el trabajo."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS II-2, regla 7, y Código SSCI (FSS), capítulo 9: sistemas fijos de detección y alarma de incendios.",
+    "IEC 60092-504 y EN 54: componentes de los sistemas de detección.",
+    "Manual de la central de incendios del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

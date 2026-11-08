@@ -71,6 +71,8 @@ func contactor() -> SimContactor:
 
 func corrientes() -> Array:
 	if not es_motor():
+		if not datos["prueba"].has("medir"):
+			return [0.0, 0.0, 0.0]
 		var f: SimGuardamotor = mesa.sim.componente(datos["prueba"]["medir"])
 		return [f.corriente(mesa.sim.solucion, 0), f.corriente(mesa.sim.solucion, 1), f.corriente(mesa.sim.solucion, 2)]
 	var r := rele()
@@ -86,6 +88,8 @@ func corriente_maxima() -> float:
 
 func i_nominal() -> float:
 	if not es_motor():
+		if not datos["prueba"].has("medir"):
+			return 1.0
 		return float(mesa.sim.componente(datos["prueba"]["medir"]).params["ajuste_a"])
 	return float(motor().params["i_delta"])
 
@@ -412,6 +416,9 @@ func avance_observacion() -> float:
 
 
 func observar(segundos: float) -> void:
+	# Maniobras que hace el personal de pesca durante la prueba, como poner el selector en VIRAR.
+	for op: Dictionary in datos["prueba"].get("al_observar", []):
+		(mesa.sim.componente(op["selector"]) as SimSelector).poner(op["posicion"])
 	_observar_restante = segundos
 	observando_total = segundos
 	_observacion_inicio = mesa.sim.tiempo
@@ -440,7 +447,7 @@ func procesar_observacion(limite_ms: int) -> Dictionary:
 
 func _en_marcha() -> bool:
 	if not es_motor():
-		for id: String in datos["prueba"]["interruptores"]:
+		for id: String in datos["prueba"].get("interruptores", []):
 			if not (mesa.sim.componente(id) as SimGuardamotor).cerrado():
 				return false
 		return true
@@ -493,7 +500,7 @@ func _motivo_prueba_fallida() -> String:
 ## Prueba de un circuito de distribución: interruptores cerrados y sin disparar, tensiones en
 ## los consumidores y condiciones sobre parámetros, como el aislamiento de una toma.
 func _motivo_circuito(p: Dictionary) -> String:
-	for id: String in p["interruptores"]:
+	for id: String in p.get("interruptores", []):
 		var f: SimGuardamotor = mesa.sim.componente(id)
 		if f.estado["disparado"]:
 			return "El interruptor %s disparó" % id
@@ -503,6 +510,9 @@ func _motivo_circuito(p: Dictionary) -> String:
 		if c.has("a"):
 			var v := mesa.sim.solucion.entre(c["a"], c["b"]).modulo()
 			if v < float(c["min"]):
+				return c["falla"]
+		elif c.has("estado"):
+			if float(mesa.sim.componente(c["componente"]).estado[c["estado"]]) < float(c["min"]):
 				return c["falla"]
 		elif c.has("param"):
 			if float(mesa.sim.componente(c["componente"]).params[c["param"]]) < float(c["min"]):

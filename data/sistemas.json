@@ -47,7 +47,7 @@
           "fichas": ["transformador", "interruptor_automatico", "diferencial", "baterias_24v"] },
         "taller": { "pantalla": "tableros", "detalle": "Tableros de 220 V y 110 V del buque y banco libre", "tableros": ["distribucion_220", "habitabilidad_110"] },
         "guardia": { "misiones": ["h1_corto_alumbrado", "h2_tierra_tomas", "h3_sobrecarga_cocina"] },
-        "examen": { "minijuegos": ["simbolos_distribucion"] }
+        "examen": { "examenes": ["v5"], "minijuegos": ["simbolos_distribucion"] }
       }
     },
     {
@@ -90,7 +90,8 @@
         "aprender": { "lecciones": ["c1_hidraulica_cubierta", "c2_mando_electrohidraulico", "c3_alumbrado_cubierta"],
           "fichas": ["electrovalvula_hidraulica", "final_carrera", "reflector"] },
         "taller": { "pantalla": "tableros", "detalle": "Mando del power block y banco libre", "tableros": ["power_block"] },
-        "examen": { "minijuegos": ["simbolos_cubierta"] }
+        "guardia": { "misiones": ["p1_power_block_no_vira", "p2_mando_se_apaga"] },
+        "examen": { "examenes": ["v5"], "minijuegos": ["simbolos_cubierta"] }
       }
     },
     {
@@ -100,7 +101,7 @@
       "estado": "activo",
       "zona": [602, 166, 148, 40],
       "modos": {
-        "aprender": { "lecciones": ["e1_sensores_proximidad", "e2_sensores_plc", "e3_red_modbus", "e4_hmi", "e5_puesto_alarmas"], "fichas": ["sensor_proximidad"] },
+        "aprender": { "lecciones": ["e1_sensores_proximidad", "e2_sensores_plc", "e3_red_modbus", "e4_hmi", "e5_puesto_alarmas", "e6_deteccion_incendio"], "fichas": ["sensor_proximidad"] },
         "taller": { "pantalla": "tableros", "detalle": "Sensores, PLC, red Modbus, puesto de alarmas y banco libre",
           "practicas": [
             { "titulo": "Red Modbus y puesto de alarmas", "detalle": "Bus RS-485, alarmas generales y pantalla Omron del MYCOM nº 3", "pantalla": "red_alarmas", "args": { "red_id": "sala_maquinas" } },

@@ -1,0 +1,76 @@
+{
+  "id": "p1_power_block_no_vira",
+  "titulo": "El power block no vira",
+  "resumen": "En plena maniobra, el power block arría pero no vira la red.",
+  "equipo": "Mando del power block",
+  "tablero": "power_block",
+  "reporte": {
+    "de": "Patrón de pesca",
+    "texto": "Durante la recogida de la red, el {{power_block}} dejó de virar: con el selector en VIRAR no se mueve, y en ARRIAR gira con normalidad. La {{central_hidraulica}} trabaja con su presión de siempre. La red está asegurada en cubierta. Encuentre la falla y deje el power block virando.",
+    "nota": "Mando de 24 V DC con bobinas de unos 22 Ω; central hidráulica con motor diésel propio: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "PB": { "averia_y1": "abierta" } },
+  "aisladores": ["Q0"],
+  "nombres_aisladores": { "Q0": "el interruptor Q0 del mando del power block" },
+  "verificacion": {
+    "fuente_conocida": ["B.L1", "B.L2"],
+    "puntos": [
+      { "texto": "Salida de Q0", "a": "Q0.2", "b": "Q0.4" },
+      { "texto": "Entrada de la fuente de 24 V", "a": "G1.L", "b": "G1.N" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se retiró el conector de la bobina Y1 sin bloquear el mando. Desde el puesto de pesca alguien probó ARRIAR para ver si funcionaba, el power block giró de golpe y el cabo de la red golpeó al oficial en el brazo.",
+      "causa": "El mando y la central seguían en servicio: la máquina podía moverse en cualquier momento.",
+      "como_evitar": "• Avise al patrón de pesca.\n• Abra y bloquee Q0, el interruptor del mando, y verifique la ausencia de tensión.\n• Pare la central hidráulica, bloquee su arranque y descargue los acumuladores antes de tocar la válvula."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "multimetro", "modos": ["ohm", "continuidad"], "a": "PB.Y1A", "b": "PB.Y1B" }
+  ],
+  "remediciones": [
+    { "instrumento": "multimetro", "a": "PB.Y1A", "b": "PB.Y1B", "despues_de": "cambiar_y1" }
+  ],
+  "pistas": [
+    "Si arría, hay presión y hay mando de 24 V. Lo que falla es propio del sentido VIRAR: el contacto del selector, el cable o la bobina Y1.",
+    "Bloquee Q0, verifique la ausencia de tensión y mida con el multímetro en ohmios la bobina Y1 entre PB.Y1A y PB.Y1B. Compárela con la Y2: unos 22 Ω.",
+    "Antes de cambiar la bobina, pare la central hidráulica y bloquee su arranque."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué no vira el power block?",
+    "opciones": [
+      { "texto": "La bobina Y1 de la válvula direccional está cortada", "correcta": true, "explicacion": "La bobina Y1 marca OL y la Y2 unos 22 Ω. Con el hilo cortado, Y1 no mueve la corredera aunque reciba los 24 V." },
+      { "texto": "Falta presión en la central hidráulica", "explicacion": "El power block arría con normalidad: hay presión." },
+      { "texto": "La fuente de 24 V está averiada", "explicacion": "Con la fuente averiada no arriaría ni encendería la luz de mando." },
+      { "texto": "El motor hidráulico del power block está dañado", "explicacion": "El motor gira bien hacia el otro lado. Una bobina que mide OL basta para explicar la falla." }
+    ]
+  },
+  "acciones": [
+    { "id": "parar_central", "boton": "Parar la central hidráulica, bloquear su arranque y descargar los acumuladores", "titulo": "Central parada", "texto": "Se paró el diésel de la central, se colocó la tarjeta en su arranque y se descargó la presión hasta ver los manómetros a cero.", "pone": { "central_parada": true }, "efecto": [{ "op": "param", "id": "PB", "clave": "presion", "valor": false }] },
+    { "id": "cambiar_y1", "boton": "Cambiar la bobina Y1 por otra de 24 V DC igual", "necesita": ["central_parada"], "si_falta": "Pare antes la central hidráulica y descargue la presión: la válvula puede tener presión atrapada.", "titulo": "Bobina cambiada", "texto": "Se cambió la bobina Y1 por una de repuesto de 24 V DC y la misma potencia. El conector DIN tenía agua y verdín: se limpió y se cambió su junta.", "efecto": [{ "op": "param", "id": "PB", "clave": "averia_y1", "valor": "" }] },
+    { "id": "arrancar_central", "boton": "Quitar la tarjeta y arrancar la central hidráulica", "necesita": ["central_parada"], "si_falta": "La central ya está en marcha.", "titulo": "Central en marcha", "texto": "Se quitó la tarjeta del arranque, se avisó a cubierta y se arrancó la central. La presión sube a la normal.", "pone": { "central_parada": false }, "efecto": [{ "op": "param", "id": "PB", "clave": "presion", "valor": true }] },
+    { "id": "cambiar_valvula", "boton": "Cambiar la válvula direccional completa", "titulo": "Repuesto innecesario", "texto": "Se desmontó una válvula sana: solo fallaba la bobina, que se cambia sin abrir el circuito hidráulico.", "innecesaria": true }
+  ],
+  "prueba": {
+    "observar_s": 30,
+    "superada": "El patrón viró la red con el power block durante 30 s sin fallos.",
+    "al_observar": [{ "selector": "S1", "posicion": "VIRAR" }],
+    "condiciones": [
+      { "componente": "PB", "param": "presion", "min": 1, "falla": "La central hidráulica está parada" },
+      { "componente": "PB", "estado": "rpm", "min": 15, "falla": "El power block no vira con el selector en VIRAR" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Resistencia de la bobina Y1 antes de cambiarla", "opciones": ["OL: hilo cortado", "Unos 22 Ω", "Casi 0 Ω"], "correcta": 0, "explicacion": "La Y2, sana, marcaba unos 22 Ω." },
+      { "etiqueta": "Bloqueos aplicados", "opciones": ["Solo el interruptor del mando", "Interruptor del mando y central hidráulica parada y descargada", "Ninguno"], "correcta": 1, "explicacion": "La energía hidráulica se aísla igual que la eléctrica." },
+      { "etiqueta": "Reparación", "opciones": ["Cambio de la válvula direccional", "Cambio de la bobina Y1 y de la junta de su conector", "Cambio del selector"], "correcta": 1, "explicacion": "El agua en el conector fue la causa probable." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones Central hidráulica y maquinaria de pesca y Mando electrohidráulico.",
+    "Ficha de la válvula direccional de mando eléctrico.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}
