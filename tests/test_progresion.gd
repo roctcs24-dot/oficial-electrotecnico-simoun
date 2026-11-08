@@ -360,6 +360,15 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 		if m.fin != "completada" or m.estrellas() != 3:
 			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
 		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
+	var dist = load("res://tests/test_guardia_distribucion.gd").new()
+	var gt = load("res://tests/test_guardia_tableros.gd").new()
+	for id: String in raiz.contenido.sistema(2)["modos"]["guardia"]["misiones"]:
+		var m: MisionGuardia = dist.resolver(id)
+		gt._observar(m, m.tiempo_de_prueba())
+		m.firmar(gt._respuestas_correctas(m))
+		if m.fin != "completada" or m.estrellas() != 3:
+			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
+		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
 	var red = load("res://tests/test_guardia_red.gd").new()
 	for id: String in raiz.contenido.sistema(6)["modos"]["guardia"]["misiones"]:
 		var m: MisionRed = red.resolver(id)

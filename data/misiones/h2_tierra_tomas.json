@@ -1,0 +1,79 @@
+{
+  "id": "h2_tierra_tomas",
+  "titulo": "Lámpara de tierra S apagada en 110 V",
+  "resumen": "En el tablero de 110 V, la lámpara de tierra de la fase S se apaga al pulsar TEST.",
+  "equipo": "Tablero de 110 V de habitabilidad",
+  "tablero": "habitabilidad_110",
+  "reporte": {
+    "de": "Oficial de guardia de máquinas",
+    "texto": "En la ronda, al pulsar TEST en el tablero de 110 V de habitabilidad, la {{lamparas_tierra}} de la fase S se apaga y las de R y T brillan más. Ayer se baldeó la cubierta y entró agua por un portillo a un camarote. No ha disparado ningún interruptor. Encuentre el circuito con la fase a masa y repárelo antes de que aparezca una segunda falla.",
+    "nota": "Red de 110 V aislada con lámparas de tierra de 110 V. Circuitos, calibres y cargas: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "X1": { "fuga_ohm": 300.0 } },
+  "aisladores": ["F1", "F2", "F3"],
+  "bloqueo": ["F2"],
+  "nombres_aisladores": { "F1": "F1, alumbrado del pasillo", "F2": "F2, tomas de los camarotes", "F3": "F3, cocina de oficiales" },
+  "verificacion": {
+    "fuente_conocida": ["Q0.4", "Q0.6"],
+    "puntos": [
+      { "texto": "Salida de F2: entre polos", "a": "F2.2", "b": "F2.4" },
+      { "texto": "Salida de F2: polo 2 a masa", "a": "F2.2", "b": "PE.PE" },
+      { "texto": "Salida de F2: polo 4 a masa", "a": "F2.4", "b": "PE.PE" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se abrió una caja de tomas de un camarote con F2 sin bloquear. Un tripulante cerró F2 desde el tablero para cargar su teléfono y el oficial recibió una descarga de 110 V entre los bornes.",
+      "causa": "El circuito podía volver a energizarse desde el tablero.",
+      "como_evitar": "• Abra F2 y coloque su candado y su tarjeta.\n• Verifique la ausencia de tensión en la salida de F2.\n• Avise a los camarotes de que sus tomas están fuera de servicio."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "megohmetro", "a": "F2.2", "b": "PE.PE" },
+    { "accion": "revisar_tomas" }
+  ],
+  "remediciones": [
+    { "instrumento": "megohmetro", "a": "F2.2", "b": "PE.PE", "despues_de": "secar_toma" }
+  ],
+  "pistas": [
+    "La lámpara que se apaga marca la fase a masa: la S. Busque qué circuito la lleva a masa abriendo los interruptores de uno en uno, con aviso a los afectados, y pulsando TEST cada vez.",
+    "Cuando las tres lámparas vuelvan a alumbrar igual, el último interruptor que abrió es el del circuito con la falla.",
+    "Bloquee ese interruptor, verifique la ausencia de tensión y mida con el megóhmetro a 500 V entre su salida F2.2 y la masa PE. Después revise las tomas de los camarotes."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Dónde está la fase S a masa?",
+    "opciones": [
+      { "texto": "En el circuito de tomas de los camarotes, F2: agua en una caja de tomas", "correcta": true, "explicacion": "Al abrir F2 las tres lámparas vuelven a alumbrar igual, y el megóhmetro marca unos cientos de ohmios entre la salida de F2 y la masa." },
+      { "texto": "En el alumbrado del pasillo, F1", "explicacion": "Con F1 abierto la lámpara S sigue apagándose al pulsar TEST: la falla no está en ese circuito." },
+      { "texto": "La lámpara de tierra S está fundida", "explicacion": "Sin pulsar TEST, las tres lámparas alumbran: la S no está fundida." },
+      { "texto": "No es una falla: en una red aislada es normal", "explicacion": "En una red sana las tres lámparas alumbran igual con TEST pulsado. Una primera falla a masa no dispara nada, pero una segunda en otra fase sería un cortocircuito." }
+    ]
+  },
+  "acciones": [
+    { "id": "revisar_tomas", "boton": "Abrir las cajas de tomas de los camarotes del circuito", "titulo": "Agua en una caja", "texto": "En el camarote del portillo que se abrió con el baldeo, la caja de tomas tiene agua dentro y los bornes oxidados. El borne de la fase S tiene restos de humedad hasta la caja metálica." },
+    { "id": "secar_toma", "boton": "Secar la caja, cambiar la toma y sellar la entrada de cables", "titulo": "Toma reparada", "texto": "Se secó la caja, se cambió la toma por una nueva, se limpió el borne y se selló la entrada de cables. Se avisó al primer oficial para revisar la junta del portillo.", "efecto": [{ "op": "param", "id": "X1", "clave": "fuga_ohm", "valor": 1e12 }] },
+    { "id": "quitar_lampara", "boton": "Quitar la lámpara de tierra S para que no moleste", "titulo": "Vigilancia anulada", "texto": "Sin la lámpara, la red de 110 V queda sin vigilancia de aislamiento en la fase S. La falla sigue ahí. Se volvió a poner la lámpara.", "innecesaria": true }
+  ],
+  "prueba": {
+    "interruptores": ["F1", "F2", "F3"],
+    "medir": "F2",
+    "observar_s": 60,
+    "superada": "Con los tres circuitos en servicio, las tomas de los camarotes tienen tensión y la red de 110 V queda sin fuga a masa.",
+    "condiciones": [
+      { "param": "fuga_ohm", "componente": "X1", "min": 1000000, "falla": "La fase S sigue a masa en el circuito de tomas" },
+      { "a": "X1.A", "b": "X1.B", "min": 100, "falla": "Las tomas de los camarotes no tienen tensión" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Circuito con la falla", "opciones": ["F1, alumbrado del pasillo", "F2, tomas de los camarotes", "F3, cocina de oficiales"], "correcta": 1, "explicacion": "Al abrir F2 las lámparas de tierra volvieron a alumbrar igual." },
+      { "etiqueta": "Aislamiento de la salida de F2 a masa antes de reparar", "opciones": ["Unos cientos de ohmios", "Más de 100 MΩ", "No se midió"], "correcta": 0, "explicacion": "El agua en la caja unía la fase S con la caja metálica." },
+      { "etiqueta": "Reparación", "opciones": ["Retirada de la lámpara de tierra S", "Secado de la caja, toma nueva y entrada de cables sellada", "Cambio de F2"], "correcta": 1, "explicacion": "Se elimina la fuga y se evita que vuelva a entrar agua." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones Interruptores automáticos, fusibles y diferenciales y Transformadores de 380/220/110 V.",
+    "IEC 60092-502 y SOLAS II-1, regla 45: vigilancia del aislamiento en redes aisladas.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

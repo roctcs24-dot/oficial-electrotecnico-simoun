@@ -76,6 +76,13 @@
         "componente": "ST"
       },
       {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 560,
+        "texto": "F1 ALUMBRADO PASILLO\nF2 TOMAS CAMAROTES\nF3 COCINA OFICIALES",
+        "tam": 15
+      },
+      {
         "tipo": "cerradura",
         "x": 90,
         "y": 600
@@ -90,6 +97,27 @@
       "componente": "CA",
       "param": "falla_mohm",
       "valor": 0.0005
+    },
+    {
+      "id": "corto_luminaria",
+      "texto": "Portalámparas quemado en una luminaria del pasillo: cortocircuito",
+      "componente": "E1",
+      "param": "corto",
+      "valor": true
+    },
+    {
+      "id": "fuga_toma",
+      "texto": "Agua en una toma de camarote: fuga a la carcasa",
+      "componente": "X1",
+      "param": "fuga_ohm",
+      "valor": 300.0
+    },
+    {
+      "id": "estufa",
+      "texto": "Estufa portátil enchufada en el circuito de la cocina: sobrecarga",
+      "componente": "X3",
+      "param": "ohm",
+      "valor": 4.25
     }
   ],
   "circuito": "tablero_habitabilidad_110",
@@ -125,6 +153,30 @@
     "CA": [
       440,
       700
+    ],
+    "F1": [
+      1000,
+      700
+    ],
+    "F2": [
+      1300,
+      700
+    ],
+    "F3": [
+      1600,
+      700
+    ],
+    "E1": [
+      900,
+      1150
+    ],
+    "X1": [
+      1300,
+      1150
+    ],
+    "X3": [
+      1650,
+      1150
     ]
   }
 }

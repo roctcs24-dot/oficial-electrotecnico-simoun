@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="220" viewBox="0 0 300 220">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2e5e4"/><stop offset="1" stop-color="#a7acaf"/></linearGradient>
+    <linearGradient id="blanco" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbfbf8"/><stop offset="1" stop-color="#d5d8d6"/></linearGradient>
+    <linearGradient id="tubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#eef1f0"/><stop offset="1" stop-color="#c9cdcb"/></linearGradient>
+    <linearGradient id="inox" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6e9ea"/><stop offset="0.5" stop-color="#b9bec1"/><stop offset="1" stop-color="#8d9396"/></linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="borne"><rect x="-16" y="-15" width="32" height="30" rx="3" fill="#2b2f32"/><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-5,0 H5" stroke="#3b4043" stroke-width="2.4" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="20" y="10" width="260" height="120" rx="10" fill="url(#blanco)" stroke="#8a9094" stroke-width="2"/>
+  <circle cx="95" cy="70" r="38" fill="#eceeeb" stroke="#9aa0a3" stroke-width="2"/>
+  <circle cx="205" cy="70" r="38" fill="#eceeeb" stroke="#9aa0a3" stroke-width="2"/>
+  <rect x="84" y="56" width="6" height="26" rx="2" fill="#3a3f43"/><rect x="100" y="56" width="6" height="26" rx="2" fill="#3a3f43"/>
+  <rect x="194" y="56" width="6" height="26" rx="2" fill="#3a3f43"/><rect x="210" y="56" width="6" height="26" rx="2" fill="#3a3f43"/>
+  <rect x="30" y="150" width="240" height="44" rx="4" fill="#3a4044"/>
+  <use xlink:href="#borne" x="70" y="172"/>
+  <use xlink:href="#borne" x="150" y="172"/>
+  <use xlink:href="#borne" x="230" y="172"/>
+</svg>

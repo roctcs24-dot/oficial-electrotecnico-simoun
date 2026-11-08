@@ -51,6 +51,12 @@ func _init(contenido_juego: Contenido, id_mision: String, danos_previos := {}) -
 
 # --- Lecturas del panel ---
 
+## La prueba en servicio es de un motor con su contactor y su relé, o de un circuito de
+## distribución: "prueba": {"interruptores": [...], "condiciones": [...], "observar_s"}.
+func es_motor() -> bool:
+	return datos["prueba"].has("motor")
+
+
 func motor() -> SimMotorTrifasico:
 	return mesa.sim.componente(datos["prueba"]["motor"])
 
@@ -64,6 +70,9 @@ func contactor() -> SimContactor:
 
 
 func corrientes() -> Array:
+	if not es_motor():
+		var f: SimGuardamotor = mesa.sim.componente(datos["prueba"]["medir"])
+		return [f.corriente(mesa.sim.solucion, 0), f.corriente(mesa.sim.solucion, 1), f.corriente(mesa.sim.solucion, 2)]
 	var r := rele()
 	return [r.corriente(mesa.sim.solucion, 0), r.corriente(mesa.sim.solucion, 1), r.corriente(mesa.sim.solucion, 2)]
 
@@ -76,6 +85,8 @@ func corriente_maxima() -> float:
 
 
 func i_nominal() -> float:
+	if not es_motor():
+		return float(mesa.sim.componente(datos["prueba"]["medir"]).params["ajuste_a"])
 	return float(motor().params["i_delta"])
 
 
@@ -87,7 +98,7 @@ func tiene_monitor() -> bool:
 func monitor_mohm() -> float:
 	var m: Dictionary = datos.get("monitor", {})
 	var resto := float(m.get("resto_mohm", 25.0))
-	if not contactor().cerrado():
+	if not es_motor() or not contactor().cerrado():
 		return resto
 	var minimo := resto
 	for r: float in motor().params["aislamiento_mohm"]:
@@ -117,15 +128,17 @@ func aislador_cerrado(pieza: String) -> bool:
 			return c.estado["cerrado"]
 		"fuente_trifasica":
 			return c.estado["activa"]
-	return c.estado["encendido"]
+	return c.estado["encendido"] and not c.estado.get("disparado", false)
 
 
 func tiene_candado(pieza: String) -> bool:
 	return candados.has(pieza)
 
 
+## Los aisladores que hay que bloquear: todos, o los de "bloqueo" si la misión lo indica, como
+## el interruptor de un solo circuito de un tablero de distribución.
 func bloqueado() -> bool:
-	for a in aisladores():
+	for a in datos.get("bloqueo", aisladores()):
 		if not candados.has(a):
 			return false
 	return true
@@ -151,7 +164,7 @@ func accionar_aislador(pieza: String, cerrar: bool) -> Dictionary:
 	if cerrar:
 		if hubo_bloqueo and not hechos.has("aviso_energizar"):
 			resultado = _falta("energizar_sin_aviso")
-	elif contactor().cerrado() and absf(motor().rpm()) > 5.0:
+	elif es_motor() and contactor().cerrado() and absf(motor().rpm()) > 5.0:
 		resultado = _falta("abrir_con_carga")
 	match c.tipo():
 		"seccionador":
@@ -159,6 +172,9 @@ func accionar_aislador(pieza: String, cerrar: bool) -> Dictionary:
 		"fuente_trifasica":
 			c.estado["activa"] = cerrar
 		_:
+			# Un interruptor disparado se rearma llevando la maneta a OFF y después a ON.
+			if cerrar and c.estado.get("disparado", false):
+				(c as SimGuardamotor).accionar(false)
 			(c as SimGuardamotor).accionar(cerrar)
 	_reiniciar_verificacion()
 	return resultado
@@ -423,6 +439,11 @@ func procesar_observacion(limite_ms: int) -> Dictionary:
 
 
 func _en_marcha() -> bool:
+	if not es_motor():
+		for id: String in datos["prueba"]["interruptores"]:
+			if not (mesa.sim.componente(id) as SimGuardamotor).cerrado():
+				return false
+		return true
 	return contactor().cerrado() and absf(motor().rpm()) > 5.0
 
 
@@ -431,11 +452,12 @@ func _al_terminar_observacion() -> Dictionary:
 	var motivo := _motivo_prueba_fallida()
 	if motivo.is_empty() and transcurrido >= tiempo_de_prueba() - 0.01:
 		prueba_ok = true
-		return _aviso("hecho", "Prueba superada", "El equipo funcionó %s sin disparos, con corriente por debajo de la nominal." % _minutos(transcurrido))
+		var superada := "El equipo funcionó %s sin disparos, con corriente por debajo de la nominal." % _minutos(transcurrido)
+		return _aviso("hecho", "Prueba superada", datos["prueba"].get("superada", superada))
 	if motivo.is_empty():
 		return _aviso("aviso", "Observación terminada", "Transcurrieron %s sin disparos. Para dar por buena la prueba, observe %s de una vez." % [_minutos(transcurrido), _minutos(tiempo_de_prueba())])
 	# Con el relé fuera de su ajuste, nada corta la sobrecarga: el motor se calienta hasta el daño.
-	if not _extendida and float(rele().params["ajuste_a"]) > i_nominal() * MARGEN_CORRIENTE and _en_marcha() and corriente_maxima() > i_nominal() * MARGEN_CORRIENTE:
+	if es_motor() and not _extendida and float(rele().params["ajuste_a"]) > i_nominal() * MARGEN_CORRIENTE and _en_marcha() and corriente_maxima() > i_nominal() * MARGEN_CORRIENTE:
 		_extendida = true
 		_falta("ajuste_alterado")
 		_observar_restante = EXTENSION_SIN_PROTECCION_S
@@ -449,6 +471,8 @@ func _al_terminar_observacion() -> Dictionary:
 ## "" si el equipo se comporta bien ahora mismo; si no, lo que se observa.
 func _motivo_prueba_fallida() -> String:
 	var p: Dictionary = datos["prueba"]
+	if not es_motor():
+		return _motivo_circuito(p)
 	if motor().quemado():
 		return "El motor está quemado"
 	if rele().estado["disparado"]:
@@ -463,6 +487,29 @@ func _motivo_prueba_fallida() -> String:
 		return "El ajuste del relé supera la corriente de la placa"
 	if tiene_monitor() and monitor_mohm() < MINIMO_MONITOR_MOHM:
 		return "El monitor de aislamiento sigue en alarma"
+	return ""
+
+
+## Prueba de un circuito de distribución: interruptores cerrados y sin disparar, tensiones en
+## los consumidores y condiciones sobre parámetros, como el aislamiento de una toma.
+func _motivo_circuito(p: Dictionary) -> String:
+	for id: String in p["interruptores"]:
+		var f: SimGuardamotor = mesa.sim.componente(id)
+		if f.estado["disparado"]:
+			return "El interruptor %s disparó" % id
+		if not f.cerrado():
+			return "El interruptor %s está abierto" % id
+	for c: Dictionary in p.get("condiciones", []):
+		if c.has("a"):
+			var v := mesa.sim.solucion.entre(c["a"], c["b"]).modulo()
+			if v < float(c["min"]):
+				return c["falla"]
+		elif c.has("param"):
+			if float(mesa.sim.componente(c["componente"]).params[c["param"]]) < float(c["min"]):
+				return c["falla"]
+		elif c.has("corriente_max"):
+			if corriente_maxima() > float(c["corriente_max"]):
+				return c["falla"]
 	return ""
 
 

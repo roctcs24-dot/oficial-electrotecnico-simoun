@@ -1,0 +1,80 @@
+{
+  "id": "h1_corto_alumbrado",
+  "titulo": "Pasillo a oscuras",
+  "resumen": "El interruptor F1 del alumbrado del pasillo dispara en cuanto se rearma.",
+  "equipo": "Tablero de 110 V de habitabilidad",
+  "tablero": "habitabilidad_110",
+  "reporte": {
+    "de": "Primer oficial",
+    "texto": "El pasillo de habitabilidad de la cubierta superior se ha quedado a oscuras. El cocinero dice que oyó un chasquido en una luminaria justo antes. En el tablero de 110 V, el {{interruptor_automatico}} F1 del alumbrado del pasillo está disparado y, al rearmarlo, vuelve a disparar al instante. Encuentre la causa, repárela y deje el pasillo con luz.",
+    "nota": "Red de 110 V aislada. F1: curva B, 10 A, 2 polos; circuito de unos 600 W: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "E1": { "corto": true } },
+  "estado_inicial": { "F1": { "encendido": true, "disparado": true } },
+  "aisladores": ["F1", "F2", "F3"],
+  "bloqueo": ["F1"],
+  "nombres_aisladores": { "F1": "F1, alumbrado del pasillo", "F2": "F2, tomas de los camarotes", "F3": "F3, cocina de oficiales" },
+  "verificacion": {
+    "fuente_conocida": ["Q0.2", "Q0.4"],
+    "puntos": [
+      { "texto": "Salida de F1: entre polos", "a": "F1.2", "b": "F1.4" },
+      { "texto": "Salida de F1: polo 2 a masa", "a": "F1.2", "b": "PE.PE" },
+      { "texto": "Salida de F1: polo 4 a masa", "a": "F1.4", "b": "PE.PE" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se abrió una luminaria del pasillo con F1 sin bloquear. Otro tripulante, a oscuras, rearmó F1 en el tablero y el oficial recibió una descarga de 110 V en el portalámparas.",
+      "causa": "El circuito podía volver a energizarse desde el tablero. Cualquiera que vea un interruptor disparado tiende a rearmarlo.",
+      "como_evitar": "• Abra F1 y coloque su candado y su tarjeta.\n• Verifique la ausencia de tensión en la salida de F1.\n• Avise de que el alumbrado del pasillo está en reparación."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "multimetro", "modos": ["ohm", "continuidad"], "a": "F1.2", "b": "F1.4" },
+    { "accion": "revisar_luminarias" }
+  ],
+  "remediciones": [
+    { "instrumento": "multimetro", "a": "F1.2", "b": "F1.4", "despues_de": "cambiar_portalamparas" }
+  ],
+  "pistas": [
+    "Un interruptor que dispara al instante al rearmarlo indica un cortocircuito. No lo rearme más veces: cada intento es un arco en el punto de la falla.",
+    "Bloquee F1, verifique la ausencia de tensión y mida con el multímetro en ohmios entre las dos salidas de F1, F1.2 y F1.4. Con el circuito sano se miden unos 20 Ω, los de las luminarias.",
+    "Abra las luminarias del pasillo una a una, empezando por la del chasquido."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué dispara F1 al instante?",
+    "opciones": [
+      { "texto": "Cortocircuito en una luminaria: un portalámparas quemado une los dos conductores", "correcta": true, "explicacion": "Entre las salidas de F1 se miden casi 0 Ω en lugar de unos 20 Ω: el circuito tiene un corto. Con 110 V, la corriente supera de lejos los 50 A del disparo magnético de un B10." },
+      { "texto": "Sobrecarga: hay demasiadas luminarias en el circuito", "explicacion": "Una sobrecarga dispara por el térmico al cabo de un tiempo, no al instante. Y el circuito funcionaba hasta el chasquido." },
+      { "texto": "El interruptor F1 está averiado", "explicacion": "La medida entre sus salidas, con F1 abierto, no pasa por F1: el corto está en el circuito." },
+      { "texto": "Una fase del tablero está a masa", "explicacion": "En una red aislada, una primera falla a masa no hace disparar ningún interruptor: la ven las lámparas de tierra." }
+    ]
+  },
+  "acciones": [
+    { "id": "revisar_luminarias", "boton": "Abrir las luminarias del pasillo una a una", "titulo": "Portalámparas quemado", "texto": "En la tercera luminaria, la del chasquido, un portalámparas está carbonizado y los dos terminales se tocan. La junta de la tapa está cuarteada y hay restos de humedad." },
+    { "id": "cambiar_portalamparas", "boton": "Cambiar el portalámparas y la junta de la luminaria", "titulo": "Luminaria reparada", "texto": "Se cambió el portalámparas quemado por uno igual, se rehízo la conexión y se puso una junta nueva en la tapa estanca.", "efecto": [{ "op": "param", "id": "E1", "clave": "corto", "valor": false }] },
+    { "id": "cambiar_f1", "boton": "Cambiar F1 por un interruptor nuevo", "titulo": "Repuesto innecesario", "texto": "El interruptor nuevo dispara igual: el corto sigue en el circuito. F1 hacía su trabajo.", "innecesaria": true },
+    { "id": "subir_f1", "boton": "Cambiar F1 por un C16 para que no dispare", "titulo": "Protección alterada", "texto": "Un C16 también dispara con un corto franco. Y con una falla menor dejaría pasar más corriente de la que aguanta el cable del alumbrado. Se volvió a poner un B10.", "innecesaria": true, "tema": "ajuste_alterado" }
+  ],
+  "prueba": {
+    "interruptores": ["F1", "F2", "F3"],
+    "medir": "F1",
+    "observar_s": 60,
+    "superada": "El alumbrado del pasillo estuvo encendido un minuto con F1 cerrado y sin disparos.",
+    "condiciones": [
+      { "a": "E1.A", "b": "E1.B", "min": 100, "falla": "El alumbrado del pasillo no tiene tensión" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Resistencia entre las salidas de F1 antes de reparar", "opciones": ["Casi 0 Ω: cortocircuito", "Unos 20 Ω", "Abierto"], "correcta": 0, "explicacion": "El portalámparas quemado unía los dos conductores." },
+      { "etiqueta": "Causa", "opciones": ["Sobrecarga del circuito", "Portalámparas quemado por humedad en una luminaria del pasillo", "Interruptor F1 averiado"], "correcta": 1, "explicacion": "La junta cuarteada dejó entrar humedad." },
+      { "etiqueta": "Reparación", "opciones": ["Cambio de F1 por un C16", "Cambio del portalámparas y de la junta de la luminaria", "Ninguna: se rearmó F1"], "correcta": 1, "explicacion": "Se repara la falla, no la protección." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones Interruptores automáticos, fusibles y diferenciales y Alumbrado normal y de emergencia.",
+    "Ficha del interruptor automático.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

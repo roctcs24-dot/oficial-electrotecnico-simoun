@@ -95,7 +95,7 @@ func _panel_mando() -> void:
 	for id: String in mesa.piezas:
 		var c := mesa.sim.componente(id)
 		var en_fallo: bool = c.tipo() == "arrancador_suave" and c.estado.get("fase", "") == "fallo"
-		if en_fallo or (c.tipo() in ["guardamotor", "rele_termico"] and c.estado.get("disparado", false)):
+		if en_fallo or (c.tipo() in ["guardamotor", "rele_termico", "interruptor_automatico"] and c.estado.get("disparado", false)):
 			if not protecciones:
 				_panel.add_child(_rotulo("Protecciones disparadas"))
 				protecciones = true
@@ -104,8 +104,21 @@ func _panel_mando() -> void:
 				_agregar_rearme_arrancador(c)
 			elif c.tipo() == "rele_termico":
 				_panel.add_child(_boton("Rearmar el relé térmico %s" % id, _rearmar_rele.bind(id)))
+			elif c.tipo() == "interruptor_automatico":
+				_panel.add_child(_boton("Rearmar el interruptor %s (maneta a OFF y a ON)" % id, _rearmar_guardamotor.bind(id)))
 			else:
 				_panel.add_child(_boton("Rearmar el guardamotor %s" % id, _rearmar_guardamotor.bind(id)))
+	# Interruptores de los circuitos de distribución: se abren y se cierran desde aquí.
+	var circuitos := false
+	for id: String in mesa.piezas:
+		var c := mesa.sim.componente(id)
+		if c.tipo() != "interruptor_automatico" or c.estado.get("disparado", false):
+			continue
+		if not circuitos:
+			_panel.add_child(_rotulo("Circuitos"))
+			circuitos = true
+		var q := c as SimGuardamotor
+		_panel.add_child(_boton("%s %s" % ["Abrir" if q.cerrado() else "Cerrar", id], _maniobrar_circuito.bind(id)))
 	var senales: Array = tablero.get("senales", [])
 	if not senales.is_empty():
 		_panel.add_child(_rotulo("Señales de otros equipos"))
@@ -142,6 +155,12 @@ func _rearmar_guardamotor(id: String) -> void:
 	_reconstruir_panel()
 
 
+func _maniobrar_circuito(id: String) -> void:
+	var q: SimGuardamotor = mesa.sim.componente(id)
+	q.accionar(not q.cerrado())
+	_reconstruir_panel()
+
+
 func _alternar_senal(id: String) -> void:
 	var sel: SimSelector = mesa.sim.componente(id)
 	sel.girar(-1 if sel.cerrado("13-14") else 1)
@@ -175,6 +194,10 @@ func _panel_pieza() -> void:
 	match c.tipo():
 		"guardamotor":
 			_agregar_ajuste(c, "Ajuste térmico", 1.0, maxf(40.0, float(c.params["ajuste_a"]) * 2.0))
+		"interruptor_automatico":
+			_panel.add_child(_etiqueta("Curva %s · In %s A · %d polos · poder de corte %s kA." % [c.params["curva"], TextoTecnico.numero(c.params["in_a"], 0), int(c.params["polos"]), TextoTecnico.numero(c.params["poder_corte_ka"], 0)], "Nota"))
+		"consumidor":
+			_panel.add_child(_etiqueta("Consume unos %s W a %s V." % [TextoTecnico.numero((c as SimConsumidor).potencia(mesa.sim.solucion), 0), TextoTecnico.numero(c.params["v_nominal"], 0)], "Nota"))
 		"rele_termico":
 			_agregar_ajuste(c, "Ajuste", 1.0, maxf(40.0, float(c.params["ajuste_a"]) * 2.0))
 			if c.estado["disparado"]:

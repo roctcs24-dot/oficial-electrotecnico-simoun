@@ -378,6 +378,8 @@ func cargar_circuito(circuito: Dictionary, posiciones: Dictionary) -> void:
 
 
 func _catalogo_de(c: SimComponente) -> String:
+	if c.tipo() == "consumidor":
+		return c.params["pieza"]
 	match c.tipo():
 		"pulsador":
 			return "pulsador_na" if c.params["contacto"] == "NA" else "pulsador_nc"
@@ -440,10 +442,12 @@ func estado_pieza(id: String) -> String:
 			return "Disparado" if e["disparado"] else "Normal"
 		"arrancador_suave":
 			return " · ".join((c as SimArrancadorSuave).pantalla())
-		"guardamotor":
+		"guardamotor", "interruptor_automatico":
 			if e["disparado"]:
 				return "Disparado"
 			return "Cerrado" if e["encendido"] else "Abierto"
+		"consumidor":
+			return "Con tensión" if e["alimentado"] else "Sin tensión"
 		"motor_trifasico":
 			if e["quemado"]:
 				return "Quemado"

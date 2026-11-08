@@ -1,0 +1,80 @@
+{
+  "id": "h3_sobrecarga_cocina",
+  "titulo": "F3 de la cocina dispara a los pocos minutos",
+  "resumen": "El interruptor de la cocina de oficiales aguanta unos minutos al rearmarlo y vuelve a disparar.",
+  "equipo": "Tablero de 110 V de habitabilidad",
+  "tablero": "habitabilidad_110",
+  "reporte": {
+    "de": "Cocinero",
+    "texto": "La cocina eléctrica de la cámara de oficiales se apaga sola. En el tablero de 110 V, el interruptor F3 está disparado. Se rearmó dos veces y en las dos aguantó unos minutos y volvió a disparar. Con el frío de la noche, alguien dejó una estufa portátil en la cámara. Encuentre la causa y deje la cocina funcionando.",
+    "nota": "F3: curva C, 16 A, 2 polos; cocina de unos 1350 W a 110 V: valores típicos — verificar a bordo."
+  },
+  "params_iniciales": { "X3": { "ohm": 4.25 } },
+  "estado_inicial": { "F3": { "encendido": true, "disparado": true } },
+  "aisladores": ["F1", "F2", "F3"],
+  "bloqueo": ["F3"],
+  "nombres_aisladores": { "F1": "F1, alumbrado del pasillo", "F2": "F2, tomas de los camarotes", "F3": "F3, cocina de oficiales" },
+  "verificacion": {
+    "fuente_conocida": ["Q0.2", "Q0.6"],
+    "puntos": [
+      { "texto": "Salida de F3: entre polos", "a": "F3.2", "b": "F3.4" },
+      { "texto": "Salida de F3: polo 2 a masa", "a": "F3.2", "b": "PE.PE" },
+      { "texto": "Salida de F3: polo 4 a masa", "a": "F3.4", "b": "PE.PE" }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se abrió la caja de conexiones de la cocina con F3 sin bloquear. El cocinero rearmó F3 para terminar la cena y el oficial recibió una descarga de 110 V.",
+      "causa": "El circuito podía volver a energizarse desde el tablero.",
+      "como_evitar": "• Abra F3 y coloque su candado y su tarjeta.\n• Verifique la ausencia de tensión en la salida de F3.\n• Avise al cocinero de que la cocina queda fuera de servicio."
+    }
+  },
+  "evidencias": [
+    { "instrumento": "multimetro", "modos": ["ohm", "continuidad"], "a": "F3.2", "b": "F3.4" },
+    { "accion": "revisar_cocina" }
+  ],
+  "remediciones": [
+    { "instrumento": "multimetro", "a": "F3.2", "b": "F3.4", "despues_de": "retirar_estufa" }
+  ],
+  "pistas": [
+    "Un interruptor que aguanta unos minutos y dispara es su disparo térmico: una sobrecarga, no un cortocircuito.",
+    "Bloquee F3, verifique la ausencia de tensión y mida en ohmios entre F3.2 y F3.4. La cocina sola mide unos 9 Ω: a 110 V, unos 12 A. Menos ohmios es más corriente.",
+    "Revise qué hay conectado al circuito de la cocina además de la cocina."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué dispara F3?",
+    "opciones": [
+      { "texto": "Sobrecarga: una estufa portátil enchufada en el circuito de la cocina suma unos 14 A a los 12 A de la cocina", "correcta": true, "explicacion": "Entre las salidas de F3 se miden unos 4,3 Ω en lugar de 9 Ω: a 110 V son unos 26 A, por encima de los 16 A de F3. El disparo térmico abre al cabo de unos minutos." },
+      { "texto": "Cortocircuito en la cocina", "explicacion": "Un cortocircuito dispararía al instante por el magnético, y la medida sería casi 0 Ω." },
+      { "texto": "F3 está averiado y dispara con menos corriente", "explicacion": "La medida muestra más carga de la normal: F3 dispara porque la corriente supera su calibre." },
+      { "texto": "Falta una fase en el tablero", "explicacion": "Los otros circuitos y la propia cocina funcionan hasta el disparo." }
+    ]
+  },
+  "acciones": [
+    { "id": "revisar_cocina", "boton": "Revisar qué hay conectado al circuito de la cocina", "titulo": "Estufa en la toma de la cocina", "texto": "En la toma de servicio de la cocina, que va por el mismo circuito F3, hay una estufa portátil de 1500 W enchufada con un ladrón. La clavija del ladrón está caliente y decolorada." },
+    { "id": "retirar_estufa", "boton": "Retirar la estufa y el ladrón, y cambiar la clavija dañada", "titulo": "Sobrecarga eliminada", "texto": "Se retiraron la estufa y el ladrón, se cambió la toma, que tenía los contactos recalentados, y se informó al primer oficial: las estufas portátiles no se conectan a los circuitos de la cocina.", "efecto": [{ "op": "param", "id": "X3", "clave": "ohm", "valor": 9.0 }] },
+    { "id": "subir_f3", "boton": "Cambiar F3 por un C25 para que aguante", "titulo": "Protección alterada", "texto": "El cable del circuito está calculado para la protección de 16 A. Con un C25 el cable se calentaría sin que nada lo cortara: riesgo de incendio. Se volvió a poner el C16.", "innecesaria": true, "tema": "ajuste_alterado" }
+  ],
+  "prueba": {
+    "interruptores": ["F1", "F2", "F3"],
+    "medir": "F3",
+    "observar_s": 300,
+    "superada": "La cocina trabajó cinco minutos con F3 cerrado, sin disparos y con la corriente por debajo de 16 A.",
+    "condiciones": [
+      { "corriente_max": 16, "falla": "La corriente de F3 supera sus 16 A" },
+      { "a": "X3.A", "b": "X3.B", "min": 100, "falla": "La cocina no tiene tensión" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Tipo de disparo", "opciones": ["Magnético, al instante", "Térmico, al cabo de unos minutos", "Diferencial"], "correcta": 1, "explicacion": "Una sobrecarga moderada dispara por el térmico." },
+      { "etiqueta": "Resistencia entre las salidas de F3 antes de reparar", "opciones": ["Unos 4,3 Ω: unos 26 A a 110 V", "Unos 9 Ω", "Casi 0 Ω"], "correcta": 0, "explicacion": "La estufa en paralelo con la cocina bajaba la resistencia del circuito." },
+      { "etiqueta": "Reparación", "opciones": ["F3 cambiado por un C25", "Estufa y ladrón retirados y toma cambiada", "Ninguna"], "correcta": 1, "explicacion": "Se elimina la sobrecarga sin tocar la protección del cable." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección Interruptores automáticos, fusibles y diferenciales: disparo térmico y magnético.",
+    "IEC 60092-352: selección e instalación de cables.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

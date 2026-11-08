@@ -46,6 +46,7 @@
         "aprender": { "lecciones": ["d1_transformadores", "d2_protecciones", "d3_alumbrado", "d4_baterias_24v"],
           "fichas": ["transformador", "interruptor_automatico", "diferencial", "baterias_24v"] },
         "taller": { "pantalla": "tableros", "detalle": "Tableros de 220 V y 110 V del buque y banco libre", "tableros": ["distribucion_220", "habitabilidad_110"] },
+        "guardia": { "misiones": ["h1_corto_alumbrado", "h2_tierra_tomas", "h3_sobrecarga_cocina"] },
         "examen": { "minijuegos": ["simbolos_distribucion"] }
       }
     },

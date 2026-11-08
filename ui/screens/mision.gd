@@ -143,9 +143,12 @@ func _marca(hecho: bool, texto: String) -> String:
 
 func _seccion_mando() -> void:
 	_panel.add_child(_rotulo("Mando local"))
-	_agregar_pulsador("S1", "Marcha (S1): mantener pulsado")
-	_agregar_pulsador("S0", "Parada (S0): mantener pulsado")
-	_panel.add_child(_boton("Rearmar el relé térmico", _rearmar_rele.bind(mision.datos["prueba"]["rele"])))
+	if mision.es_motor():
+		_agregar_pulsador("S1", "Marcha (S1): mantener pulsado")
+		_agregar_pulsador("S0", "Parada (S0): mantener pulsado")
+		_panel.add_child(_boton("Rearmar el relé térmico", _rearmar_rele.bind(mision.datos["prueba"]["rele"])))
+	else:
+		_panel.add_child(_etiqueta("Los interruptores de los circuitos se abren, se cierran y se rearman en «Aislar y bloquear». Un interruptor disparado se rearma llevando su maneta a OFF y después a ON.", "Nota"))
 	var epp := _boton(_marca(mision.hechos.has("epp"), "Colocarse el EPP para trabajar con tensión"), _colocar_epp)
 	epp.disabled = mision.hechos.has("epp")
 	_panel.add_child(epp)

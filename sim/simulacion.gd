@@ -20,6 +20,7 @@ static func tipos() -> Dictionary:
 		"transformador_mando": SimTransformadorMando,
 		"guardamotor": SimGuardamotor,
 		"interruptor_automatico": SimInterruptorAutomatico,
+		"consumidor": SimConsumidor,
 		"fusible": SimFusible,
 		"contactor": SimContactor,
 		"rele_termico": SimReleTermico,
