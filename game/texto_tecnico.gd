@@ -39,7 +39,8 @@ static func expandir(texto: String, glosario: Dictionary, vistos: Dictionary) ->
 		# {{Estator}} con mayúscula inicial sirve para empezar una frase.
 		if escrito != id:
 			nombre = nombre.substr(0, 1).to_upper() + nombre.substr(1)
-		if vistos.has(id):
+		# Si el término es igual en los dos idiomas, como «contactor», no se repite en inglés.
+		if vistos.has(id) or nombre.to_lower() == str(termino["en"]).to_lower():
 			resultado += nombre
 		else:
 			vistos[id] = true

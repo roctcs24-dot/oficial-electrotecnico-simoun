@@ -294,3 +294,9 @@ func test_el_ingles_solo_aparece_la_primera_vez() -> String:
 		A.cierto(dos == "Otra bobina.", "misma ficha: %s" % dos),
 		A.cierto(nuevo == "Otra bobina ([i]coil[/i]).", "otra ficha vuelve a mostrarlo: %s" % nuevo),
 	])
+
+
+func test_termino_igual_en_ingles_no_se_repite() -> String:
+	var glosario := {"contactor": {"es": "contactor", "en": "contactor"}, "power_block": {"es": "power block", "en": "power block"}}
+	var uno := TextoTecnico.expandir("El {{contactor}} y el {{power_block}}.", glosario, {})
+	return A.cierto(uno == "El contactor y el power block.", "no debe repetir el término: %s" % uno)

@@ -9,6 +9,8 @@ const LECTURAS_POR_SEGUNDO := 4.0
 const CUADROS_ENCUADRE := 4
 const TAMANO_PESTANA_APRETADA := 14
 const MARGEN_PESTANA_APRETADA := 4.0
+## Ancho de pantalla desde el que cinco pestañas caben con la letra normal.
+const ANCHO_PESTANAS_HOLGADAS := 1200.0
 
 var mesa: MesaTaller
 var vista: VistaMesa
@@ -295,7 +297,8 @@ func _apretar_pestana(b: Button) -> void:
 			caja.content_margin_left = MARGEN_PESTANA_APRETADA
 			caja.content_margin_right = MARGEN_PESTANA_APRETADA
 			b.add_theme_stylebox_override(estado, caja)
-	if raiz.vertical:
+	# En horizontal, el panel lateral de un celular también es estrecho para cinco pestañas.
+	if raiz.vertical or get_viewport_rect().size.x < ANCHO_PESTANAS_HOLGADAS:
 		b.add_theme_font_size_override("font_size", TAMANO_PESTANA_APRETADA)
 
 

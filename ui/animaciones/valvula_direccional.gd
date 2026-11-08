@@ -90,7 +90,7 @@ func dibujar() -> void:
 					lienzo.draw_line(centro + Vector2(celda * x - 6.0, celda * 0.35), centro + Vector2(celda * x + 6.0, celda * 0.35), Tema.TINTA, 2.0)
 			2:
 				flecha(centro + Vector2(-celda * 0.25, celda * 0.35), centro + Vector2(celda * 0.25, -celda * 0.35), Tema.TINTA, 2.0)
-				flecha(centro + Vector2(celda * 0.25, celda * 0.35), centro + Vector2(-celda * 0.25, -celda * 0.35), Tema.TINTA, 2.0)
+				flecha(centro + Vector2(-celda * 0.25, -celda * 0.35), centro + Vector2(celda * 0.25, celda * 0.35), Tema.TINTA, 2.0)
 	# Bobinas a los lados.
 	for lado in [-1, 1]:
 		var x0: float = c.x + lado * (celda * 1.5 + 4.0) + desplazamiento + (0.0 if lado > 0 else -36.0)

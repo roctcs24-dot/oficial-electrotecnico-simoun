@@ -21,7 +21,7 @@
     {
       "titulo": "Dónde entra la electricidad",
       "bloques": [
-        { "tipo": "texto", "texto": "Aunque la fuerza es hidráulica, el oficial electrotécnico se ocupa de:\n• [b]El mando:[/b] palancas, selectores y joysticks que dan 24 V DC a las bobinas de las válvulas direccionales, o una señal proporcional a sus amplificadores.\n• [b]Las seguridades:[/b] paradas de emergencia, {{final_carrera}} que detienen la pluma o el winche al final de su recorrido, presostatos y termostatos del aceite.\n• [b]Los arranques y alarmas de la central:[/b] baja presión, alto nivel de temperatura del aceite, filtro sucio, nivel bajo del tanque.\n• [b]El alumbrado de cubierta[/b] para la maniobra nocturna." },
+        { "tipo": "texto", "texto": "Aunque la fuerza es hidráulica, el oficial electrotécnico se ocupa de:\n• [b]El mando:[/b] palancas, selectores y joysticks que dan 24 V DC a las bobinas de las válvulas direccionales, o una señal proporcional a sus amplificadores.\n• [b]Las seguridades:[/b] paradas de emergencia, {{final_carrera}} que detienen la pluma o el winche al final de su recorrido, presostatos y termostatos del aceite.\n• [b]Los arranques y alarmas de la central:[/b] baja presión, alta temperatura del aceite, filtro sucio, nivel bajo del tanque.\n• [b]El alumbrado de cubierta[/b] para la maniobra nocturna." },
         {
           "tipo": "quiz",
           "tema": "hidraulica_electrico",

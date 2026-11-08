@@ -24,7 +24,7 @@
         "x": 400,
         "y": 170,
         "texto": "MANDO CON TENSIÓN",
-        "tam": 15
+        "tam": 28
       },
       {
         "tipo": "luz",
@@ -38,7 +38,7 @@
         "x": 400,
         "y": 350,
         "texto": "ARRIAR   0   VIRAR",
-        "tam": 16
+        "tam": 30
       },
       {
         "tipo": "selector",
@@ -51,7 +51,7 @@
         "x": 400,
         "y": 580,
         "texto": "PARADA DE EMERGENCIA",
-        "tam": 15
+        "tam": 28
       },
       {
         "tipo": "seta",

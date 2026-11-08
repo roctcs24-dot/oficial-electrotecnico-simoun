@@ -51,8 +51,8 @@
     ]
   },
   "acciones": [
-    { "id": "revisar_cocina", "boton": "Revisar qué hay conectado al circuito de la cocina", "titulo": "Estufa en la toma de la cocina", "texto": "En la toma de servicio de la cocina, que va por el mismo circuito F3, hay una estufa portátil de 1500 W enchufada con un ladrón. La clavija del ladrón está caliente y decolorada." },
-    { "id": "retirar_estufa", "boton": "Retirar la estufa y el ladrón, y cambiar la clavija dañada", "titulo": "Sobrecarga eliminada", "texto": "Se retiraron la estufa y el ladrón, se cambió la toma, que tenía los contactos recalentados, y se informó al primer oficial: las estufas portátiles no se conectan a los circuitos de la cocina.", "efecto": [{ "op": "param", "id": "X3", "clave": "ohm", "valor": 9.0 }] },
+    { "id": "revisar_cocina", "boton": "Revisar qué hay conectado al circuito de la cocina", "titulo": "Estufa en la toma de la cocina", "texto": "En la toma de servicio de la cocina, que va por el mismo circuito F3, hay una estufa portátil de 1500 W enchufada con un ladrón. La clavija del ladrón y la toma están calientes y decoloradas." },
+    { "id": "retirar_estufa", "boton": "Retirar la estufa y el ladrón, y cambiar la toma recalentada", "titulo": "Sobrecarga eliminada", "texto": "Se retiraron la estufa y el ladrón, se cambió la toma, que tenía los contactos recalentados, y se informó al primer oficial: las estufas portátiles no se conectan a los circuitos de la cocina.", "efecto": [{ "op": "param", "id": "X3", "clave": "ohm", "valor": 9.0 }] },
     { "id": "subir_f3", "boton": "Cambiar F3 por un C25 para que aguante", "titulo": "Protección alterada", "texto": "El cable del circuito está calculado para la protección de 16 A. Con un C25 el cable se calentaría sin que nada lo cortara: riesgo de incendio. Se volvió a poner el C16.", "innecesaria": true, "tema": "ajuste_alterado" }
   ],
   "prueba": {

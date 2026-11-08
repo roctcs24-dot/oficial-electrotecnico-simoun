@@ -24,7 +24,7 @@
         "x": 330,
         "y": 180,
         "texto": "R",
-        "tam": 16
+        "tam": 24
       },
       {
         "tipo": "luz",
@@ -38,7 +38,7 @@
         "x": 500,
         "y": 180,
         "texto": "S",
-        "tam": 16
+        "tam": 24
       },
       {
         "tipo": "luz",
@@ -52,7 +52,7 @@
         "x": 670,
         "y": 180,
         "texto": "T",
-        "tam": 16
+        "tam": 24
       },
       {
         "tipo": "luz",
@@ -66,7 +66,7 @@
         "x": 500,
         "y": 350,
         "texto": "PULSADOR\nDE TEST TIERRA",
-        "tam": 15
+        "tam": 19
       },
       {
         "tipo": "pulsador",
@@ -80,7 +80,7 @@
         "x": 500,
         "y": 560,
         "texto": "F1 ALUMBRADO PASILLO\nF2 TOMAS CAMAROTES\nF3 COCINA OFICIALES",
-        "tam": 15
+        "tam": 19
       },
       {
         "tipo": "cerradura",

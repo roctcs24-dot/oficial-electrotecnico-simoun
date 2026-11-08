@@ -57,6 +57,8 @@ func _capturar() -> void:
 		await _capturar_instrumentos(carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "tablero":
 		await _capturar_tablero(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "revision":
+		await _capturar_revision(raiz, carpeta)
 	else:
 		await _capturar_general(raiz, carpeta)
 	quit()
@@ -562,6 +564,54 @@ func _capturar_red(raiz: Raiz, carpeta: String) -> void:
 		raiz.volver()
 		raiz.ir_a("minijuego_simbolos", {"sistema": 6, "registro": "simbolos_electronica"})
 		await _guardar(carpeta, "red_simbolos", tam)
+		raiz.volver()
+
+
+## Recorrido por lo añadido en la v4 y la v5: sistemas, misiones de los tableros y el examen.
+func _capturar_revision(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		await _guardar(carpeta, "plano", tam)
+		for sis in [2, 5, 6]:
+			raiz.ir_a("sistema", {"id": sis})
+			await _guardar(carpeta, "sistema_%d" % sis, tam)
+			raiz.volver()
+		for sis in [2, 5]:
+			raiz.ir_a("guardia", {"id": sis})
+			await _guardar(carpeta, "guardia_%d" % sis, tam)
+			raiz.volver()
+			raiz.ir_a("examen", {"id": sis})
+			await _guardar(carpeta, "examen_%d" % sis, tam)
+			raiz.volver()
+		for id: String in ["h1_corto_alumbrado", "h3_sobrecarga_cocina", "p1_power_block_no_vira", "p2_mando_se_apaga"]:
+			raiz.ir_a("mision", {"id": id})
+			var p = raiz.pantalla_actual()
+			await _guardar(carpeta, id + "_reporte", tam)
+			p._elegir_pestana("proceso")
+			await _guardar(carpeta, id + "_proceso", tam)
+			p._desplazable_panel.scroll_vertical = 900
+			await _guardar(carpeta, id + "_proceso_abajo", tam)
+			p._elegir_pestana("pieza")
+			await _guardar(carpeta, id + "_equipo", tam)
+			p._elegir_pestana("medir")
+			await _guardar(carpeta, id + "_medir", tam)
+			p._elegir_pestana("libro")
+			await _guardar(carpeta, id + "_libro", tam)
+			raiz.volver()
+		raiz.ir_a("tablero", {"tablero": "power_block"})
+		var t = raiz.pantalla_actual()
+		var sim: SimSimulacion = t.mesa.sim
+		(sim.componente("Q0") as SimSeccionador).accionar(true)
+		(sim.componente("S1") as SimSelector).poner("VIRAR")
+		sim.avanzar_tiempo(4.0)
+		t._reconstruir_panel()
+		await _guardar(carpeta, "tablero_power_block", tam)
+		t._alternar_puerta()
+		await _guardar(carpeta, "tablero_power_block_interior", tam)
+		raiz.volver()
+		raiz.ir_a("prueba_examen", {"id": "v5"})
+		await _guardar(carpeta, "prueba_v5", tam)
 		raiz.volver()
 
 
