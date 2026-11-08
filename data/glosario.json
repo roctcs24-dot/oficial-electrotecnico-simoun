@@ -217,6 +217,19 @@
     "bateria_plomo": { "es": "batería de plomo-ácido", "en": "lead-acid battery", "def": "Batería de celdas de 2 V con placas de plomo en ácido sulfúrico. Desprende hidrógeno al cargarse." },
     "cargador_baterias": { "es": "cargador de baterías", "en": "battery charger", "def": "Rectificador que carga las baterías y mantiene su tensión de flotación; a menudo alimenta también los consumos de 24 V DC." },
     "tension_flotacion": { "es": "tensión de flotación", "en": "float voltage", "def": "Tensión que el cargador mantiene en una batería ya cargada para compensar su autodescarga, unos 2,25 V por celda en plomo-ácido." },
-    "ups": { "es": "sistema de alimentación ininterrumpida (SAI)", "en": "uninterruptible power supply, UPS", "def": "Equipo con baterías e inversor que mantiene la alimentación de equipos críticos durante un corte." }
+    "ups": { "es": "sistema de alimentación ininterrumpida (SAI)", "en": "uninterruptible power supply, UPS", "def": "Equipo con baterías e inversor que mantiene la alimentación de equipos críticos durante un corte." },
+    "central_hidraulica": { "es": "central hidráulica", "en": "hydraulic power unit, HPU", "def": "Conjunto de motor, bombas, tanque, filtros y válvulas que da el aceite a presión a la maquinaria de cubierta." },
+    "valvula_direccional": { "es": "válvula direccional", "en": "directional control valve", "def": "Válvula que, moviendo su corredera, envía el aceite a un lado u otro del motor o del cilindro, o lo bloquea." },
+    "corredera": { "es": "corredera", "en": "spool", "def": "Pieza que se desliza dentro de la válvula direccional y abre o cierra sus pasos de aceite." },
+    "conector_din": { "es": "conector de bobina DIN 43650", "en": "DIN 43650 solenoid connector", "def": "Conector rectangular que se atornilla sobre la bobina de una electroválvula; algunos llevan un LED y un supresor." },
+    "diodo_supresor": { "es": "diodo supresor", "en": "flyback diode, suppressor", "def": "Diodo en paralelo con una bobina de continua que absorbe la sobretensión al cortar su corriente." },
+    "final_carrera": { "es": "final de carrera", "en": "limit switch", "def": "Interruptor que acciona una pieza móvil al llegar a una posición, para detener o señalizar el movimiento." },
+    "power_block": { "es": "power block", "en": "power block", "def": "Roldana hidráulica suspendida de la pluma que recoge la red de cerco." },
+    "winche": { "es": "winche", "en": "winch", "def": "Máquina de tambor para virar o arriar un cabo o un cable, como la jareta de la red de cerco." },
+    "acumulador_hidraulico": { "es": "acumulador hidráulico", "en": "hydraulic accumulator", "def": "Recipiente con gas a presión que guarda aceite a presión. Mantiene presión aunque la central esté parada." },
+    "mando_proporcional": { "es": "mando proporcional", "en": "proportional control", "def": "Mando en el que la palanca regula la velocidad del movimiento, no solo su sentido." },
+    "reflector": { "es": "reflector", "en": "floodlight, searchlight", "def": "Proyector de gran potencia que alumbra la cubierta o el agua durante la maniobra." },
+    "halogenuros_metalicos": { "es": "lámpara de halogenuros metálicos", "en": "metal halide lamp", "def": "Lámpara de descarga de luz blanca; necesita balasto e ignitor y tarda minutos en encender del todo." },
+    "grado_proteccion": { "es": "grado de protección IP", "en": "ingress protection, IP code", "def": "Dos cifras que indican la protección contra sólidos y contra el agua, como IP56 o IP67 en cubierta." }
   }
 }

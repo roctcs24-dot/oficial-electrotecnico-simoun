@@ -1,0 +1,57 @@
+{
+  "id": "c2_mando_electrohidraulico",
+  "titulo": "Mando electrohidráulico: bobinas y finales de carrera",
+  "resumen": "Válvula direccional con bobinas de 24 V, conector DIN, pruebas de la bobina y finales de carrera.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La válvula direccional",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{valvula_direccional}} de cada movimiento tiene una {{corredera}} que dos muelles mantienen en el centro. A cada lado, una bobina de 24 V DC, rotuladas aquí Y1 y Y2:\n• Sin tensión en ninguna, la corredera queda centrada y el motor parado.\n• Con tensión en Y1, la corredera se desplaza: el aceite de la bomba va por un lado del motor y vuelve al tanque por el otro.\n• Con tensión en Y2, al revés.\n\nPruébelo: dé tensión a cada bobina y después corte el hilo de Y1." },
+        { "tipo": "animacion", "id": "valvula_direccional", "params": {}, "pie": "Válvula 4/3 de centro cerrado con dos bobinas. Configuración del buque: verificar en el esquema hidráulico." },
+        {
+          "tipo": "quiz",
+          "tema": "valvula_un_sentido",
+          "pregunta": "El power block arría pero no vira. Con el selector en VIRAR hay 24 V en el conector de Y1. ¿Qué es lo más probable?",
+          "opciones": ["Falta presión en la central", "La bobina Y1 está cortada o su corredera, agarrotada", "La parada de emergencia está pulsada"],
+          "correcta": 1,
+          "explicacion": "Hay presión, porque arría, y hay tensión en Y1. Lo que no responde es esa bobina o su lado de la válvula."
+        }
+      ]
+    },
+    {
+      "titulo": "Probar una bobina",
+      "bloques": [
+        { "tipo": "texto", "texto": "Las bobinas se conectan con un {{conector_din}} atornillado sobre ellas. Muchos llevan un LED que se enciende con tensión y un {{diodo_supresor}} que protege el contacto del mando al cortar la corriente.\n\nCon el mando bloqueado y la ausencia de tensión verificada, retire el conector y mida la bobina con el multímetro en ohmios:\n• Una bobina de 24 V DC y unos 26 W mide unos 22 Ω (R = V² / P).\n• OL: hilo cortado.\n• Muy pocos ohmios: espiras en cortocircuito. Una bobina así pide mucha corriente y puede hacer saltar la fuente o el fusible del mando.\n\nCon tensión, una bobina sana atrae un destornillador de acero acercado a su tuerca. Algunas válvulas tienen un pulsador de mando manual en el extremo de la corredera ([i]valores del fabricante — verificar[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "bobina_ohmios",
+          "pregunta": "Una bobina de 24 V DC de unos 26 W mide 0,6 Ω. ¿Qué indica?",
+          "opciones": ["Que está sana", "Espiras en cortocircuito: pedirá unos 40 A y hará saltar la protección del mando", "Que está cortada"],
+          "correcta": 1,
+          "explicacion": "Sana mediría unos 22 Ω. Con 0,6 Ω, a 24 V pasarían unos 40 A: la fuente se protege o el fusible se funde."
+        }
+      ]
+    },
+    {
+      "titulo": "Finales de carrera",
+      "bloques": [
+        { "tipo": "texto", "texto": "Un {{final_carrera}} detiene un movimiento al llegar al límite: la pluma arriba del todo, el tambor del winche sin cable, la grúa en su giro máximo.\n• [b]Mecánicos:[/b] una leva o una palanca con rodillo acciona un contacto. Se usa el contacto NC en serie con la bobina: al llegar al final se abre y para el movimiento en ese sentido. Si el cable se corta, también para: es una seguridad.\n• [b]Inductivos:[/b] {{sensor_proximidad}} que ve una pieza de la máquina, sin desgaste.\n\nEn cubierta, el agua y los golpes son su mayor enemigo: revise el {{grado_proteccion}} (IP66 o IP67 típico), las juntas y los prensaestopas. Nunca puentee un final de carrera para terminar la maniobra." },
+        {
+          "tipo": "quiz",
+          "tema": "final_carrera_nc",
+          "pregunta": "¿Por qué el final de carrera de la pluma se cablea con su contacto NC en serie con la bobina de subir?",
+          "opciones": ["Porque gasta menos corriente", "Porque al llegar al final abre y para la subida, y un cable cortado también la para", "Porque así la pluma sube más rápido"],
+          "correcta": 1,
+          "explicacion": "Un circuito de seguridad debe pararse ante una falla del propio cableado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "DIN EN 175301-803 (antes DIN 43650): conectores de bobinas de válvulas.",
+    "IEC 60947-5-1: interruptores de posición; IEC 60529: grados de protección IP.",
+    "Esquemas hidráulico y eléctrico del power block y de los winches del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

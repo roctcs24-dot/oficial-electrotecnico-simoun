@@ -1,0 +1,55 @@
+{
+  "id": "c1_hidraulica_cubierta",
+  "titulo": "Central hidráulica y maquinaria de pesca",
+  "resumen": "Power block, winches y grúas movidos por aceite a presión; dónde entra la electricidad.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Aceite a presión para la maniobra",
+      "bloques": [
+        { "tipo": "texto", "texto": "La maniobra de cerco necesita mucha fuerza y velocidad regulable: el {{power_block}} recoge la red, el {{winche}} de la jareta cierra el copo por abajo y las grúas mueven la panga y el salabardo. En el buque, todo eso lo mueve una {{central_hidraulica}} de cubierta con su propio motor diésel CAT V12 y once circuitos de 65 a 160 bar ([i]según las fotos del buque; circuitos y presiones de cada máquina: verificar a bordo[/i]).\n\n• Bombas movidas por el diésel aspiran aceite del tanque y lo impulsan a presión.\n• Una {{valvula_direccional}} por cada movimiento envía el aceite al motor hidráulico o al cilindro, en un sentido o en el otro.\n• Válvulas de alivio limitan la presión de cada circuito; filtros y enfriador cuidan el aceite." },
+        {
+          "tipo": "quiz",
+          "tema": "hidraulica_por_que",
+          "pregunta": "¿Por qué la maquinaria de pesca suele ser hidráulica y no movida por motores eléctricos?",
+          "opciones": ["Porque la hidráulica no necesita mantenimiento", "Porque da mucha fuerza con máquinas pequeñas, regula la velocidad con suavidad y aguanta bloqueos y cargas de choque", "Porque no hay energía eléctrica en cubierta"],
+          "correcta": 1,
+          "explicacion": "Un motor hidráulico pequeño da mucho par y puede quedarse frenado con carga sin quemarse: la válvula de alivio limita la presión."
+        }
+      ]
+    },
+    {
+      "titulo": "Dónde entra la electricidad",
+      "bloques": [
+        { "tipo": "texto", "texto": "Aunque la fuerza es hidráulica, el oficial electrotécnico se ocupa de:\n• [b]El mando:[/b] palancas, selectores y joysticks que dan 24 V DC a las bobinas de las válvulas direccionales, o una señal proporcional a sus amplificadores.\n• [b]Las seguridades:[/b] paradas de emergencia, {{final_carrera}} que detienen la pluma o el winche al final de su recorrido, presostatos y termostatos del aceite.\n• [b]Los arranques y alarmas de la central:[/b] baja presión, alto nivel de temperatura del aceite, filtro sucio, nivel bajo del tanque.\n• [b]El alumbrado de cubierta[/b] para la maniobra nocturna." },
+        {
+          "tipo": "quiz",
+          "tema": "hidraulica_electrico",
+          "pregunta": "El power block no gira en ningún sentido. La central está en marcha con su presión normal. ¿Qué revisa primero?",
+          "opciones": ["El motor hidráulico del power block", "La tensión de mando de 24 V: parada de emergencia, fuente y fusibles", "El aceite del tanque"],
+          "correcta": 1,
+          "explicacion": "Si no gira en ningún sentido y hay presión, lo común a los dos sentidos es el mando: sin 24 V ninguna bobina se excita."
+        }
+      ]
+    },
+    {
+      "titulo": "Energía almacenada",
+      "bloques": [
+        { "tipo": "texto", "texto": "Parar la central no deja la maquinaria sin energía:\n• Un {{acumulador_hidraulico}} guarda aceite a presión aunque la bomba esté parada.\n• Una carga suspendida, como la pluma o la red colgada del power block, puede moverse sola si se abre una válvula.\n• El aceite a 160 bar que sale por un poro puede inyectarse bajo la piel: es una lesión grave aunque parezca un pinchazo.\n\nAntes de trabajar en una válvula, una bobina o un cilindro: pare la central y bloquee su arranque, baje o apoye las cargas, descargue la presión de los acumuladores según el manual y bloquee el mando eléctrico ([i]procedimiento del buque — verificar[/i])." },
+        {
+          "tipo": "ordenar",
+          "tema": "orden_bloqueo_hidraulico",
+          "pregunta": "Seleccione en orden cómo dejar sin energía el power block antes de cambiar una bobina:",
+          "pasos": ["Avisar al patrón de pesca y al jefe de máquinas", "Apoyar o asegurar la red y la pluma para que nada quede colgando", "Parar la central hidráulica y bloquear su arranque", "Descargar la presión de los acumuladores y comprobar los manómetros a cero", "Abrir y bloquear el interruptor del mando eléctrico y verificar la ausencia de tensión"],
+          "explicacion": "La energía hidráulica y la mecánica de las cargas suspendidas se aseguran igual que la eléctrica."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+    "ISO 1219-1: símbolos gráficos de hidráulica.",
+    "Manual de la central hidráulica y de cada máquina de cubierta del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

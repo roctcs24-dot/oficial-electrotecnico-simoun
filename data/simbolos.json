@@ -376,6 +376,76 @@
         { "texto": "PE", "x": 150, "y": 60, "tam": 18 } ] },
       "ansi": { "svg": "res://art/simbolos/ansi/masa_casco.svg", "tamano": [240, 200], "etiquetas": [
         { "texto": "PE", "x": 150, "y": 60, "tam": 18 } ] }
+    },
+    {
+      "id": "final_carrera_na", "nombre": "Final de carrera, contacto NA", "sistema": 5, "similares": ["final_carrera_nc", "interruptor_nivel"],
+      "iec": { "svg": "res://art/simbolos/iec/final_carrera_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S1", "x": 160, "y": 104, "tam": 20 }, { "texto": "13", "x": 138, "y": 30, "tam": 14 }, { "texto": "14", "x": 138, "y": 170, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/final_carrera_na.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "LS", "x": 120, "y": 60, "tam": 20 } ] }
+    },
+    {
+      "id": "final_carrera_nc", "nombre": "Final de carrera, contacto NC", "sistema": 5, "similares": ["final_carrera_na", "seta_emergencia"],
+      "iec": { "svg": "res://art/simbolos/iec/final_carrera_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S2", "x": 170, "y": 104, "tam": 20 }, { "texto": "11", "x": 104, "y": 30, "tam": 14 }, { "texto": "12", "x": 104, "y": 170, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/final_carrera_nc.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "LS", "x": 120, "y": 170, "tam": 20 } ] }
+    },
+    {
+      "id": "bobina_electrovalvula", "nombre": "Bobina de electroválvula", "sistema": 5, "similares": ["bobina_diodo"],
+      "iec": { "svg": "res://art/simbolos/iec/bobina_electrovalvula.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "Y1", "x": 186, "y": 100, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/bobina_electrovalvula.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "SOL", "x": 176, "y": 100, "tam": 18 } ] }
+    },
+    {
+      "id": "bobina_diodo", "nombre": "Bobina con diodo supresor", "sistema": 5, "similares": ["bobina_electrovalvula"],
+      "iec": { "svg": "res://art/simbolos/iec/bobina_diodo.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "Y1", "x": 60, "y": 100, "tam": 20 }, { "texto": "+", "x": 104, "y": 40, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/bobina_diodo.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "SOL", "x": 70, "y": 100, "tam": 16 }, { "texto": "+", "x": 104, "y": 40, "tam": 18 } ] }
+    },
+    {
+      "id": "reflector", "nombre": "Reflector", "sistema": 5, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/reflector.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "E1", "x": 100, "y": 54, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/reflector.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "E1", "x": 100, "y": 54, "tam": 18 } ] }
+    },
+    {
+      "id": "selector_tres_posiciones", "nombre": "Selector de tres posiciones", "sistema": 5, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/selector_tres_posiciones.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S1", "x": 196, "y": 104, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/selector_tres_posiciones.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S1", "x": 196, "y": 140, "tam": 20 }, { "texto": "1", "x": 60, "y": 82, "tam": 14 }, { "texto": "0", "x": 120, "y": 72, "tam": 14 }, { "texto": "2", "x": 180, "y": 82, "tam": 14 } ] }
+    },
+    {
+      "id": "seta_emergencia", "nombre": "Parada de emergencia de seta", "sistema": 5, "similares": ["final_carrera_nc"],
+      "iec": { "svg": "res://art/simbolos/iec/seta_emergencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S0", "x": 170, "y": 104, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/seta_emergencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "S0", "x": 196, "y": 130, "tam": 20 } ] }
+    },
+    {
+      "id": "interruptor_nivel", "nombre": "Interruptor de nivel por flotador", "sistema": 5, "similares": ["final_carrera_na"],
+      "iec": { "svg": "res://art/simbolos/iec/interruptor_nivel.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "LS", "x": 160, "y": 104, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/interruptor_nivel.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "FS", "x": 176, "y": 140, "tam": 20 } ] }
+    },
+    {
+      "id": "sirena", "nombre": "Sirena o bocina", "sistema": 5, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/sirena.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "H2", "x": 176, "y": 150, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/sirena.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "H2", "x": 200, "y": 170, "tam": 20 } ] }
+    },
+    {
+      "id": "baliza", "nombre": "Baliza destellante", "sistema": 5, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/baliza.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "H3", "x": 120, "y": 150, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/baliza.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "H3", "x": 120, "y": 150, "tam": 20 } ] }
     }
   ]
 }

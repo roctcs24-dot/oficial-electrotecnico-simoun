@@ -1,0 +1,37 @@
+{
+  "id": "electrovalvula_hidraulica",
+  "titulo": "Válvula direccional de mando eléctrico",
+  "resumen": "Envía el aceite de la central al motor o al cilindro de cada máquina de cubierta, según qué bobina tenga tensión.",
+  "dibujo": {
+    "svg": "res://art/equipos/electrovalvula_hidraulica.svg",
+    "tamano": [500, 280],
+    "nota": "Válvula direccional 4/3 de tamaño típico con dos bobinas, conectores DIN y pulsadores de mando manual, dibujada de forma general. Marca, tamaño y tensión de las válvulas del buque: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Y1", "x": 95, "y": 150, "tam": 18, "color": "#f4f4f0" },
+      { "texto": "Y2", "x": 405, "y": 150, "tam": 18, "color": "#f4f4f0" },
+      { "texto": "Conector DIN", "x": 95, "y": 40, "tam": 13 },
+      { "texto": "24 V DC", "x": 250, "y": 212, "tam": 13, "color": "#20242a" },
+      { "texto": "P  A  B", "x": 250, "y": 262, "tam": 12 },
+      { "texto": "Mando manual", "x": 470, "y": 250, "tam": 11 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Bobina de la electroválvula y bobina con diodo supresor según IEC 60617 y ANSI/IEEE 315. El símbolo hidráulico de la válvula sigue la ISO 1219-1. Verificar contra la norma.",
+    "lista": ["bobina_electrovalvula", "bobina_diodo"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "La {{valvula_direccional}} decide hacia dónde va el aceite de la {{central_hidraulica}}: a un lado del motor del {{power_block}} o del {{winche}}, al otro, o a ninguno. Con mando eléctrico, el oficial gobierna la maniobra desde un selector, una palanca o un PLC, lejos de las tuberías de alta presión." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Cuerpo[/b] con los pasos P (bomba), T (tanque), A y B (hacia la máquina).\n• [b]{{Corredera}}[/b] que se desliza y abre unos pasos y cierra otros.\n• [b]Muelles[/b] que la centran cuando no hay tensión.\n• [b]Bobinas[/b] sobre un tubo con un núcleo móvil que empuja la corredera. A menudo de 24 V DC; las hay de 110 o 220 V AC.\n• [b]Mando manual[/b]: un pulsador en el extremo para mover la corredera sin tensión, en pruebas o emergencias." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• Cada bobina con su {{conector_din}}: dos bornes de la bobina y uno de tierra. Respete la polaridad si lleva LED o diodo.\n• Un {{diodo_supresor}} en paralelo con la bobina de continua, con el cátodo al +, evita la sobretensión al cortar la corriente.\n• Las dos bobinas de una válvula no deben recibir tensión a la vez: el mando se enclava para impedirlo.\n• El prensaestopas del conector y su junta mantienen fuera el agua de cubierta." },
+    { "id": "ajuste", "titulo": "Cómo se ajusta", "texto": "Las válvulas todo-nada no tienen ajuste eléctrico. Las proporcionales llevan un amplificador con ajustes de corriente mínima y máxima, rampas y zona muerta ([i]según el fabricante — verificar[/i]). La velocidad de la máquina se ajusta además con válvulas de caudal y la fuerza máxima con las de alivio, que son trabajo del mecánico con el manual." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "• [b]Tensión[/b] en el conector con el mando accionado: 24 V; el LED del conector debe encenderse.\n• [b]Resistencia de la bobina[/b], con el mando bloqueado y el conector retirado: unos 22 Ω para 24 V y 26 W. OL indica bobina cortada; muy pocos ohmios, espiras en cortocircuito.\n• [b]Aislamiento[/b] de la bobina a su carcasa con el {{megohmetro}} a 500 V.\n• [b]Atracción[/b]: con tensión, la tuerca de la bobina atrae un destornillador de acero.\n• [b]Mando manual[/b]: si con él la máquina se mueve y con la bobina no, la falla es eléctrica." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]Bobina cortada[/b]: la máquina no se mueve en ese sentido.\n• [b]Bobina en cortocircuito[/b]: hace saltar la fuente o el fusible del mando, y deja sin mando a todas las válvulas del circuito.\n• [b]Agua en el conector[/b]: corrosión, falsos contactos y fugas a masa.\n• [b]Corredera agarrotada[/b] por suciedad del aceite: la bobina tiene tensión y atrae, pero no hay movimiento; puede calentarse y quemarse.\n• [b]Bobina de tensión equivocada[/b] tras un cambio: una de 12 V a 24 V se quema; una de 220 V AC a 24 V DC no mueve nada." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Antes de cada marea: prueba de todos los movimientos y de las paradas de emergencia.\n• Cada mes: juntas y prensaestopas de los conectores, limpieza y grasa dieléctrica.\n• Cambio de filtros de aceite según el fabricante: el aceite sucio agarrota las correderas.\n\n[b]Correctivo:[/b] la bobina se cambia por otra igual (tensión, potencia, tipo de tubo), con la central parada, las cargas apoyadas y el mando bloqueado." }
+  ],
+  "para_saber_mas": [
+    "ISO 4413: transmisiones hidráulicas; ISO 1219-1: símbolos hidráulicos.",
+    "DIN EN 175301-803: conectores de bobinas.",
+    "Lección Mando electrohidráulico: bobinas y finales de carrera.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

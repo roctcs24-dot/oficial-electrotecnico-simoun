@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <defs>
+    <linearGradient id="bloque" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c7cbcd"/><stop offset="1" stop-color="#6c7276"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4f53"/><stop offset="1" stop-color="#202326"/></linearGradient>
+    <linearGradient id="tubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e9ea"/><stop offset="0.5" stop-color="#a7acaf"/><stop offset="1" stop-color="#6c7276"/></linearGradient>
+    <linearGradient id="amarillo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2c84b"/><stop offset="1" stop-color="#b8901f"/></linearGradient>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2e5e4"/><stop offset="1" stop-color="#a7acaf"/></linearGradient>
+    <radialGradient id="cristal" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#e5ecf0"/><stop offset="1" stop-color="#9fb0bb"/></radialGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+  </defs>
+  <path d="M90,250 L60,330 H300 L270,250" fill="none" stroke="#5f6568" stroke-width="12" stroke-linejoin="round"/>
+  <rect x="150" y="320" width="60" height="30" rx="4" fill="#4a4f53"/>
+  <rect x="60" y="60" width="240" height="190" rx="22" fill="url(#oscuro)"/>
+  <rect x="80" y="80" width="200" height="150" rx="14" fill="url(#cristal)" stroke="#8a9094" stroke-width="3"/>
+  <path d="M80,120 H280 M80,160 H280 M80,200 H280" stroke="#c9d4da" stroke-width="2"/>
+  <circle cx="70" cy="70" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <circle cx="290" cy="70" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <circle cx="70" cy="240" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <circle cx="290" cy="240" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <circle cx="60" cy="250" r="10" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <circle cx="300" cy="250" r="10" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
+  <rect x="300" y="150" width="24" height="30" rx="3" fill="#2b2f32"/>
+</svg>

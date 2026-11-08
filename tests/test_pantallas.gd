@@ -158,6 +158,7 @@ func _recorrer(raiz: Raiz) -> String:
 		for pestana: String in ["reporte", "proceso", "medir"]:
 			pasos.append(["mision", {"id": id, "pestana_inicial": pestana}])
 	pasos.append(["tablero", {"tablero": "habitabilidad_110"}])
+	pasos.append(["tablero", {"tablero": "power_block"}])
 	pasos.append(["guardia", {"id": 6}])
 	for id: String in raiz.contenido.sistema(6)["modos"]["guardia"]["misiones"]:
 		for pestana: String in ["mision", "red", "hmi"]:
@@ -167,12 +168,12 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])
-	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"] + raiz.contenido.sistema(2)["modos"]["aprender"]["fichas"]:
+	for id: String in raiz.contenido.sistema(3)["modos"]["aprender"]["fichas"] + raiz.contenido.sistema(2)["modos"]["aprender"]["fichas"] + raiz.contenido.sistema(5)["modos"]["aprender"]["fichas"]:
 		pasos.append(["ficha", {"id": id}])
 		pasos.append(["ficha", {"id": id, "vista": "simbolos"}])
 		for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
 			pasos.append(["ficha", {"id": id, "vista": "extra_%d" % n}])
-	for sistema in [0, 2, 3, 6]:
+	for sistema in [0, 2, 3, 5, 6]:
 		for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
 			for n in raiz.contenido.leccion(id)["paginas"].size():
 				pasos.append(["leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}}])

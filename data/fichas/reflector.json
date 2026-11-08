@@ -1,0 +1,35 @@
+{
+  "id": "reflector",
+  "titulo": "Reflector de cubierta",
+  "resumen": "Alumbra la cubierta, el agua y la red durante la maniobra nocturna.",
+  "dibujo": {
+    "svg": "res://art/equipos/reflector.svg",
+    "tamano": [360, 360],
+    "nota": "Reflector de cubierta con lira de fijación, dibujado de forma general. Tipo de lámpara, potencia y número de reflectores del buque: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Cristal templado", "x": 180, "y": 140, "tam": 14, "color": "#20242a" },
+      { "texto": "Lira", "x": 180, "y": 300, "tam": 13 },
+      { "texto": "Prensaestopas", "x": 320, "y": 140, "tam": 11 },
+      { "texto": "IP56 · 1000 W", "x": 180, "y": 40, "tam": 13 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Reflector según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": ["reflector"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "El {{reflector}} da la luz de la maniobra de pesca, del atraque y de los trabajos en cubierta. Muchos son de {{halogenuros_metalicos}}; los más nuevos, LED." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Carcasa[/b] estanca con reflector de aluminio, cristal templado y junta.\n• [b]Lámpara[/b] de descarga o módulo LED.\n• [b]Equipo auxiliar[/b] de la lámpara de descarga: balasto, ignitor y condensador, dentro del reflector o en una caja aparte. En los LED, un driver electrónico.\n• [b]Lira[/b] de fijación orientable." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• Desde un circuito de alumbrado de cubierta con su interruptor automático, normalmente a 220 V en la red aislada ([i]verificar a bordo[/i]).\n• Cable apto para intemperie, con su prensaestopas apretado y un lazo de goteo para que el agua no corra hacia la entrada.\n• Si el equipo auxiliar va aparte, el cable entre el ignitor y la lámpara no debe superar la longitud que admite el fabricante." },
+    { "id": "ajuste", "titulo": "Cómo se ajusta", "texto": "Se orienta con la lira para alumbrar la zona de trabajo sin deslumbrar al puente ni a la tripulación. Las lámparas de descarga se cambian por otras del mismo tipo y potencia que el balasto; no se mezclan sodio y halogenuros." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "• [b]Tensión[/b] en la entrada del balasto o del driver.\n• [b]Ignitor[/b]: si llega tensión al balasto y la lámpara nueva no enciende, se cambia el ignitor.\n• [b]Aislamiento[/b] del circuito con el {{megohmetro}} a 500 V, con lámparas, ignitores y drivers desconectados: el impulso del ignitor o la electrónica se dañan con la prueba.\n• [b]Corriente[/b] con la pinza tras unos minutos encendido." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]No enciende[/b]: lámpara agotada, ignitor o balasto averiados, o lámpara caliente que aún no se ha enfriado.\n• [b]Se apaga y vuelve a encender sola[/b]: lámpara al final de su vida.\n• [b]Lámparas que estallan[/b]: agua dentro por la junta.\n• [b]Fuga a masa[/b] del circuito de cubierta: humedad en reflectores y cajas de conexión.\n• [b]Driver LED[/b] quemado por sobretensión o calor." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Antes de cada marea: encendido de todos los reflectores.\n• Cada mes: juntas, cristal, prensaestopas, soporte y tornillería.\n• Cada año: aislamiento de los circuitos de cubierta.\n\n[b]Seguridad:[/b] trabajo en altura con arnés y permiso; circuito bloqueado; lámpara fría." }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-306: alumbrado de buques.",
+    "IEC 60598-2-5: proyectores.",
+    "Lección Alumbrado de cubierta y reflectores.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

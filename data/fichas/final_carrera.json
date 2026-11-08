@@ -1,0 +1,36 @@
+{
+  "id": "final_carrera",
+  "titulo": "Final de carrera",
+  "resumen": "Detiene o señaliza un movimiento al llegar a su posición límite: pluma, winche, grúa o compuerta.",
+  "dibujo": {
+    "svg": "res://art/equipos/final_carrera.svg",
+    "tamano": [320, 390],
+    "nota": "Final de carrera de palanca con rodillo, dibujado de forma general. Modelos y ubicación de los del buque: verificar a bordo.",
+    "etiquetas": [
+      { "texto": "Rodillo", "x": 250, "y": 80, "tam": 13 },
+      { "texto": "Palanca", "x": 230, "y": 110, "tam": 12 },
+      { "texto": "1 NA + 1 NC", "x": 160, "y": 186, "tam": 13, "color": "#20242a" },
+      { "texto": "IP67", "x": 160, "y": 266, "tam": 13, "color": "#20242a" },
+      { "texto": "Prensaestopas", "x": 250, "y": 340, "tam": 12 }
+    ]
+  },
+  "simbolos": {
+    "nota": "Contactos NA y NC de un interruptor de posición según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": ["final_carrera_na", "final_carrera_nc"]
+  },
+  "secciones": [
+    { "id": "funcion", "titulo": "Para qué sirve", "texto": "El {{final_carrera}} impide que una máquina pase de su límite: la pluma del {{power_block}} arriba del todo, el tambor del {{winche}} sin cable, el giro máximo de una grúa. También señaliza posiciones, como una compuerta cerrada." },
+    { "id": "partes", "titulo": "Cómo funciona por dentro", "texto": "• [b]Actuador[/b]: palanca con rodillo, varilla, émbolo o leva, que mueve la pieza de la máquina.\n• [b]Bloque de contactos[/b] de acción brusca, normalmente uno NA y uno NC.\n• [b]Caja[/b] metálica o de plástico con su {{grado_proteccion}}, junta y prensaestopas.\n\nLa versión sin contacto es un {{sensor_proximidad}} inductivo que ve una pieza metálica de la máquina." },
+    { "id": "conexion", "titulo": "Cómo se conecta", "texto": "• Para parar un movimiento, su contacto NC va en serie con la bobina de ese sentido: al llegar al límite se abre. Así, un cable cortado también para el movimiento.\n• El sentido contrario sigue funcionando, para poder salir del límite.\n• Para señalizar al PLC, el contacto que corresponda a una entrada, según se quiera la señal con la máquina en el límite o fuera de él." },
+    { "id": "ajuste", "titulo": "Cómo se ajusta", "texto": "• La posición de la leva o del final de carrera se ajusta para que corte antes del tope mecánico, con margen para la inercia de la máquina.\n• La palanca se orienta para que el rodillo trabaje en su recorrido, sin pasarse.\n• Pruebe el ajuste a velocidad lenta primero, con alguien vigilando el tope." },
+    { "id": "pruebas", "titulo": "Cómo se prueba", "texto": "• [b]Funcional[/b]: lleve la máquina despacio hasta el límite y compruebe que se detiene.\n• [b]Continuidad[/b] con el circuito bloqueado: el contacto NC cerrado en reposo y abierto con el actuador accionado; el NA al revés.\n• [b]Aislamiento[/b] de los contactos a la caja con el {{megohmetro}}, con el cable desconectado del mando electrónico." },
+    { "id": "fallas", "titulo": "Fallas típicas", "texto": "• [b]Agua dentro[/b] por la junta o el prensaestopas: contactos oxidados, falsos contactos y fugas a masa.\n• [b]Palanca floja o doblada[/b] por un golpe: deja de accionar y la máquina llega al tope.\n• [b]Contacto pegado[/b]: el NC no abre.\n• [b]Puentes[/b] puestos para terminar una maniobra y olvidados: la máquina queda sin protección. Nunca puentee un final de carrera." },
+    { "id": "mantenimiento", "titulo": "Mantenimiento", "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Antes de cada marea: prueba funcional de cada límite.\n• Cada mes: juntas, prensaestopas, apriete de la palanca y del soporte.\n\n[b]Correctivo:[/b] se cambia por otro de los mismos contactos, actuador y grado de protección, y se vuelve a ajustar su posición." }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-1: interruptores de posición.",
+    "IEC 60529: grados de protección IP.",
+    "Lección Mando electrohidráulico: bobinas y finales de carrera.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

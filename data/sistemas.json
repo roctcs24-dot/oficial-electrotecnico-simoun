@@ -2,7 +2,7 @@
   "plano": {
     "svg": "res://art/barco/plano.svg",
     "tamano": [1000, 420],
-    "tableros": [{"id": "servotimon_1", "x": 40, "y": 296}, {"id": "compresores_nh3", "x": 440, "y": 356}, {"id": "purificadora_1", "x": 500, "y": 356}, {"id": "hidroforo_salada", "x": 560, "y": 356}, {"id": "bombas_mp", "x": 640, "y": 356}, {"id": "habitabilidad_110", "x": 786, "y": 190}, {"id": "distribucion_220", "x": 786, "y": 232}], "etiquetas": [
+    "tableros": [{"id": "servotimon_1", "x": 40, "y": 296}, {"id": "power_block", "x": 250, "y": 150}, {"id": "compresores_nh3", "x": 440, "y": 356}, {"id": "purificadora_1", "x": 500, "y": 356}, {"id": "hidroforo_salada", "x": 560, "y": 356}, {"id": "bombas_mp", "x": 640, "y": 356}, {"id": "habitabilidad_110", "x": 786, "y": 190}, {"id": "distribucion_220", "x": 786, "y": 232}], "etiquetas": [
       { "texto": "Silueta basada en un atunero francés de la misma época. No es el plano real del buque: verificar a bordo.", "x": 500, "y": 400, "tam": 18, "color": "#b1bcc4" },
       { "texto": "Eslora: 69 m (registro WCPFC, verificar)", "x": 490, "y": 378, "tam": 16, "color": "#b1bcc4" },
       { "texto": "POPA", "x": 40, "y": 334, "tam": 16, "color": "#8d989f" },
@@ -84,9 +84,14 @@
       "id": 5,
       "nombre": "Cubierta y pesca",
       "resumen": "Winches, power block, grúas y alumbrado de cubierta.",
-      "estado": "proximamente",
+      "estado": "activo",
       "zona": [64, 96, 396, 152],
-      "modos": {}
+      "modos": {
+        "aprender": { "lecciones": ["c1_hidraulica_cubierta", "c2_mando_electrohidraulico", "c3_alumbrado_cubierta"],
+          "fichas": ["electrovalvula_hidraulica", "final_carrera", "reflector"] },
+        "taller": { "pantalla": "tableros", "detalle": "Mando del power block y banco libre", "tableros": ["power_block"] },
+        "examen": { "minijuegos": ["simbolos_cubierta"] }
+      }
     },
     {
       "id": 6,

@@ -1,0 +1,137 @@
+{
+  "id": "power_block",
+  "titulo": "Mando del power block",
+  "ubicacion": "Cubierta principal, puesto de mando de la maniobra",
+  "foto": "Sin foto: frente típico",
+  "alimentacion": "Q0",
+  "nota": "Frente típico de un mando de power block con selector y parada de emergencia. En muchos buques el mando es una palanca proporcional en el puente de pesca: verificar a bordo.",
+  "frente": {
+    "tamano": [
+      800,
+      900
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 400,
+        "y": 80,
+        "texto": "POWER BLOCK",
+        "tam": 30
+      },
+      {
+        "tipo": "rotulo",
+        "x": 400,
+        "y": 170,
+        "texto": "MANDO CON TENSIÓN",
+        "tam": 15
+      },
+      {
+        "tipo": "luz",
+        "x": 400,
+        "y": 240,
+        "color": "verde",
+        "componente": "H1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 400,
+        "y": 350,
+        "texto": "ARRIAR   0   VIRAR",
+        "tam": 16
+      },
+      {
+        "tipo": "selector",
+        "x": 400,
+        "y": 440,
+        "componente": "S1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 400,
+        "y": 580,
+        "texto": "PARADA DE EMERGENCIA",
+        "tam": 15
+      },
+      {
+        "tipo": "seta",
+        "x": 400,
+        "y": 680,
+        "componente": "S0"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 740,
+        "y": 450
+      }
+    ]
+  },
+  "lecturas": [
+    {
+      "componente": "PB",
+      "texto": "Giro del power block (+ virando, − arriando)",
+      "clave": "rpm",
+      "unidad": "rpm",
+      "decimales": 0
+    }
+  ],
+  "senales": [],
+  "averias": [
+    {
+      "id": "y1_abierta",
+      "texto": "Bobina Y1 (virar) con el hilo cortado",
+      "componente": "PB",
+      "param": "averia_y1",
+      "valor": "abierta"
+    },
+    {
+      "id": "y2_corto",
+      "texto": "Bobina Y2 (arriar) con espiras en cortocircuito",
+      "componente": "PB",
+      "param": "averia_y2",
+      "valor": "corto"
+    },
+    {
+      "id": "sin_presion",
+      "texto": "Central hidráulica parada: sin presión",
+      "componente": "PB",
+      "param": "presion",
+      "valor": false
+    }
+  ],
+  "circuito": "mando_power_block",
+  "interior": {
+    "B": [
+      0,
+      0
+    ],
+    "Q0": [
+      440,
+      0
+    ],
+    "G1": [
+      900,
+      0
+    ],
+    "S0": [
+      1260,
+      0
+    ],
+    "S1": [
+      1500,
+      0
+    ],
+    "H1": [
+      1820,
+      0
+    ],
+    "PE": [
+      2060,
+      0
+    ],
+    "PB": [
+      440,
+      620
+    ]
+  }
+}

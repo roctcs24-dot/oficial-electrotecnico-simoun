@@ -1,0 +1,21 @@
+{
+  "nombre": "Mando del power block",
+  "nota": "Mando electrohidráulico típico del power block: fuente de 24 V DC desde 220 V, parada de emergencia, selector VIRAR-0-ARRIAR y válvula direccional con dos bobinas de 24 V DC. La central hidráulica de cubierta tiene motor diésel propio. Esquema, tensiones y bobinas: valores típicos — verificar a bordo.",
+  "componentes": [
+    { "id": "B", "tipo": "fuente_trifasica", "params": { "v_linea": 220 } },
+    { "id": "Q0", "tipo": "seccionador", "estado": { "cerrado": true } },
+    { "id": "G1", "tipo": "fuente_dc", "params": { "v_entrada": 220.0 } },
+    { "id": "S0", "tipo": "seta" },
+    { "id": "S1", "tipo": "selector", "params": { "posiciones": ["ARRIAR", "0", "VIRAR"], "inicial": "0", "contactos": { "13-14": ["VIRAR"], "23-24": ["ARRIAR"] } } },
+    { "id": "H1", "tipo": "lampara", "params": { "v_nominal": 24.0, "r": 1200.0 } },
+    { "id": "PB", "tipo": "power_block" },
+    { "id": "PE", "tipo": "masa" }
+  ],
+  "cables": [
+    ["B.L1", "Q0.1"], ["B.L2", "Q0.3"], ["Q0.2", "G1.L"],
+    ["Q0.4", "G1.N"], ["G1.+", "S0.11"], ["S0.12", "S1.13"],
+    ["S0.12", "S1.23"], ["S1.14", "PB.Y1A"], ["S1.24", "PB.Y2A"],
+    ["PB.Y1B", "G1.-"], ["PB.Y2B", "G1.-"], ["S0.12", "H1.X1"],
+    ["H1.X2", "G1.-"]
+  ]
+}

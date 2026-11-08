@@ -1,0 +1,55 @@
+{
+  "id": "c3_alumbrado_cubierta",
+  "titulo": "Alumbrado de cubierta y reflectores",
+  "resumen": "Reflectores de descarga y LED, balasto e ignitor, estanqueidad y fallas típicas.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Reflectores de descarga",
+      "bloques": [
+        { "tipo": "texto", "texto": "La maniobra nocturna se alumbra con {{reflector}} de gran potencia en el palo y en las bandas. Muchos son de {{halogenuros_metalicos}} de 400 a 2000 W ([i]tipo y potencia de los del buque: verificar a bordo[/i]):\n• [b]Balasto:[/b] una reactancia que limita la corriente de la lámpara.\n• [b]Ignitor:[/b] da impulsos de varios miles de voltios para encender el arco. Por eso el cable entre el ignitor y la lámpara es especial y no se toca con la lámpara encendida.\n• [b]Condensador:[/b] corrige el factor de potencia del balasto.\n• La lámpara tarda varios minutos en dar toda su luz y, apagada en caliente, no vuelve a encender hasta enfriarse.\n\nLos reflectores LED encienden al instante y gastan menos; su driver electrónico es lo que suele fallar." },
+        {
+          "tipo": "quiz",
+          "tema": "reflector_ignitor",
+          "pregunta": "Un reflector de halogenuros no enciende. La lámpara es nueva y llegan 220 V al balasto. ¿Qué revisa a continuación?",
+          "opciones": ["El ignitor y el condensador", "El interruptor del circuito", "La tensión de la red"],
+          "correcta": 0,
+          "explicacion": "Con tensión en el balasto y la lámpara nueva, falta el impulso de encendido: el ignitor. Un condensador seco reduce la tensión de arranque en algunos montajes."
+        }
+      ]
+    },
+    {
+      "titulo": "Agua, sal y vibración",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Estanqueidad:[/b] los reflectores de cubierta llevan un {{grado_proteccion}} alto, como IP56 o IP67. Tras cambiar una lámpara, revise la junta del cristal y apriete los tornillos en cruz.\n• [b]Condensación:[/b] dentro de un reflector caliente que se enfría con la lluvia entra humedad si la junta falla: aislamiento bajo y lámparas que estallan.\n• [b]Vibración:[/b] afloja bornes y rompe filamentos y soldaduras; use arandelas y terminales adecuados.\n• [b]Sal:[/b] corroe bornes y prensaestopas; límpielos y engráselos con grasa dieléctrica.\n\nTrabajar en un reflector del palo es trabajo en altura: arnés, permiso de trabajo y el circuito bloqueado." },
+        {
+          "tipo": "quiz",
+          "tema": "reflector_humedad",
+          "pregunta": "Las lámparas de un mismo reflector estallan una tras otra a los pocos días. ¿Qué es lo más probable?",
+          "opciones": ["Lámparas defectuosas", "Entra agua por la junta del cristal y la lámpara caliente estalla al mojarse", "La tensión es baja"],
+          "correcta": 1,
+          "explicacion": "El choque térmico del agua sobre el vidrio caliente rompe la lámpara. Cambie la junta y compruebe el aislamiento del reflector con el megóhmetro."
+        }
+      ]
+    },
+    {
+      "titulo": "Mantenimiento",
+      "bloques": [
+        { "tipo": "texto", "texto": "[b]Antes de cada marea[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Encender todos los reflectores y luces de cubierta, y cambiar lámparas agotadas.\n• Revisar juntas, cristales, prensaestopas y soportes.\n• Medir el aislamiento de los circuitos de cubierta con el megóhmetro a 500 V, con lámparas y equipos electrónicos desconectados.\n\n[b]Al cambiar una lámpara de descarga:[/b] circuito bloqueado, lámpara fría, guantes limpios (la grasa de los dedos acorta su vida), misma potencia y tipo que indica el balasto." },
+        {
+          "tipo": "ordenar",
+          "tema": "orden_cambio_reflector",
+          "pregunta": "Seleccione en orden cómo cambiar la lámpara de un reflector del palo:",
+          "pasos": ["Obtener el permiso de trabajo en altura y preparar el arnés", "Abrir y bloquear el interruptor del circuito y verificar la ausencia de tensión", "Esperar a que la lámpara se enfríe", "Cambiar la lámpara por otra del mismo tipo y potencia, sin tocar el vidrio con los dedos", "Revisar la junta, cerrar el reflector y probarlo"],
+          "explicacion": "La altura, la tensión y la temperatura de la lámpara son los tres riesgos del trabajo."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-306: alumbrado de buques.",
+    "IEC 60529: grados de protección IP.",
+    "Manual del fabricante de los reflectores del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

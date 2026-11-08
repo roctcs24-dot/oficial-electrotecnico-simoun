@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="480" height="360" viewBox="0 0 480 360">
+  <defs>
+    <linearGradient id="pintura" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f7a4f"/><stop offset="1" stop-color="#244a30"/></linearGradient>
+    <linearGradient id="caucho" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3d40"/><stop offset="1" stop-color="#141618"/></linearGradient>
+    <linearGradient id="acero_l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9dcdd"/><stop offset="0.5" stop-color="#9aa0a3"/><stop offset="1" stop-color="#5f6568"/></linearGradient>
+    <linearGradient id="bloque" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8bdc0"/><stop offset="1" stop-color="#6c7276"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4f53"/><stop offset="1" stop-color="#202326"/></linearGradient>
+    <linearGradient id="amarillo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2c84b"/><stop offset="1" stop-color="#b8901f"/></linearGradient>
+    <radialGradient id="acero" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+    <g id="borne"><rect x="-16" y="-15" width="32" height="30" rx="3" fill="#2b2f32"/><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-5,0 H5" stroke="#3b4043" stroke-width="2.4" stroke-linecap="round"/></g>
+  </defs>
+  <path d="M60,40 L300,40 L250,210 L110,210 Z" fill="url(#pintura)" stroke="#1c3524" stroke-width="3"/>
+  <path d="M96,52 L264,52 L228,176 L132,176 Z" fill="url(#caucho)"/>
+  <path d="M104,58 L116,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M124,58 L136,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M144,58 L156,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M164,58 L176,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M184,58 L196,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M204,58 L216,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M224,58 L236,170" stroke="#4d5155" stroke-width="3"/>
+  <path d="M244,58 L256,170" stroke="#4d5155" stroke-width="3"/>
+  <circle cx="180" cy="126" r="22" fill="url(#acero_l)" stroke="#3b4043" stroke-width="2"/>
+  <rect x="300" y="96" width="90" height="64" rx="8" fill="url(#acero_l)" stroke="#4f5559" stroke-width="2"/>
+  <path d="M320,96 V160 M340,96 V160 M360,96 V160" stroke="#6c7276" stroke-width="2"/>
+  <path d="M345,160 V230 M372,160 V230" stroke="#1b1d1f" stroke-width="10" stroke-linecap="round"/>
+  <rect x="250" y="226" width="200" height="70" rx="6" fill="url(#bloque)" stroke="#4f5559" stroke-width="2"/>
+  <rect x="262" y="232" width="40" height="58" rx="4" fill="url(#oscuro)"/>
+  <rect x="268" y="240" width="28" height="10" rx="2" fill="#5a3a12"/>
+  <rect x="398" y="232" width="40" height="58" rx="4" fill="url(#oscuro)"/>
+  <rect x="404" y="240" width="28" height="10" rx="2" fill="#5a3a12"/>
+  <rect x="314" y="246" width="72" height="30" rx="3" fill="url(#amarillo)"/>
+  <path d="M282,290 V318 M418,290 V318" stroke="#1b1d1f" stroke-width="7"/>
+  <rect x="40" y="300" width="420" height="44" rx="4" fill="#3a4044"/>
+  <use xlink:href="#borne" x="110" y="322"/>
+  <use xlink:href="#borne" x="190" y="322"/>
+  <use xlink:href="#borne" x="310" y="322"/>
+  <use xlink:href="#borne" x="390" y="322"/>
+</svg>
