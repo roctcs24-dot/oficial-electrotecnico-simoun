@@ -2,12 +2,12 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v3.5**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque, y la v4 en curso. Incluye:
+Estado: **v3.6**, con la v1, la v2 y la v3 completas y adaptadas a los equipos reales del buque, y la v4 en curso. Incluye:
 
 - 21 lecciones de fundamentos, seguridad (también con amoníaco), motores, arrancadores (también el arrancador suave), tableros de bombas e instrumentos.
 - 8 lecciones de generación: alternador, AVR, gobernador, cuadro principal, sincronización, reparto de carga, blackout y red aislada.
 - 8 lecciones de refrigeración: ciclo de compresión, presión y temperatura del NH3, diagrama presión–entalpía, compresores, componentes, control y protecciones, cableado del compresor y diagnóstico.
-- Sistema 6, electrónica y PLC (en desarrollo): 2 lecciones de sensores de proximidad PNP y NPN y de su cableado al PLC, con un banco animado; la ficha del sensor; en el Taller, el banco de sensores con PLC y el PLC de la bomba de achique; y en el cajón, fuente de 24 V DC, sensores PNP y NPN, relé de 24 V, luz de 24 V y PLC.
+- Sistema 6, electrónica, PLC y alarmas (en desarrollo): 5 lecciones (sensores de proximidad PNP y NPN, su cableado al PLC, red RS-485 y Modbus RTU con tramas animadas, pantallas HMI y puesto de alarmas); la ficha del sensor; en el Taller, la red Modbus con el puesto de alarmas y la pantalla Omron del MYCOM nº 3, el banco de sensores con PLC y el PLC de la bomba de achique; y en el cajón, fuente de 24 V DC, sensores PNP y NPN, relé de 24 V, luz de 24 V y PLC.
 - Fichas de los equipos de los sistemas 1, 3, 4 y 6, entre ellas la del generador de emergencia y la del detector de amoníaco, con simbología IEC y ANSI, y un minijuego de símbolos por sistema.
 - Cuadro principal con los cuatro generadores del buque (380 V, 50 Hz), paneles al estilo de sus módulos de sincronismo, PMS, protecciones, lámparas de tierra R-S-T y cuadro de emergencia con su generador.
 - Taller con multímetro, megóhmetro y pinza amperimétrica, y siete tableros reales del buque que se manejan desde su frente, con su interior en la mesa del Taller: bombas de la máquina principal, hidróforo de agua salada, purificadora nº 1, controlador del servotimón nº 1 con su variador Danfoss, tableros de 110 V de habitabilidad y de 220 V de distribución, y el de compresores NH3, con los compresores nº 3 y nº 4 y su arrancador suave, amperímetros de aguja y las tres bombas de amoníaco. Tienen una marca amarilla en su lugar del plano del barco.
@@ -295,6 +295,15 @@ Cada generador avanza a lo sumo 50 ms por paso: `SimSimulacion.paso()` divide lo
 - **Multímetro:** `vdc` con signo, `diodo` con la caída real, y `ma`, miliamperios en continua en serie. La entrada de mA tiene un fusible de 0,4 A. En serie, el multímetro cierra el circuito y los componentes reajustan su estado, como un transmisor que empieza a regular.
 - Las pruebas están en `tests/test_sim_electronica.gd` y, para el banco de sensores con PLC (`data/circuitos/banco_sensores.json`, programa `data/plc/espejo_entradas.json`), en `tests/test_sim_sensores.gd`. Con `sensores` detrás de la carpeta, el comando de capturas guarda el Taller del sistema 6 y el banco.
 - **Taller del sistema 6:** `modos.taller.practicas` lista prácticas preparadas, cada una con `titulo`, `detalle`, `pantalla` y `args`; el Taller acepta `{"plantilla": "<id>"}` para abrir con una plantilla montada. En el cajón, un PLC llega con el programa de `programa_de`. En la mesa se ven los LEDs del sensor, de la fuente, del relé y de las entradas y salidas del PLC, y la pestaña Pieza acerca la pieza al sensor y cambia el PLC a RUN o STOP y sus entradas a PNP o NPN.
+
+**Red Modbus y puesto de alarmas (v4, en desarrollo; se abre desde el Taller del sistema 6):**
+
+- **Red** (`sim/comunicaciones/red_modbus.gd`, `SimRedModbus`): bus RS-485 con el maestro en un extremo y los esclavos en el orden del cable, cada uno con `direccion`, `baudios`, `formato`, `terminacion`, `invertido` y `alimentado`. El maestro recorre su tabla `sondeo` con la función 03: cada petición termina `ok`, `sin_respuesta`, `crc` o `excepcion`, y tres fallos seguidos dan falla de comunicación. Un terminador que falta o sobra y el ruido deforman tramas al azar (con `semilla`, reproducible); `resistencia_a_b()` da lo que mide el multímetro entre A y B; `aplicar()` hace averías y reparaciones (`ajuste`, `corte`, `ruido`, `valor`, `rampa`, `hmi`).
+- **Puesto de alarmas** (`sim/comunicaciones/sistema_alarmas.gd`, `SimSistemaAlarmas`): puntos `alta`, `baja`, `digital` y `comunicacion` con límite, histéresis y retardo; estados normal, activa, reconocida y retorno; bocina, silenciar, reconocer, historial con hora y extensión a camarotes a los 180 s.
+- **Pantalla local** (`sim/comunicaciones/pantalla_hmi.gd`, `SimPantallaHMI`): lee su controlador por su propio cable, guarda la tendencia y tiene alarmas locales con ajustes protegidos por nivel de técnico.
+- **Datos** en `data/redes/<id>.json`: `maestro` con su `sondeo` (cada dirección con `esperado`, `cantidad` y `canales` con `tag`, `unidad`, `decimales` y límites `alta`, `baja` o `digital` con `retardo_s`), `esclavos` con sus `registros` (`valor`, `escala`, `ruido`), `hmi` (campos, tendencia y ajustes) y `averias` de práctica. Se cargan con `Contenido.red(id)`.
+- **Pantalla** `ui/screens/red_alarmas.gd`, con las pestañas Puesto de alarmas, Red RS-485 (`VistaRed`, ajustes de cada equipo, medida entre A y B y diagnóstico del maestro), Pantalla MYCOM (páginas Principal, Alarmas, Tendencia con `GraficoTendencia` y Ajustes) y Averías (concretas o al azar). Las misiones de la red la extienden.
+- Las pruebas están en `tests/test_red_modbus.gd`. Con `red` detrás de la carpeta, el comando de capturas guarda sus pestañas.
 
 **PLC (v4, en desarrollo; se abre desde el Taller del sistema 6):**
 

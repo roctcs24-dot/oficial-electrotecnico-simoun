@@ -147,6 +147,12 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["prueba_examen", {"id": "v3"}])
 	pasos.append(["plc", {}])
 	pasos.append(["plc", {"pestana": "programa"}])
+	pasos.append(["sistema", {"id": 6}])
+	pasos.append(["tableros", {"id": 6}])
+	for pestana in ["puesto", "red", "hmi", "averias"]:
+		pasos.append(["red_alarmas", {"pestana": pestana}])
+	for pagina in ["alarmas", "tendencia", "ajustes"]:
+		pasos.append(["red_alarmas", {"pestana": "hmi", "pagina_hmi_inicial": pagina}])
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])
@@ -155,7 +161,7 @@ func _recorrer(raiz: Raiz) -> String:
 		pasos.append(["ficha", {"id": id, "vista": "simbolos"}])
 		for n in raiz.contenido.ficha(id).get("dibujos_extra", []).size():
 			pasos.append(["ficha", {"id": id, "vista": "extra_%d" % n}])
-	for sistema in [0, 3]:
+	for sistema in [0, 3, 6]:
 		for id: String in raiz.contenido.sistema(sistema)["modos"]["aprender"]["lecciones"]:
 			for n in raiz.contenido.leccion(id)["paginas"].size():
 				pasos.append(["leccion", {"id": id, "sistema": sistema, "pagina": n, "respuestas": {}}])

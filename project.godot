@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Oficial Electrotécnico: B/P Vía Simoun"
 config/description="Juego educativo para oficiales electrotécnicos a bordo de un atunero cerquero."
-config/version="3.5.0"
+config/version="3.6.0"
 run/main_scene="res://ui/raiz.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"

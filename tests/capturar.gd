@@ -51,6 +51,8 @@ func _capturar() -> void:
 		await _capturar_plc(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "sensores":
 		await _capturar_sensores(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "red":
+		await _capturar_red(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "instrumentos":
 		await _capturar_instrumentos(carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "tablero":
@@ -503,6 +505,32 @@ func _capturar_sensores(raiz: Raiz, carpeta: String) -> void:
 		p._elegir_pestana("pieza")
 		await _guardar(carpeta, "sensores_banco", tam)
 		raiz.volver()
+		raiz.volver()
+
+
+## Puesto de alarmas, red RS-485 y pantalla del MYCOM con dos averías.
+func _capturar_red(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("red_alarmas")
+		var p = raiz.pantalla_actual()
+		p.red.aplicar({"op": "ajuste", "equipo": "MY4", "clave": "direccion", "valor": 11})
+		p.red.aplicar({"op": "valor", "equipo": "ES1", "registro": 0, "valor": 1})
+		for _i in 60:
+			p._avanzar(0.5)
+		p.puesto.silenciar()
+		p._rehacer()
+		await _guardar(carpeta, "red_puesto", tam)
+		p.args["seleccion"] = "MY4"
+		p._elegir_pestana("red")
+		p._medir()
+		await _guardar(carpeta, "red_bus", tam)
+		p._elegir_pestana("hmi")
+		await _guardar(carpeta, "red_hmi", tam)
+		p.args["pagina_hmi"] = "tendencia"
+		p._rehacer()
+		await _guardar(carpeta, "red_hmi_tendencia", tam)
 		raiz.volver()
 
 

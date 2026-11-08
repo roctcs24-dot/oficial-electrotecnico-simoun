@@ -1,0 +1,57 @@
+{
+  "id": "e4_hmi",
+  "titulo": "Pantallas HMI",
+  "resumen": "Páginas, valores, alarmas, tendencias, ajustes protegidos y error de comunicación.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Qué es una HMI",
+      "bloques": [
+        { "tipo": "texto", "texto": "Una {{hmi}} es la pantalla táctil de un equipo, como la Omron de los MYCOM nº 3 y nº 4 o la SIMATIC «Alarmas generales» del buque. No gobierna la máquina: muestra lo que le envía el controlador, normalmente un PLC, y le pasa las órdenes y los ajustes del operador.\n\n• Se alimenta de 24 V DC, casi siempre de la misma fuente del tablero.\n• Se comunica con el controlador por un cable serie (RS-232 o RS-485) o por Ethernet.\n• Si se apaga o pierde la comunicación, el equipo sigue funcionando con su programa, pero usted deja de ver sus valores y sus alarmas en ella." },
+        { "tipo": "texto", "texto": "La pantalla del MYCOM muestra, entre otras, estas siglas ([i]significado de cada sigla: verificar en el manual MYCOM[/i]):\n• [b]CAP:[/b] capacidad, en %.\n• [b]SP, DP y OP:[/b] presiones de succión, descarga y aceite, en kgf/cm². 1 kgf/cm² son 0,98 bar.\n• [b]ST, DT y OT:[/b] temperaturas de succión, descarga y aceite, en °C." },
+        {
+          "tipo": "quiz",
+          "tema": "hmi_apagada",
+          "pregunta": "La pantalla del MYCOM nº 3 se queda en negro con el compresor en marcha. ¿Qué ocurre con el compresor?",
+          "opciones": ["Se para de inmediato", "Sigue funcionando con su controlador; usted pierde la vista de sus valores en esa pantalla", "Pasa a capacidad mínima"],
+          "correcta": 1,
+          "explicacion": "La HMI solo muestra y envía órdenes. El controlador sigue con su programa y sus protecciones. Vigile el compresor por sus manómetros y por el puesto de alarmas hasta reparar la pantalla."
+        }
+      ]
+    },
+    {
+      "titulo": "Páginas, alarmas y tendencias",
+      "bloques": [
+        { "tipo": "texto", "texto": "Las HMI se recorren por páginas con botones fijos abajo o a un lado:\n• [b]Principal:[/b] el esquema del equipo con sus valores.\n• [b]Alarmas:[/b] las activas, con la hora, y el historial. Reconocer una alarma en la HMI local no la reconoce en el puesto de alarmas, salvo que estén integrados.\n• [b]{{Tendencia}}:[/b] la evolución de los valores. Una temperatura de descarga que sube despacio durante una hora cuenta una historia distinta de un salto brusco.\n• [b]Ajustes:[/b] consignas y límites de alarma." },
+        { "tipo": "texto", "texto": "[b]Error de comunicación:[/b] si la HMI pierde el enlace con el controlador, muestra un aviso y deja los valores en #### o congelados. Revise el cable de la pantalla, su conector y la alimentación del controlador.\n\nSi el puesto de alarmas pierde la comunicación con un equipo pero su pantalla local sigue mostrando valores, el equipo funciona: el problema está en la red del puesto." },
+        {
+          "tipo": "quiz",
+          "tema": "hmi_local_vs_puesto",
+          "pregunta": "El puesto de alarmas da «Falla de comunicación: Compresor MYCOM nº 4», pero la pantalla Omron del nº 4 muestra sus presiones normales. ¿Dónde busca?",
+          "opciones": ["En el controlador del compresor, que está parado", "En la red RS-485 del puesto: cable, borne, dirección o ajustes de comunicación del nº 4", "En los sensores de presión del compresor"],
+          "correcta": 1,
+          "explicacion": "La pantalla local demuestra que el controlador y sus sensores funcionan. Lo que falla es el enlace entre el controlador y el maestro del puesto."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajustes protegidos",
+      "bloques": [
+        { "tipo": "texto", "texto": "Los ajustes están protegidos por niveles de acceso: el operador solo consulta; el técnico, con su contraseña, cambia límites dentro del margen que admite el equipo.\n\n• No cambie un ajuste de seguridad del fabricante sin autorización del jefe de máquinas.\n• Antes de cambiarlo, anote el valor anterior; después, el nuevo, la fecha y el motivo en el libro de máquinas.\n• Subir un límite de alarma para que deje de sonar oculta el problema: busque la causa.\n• Cierre la sesión de técnico al terminar.\n\nLimpie la pantalla con un paño suave y seco. No la toque con herramientas: la lámina táctil se raya y deja de responder." },
+        {
+          "tipo": "quiz",
+          "tema": "hmi_subir_limite",
+          "pregunta": "La alarma de alta temperatura de descarga del MYCOM nº 3 salta a 130 °C varias veces por guardia. ¿Qué hace?",
+          "opciones": ["Sube el límite a 140 °C desde la página de ajustes", "Busca la causa: agua de las cabezas, recalentamiento de la succión, válvulas del compresor; e informa al jefe de máquinas", "Silencia la bocina cada vez"],
+          "correcta": 1,
+          "explicacion": "La alarma avisa de un problema real. Subir el límite lo esconde hasta que el compresor se dañe. Cualquier cambio de ajuste lo autoriza el jefe de máquinas y se anota."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-504: automatización, control e instrumentación en buques.",
+    "Manual de la pantalla Omron y del controlador del compresor Mayekawa MYCOM.",
+    "Manual de la pantalla SIMATIC HMI del sistema de alarmas generales."
+  ]
+}

@@ -89,9 +89,10 @@
       "estado": "activo",
       "zona": [602, 166, 148, 40],
       "modos": {
-        "aprender": { "lecciones": ["e1_sensores_proximidad", "e2_sensores_plc"], "fichas": ["sensor_proximidad"] },
-        "taller": { "pantalla": "tableros", "detalle": "Banco de sensores, PLC y banco libre",
+        "aprender": { "lecciones": ["e1_sensores_proximidad", "e2_sensores_plc", "e3_red_modbus", "e4_hmi", "e5_puesto_alarmas"], "fichas": ["sensor_proximidad"] },
+        "taller": { "pantalla": "tableros", "detalle": "Sensores, PLC, red Modbus, puesto de alarmas y banco libre",
           "practicas": [
+            { "titulo": "Red Modbus y puesto de alarmas", "detalle": "Bus RS-485, alarmas generales y pantalla Omron del MYCOM nº 3", "pantalla": "red_alarmas", "args": { "red_id": "sala_maquinas" } },
             { "titulo": "Sensores PNP y NPN con PLC", "detalle": "Fuente de 24 V, dos sensores y un PLC en la mesa del Taller", "pantalla": "taller", "args": { "plantilla": "banco_sensores" } },
             { "titulo": "PLC: bomba de achique de sentina", "detalle": "Entradas, salidas y programa ladder en vivo", "pantalla": "plc", "args": { "circuito": "plc_bomba_achique" } }
           ] }

@@ -1,0 +1,93 @@
+{
+  "id": "sala_maquinas",
+  "nombre": "Red Modbus RTU del puesto de alarmas",
+  "nota": "Arquitectura típica: un maestro en el puesto de alarmas y los equipos de sala de máquinas como esclavos en un bus RS-485. En el buque hay una pantalla SIMATIC «Alarmas generales», controladores Hanyoung AX4 de temperatura del estator de los generadores y pantallas Omron en los MYCOM; que estén unidos por esta red, sus direcciones y sus ajustes: verificar a bordo.",
+  "longitud_m": 180,
+  "semilla": 7,
+  "maestro": {
+    "id": "PA", "nombre": "Puesto de alarmas", "equipo": "PLC maestro del sistema de alarmas",
+    "baudios": 19200, "formato": "8E1", "timeout_ms": 300, "terminacion": true,
+    "sondeo": [
+      { "direccion": 1, "esperado": "AX1", "nombre": "Temperatura del estator GEN 1", "cantidad": 1,
+        "canales": [{ "reg": 0, "tag": "TT-G1", "nombre": "Temperatura del estator GEN 1", "unidad": "°C", "decimales": 1, "alta": 140, "retardo_s": 5 }] },
+      { "direccion": 2, "esperado": "AX2", "nombre": "Temperatura del estator GEN 2", "cantidad": 1,
+        "canales": [{ "reg": 0, "tag": "TT-G2", "nombre": "Temperatura del estator GEN 2", "unidad": "°C", "decimales": 1, "alta": 140, "retardo_s": 5 }] },
+      { "direccion": 3, "esperado": "AX3", "nombre": "Temperatura del estator GEN 3", "cantidad": 1,
+        "canales": [{ "reg": 0, "tag": "TT-G3", "nombre": "Temperatura del estator GEN 3", "unidad": "°C", "decimales": 1, "alta": 140, "retardo_s": 5 }] },
+      { "direccion": 4, "esperado": "AX4", "nombre": "Temperatura del estator GEN 4", "cantidad": 1,
+        "canales": [{ "reg": 0, "tag": "TT-G4", "nombre": "Temperatura del estator GEN 4", "unidad": "°C", "decimales": 1, "alta": 140, "retardo_s": 5 }] },
+      { "direccion": 11, "esperado": "MY3", "nombre": "Compresor MYCOM nº 3", "cantidad": 7,
+        "canales": [
+          { "reg": 0, "tag": "MY3-CAP", "nombre": "Capacidad MYCOM nº 3", "unidad": "%", "decimales": 0 },
+          { "reg": 1, "tag": "MY3-SP", "nombre": "Presión de succión MYCOM nº 3", "unidad": "kgf/cm²", "decimales": 2, "baja": -0.3, "retardo_s": 10 },
+          { "reg": 2, "tag": "MY3-DP", "nombre": "Presión de descarga MYCOM nº 3", "unidad": "kgf/cm²", "decimales": 1, "alta": 15.0, "retardo_s": 3 },
+          { "reg": 3, "tag": "MY3-OP", "nombre": "Presión de aceite MYCOM nº 3", "unidad": "kgf/cm²", "decimales": 1, "baja": 1.5, "retardo_s": 10 },
+          { "reg": 4, "tag": "MY3-ST", "nombre": "Temperatura de succión MYCOM nº 3", "unidad": "°C", "decimales": 0 },
+          { "reg": 5, "tag": "MY3-DT", "nombre": "Temperatura de descarga MYCOM nº 3", "unidad": "°C", "decimales": 0, "alta": 130, "retardo_s": 5 },
+          { "reg": 6, "tag": "MY3-OT", "nombre": "Temperatura del aceite MYCOM nº 3", "unidad": "°C", "decimales": 0, "alta": 65, "retardo_s": 10 }
+        ] },
+      { "direccion": 12, "esperado": "MY4", "nombre": "Compresor MYCOM nº 4", "cantidad": 7,
+        "canales": [
+          { "reg": 0, "tag": "MY4-CAP", "nombre": "Capacidad MYCOM nº 4", "unidad": "%", "decimales": 0 },
+          { "reg": 1, "tag": "MY4-SP", "nombre": "Presión de succión MYCOM nº 4", "unidad": "kgf/cm²", "decimales": 2, "baja": -0.3, "retardo_s": 10 },
+          { "reg": 2, "tag": "MY4-DP", "nombre": "Presión de descarga MYCOM nº 4", "unidad": "kgf/cm²", "decimales": 1, "alta": 15.0, "retardo_s": 3 },
+          { "reg": 3, "tag": "MY4-OP", "nombre": "Presión de aceite MYCOM nº 4", "unidad": "kgf/cm²", "decimales": 1, "baja": 1.5, "retardo_s": 10 },
+          { "reg": 4, "tag": "MY4-ST", "nombre": "Temperatura de succión MYCOM nº 4", "unidad": "°C", "decimales": 0 },
+          { "reg": 5, "tag": "MY4-DT", "nombre": "Temperatura de descarga MYCOM nº 4", "unidad": "°C", "decimales": 0, "alta": 130, "retardo_s": 5 },
+          { "reg": 6, "tag": "MY4-OT", "nombre": "Temperatura del aceite MYCOM nº 4", "unidad": "°C", "decimales": 0, "alta": 65, "retardo_s": 10 }
+        ] },
+      { "direccion": 20, "esperado": "ES1", "nombre": "Módulo de E/S de sala de máquinas", "cantidad": 4,
+        "canales": [
+          { "reg": 0, "tag": "LSH-SM", "nombre": "Nivel alto de sentina de sala de máquinas", "unidad": "", "decimales": 0, "digital": true, "retardo_s": 10 },
+          { "reg": 1, "tag": "TT-SM", "nombre": "Temperatura de la sala de máquinas", "unidad": "°C", "decimales": 1, "alta": 50, "retardo_s": 30 },
+          { "reg": 2, "tag": "LT-TD", "nombre": "Nivel del tanque de servicio diario", "unidad": "%", "decimales": 0, "baja": 30, "retardo_s": 30 },
+          { "reg": 3, "tag": "PT-AA", "nombre": "Presión del aire de arranque", "unidad": "bar", "decimales": 1, "baja": 15, "retardo_s": 10 }
+        ] }
+    ]
+  },
+  "esclavos": [
+    { "id": "AX1", "nombre": "Temperatura del estator GEN 1", "equipo": "Hanyoung AX4", "direccion": 1, "registros": [{ "valor": 84.0, "escala": 0.1, "ruido": 0.2 }] },
+    { "id": "AX2", "nombre": "Temperatura del estator GEN 2", "equipo": "Hanyoung AX4", "direccion": 2, "registros": [{ "valor": 87.5, "escala": 0.1, "ruido": 0.2 }] },
+    { "id": "AX3", "nombre": "Temperatura del estator GEN 3", "equipo": "Hanyoung AX4", "direccion": 3, "registros": [{ "valor": 36.0, "escala": 0.1, "ruido": 0.2 }] },
+    { "id": "AX4", "nombre": "Temperatura del estator GEN 4", "equipo": "Hanyoung AX4", "direccion": 4, "registros": [{ "valor": 82.0, "escala": 0.1, "ruido": 0.2 }] },
+    { "id": "MY3", "nombre": "Compresor MYCOM nº 3", "equipo": "Controlador del MYCOM con pantalla Omron", "direccion": 11, "registros": [
+      { "valor": 67, "escala": 1 }, { "valor": 0.45, "escala": 0.01, "ruido": 0.01 }, { "valor": 12.6, "escala": 0.1, "ruido": 0.05 },
+      { "valor": 3.1, "escala": 0.1, "ruido": 0.03 }, { "valor": -22, "escala": 1, "ruido": 0.3 }, { "valor": 96, "escala": 1, "ruido": 0.4 }, { "valor": 48, "escala": 1, "ruido": 0.2 }] },
+    { "id": "MY4", "nombre": "Compresor MYCOM nº 4", "equipo": "Controlador del MYCOM con pantalla Omron", "direccion": 12, "registros": [
+      { "valor": 33, "escala": 1 }, { "valor": 0.48, "escala": 0.01, "ruido": 0.01 }, { "valor": 12.5, "escala": 0.1, "ruido": 0.05 },
+      { "valor": 3.0, "escala": 0.1, "ruido": 0.03 }, { "valor": -21, "escala": 1, "ruido": 0.3 }, { "valor": 92, "escala": 1, "ruido": 0.4 }, { "valor": 47, "escala": 1, "ruido": 0.2 }] },
+    { "id": "ES1", "nombre": "Módulo de E/S de sala de máquinas", "equipo": "Módulo de E/S remoto con Modbus RTU", "direccion": 20, "terminacion": true, "registros": [
+      { "valor": 0, "escala": 1 }, { "valor": 41.0, "escala": 0.1, "ruido": 0.1 }, { "valor": 72, "escala": 1 }, { "valor": 27.0, "escala": 0.1, "ruido": 0.05 }] }
+  ],
+  "hmi": {
+    "esclavo": "MY3",
+    "titulo": "MYCOM nº 3",
+    "campos": [
+      { "reg": 0, "sigla": "CAP", "nombre": "Capacidad", "unidad": "%", "decimales": 0 },
+      { "reg": 1, "sigla": "SP", "nombre": "Presión de succión", "unidad": "kgf/cm²", "decimales": 2 },
+      { "reg": 2, "sigla": "DP", "nombre": "Presión de descarga", "unidad": "kgf/cm²", "decimales": 1 },
+      { "reg": 3, "sigla": "OP", "nombre": "Presión de aceite", "unidad": "kgf/cm²", "decimales": 1 },
+      { "reg": 4, "sigla": "ST", "nombre": "Temperatura de succión", "unidad": "°C", "decimales": 0 },
+      { "reg": 5, "sigla": "DT", "nombre": "Temperatura de descarga", "unidad": "°C", "decimales": 0 },
+      { "reg": 6, "sigla": "OT", "nombre": "Temperatura del aceite", "unidad": "°C", "decimales": 0 }
+    ],
+    "tendencia": [{ "reg": 5, "sigla": "DT", "min": 60, "max": 150, "color": "#c0392b" }, { "reg": 2, "sigla": "DP", "min": 0, "max": 20, "color": "#2a5fb0" }],
+    "ajustes": [
+      { "id": "DT-alta", "texto": "Alarma por alta temperatura de descarga", "reg": 5, "tipo": "alta", "valor": 130, "min": 110, "max": 140, "paso": 5, "unidad": "°C", "decimales": 0, "retardo_s": 5 },
+      { "id": "OP-baja", "texto": "Alarma por baja presión de aceite", "reg": 3, "tipo": "baja", "valor": 1.5, "min": 1.0, "max": 2.5, "paso": 0.1, "unidad": "kgf/cm²", "decimales": 1, "retardo_s": 10 },
+      { "id": "DP-alta", "texto": "Alarma por alta presión de descarga", "reg": 2, "tipo": "alta", "valor": 15.0, "min": 13.0, "max": 16.0, "paso": 0.5, "unidad": "kgf/cm²", "decimales": 1, "retardo_s": 3 }
+    ]
+  },
+  "averias": [
+    { "id": "sin_terminador", "texto": "Quitar el terminador del módulo de E/S, al final del bus", "ops": [{ "op": "ajuste", "equipo": "ES1", "clave": "terminacion", "valor": false }] },
+    { "id": "direccion_duplicada", "texto": "El MYCOM nº 4 con la dirección 11, la misma del nº 3", "ops": [{ "op": "ajuste", "equipo": "MY4", "clave": "direccion", "valor": 11 }] },
+    { "id": "velocidad_ax2", "texto": "El AX4 del GEN 2 a 9600 baudios", "ops": [{ "op": "ajuste", "equipo": "AX2", "clave": "baudios", "valor": 9600 }] },
+    { "id": "invertido_ax3", "texto": "A y B invertidos en el AX4 del GEN 3", "ops": [{ "op": "ajuste", "equipo": "AX3", "clave": "invertido", "valor": true }] },
+    { "id": "corte_my4", "texto": "Cable cortado entre el MYCOM nº 3 y el nº 4", "ops": [{ "op": "corte", "antes_de": "MY4" }] },
+    { "id": "ruido", "texto": "Pantalla del cable sin conectar junto a un variador", "ops": [{ "op": "ruido", "valor": 0.25 }] },
+    { "id": "sin_alimentacion_es1", "texto": "Módulo de E/S sin alimentación de 24 V", "ops": [{ "op": "ajuste", "equipo": "ES1", "clave": "alimentado", "valor": false }] },
+    { "id": "descarga_my3", "texto": "Temperatura de descarga del MYCOM nº 3 en aumento", "ops": [{ "op": "rampa", "equipo": "MY3", "registro": 5, "valor": 1.5, "hasta": 138 }] },
+    { "id": "sentina", "texto": "Agua en la sentina de sala de máquinas", "ops": [{ "op": "valor", "equipo": "ES1", "registro": 0, "valor": 1 }] },
+    { "id": "hmi_cable", "texto": "Cable de la pantalla Omron al controlador del MYCOM nº 3 suelto", "ops": [{ "op": "hmi", "valor": true }] }
+  ]
+}

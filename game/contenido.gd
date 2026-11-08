@@ -119,3 +119,9 @@ func tablero(id: String) -> Dictionary:
 
 func plc(id: String) -> Dictionary:
 	return leer("plc/%s.json" % id)
+
+
+## Una red Modbus del buque, con su maestro, sus esclavos, la pantalla local y sus averías.
+func red(id: String) -> SimRedModbus:
+	var datos := leer("redes/%s.json" % id)
+	return null if datos.is_empty() else SimRedModbus.desde_dict(datos)

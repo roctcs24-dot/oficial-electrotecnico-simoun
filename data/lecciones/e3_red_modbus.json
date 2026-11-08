@@ -1,0 +1,73 @@
+{
+  "id": "e3_red_modbus",
+  "titulo": "Red RS-485 y Modbus RTU",
+  "resumen": "Bus de dos hilos, terminadores, direcciones, velocidad, tramas y diagnóstico de la red.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Un bus de dos hilos",
+      "bloques": [
+        { "tipo": "texto", "texto": "Muchos equipos de la cámara de máquinas envían sus valores al puesto de alarmas por un {{rs485}}: un par trenzado y apantallado con dos hilos, A y B, que recorre los equipos uno tras otro.\n\n• La señal es diferencial: lo que cuenta es la tensión entre A y B, no respecto a masa. Por eso aguanta bien el ruido de motores y variadores.\n• El cable va de un equipo al siguiente, en línea. Las derivaciones largas y las estrellas deforman la señal.\n• Admite hasta 32 cargas unitarias y unos 1200 m a baja velocidad ([i]TIA-485; a más velocidad, menos longitud[/i]).\n• En cada uno de los dos extremos va una {{resistencia_terminacion}} de 120 Ω entre A y B. Solo en los extremos." },
+        { "tipo": "texto", "texto": "[b]Cuidado con los nombres:[/b] unos fabricantes llaman A al hilo positivo y otros al negativo. Otros rotulan D+ y D−, o Data+ y Data−. Antes de conectar un equipo nuevo, compare su manual con el de los demás y con el esquema del buque.\n\nLa pantalla del cable se conecta a masa en un solo punto, normalmente en el maestro ([i]según el fabricante y el esquema del buque[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "rs485_terminadores",
+          "pregunta": "¿Dónde van las resistencias de terminación de 120 Ω de un bus RS-485?",
+          "opciones": ["Una en cada equipo", "Una en cada uno de los dos extremos del bus", "Solo en el maestro"],
+          "correcta": 1,
+          "explicacion": "Van en los dos extremos de la línea, sean el maestro o un esclavo. Si falta una, las tramas rebotan en el final; si se ponen de más, la señal se debilita."
+        }
+      ]
+    },
+    {
+      "titulo": "Maestro, esclavos y tramas",
+      "bloques": [
+        { "tipo": "texto", "texto": "En una red {{modbus}} habla solo quien pregunta, según el reparto entre {{maestro_esclavo}}:\n• El maestro envía una petición con la {{direccion_modbus}}, de 1 a 247, la función y los registros que quiere.\n• Solo contesta el esclavo que tiene esa dirección. Los demás callan.\n• Cada trama termina con un {{crc}} de dos bytes. Si no cuadra, la trama se descarta.\n• Si no llega respuesta dentro del {{tiempo_espera}}, el maestro pasa al siguiente esclavo.\n\nTodos los equipos del bus deben tener la misma {{velocidad_transmision}}, por ejemplo 19200 baudios, y el mismo {{paridad}}, por ejemplo 8E1. Si uno es distinto, no entiende las peticiones y no contesta." },
+        { "tipo": "texto", "texto": "Pruébelo: el maestro lee el registro de temperatura de un esclavo. Pida a otras direcciones y quite el terminador del final para ver qué cambia." },
+        {
+          "tipo": "animacion",
+          "id": "trama_modbus",
+          "params": {},
+          "pie": "Petición de la función 03 (leer registros) y respuesta de un esclavo, con su CRC real. El valor 875 con escala 0,1 son 87,5 °C."
+        },
+        { "tipo": "texto", "texto": "Los valores viajan en {{registro_modbus}} de 16 bits, enteros. Por eso un equipo envía 875 para 87,5 °C: el maestro aplica la escala, aquí 0,1.\n\nFunciones habituales: 03 leer registros de retención, 04 leer registros de entrada, 06 escribir un registro y 16 escribir varios. Si el esclavo no tiene los registros pedidos, contesta con la excepción 02.\n\n[b]Ojo con la numeración:[/b] el registro 40001 de los manuales es la dirección 0 dentro de la trama. Un desfase de uno hace que el maestro lea el valor del registro vecino." },
+        {
+          "tipo": "quiz",
+          "tema": "modbus_direccion_repetida",
+          "pregunta": "Tras cambiar el controlador del MYCOM nº 4, el puesto da falla de comunicación con el nº 3 y con el nº 4. El nº 3 no se ha tocado. ¿Qué es lo más probable?",
+          "opciones": ["El cable del bus está cortado antes del nº 3", "El controlador nuevo tiene la misma dirección que el nº 3", "El maestro está averiado"],
+          "correcta": 1,
+          "explicacion": "Con dos equipos en la misma dirección contestan los dos a la vez, las tramas se mezclan y llegan con el CRC mal; y a la dirección del nº 4 no contesta nadie. Un equipo de repuesto viene con la dirección de fábrica: hay que configurarla."
+        }
+      ]
+    },
+    {
+      "titulo": "Diagnóstico de la red",
+      "bloques": [
+        { "tipo": "texto", "texto": "El diagnóstico del maestro y la forma de la falla orientan la búsqueda:\n• [b]Un solo equipo sin respuesta:[/b] su alimentación, su dirección, su velocidad, su formato o A y B invertidos en su borne.\n• [b]Todos los equipos desde uno en adelante sin respuesta:[/b] cable cortado o borne suelto antes de ese equipo.\n• [b]Errores de CRC intermitentes en muchos equipos:[/b] falta un terminador, sobran terminadores, o hay ruido por la pantalla mal conectada o un cable junto a un variador.\n• [b]Errores de CRC continuos en una dirección y otra sin respuesta:[/b] dirección repetida.\n• [b]Excepción 02:[/b] contesta un equipo que no tiene esos registros: otra dirección equivocada." },
+        { "tipo": "texto", "texto": "[b]Medida de los terminadores:[/b] con los equipos de la red sin alimentación, mida con el multímetro en ohmios entre A y B:\n• Unos 60 Ω: los dos terminadores, 120 Ω en paralelo.\n• Unos 120 Ω: falta uno, o el cable está cortado y solo se mide el del lado del instrumento.\n• Unos 40 Ω o menos: sobran terminadores.\n\nLos LEDs TX y RX de cada equipo indican si recibe peticiones y si contesta. Un equipo cuyo LED RX parpadea pero nunca el TX recibe, pero no contesta: dirección, velocidad, formato o polaridad." },
+        {
+          "tipo": "quiz",
+          "tema": "rs485_medida_120",
+          "pregunta": "Con la red sin alimentación, mide 118 Ω entre A y B en el conector del maestro. ¿Qué indica?",
+          "opciones": ["La red está bien", "Solo hay un terminador en el circuito: falta el del otro extremo, o el cable está cortado", "Hay un cortocircuito entre A y B"],
+          "correcta": 1,
+          "explicacion": "Con los dos terminadores se miden unos 60 Ω. Unos 120 Ω indican que solo uno está en el circuito. Compruebe el terminador del último equipo y la continuidad del cable hasta él."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "rs485_orden_diagnostico",
+          "pregunta": "Seleccione en orden cómo buscar una falla de comunicación con un solo equipo del bus:",
+          "pasos": ["Leer en el diagnóstico del maestro qué direcciones fallan y de qué forma", "Comprobar que el equipo tiene alimentación y que sus LEDs RX y TX parpadean", "Comprobar en su menú la dirección, la velocidad y el formato", "Revisar en su borne el apriete y la polaridad de A y B", "Poner los contadores a cero y comprobar que contesta sin errores"],
+          "explicacion": "De lo general a lo particular: primero dónde falla, después lo que no exige abrir nada, y al final las conexiones. Termine siempre comprobando que contesta sin errores."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "TIA-485-A (EIA-485): capa física del bus RS-485.",
+    "Modbus Application Protocol Specification V1.1b3 y Modbus over Serial Line V1.02 (Modbus Organization).",
+    "IEC 60092-504: automatización, control e instrumentación en buques.",
+    "Manual de comunicaciones de cada equipo: direcciones, registros, escalas y ajustes de fábrica."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "e5_puesto_alarmas",
+  "titulo": "Puesto de alarmas de sala de máquinas",
+  "resumen": "Estados de una alarma, silenciar y reconocer, retardos, fallas de sensor y de comunicación, extensión a camarotes.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "De la señal a la bocina",
+      "bloques": [
+        { "tipo": "texto", "texto": "El {{sistema_alarmas}} reúne las señales de la cámara de máquinas en un puesto, en la sala de control:\n• Señales cableadas: contactos de presostatos, termostatos e interruptores de nivel, y lazos de 4–20 mA.\n• Señales por la red: valores que el maestro lee de controladores, como los AX4 de temperatura del estator de los generadores o los controladores de los MYCOM.\n\nCada señal tiene su límite y su {{retardo_alarma}}: la condición debe mantenerse unos segundos antes de avisar, para no alarmar por un pico breve.\n\nEl sistema tiene dos alimentaciones, la principal y la de emergencia o baterías, y avisa si falla cualquiera de ellas ([i]según las reglas de la sociedad de clasificación — verificar a bordo[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "alarma_retardo",
+          "pregunta": "¿Para qué sirve el retardo de una alarma de nivel alto de sentina?",
+          "opciones": ["Para que avise más tarde y moleste menos", "Para no avisar por el agua que se mueve con el balance, y sí cuando el nivel se mantiene", "Para dar tiempo a que arranque la bomba de achique"],
+          "correcta": 1,
+          "explicacion": "Con mar, el agua de la sentina se mueve y toca el interruptor un instante. El retardo exige que el nivel se mantenga antes de dar la alarma."
+        }
+      ]
+    },
+    {
+      "titulo": "Silenciar y reconocer",
+      "bloques": [
+        { "tipo": "texto", "texto": "Estados de una alarma ([i]ISA-18.2 / IEC 62682[/i]):\n• [b]Activa sin reconocer:[/b] la luz parpadea y suena la bocina.\n• [b]{{Silenciar_bocina}}:[/b] apaga el sonido. La alarma sigue sin reconocer y parpadeando.\n• [b]{{Reconocer_alarma}}:[/b] usted confirma que la ha visto. La luz queda fija mientras la causa siga presente.\n• [b]Normal sin reconocer:[/b] la causa desapareció antes de reconocerla. Parpadea más lento hasta que la reconozca: así sabe que hubo una alarma aunque ya no esté.\n• Cuando la causa desaparece después de reconocerla, la alarma se borra de la lista y queda en el historial.\n\nHaga la prueba de lámparas cada guardia: una luz fundida es una alarma que no verá." },
+        {
+          "tipo": "quiz",
+          "tema": "alarma_silenciar_reconocer",
+          "pregunta": "Suena la bocina por baja presión de aceite del MYCOM nº 4. Pulsa «Silenciar bocina». ¿En qué estado queda la alarma?",
+          "opciones": ["Reconocida", "Activa sin reconocer, parpadeando, solo sin sonido", "Borrada"],
+          "correcta": 1,
+          "explicacion": "Silenciar solo apaga el sonido. Para reconocerla debe pulsar «Reconocer», después de leer qué alarma es. Y luego atender la causa."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "alarma_orden_atencion",
+          "pregunta": "Seleccione en orden cómo atender una alarma nueva en el puesto:",
+          "pasos": ["Silenciar la bocina", "Leer la alarma, su hora y su valor", "Reconocer la alarma", "Ir al equipo y comprobar la causa en sitio", "Corregir la causa o avisar al jefe de máquinas, y anotarlo en el libro"],
+          "explicacion": "Silenciar primero deja oír otras alarmas y comunicarse. Reconocer confirma que usted la ha leído; la alarma solo se resuelve en el equipo."
+        }
+      ]
+    },
+    {
+      "titulo": "Fallas que no son del proceso",
+      "bloques": [
+        { "tipo": "texto", "texto": "No todas las alarmas son del proceso:\n• [b]Falla de sensor:[/b] un lazo de 4–20 mA por debajo de 3,6 mA (cable cortado) o por encima de 21 mA (cortocircuito o sensor averiado) da una alarma de sensor, no de valor bajo o alto.\n• [b]{{Falla_comunicacion}}:[/b] el maestro no recibe respuesta de un equipo. Mientras dura, sus valores no son válidos y sus alarmas de proceso no pueden avisar: vigile ese equipo en sitio hasta reparar la red.\n\n[b]{{Extension_alarmas}}:[/b] en los buques con cámara de máquinas sin dotación permanente, una alarma que no se reconoce en el puesto en un tiempo limitado se extiende a los camarotes de los oficiales de máquinas y a los espacios comunes ([i]SOLAS II-1, reglas 51 y 53; tiempo: verificar a bordo[/i]).\n\nInhibir una alarma solo se hace con autorización, anotándolo en el libro y rehabilitándola al terminar el trabajo." },
+        {
+          "tipo": "quiz",
+          "tema": "alarma_falla_com_vigilar",
+          "pregunta": "El puesto da falla de comunicación con el módulo de E/S de sala de máquinas, que lleva la alarma de sentina. ¿Qué hace mientras busca la avería?",
+          "opciones": ["Nada: la alarma de sentina sigue funcionando", "Inhibir la alarma de comunicación", "Vigilar en sitio la sentina y las demás señales de ese módulo, porque sus alarmas no pueden llegar al puesto"],
+          "correcta": 2,
+          "explicacion": "Sin comunicación, el puesto no recibe las señales del módulo. Una inundación no daría alarma. Hasta reparar la red, esas señales se vigilan en sitio y se avisa al jefe de máquinas."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS II-1, reglas 51 y 53: sistemas de alarma y cámara de máquinas sin dotación permanente.",
+    "ISA-18.2 e IEC 62682: gestión de alarmas.",
+    "IEC 60092-504: automatización, control e instrumentación en buques.",
+    "Reglas de la sociedad de clasificación del buque para máquinas desatendidas."
+  ]
+}

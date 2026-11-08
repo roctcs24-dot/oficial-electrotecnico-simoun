@@ -183,6 +183,24 @@
     "plc": { "es": "autómata programable (PLC)", "en": "programmable logic controller, PLC", "def": "Equipo que lee entradas, ejecuta un programa y gobierna salidas, ciclo tras ciclo." },
     "entrada_digital": { "es": "entrada digital", "en": "digital input", "def": "Entrada del PLC que solo distingue dos estados: con señal o sin señal." },
     "fuente_conmutada": { "es": "fuente conmutada", "en": "switch-mode power supply, SMPS", "def": "Fuente que convierte la alterna en una continua estable, como los 24 V DC de mando, conmutando a alta frecuencia." },
-    "limite_corriente": { "es": "límite de corriente", "en": "current limit", "def": "Corriente máxima que el arrancador suave deja pasar durante el arranque, en veces la corriente del motor." }
+    "limite_corriente": { "es": "límite de corriente", "en": "current limit", "def": "Corriente máxima que el arrancador suave deja pasar durante el arranque, en veces la corriente del motor." },
+    "rs485": { "es": "bus RS-485", "en": "RS-485 bus", "def": "Enlace serie diferencial de dos hilos, A y B, que une hasta 32 cargas unitarias en una línea de hasta unos 1200 m." },
+    "modbus": { "es": "Modbus", "en": "Modbus RTU, Modbus TCP", "def": "Protocolo en el que un maestro pide datos a cada esclavo por su dirección. RTU va por RS-485; TCP, por Ethernet." },
+    "maestro_esclavo": { "es": "maestro y esclavo", "en": "master and slave, client and server", "def": "Reparto de papeles de Modbus: solo el maestro pregunta; cada esclavo contesta solo a las peticiones con su dirección." },
+    "direccion_modbus": { "es": "dirección del esclavo", "en": "slave address, unit ID", "def": "Número de 1 a 247 que identifica a cada esclavo en el bus. No puede repetirse." },
+    "velocidad_transmision": { "es": "velocidad de transmisión", "en": "baud rate", "def": "Bits por segundo del enlace serie, como 9600 o 19200 baudios. Todos los equipos del bus deben usar la misma." },
+    "paridad": { "es": "formato del carácter", "en": "parity, data format (8E1, 8N1)", "def": "Bits de datos, paridad y bits de parada de cada carácter, como 8E1. Debe ser igual en todo el bus." },
+    "resistencia_terminacion": { "es": "resistencia de terminación", "en": "termination resistor", "def": "Resistencia de 120 Ω entre A y B en cada uno de los dos extremos del bus, que evita que las tramas reboten." },
+    "registro_modbus": { "es": "registro", "en": "holding register, input register", "def": "Palabra de 16 bits de un esclavo, como 40001, que guarda un valor entero; el maestro lo convierte con su escala." },
+    "crc": { "es": "CRC", "en": "cyclic redundancy check, CRC", "def": "Dos bytes al final de cada trama Modbus RTU que permiten detectar si llegó deformada." },
+    "tiempo_espera": { "es": "tiempo de espera", "en": "timeout", "def": "Tiempo que el maestro espera una respuesta antes de darla por perdida y pasar al siguiente esclavo." },
+    "hmi": { "es": "pantalla HMI", "en": "human-machine interface, HMI", "def": "Pantalla táctil desde la que el operador ve valores, alarmas y tendencias de un equipo y cambia sus ajustes." },
+    "tendencia": { "es": "tendencia", "en": "trend", "def": "Gráfica de un valor a lo largo del tiempo, que muestra cómo ha llegado a su valor actual." },
+    "sistema_alarmas": { "es": "sistema de alarmas y monitoreo", "en": "alarm and monitoring system, AMS", "def": "Sistema que vigila las señales de la cámara de máquinas, avisa con luz y bocina y guarda el historial." },
+    "reconocer_alarma": { "es": "reconocer una alarma", "en": "acknowledge, ACK", "def": "Confirmar en el puesto que se ha visto la alarma. Pasa de parpadeo a luz fija; no la elimina si la causa sigue." },
+    "silenciar_bocina": { "es": "silenciar la bocina", "en": "silence, mute", "def": "Apagar el aviso acústico sin reconocer la alarma." },
+    "falla_comunicacion": { "es": "falla de comunicación", "en": "communication failure, comms fault", "def": "Alarma que da el maestro cuando un esclavo deja de contestar a varias peticiones seguidas." },
+    "retardo_alarma": { "es": "retardo de la alarma", "en": "alarm delay, time delay", "def": "Tiempo que la condición debe mantenerse antes de dar la alarma, para no avisar por picos breves." },
+    "extension_alarmas": { "es": "extensión de alarmas", "en": "alarm extension, watch call system", "def": "Envío de las alarmas no reconocidas a los camarotes y espacios comunes de los oficiales de máquinas." }
   }
 }
