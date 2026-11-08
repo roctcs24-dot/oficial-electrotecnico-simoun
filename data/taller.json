@@ -23,6 +23,15 @@
       }
     },
     {
+      "id": "arrancador_suave", "tipo": "arrancador_suave", "prefijo": "AS", "nombre": "Arrancador suave", "potencia": true, "ficha": "arrancador_suave",
+      "params": { "ie_a": 173, "u_inicial": 0.4, "rampa_s": 10, "limite_corriente": 3.5 },
+      "bornes": {
+        "1": [110, 50], "3": [180, 50], "5": [250, 50], "2": [110, 490], "4": [180, 490], "6": [250, 490],
+        "A1": [70, 131], "A2": [130, 131], "13": [230, 131], "14": [290, 131],
+        "23": [60, 411], "24": [120, 411], "95": [200, 411], "96": [260, 411], "98": [320, 411]
+      }
+    },
+    {
       "id": "rele_termico", "tipo": "rele_termico", "prefijo": "F", "nombre": "Relé térmico", "potencia": true, "ficha": "rele_termico",
       "params": { "ajuste_a": 29.5 },
       "bornes": {
@@ -116,9 +125,11 @@
   "plantillas": [
     { "id": "arranque_directo", "nombre": "Arranque directo" },
     { "id": "estrella_triangulo", "nombre": "Estrella-triángulo" },
-    { "id": "muestra_contactor", "nombre": "Banco de prueba del contactor" }
+    { "id": "muestra_contactor", "nombre": "Banco de prueba del contactor" },
+    { "id": "arranque_suave", "nombre": "Arranque con arrancador suave" }
   ],
   "consecuencias": {
+    "arrancador_fallo": { "titulo": "Fallo del arrancador suave", "texto": "El arrancador suave se paró y abrió su contacto de fallo 95-96, que suelta el contactor de línea. Lea el fallo en su pantalla: una falta de fase viene de aguas arriba; un tiempo de arranque excedido indica un motor o una carga que no deja acelerar, o un límite de corriente demasiado bajo. Corrija la causa, rearme el arrancador y vuelva a dar marcha." },
     "disparo_magnetico": { "titulo": "Disparo magnético del guardamotor", "texto": "La corriente superó el umbral magnético: hubo un cortocircuito o una corriente muy alta aguas abajo, como la de un motor 220Δ/380Y conectado en delta a 380 V. Abra el guardamotor, corrija la causa y mida el aislamiento antes de volver a cerrar. Tras un disparo, lleve el mando a apagado antes de cerrar." },
     "disparo_termico": { "titulo": "Disparo térmico del guardamotor", "texto": "La corriente estuvo por encima del ajuste durante demasiado tiempo. Compruebe la carga, la conexión del motor y que el ajuste coincida con la corriente de la placa. No suba el ajuste para evitar el disparo." },
     "disparo_rele_termico": { "titulo": "Disparo del relé térmico", "texto": "La sobrecarga fue suficiente para cambiar 95-96 y 97-98. Revise la conexión estrella o delta según la placa, la carga y las tres fases. El relé no corta la potencia: si 95-96 no está en serie con la bobina, el motor sigue conectado." },

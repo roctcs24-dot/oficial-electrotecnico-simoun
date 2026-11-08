@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="290" viewBox="0 0 400 290">
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,36 V96 M110,36 V96 M160,36 V96 M60,194 V254 M110,194 V254 M160,194 V254"/>
+    <rect x="34" y="96" width="152" height="98" rx="4"/>
+    <!-- Contacto NA de marcha y bobina de mando, con la letra de la función -->
+    <path d="M246,36 V128 M246,162 V254 M228,128 H264 M228,162 H264"/>
+    <path d="M330,36 V112 M330,178 V254"/>
+    <circle cx="330" cy="145" r="33"/>
+  </g>
+  <path d="M186,145 H297" fill="none" stroke="#20242a" stroke-width="2" stroke-dasharray="8 6"/>
+</svg>

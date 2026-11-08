@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="290" viewBox="0 0 400 290">
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Tres fases que entran y salen del bloque -->
+    <path d="M60,36 V96 M110,36 V96 M160,36 V96 M60,194 V254 M110,194 V254 M160,194 V254"/>
+    <rect x="34" y="96" width="152" height="98"/>
+    <!-- Par de tiristores en antiparalelo -->
+    <path d="M58,118 L82,118 L70,138 Z M58,138 H82 M82,138 L92,148"/>
+    <path d="M58,172 L82,172 L70,152 Z M58,152 H82 M58,152 L48,142"/>
+    <path d="M70,108 V118 M70,172 V182"/>
+    <!-- Rampa de tensión -->
+    <path d="M112,176 L156,124 H176"/>
+    <path d="M108,182 H178 M112,182 V114" stroke-width="1.6"/>
+    <!-- Contacto 13-14 «en marcha» -->
+    <path d="M246,36 V116 M246,172 V254 M246,172 L224,122"/>
+    <!-- Orden de marcha A1-A2 -->
+    <path d="M330,36 V118 M330,172 V254"/>
+    <rect x="306" y="118" width="48" height="54"/>
+    <path d="M314,164 L330,134 H346" stroke-width="2"/>
+  </g>
+  <path d="M186,145 H306" fill="none" stroke="#20242a" stroke-width="2" stroke-dasharray="8 6"/>
+</svg>

@@ -44,6 +44,15 @@
         { "texto": "MCP", "x": 204, "y": 132, "tam": 18 } ] }
     },
     {
+      "id": "arrancador_suave", "nombre": "Arrancador suave", "sistema": 3, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/arrancador_suave.svg", "tamano": [400, 290], "etiquetas": [
+        { "texto": "1", "x": 45, "y": 26, "tam": 20 }, { "texto": "3", "x": 95, "y": 26, "tam": 20 }, { "texto": "5", "x": 145, "y": 26, "tam": 20 }, { "texto": "2", "x": 45, "y": 276, "tam": 20 }, { "texto": "4", "x": 95, "y": 276, "tam": 20 }, { "texto": "6", "x": 145, "y": 276, "tam": 20 }, { "texto": "13", "x": 230, "y": 26, "tam": 20 }, { "texto": "14", "x": 230, "y": 276, "tam": 20 }, { "texto": "A1", "x": 312, "y": 26, "tam": 20 }, { "texto": "A2", "x": 312, "y": 276, "tam": 20 }, { "texto": "AS1", "x": 384, "y": 146, "tam": 20 }
+      ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/arrancador_suave.svg", "tamano": [400, 290], "etiquetas": [
+        { "texto": "L1", "x": 45, "y": 26, "tam": 20 }, { "texto": "L2", "x": 95, "y": 26, "tam": 20 }, { "texto": "L3", "x": 145, "y": 26, "tam": 20 }, { "texto": "T1", "x": 45, "y": 276, "tam": 20 }, { "texto": "T2", "x": 95, "y": 276, "tam": 20 }, { "texto": "T3", "x": 145, "y": 276, "tam": 20 }, { "texto": "SS", "x": 110, "y": 145, "tam": 30 }, { "texto": "SS", "x": 330, "y": 145, "tam": 22 }, { "texto": "RUN", "x": 278, "y": 145, "tam": 14 }
+      ] }
+    },
+    {
       "id": "pulsador_na", "nombre": "Pulsador NA", "sistema": 3, "similares": [],
       "iec": { "svg": "res://art/simbolos/iec/pulsador_na.svg", "tamano": [240, 200], "etiquetas": [
         { "texto": "13", "x": 164, "y": 34, "tam": 18 }, { "texto": "14", "x": 164, "y": 166, "tam": 18 }, { "texto": "S1", "x": 80, "y": 62, "tam": 18 } ] },

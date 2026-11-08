@@ -192,11 +192,24 @@ func _panel_mando(columna: VBoxContainer) -> void:
 	columna.add_child(_rotulo("Compresor"))
 	columna.add_child(_luz_con_texto("marcha", "Compresor en marcha: contactor K1 cerrado", LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
 	var motor: SimMotorTrifasico = sim.componente("M1")
-	var i_n: float = motor.params["i_delta"]
-	_instrumentos["corriente"] = InstrumentoAguja.new().configurar("Motor", "A", 0.0, i_n * 1.6, i_n)
+	# Un motor 220Δ/380Y trabaja en estrella en la red de 380 V: su corriente es la de estrella.
+	var en_estrella := is_equal_approx(float(motor.params["v_estrella"]), SimRed.V_LINEA)
+	var i_n: float = motor.params["i_estrella"] if en_estrella else motor.params["i_delta"]
+	var fondo := i_n * 1.6
+	var arrancador := _arrancador()
+	if arrancador != null:
+		# Con arrancador suave la escala abarca el límite de corriente del arranque.
+		fondo = ceilf(float(arrancador.params["limite_corriente"]) * float(arrancador.params["ie_a"]) * 1.1 / 100.0) * 100.0
+	_instrumentos["corriente"] = InstrumentoAguja.new().configurar("Motor", "A", 0.0, fondo, i_n)
 	var instrumento := HFlowContainer.new()
 	instrumento.add_child(_instrumentos["corriente"])
 	columna.add_child(instrumento)
+	if arrancador != null:
+		columna.add_child(_rotulo("Arrancador suave %s" % arrancador.id))
+		_textos["arrancador"] = _etiqueta("")
+		columna.add_child(_textos["arrancador"])
+		if arrancador.fase() == "fallo":
+			columna.add_child(_boton("Rearmar el arrancador (tecla Reset)", _rearmar_arrancador.bind(arrancador)))
 	var mandos := _rejilla()
 	columna.add_child(mandos)
 	var q: SimGuardamotor = operador.guardamotor()
@@ -385,6 +398,16 @@ func _atender(aviso: Dictionary) -> void:
 	_comprobar_firma()
 
 
+## Arrancador suave del compresor, si el circuito lo tiene.
+func _arrancador() -> SimArrancadorSuave:
+	return sim.componente("AS1") as SimArrancadorSuave if sim.componentes.has("AS1") else null
+
+
+func _rearmar_arrancador(arrancador: SimArrancadorSuave) -> void:
+	arrancador.rearmar()
+	_comprobar_firma()
+
+
 func _actualizar() -> void:
 	if sim.solucion == null:
 		sim.paso()
@@ -416,6 +439,8 @@ func _actualizar() -> void:
 	if _luces.has("marcha"):
 		_luces["marcha"].encendida = marcha
 		_instrumentos["corriente"].valor = operador.corriente_motor()
+		if _textos.has("arrancador") and _arrancador() != null:
+			_textos["arrancador"].text = " · ".join(_arrancador().pantalla())
 		_luces["rele"].encendida = (sim.componente("F2") as SimReleTermico).estado["disparado"]
 		for id: String in PRESOSTATOS:
 			_luces[id].encendida = not (sim.componente(id) as SimPresostato).cerrado()
@@ -451,6 +476,8 @@ func _calcular_firma() -> String:
 		partes.append(str(v))
 	for id: String in PRESOSTATOS:
 		partes.append(str((sim.componente(id) as SimPresostato).estado["disparado"]))
+	if _arrancador() != null:
+		partes.append(str(_arrancador().fase() == "fallo"))
 	return "|".join(partes)
 
 

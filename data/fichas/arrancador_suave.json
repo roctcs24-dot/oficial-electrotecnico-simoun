@@ -1,0 +1,101 @@
+{
+  "id": "arrancador_suave",
+  "titulo": "Arrancador suave",
+  "resumen": "Arranca el motor subiendo la tensión en rampa con tiristores y limitando la corriente; al terminar, un bypass interno lo deja en directo.",
+  "dibujo": {
+    "svg": "res://art/equipos/arrancador_suave.svg",
+    "tamano": [360, 540],
+    "nota": "Ilustración sin marca con la disposición típica de un arrancador suave con pantalla y bypass interno, como los Siemens SIRIUS 3RW55 de los compresores nº 3 y nº 4 del buque. La posición y el nombre de los bornes de mando cambian con cada modelo: verifique en el esquema del tablero y en el manual.",
+    "etiquetas": [
+      { "texto": "1/L1", "x": 110, "y": 88, "tam": 14 },
+      { "texto": "3/L2", "x": 180, "y": 88, "tam": 14 },
+      { "texto": "5/L3", "x": 250, "y": 88, "tam": 14 },
+      { "texto": "A1", "x": 70, "y": 108, "tam": 13, "color": "#20242a" },
+      { "texto": "A2", "x": 130, "y": 108, "tam": 13, "color": "#20242a" },
+      { "texto": "13", "x": 230, "y": 108, "tam": 13, "color": "#20242a" },
+      { "texto": "14", "x": 290, "y": 108, "tam": 13, "color": "#20242a" },
+      { "texto": "ARRANCADOR SUAVE", "x": 180, "y": 196, "tam": 15 },
+      { "texto": "SOFT STARTER", "x": 180, "y": 218, "tam": 13 },
+      { "texto": "380 V · Ie 173 A", "x": 180, "y": 268, "tam": 14, "color": "#7fe0a8" },
+      { "texto": "Mando 110 V AC", "x": 180, "y": 292, "tam": 12, "color": "#7fe0a8" },
+      { "texto": "23", "x": 60, "y": 440, "tam": 13, "color": "#20242a" },
+      { "texto": "24", "x": 120, "y": 440, "tam": 13, "color": "#20242a" },
+      { "texto": "95", "x": 200, "y": 440, "tam": 13, "color": "#20242a" },
+      { "texto": "96", "x": 260, "y": 440, "tam": 13, "color": "#20242a" },
+      { "texto": "98", "x": 320, "y": 440, "tam": 13, "color": "#20242a" },
+      { "texto": "2/T1", "x": 110, "y": 532, "tam": 14, "color": "#20242a" },
+      { "texto": "4/T2", "x": 180, "y": 532, "tam": 14, "color": "#20242a" },
+      { "texto": "6/T3", "x": 250, "y": 532, "tam": 14, "color": "#20242a" }
+    ]
+  },
+  "simbolos": {
+    "nota": "No hay un único símbolo normalizado de arrancador suave: en la columna IEC se dibuja como bloque con los tiristores en antiparalelo y la rampa, según la práctica de los esquemas IEC 60617; en la columna ANSI, como bloque con las letras SS. Verificar contra el esquema del fabricante.",
+    "iec": {
+      "titulo": "IEC 60617",
+      "svg": "res://art/simbolos/iec/arrancador_suave.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "1", "x": 45, "y": 26, "tam": 20 }, { "texto": "3", "x": 95, "y": 26, "tam": 20 }, { "texto": "5", "x": 145, "y": 26, "tam": 20 },
+        { "texto": "2", "x": 45, "y": 276, "tam": 20 }, { "texto": "4", "x": 95, "y": 276, "tam": 20 }, { "texto": "6", "x": 145, "y": 276, "tam": 20 },
+        { "texto": "13", "x": 230, "y": 26, "tam": 20 }, { "texto": "14", "x": 230, "y": 276, "tam": 20 },
+        { "texto": "A1", "x": 312, "y": 26, "tam": 20 }, { "texto": "A2", "x": 312, "y": 276, "tam": 20 },
+        { "texto": "AS1", "x": 384, "y": 146, "tam": 20 }
+      ]
+    },
+    "ansi": {
+      "titulo": "ANSI/IEEE 315 (NEMA)",
+      "svg": "res://art/simbolos/ansi/arrancador_suave.svg",
+      "tamano": [400, 290],
+      "etiquetas": [
+        { "texto": "L1", "x": 45, "y": 26, "tam": 20 }, { "texto": "L2", "x": 95, "y": 26, "tam": 20 }, { "texto": "L3", "x": 145, "y": 26, "tam": 20 },
+        { "texto": "T1", "x": 45, "y": 276, "tam": 20 }, { "texto": "T2", "x": 95, "y": 276, "tam": 20 }, { "texto": "T3", "x": 145, "y": 276, "tam": 20 },
+        { "texto": "SS", "x": 110, "y": 145, "tam": 30 },
+        { "texto": "SS", "x": 330, "y": 145, "tam": 22 },
+        { "texto": "RUN", "x": 278, "y": 145, "tam": 14 }
+      ]
+    }
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{arrancador_suave}} arranca un motor de inducción sin el golpe de corriente del {{arranque_directo}}. Sube la tensión del motor poco a poco, en una {{rampa_tension}}, y no deja pasar más corriente que su {{limite_corriente}}. Así el generador no sufre una caída de tensión fuerte, y el acoplamiento y el compresor no reciben un tirón.\n\nA bordo del Vía Simoun lo llevan los compresores de amoníaco nº 3 y nº 4. Sus motores de 90 kW tienen placa 220Δ/380Y: a 380 V van en estrella y no admiten {{arranque_yd}}. Con cuatro generadores de 452 kW, un arranque directo de unos 1100 A se notaría en toda la red."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• En cada fase, dos {{tiristores}} en antiparalelo, uno para cada semionda. Retrasando el disparo en cada semiciclo recortan la onda y bajan la tensión eficaz.\n• Un contactor interno de {{bypass}} que cierra al final de la rampa. Con el motor ya en velocidad, los tiristores dejan de conducir y no se calientan.\n• Un disipador de aletas.\n• Una electrónica de control que mide la corriente de cada fase y protege el motor y el propio arrancador.\n• La pantalla y el teclado para ajustar y leer alarmas.\n\nDurante la rampa el motor da menos par: el par crece con el cuadrado de la tensión. Por eso conviene arrancar el compresor descargado, con las solenoides de descarga de cilindros sin tensión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Potencia:[/b] la línea entra por 1/L1, 3/L2 y 5/L3, normalmente después del interruptor o guardamotor y de un contactor de línea. Sale por 2/T1, 4/T2 y 6/T3 hacia el relé de sobrecarga y el motor.\n• [b]Mando:[/b] en los modelos sencillos, la tensión en A1-A2 es la orden de marcha. En el 3RW55, A1-A2 es la alimentación de la electrónica, que queda siempre conectada, y la orden entra por una entrada digital. Siga el esquema del tablero ([i]verificar a bordo[/i]).\n• [b]Salidas:[/b] 13-14 cierra mientras está en marcha, 23-24 cuando cierra el bypass, y 95-96 abre si hay un fallo (95-98 cierra). El 95-96 se cablea en serie con el mando, como el del {{rele_termico}}.\n\nEn este juego, la orden de marcha llega a A1-A2 a la vez que a la bobina del contactor de línea."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta",
+      "texto": "Los parámetros principales ([i]valores típicos del compresor nº 3 — verificar a bordo[/i]):\n• [b]Ie, corriente del motor:[/b] la de la placa en la conexión real; aquí 173 A en estrella.\n• [b]Tensión inicial:[/b] 40 %. Si es muy baja, el motor no despega al principio de la rampa.\n• [b]Tiempo de rampa:[/b] 10 s.\n• [b]Límite de corriente:[/b] 3,5 × Ie, unos 600 A. Con un límite demasiado bajo, el motor no llega a la velocidad y el arrancador da fallo por tiempo.\n• [b]Tiempo máximo de arranque:[/b] 30 s.\n• [b]Clase de disparo[/b] de la protección del motor, si la usa en vez de un relé aparte.\n\nCambie los parámetros solo con el motor parado, y anótelos en el libro antes y después."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "[b]En marcha:[/b]\n• Con la {{pinza}}, la corriente sube hasta el límite y se mantiene mientras el motor acelera. Cuando cierra el bypass, baja a la corriente de carga.\n• La pantalla indica la fase de arranque, la corriente y el último fallo.\n• Las tres fases deben llevar corrientes parecidas.\n\n[b]Sin tensión, con {{loto}} y la ausencia de tensión verificada:[/b]\n• Con el multímetro en Ω, entre 1/L1 y 2/T1 de cada fase: valor alto en las tres. Casi 0 Ω indica un tiristor en cortocircuito.\n• El {{megohmetro}} [b]no[/b] se aplica al arrancador: desconecte el motor en 2/T1, 4/T2 y 6/T3 y mida el aislamiento solo del cable y del motor. La tensión de prueba puede dañar la electrónica."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Falta de fase:[/b] el arrancador se para y muestra el fallo. Busque fusibles, polos de interruptor o bornes flojos aguas arriba.\n• [b]Tiempo de arranque excedido:[/b] el motor no llegó a la velocidad. Puede ser un límite de corriente bajo, el compresor cargado o un rodamiento agarrotado.\n• [b]Tiristor en cortocircuito:[/b] el motor zumba o arranca en directo al cerrar el contactor de línea, y la pantalla avisa.\n• [b]Sobretemperatura del arrancador:[/b] demasiados arranques por hora, disipador sucio o ventilación del tablero obstruida.\n• [b]El bypass no cierra:[/b] los tiristores trabajan en permanencia, se calientan y el arrancador acaba disparando."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar a bordo y en el plan de mantenimiento[/i]):\n• Cada 6 meses: limpieza del polvo del disipador, comprobación de los ventiladores del tablero y apriete de los bornes de potencia.\n• Cada año: lectura del registro de fallos y del número de arranques, y copia de los parámetros.\n\n[b]Correctivo:[/b] antes de cambiarlo, compruebe el motor y el cable con el megóhmetro, con el arrancador desconectado. Si cambia el equipo, cargue los mismos parámetros y pruebe un arranque mirando la corriente con la pinza."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-2: arrancadores de motor de semiconductores para corriente alterna.",
+    "Manual del fabricante del arrancador (Siemens SIRIUS 3RW55 en los compresores nº 3 y nº 4: verificar a bordo).",
+    "IEC 60092: instalaciones eléctricas en buques.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

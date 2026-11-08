@@ -295,6 +295,8 @@ func _panel_equipo() -> void:
 			_agregar_ajuste(c, "Ajuste", 6.0, 50.0)
 		"pulsador":
 			_agregar_pulsador(id)
+		"arrancador_suave":
+			_agregar_rearme_arrancador(c)
 		"motor_trifasico":
 			_panel.add_child(_etiqueta("Placa: %s kW · %s V Δ · %s A · %s rpm" % [
 				TextoTecnico.numero(c.params["p_kw"], 0), TextoTecnico.numero(c.params["v_delta"], 0),

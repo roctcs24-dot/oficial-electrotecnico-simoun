@@ -91,6 +91,8 @@ func _panel_pieza() -> void:
 			_agregar_ajuste(c, "Ajuste", 6.0, 50.0)
 		"pulsador":
 			_agregar_pulsador(id)
+		"arrancador_suave":
+			_agregar_rearme_arrancador(c)
 		"motor_trifasico":
 			_agregar_carga(c)
 	if mesa.danada(id):

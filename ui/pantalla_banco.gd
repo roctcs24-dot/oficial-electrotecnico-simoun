@@ -358,6 +358,18 @@ func _rearmar_rele(id: String) -> void:
 	_reconstruir_panel()
 
 
+## El arrancador suave en fallo se rearma desde su teclado; la marcha necesita una orden nueva.
+func _rearmar_arrancador(id: String) -> void:
+	(mesa.sim.componente(id) as SimArrancadorSuave).rearmar()
+	_reconstruir_panel()
+
+
+## Botón de rearme del arrancador suave, solo si está en fallo.
+func _agregar_rearme_arrancador(c: SimComponente) -> void:
+	if c.estado.get("fase", "") == "fallo":
+		_panel.add_child(_boton("Rearmar el arrancador (tecla Reset)", _rearmar_arrancador.bind(c.id)))
+
+
 func _panel_medir() -> void:
 	var grupo := ButtonGroup.new()
 	var fila := HBoxContainer.new()

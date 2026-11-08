@@ -55,6 +55,7 @@ static func tipos() -> Dictionary:
 		"horometro": SimHorometro,
 		"hidroforo": SimHidroforo,
 		"timon": SimTimon,
+		"arrancador_suave": SimArrancadorSuave,
 	}
 
 

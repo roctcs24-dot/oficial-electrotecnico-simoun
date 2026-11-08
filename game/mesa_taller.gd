@@ -430,6 +430,8 @@ func estado_pieza(id: String) -> String:
 			return "Cerrado" if e["energizada"] else "Abierto"
 		"rele_termico":
 			return "Disparado" if e["disparado"] else "Normal"
+		"arrancador_suave":
+			return " · ".join((c as SimArrancadorSuave).pantalla())
 		"guardamotor":
 			if e["disparado"]:
 				return "Disparado"

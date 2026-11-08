@@ -168,6 +168,11 @@
     "monitor_aislamiento": { "es": "monitor de aislamiento", "en": "insulation monitoring device", "def": "Equipo que mide de forma continua la resistencia de una red aislada contra el casco." },
     "lamparas_tierra": { "es": "lámparas de tierra", "en": "earth lamps", "def": "Tres lámparas entre cada fase y el casco: la de la fase con falla se apaga o se atenúa." },
     "secuencimetro": { "es": "secuencímetro", "en": "phase rotation meter", "def": "Instrumento que indica el orden de las fases." },
-    "transformador_corriente": { "es": "transformador de corriente", "en": "current transformer, CT", "def": "Transformador que reduce la corriente de un conductor, por ejemplo a 5 A o a 1 A, para instrumentos y relés." }
+    "transformador_corriente": { "es": "transformador de corriente", "en": "current transformer, CT", "def": "Transformador que reduce la corriente de un conductor, por ejemplo a 5 A o a 1 A, para instrumentos y relés." },
+    "arrancador_suave": { "es": "arrancador suave", "en": "soft starter", "def": "Equipo que arranca un motor subiendo la tensión en rampa con tiristores y limitando la corriente." },
+    "tiristores": { "es": "tiristores", "en": "thyristors, SCR", "def": "Semiconductores que conducen desde que reciben un impulso en la puerta hasta que la corriente pasa por cero. En antiparalelo regulan la tensión alterna." },
+    "bypass": { "es": "bypass", "en": "bypass contactor", "def": "Contactor que puentea los tiristores del arrancador suave cuando el motor ya está en velocidad." },
+    "rampa_tension": { "es": "rampa de tensión", "en": "voltage ramp", "def": "Subida progresiva de la tensión del motor desde la tensión inicial hasta la plena durante el tiempo de rampa." },
+    "limite_corriente": { "es": "límite de corriente", "en": "current limit", "def": "Corriente máxima que el arrancador suave deja pasar durante el arranque, en veces la corriente del motor." }
   }
 }

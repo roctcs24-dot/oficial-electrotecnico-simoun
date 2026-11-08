@@ -53,7 +53,7 @@
       "modos": {
         "aprender": {
           "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m9_pruebas", "m10_tableros", "i1_multimetro", "i2_megohmetro", "i3_pinza"],
-          "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador"]
+          "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador", "arrancador_suave"]
         },
         "taller": {"pantalla": "tableros", "detalle": "Banco libre y tableros del buque", "tableros": ["bombas_mp", "hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220"]},
         "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento", "t1_tierra_bombas_mp", "t2_hidroforo_sin_fase"] },

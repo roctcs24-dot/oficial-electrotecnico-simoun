@@ -94,11 +94,15 @@ func _panel_mando() -> void:
 	var protecciones := false
 	for id: String in mesa.piezas:
 		var c := mesa.sim.componente(id)
-		if c.tipo() in ["guardamotor", "rele_termico"] and c.estado.get("disparado", false):
+		var en_fallo: bool = c.tipo() == "arrancador_suave" and c.estado.get("fase", "") == "fallo"
+		if en_fallo or (c.tipo() in ["guardamotor", "rele_termico"] and c.estado.get("disparado", false)):
 			if not protecciones:
 				_panel.add_child(_rotulo("Protecciones disparadas"))
 				protecciones = true
-			if c.tipo() == "rele_termico":
+			if en_fallo:
+				_panel.add_child(_etiqueta("Arrancador suave %s: %s." % [id, c.estado["fallo"]]))
+				_agregar_rearme_arrancador(c)
+			elif c.tipo() == "rele_termico":
 				_panel.add_child(_boton("Rearmar el relé térmico %s" % id, _rearmar_rele.bind(id)))
 			else:
 				_panel.add_child(_boton("Rearmar el guardamotor %s" % id, _rearmar_guardamotor.bind(id)))
@@ -175,6 +179,11 @@ func _panel_pieza() -> void:
 			_agregar_ajuste(c, "Ajuste", 1.0, maxf(40.0, float(c.params["ajuste_a"]) * 2.0))
 			if c.estado["disparado"]:
 				_panel.add_child(_boton("Rearmar (botón azul)", _rearmar_rele.bind(id)))
+		"arrancador_suave":
+			_panel.add_child(_etiqueta("Ajustes: Ie %s A · tensión inicial %d %% · rampa %s s · límite %s × Ie." % [
+				TextoTecnico.numero(c.params["ie_a"], 0), roundi(float(c.params["u_inicial"]) * 100.0),
+				TextoTecnico.numero(c.params["rampa_s"], 0), TextoTecnico.numero(c.params["limite_corriente"], 1)], "Nota"))
+			_agregar_rearme_arrancador(c)
 		"motor_trifasico":
 			var m := c as SimMotorTrifasico
 			_panel.add_child(_etiqueta("Placa: %s kW · %d Δ / %d Y V · %s / %s A · %d rpm" % [TextoTecnico.numero(m.params["p_kw"], 1), roundi(m.params["v_delta"]), roundi(m.params["v_estrella"]), TextoTecnico.numero(m.params["i_delta"], 1), TextoTecnico.numero(m.params["i_estrella"], 1), roundi(m.params["rpm"])], "Nota"))
