@@ -532,6 +532,12 @@ func _capturar_red(raiz: Raiz, carpeta: String) -> void:
 		p._rehacer()
 		await _guardar(carpeta, "red_hmi_tendencia", tam)
 		raiz.volver()
+		raiz.ir_a("mision_red", {"id": "a3_sentina_sin_comunicacion"})
+		await _guardar(carpeta, "red_mision", tam)
+		raiz.volver()
+		raiz.ir_a("minijuego_simbolos", {"sistema": 6, "registro": "simbolos_electronica"})
+		await _guardar(carpeta, "red_simbolos", tam)
+		raiz.volver()
 
 
 ## Hoja de muestra con todos los instrumentos dibujados, a tamaño normal y ampliado.

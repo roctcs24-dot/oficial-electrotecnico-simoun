@@ -1,0 +1,71 @@
+{
+  "id": "a3_sentina_sin_comunicacion",
+  "tipo": "red",
+  "titulo": "La alarma de sentina no puede llegar",
+  "resumen": "El puesto no comunica con el módulo de E/S de sala de máquinas, que lleva la alarma de sentina.",
+  "equipo": "Red Modbus RTU y módulo de E/S de sala de máquinas",
+  "red": "sala_maquinas",
+  "reporte": {
+    "de": "Oficial de guardia de máquinas",
+    "texto": "Hace media hora el {{sistema_alarmas}} dio «Falla de comunicación: Módulo de E/S de sala de máquinas», y desde entonces aparecen errores de comunicación sueltos con otros equipos. Ese módulo lleva la alarma de nivel alto de sentina, la temperatura de la sala, el nivel del tanque de servicio diario y la presión del aire de arranque. Esta mañana se trabajó en la bandeja de cables junto a los MYCOM. Restablezca la comunicación y deje la sala en condiciones.",
+    "nota": "Recorrido del cable del bus y posición de las cajas de conexiones: valores típicos — verificar a bordo."
+  },
+  "preparar": [
+    { "op": "corte", "antes_de": "ES1" },
+    { "op": "valor", "equipo": "ES1", "registro": 0, "valor": 1 }
+  ],
+  "preparar_s": 20,
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que las alarmas del módulo de E/S no llegan al puesto", "pone": ["aviso"], "titulo": "Aviso dado", "texto": "El jefe de máquinas queda informado de que la sentina, la temperatura de la sala, el tanque de servicio diario y el aire de arranque no tienen alarma en el puesto." },
+    { "id": "ronda", "boton": "Hacer una ronda en sitio por la sentina, el tanque de servicio diario y las botellas de aire", "pone": ["vigilancia", "sentina_vista"], "titulo": "Agua en la sentina", "texto": "En la ronda se ve agua en la sentina de sala de máquinas por encima del interruptor de nivel alto. Sin comunicación con el módulo, esa alarma no podía llegar al puesto. El tanque de servicio diario y el aire de arranque están en sus valores normales." }
+  ],
+  "pasos_requeridos": [{ "marca": "vigilancia", "falta": "sin_aviso_alarmas" }],
+  "evidencias": [
+    { "hecho": "vio_diagnostico" },
+    { "hecho": "midio_ab" },
+    { "accion": "revisar_caja" }
+  ],
+  "pistas": [
+    "Una sola dirección sin respuesta y errores de CRC sueltos en las demás: la línea ha perdido algo entre el último equipo que contesta y el módulo de E/S.",
+    "Mida entre A y B en el conector del maestro. Unos 120 Ω dicen que solo hay un terminador en el circuito: el del final ya no está conectado.",
+    "Revise la caja de conexiones del bus entre el MYCOM nº 4 y el módulo de E/S, junto a la bandeja donde se trabajó."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué no comunica el módulo de E/S?",
+    "opciones": [
+      { "texto": "El cable del bus está cortado o suelto entre el MYCOM nº 4 y el módulo de E/S", "correcta": true, "explicacion": "Sin cable, el módulo no recibe peticiones. Además, el tramo que queda termina en el MYCOM nº 4 sin terminador: las tramas rebotan y aparecen errores en los demás equipos. La medida de unos 120 Ω lo confirma." },
+      { "texto": "El módulo de E/S está averiado", "explicacion": "Un módulo averiado no explicaría los errores en los demás equipos ni la medida de 120 Ω entre A y B." },
+      { "texto": "El módulo de E/S tiene otra dirección", "explicacion": "Con otra dirección no contestaría, pero el bus seguiría terminado y los demás equipos no tendrían errores." },
+      { "texto": "Sobra un terminador en el bus", "explicacion": "Con un terminador de más se medirían unos 40 Ω, no 120 Ω." }
+    ]
+  },
+  "nota_trabajo": "El bus trabaja a 24 V DC. Los empalmes del cable del bus se hacen en una caja de conexiones, con borne, y respetando A, B y la pantalla.",
+  "acciones": [
+    { "id": "revisar_caja", "boton": "Revisar la caja de conexiones del bus entre el MYCOM nº 4 y el módulo de E/S", "pone": ["revisado"], "titulo": "Hilo suelto", "texto": "El borne del hilo B hacia el módulo de E/S está flojo y el hilo, partido junto al terminal: el cable quedó tirante tras el trabajo en la bandeja. El hilo A está a punto de salirse.", "medicion": true },
+    { "id": "rehacer_conexion", "boton": "Rehacer la conexión de A, B y la pantalla en la caja, con terminales nuevos y el cable sujeto", "necesita": ["revisado"], "si_falta": "Revise antes la caja de conexiones.", "pone": ["empalmado"], "titulo": "Conexión rehecha", "texto": "Se cortaron los extremos dañados, se pusieron terminales nuevos en A y B, se conectó la pantalla y se sujetó el cable a la bandeja con holgura.", "efecto": [{ "op": "corte", "antes_de": "" }] },
+    { "id": "achicar", "boton": "Achicar la sentina de sala de máquinas con la bomba de achique", "necesita": ["sentina_vista"], "si_falta": "Haga antes la ronda por la sentina.", "titulo": "Sentina achicada", "texto": "Se achicó la sentina con la bomba de achique por el separador de sentinas, según el procedimiento del buque, hasta dejarla por debajo del interruptor de nivel. Se buscó el origen del agua: una junta de la bomba de agua salada nº 2 goteaba y se apretó el prensaestopas.", "efecto": [{ "op": "valor", "equipo": "ES1", "registro": 0, "valor": 0 }] },
+    { "id": "cambiar_modulo", "boton": "Cambiar el módulo de E/S por uno del pañol", "titulo": "Repuesto innecesario", "texto": "El módulo nuevo tampoco comunica: el cable sigue cortado. El módulo retirado estaba bien.", "innecesaria": true }
+  ],
+  "prueba": {
+    "mantener_s": 60,
+    "superada": "El módulo de E/S y el resto de la red comunicaron sin errores durante un minuto, con la sentina achicada y las alarmas reconocidas.",
+    "objetivos": [
+      { "c": "comunica", "esperado": "ES1", "texto": "Módulo de E/S comunica" },
+      { "c": "todos_comunican", "texto": "Todos los equipos de la red comunican sin errores" },
+      { "c": "valor", "equipo": "ES1", "registro": 0, "max": 0.5, "texto": "Sentina por debajo del nivel alto" },
+      { "c": "sin_sin_reconocer", "texto": "Ninguna alarma sin reconocer en el puesto" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa", "opciones": ["Módulo de E/S averiado", "Hilo B partido y A suelto en la caja junto al MYCOM nº 4", "Dirección cambiada"], "correcta": 1, "explicacion": "El cable quedó tirante tras el trabajo en la bandeja." },
+      { "etiqueta": "Medida entre A y B antes de reparar", "opciones": ["Unos 60 Ω", "Unos 120 Ω: solo el terminador del puesto", "Unos 40 Ω"], "correcta": 1, "explicacion": "Sin el tramo final, el terminador del módulo de E/S no estaba en el circuito." },
+      { "etiqueta": "Medidas tomadas mientras no había comunicación", "opciones": ["Ninguna", "Aviso al jefe de máquinas y ronda en sitio; se encontró y achicó agua en la sentina", "Inhibir la alarma de comunicación"], "correcta": 1, "explicacion": "Sin comunicación, las alarmas del módulo no llegaban: la ronda encontró el agua." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones Red RS-485 y Modbus RTU y Puesto de alarmas de sala de máquinas.",
+    "SOLAS II-1, reglas 48 y 51: achique y sistemas de alarma de cámaras de máquinas.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

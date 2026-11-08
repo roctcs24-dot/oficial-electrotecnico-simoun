@@ -1,0 +1,67 @@
+{
+  "id": "a1_direccion_mycom",
+  "tipo": "red",
+  "titulo": "Sin comunicación con los dos MYCOM",
+  "resumen": "Tras cambiar el controlador del MYCOM nº 4, el puesto pierde la comunicación con el nº 3 y con el nº 4.",
+  "equipo": "Red Modbus RTU del puesto de alarmas",
+  "red": "sala_maquinas",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "Esta mañana se cambió el controlador del compresor MYCOM nº 4 por uno del pañol. Desde entonces el {{sistema_alarmas}} da «Falla de comunicación» con el MYCOM nº 3 y con el nº 4. Los dos compresores funcionan y la pantalla Omron del nº 3 muestra sus valores. Restablezca la comunicación de los dos sin afectar al resto de la red, y deje las alarmas reconocidas.",
+    "nota": "Direcciones, velocidades y orden de los equipos en el bus: valores típicos — verificar a bordo. Los ajustes de comunicación de cada equipo se cambian en la pestaña Red RS-485, tocando el equipo."
+  },
+  "preparar": [
+    { "op": "ajuste", "equipo": "MY4", "clave": "direccion", "valor": 11 }
+  ],
+  "preparar_s": 20,
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas de que las alarmas de los MYCOM nº 3 y nº 4 no llegan al puesto, y vigilarlos en sitio", "pone": ["aviso"], "titulo": "Aviso dado", "texto": "El jefe de máquinas queda informado. Mientras dure la avería, las presiones y temperaturas de los dos MYCOM se vigilan en sus manómetros y en la pantalla local." }
+  ],
+  "pasos_requeridos": [{ "marca": "aviso", "falta": "sin_aviso_alarmas" }],
+  "evidencias": [
+    { "hecho": "vio_diagnostico" },
+    { "alguno": ["menu_MY4", "menu_MY3"] }
+  ],
+  "pistas": [
+    "Abra la pestaña Red RS-485 y lea el diagnóstico del maestro: ¿cómo falla la dirección 11 y cómo la 12?",
+    "Errores de CRC continuos en una dirección y ninguna respuesta en otra: dos equipos contestan a la vez a la misma dirección.",
+    "Un controlador de repuesto viene con la dirección de fábrica o la del equipo de donde salió. Toque el MYCOM nº 4 en el bus y compruebe su dirección: según la lista de la red, debe ser la 12."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué el puesto no comunica con ninguno de los dos MYCOM?",
+    "opciones": [
+      { "texto": "El controlador nuevo del nº 4 tiene la dirección 11, la misma que el nº 3", "correcta": true, "explicacion": "Los dos controladores contestan a la vez a las peticiones de la dirección 11: las tramas se mezclan y llegan con el CRC mal. A la dirección 12 no contesta nadie. Por eso fallan los dos." },
+      { "texto": "El cable del bus quedó cortado entre el nº 3 y el nº 4", "explicacion": "Con un corte, el nº 3 seguiría contestando, y los equipos detrás del corte, como el módulo de E/S, también fallarían. Aquí el módulo de E/S comunica." },
+      { "texto": "Falta un terminador al final del bus", "explicacion": "Un terminador que falta da errores intermitentes en muchos equipos, no errores continuos en una sola dirección." },
+      { "texto": "El maestro del puesto está averiado", "explicacion": "El maestro comunica con los AX4 y con el módulo de E/S sin errores. El problema está en las direcciones 11 y 12." }
+    ]
+  },
+  "nota_trabajo": "Las comprobaciones y reparaciones de esta avería se hacen sin abrir tensión de fuerza: el bus y los controladores trabajan a 24 V DC. Los ajustes de comunicación se cambian en la pestaña Red RS-485.",
+  "acciones": [
+    { "id": "leer_lista", "boton": "Consultar la lista de equipos de la red: dirección, velocidad y formato de cada uno", "titulo": "Lista de la red", "texto": "Según la lista de equipos de la red del puesto: MYCOM nº 3, dirección 11; MYCOM nº 4, dirección 12; todos a 19200 baudios, 8E1.", "medicion": true },
+    { "id": "cambiar_cable", "boton": "Cambiar el tramo de cable del bus entre el MYCOM nº 3 y el nº 4", "titulo": "Cable cambiado sin necesidad", "texto": "El cable estaba en buen estado: el módulo de E/S, detrás de los MYCOM, comunicaba sin errores. Se gastaron cable y horas de trabajo sin resolver nada.", "innecesaria": true },
+    { "id": "reiniciar_maestro", "boton": "Apagar y encender el PLC maestro del puesto de alarmas", "titulo": "Reinicio sin necesidad", "texto": "Durante el reinicio el puesto quedó sin vigilar ninguna alarma de la cámara de máquinas, y al volver siguió igual: el maestro no era la causa.", "innecesaria": true }
+  ],
+  "prueba": {
+    "mantener_s": 30,
+    "superada": "Los dos MYCOM y el resto de la red comunicaron sin errores durante 30 s, con las alarmas reconocidas.",
+    "objetivos": [
+      { "c": "comunica", "esperado": "MY3", "texto": "MYCOM nº 3 comunica" },
+      { "c": "comunica", "esperado": "MY4", "texto": "MYCOM nº 4 comunica" },
+      { "c": "todos_comunican", "texto": "Todos los equipos de la red comunican sin errores" },
+      { "c": "sin_sin_reconocer", "texto": "Ninguna alarma sin reconocer en el puesto" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa", "opciones": ["Dirección 11 repetida en el controlador nuevo del MYCOM nº 4", "Cable del bus cortado", "Maestro del puesto averiado"], "correcta": 0, "explicacion": "El repuesto llegó con la dirección 11, la del nº 3." },
+      { "etiqueta": "Reparación", "opciones": ["Cambio del cable del bus", "Dirección del controlador del nº 4 cambiada a 12", "Reinicio del maestro"], "correcta": 1, "explicacion": "Se configuró la dirección que le corresponde según la lista de la red." },
+      { "etiqueta": "Prueba", "opciones": ["Ninguna", "Toda la red comunicando sin errores y alarmas reconocidas", "Solo el nº 4 comunicando"], "correcta": 1, "explicacion": "Se comprueba toda la red: un cambio de dirección puede afectar a otro equipo." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección Red RS-485 y Modbus RTU.",
+    "Modbus over Serial Line V1.02: direcciones de los esclavos.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

@@ -140,6 +140,9 @@ func _seccion_prueba(columna: VBoxContainer) -> void:
 		columna.add_child(pantalla._etiqueta("✓ Prueba en servicio superada."))
 		return
 	var instruccion := "Deje la planta así durante %d s seguidos:" if mision is MisionPlanta else "Deje el cuadro así durante %d s seguidos:"
+	if mision is MisionRed:
+		instruccion = "Deje la red y el puesto así durante %d s seguidos:"
+	columna.add_child(pantalla._etiqueta(instruccion % roundi(mision.tiempo_de_prueba()), "Nota"))
 	for o: Dictionary in mision.objetivos():
 		var marca: Label = pantalla._etiqueta("")
 		marca.set_meta("objetivo", o)

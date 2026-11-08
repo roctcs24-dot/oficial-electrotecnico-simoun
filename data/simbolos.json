@@ -236,6 +236,76 @@
         { "texto": "p", "x": 120, "y": 100, "tam": 30 }, { "texto": "4–20 mA", "x": 200, "y": 78, "tam": 11 } ] },
       "ansi": { "svg": "res://art/simbolos/ansi/transmisor_presion.svg", "tamano": [240, 200], "etiquetas": [
         { "texto": "PT", "x": 120, "y": 100, "tam": 26 } ] }
+    },
+    {
+      "id": "resistencia", "nombre": "Resistencia", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/resistencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "R1", "x": 120, "y": 56, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/resistencia.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "R1", "x": 120, "y": 56, "tam": 20 } ] }
+    },
+    {
+      "id": "capacitor", "nombre": "Condensador eléctrico", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/capacitor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "C1", "x": 120, "y": 40, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/capacitor.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "C1", "x": 120, "y": 40, "tam": 20 }, { "texto": "+", "x": 96, "y": 58, "tam": 18 } ] }
+    },
+    {
+      "id": "diodo", "nombre": "Diodo", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/diodo.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A", "x": 30, "y": 78, "tam": 18 }, { "texto": "K", "x": 210, "y": 78, "tam": 18 }, { "texto": "V1", "x": 120, "y": 44, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/diodo.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A", "x": 30, "y": 78, "tam": 18 }, { "texto": "K", "x": 210, "y": 78, "tam": 18 }, { "texto": "D1", "x": 120, "y": 44, "tam": 20 } ] }
+    },
+    {
+      "id": "led", "nombre": "Diodo LED", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/led.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A", "x": 30, "y": 78, "tam": 18 }, { "texto": "K", "x": 210, "y": 78, "tam": 18 }, { "texto": "H1", "x": 96, "y": 150, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/led.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "A", "x": 30, "y": 78, "tam": 18 }, { "texto": "K", "x": 210, "y": 78, "tam": 18 }, { "texto": "LED", "x": 96, "y": 150, "tam": 18 } ] }
+    },
+    {
+      "id": "puente_rectificador", "nombre": "Puente rectificador", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/puente_rectificador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "~", "x": 36, "y": 82, "tam": 24 }, { "texto": "~", "x": 204, "y": 82, "tam": 24 }, { "texto": "+", "x": 136, "y": 16, "tam": 20 }, { "texto": "−", "x": 136, "y": 186, "tam": 22 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/puente_rectificador.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "~", "x": 36, "y": 82, "tam": 24 }, { "texto": "~", "x": 204, "y": 82, "tam": 24 }, { "texto": "+", "x": 136, "y": 16, "tam": 20 }, { "texto": "−", "x": 136, "y": 186, "tam": 22 } ] }
+    },
+    {
+      "id": "transistor_npn", "nombre": "Transistor NPN", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/transistor_npn.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "B", "x": 40, "y": 82, "tam": 18 }, { "texto": "C", "x": 166, "y": 26, "tam": 18 }, { "texto": "E", "x": 166, "y": 174, "tam": 18 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/transistor_npn.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "B", "x": 40, "y": 82, "tam": 18 }, { "texto": "C", "x": 166, "y": 26, "tam": 18 }, { "texto": "E", "x": 166, "y": 174, "tam": 18 }, { "texto": "Q1", "x": 214, "y": 100, "tam": 18 } ] }
+    },
+    {
+      "id": "bateria", "nombre": "Batería", "sistema": 6, "similares": ["capacitor"],
+      "iec": { "svg": "res://art/simbolos/iec/bateria.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "+", "x": 96, "y": 52, "tam": 20 }, { "texto": "−", "x": 140, "y": 52, "tam": 22 }, { "texto": "G1", "x": 120, "y": 160, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/bateria.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "+", "x": 80, "y": 52, "tam": 20 }, { "texto": "−", "x": 160, "y": 52, "tam": 22 }, { "texto": "BT1", "x": 120, "y": 160, "tam": 18 } ] }
+    },
+    {
+      "id": "termopar", "nombre": "Termopar", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/termopar.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "+", "x": 46, "y": 40, "tam": 20 }, { "texto": "−", "x": 196, "y": 40, "tam": 22 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/termopar.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "+", "x": 46, "y": 40, "tam": 20 }, { "texto": "−", "x": 196, "y": 40, "tam": 22 }, { "texto": "TC", "x": 150, "y": 150, "tam": 20 } ] }
+    },
+    {
+      "id": "pt100", "nombre": "Sonda PT100", "sistema": 6, "similares": ["resistencia"],
+      "iec": { "svg": "res://art/simbolos/iec/pt100.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "θ", "x": 120, "y": 56, "tam": 22 }, { "texto": "PT100", "x": 190, "y": 150, "tam": 14 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/pt100.svg", "tamano": [240, 200], "etiquetas": [
+        { "texto": "RTD", "x": 120, "y": 56, "tam": 20 } ] }
+    },
+    {
+      "id": "sensor_proximidad", "nombre": "Sensor de proximidad inductivo", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/sensor_proximidad.svg", "tamano": [400, 290], "etiquetas": [
+        { "texto": "BN", "x": 266, "y": 30, "tam": 18 }, { "texto": "BK", "x": 266, "y": 262, "tam": 18 }, { "texto": "B1", "x": 372, "y": 145, "tam": 20 } ] },
+      "ansi": { "svg": "res://art/simbolos/ansi/sensor_proximidad.svg", "tamano": [400, 290], "etiquetas": [
+        { "texto": "PRS", "x": 120, "y": 205, "tam": 18 }, { "texto": "NO", "x": 250, "y": 145, "tam": 18 } ] }
     }
   ]
 }

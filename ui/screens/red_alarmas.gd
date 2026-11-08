@@ -105,6 +105,7 @@ func _fila_pestanas() -> Control:
 
 func _elegir_pestana(id: String) -> void:
 	args["pestana"] = id
+	_al_actuar("pestana", {"pestana": id})
 	for clave: String in _botones_pestana:
 		_botones_pestana[clave].set_pressed_no_signal(clave == id)
 	_desplazable_zona.scroll_vertical = 0
@@ -349,6 +350,7 @@ func _panel_red(columna: VBoxContainer) -> void:
 
 func _seleccionar(id: String) -> void:
 	args["seleccion"] = id
+	_al_actuar("seleccionar", {"equipo": id})
 	_rehacer()
 
 
@@ -558,6 +560,7 @@ func _hmi_ajustes(interior: VBoxContainer) -> void:
 
 func _pagina_hmi(id: String) -> void:
 	args["pagina_hmi"] = id
+	_al_actuar("pagina_hmi", {"pagina": id})
 	_rehacer()
 
 
@@ -577,7 +580,7 @@ func _ajustar_hmi(id: String, pasos: int) -> void:
 	if not motivo.is_empty():
 		_mostrar_aviso("Ajuste no aceptado", motivo)
 		return
-	_al_actuar("ajuste_hmi", {"id": id})
+	_al_actuar("ajuste_hmi", {"id": id, "pasos": pasos})
 	_rehacer()
 
 

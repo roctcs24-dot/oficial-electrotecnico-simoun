@@ -2,7 +2,7 @@ extends Pantalla
 ## Misiones de avería disponibles en un sistema.
 
 ## Pantalla de cada tipo de misión; las de motores, sin tipo, usan la mesa de trabajo.
-const PANTALLAS := {"cuadro": "mision_cuadro", "planta": "mision_planta"}
+const PANTALLAS := {"cuadro": "mision_cuadro", "planta": "mision_planta", "red": "mision_red"}
 
 
 func construir() -> void:

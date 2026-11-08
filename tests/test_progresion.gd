@@ -37,8 +37,8 @@ func test_banco_del_examen_bien_formado() -> String:
 	var temas := {}
 	var publicados := c.examenes()
 	publicados.sort()
-	if publicados != ["v1", "v2", "v3"]:
-		return "deben publicarse los exámenes v1, v2 y v3: %s" % str(c.examenes())
+	if publicados != ["v1", "v2", "v3", "v4"]:
+		return "deben publicarse los exámenes v1, v2, v3 y v4: %s" % str(c.examenes())
 	for id: String in c.examenes():
 		var motivo := _revisar_examen(c.examen(id), temas)
 		if not motivo.is_empty():
@@ -357,6 +357,14 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 			continue
 		var m := MisionPlanta.new(raiz.contenido, id)
 		planta.completar(m)
+		if m.fin != "completada" or m.estrellas() != 3:
+			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
+		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
+	var red = load("res://tests/test_guardia_red.gd").new()
+	for id: String in raiz.contenido.sistema(6)["modos"]["guardia"]["misiones"]:
+		var m: MisionRed = red.resolver(id)
+		red._observar(m)
+		red._firmar(m)
 		if m.fin != "completada" or m.estrellas() != 3:
 			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
 		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")

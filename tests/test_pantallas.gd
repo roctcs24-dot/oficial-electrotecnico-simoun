@@ -153,6 +153,12 @@ func _recorrer(raiz: Raiz) -> String:
 		pasos.append(["red_alarmas", {"pestana": pestana}])
 	for pagina in ["alarmas", "tendencia", "ajustes"]:
 		pasos.append(["red_alarmas", {"pestana": "hmi", "pagina_hmi_inicial": pagina}])
+	pasos.append(["guardia", {"id": 6}])
+	for id: String in raiz.contenido.sistema(6)["modos"]["guardia"]["misiones"]:
+		for pestana: String in ["mision", "red", "hmi"]:
+			pasos.append(["mision_red", {"id": id, "pestana_inicial": pestana}])
+	pasos.append(["examen", {"id": 6}])
+	pasos.append(["prueba_examen", {"id": "v4"}])
 	pasos.append(["repaso", {}])
 	pasos.append(["progreso", {}])
 	pasos.append(["minijuego_simbolos", {}])

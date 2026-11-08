@@ -1,0 +1,71 @@
+{
+  "id": "a4_descarga_mycom_hmi",
+  "tipo": "red",
+  "titulo": "Alta temperatura de descarga en el MYCOM nº 3",
+  "resumen": "El puesto avisa de alta temperatura de descarga del MYCOM nº 3; en la pantalla Omron alguien subió el límite.",
+  "equipo": "Compresor MYCOM nº 3 y su pantalla Omron",
+  "red": "sala_maquinas",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "El {{sistema_alarmas}} da alta temperatura de descarga del MYCOM nº 3. El oficial de la guardia anterior dice que la alarma local de la pantalla Omron «molestaba» y que subió su límite. Revise la tendencia y los ajustes de la pantalla, encuentre la causa, corríjala y deje la pantalla como debe estar.",
+    "nota": "Temperaturas y límites del MYCOM: valores típicos — verificar en el manual Mayekawa y a bordo. La sesión de técnico de la pantalla es la del buque."
+  },
+  "preparar": [
+    { "op": "ajuste_hmi", "id": "DT-alta", "valor": 140 },
+    { "op": "valor", "equipo": "MY3", "registro": 5, "valor": 133 }
+  ],
+  "preparar_s": 20,
+  "ajustes_hmi_correctos": { "DT-alta": 130 },
+  "pasos": [
+    { "id": "aviso", "boton": "Avisar al jefe de máquinas y vigilar en sitio el MYCOM nº 3", "pone": ["aviso"], "titulo": "Aviso dado", "texto": "El jefe de máquinas queda informado. Se vigila la temperatura de descarga en la pantalla local y el agua de las cabezas." }
+  ],
+  "pasos_requeridos": [{ "marca": "aviso", "falta": "sin_aviso_alarmas" }],
+  "evidencias": [
+    { "hecho": "vio_hmi_tendencia" },
+    { "hecho": "vio_hmi_ajustes" },
+    { "accion": "comprobar_agua" }
+  ],
+  "pistas": [
+    "Abra la pantalla del MYCOM: en Tendencia vea cómo ha llegado la temperatura de descarga a su valor, y en Ajustes, el límite de su alarma local.",
+    "La pantalla local y el puesto marcan la misma temperatura: el sensor dice la verdad. Busque por qué se calienta la descarga.",
+    "Las cabezas del MYCOM se enfrían con agua salada. Compruebe el caudal y el filtro. Después devuelva el límite de la alarma local a 130 °C y cierre la sesión de técnico."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué está alta la temperatura de descarga?",
+    "opciones": [
+      { "texto": "Llega poca agua salada a las cabezas: el filtro está casi tapado", "correcta": true, "explicacion": "Sin refrigeración suficiente de las cabezas, el gas comprimido sale más caliente y el aceite se degrada. El límite subido en la pantalla solo escondía el problema." },
+      { "texto": "El sensor de temperatura de descarga está averiado", "explicacion": "La pantalla local y el puesto de alarmas leen el mismo valor, que sube de forma progresiva en la tendencia. Un sensor averiado daría saltos o valores fuera de escala." },
+      { "texto": "El límite de 130 °C es demasiado bajo", "explicacion": "El límite lo fija el fabricante. El compresor trabajaba a unos 95 °C antes de la avería." },
+      { "texto": "La red Modbus envía valores falsos", "explicacion": "La pantalla local no usa la red del puesto, y marca lo mismo." }
+    ]
+  },
+  "nota_trabajo": "Los ajustes de la pantalla se cambian en su página Ajustes, con la sesión de técnico. Anote el valor anterior y el nuevo.",
+  "acciones": [
+    { "id": "comprobar_agua", "boton": "Comprobar el agua de refrigeración de las cabezas del MYCOM nº 3", "pone": ["agua_comprobada"], "titulo": "Poco caudal de agua", "texto": "La bomba de enfriamiento de cabezas está en marcha, pero el manómetro del agua a las cabezas marca muy poco y la salida apenas está templada. El filtro de agua salada de las cabezas está casi tapado.", "medicion": true },
+    { "id": "limpiar_filtro", "boton": "Aislar el filtro de agua salada de las cabezas, limpiarlo y volver a ponerlo en servicio", "necesita": ["agua_comprobada"], "si_falta": "Compruebe antes el agua de las cabezas.", "titulo": "Filtro limpio", "texto": "Se cerraron las válvulas del filtro, se limpió la cesta, llena de conchas y algas, y se abrió de nuevo. El caudal de agua a las cabezas vuelve a ser normal y la temperatura de descarga empieza a bajar.", "efecto": [{ "op": "rampa", "equipo": "MY3", "registro": 5, "valor": -2.0, "hasta": 96 }] },
+    { "id": "subir_puesto", "boton": "Subir también a 140 °C el límite del puesto de alarmas", "titulo": "Límite alterado", "texto": "Con el límite subido, el puesto deja de avisar mientras el compresor se recalienta. Se volvió a dejar en 130 °C.", "innecesaria": true, "tema": "limite_alarma_alterado" },
+    { "id": "cambiar_sensor", "boton": "Cambiar el sensor de temperatura de descarga", "titulo": "Repuesto innecesario", "texto": "El sensor nuevo marca lo mismo que el viejo: la temperatura era real.", "innecesaria": true }
+  ],
+  "prueba": {
+    "mantener_s": 30,
+    "superada": "La temperatura de descarga volvió a su valor normal y la pantalla quedó con el límite de 130 °C y la sesión cerrada.",
+    "objetivos": [
+      { "c": "valor", "equipo": "MY3", "registro": 5, "max": 110, "texto": "Temperatura de descarga por debajo de 110 °C" },
+      { "c": "ajuste_hmi", "id": "DT-alta", "valor": 130, "texto": "Alarma local de alta temperatura de descarga en 130 °C" },
+      { "c": "sesion_cerrada", "texto": "Sesión de técnico cerrada en la pantalla" },
+      { "c": "sin_sin_reconocer", "texto": "Ninguna alarma sin reconocer en el puesto" }
+    ]
+  },
+  "libro": {
+    "campos": [
+      { "etiqueta": "Causa", "opciones": ["Sensor de temperatura averiado", "Filtro de agua salada de las cabezas casi tapado", "Límite de alarma demasiado bajo"], "correcta": 1, "explicacion": "Llegaba poca agua a las cabezas." },
+      { "etiqueta": "Ajuste de la pantalla", "opciones": ["Alarma local subida a 140 °C", "Alarma local devuelta de 140 °C a 130 °C, valor del fabricante", "Sin cambios"], "correcta": 1, "explicacion": "Se anota el valor anterior y el nuevo." },
+      { "etiqueta": "Reparación", "opciones": ["Limpieza del filtro de agua de las cabezas", "Cambio del sensor", "Cambio del controlador"], "correcta": 0, "explicacion": "Con el caudal normal, la descarga volvió a unos 95 °C." }
+    ]
+  },
+  "para_saber_mas": [
+    "Lecciones Pantallas HMI y Compresores de pistón: Vilter y MYCOM.",
+    "Manual del compresor Mayekawa MYCOM y de su pantalla Omron.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}
