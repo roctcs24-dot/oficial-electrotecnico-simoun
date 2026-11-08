@@ -2,10 +2,10 @@
   "id": "bombas_mp",
   "titulo": "Tablero de bombas máquina principal",
   "ubicacion": "Sala de máquinas, junto al motor principal",
-  "foto": "Foto 070 del buque",
+  "foto": "Fotos 070 y del interior del tablero",
   "circuito": "tablero_bombas_mp",
   "alimentacion": "Q0",
-  "nota": "Reproduce el frente real. El interior, los motores y los ajustes son típicos: verificar con el esquema del tablero. La lente de APAGADO de la reserva es verde en la foto: según IEC 60073 debería ser roja.",
+  "nota": "Reproduce el frente y el interior de las fotos. Potencias de los motores, ajustes y cableado del mando son típicos: verificar con el esquema del tablero. La lente de APAGADO de la reserva es verde en la foto: según IEC 60073 debería ser roja.",
   "frente": {
     "tamano": [
       1000,
@@ -298,7 +298,7 @@
         "x": 810,
         "y": 630,
         "color": "ambar",
-        "componente": ""
+        "componente": "HF5"
       },
       {
         "tipo": "rotulo",
@@ -308,11 +308,12 @@
         "tam": 15
       },
       {
-        "tipo": "luz",
+        "tipo": "pulsador",
         "x": 810,
         "y": 785,
         "color": "verde",
-        "componente": ""
+        "componente": "SM5",
+        "luz": "HE5"
       },
       {
         "tipo": "rotulo",
@@ -326,7 +327,7 @@
         "x": 810,
         "y": 940,
         "color": "verde",
-        "componente": ""
+        "componente": "SP5"
       },
       {
         "tipo": "cerradura",
@@ -344,49 +345,45 @@
       440,
       0
     ],
-    "T1": [
+    "FT": [
       820,
       0
     ],
+    "T1": [
+      1120,
+      0
+    ],
     "F0": [
-      1160,
+      1460,
       0
     ],
     "HT1": [
-      1360,
+      1780,
       0
     ],
     "HT2": [
-      1600,
+      2020,
       0
     ],
     "HT3": [
-      1840,
+      2260,
       0
     ],
     "ST": [
-      2080,
+      2500,
       0
     ],
     "PE": [
-      2320,
+      2740,
       0
     ],
     "Q1": [
       0,
       700
     ],
-    "K1": [
-      0,
-      1260
-    ],
-    "F1": [
-      0,
-      1820
-    ],
     "M1": [
       0,
-      2340
+      1900
     ],
     "HF1": [
       540,
@@ -395,6 +392,10 @@
     "HE1": [
       540,
       960
+    ],
+    "AS1": [
+      0,
+      1260
     ],
     "HA1": [
       540,
@@ -408,21 +409,17 @@
       540,
       1760
     ],
+    "KA1": [
+      540,
+      2040
+    ],
     "Q2": [
       1120,
       700
     ],
-    "K2": [
-      1120,
-      1260
-    ],
-    "F2": [
-      1120,
-      1820
-    ],
     "M2": [
       1120,
-      2340
+      1900
     ],
     "HF2": [
       1660,
@@ -431,6 +428,10 @@
     "HE2": [
       1660,
       960
+    ],
+    "AS2": [
+      1120,
+      1260
     ],
     "HA2": [
       1660,
@@ -444,21 +445,17 @@
       1660,
       1760
     ],
+    "KA2": [
+      1660,
+      2040
+    ],
     "Q3": [
       2240,
       700
     ],
-    "K3": [
-      2240,
-      1260
-    ],
-    "F3": [
-      2240,
-      1820
-    ],
     "M3": [
       2240,
-      2340
+      1900
     ],
     "HF3": [
       2780,
@@ -467,6 +464,10 @@
     "HE3": [
       2780,
       960
+    ],
+    "K3": [
+      2240,
+      1260
     ],
     "SEL3": [
       2780,
@@ -480,17 +481,9 @@
       3360,
       700
     ],
-    "K4": [
-      3360,
-      1260
-    ],
-    "F4": [
-      3360,
-      1820
-    ],
     "M4": [
       3360,
-      2340
+      1900
     ],
     "HF4": [
       3900,
@@ -500,6 +493,10 @@
       3900,
       960
     ],
+    "K4": [
+      3360,
+      1260
+    ],
     "SEL4": [
       3900,
       1220
@@ -507,6 +504,38 @@
     "ORD4": [
       3900,
       1540
+    ],
+    "Q5": [
+      4480,
+      700
+    ],
+    "M5": [
+      4480,
+      1900
+    ],
+    "HF5": [
+      5020,
+      700
+    ],
+    "HE5": [
+      5020,
+      960
+    ],
+    "AS5": [
+      4480,
+      1260
+    ],
+    "SP5": [
+      5020,
+      1480
+    ],
+    "SM5": [
+      5020,
+      1760
+    ],
+    "KA5": [
+      5020,
+      2040
     ]
   },
   "senales": [

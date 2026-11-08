@@ -243,7 +243,7 @@ func test_g1_sintoma_y_medicion_de_la_bobina() -> String:
 	m.mesa.sim.componente("S1").estado["presionado"] = true
 	m.mesa.avanzar(4)
 	var v := _medidor().medir(m.mesa.sim, "vac", "K1.A1", "K1.A2")
-	var cerrado := m.contactor().cerrado()
+	var cerrado := (m.contactor() as SimContactor).cerrado()
 	m.mesa.sim.componente("S1").estado["presionado"] = false
 	m.mesa.avanzar(2)
 	_bloquear_y_verificar(m)
@@ -338,7 +338,7 @@ func test_g2_dispara_a_los_pocos_minutos() -> String:
 		A.cerca(i[0], i[1], 0.02, "las fases deben ser iguales"),
 		A.cierto(tiempo > 180.0 and tiempo < 330.0, "debe disparar entre 3 y 5,5 min: %.0f s" % tiempo),
 		A.cierto(m.rele().estado["disparado"], "debe disparar el relé"),
-		A.cierto(not m.contactor().cerrado(), "K1 debe soltar"),
+		A.cierto(not (m.contactor() as SimContactor).cerrado(), "K1 debe soltar"),
 		A.cierto(not m.motor().quemado(), "la protección debe salvar el motor"),
 		A.cierto(m.faltas.is_empty(), "comprobar el síntoma antes de bloquear no es falta: %s" % str(m.faltas)),
 	])

@@ -15,6 +15,7 @@
     "capacidad_bodega": { "valor": 1324, "unidad": "m3", "verificar": true },
     "tripulacion": { "valor": 24, "unidad": "personas", "verificar": true },
     "motor_principal_modelo": { "valor": "Wabtec (GE) 16V250, panel MEC2+ y consola Marinsa, reductora Reintjes WAF, mando de propulsión Kobelt", "unidad": "", "verificar": true },
+    "motor_principal_equipos": { "valor": "detector de niebla de aceite CMR en el cárter, filtros de aire Falls Filtration en los turbos, circuitos de enfriamiento HT y LT", "unidad": "", "verificar": true },
     "bodegas": { "valor": 9, "unidad": "bodegas con cubas a babor y estribor (17 cubas en el registrador Lauburu)", "verificar": true }
   },
   "red_principal": {

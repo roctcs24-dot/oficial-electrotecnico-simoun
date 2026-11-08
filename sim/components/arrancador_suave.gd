@@ -10,6 +10,11 @@ extends SimComponente
 ## tiempo de rampa, sin dejar pasar más corriente que el límite. Cuando la rampa termina y la
 ## corriente baja cerca de la nominal, cierra el bypass. Modelo simplificado para enseñar: no
 ## hay recorte de la onda ni armónicos.
+##
+## Los SIRIUS 3RW40 del tablero de bombas de la máquina principal llevan además protección de
+## sobrecarga del motor: con clase_sobrecarga 10, 15 o 20 se calientan con la corriente frente
+## a Ie como un relé térmico y, al disparar, cambian el contacto 95-96/98 y encienden OVERLOAD.
+## Con clase 0 (OFF) no protegen, como el modelo de los compresores.
 
 const POLOS := [["1", "2"], ["3", "4"], ["5", "6"]]
 const R_BLOQUEO := 1.0e5
@@ -37,11 +42,12 @@ func _params_por_defecto() -> Dictionary:
 		"rampa_s": 10.0,
 		"limite_corriente": 3.5,
 		"t_max_arranque_s": 30.0,
+		"clase_sobrecarga": 0,
 	}
 
 
 func _estado_inicial() -> Dictionary:
-	return {"fase": "listo", "t": 0.0, "u": 0.0, "i": 0.0, "fallo": ""}
+	return {"fase": "listo", "t": 0.0, "u": 0.0, "i": 0.0, "fallo": "", "memoria": 0.0, "sobrecarga": false}
 
 
 func _preparar() -> void:
@@ -61,9 +67,19 @@ func corriente() -> float:
 	return estado["i"]
 
 
-## Texto de la pantalla del arrancador, en el estilo de su indicador.
+## Texto de la pantalla del arrancador, en el estilo de su indicador. El 3RW40 no tiene
+## pantalla: se describen sus LED.
 func pantalla() -> Array[String]:
 	var amperios := "%d A" % roundi(estado["i"])
+	if str(params["modelo"]).contains("3RW40"):
+		match estado["fase"]:
+			"arranque":
+				return ["STATE/BYPASSED verde intermitente", amperios]
+			"bypass":
+				return ["STATE/BYPASSED verde fijo", amperios]
+			"fallo":
+				return ["OVERLOAD rojo" if estado["sobrecarga"] else "FAILURE rojo", str(estado["fallo"])]
+		return ["DEVICE verde", "Ie %d A · clase %d" % [roundi(params["ie_a"]), int(params["clase_sobrecarga"])]]
 	match estado["fase"]:
 		"arranque":
 			return ["ARRANQUE", "U %d %%   %s" % [roundi(estado["u"] * 100.0), amperios]]
@@ -80,6 +96,7 @@ func rearmar() -> bool:
 		return false
 	estado["fase"] = "listo"
 	estado["fallo"] = ""
+	estado["sobrecarga"] = false
 	estado["t"] = 0.0
 	_r = R_BLOQUEO
 	return true
@@ -148,6 +165,7 @@ func _ajustar(sol: SimSolver.Solucion) -> bool:
 
 func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 	estado["i"] = sol.entre(n("1"), n("2")).modulo() / _r
+	_proteger(dt)
 	if not en_marcha():
 		return
 	var lineas := [tension(sol, "1", "3"), tension(sol, "3", "5"), tension(sol, "5", "1")]
@@ -170,8 +188,21 @@ func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 		_fallar("Tiempo de arranque excedido")
 
 
-func _fallar(texto: String) -> void:
+## Memoria térmica del motor: la clase 10 dispara como un relé térmico; las clases 15 y 20
+## tardan 1,5 y 2 veces más.
+func _proteger(dt: float) -> void:
+	var clase := int(params["clase_sobrecarga"])
+	if clase <= 0:
+		return
+	var paso := dt * 10.0 / float(clase)
+	estado["memoria"] = SimTermico.actualizar(estado["memoria"], estado["i"], float(params["ie_a"]), paso)
+	if en_marcha() and estado["memoria"] >= SimTermico.UMBRAL:
+		estado["sobrecarga"] = true
+		_fallar("Sobrecarga del motor", "arrancador_sobrecarga")
+
+
+func _fallar(texto: String, evento := "arrancador_fallo") -> void:
 	estado["fase"] = "fallo"
 	estado["fallo"] = texto
 	_r = R_BLOQUEO
-	avisar("arrancador_fallo", {"fallo": texto})
+	avisar(evento, {"fallo": texto})

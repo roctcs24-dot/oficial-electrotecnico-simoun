@@ -61,12 +61,33 @@ func motor() -> SimMotorTrifasico:
 	return mesa.sim.componente(datos["prueba"]["motor"])
 
 
-func rele() -> SimReleTermico:
+## La protección del motor: un relé térmico o, en las bombas con arrancador suave SIRIUS
+## 3RW40, el propio arrancador, que también hace de contactor.
+func rele() -> SimComponente:
 	return mesa.sim.componente(datos["prueba"]["rele"])
 
 
-func contactor() -> SimContactor:
+func contactor() -> SimComponente:
 	return mesa.sim.componente(datos["prueba"]["contactor"])
+
+
+func _rele_disparado() -> bool:
+	var r := rele()
+	if r is SimArrancadorSuave:
+		return r.estado["fase"] == "fallo"
+	return r.estado["disparado"]
+
+
+func _ajuste_rele() -> float:
+	var r := rele()
+	return float(r.params["ie_a"] if r is SimArrancadorSuave else r.params["ajuste_a"])
+
+
+func _contactor_cerrado() -> bool:
+	var c := contactor()
+	if c is SimArrancadorSuave:
+		return (c as SimArrancadorSuave).en_marcha()
+	return (c as SimContactor).cerrado()
 
 
 func corrientes() -> Array:
@@ -76,7 +97,11 @@ func corrientes() -> Array:
 		var f: SimGuardamotor = mesa.sim.componente(datos["prueba"]["medir"])
 		return [f.corriente(mesa.sim.solucion, 0), f.corriente(mesa.sim.solucion, 1), f.corriente(mesa.sim.solucion, 2)]
 	var r := rele()
-	return [r.corriente(mesa.sim.solucion, 0), r.corriente(mesa.sim.solucion, 1), r.corriente(mesa.sim.solucion, 2)]
+	if r is SimArrancadorSuave:
+		var i: float = (r as SimArrancadorSuave).corriente()
+		return [i, i, i]
+	var t := r as SimReleTermico
+	return [t.corriente(mesa.sim.solucion, 0), t.corriente(mesa.sim.solucion, 1), t.corriente(mesa.sim.solucion, 2)]
 
 
 func corriente_maxima() -> float:
@@ -102,7 +127,7 @@ func tiene_monitor() -> bool:
 func monitor_mohm() -> float:
 	var m: Dictionary = datos.get("monitor", {})
 	var resto := float(m.get("resto_mohm", 25.0))
-	if not es_motor() or not contactor().cerrado():
+	if not es_motor() or not _contactor_cerrado():
 		return resto
 	var minimo := resto
 	for r: float in motor().params["aislamiento_mohm"]:
@@ -168,7 +193,7 @@ func accionar_aislador(pieza: String, cerrar: bool) -> Dictionary:
 	if cerrar:
 		if hubo_bloqueo and not hechos.has("aviso_energizar"):
 			resultado = _falta("energizar_sin_aviso")
-	elif es_motor() and contactor().cerrado() and absf(motor().rpm()) > 5.0:
+	elif es_motor() and _contactor_cerrado() and absf(motor().rpm()) > 5.0:
 		resultado = _falta("abrir_con_carga")
 	match c.tipo():
 		"seccionador":
@@ -451,7 +476,7 @@ func _en_marcha() -> bool:
 			if not (mesa.sim.componente(id) as SimGuardamotor).cerrado():
 				return false
 		return true
-	return contactor().cerrado() and absf(motor().rpm()) > 5.0
+	return _contactor_cerrado() and absf(motor().rpm()) > 5.0
 
 
 func _al_terminar_observacion() -> Dictionary:
@@ -464,7 +489,7 @@ func _al_terminar_observacion() -> Dictionary:
 	if motivo.is_empty():
 		return _aviso("aviso", "Observación terminada", "Transcurrieron %s sin disparos. Para dar por buena la prueba, observe %s de una vez." % [_minutos(transcurrido), _minutos(tiempo_de_prueba())])
 	# Con el relé fuera de su ajuste, nada corta la sobrecarga: el motor se calienta hasta el daño.
-	if es_motor() and not _extendida and float(rele().params["ajuste_a"]) > i_nominal() * MARGEN_CORRIENTE and _en_marcha() and corriente_maxima() > i_nominal() * MARGEN_CORRIENTE:
+	if es_motor() and not _extendida and _ajuste_rele() > i_nominal() * MARGEN_CORRIENTE and _en_marcha() and corriente_maxima() > i_nominal() * MARGEN_CORRIENTE:
 		_extendida = true
 		_falta("ajuste_alterado")
 		_observar_restante = EXTENSION_SIN_PROTECCION_S
@@ -482,15 +507,15 @@ func _motivo_prueba_fallida() -> String:
 		return _motivo_circuito(p)
 	if motor().quemado():
 		return "El motor está quemado"
-	if rele().estado["disparado"]:
-		return "El relé térmico disparó"
-	if not contactor().cerrado():
-		return "El contactor no está cerrado"
+	if _rele_disparado():
+		return "El arrancador suave disparó por sobrecarga" if rele() is SimArrancadorSuave else "El relé térmico disparó"
+	if not _contactor_cerrado():
+		return "El arrancador suave no está en marcha" if contactor() is SimArrancadorSuave else "El contactor no está cerrado"
 	if absf(motor().rpm()) < float(p["rpm_min"]):
 		return "El motor no alcanza su velocidad"
 	if corriente_maxima() > i_nominal() * MARGEN_CORRIENTE:
 		return "La corriente supera la nominal"
-	if float(rele().params["ajuste_a"]) > i_nominal() * MARGEN_CORRIENTE:
+	if _ajuste_rele() > i_nominal() * MARGEN_CORRIENTE:
 		return "El ajuste del relé supera la corriente de la placa"
 	if tiene_monitor() and monitor_mohm() < MINIMO_MONITOR_MOHM:
 		return "El monitor de aislamiento sigue en alarma"

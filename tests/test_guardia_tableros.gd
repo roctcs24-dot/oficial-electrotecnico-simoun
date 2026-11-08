@@ -96,7 +96,7 @@ func test_t1_la_lampara_se_apaga_solo_con_la_bomba_1() -> String:
 	var m := _mision("t1_tierra_bombas_mp")
 	var parada := _test_tierra(m)
 	_pulsar(m, "SM1")
-	m.mesa.avanzar(60)
+	m.mesa.avanzar(300)
 	var en_marcha := _test_tierra(m)
 	return A.primero([
 		A.cierto(parada > 0.5, "con la bomba parada L1 alumbra: %.2f" % parada),

@@ -15,21 +15,42 @@ func _luz(sim: SimSimulacion, id: String) -> bool:
 	return sim.componente(id).estado["encendida"]
 
 
+func _arrancador(sim: SimSimulacion, id: String) -> SimArrancadorSuave:
+	return sim.componente(id) as SimArrancadorSuave
+
+
 func test_encendido_y_apagado_de_la_bomba_de_enfriamiento() -> String:
 	var sim := _tablero()
 	var apagado_al_inicio: bool = _luz(sim, "HA1") and not _luz(sim, "HE1")
 	A.pulsar(sim, "SM1", 0.3)
-	sim.avanzar_tiempo(6.0)
-	var en_marcha: bool = sim.componente("K1").cerrado() and sim.componente("M1").rpm() > 1400.0
+	sim.avanzar_tiempo(2.0)
+	var en_rampa: bool = _arrancador(sim, "AS1").fase() == "arranque"
+	sim.avanzar_tiempo(12.0)
+	var en_marcha: bool = _arrancador(sim, "AS1").fase() == "bypass" and sim.componente("M1").rpm() > 1400.0
 	var luces_marcha: bool = _luz(sim, "HE1") and not _luz(sim, "HA1")
 	A.pulsar(sim, "SP1", 0.3)
 	sim.avanzar_tiempo(1.0)
 	return A.primero([
 		A.cierto(apagado_al_inicio, "parada: APAGADO encendida y ENCENDIDO apagada"),
-		A.cierto(en_marcha, "ENCENDIDO arranca la bomba y se enclava"),
+		A.cierto(en_rampa, "ENCENDIDO arranca la bomba en rampa con el arrancador suave"),
+		A.cierto(en_marcha, "tras la rampa el arrancador cierra su bypass y la bomba sigue enclavada"),
 		A.cierto(luces_marcha, "en marcha se enciende ENCENDIDO y se apaga APAGADO"),
-		A.cierto(not sim.componente("K1").cerrado() and _luz(sim, "HA1"), "APAGADO la para"),
+		A.cierto(not _arrancador(sim, "AS1").en_marcha() and _luz(sim, "HA1"), "APAGADO la para"),
 		A.cierto(not _luz(sim, "HF1"), "sin falla térmica"),
+	])
+
+
+func test_arranque_suave_limita_la_corriente() -> String:
+	var sim := _tablero()
+	A.pulsar(sim, "SM2", 0.3)
+	var maxima := 0.0
+	for _i in 30:
+		sim.avanzar_tiempo(0.5)
+		maxima = maxf(maxima, _arrancador(sim, "AS2").corriente())
+	var ie: float = _arrancador(sim, "AS2").params["ie_a"]
+	return A.primero([
+		A.cierto(maxima <= ie * 4.0 * 1.05, "no pasa del límite de 4 × Ie: %.0f A" % maxima),
+		A.cierto(maxima < ie * 6.0, "menos que un arranque directo, unas 6 veces la nominal: %.0f A" % maxima),
 	])
 
 
@@ -77,7 +98,7 @@ func test_fase_a_masa_apaga_su_lampara_y_aviva_las_otras() -> String:
 	var sim := _tablero()
 	sim.componente("M1").params["aislamiento_mohm"] = [0.005, 300.0, 300.0]
 	A.pulsar(sim, "SM1", 0.3)
-	sim.avanzar_tiempo(3.0)
+	sim.avanzar_tiempo(15.0)
 	# Sin pulsar TEST el centro de la estrella no toca el casco: la falla no se ve.
 	var antes: float = sim.componente("HT1").estado["relacion"]
 	sim.componente("ST").estado["presionado"] = true
@@ -100,13 +121,31 @@ func test_bomba_agarrotada_dispara_y_enciende_falla_termica() -> String:
 	var disparo := false
 	for _i in 120:
 		sim.avanzar_tiempo(0.5)
-		if sim.componente("F2").estado["disparado"] or not sim.componente("Q2").cerrado():
+		if _arrancador(sim, "AS2").fase() == "fallo" or not sim.componente("Q2").cerrado():
 			disparo = true
 			break
 	sim.avanzar_tiempo(0.5)
 	return A.primero([
 		A.cierto(disparo, "con el rotor bloqueado debe disparar la protección"),
-		A.cierto(not sim.componente("K2").cerrado(), "la bomba queda parada"),
+		A.cierto(_arrancador(sim, "AS2").estado["sobrecarga"], "dispara la protección de sobrecarga del 3RW40"),
+		A.cierto(_luz(sim, "HF2"), "se enciende FALLA TERMICA"),
+		A.cierto(not _arrancador(sim, "AS2").en_marcha() and not _luz(sim, "HE2"), "la bomba queda parada"),
+	])
+
+
+func test_prelubricacion_disparada_enciende_falla_termica() -> String:
+	var sim := _tablero()
+	sim.componente("M3").params["bloqueado"] = true
+	(sim.componente("SEL3") as SimSelector).poner("MAN")
+	for _i in 120:
+		sim.avanzar_tiempo(0.5)
+		if not sim.componente("Q3").cerrado():
+			break
+	sim.avanzar_tiempo(0.5)
+	return A.primero([
+		A.cierto(sim.componente("Q3").estado["disparado"], "el guardamotor GV2ME dispara con el rotor bloqueado"),
+		A.cierto(_luz(sim, "HF3"), "su contacto de señal 97-98 enciende FALLA TERMICA"),
+		A.cierto(not _luz(sim, "HF4"), "la otra bomba no marca falla"),
 	])
 
 
@@ -122,7 +161,7 @@ func test_candado_impide_cerrar_el_interruptor_general() -> String:
 	return A.primero([
 		A.cierto(con_tension_cerrado, "el candado no entra con el interruptor cerrado"),
 		A.cierto(candado and not cerrar, "abierto y con candado no se puede cerrar"),
-		A.cierto(not sim.componente("K1").cerrado() and not _luz(sim, "HA1"), "sin tensión no hay mando ni luces"),
+		A.cierto(not _arrancador(sim, "AS1").en_marcha() and not _luz(sim, "HA1"), "sin tensión no hay mando ni luces"),
 	])
 
 

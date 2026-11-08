@@ -378,7 +378,8 @@ func cargar_circuito(circuito: Dictionary, posiciones: Dictionary) -> void:
 
 
 func _catalogo_de(c: SimComponente) -> String:
-	if c.tipo() == "consumidor":
+	# Consumidores, el arrancador 3RW40 y el relé de 110 V AC dicen qué pieza los dibuja.
+	if c.params.has("pieza"):
 		return c.params["pieza"]
 	match c.tipo():
 		"pulsador":

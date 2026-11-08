@@ -2,7 +2,8 @@ class_name SimReleDC
 extends SimComponente
 ## Relé auxiliar de 24 V DC: bobina A1-A2 y dos contactos conmutados, común 11 con NC 12 y NA
 ## 14, y común 21 con NC 22 y NA 24. Cierra con el 70 % de su tensión y suelta por debajo del 30 %.
-## La bobina no tiene polaridad.
+## La bobina no tiene polaridad. Con el parámetro alterna, la bobina es de alterna, como los
+## relés enchufables de 110 V AC del tablero de bombas de la máquina principal.
 
 const CONTACTOS := [["11", "12", "14"], ["21", "22", "24"]]
 const CIERRA := 0.7
@@ -18,7 +19,7 @@ func tipo() -> String:
 
 
 func usa_continua() -> bool:
-	return true
+	return not params.get("alterna", false)
 
 
 func _params_por_defecto() -> Dictionary:
@@ -37,11 +38,13 @@ func estampar(e: SimEstampa) -> void:
 
 
 func _relacion(sol: SimSolver.Solucion) -> float:
+	if params.get("alterna", false):
+		return tension(sol, "A1", "A2") / float(params["v_bobina"])
 	return absf(tension_dc(sol, "A1", "A2")) / float(params["v_bobina"])
 
 
 func asentar(sol: SimSolver.Solucion) -> bool:
-	if sol.dc == null:
+	if sol.dc == null and usa_continua():
 		return false
 	var energizado: bool = estado["energizado"]
 	if estado["bobina_quemada"]:
@@ -57,7 +60,7 @@ func asentar(sol: SimSolver.Solucion) -> bool:
 
 
 func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
-	if estado["bobina_quemada"] or sol.dc == null:
+	if estado["bobina_quemada"] or (sol.dc == null and usa_continua()):
 		return
 	if _relacion(sol) > QUEMA:
 		_sobretension_s += dt

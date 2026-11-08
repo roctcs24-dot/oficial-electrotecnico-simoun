@@ -92,7 +92,7 @@ func test_pulsar_encendido_en_el_frente_arranca_la_bomba() -> String:
 	sim.avanzar_tiempo(0.3)
 	p.soltar(i)
 	sim.avanzar_tiempo(5.0)
-	var en_marcha: bool = sim.componente("K1").cerrado()
+	var en_marcha: bool = (sim.componente("AS1") as SimArrancadorSuave).en_marcha()
 	var suelto: bool = not sim.componente("SM1").estado["presionado"]
 	raiz.free()
 	return A.primero([
@@ -184,12 +184,12 @@ func test_recorre_las_pestanas_en_ambas_orientaciones() -> String:
 		var p = raiz.pantalla_actual()
 		for pestana: String in ["mando", "medir", "pieza", "datos"]:
 			p._elegir_pestana(pestana)
-		p.args["pieza"] = "F1"
+		p.args["pieza"] = "AS1"
 		p._elegir_pestana("pieza")
 		var hijos: int = p._panel.get_child_count()
 		raiz.free()
 		if hijos < 3:
-			return "la pestaña Equipo debe mostrar el relé y su ajuste"
+			return "la pestaña Equipo debe mostrar el arrancador suave y sus ajustes"
 	return ""
 
 

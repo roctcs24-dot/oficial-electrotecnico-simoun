@@ -1,7 +1,8 @@
 class_name SimGuardamotor
 extends SimComponente
 ## Guardamotor (motor protection circuit breaker): disparo térmico ajustable,
-## magnético instantáneo y contacto auxiliar 13-14.
+## magnético instantáneo, contacto auxiliar 13-14 y contacto de señal de disparo 97-98, que
+## solo cierra cuando ha disparado (bloque lateral tipo GVAD).
 
 const POLOS := [["1", "2"], ["3", "4"], ["5", "6"]]
 
@@ -36,6 +37,8 @@ func estampar(e: SimEstampa) -> void:
 		for polo in POLOS:
 			e.impedancia(n(polo[0]), n(polo[1]), R_CONTACTO)
 		e.enlace(n("13"), n("14"))
+	if estado["disparado"]:
+		e.enlace(n("97"), n("98"))
 
 
 func corriente(sol: SimSolver.Solucion, polo: int) -> float:
