@@ -4,6 +4,7 @@ extends VBoxContainer
 ## Cada animación es ui/animaciones/<id>.gd y recibe sus parámetros desde el JSON.
 
 const ALTO_LIENZO := 230.0
+const CARPETA := "res://ui/animaciones/%s.gd"
 
 var lienzo: Control
 var params := {}
@@ -47,6 +48,40 @@ func texto(posicion: Vector2, cadena: String, tam := 16, color := Tema.TINTA, ce
 	if centrado:
 		x -= fuente.get_string_size(cadena, HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x / 2.0
 	lienzo.draw_string(fuente, Vector2(x, posicion.y + tam * 0.35), cadena, HORIZONTAL_ALIGNMENT_LEFT, -1, tam, color)
+
+
+## Dibuja en un espacio de diseño fijo, escalado y centrado en el lienzo. Devuelve la escala.
+func diseno(ancho: float, alto: float) -> float:
+	var escala := minf(lienzo.size.x / ancho, lienzo.size.y / alto)
+	var sobra := lienzo.size - Vector2(ancho, alto) * escala
+	lienzo.draw_set_transform(sobra / 2.0, 0.0, Vector2(escala, escala))
+	return escala
+
+
+## Tarjeta con un título, una nota y un control a la derecha, como el interruptor de tensión.
+func tarjeta_control(titulo: String, nota: String, control: Control) -> Label:
+	var tarjeta := PanelContainer.new()
+	tarjeta.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(tarjeta)
+	var fila := HBoxContainer.new()
+	fila.add_theme_constant_override("separation", 10)
+	tarjeta.add_child(fila)
+	var textos := VBoxContainer.new()
+	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textos.add_theme_constant_override("separation", 0)
+	fila.add_child(textos)
+	var t := Label.new()
+	t.text = titulo
+	t.theme_type_variation = "Fuerte"
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	textos.add_child(t)
+	var n := Label.new()
+	n.text = nota
+	n.theme_type_variation = "Nota"
+	n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	textos.add_child(n)
+	fila.add_child(control)
+	return n
 
 
 func flecha(desde: Vector2, hasta: Vector2, color: Color, grosor := 3.0) -> void:

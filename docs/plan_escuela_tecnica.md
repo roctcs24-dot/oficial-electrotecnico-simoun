@@ -144,7 +144,7 @@ Reordenadas el 2026-11-15 tras la petición del usuario: primero la interfaz y e
 | 30 | 4.3.0 | Tema, filas con marca y barra; avance en Sistema y Aprender |
 | 31 | 4.4.0 | Inicio nuevo con «Continuar», barra de navegación, plano con zonas de 48 pt o más |
 | 32 | 4.5.0 | Escuela y Pañol navegables, bienvenida y tamaño de texto |
-| 33 | 4.6.0 | Ficha visual de componente con cuatro pestañas (qué es, cómo funciona, cómo se conecta, cómo se mide); se estrena con el contactor, el relé térmico y el guardamotor |
+| 33 | 4.6.0 | Ficha visual de componente con cinco pestañas (qué es, cómo funciona, cómo se conecta, cómo se mide, fallas y mantenimiento) en `data/atlas/<id>.json`; se estrena con el contactor, el relé térmico y el guardamotor y abre el módulo 7 |
 | 34 | 4.7.0 | Electricidad industrial I, protección: interruptor automático, diferencial, fusible y portafusible, seccionador, relé de control de fases y de tensión, monitor de aislamiento |
 | 35 | 4.8.0 | Electricidad industrial II, mando: relé auxiliar, temporizadores a la conexión y a la desconexión, pulsadores, selectores, pilotos, seta, finales de carrera, presostato, termostato, interruptor de nivel |
 | 36 | 4.9.0 | Electricidad industrial III, potencia y medida: transformador y transformador de intensidad, motor, arrancador estrella-triángulo, arrancador suave, variador, resistencia de caldeo, condensadores de compensación, amperímetro y voltímetro, analizador de red, horómetro, borneras |
@@ -166,7 +166,7 @@ El usuario pidió conocer **todos los componentes de electricidad industrial, c�
 
 Hoy hay 32 fichas en `data/fichas/` con texto (función, partes, conexión, ajuste, pruebas, fallas, mantenimiento) y símbolos IEC y ANSI. Solo la del contactor tiene un banco interactivo.
 
-Cada componente del atlas tendrá cuatro pestañas visuales:
+Cada componente del atlas tiene cinco pestañas visuales (la quinta, fallas y mantenimiento, añadida a petición del usuario):
 
 1. **Qué es:**
    - dibujo realista con sus partes señaladas;
@@ -183,6 +183,10 @@ Cada componente del atlas tendrá cuatro pestañas visuales:
    - qué instrumento y en qué escala;
    - dónde se ponen las puntas;
    - el valor normal y el de cada falla típica, medidos en la simulación y no escritos a mano.
+
+5. **Fallas y mantenimiento:** botones de las fallas típicas con su síntoma, qué se mide (con valores), causa y reparación; debajo, el mantenimiento preventivo mensual, semestral y anual como lista para marcar.
+
+Hecho en la etapa 33: formato `data/atlas/<id>.json` (descrito en el README), pantalla `ui/screens/atlas.gd`, cortes animados `corte_contactor`, `corte_rele_termico` y `corte_guardamotor`, y lecturas calculadas con la simulación en `game/atlas_medidas.gd`.
 
 Las fichas existentes se pasan al formato nuevo. Los componentes nuevos se añaden por familias, en las etapas 34 a 36 (electricidad industrial), 38 y 39 (electrónica) y 45 y 46 (hidráulica y neumática). En cada uno, los valores que no salgan de las fotos del buque se marcan «valor típico — verificar a bordo».
 

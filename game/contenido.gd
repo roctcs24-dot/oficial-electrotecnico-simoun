@@ -71,6 +71,14 @@ func ficha(id: String) -> Dictionary:
 	return leer("fichas/%s.json" % id)
 
 
+## Ficha visual del atlas de la Escuela: data/atlas/<id>.json. Toma el dibujo y los símbolos
+## de data/fichas/<ficha>.json para no repetirlos.
+func atlas(id: String) -> Dictionary:
+	if not FileAccess.file_exists(CARPETA + "atlas/%s.json" % id):
+		return {}
+	return leer("atlas/%s.json" % id)
+
+
 ## Con sistema >= 0, solo los símbolos de ese sistema del buque.
 func simbolos(sistema := -1) -> Array:
 	var todos: Array = leer("simbolos.json").get("simbolos", [])

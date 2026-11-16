@@ -1,0 +1,626 @@
+{
+ "id": "rele_termico",
+ "ficha": "rele_termico",
+ "titulo": "Relé térmico",
+ "termino": "rele_termico",
+ "icono": "termico",
+ "resumen": "Protege el motor contra la sobrecarga abriendo el mando del contactor.",
+ "bornes_dibujo": {
+  "1": [
+   108,
+   30
+  ],
+  "3": [
+   180,
+   30
+  ],
+  "5": [
+   252,
+   30
+  ],
+  "97": [
+   96,
+   282
+  ],
+  "98": [
+   152,
+   282
+  ],
+  "95": [
+   208,
+   282
+  ],
+  "96": [
+   264,
+   282
+  ],
+  "2": [
+   110,
+   380
+  ],
+  "4": [
+   180,
+   380
+  ],
+  "6": [
+   250,
+   380
+  ]
+ },
+ "que_es": {
+  "texto": "El {{rele_termico}} vigila la corriente de cada fase del motor. Si una {{sobrecarga}} se mantiene, abre su contacto 95-96 y el {{contactor}} suelta. No corta la potencia por sí mismo y no protege contra el {{cortocircuito}}.",
+  "partes": [
+   {
+    "texto": "Pines 1, 3 y 5: entran directamente en 2, 4 y 6 del contactor.",
+    "marca": [
+     30,
+     30
+    ]
+   },
+   {
+    "texto": "Dial de la {{corriente_ajuste}}: se pone a la corriente nominal de la placa del motor.",
+    "marca": [
+     62,
+     176
+    ]
+   },
+   {
+    "texto": "Botón azul de {{rearme}}, selector manual o automático (H/A) y botón rojo de prueba y paro (STOP).",
+    "marca": [
+     318,
+     144
+    ]
+   },
+   {
+    "texto": "Contactos 95-96 ({{nc}}, al mando) y 97-98 ({{na}}, a la alarma).",
+    "marca": [
+     318,
+     282
+    ]
+   },
+   {
+    "texto": "Salida al motor: 2/T1, 4/T2 y 6/T3.",
+    "marca": [
+     318,
+     380
+    ]
+   }
+  ],
+  "placa": "Clase 10 · 12-18 A · 690 V · 95-96 NC · 97-98 NO",
+  "a_bordo": "Debajo de cada contactor de motor: bombas, compresores y ventiladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_rele_termico",
+  "params": {
+   "ajuste_a": 15.2,
+   "veces": 1.5
+  },
+  "pasos": [
+   "La corriente del motor calienta el {{bimetal}} de cada fase.",
+   "Con sobrecarga, el bimetal se curva y empuja la {{barra_disparo}}.",
+   "La barra abre 95-96: el contactor suelta y el motor para. 97-98 cierra y avisa."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_rele_termico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Potencia",
+     "x": 46,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Mando a 110 V",
+     "x": 262,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "desde K1",
+     "x": 80,
+     "y": 28,
+     "tam": 11
+    },
+    {
+     "texto": "1",
+     "x": 28,
+     "y": 66,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 68,
+     "y": 66,
+     "tam": 12
+    },
+    {
+     "texto": "5",
+     "x": 108,
+     "y": 66,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 28,
+     "y": 126,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 68,
+     "y": 126,
+     "tam": 12
+    },
+    {
+     "texto": "6",
+     "x": 108,
+     "y": 126,
+     "tam": 12
+    },
+    {
+     "texto": "F2",
+     "x": 172,
+     "y": 95,
+     "tam": 13
+    },
+    {
+     "texto": "M",
+     "x": 80,
+     "y": 208,
+     "tam": 15
+    },
+    {
+     "texto": "3~",
+     "x": 80,
+     "y": 226,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 198,
+     "y": 24,
+     "tam": 12
+    },
+    {
+     "texto": "95",
+     "x": 194,
+     "y": 40,
+     "tam": 11
+    },
+    {
+     "texto": "96",
+     "x": 194,
+     "y": 82,
+     "tam": 11
+    },
+    {
+     "texto": "F2",
+     "x": 236,
+     "y": 60,
+     "tam": 12
+    },
+    {
+     "texto": "S0",
+     "x": 236,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 234,
+     "y": 162,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 290,
+     "y": 160,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 240,
+     "y": 220,
+     "tam": 13
+    },
+    {
+     "texto": "N",
+     "x": 240,
+     "y": 276,
+     "tam": 12
+    },
+    {
+     "texto": "97",
+     "x": 376,
+     "y": 56,
+     "tam": 11
+    },
+    {
+     "texto": "98",
+     "x": 376,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "F2",
+     "x": 388,
+     "y": 80,
+     "tam": 11
+    },
+    {
+     "texto": "H3",
+     "x": 386,
+     "y": 160,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    40,
+    70
+   ],
+   "3": [
+    80,
+    70
+   ],
+   "5": [
+    120,
+    70
+   ],
+   "2": [
+    40,
+    120
+   ],
+   "4": [
+    80,
+    120
+   ],
+   "6": [
+    120,
+    120
+   ],
+   "95": [
+    210,
+    35
+   ],
+   "96": [
+    210,
+    85
+   ],
+   "97": [
+    360,
+    55
+   ],
+   "98": [
+    360,
+    105
+   ]
+  },
+  "bornes": {
+   "1": "Pin que entra en 2/T1 del contactor: le llega la fase L1 cuando el contactor cierra.",
+   "3": "Pin que entra en 4/T2 del contactor: fase L2.",
+   "5": "Pin que entra en 6/T3 del contactor: fase L3.",
+   "2": "Sale la fase L1 al borne U1 del motor.",
+   "4": "Sale la fase L2 al borne V1 del motor.",
+   "6": "Sale la fase L3 al borne W1 del motor.",
+   "95": "Llega la fase de mando de 110 V, después del fusible de mando.",
+   "96": "Va a la parada S0. Si el relé dispara, 95-96 abre y el contactor suelta.",
+   "97": "Llega la fase de mando para la señal de disparo.",
+   "98": "Va a la luz H3 o a la alarma de disparo térmico: solo tiene tensión si el relé disparó."
+  },
+  "grupos": [
+   {
+    "nombre": "95-96 al mando",
+    "bornes": [
+     "95",
+     "96"
+    ],
+    "texto": "Contacto NC en serie con el mando del contactor, antes de la parada S0: si el relé dispara, abre y el contactor suelta."
+   },
+   {
+    "nombre": "97-98 alarma",
+    "bornes": [
+     "97",
+     "98"
+    ],
+    "texto": "Contacto NA que cierra al disparar: enciende la luz H3 o da la alarma de disparo térmico."
+   },
+   {
+    "nombre": "Potencia 1…6",
+    "bornes": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "texto": "Los tres polos van en serie con el motor, entre el contactor y la bornera. El relé se ajusta a la corriente de placa del motor."
+   }
+  ],
+  "taller": "arranque_directo"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación. Las corrientes son del arranque directo del Taller, con un motor de 15 kW: compárelas con la placa del suyo.",
+  "taller": "medir_rele_termico",
+  "grupos": [
+   {
+    "nombre": "Contacto 95-96",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "95",
+    "negra": "96",
+    "como": "Escala Ω · punta roja en 95, negra en 96",
+    "nota": "Sin tensión, con el tablero bloqueado.",
+    "titulo_tabla": "Qué debe marcar 95-96",
+    "columna": "95-96",
+    "medida": {
+     "circuito": "medir_rele_termico",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "F2.95",
+     "b": "F2.96"
+    },
+    "filas": [
+     {
+      "estado": "En servicio",
+      "hacer": "Normal: deja pasar el mando",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "F2": {
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Rearmar cuando se enfríe",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Contacto 97-98",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "97",
+    "negra": "98",
+    "como": "Escala Ω · punta roja en 97, negra en 98",
+    "nota": "Sin tensión, con el tablero bloqueado.",
+    "titulo_tabla": "Qué debe marcar 97-98",
+    "columna": "97-98",
+    "medida": {
+     "circuito": "medir_rele_termico",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "F2.97",
+     "b": "F2.98"
+    },
+    "filas": [
+     {
+      "estado": "En servicio",
+      "hacer": "Normal: sin alarma",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "F2": {
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Da la alarma de disparo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente por fase",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "2",
+    "como": "Pinza amperimétrica abrazando un solo cable de salida",
+    "nota": "Con el motor en marcha y el tablero cerrado, si el modelo lo permite.",
+    "titulo_tabla": "Corriente del motor en marcha (Ir = 29,5 A)",
+    "columna": "Pinza",
+    "medida": {
+     "circuito": "arranque_directo",
+     "instrumento": "pinza",
+     "segundos": 4,
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "cable": [
+      "F2.2",
+      "M1.U1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Fase L1 (2/T1)",
+      "hacer": "Por debajo de Ir: normal",
+      "bien": true
+     },
+     {
+      "estado": "Fase L2 (4/T2)",
+      "cambios": {
+       "cable": [
+        "F2.4",
+        "M1.V1"
+       ]
+      },
+      "hacer": "Igual a las otras",
+      "bien": true
+     },
+     {
+      "estado": "Fase L3 (6/T3)",
+      "cambios": {
+       "cable": [
+        "F2.6",
+        "M1.W1"
+       ]
+      },
+      "hacer": "Igual a las otras",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Dispara sin causa",
+    "sintoma": "El motor para por el térmico cada cierto rato aunque la bomba trabaja normal.",
+    "mide": [
+     {
+      "donde": "corriente en 2/T1",
+      "bien": true,
+      "medida": {
+       "circuito": "arranque_directo",
+       "instrumento": "pinza",
+       "segundos": 4,
+       "estado": {
+        "Q1": {
+         "encendido": true
+        },
+        "S1": {
+         "presionado": true
+        }
+       },
+       "cable": [
+        "F2.2",
+        "M1.U1"
+       ]
+      }
+     },
+     {
+      "donde": "ajuste del dial",
+      "bien": false,
+      "valor": "20 A"
+     }
+    ],
+    "causa": "El dial está por debajo de la corriente de placa del motor (29,5 A en este ejemplo): el relé ve una sobrecarga que no existe.",
+    "reparacion": "Ajustar Ir a la corriente nominal de la placa, nunca por encima; rearmar y vigilar la corriente con la pinza."
+   },
+   {
+    "nombre": "No dispara",
+    "sintoma": "El motor se calentó hasta quemarse y el relé nunca disparó.",
+    "mide": [
+     {
+      "donde": "ajuste del dial",
+      "bien": false,
+      "valor": "45 A"
+     },
+     {
+      "donde": "corriente en 2/T1",
+      "bien": true,
+      "medida": {
+       "circuito": "arranque_directo",
+       "instrumento": "pinza",
+       "segundos": 4,
+       "estado": {
+        "Q1": {
+         "encendido": true
+        },
+        "S1": {
+         "presionado": true
+        }
+       },
+       "cable": [
+        "F2.2",
+        "M1.U1"
+       ]
+      }
+     }
+    ],
+    "causa": "Ajuste muy por encima de la corriente de placa, o el 95-96 puenteado en el mando.",
+    "reparacion": "Bloquear, revisar el aislamiento del motor y repararlo; ajustar Ir a la placa, quitar cualquier puente y probar el disparo con el botón de prueba."
+   },
+   {
+    "nombre": "No rearma",
+    "sintoma": "Se pulsa el rearme y el motor sigue sin arrancar.",
+    "mide": [
+     {
+      "donde": "95-96 tras pulsar",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_rele_termico",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "F2.95",
+       "b": "F2.96",
+       "estado": {
+        "F2": {
+         "disparado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "El bimetal sigue caliente: el rearme no engancha hasta que se enfría.",
+    "reparacion": "Esperar unos minutos (valor típico — verificar con el fabricante), buscar la causa de la sobrecarga y rearmar."
+   },
+   {
+    "nombre": "95-96 abierto",
+    "sintoma": "El motor no arranca y el relé no muestra disparo.",
+    "mide": [
+     {
+      "donde": "95-96 sin disparo",
+      "bien": false,
+      "valor": "OL"
+     },
+     {
+      "donde": "95-96 de un relé sano",
+      "bien": true,
+      "medida": {
+       "circuito": "medir_rele_termico",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "F2.95",
+       "b": "F2.96"
+      }
+     }
+    ],
+    "causa": "Contacto 95-96 quemado o un borne flojo.",
+    "reparacion": "Bloquear y reapretar los bornes; si 95-96 sigue en OL sin disparo, cambiar el relé."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "el dial coincide con la placa del motor"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y prueba con el botón de prueba"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de disparo con fuente de corriente, si la hay a bordo"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-4-1: relés de sobrecarga y clases de disparo.",
+  "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+  "IEC 60092: instalaciones eléctricas en buques."
+ ]
+}

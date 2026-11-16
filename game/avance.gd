@@ -9,6 +9,19 @@ static func lecciones(s: Dictionary, partida: Partida) -> Array[int]:
 	return _contar(ids, partida.leccion_completada)
 
 
+## Fichas del atlas con sus cinco pestañas vistas.
+static func atlas(s: Dictionary, partida: Partida) -> Array[int]:
+	var ids: Array = s.get("modos", {}).get("aprender", {}).get("atlas", [])
+	return _contar(ids, partida.atlas_completo)
+
+
+## Lo que cuenta en Aprender: lecciones y fichas del atlas.
+static func aprender(s: Dictionary, partida: Partida) -> Array[int]:
+	var l := lecciones(s, partida)
+	var a := atlas(s, partida)
+	return [l[0] + a[0], l[1] + a[1]]
+
+
 static func misiones(s: Dictionary, partida: Partida) -> Array[int]:
 	var ids: Array = s.get("modos", {}).get("guardia", {}).get("misiones", [])
 	return _contar(ids, partida.mision_completada)
@@ -19,11 +32,11 @@ static func examenes(s: Dictionary, partida: Partida) -> Array[int]:
 	return _contar(ids, partida.examen_aprobado)
 
 
-## Lecciones, misiones y exámenes juntos.
+## Lecciones, fichas del atlas, misiones y exámenes juntos.
 static func sistema(s: Dictionary, partida: Partida) -> Array[int]:
 	var hechos := 0
 	var total := 0
-	for parte: Array[int] in [lecciones(s, partida), misiones(s, partida), examenes(s, partida)]:
+	for parte: Array[int] in [aprender(s, partida), misiones(s, partida), examenes(s, partida)]:
 		hechos += parte[0]
 		total += parte[1]
 	return [hechos, total]

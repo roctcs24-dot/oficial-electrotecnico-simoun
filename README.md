@@ -18,6 +18,7 @@ Estado: **v4.0**, con la v1 a la v5 completas: los siete sistemas del buque est�
 - Exámenes de la v1 a la v5, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
 - Inicio con la lección recomendada, el repaso pendiente y una tarjeta de color por sistema; barra de navegación (Inicio, Escuela técnica, Buque, Pañol, Progreso), bienvenida la primera vez y tamaño de letra ajustable; estilo oscuro elegido por el usuario. Glosario y plano del barco.
+- Escuela técnica: atlas de componentes de electricidad industrial (módulo 7) con fichas visuales de cinco pestañas: qué es, cómo funciona (corte animado que se maneja con el dedo), cómo se conecta (esquema con bornes que se iluminan también en el dibujo), cómo se mide (lecturas calculadas con la simulación) y fallas con su mantenimiento. Estrenado con el contactor, el relé térmico y el guardamotor.
 
 Los requisitos completos están en [CLAUDE.md](CLAUDE.md). Están completas la v2 (generadores, paneles y cuadro principal), la v3 (refrigeración por amoníaco), la v4 (electrónica, sensores, PLC, red Modbus, HMI, puesto de alarmas y detección de incendios) y la v5 (distribución, alumbrado, baterías y cubierta). La v6 de la hoja de ruta, una vista 3D con recorrido por el buque, no está empezada: cambia el tipo de juego (2D) y requiere decidir antes su alcance. El Main Engine Control Panel de la máquina principal (Wabtec 16V250 con MEC2+) está en el sistema 6, con su frente y los valores de la pantalla tomados de un vídeo del buque; su interior y su lógica son típicos.
 
@@ -64,7 +65,7 @@ Para revisar el aspecto de las pantallas sin tener que navegar por ellas, este c
 godot --path . --script res://tests/capturar.gd -- carpeta/de/salida
 ```
 
-Con `lecciones`, `fichas`, `taller`, `guardia`, `progresion`, `cuadro`, `guardia_cuadro`, `planta` o `guardia_planta` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
+Con `lecciones`, `fichas`, `atlas`, `taller`, `guardia`, `progresion`, `cuadro`, `guardia_cuadro`, `planta` o `guardia_planta` detrás de la carpeta captura solo esa parte. En `lecciones` y `fichas`, un número más elige el sistema; por ejemplo, `-- carpeta fichas 1`.
 
 ## Exportar
 
@@ -152,6 +153,21 @@ Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fa
 **Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
 
 Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera del motor. Sus `simbolos` pueden ser `iec` y `ansi` propios, o una `lista` de ids de `data/simbolos.json`.
+
+**Atlas de la Escuela:** cada componente del atlas es `data/atlas/<id>.json`, y se publica añadiendo su id a `modos.aprender.atlas` de un módulo de la Escuela en `data/sistemas.json`. No hace falta código nuevo salvo la animación del corte, si el componente necesita una propia. El dibujo y los símbolos se toman de `data/fichas/<ficha>.json`. Las pruebas de `tests/test_atlas.gd` comprueban que esté bien formado.
+
+| Campo | Contenido |
+|---|---|
+| `ficha`, `titulo`, `termino`, `icono`, `resumen` | Ficha de la que salen el dibujo y los símbolos; título; id del glosario cuyo inglés va en la cabecera; icono de `art/iconos/` |
+| `bornes_dibujo` | Posición de cada borne en el dibujo del equipo, en coordenadas del SVG |
+| `que_es` | `texto`, `partes` (texto y `marca` opcional [x, y] para el número sobre el dibujo), `placa` y `a_bordo` (con «verificar a bordo») |
+| `funciona` | `animacion` de `ui/animaciones/` con sus `params`, tres `pasos` y, si la animación tiene interruptor de tensión, `pasos_sin` |
+| `conexion` | `esquema` (SVG con `etiquetas`), `bornes_esquema` (posición de cada borne en el esquema), `bornes` (qué le llega a cada uno), `grupos` (chips con `nombre`, `bornes` y `texto`) y `taller` (circuito que se monta en el Taller) |
+| `medir` | `grupos` con `instrumento` (`multimetro`, `megohmetro` o `pinza`), `escala`, puntas `roja` y `negra`, `como`, `nota`, `titulo_tabla`, `columna`, la `medida` base y sus `filas` (`estado`, `cambios`, `hacer`, `bien`); `nota` y `taller` (circuito para medirlo uno mismo) |
+| `fallas` | `lista` de fallas (`nombre`, `sintoma`, `mide`, `causa`, `reparacion`), `mantenimiento` (`periodo` y `tarea`) y `nota_mantenimiento` |
+| `para_saber_mas` | Normas y fuentes |
+
+Una medida dice qué circuito de `data/circuitos/` montar, qué cambiar en él y con qué medir: `{"circuito": "medir_contactor", "estado": {"K1": {"bobina_quemada": true}}, "params": {...}, "segundos": 0.2, "instrumento": "multimetro", "modo": "ohm", "a": "K1.A1", "b": "K1.A2"}`. La pinza lleva `cable` y el megóhmetro `v_prueba`. Los `cambios` de una fila se mezclan con la medida del grupo. Las lecturas de «Medir» salen siempre de la simulación (`game/atlas_medidas.gd`); solo las fallas admiten un `valor` escrito para lo que la simulación no modela.
 
 **Símbolos:** cada entrada de `data/simbolos.json` tiene `id`, `nombre`, `sistema`, `similares` y sus dibujos `iec` y `ansi`. Cada minijuego pregunta los de su sistema, y un examen solo los del sistema de su `sistema_simbolos`. `similares` lista los que comparten dibujo en alguna norma, para no ofrecerlos juntos como opciones.
 

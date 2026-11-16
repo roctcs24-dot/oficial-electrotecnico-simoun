@@ -1,0 +1,8 @@
+{
+  "nombre": "Contactor suelto para medir",
+  "nota": "El contactor fuera del tablero, sin cables: se mide sin tensión.",
+  "componentes": [
+    { "id": "K1", "tipo": "contactor" }
+  ],
+  "cables": []
+}

@@ -1,0 +1,647 @@
+{
+ "id": "guardamotor",
+ "ficha": "guardamotor",
+ "titulo": "Guardamotor",
+ "termino": "guardamotor",
+ "icono": "guardamotor",
+ "resumen": "Interruptor del motor con disparo térmico ajustable y magnético instantáneo.",
+ "bornes_dibujo": {
+  "1": [
+   102,
+   72
+  ],
+  "3": [
+   160,
+   72
+  ],
+  "5": [
+   218,
+   72
+  ],
+  "2": [
+   102,
+   428
+  ],
+  "4": [
+   160,
+   428
+  ],
+  "6": [
+   218,
+   428
+  ]
+ },
+ "que_es": {
+  "texto": "El {{guardamotor}} es el interruptor de cabecera de cada motor: lo conecta a la red, lo protege contra la {{sobrecarga}} con su {{disparo_termico}} ajustable y contra el {{cortocircuito}} con su {{disparo_magnetico}}. Sirve también para aislar el motor al trabajar en él.",
+  "partes": [
+   {
+    "texto": "Bornes de entrada 1/L1, 3/L2 y 5/L3, desde el cuadro.",
+    "marca": [
+     280,
+     72
+    ]
+   },
+   {
+    "texto": "Dial de la {{corriente_ajuste}}, a la corriente de placa del motor.",
+    "marca": [
+     40,
+     184
+    ]
+   },
+   {
+    "texto": "Pulsadores I (marcha) y O (paro): también indican si disparó.",
+    "marca": [
+     280,
+     200
+    ]
+   },
+   {
+    "texto": "Bornes de salida 2/T1, 4/T2 y 6/T3, hacia el contactor.",
+    "marca": [
+     280,
+     428
+    ]
+   },
+   {
+    "texto": "Bloque auxiliar lateral, que no se ve en el dibujo: 13-14 ({{na}}) y la señal de disparo 97-98."
+   }
+  ],
+  "placa": "24-32 A · Ue 380 V 50 Hz · IEC 60947-2 y 60947-4-1",
+  "a_bordo": "En cada salida de motor de los tableros de bombas, compresores y ventiladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_guardamotor",
+  "params": {
+   "ajuste_a": 25,
+   "magnetico_veces": 13,
+   "veces": 1.0
+  },
+  "pasos": [
+   "La corriente atraviesa el contacto principal, la bobina magnética y el {{bimetal}}.",
+   "Con sobrecarga el bimetal se curva poco a poco; con un cortocircuito la bobina atrae su núcleo al instante.",
+   "Cualquiera de los dos suelta el {{cerrojo}}: abren los contactos y el 13-14, y cierra el 97-98."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_guardamotor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Potencia",
+     "x": 46,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Mando a 110 V",
+     "x": 262,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 40,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 80,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 120,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 28,
+     "y": 40,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 68,
+     "y": 40,
+     "tam": 12
+    },
+    {
+     "texto": "5",
+     "x": 108,
+     "y": 40,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 28,
+     "y": 152,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 68,
+     "y": 152,
+     "tam": 12
+    },
+    {
+     "texto": "6",
+     "x": 108,
+     "y": 152,
+     "tam": 12
+    },
+    {
+     "texto": "I>",
+     "x": 140,
+     "y": 117,
+     "tam": 11
+    },
+    {
+     "texto": "Q1",
+     "x": 160,
+     "y": 64,
+     "tam": 13
+    },
+    {
+     "texto": "M",
+     "x": 80,
+     "y": 214,
+     "tam": 15
+    },
+    {
+     "texto": "3~",
+     "x": 80,
+     "y": 230,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 198,
+     "y": 24,
+     "tam": 12
+    },
+    {
+     "texto": "13",
+     "x": 194,
+     "y": 44,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 194,
+     "y": 88,
+     "tam": 11
+    },
+    {
+     "texto": "Q1",
+     "x": 232,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "S0",
+     "x": 236,
+     "y": 115,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 234,
+     "y": 167,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 290,
+     "y": 165,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 240,
+     "y": 225,
+     "tam": 13
+    },
+    {
+     "texto": "N",
+     "x": 240,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "97",
+     "x": 376,
+     "y": 56,
+     "tam": 11
+    },
+    {
+     "texto": "98",
+     "x": 376,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "Q1",
+     "x": 388,
+     "y": 80,
+     "tam": 11
+    },
+    {
+     "texto": "H4",
+     "x": 386,
+     "y": 160,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    40,
+    40
+   ],
+   "3": [
+    80,
+    40
+   ],
+   "5": [
+    120,
+    40
+   ],
+   "2": [
+    40,
+    150
+   ],
+   "4": [
+    80,
+    150
+   ],
+   "6": [
+    120,
+    150
+   ],
+   "13": [
+    210,
+    40
+   ],
+   "14": [
+    210,
+    90
+   ],
+   "97": [
+    360,
+    55
+   ],
+   "98": [
+    360,
+    105
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase L1 de la red de 380 V desde las barras del tablero. Tiene tensión aunque el guardamotor esté en O.",
+   "3": "Llega la fase L2 de la red de 380 V desde las barras.",
+   "5": "Llega la fase L3 de la red de 380 V desde las barras.",
+   "2": "Sale la fase L1 hacia 1/L1 del contactor. Sin tensión con el guardamotor en O o disparado.",
+   "4": "Sale la fase L2 hacia 3/L2 del contactor.",
+   "6": "Sale la fase L3 hacia 5/L3 del contactor.",
+   "13": "Llega la fase de mando de 110 V.",
+   "14": "Va a la parada S0: con el guardamotor en O o disparado, el mando del contactor queda sin tensión.",
+   "97": "Llega la fase de mando para la señal de disparo.",
+   "98": "Va a la luz H4 o a la alarma: solo tiene tensión si el guardamotor disparó."
+  },
+  "grupos": [
+   {
+    "nombre": "1-2 · 3-4 · 5-6",
+    "bornes": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "texto": "Polos de potencia: entra la red por 1, 3 y 5 y sale por 2, 4 y 6 hacia el contactor. Con el mando en O, el motor queda aislado."
+   },
+   {
+    "nombre": "13-14 auxiliar",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "Auxiliar NA en serie con el mando: sin el guardamotor en I no se puede arrancar el contactor."
+   },
+   {
+    "nombre": "97-98 señal",
+    "bornes": [
+     "97",
+     "98"
+    ],
+    "texto": "Señal de disparo: cierra solo cuando disparó y enciende la luz H4 o la alarma."
+   }
+  ],
+  "taller": "arranque_directo"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación. El criterio de aislamiento es el de IEEE 43 para menos de 1 kV: verificar con el criterio del buque.",
+  "taller": "medir_guardamotor",
+  "grupos": [
+   {
+    "nombre": "Polos 1-2",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · punta roja en 1/L1, negra en 2/T1",
+    "nota": "Sin tensión, con el cuadro aguas arriba bloqueado.",
+    "titulo_tabla": "Qué debe marcar cada polo",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "medir_guardamotor",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "Q1.1",
+     "b": "Q1.2"
+    },
+    "filas": [
+     {
+      "estado": "En I",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "En O",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Buscar la causa y rearmar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Auxiliares",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "13",
+    "negra": "14",
+    "como": "Escala Ω · puntas en el bloque auxiliar lateral",
+    "nota": "Sin tensión de mando.",
+    "titulo_tabla": "13-14 y 97-98",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_guardamotor",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "Q1.13",
+     "b": "Q1.14"
+    },
+    "filas": [
+     {
+      "estado": "13-14 en I",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: deja pasar el mando",
+      "bien": true
+     },
+     {
+      "estado": "13-14 en O",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "97-98 en I",
+      "cambios": {
+       "a": "Q1.97",
+       "b": "Q1.98",
+       "estado": {
+        "Q1": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: sin alarma",
+      "bien": true
+     },
+     {
+      "estado": "97-98 disparado",
+      "cambios": {
+       "a": "Q1.97",
+       "b": "Q1.98",
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Da la señal de disparo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Aislamiento",
+    "instrumento": "megohmetro",
+    "escala": "500 V",
+    "roja": "1",
+    "negra": "3",
+    "como": "Megóhmetro a 500 V · entre 1/L1 y 3/L2, en O",
+    "nota": "Desconectado de la red y del motor; descargue después de medir.",
+    "titulo_tabla": "Aislamiento entre polos (mínimo 5 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "circuito": "medir_guardamotor",
+     "instrumento": "megohmetro",
+     "v_prueba": 500,
+     "a": "Q1.1",
+     "b": "Q1.3"
+    },
+    "filas": [
+     {
+      "estado": "Entre 1 y 3, en O",
+      "hacer": "Bueno",
+      "bien": true
+     },
+     {
+      "estado": "Entre 3 y 5, en O",
+      "cambios": {
+       "a": "Q1.3",
+       "b": "Q1.5"
+      },
+      "hacer": "Bueno",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Salta al arrancar",
+    "sintoma": "Se pone en I, se pulsa marcha y en cuanto arranca el motor salta.",
+    "mide": [
+     {
+      "donde": "97-98 tras el disparo",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_guardamotor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q1.97",
+       "b": "Q1.98",
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "aislamiento del motor a masa",
+      "bien": false,
+      "valor": "0,2 MΩ"
+     }
+    ],
+    "causa": "Cortocircuito o derivación en el cable o en el motor: actúa el disparo magnético.",
+    "reparacion": "Bloquear, medir el aislamiento del cable y del motor por separado, reparar el que falle y solo entonces rearmar."
+   },
+   {
+    "nombre": "Salta tras un rato",
+    "sintoma": "El motor trabaja unos minutos y el guardamotor salta; al rato se puede rearmar.",
+    "mide": [
+     {
+      "donde": "corriente en 2/T1",
+      "bien": true,
+      "medida": {
+       "circuito": "arranque_directo",
+       "instrumento": "pinza",
+       "segundos": 4,
+       "estado": {
+        "Q1": {
+         "encendido": true
+        },
+        "S1": {
+         "presionado": true
+        }
+       },
+       "cable": [
+        "F2.2",
+        "M1.U1"
+       ]
+      }
+     },
+     {
+      "donde": "ajuste del dial",
+      "bien": false,
+      "valor": "20 A"
+     }
+    ],
+    "causa": "Disparo térmico: ajuste por debajo de la placa, una sobrecarga mecánica (bomba trabada) o falta de una fase.",
+    "reparacion": "Medir la corriente de las tres fases, comprobar la bomba y ajustar Ir a la placa del motor."
+   },
+   {
+    "nombre": "No rearma",
+    "sintoma": "Se gira a I y no queda conectado.",
+    "mide": [
+     {
+      "donde": "97-98 al intentarlo",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_guardamotor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q1.97",
+       "b": "Q1.98",
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Tras un disparo hay que llevarlo a O antes de I. Si vuelve a saltar, la causa sigue ahí o el bimetal aún está caliente.",
+    "reparacion": "Llevar a O, esperar a que se enfríe, buscar la causa y volver a I."
+   },
+   {
+    "nombre": "Falta una fase",
+    "sintoma": "El motor zumba y no arranca, o arranca con dos fases y se calienta.",
+    "mide": [
+     {
+      "donde": "polo 1-2 en I, sin tensión",
+      "bien": false,
+      "valor": "OL"
+     },
+     {
+      "donde": "polo sano en I",
+      "bien": true,
+      "medida": {
+       "circuito": "medir_guardamotor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q1.1",
+       "b": "Q1.2",
+       "estado": {
+        "Q1": {
+         "encendido": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un contacto principal quemado o un borne flojo.",
+    "reparacion": "Bloquear y reapretar; si un polo mide OL en I, cambiar el guardamotor."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "el dial coincide con la placa del motor"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y prueba del botón de disparo"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "maniobras O-I en vacío y signos de calentamiento"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-2 e IEC 60947-4-1: interruptores automáticos y arrancadores.",
+  "IEEE 43: criterio de resistencia de aislamiento.",
+  "IEC 60092: instalaciones eléctricas en buques."
+ ]
+}

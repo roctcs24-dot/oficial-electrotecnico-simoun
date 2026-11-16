@@ -1,0 +1,121 @@
+class_name AtlasMedidas
+extends RefCounted
+## Las lecturas de las tablas «Medir» y de las fallas del atlas se calculan con la simulación,
+## no se escriben a mano. Cada medida del JSON dice qué circuito montar, qué cambiar en él y
+## con qué instrumento medir:
+##   {"circuito": "medir_contactor", "estado": {"K1": {"bobina_quemada": true}},
+##    "params": {"B": {"v_linea": 300}}, "segundos": 2, "instrumento": "multimetro",
+##    "modo": "ohm", "a": "K1.A1", "b": "K1.A2"}
+## Con la pinza, "cable": ["F2.2", "M1.U1"] dice qué conductor abraza. Con el megóhmetro,
+## "v_prueba" elige 250, 500 o 1000 V. Una medida puede llevar "valor" escrito en su lugar:
+## solo se admite en las fallas, para lo que la simulación no modela.
+
+
+## Las lecturas ya calculadas: el contenido no cambia mientras el juego está abierto.
+static var _cache := {}
+
+
+## La medida de una fila: la del grupo con los cambios de la fila. "estado" y "params" se
+## mezclan componente a componente; el resto de claves se sustituye.
+static func combinar(base: Dictionary, cambios: Dictionary) -> Dictionary:
+	var r := base.duplicate(true)
+	for clave: String in cambios:
+		if clave in ["estado", "params"]:
+			var mezcla: Dictionary = r.get(clave, {})
+			for id: String in cambios[clave]:
+				var previo: Dictionary = mezcla.get(id, {})
+				previo.merge(cambios[clave][id], true)
+				mezcla[id] = previo
+			r[clave] = mezcla
+		else:
+			r[clave] = cambios[clave]
+	return r
+
+
+## Devuelve {valor, unidad, fuera_de_rango, averia, texto}, o {texto, averia} con el motivo
+## si la medida no se puede hacer.
+static func medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
+	if medida.has("valor"):
+		return {"texto": str(medida["valor"]), "averia": ""}
+	var clave := JSON.stringify(medida, "", true)
+	if not _cache.has(clave):
+		_cache[clave] = _medir(contenido, medida)
+	return _cache[clave].duplicate()
+
+
+static func _medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
+	var datos := contenido.circuito_datos(str(medida.get("circuito", "")))
+	if datos.is_empty():
+		return {"texto": "?", "averia": "sin_circuito"}
+	for c: Dictionary in datos.get("componentes", []):
+		var id: String = c["id"]
+		if medida.get("params", {}).has(id):
+			var p: Dictionary = c.get("params", {})
+			p.merge(medida["params"][id], true)
+			c["params"] = p
+		if medida.get("estado", {}).has(id):
+			var e: Dictionary = c.get("estado", {})
+			e.merge(medida["estado"][id], true)
+			c["estado"] = e
+	var sim := SimSimulacion.desde_dict(datos)
+	var segundos := float(medida.get("segundos", 0.0))
+	if segundos > 0.0:
+		sim.avanzar_tiempo(segundos)
+	var r := {}
+	match str(medida.get("instrumento", "multimetro")):
+		"multimetro":
+			var m := SimMultimetro.new()
+			m.ruido = 0.0
+			r = m.medir(sim, str(medida.get("modo", "ohm")), medida["a"], medida["b"])
+		"megohmetro":
+			var mg := SimMegohmetro.new()
+			mg.ruido = 0.0
+			var lectura := mg.medir(sim, medida["a"], medida["b"], int(medida.get("v_prueba", 500)))
+			r = {"valor": lectura["mohm"], "unidad": "MΩ", "fuera_de_rango": lectura["fuera_de_rango"], "averia": lectura["averia"]}
+		"pinza":
+			var pz := SimPinza.new()
+			pz.ruido = 0.0
+			var indice := _indice_cable(sim, medida.get("cable", []))
+			r = pz.medir(sim, [] if indice < 0 else [indice])
+		_:
+			return {"texto": "?", "averia": "instrumento_desconocido"}
+	r["texto"] = texto(r)
+	return r
+
+
+static func _indice_cable(sim: SimSimulacion, cable: Array) -> int:
+	if cable.size() != 2:
+		return -1
+	for i in sim.cables.size():
+		var c: Array = sim.cables[i]
+		if (c[0] == cable[0] and c[1] == cable[1]) or (c[0] == cable[1] and c[1] == cable[0]):
+			return i
+	return -1
+
+
+## Lectura como la mostraría la pantalla del instrumento, con coma decimal.
+static func texto(r: Dictionary) -> String:
+	if not str(r.get("averia", "")).is_empty():
+		return "—"
+	var unidad: String = r.get("unidad", "")
+	var v := float(r.get("valor", 0.0))
+	if r.get("fuera_de_rango", false):
+		return "> 999 MΩ" if unidad == "MΩ" else "OL"
+	match unidad:
+		"Ω":
+			if v < 1.0:
+				return "0,0 Ω"
+			if v >= 1000.0:
+				return "%s kΩ" % _numero(v / 1000.0, 1)
+			return "%d Ω" % roundi(v)
+		"V", "A":
+			return "%s %s" % [_numero(v, 0 if v >= 20.0 else 1), unidad]
+		"MΩ":
+			return "%s MΩ" % _numero(v, 0 if v >= 20.0 else 1)
+	return "%s %s" % [_numero(v, 1), unidad]
+
+
+static func _numero(v: float, decimales: int) -> String:
+	if decimales == 0:
+		return str(roundi(v))
+	return (("%." + str(decimales) + "f") % v).replace(".", ",")

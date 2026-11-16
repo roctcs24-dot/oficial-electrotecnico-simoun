@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="290" viewBox="0 0 400 290">
+  <defs>
+    <g id="principal" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-4,-10 A4,4 0 0 0 4,-10"/></g>
+    <g id="na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9"/></g>
+    <g id="nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13"/></g>
+    <g id="pulsador_na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-5,0 H-20 M-20,-5 V5"/></g>
+    <g id="pulsador_nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13 M4,-2 H-14 M-14,-7 V3"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15"/></g>
+    <g id="lampara" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><circle r="13"/><path d="M-9.2,-9.2 L9.2,9.2 M9.2,-9.2 L-9.2,9.2 M0,-25 V-13 M0,25 V13"/></g>
+    <g id="termico" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-9 H7 V9 H0 V25"/></g>
+  </defs>
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Potencia -->
+    <path d="M40,28 V55 M80,28 V55 M120,28 V55"/>
+    <path d="M40,105 V150 L62,186 M80,105 V184 M120,105 V150 L98,186"/>
+    <circle cx="80" cy="212" r="28"/>
+    <!-- Mando -->
+    <path d="M210,28 V40 M210,90 V110 M210,110 H290 M210,160 V170 H290 V160 M250,170 V187 M250,237 V252 H360 M250,252 V262"/>
+    <path d="M210,32 H360 V40 M360,90 V110 M360,160 V252"/>
+  </g>
+  <g stroke="#20242a" stroke-width="2" stroke-dasharray="6 4" fill="none"><path d="M30,80 H134"/></g>
+  <use xlink:href="#principal" x="40" y="80"/><use xlink:href="#principal" x="80" y="80"/><use xlink:href="#principal" x="120" y="80"/>
+  <use xlink:href="#pulsador_nc" x="210" y="65"/>
+  <use xlink:href="#pulsador_na" x="210" y="135"/>
+  <use xlink:href="#na" x="290" y="135"/>
+  <use xlink:href="#nc" x="360" y="65"/>
+  <use xlink:href="#bobina" x="250" y="212"/>
+  <use xlink:href="#lampara" x="360" y="135"/>
+  <circle cx="250" cy="252" r="3" fill="#20242a"/><circle cx="210" cy="110" r="3" fill="#20242a"/><circle cx="250" cy="170" r="3" fill="#20242a"/><circle cx="210" cy="32" r="3" fill="#20242a"/>
+</svg>

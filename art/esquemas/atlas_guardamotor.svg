@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="290" viewBox="0 0 400 290">
+  <defs>
+    <g id="principal" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-4,-10 A4,4 0 0 0 4,-10"/></g>
+    <g id="na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9"/></g>
+    <g id="nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13"/></g>
+    <g id="pulsador_na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-5,0 H-20 M-20,-5 V5"/></g>
+    <g id="pulsador_nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13 M4,-2 H-14 M-14,-7 V3"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15"/></g>
+    <g id="lampara" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><circle r="13"/><path d="M-9.2,-9.2 L9.2,9.2 M9.2,-9.2 L-9.2,9.2 M0,-25 V-13 M0,25 V13"/></g>
+    <g id="termico" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-9 H7 V9 H0 V25"/></g>
+  </defs>
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Potencia: Q1 con disparo térmico y magnético -->
+    <path d="M40,28 V40 M80,28 V40 M120,28 V40"/>
+    <path d="M40,90 V100 M80,90 V100 M120,90 V100"/>
+    <path d="M40,150 V160 L62,192 M80,150 V190 M120,150 V160 L98,192"/>
+    <circle cx="80" cy="218" r="26"/>
+    <!-- Mando -->
+    <path d="M210,28 V40 M210,90 V90 M210,140 H270 M210,190 V196 H270 V190 M240,196 V200 M240,250 V258 H360 M240,258 V266"/>
+    <path d="M210,32 H360 V55 M360,105 V135 M360,185 V258"/>
+  </g>
+  <g fill="none" stroke="#20242a" stroke-width="2.5"><rect x="128" y="108" width="24" height="18"/></g>
+  <g stroke="#20242a" stroke-width="2" stroke-dasharray="6 4" fill="none"><path d="M30,64 H140 M140,64 V108 M152,117 H166"/></g>
+  <use xlink:href="#principal" x="40" y="65"/><use xlink:href="#principal" x="80" y="65"/><use xlink:href="#principal" x="120" y="65"/>
+  <use xlink:href="#termico" x="40" y="125"/><use xlink:href="#termico" x="80" y="125"/><use xlink:href="#termico" x="120" y="125"/>
+  <use xlink:href="#na" x="210" y="65"/>
+  <use xlink:href="#pulsador_nc" x="210" y="115"/>
+  <use xlink:href="#pulsador_na" x="210" y="165"/>
+  <use xlink:href="#na" x="270" y="165"/>
+  <use xlink:href="#bobina" x="240" y="225"/>
+  <use xlink:href="#na" x="360" y="80"/>
+  <use xlink:href="#lampara" x="360" y="160"/>
+  <circle cx="240" cy="258" r="3" fill="#20242a"/><circle cx="210" cy="140" r="3" fill="#20242a"/><circle cx="240" cy="196" r="3" fill="#20242a"/><circle cx="210" cy="32" r="3" fill="#20242a"/>
+</svg>

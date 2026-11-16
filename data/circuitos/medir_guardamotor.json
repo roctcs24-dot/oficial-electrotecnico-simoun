@@ -1,0 +1,8 @@
+{
+  "nombre": "Guardamotor suelto para medir",
+  "nota": "El guardamotor fuera del tablero, sin cables: se mide sin tensión. Ajuste típico de 25 A: verificar a bordo.",
+  "componentes": [
+    { "id": "Q1", "tipo": "guardamotor", "params": { "ajuste_a": 25 } }
+  ],
+  "cables": []
+}

@@ -59,6 +59,8 @@ func _capturar() -> void:
 		await _capturar_tablero(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "maquina":
 		await _capturar_maquina(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "atlas":
+		await _capturar_atlas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -642,6 +644,44 @@ func _capturar_revision(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("prueba_examen", {"id": "v5"})
 		await _guardar(carpeta, "prueba_v5", tam)
 		raiz.volver()
+
+
+## Las fichas visuales del atlas de la Escuela: cada pestaña y los estados que se animan.
+func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("sistema", {"id": 7})
+		await _guardar(carpeta, "modulo_7", tam)
+		raiz.ir_a("aprender", {"id": 7})
+		await _guardar(carpeta, "modulo_7_aprender", tam)
+		raiz.volver()
+		raiz.volver()
+		for id: String in ["contactor", "rele_termico", "guardamotor"]:
+			for pestana: String in ["que_es", "funciona", "conexion", "medir", "fallas"]:
+				raiz.ir_a("atlas", {"id": id, "pestana": pestana})
+				await _guardar(carpeta, "%s_%s" % [id, pestana], tam)
+				var p = raiz.pantalla_actual()
+				if pestana == "funciona":
+					var a = p.animacion
+					if id == "contactor":
+						a.poner_tension(false)
+						a.campo = 0.0
+						a.posicion = 0.0
+					else:
+						a.poner_corriente(7.2 if id == "rele_termico" else 1.5)
+						a.avanzar(400.0)
+					await _guardar(carpeta, "%s_funciona_2" % id, tam)
+				elif pestana == "conexion":
+					p.tocar_borne(p.atlas["conexion"]["bornes_esquema"].keys()[0])
+					await _guardar(carpeta, "%s_conexion_borne" % id, tam)
+				raiz.volver()
+			raiz.ir_a("atlas", {"id": id, "pestana": "medir", "grupo_medir": 2})
+			await _guardar(carpeta, "%s_medir_3" % id, tam)
+			raiz.volver()
+			raiz.ir_a("atlas", {"id": id, "pestana": "fallas", "falla": 2})
+			await _guardar(carpeta, "%s_fallas_3" % id, tam)
+			raiz.volver()
 
 
 ## Hoja de muestra con todos los instrumentos dibujados, a tamaño normal y ampliado.

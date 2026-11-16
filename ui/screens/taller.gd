@@ -13,7 +13,8 @@ func construir() -> void:
 			nueva.cargar_plantilla(args["plantilla"])
 		else:
 			nueva.recuperar_autoguardado()
-		_iniciar_banco(nueva, "cajon")
+		# El atlas abre el Taller directamente en la pestaña de medir.
+		_iniciar_banco(nueva, str(args.get("pestana_inicial", "cajon")))
 	_cabecera("Taller", "Toque dos bornes para unirlos con un cable")
 	_montar_banco()
 

@@ -43,7 +43,7 @@ func construir() -> void:
 func _avance_modo(s: Dictionary, modo: String) -> Array[int]:
 	match modo:
 		"aprender":
-			return Avance.lecciones(s, raiz.partida)
+			return Avance.aprender(s, raiz.partida)
 		"guardia":
 			return Avance.misiones(s, raiz.partida)
 		"examen":

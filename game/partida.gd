@@ -15,7 +15,7 @@ const PUNTOS_EXAMEN := 100
 ## último intervalo queda resuelto, aunque sus fallos siguen en las estadísticas.
 const INTERVALOS_REPASO_DIAS := [1, 3, 7, 14, 30]
 const SEGUNDOS_POR_DIA := 86400.0
-const APARTADOS := ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos", "examenes", "ajustes"]
+const APARTADOS := ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos", "examenes", "ajustes", "atlas"]
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -36,6 +36,7 @@ static func datos_nuevos() -> Dictionary:
 		"minijuegos": {},
 		"examenes": {},
 		"ajustes": {"bienvenida_vista": false, "tamano_texto": 1.0},
+		"atlas": {},
 	}
 
 
@@ -161,6 +162,44 @@ func marcar_ficha_vista(id: String) -> void:
 
 func ficha_vista(id: String) -> bool:
 	return datos["fichas_vistas"].has(id)
+
+
+## Lo recorrido de una ficha del atlas: {pestanas: {id: true}, mantenimiento: {indice: true}}.
+func _atlas(id: String) -> Dictionary:
+	var todos: Dictionary = datos["atlas"]
+	if not todos.get(id) is Dictionary:
+		todos[id] = {}
+	var a: Dictionary = todos[id]
+	for clave in ["pestanas", "mantenimiento"]:
+		if not a.get(clave) is Dictionary:
+			a[clave] = {}
+	return a
+
+
+func marcar_pestana_atlas(id: String, pestana: String) -> void:
+	var p: Dictionary = _atlas(id)["pestanas"]
+	if p.has(pestana):
+		return
+	p[pestana] = true
+	guardar()
+
+
+func pestanas_atlas(id: String) -> int:
+	return datos["atlas"].get(id, {}).get("pestanas", {}).size()
+
+
+## Una ficha del atlas cuenta como hecha cuando se han visto sus cinco pestañas.
+func atlas_completo(id: String) -> bool:
+	return pestanas_atlas(id) >= 5
+
+
+func tarea_atlas_hecha(id: String, indice: int) -> bool:
+	return datos["atlas"].get(id, {}).get("mantenimiento", {}).get(str(indice), false)
+
+
+func marcar_tarea_atlas(id: String, indice: int, hecha: bool) -> void:
+	_atlas(id)["mantenimiento"][str(indice)] = hecha
+	guardar()
 
 
 func leccion_completada(id: String) -> bool:

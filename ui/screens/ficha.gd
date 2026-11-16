@@ -52,6 +52,9 @@ func construir() -> void:
 		columna.add_child(_crear_selector())
 		columna.add_child(_nota)
 	columna.add_child(_crear_banco())
+	# Si el equipo está en el atlas de la Escuela, un acceso a su ficha visual.
+	if not raiz.contenido.atlas(id).is_empty():
+		columna.add_child(_boton("Ver la ficha visual del atlas", raiz.ir_a.bind("atlas", {"id": id})))
 	columna.add_child(textos)
 	_mostrar_vista(_vista)
 

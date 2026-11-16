@@ -23,6 +23,13 @@ func construir() -> void:
 		var siguiente := Avance.siguiente_leccion(s, raiz.partida)
 		for i in lecciones.size():
 			lista.add_child(_fila_leccion(lecciones[i], i + 1, color, lecciones[i] == siguiente))
+	var atlas: Array = contenido_modo.get("atlas", [])
+	if not atlas.is_empty():
+		var parte := Avance.atlas(s, raiz.partida)
+		lista.add_child(_rotulo("Atlas de componentes · %d de %d vistos" % parte))
+		lista.add_child(_etiqueta("Cada componente en cinco vistas: qué es, cómo funciona, cómo se conecta, cómo se mide, y fallas y mantenimiento.", "Nota"))
+		for id: String in atlas:
+			lista.add_child(_fila_atlas(id, color))
 	var fichas: Array = contenido_modo.get("fichas", [])
 	if not fichas.is_empty():
 		lista.add_child(_rotulo("Fichas de equipos"))
@@ -44,6 +51,14 @@ func _fila_leccion(id: String, numero: int, color: Color, es_siguiente: bool) ->
 	var titulo := "%d. %s" % [numero, l.get("titulo", id)]
 	var opciones := {"color": color, "hecho": hecha, "siguiente": es_siguiente}
 	return _fila(titulo, l.get("resumen", ""), raiz.ir_a.bind("leccion", {"id": id, "sistema": args["id"]}), "leccion", estado, true, opciones)
+
+
+func _fila_atlas(id: String, color: Color) -> FilaMenu:
+	var a := raiz.contenido.atlas(id)
+	var vistas := raiz.partida.pestanas_atlas(id)
+	var hecha := raiz.partida.atlas_completo(id)
+	var estado := "" if vistas == 0 or hecha else "%d de 5" % mini(vistas, 5)
+	return _fila(a.get("titulo", id), a.get("resumen", ""), raiz.ir_a.bind("atlas", {"id": id}), str(a.get("icono", "ficha")), estado, true, {"color": color, "hecho": hecha, "avance": minf(vistas / 5.0, 1.0)})
 
 
 func _fila_ficha(id: String, color: Color) -> FilaMenu:

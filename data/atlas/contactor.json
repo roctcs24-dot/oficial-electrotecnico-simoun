@@ -1,0 +1,758 @@
+{
+ "id": "contactor",
+ "ficha": "contactor",
+ "titulo": "Contactor",
+ "termino": "contactor",
+ "icono": "electricidad",
+ "resumen": "Interruptor de potencia que se manda a distancia con una bobina.",
+ "bornes_dibujo": {
+  "1": [
+   110,
+   80
+  ],
+  "3": [
+   180,
+   80
+  ],
+  "5": [
+   250,
+   80
+  ],
+  "13": [
+   110,
+   165
+  ],
+  "21": [
+   180,
+   165
+  ],
+  "A1": [
+   250,
+   165
+  ],
+  "14": [
+   110,
+   336
+  ],
+  "22": [
+   180,
+   336
+  ],
+  "A2": [
+   250,
+   336
+  ],
+  "2": [
+   110,
+   420
+  ],
+  "4": [
+   180,
+   420
+  ],
+  "6": [
+   250,
+   420
+  ]
+ },
+ "que_es": {
+  "texto": "Un {{contactor}} conecta y desconecta un motor muchas veces y a distancia: una señal pequeña de mando en su {{bobina}} maneja la corriente grande de la potencia. No protege: de eso se encargan el {{guardamotor}} y el {{rele_termico}}.",
+  "partes": [
+   {
+    "texto": "Bornes de potencia: entra la línea por arriba (1/L1, 3/L2, 5/L3) y sale al motor por abajo (2/T1, 4/T2, 6/T3).",
+    "marca": [
+     40,
+     80
+    ]
+   },
+   {
+    "texto": "Bornes de la bobina A1-A2, a la tensión de mando.",
+    "marca": [
+     322,
+     165
+    ]
+   },
+   {
+    "texto": "{{Contacto_auxiliar}} 13-14 ({{na}}) y 21-22 ({{nc}}).",
+    "marca": [
+     40,
+     165
+    ]
+   },
+   {
+    "texto": "Testigo: muestra si está cerrado (I) o abierto (O).",
+    "marca": [
+     232,
+     252
+    ]
+   }
+  ],
+  "placa": "AC-3 · 32 A · 380 V · bobina 110 V 50 Hz",
+  "a_bordo": "Tableros de bombas, de compresores y de ventiladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_contactor",
+  "params": {
+   "v_bobina": 110
+  },
+  "pasos": [
+   "La bobina recibe 110 V y magnetiza el {{nucleo}}.",
+   "El núcleo atrae la {{armadura}} y vence el {{muelle}}.",
+   "Cierran 1-2, 3-4 y 5-6: el motor recibe tensión. 13-14 cierra y 21-22 abre."
+  ],
+  "pasos_sin": [
+   "Sin tensión en A1-A2, el campo del núcleo cae.",
+   "El muelle separa la armadura del núcleo y sube el {{puente_movil}}.",
+   "Abren 1-2, 3-4 y 5-6: el motor se queda sin tensión. 13-14 abre y 21-22 cierra."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_contactor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Potencia",
+     "x": 46,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Mando a 110 V",
+     "x": 262,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 40,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 80,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 120,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 28,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 68,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "5",
+     "x": 108,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 28,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 68,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "6",
+     "x": 108,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 150,
+     "y": 80,
+     "tam": 13
+    },
+    {
+     "texto": "M",
+     "x": 80,
+     "y": 208,
+     "tam": 15
+    },
+    {
+     "texto": "3~",
+     "x": 80,
+     "y": 226,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 198,
+     "y": 24,
+     "tam": 12
+    },
+    {
+     "texto": "S0",
+     "x": 236,
+     "y": 62,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 236,
+     "y": 136,
+     "tam": 12
+    },
+    {
+     "texto": "13",
+     "x": 302,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 302,
+     "y": 158,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 318,
+     "y": 135,
+     "tam": 12
+    },
+    {
+     "texto": "21",
+     "x": 374,
+     "y": 44,
+     "tam": 11
+    },
+    {
+     "texto": "22",
+     "x": 374,
+     "y": 88,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 388,
+     "y": 66,
+     "tam": 11
+    },
+    {
+     "texto": "H2",
+     "x": 386,
+     "y": 135,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 250,
+     "y": 212,
+     "tam": 13
+    },
+    {
+     "texto": "A1",
+     "x": 276,
+     "y": 190,
+     "tam": 12
+    },
+    {
+     "texto": "A2",
+     "x": 276,
+     "y": 236,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 250,
+     "y": 276,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    40,
+    55
+   ],
+   "3": [
+    80,
+    55
+   ],
+   "5": [
+    120,
+    55
+   ],
+   "2": [
+    40,
+    105
+   ],
+   "4": [
+    80,
+    105
+   ],
+   "6": [
+    120,
+    105
+   ],
+   "13": [
+    290,
+    110
+   ],
+   "14": [
+    290,
+    160
+   ],
+   "21": [
+    360,
+    40
+   ],
+   "22": [
+    360,
+    90
+   ],
+   "A1": [
+    250,
+    187
+   ],
+   "A2": [
+    250,
+    237
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase L1 de la red de 380 V desde el guardamotor Q1. Con el contactor abierto aquí hay tensión aunque el motor esté parado.",
+   "3": "Llega la fase L2 de la red de 380 V desde el guardamotor Q1.",
+   "5": "Llega la fase L3 de la red de 380 V desde el guardamotor Q1.",
+   "2": "Sale la fase L1 hacia el relé térmico y el motor. Solo tiene tensión con el contactor cerrado.",
+   "4": "Sale la fase L2 hacia el relé térmico y el motor.",
+   "6": "Sale la fase L3 hacia el relé térmico y el motor.",
+   "A1": "Llega la fase de mando de 110 V a través de S0 y de S1 o de la retención 13-14.",
+   "A2": "Va al neutro (X2) del transformador de mando: cierra el circuito de la bobina.",
+   "13": "Viene de S0, igual que S1: el 13-14 queda en paralelo con el pulsador de marcha.",
+   "14": "Va a A1. Al cerrar K1, el 13-14 mantiene la bobina alimentada aunque se suelte S1: es el {{retencion}}.",
+   "21": "Llega la fase de mando de 110 V, antes de S0.",
+   "22": "Va a la luz H2 de motor parado, que se apaga cuando K1 cierra."
+  },
+  "grupos": [
+   {
+    "nombre": "A1-A2 bobina",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "La bobina va a la tensión de mando, 110 V (valor típico — verificar a bordo): A1 recibe la fase a través de la parada S0 y de la marcha S1 o de la retención 13-14; A2 va al neutro del transformador de mando."
+   },
+   {
+    "nombre": "1-2 · 3-4 · 5-6",
+    "bornes": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "texto": "Polos de potencia: entra la red de 380 V por 1, 3 y 5 desde el guardamotor y sale por 2, 4 y 6 hacia el relé térmico y el motor."
+   },
+   {
+    "nombre": "13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "Auxiliar NA en paralelo con S1: es la retención. Al soltar S1, la bobina sigue alimentada por 13-14 hasta que se pulse S0."
+   },
+   {
+    "nombre": "21-22",
+    "bornes": [
+     "21",
+     "22"
+    ],
+    "texto": "Auxiliar NC: enciende la luz H2 de motor parado y la apaga cuando el contactor cierra."
+   }
+  ],
+  "taller": "arranque_directo"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación; el de su contactor está en la hoja del fabricante.",
+  "taller": "medir_contactor",
+  "grupos": [
+   {
+    "nombre": "Bobina A1-A2",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala Ω · punta roja en A1, negra en A2",
+    "nota": "Con el tablero bloqueado y la ausencia de tensión verificada.",
+    "titulo_tabla": "Qué debe marcar (bobina de 110 V)",
+    "columna": "A1-A2",
+    "medida": {
+     "circuito": "medir_contactor",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "K1.A1",
+     "b": "K1.A2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Nada",
+      "bien": true
+     },
+     {
+      "estado": "Cortada",
+      "cambios": {
+       "estado": {
+        "K1": {
+         "bobina_quemada": true
+        }
+       }
+      },
+      "hacer": "Cambiar la bobina",
+      "bien": false
+     },
+     {
+      "estado": "Espiras en corto",
+      "cambios": {
+       "params": {
+        "K1": {
+         "espiras_en_corto": true
+        }
+       }
+      },
+      "hacer": "Cambiar la bobina y el fusible de mando",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · punta roja en 1/L1, negra en 2/T1",
+    "nota": "Sin tensión. Para medirlo cerrado se empuja la armadura a mano, si el modelo lo permite.",
+    "titulo_tabla": "Qué debe marcar cada contacto",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_contactor",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "K1.1",
+     "b": "K1.2"
+    },
+    "filas": [
+     {
+      "estado": "1-2 en reposo",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "1-2 con la armadura cerrada",
+      "cambios": {
+       "estado": {
+        "K1": {
+         "energizada": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "1-2 en reposo, soldado",
+      "cambios": {
+       "estado": {
+        "K1": {
+         "soldado": true
+        }
+       }
+      },
+      "hacer": "Cambiar el contactor",
+      "bien": false
+     },
+     {
+      "estado": "13-14 en reposo",
+      "cambios": {
+       "a": "K1.13",
+       "b": "K1.14"
+      },
+      "hacer": "Normal: NA abierto",
+      "bien": true
+     },
+     {
+      "estado": "21-22 en reposo",
+      "cambios": {
+       "a": "K1.21",
+       "b": "K1.22"
+      },
+      "hacer": "Normal: NC cerrado",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión de mando",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala V~ · punta roja en A1, negra en A2",
+    "nota": "Con tensión: use el EPP y no toque partes desnudas.",
+    "titulo_tabla": "Qué debe marcar con el mando energizado",
+    "columna": "A1-A2",
+    "medida": {
+     "circuito": "muestra_contactor",
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "K1.A1",
+     "b": "K1.A2",
+     "segundos": 0.2
+    },
+    "filas": [
+     {
+      "estado": "S1 pulsado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: cierra",
+      "bien": true
+     },
+     {
+      "estado": "S1 sin pulsar",
+      "hacer": "Normal: no hay orden",
+      "bien": true
+     },
+     {
+      "estado": "Red de 300 V, S1 pulsado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "B": {
+         "v_linea": 300
+        }
+       }
+      },
+      "hacer": "Menos del 85 %: no cierra o zumba",
+      "bien": false
+     },
+     {
+      "estado": "Bobina cortada, S1 pulsado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "K1": {
+         "bobina_quemada": true
+        }
+       }
+      },
+      "hacer": "Hay orden: cambiar la bobina",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No cierra",
+    "sintoma": "Pulsa marcha y no se oye el «clac»: el motor no arranca.",
+    "mide": [
+     {
+      "donde": "A1-A2 al pulsar",
+      "bien": true,
+      "medida": {
+       "circuito": "muestra_contactor",
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "K1.A1",
+       "b": "K1.A2",
+       "segundos": 0.2,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "K1": {
+         "bobina_quemada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "bobina, sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_contactor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "K1.A1",
+       "b": "K1.A2",
+       "estado": {
+        "K1": {
+         "bobina_quemada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Bobina cortada: llega la orden pero no hay campo que cierre.",
+    "reparacion": "Bloquear, cambiar la bobina por otra de la misma tensión y probar."
+   },
+   {
+    "nombre": "Zumba o vibra",
+    "sintoma": "Al pulsar marcha el contactor zumba fuerte, vibra y se calienta; a veces no llega a cerrar.",
+    "mide": [
+     {
+      "donde": "A1-A2 al pulsar",
+      "bien": false,
+      "medida": {
+       "circuito": "muestra_contactor",
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "K1.A1",
+       "b": "K1.A2",
+       "segundos": 0.2,
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "B": {
+         "v_linea": 300
+        }
+       }
+      }
+     },
+     {
+      "donde": "bobina, sin tensión",
+      "bien": true,
+      "medida": {
+       "circuito": "medir_contactor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "K1.A1",
+       "b": "K1.A2"
+      }
+     }
+    ],
+    "causa": "Tensión de mando baja (menos del 85 % de la nominal). También lo provocan un núcleo sucio u oxidado o la {{espira_sombra}} rota.",
+    "reparacion": "Corregir la alimentación del mando. Si la tensión es correcta: bloquear, limpiar las caras del núcleo con un paño seco y revisar la espira de sombra; si está rota, cambiar el contactor."
+   },
+   {
+    "nombre": "Contactos soldados",
+    "sintoma": "Pulsa parada y el motor sigue en marcha. Es una situación peligrosa.",
+    "mide": [
+     {
+      "donde": "A1-A2 sin orden",
+      "bien": true,
+      "medida": {
+       "circuito": "muestra_contactor",
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "K1.A1",
+       "b": "K1.A2",
+       "segundos": 0.2
+      }
+     },
+     {
+      "donde": "1-2 sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_contactor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "K1.1",
+       "b": "K1.2",
+       "estado": {
+        "K1": {
+         "soldado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un cortocircuito o muchas maniobras con carga soldaron los contactos: la bobina ya no manda.",
+    "reparacion": "Parar el motor abriendo el guardamotor, bloquear y cambiar el contactor. Buscar la causa del cortocircuito antes de volver a arrancar."
+   },
+   {
+    "nombre": "Bobina quemada",
+    "sintoma": "Huele a barniz y la bobina se ve oscurecida; el contactor no cierra y se funde el fusible de mando.",
+    "mide": [
+     {
+      "donde": "bobina, sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_contactor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "K1.A1",
+       "b": "K1.A2",
+       "params": {
+        "K1": {
+         "espiras_en_corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "tensión de la etiqueta",
+      "bien": false,
+      "valor": "24 V"
+     }
+    ],
+    "causa": "Sobretensión en la bobina, o una bobina de menor tensión que la del mando (por ejemplo, de 24 V en un mando de 110 V). Las espiras se queman y quedan en corto.",
+    "reparacion": "Bloquear, cambiar la bobina por una de la tensión del mando, cambiar el fusible de mando y probar."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "zumbido y temperatura, con el equipo en marcha"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y limpieza de polvo y humedad"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "desgaste de los contactos y de la cámara apagachispas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-4-1: contactores y arrancadores de motor.",
+  "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+  "IEC 60092: instalaciones eléctricas en buques.",
+  "NFPA 70E: seguridad eléctrica en el trabajo."
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "nombre": "Relé térmico suelto para medir",
+  "nota": "El relé fuera del tablero, sin cables: se mide sin tensión. Ajuste típico de 15,2 A: verificar a bordo.",
+  "componentes": [
+    { "id": "F2", "tipo": "rele_termico", "params": { "ajuste_a": 15.2 } }
+  ],
+  "cables": []
+}

@@ -17,7 +17,7 @@ func construir() -> void:
 	for m: Dictionary in c.modulos_escuela():
 		paso += 1
 		lista.add_child(_fila_paso(paso, m, str(m.get("icono", "aprender"))))
-	lista.add_child(_etiqueta("Cada módulo tendrá un atlas de componentes con cinco vistas: qué es, cómo funciona, cómo se conecta, cómo se mide, y fallas y mantenimiento.", "Nota"))
+	lista.add_child(_etiqueta("Cada módulo tiene un atlas de componentes con cinco vistas: qué es, cómo funciona, cómo se conecta, cómo se mide, y fallas y mantenimiento. Los módulos «En preparación» se irán publicando.", "Nota"))
 
 
 func _fila_paso(numero: int, s: Dictionary, icono: String) -> FilaMenu:
