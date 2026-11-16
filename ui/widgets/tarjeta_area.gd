@@ -6,6 +6,9 @@ extends FilaMenu
 const ALTO := 132.0
 const LADO_ICONO_GRANDE := 32.0
 
+## Módulo todavía sin contenido: se ve con el color atenuado.
+var apagada := false
+
 
 func iniciar_area(titulo: String, detalle: String, icono: String, color_area: Color, avance := -1.0) -> void:
 	activa = true
@@ -27,11 +30,11 @@ func iniciar_area(titulo: String, detalle: String, icono: String, color_area: Co
 	hueco.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	columna.add_child(hueco)
 	var nombre := _texto(titulo, "Fuerte", Color.WHITE)
-	nombre.add_theme_font_size_override("font_size", 17)
+	nombre.add_theme_font_size_override("font_size", Tema.tam(17))
 	columna.add_child(nombre)
 	if not detalle.is_empty():
 		var d := _texto(detalle, "Nota", Color(1, 1, 1, 0.88))
-		d.add_theme_font_size_override("font_size", 14)
+		d.add_theme_font_size_override("font_size", Tema.tam(14))
 		columna.add_child(d)
 	if avance >= 0.0:
 		var b := ProgressBar.new()
@@ -48,7 +51,7 @@ func iniciar_area(titulo: String, detalle: String, icono: String, color_area: Co
 
 
 func _actualizar_estilo() -> void:
-	var fondo := color.darkened(0.08)
+	var fondo := color.darkened(0.55 if apagada else 0.08)
 	if _presionada:
 		fondo = color.darkened(0.25)
 	elif _encima and not OS.has_feature("mobile"):

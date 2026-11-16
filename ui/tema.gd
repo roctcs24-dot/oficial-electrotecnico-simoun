@@ -32,6 +32,14 @@ const PESO_FUERTE := 600
 const PESO_NEGRITA := 700
 
 static var _fuentes := {}
+## Tamaño del texto elegido en Mi progreso: 1 normal, 1,15 grande, 1,3 muy grande.
+static var escala_texto := 1.0
+const TAMANOS_TEXTO := [["Normal", 1.0], ["Grande", 1.15], ["Muy grande", 1.3]]
+
+
+## Un tamaño de letra con la escala elegida.
+static func tam(puntos: float) -> int:
+	return roundi(puntos * escala_texto)
 
 
 ## La fuente es variable: un solo archivo da todos los pesos. Si le falta un carácter,
@@ -86,19 +94,19 @@ static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, b
 static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	var t := Theme.new()
 	t.default_font = fuente(PESO_NORMAL)
-	t.default_font_size = 18
+	t.default_font_size = tam(18)
 
 	t.set_color("font_color", "Label", TEXTO)
 	t.set_type_variation("Titulo", "Label")
-	t.set_font_size("font_size", "Titulo", 24)
+	t.set_font_size("font_size", "Titulo", tam(24))
 	t.set_font("font", "Titulo", fuente(PESO_FUERTE))
 	t.set_type_variation("Subtitulo", "Label")
-	t.set_font_size("font_size", "Subtitulo", 19)
+	t.set_font_size("font_size", "Subtitulo", tam(19))
 	t.set_font("font", "Subtitulo", fuente(PESO_FUERTE))
 	t.set_type_variation("Fuerte", "Label")
 	t.set_font("font", "Fuerte", fuente(PESO_MEDIO))
 	t.set_type_variation("Nota", "Label")
-	t.set_font_size("font_size", "Nota", 16)
+	t.set_font_size("font_size", "Nota", tam(16))
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
 	t.set_font("font", "Button", fuente(PESO_MEDIO))
 	t.set_font("normal_font", "RichTextLabel", fuente(PESO_NORMAL))
@@ -121,7 +129,7 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_color("font_disabled_color", "Button", TEXTO_SUAVE.darkened(0.2))
 
 	t.set_type_variation("Rotulo", "Label")
-	t.set_font_size("font_size", "Rotulo", 13)
+	t.set_font_size("font_size", "Rotulo", tam(13))
 	t.set_font("font", "Rotulo", fuente(PESO_FUERTE))
 	t.set_color("font_color", "Rotulo", ACENTO)
 
@@ -163,5 +171,5 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 
 	t.set_color("default_color", "RichTextLabel", TEXTO)
 	for clave in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]:
-		t.set_font_size(clave, "RichTextLabel", 18)
+		t.set_font_size(clave, "RichTextLabel", tam(18))
 	return t

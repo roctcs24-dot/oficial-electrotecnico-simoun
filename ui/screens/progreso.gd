@@ -22,7 +22,25 @@ func construir() -> void:
 	_seccion_rango(columna)
 	_seccion_avance(columna)
 	_seccion_errores(columna)
+	_seccion_ajustes(columna)
 	_seccion_partida(columna)
+
+
+## Tamaño del texto y la bienvenida de la primera vez.
+func _seccion_ajustes(columna: VBoxContainer) -> void:
+	columna.add_child(_rotulo("Tamaño del texto"))
+	var fila := HBoxContainer.new()
+	fila.add_theme_constant_override("separation", 8)
+	columna.add_child(fila)
+	var grupo := ButtonGroup.new()
+	for t: Array in Tema.TAMANOS_TEXTO:
+		var b := _boton(t[0], raiz.aplicar_tamano_texto.bind(t[1]))
+		b.toggle_mode = true
+		b.button_group = grupo
+		b.set_pressed_no_signal(is_equal_approx(Tema.escala_texto, t[1]))
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		fila.add_child(b)
+	columna.add_child(_boton("Ver la bienvenida otra vez", raiz.ir_a.bind("bienvenida")))
 
 
 func _seccion_rango(columna: VBoxContainer) -> void:
@@ -46,7 +64,7 @@ func _seccion_avance(columna: VBoxContainer) -> void:
 	var misiones := 0
 	var completadas := 0
 	var estrellas := 0
-	for s: Dictionary in c.sistemas():
+	for s: Dictionary in c.todos():
 		var modos: Dictionary = s.get("modos", {})
 		for id: String in modos.get("aprender", {}).get("lecciones", []):
 			lecciones += 1

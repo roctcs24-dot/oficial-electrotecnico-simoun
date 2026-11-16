@@ -89,7 +89,7 @@ func _chip(estado: String) -> Control:
 	caja.add_theme_stylebox_override("panel", Tema.caja(fondo, 13, 10, 3))
 	var e := _texto(estado, "Nota", Tema.ACENTO if siguiente else (Tema.TEXTO_SUAVE if activa else Tema.APAGADO))
 	e.autowrap_mode = TextServer.AUTOWRAP_OFF
-	e.add_theme_font_size_override("font_size", 14)
+	e.add_theme_font_size_override("font_size", Tema.tam(14))
 	caja.add_child(e)
 	return caja
 

@@ -6,7 +6,7 @@ extends RefCounted
 
 ## {sistema, leccion, numero, total} de la siguiente lección, o {} si están todas hechas.
 static func siguiente(contenido: Contenido, partida: Partida) -> Dictionary:
-	for s: Dictionary in contenido.sistemas():
+	for s: Dictionary in contenido.todos():
 		if s.get("estado", "") != "activo":
 			continue
 		var lecciones: Array = s.get("modos", {}).get("aprender", {}).get("lecciones", [])

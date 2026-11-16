@@ -15,7 +15,7 @@ const PUNTOS_EXAMEN := 100
 ## último intervalo queda resuelto, aunque sus fallos siguen en las estadísticas.
 const INTERVALOS_REPASO_DIAS := [1, 3, 7, 14, 30]
 const SEGUNDOS_POR_DIA := 86400.0
-const APARTADOS := ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos", "examenes"]
+const APARTADOS := ["fichas_vistas", "lecciones", "misiones", "errores", "equipos_danados", "minijuegos", "examenes", "ajustes"]
 
 var ruta := RUTA
 var datos := datos_nuevos()
@@ -35,6 +35,7 @@ static func datos_nuevos() -> Dictionary:
 		"equipos_danados": {},
 		"minijuegos": {},
 		"examenes": {},
+		"ajustes": {"bienvenida_vista": false, "tamano_texto": 1.0},
 	}
 
 

@@ -45,13 +45,14 @@ func construir() -> void:
 		izquierda.add_child(_crear_continuar(siguiente))
 	var pendientes := raiz.partida.temas_pendientes().size()
 	if pendientes > 0:
-		izquierda.add_child(_fila("Repaso de hoy", "%d temas que conviene repasar" % pendientes, raiz.ir_a_seccion.bind("repaso"), "repaso", str(pendientes), true, {"color": Tema.ACENTO_FUERTE}))
+		izquierda.add_child(_fila("Repaso de hoy", "%d temas que conviene repasar" % pendientes, raiz.ir_a.bind("repaso"), "repaso", str(pendientes), true, {"color": Tema.ACENTO_FUERTE}))
+	derecha.add_child(_rotulo("Escuela técnica"))
+	var escuela := _rejilla()
+	derecha.add_child(escuela)
+	for m: Dictionary in c.modulos_escuela():
+		escuela.add_child(_tarjeta_modulo(m))
 	derecha.add_child(_rotulo("Sistemas del buque"))
-	var rejilla := GridContainer.new()
-	rejilla.columns = 2
-	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rejilla.add_theme_constant_override("h_separation", 10)
-	rejilla.add_theme_constant_override("v_separation", 10)
+	var rejilla := _rejilla()
 	derecha.add_child(rejilla)
 	for s: Dictionary in c.sistemas():
 		if s.get("estado", "") == "activo":
@@ -132,6 +133,31 @@ func _crear_continuar(siguiente: Dictionary) -> Control:
 func _abrir_leccion(siguiente: Dictionary) -> void:
 	raiz.ir_a("sistema", {"id": siguiente["sistema"]})
 	raiz.ir_a("leccion", {"id": siguiente["leccion"], "sistema": siguiente["sistema"]})
+
+
+func _rejilla() -> GridContainer:
+	var rejilla := GridContainer.new()
+	rejilla.columns = 2
+	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rejilla.add_theme_constant_override("h_separation", 10)
+	rejilla.add_theme_constant_override("v_separation", 10)
+	return rejilla
+
+
+## Un módulo sin contenido todavía se ve apagado y lleva a la Escuela, que explica lo que viene.
+func _tarjeta_modulo(m: Dictionary) -> TarjetaArea:
+	var t := TarjetaArea.new()
+	var activo: bool = m.get("estado", "") == "activo"
+	var avance := Avance.fraccion(Avance.sistema(m, raiz.partida)) if activo else -1.0
+	t.iniciar_area(m.get("nombre", ""), m.get("resumen", "") if activo else "En preparación", str(m.get("icono", "aprender")), Tema.color_area(m), avance)
+	t.apagada = not activo
+	t._actualizar_estilo()
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	if activo:
+		t.pulsada.connect(raiz.ir_a.bind("sistema", {"id": int(m["id"])}))
+	else:
+		t.pulsada.connect(raiz.ir_a_seccion.bind("escuela"))
+	return t
 
 
 func _tarjeta_sistema(s: Dictionary) -> TarjetaArea:

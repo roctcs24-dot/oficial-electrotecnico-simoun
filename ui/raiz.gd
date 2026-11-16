@@ -25,9 +25,10 @@ var _zona: MarginContainer
 
 
 func _ready() -> void:
-	theme = Tema.crear()
 	partida = Partida.new(ruta_partida)
 	partida.cargar()
+	Tema.escala_texto = float(partida.datos["ajustes"].get("tamano_texto", 1.0))
+	theme = Tema.crear()
 	var fondo := ColorRect.new()
 	fondo.color = Tema.FONDO
 	fondo.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -40,6 +41,9 @@ func _ready() -> void:
 	vertical = _calcular_vertical()
 	resized.connect(_al_cambiar_tamano)
 	ir_a("inicio")
+	# La bienvenida sale la primera vez en la partida real; las partidas de prueba no la ven.
+	if ruta_partida == Partida.RUTA and not partida.datos["ajustes"].get("bienvenida_vista", false):
+		ir_a("bienvenida")
 
 
 func ir_a(nombre: String, argumentos := {}) -> void:
@@ -51,6 +55,15 @@ func volver() -> void:
 	if _pila.size() > 1:
 		_pila.pop_back()
 		reconstruir()
+
+
+## Cambia el tamaño del texto de todo el juego y lo guarda en la partida.
+func aplicar_tamano_texto(escala: float) -> void:
+	partida.datos["ajustes"]["tamano_texto"] = escala
+	partida.guardar()
+	Tema.escala_texto = escala
+	theme = Tema.crear()
+	reconstruir()
 
 
 ## Una sección de la barra de navegación empieza una pila nueva.

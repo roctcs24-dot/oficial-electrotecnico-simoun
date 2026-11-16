@@ -181,3 +181,86 @@ func test_zona_del_plano_alcanzable_con_el_dedo() -> String:
 			fallos.append(int(s["id"]))
 	plano.free()
 	return "" if fallos.is_empty() else "zonas sin margen táctil: %s" % str(fallos)
+
+
+func test_escuela_y_panol_en_la_barra() -> String:
+	var raiz := _raiz()
+	var nombres := []
+	for s: Array in BarraNavegacion.SECCIONES:
+		nombres.append(s[0])
+	raiz.ir_a_seccion("escuela")
+	var filas_escuela: Array[FilaMenu] = []
+	_filas(raiz.pantalla_actual(), filas_escuela)
+	raiz.ir_a_seccion("panol")
+	var filas_panol: Array[FilaMenu] = []
+	_filas(raiz.pantalla_actual(), filas_panol)
+	filas_panol[0].pulsada.emit()
+	var fichas := raiz.nombre_actual() == "fichas_equipos"
+	var filas_fichas: Array[FilaMenu] = []
+	_filas(raiz.pantalla_actual(), filas_fichas)
+	var modulos := raiz.contenido.modulos_escuela().size()
+	raiz.free()
+	return A.primero([
+		A.cierto(nombres == ["inicio", "escuela", "plano_barco", "panol", "progreso"], "secciones: %s" % str(nombres)),
+		A.cierto(filas_escuela.size() == modulos + 1, "la Escuela lista los fundamentos y %d módulos: %d filas" % [modulos, filas_escuela.size()]),
+		A.cierto(fichas and filas_fichas.size() >= 30, "el Pañol abre las fichas de equipos: %d" % filas_fichas.size()),
+	])
+
+
+func test_modulos_de_la_escuela_con_id_color_e_icono() -> String:
+	var c := Contenido.new()
+	var ids := []
+	for m: Dictionary in c.modulos_escuela():
+		ids.append(int(m["id"]))
+		if not ResourceLoader.exists("res://art/iconos/%s.svg" % m.get("icono", "")) and not FileAccess.file_exists("res://art/iconos/%s.svg" % m.get("icono", "")):
+			return "el módulo %d no tiene icono" % int(m["id"])
+		if c.sistema(int(m["id"])).is_empty():
+			return "contenido.sistema() no encuentra el módulo %d" % int(m["id"])
+	return A.cierto(ids == [7, 8, 9, 10, 11], "módulos 7 a 11: %s" % str(ids))
+
+
+func test_partida_antigua_recibe_ajustes_y_la_prueba_no_ve_la_bienvenida() -> String:
+	var p := Partida.new("user://pruebas_ajustes.json")
+	var antigua := Partida.datos_nuevos()
+	antigua.erase("ajustes")
+	var motivo := p.desde_texto(JSON.stringify(antigua))
+	var raiz := _raiz()
+	var en_inicio := raiz.nombre_actual() == "inicio"
+	raiz.free()
+	return A.primero([
+		A.cierto(motivo.is_empty(), "una partida sin ajustes se carga: %s" % motivo),
+		A.cierto(p.datos["ajustes"]["bienvenida_vista"] == false and is_equal_approx(p.datos["ajustes"]["tamano_texto"], 1.0), "recibe los ajustes por defecto"),
+		A.cierto(en_inicio, "en las pruebas el juego abre en el inicio, sin bienvenida"),
+	])
+
+
+func test_bienvenida_se_recorre_y_queda_vista() -> String:
+	var raiz := _raiz()
+	raiz.ir_a("bienvenida")
+	var p = raiz.pantalla_actual()
+	p._ir(1)
+	p = raiz.pantalla_actual()
+	p._ir(2)
+	raiz.pantalla_actual().terminar()
+	var vista: bool = raiz.partida.datos["ajustes"]["bienvenida_vista"]
+	var vuelve := raiz.nombre_actual() == "inicio"
+	raiz.free()
+	return A.primero([
+		A.cierto(vista, "al terminar queda marcada como vista"),
+		A.cierto(vuelve, "y vuelve al inicio"),
+	])
+
+
+func test_tamano_de_texto_cambia_el_tema_y_se_guarda() -> String:
+	var raiz := _raiz()
+	var normal := raiz.theme.default_font_size
+	raiz.aplicar_tamano_texto(1.3)
+	var grande := raiz.theme.default_font_size
+	var guardado: float = raiz.partida.datos["ajustes"]["tamano_texto"]
+	raiz.aplicar_tamano_texto(1.0)
+	raiz.free()
+	return A.primero([
+		A.cierto(grande > normal, "la letra crece: %d → %d" % [normal, grande]),
+		A.cierto(is_equal_approx(guardado, 1.3), "el tamaño queda en la partida"),
+		A.cierto(is_equal_approx(Tema.escala_texto, 1.0), "se puede volver al normal"),
+	])

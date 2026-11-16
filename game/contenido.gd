@@ -36,12 +36,23 @@ func plano() -> Dictionary:
 	return leer("sistemas.json").get("plano", {})
 
 
+## Los sistemas del buque, del 0 al 6, con su zona en el plano.
 func sistemas() -> Array:
 	return leer("sistemas.json").get("sistemas", [])
 
 
+## Los módulos de la Escuela técnica, del 7 en adelante: sin zona en el plano.
+func modulos_escuela() -> Array:
+	return leer("sistemas.json").get("escuela", [])
+
+
+## Sistemas del buque y módulos de la Escuela, para lo que recorre todo el contenido.
+func todos() -> Array:
+	return sistemas() + modulos_escuela()
+
+
 func sistema(id: int) -> Dictionary:
-	for s: Dictionary in sistemas():
+	for s: Dictionary in todos():
 		if int(s["id"]) == id:
 			return s
 	return {}

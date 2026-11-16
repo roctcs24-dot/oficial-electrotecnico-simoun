@@ -1,14 +1,14 @@
 class_name BarraNavegacion
 extends PanelContainer
-## Barra fija de las pantallas principales: Inicio, Buque, Repaso, Progreso y Glosario. Solo
+## Barra fija de las pantallas principales: Inicio, Escuela, Buque, Pañol y Progreso. Solo
 ## aparece en el primer nivel, para no quitar sitio al Taller ni a las misiones.
 
 const SECCIONES := [
 	["inicio", "Inicio", "inicio"],
+	["escuela", "Escuela", "escuela"],
 	["plano_barco", "Buque", "buque"],
-	["repaso", "Repaso", "repaso"],
+	["panol", "Pañol", "herramientas"],
 	["progreso", "Progreso", "progreso"],
-	["glosario", "Glosario", "glosario"],
 ]
 const ALTO := 62.0
 const LADO_ICONO := 24.0
@@ -40,7 +40,7 @@ func _boton(seccion: String, texto: String, icono: String, activo: bool) -> Butt
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.custom_minimum_size.y = ALTO
 	b.mouse_filter = Control.MOUSE_FILTER_PASS
-	b.add_theme_font_size_override("font_size", 13)
+	b.add_theme_font_size_override("font_size", Tema.tam(13))
 	b.add_theme_constant_override("icon_max_width", int(LADO_ICONO))
 	var color := Tema.ACENTO if activo else Tema.APAGADO
 	for clave in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:

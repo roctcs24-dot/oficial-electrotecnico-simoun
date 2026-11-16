@@ -112,5 +112,12 @@
         "examen": { "examenes": ["v4"], "minijuegos": ["simbolos_electronica"] }
       }
     }
+  ],
+  "escuela": [
+    { "id": 7, "color": "#f2b705", "icono": "electricidad", "nombre": "Electricidad industrial", "resumen": "Componentes de protección, mando, potencia y medida: cómo funcionan, se conectan, se miden y fallan; y la electricidad desde cero.", "estado": "en_preparacion", "etapa": 34, "modos": {} },
+    { "id": 8, "color": "#8e5bd6", "icono": "electronica", "nombre": "Electrónica", "resumen": "Resistencia, condensador, diodo, transistor, fuentes, señales de proceso y lógica, desde cero.", "estado": "en_preparacion", "etapa": 38, "modos": {} },
+    { "id": 9, "color": "#1f7fd1", "icono": "hidraulica", "nombre": "Hidráulica y neumática", "resumen": "Presión, bombas, cilindros, válvulas, aire comprimido y electroneumática.", "estado": "en_preparacion", "etapa": 45, "modos": {} },
+    { "id": 10, "color": "#2e9e6a", "icono": "valvulas", "nombre": "Válvulas y líneas", "resumen": "¿Abierta o cerrada?, colores de tubería y cómo seguir una línea a bordo.", "estado": "en_preparacion", "etapa": 41, "modos": {} },
+    { "id": 11, "color": "#d9534f", "icono": "herramientas", "nombre": "Herramientas y racores", "resumen": "Llaves en milímetros y pulgadas, roscas, bridas, mangueras y racores.", "estado": "en_preparacion", "etapa": 42, "modos": {} }
   ]
 }

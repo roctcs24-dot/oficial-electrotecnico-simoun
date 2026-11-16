@@ -10,7 +10,7 @@ var _indice := {}
 
 func _init(contenido_juego: Contenido) -> void:
 	contenido = contenido_juego
-	for s: Dictionary in contenido.sistemas():
+	for s: Dictionary in contenido.todos():
 		var modos: Dictionary = s.get("modos", {})
 		for id: String in modos.get("aprender", {}).get("lecciones", []):
 			_agregar_leccion(contenido.leccion(id))
