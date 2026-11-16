@@ -1,0 +1,377 @@
+{
+  "id": "maquina_principal",
+  "titulo": "Main Engine Control Panel",
+  "ubicacion": "Sala de control de máquinas, junto a la consola de propulsión Marinsa",
+  "foto": "Vídeo del buque del 2026-11-12: frente del panel y pantalla del MEC2+",
+  "circuito": "panel_maquina_principal",
+  "alimentacion": "Q0",
+  "nota": "El frente reproduce el del vídeo. La pantalla del MEC2+ está en el panel contiguo y aquí se resume. El interior, los umbrales y los retardos son típicos: verificar a bordo con el esquema del panel y el manual del MEC2+.",
+  "frente": {
+    "tamano": [
+      1000,
+      1150
+    ],
+    "acabado": "gris",
+    "elementos": [
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 60,
+        "texto": "MAIN ENGINE CONTROL PANEL",
+        "tam": 28
+      },
+      {
+        "tipo": "pantalla_mec",
+        "x": 500,
+        "y": 250,
+        "componente": "MP",
+        "alimentacion": "SPW",
+        "ancho": 760,
+        "alto": 250
+      },
+      {
+        "tipo": "rotulo",
+        "x": 500,
+        "y": 470,
+        "texto": "PANTALLA DEL MEC2+ (EN EL PANEL CONTIGUO)",
+        "tam": 14
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 580,
+        "texto": "COP / OVERSPEED",
+        "tam": 17
+      },
+      {
+        "tipo": "luz",
+        "x": 300,
+        "y": 650,
+        "color": "rojo",
+        "componente": "H3"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 580,
+        "texto": "LOAD LIMIT",
+        "tam": 17
+      },
+      {
+        "tipo": "luz",
+        "x": 470,
+        "y": 650,
+        "color": "ambar",
+        "componente": "H4"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 580,
+        "texto": "LOW OIL PRESSURE",
+        "tam": 17
+      },
+      {
+        "tipo": "luz",
+        "x": 640,
+        "y": 650,
+        "color": "rojo",
+        "componente": "H5"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 760,
+        "texto": "SYSTEM OK",
+        "tam": 17
+      },
+      {
+        "tipo": "luz",
+        "x": 300,
+        "y": 830,
+        "color": "verde",
+        "componente": "H1"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 760,
+        "texto": "ENGINE RUNNING",
+        "tam": 17
+      },
+      {
+        "tipo": "luz",
+        "x": 470,
+        "y": 830,
+        "color": "verde",
+        "componente": "H2"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 760,
+        "texto": "RESET ALARM",
+        "tam": 17
+      },
+      {
+        "tipo": "pulsador",
+        "x": 640,
+        "y": 830,
+        "color": "negro",
+        "componente": "RA"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 760,
+        "texto": "EMERGENCY STOP",
+        "tam": 17,
+        "fondo": "#c8231a",
+        "tinta": "#ffffff"
+      },
+      {
+        "tipo": "seta",
+        "x": 810,
+        "y": 845,
+        "componente": "S0"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 300,
+        "y": 950,
+        "texto": "SYSTEM POWER\nOFF - ON",
+        "tam": 17
+      },
+      {
+        "tipo": "selector",
+        "x": 300,
+        "y": 1040,
+        "componente": "SPW"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 470,
+        "y": 950,
+        "texto": "STOP - RUN - START",
+        "tam": 17
+      },
+      {
+        "tipo": "selector",
+        "x": 470,
+        "y": 1040,
+        "componente": "SRS"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 640,
+        "y": 950,
+        "texto": "LOCAL - REMOTE",
+        "tam": 17
+      },
+      {
+        "tipo": "selector",
+        "x": 640,
+        "y": 1040,
+        "componente": "SL"
+      },
+      {
+        "tipo": "rotulo",
+        "x": 810,
+        "y": 950,
+        "texto": "SPEED\nDECR - INCR",
+        "tam": 17
+      },
+      {
+        "tipo": "selector",
+        "x": 810,
+        "y": 1040,
+        "componente": "SPD"
+      },
+      {
+        "tipo": "cerradura",
+        "x": 960,
+        "y": 700
+      }
+    ]
+  },
+  "interior": {
+    "F": [
+      0,
+      0
+    ],
+    "Q0": [
+      380,
+      0
+    ],
+    "PLC": [
+      780,
+      0
+    ],
+    "PT1": [
+      1500,
+      0
+    ],
+    "SPW": [
+      0,
+      520
+    ],
+    "S0": [
+      240,
+      520
+    ],
+    "SRS": [
+      480,
+      520
+    ],
+    "SL": [
+      720,
+      520
+    ],
+    "SPD": [
+      960,
+      520
+    ],
+    "RA": [
+      1200,
+      520
+    ],
+    "VIR": [
+      1440,
+      520
+    ],
+    "H1": [
+      0,
+      860
+    ],
+    "H2": [
+      240,
+      860
+    ],
+    "H3": [
+      480,
+      860
+    ],
+    "H4": [
+      720,
+      860
+    ],
+    "H5": [
+      960,
+      860
+    ],
+    "MP": [
+      0,
+      1180
+    ]
+  },
+  "lecturas": [
+    {
+      "componente": "MP",
+      "clave": "rpm",
+      "texto": "Velocidad",
+      "unidad": "rpm",
+      "decimales": 0
+    },
+    {
+      "componente": "MP",
+      "clave": "consigna",
+      "texto": "Consigna de velocidad",
+      "unidad": "rpm",
+      "decimales": 0
+    },
+    {
+      "componente": "MP",
+      "clave": "p_aceite",
+      "texto": "Aceite a la entrada del motor",
+      "unidad": "bar"
+    },
+    {
+      "componente": "MP",
+      "clave": "p_aire",
+      "texto": "Aire en las botellas",
+      "unidad": "bar"
+    },
+    {
+      "componente": "MP",
+      "clave": "t_ht",
+      "texto": "Agua de salida",
+      "unidad": "°C",
+      "decimales": 0
+    }
+  ],
+  "senales": [
+    {
+      "componente": "VIR",
+      "texto": "Virador del volante",
+      "si": "desacoplado",
+      "no": "acoplado",
+      "boton_dar": "Desacoplar el virador",
+      "boton_quitar": "Acoplar el virador"
+    }
+  ],
+  "averias": [
+    {
+      "id": "presostato_aire",
+      "texto": "Presostato de aire de arranque con los contactos pegados abiertos",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "presostato_aire"
+    },
+    {
+      "id": "no_enciende",
+      "texto": "El motor gira con el aire pero no enciende (combustible)",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "no_enciende"
+    },
+    {
+      "id": "cop",
+      "texto": "Presostato de sobrepresión del cárter (COP) que abre en marcha",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "cop"
+    },
+    {
+      "id": "niebla",
+      "texto": "Detector de niebla de aceite en alarma a los 20 s de marcha",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "niebla"
+    },
+    {
+      "id": "baja_presion_aceite",
+      "texto": "Baja presión de aceite en marcha",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "baja_presion_aceite"
+    },
+    {
+      "id": "agua_ht",
+      "texto": "Falta de refrigeración: el agua de salida sube",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "agua_ht"
+    },
+    {
+      "id": "sobrevelocidad",
+      "texto": "Regulador de velocidad averiado: el motor se embala",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "sobrevelocidad"
+    },
+    {
+      "id": "termostato_ht_abierto",
+      "texto": "Termostato de alta temperatura abierto con el agua fría",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "termostato_ht_abierto"
+    },
+    {
+      "id": "prelub_sin_bomba",
+      "texto": "La bomba de prelubricación no da presión",
+      "componente": "MP",
+      "param": "averia",
+      "valor": "prelub_sin_bomba"
+    }
+  ]
+}

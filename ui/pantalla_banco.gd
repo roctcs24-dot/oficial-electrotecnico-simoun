@@ -367,6 +367,43 @@ func _rearmar_arrancador(id: String) -> void:
 	_reconstruir_panel()
 
 
+## LEDs de las entradas y salidas con nombre de un autómata, como en su frente.
+func _agregar_io_plc(c: SimComponente) -> void:
+	var plc := c as SimPLC
+	var etiquetas: Dictionary = plc.params["etiquetas"]
+	_panel.add_child(_etiqueta("%s · %s" % ["Alimentado" if plc.estado["alimentado"] else "Sin alimentación", plc.estado["modo"]], "Nota"))
+	for i in SimPLC.ENTRADAS:
+		var d := "%" + SimPLC.entrada(i)
+		if etiquetas.has(d):
+			_panel.add_child(_etiqueta("%s  %s · LED %s" % [d, etiquetas[d], "encendido" if plc.entrada_activa(i) else "apagado"]))
+	for i in SimPLC.SALIDAS:
+		var d := "%" + SimPLC.salida(i)
+		if etiquetas.has(d):
+			_panel.add_child(_etiqueta("%s  %s · LED %s" % [d, etiquetas[d], "encendido" if plc.salida_activa(i) else "apagado"]))
+	_panel.add_child(_etiqueta("Una entrada apagada con su contacto cerrado indica un cable o un borne; una encendida con el contacto abierto, un corto.", "Nota"))
+
+
+## Lecturas y contactos de la máquina principal, y el rearme de sus disparos retenidos.
+func _agregar_maquina(c: SimComponente, con_rearme := true) -> void:
+	var mp := c as SimMaquinaPrincipal
+	_panel.add_child(_etiqueta("%s rpm · aceite %s bar · aire %s bar · agua HT %s °C" % [
+		TextoTecnico.numero(mp.rpm(), 0), TextoTecnico.numero(mp.presion("aceite"), 1),
+		TextoTecnico.numero(mp.presion("aire"), 1), TextoTecnico.numero(mp.temperatura("ht"), 0)], "Nota"))
+	for linea: String in mp.pantalla():
+		_panel.add_child(_etiqueta(linea, "Nota"))
+	var nombres := {"PL": "presostato de aceite", "VG": "virador desacoplado", "PA": "presostato de aire", "SV": "relé de velocidad", "SB": "sobrevelocidad (NC)", "CP": "sobrepresión del cárter, COP (NC)", "NA": "niebla de aceite CMR (NC)", "TA": "alta temperatura del agua (NC)", "LL": "limitación de carga"}
+	for par: String in nombres:
+		_panel.add_child(_etiqueta("%s1-%s2, %s: %s" % [par, par, nombres[par], "cerrado" if mp.contacto_cerrado(par) else "abierto"]))
+	if con_rearme and mp.disparo_retenido():
+		_panel.add_child(_boton("Rearmar en el motor el disparo retenido", _rearmar_maquina.bind(c.id)))
+
+
+func _rearmar_maquina(id: String) -> void:
+	if not (mesa.sim.componente(id) as SimMaquinaPrincipal).rearmar():
+		_mostrar_aviso("Motor en movimiento", "Los disparos de sobrevelocidad, de sobrepresión del cárter y de niebla de aceite se rearman con el motor parado, después de buscar la causa.")
+	_reconstruir_panel()
+
+
 ## Acercar o retirar la pieza metálica delante de un sensor de proximidad.
 func _agregar_objeto_sensor(c: SimComponente) -> void:
 	var delante: bool = c.estado["objeto"]

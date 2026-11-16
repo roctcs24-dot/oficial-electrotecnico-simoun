@@ -230,6 +230,14 @@
     "mando_proporcional": { "es": "mando proporcional", "en": "proportional control", "def": "Mando en el que la palanca regula la velocidad del movimiento, no solo su sentido." },
     "reflector": { "es": "reflector", "en": "floodlight, searchlight", "def": "Proyector de gran potencia que alumbra la cubierta o el agua durante la maniobra." },
     "halogenuros_metalicos": { "es": "lámpara de halogenuros metálicos", "en": "metal halide lamp", "def": "Lámpara de descarga de luz blanca; necesita balasto e ignitor y tarda minutos en encender del todo." },
-    "grado_proteccion": { "es": "grado de protección IP", "en": "ingress protection, IP code", "def": "Dos cifras que indican la protección contra sólidos y contra el agua, como IP56 o IP67 en cubierta." }
+    "grado_proteccion": { "es": "grado de protección IP", "en": "ingress protection, IP code", "def": "Dos cifras que indican la protección contra sólidos y contra el agua, como IP56 o IP67 en cubierta." },
+    "maquina_principal": { "es": "máquina principal", "en": "main engine", "def": "Motor diésel que mueve la hélice a través de la reductora." },
+    "permisivo": { "es": "permisivo de arranque", "en": "start permissive, start interlock", "def": "Condición que debe cumplirse para que el mando deje arrancar, como la presión de aceite o el virador desacoplado." },
+    "virador": { "es": "virador", "en": "turning gear", "def": "Motor reductor que gira despacio el cigüeñal para inspección; acoplado, impide arrancar." },
+    "aire_arranque": { "es": "aire de arranque", "en": "starting air", "def": "Aire comprimido de las botellas, a unos 30 bar, que hace girar el motor hasta que enciende." },
+    "prelubricacion": { "es": "prelubricación", "en": "prelubrication, pre-lube", "def": "Aceite a presión enviado a los cojinetes con el motor parado, antes de arrancarlo." },
+    "rele_velocidad": { "es": "relé de velocidad", "en": "speed switch, speed relay", "def": "Contacto que cambia a una velocidad del motor; indica que encendió y corta el aire de arranque." },
+    "parada_seguridad": { "es": "parada de seguridad", "en": "safety shutdown", "def": "Parada automática del motor por una condición peligrosa; queda retenida hasta reponerla." },
+    "niebla_aceite": { "es": "detector de niebla de aceite", "en": "oil mist detector", "def": "Mide la niebla de aceite del cárter, que anuncia un punto caliente y el riesgo de explosión." }
   }
 }

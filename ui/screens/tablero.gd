@@ -11,7 +11,7 @@ func construir() -> void:
 	tablero = raiz.contenido.tablero(args["tablero"])
 	if not args.has("mesa"):
 		var nueva := MesaTaller.new(raiz.contenido)
-		nueva.cargar_circuito(raiz.contenido.leer("circuitos/%s.json" % tablero["circuito"]), tablero["interior"])
+		nueva.cargar_circuito(raiz.contenido.circuito_datos(tablero["circuito"]), tablero["interior"])
 		_iniciar_banco(nueva, "mando")
 		args["puerta"] = false
 	_cabecera(tablero["titulo"], tablero.get("ubicacion", ""))
@@ -39,9 +39,10 @@ var _lecturas := {}
 func _actualizar_lectura() -> void:
 	super()
 	for l: Dictionary in tablero.get("lecturas", []):
-		var etiqueta: Label = _lecturas.get(l["componente"] + l["clave"])
+		# Sin tipo: al cambiar de pestaña la etiqueta guardada ya puede estar liberada.
+		var etiqueta: Variant = _lecturas.get(l["componente"] + l["clave"])
 		if is_instance_valid(etiqueta):
-			etiqueta.text = _texto_lectura(l)
+			(etiqueta as Label).text = _texto_lectura(l)
 
 
 func _texto_lectura(l: Dictionary) -> String:
@@ -108,6 +109,17 @@ func _panel_mando() -> void:
 				_panel.add_child(_boton("Rearmar el interruptor %s (maneta a OFF y a ON)" % id, _rearmar_guardamotor.bind(id)))
 			else:
 				_panel.add_child(_boton("Rearmar el guardamotor %s" % id, _rearmar_guardamotor.bind(id)))
+	for id: String in mesa.piezas:
+		var c := mesa.sim.componente(id)
+		if c is SimMaquinaPrincipal and (c as SimMaquinaPrincipal).disparo_retenido():
+			_panel.add_child(_rotulo("Disparos retenidos en el motor"))
+			var cual := "Sobrevelocidad disparada."
+			if c.estado["cop"]:
+				cual = "Presostato de sobrepresión del cárter (COP) disparado."
+			elif c.estado["niebla"]:
+				cual = "Detector de niebla de aceite en alarma."
+			_panel.add_child(_etiqueta(cual))
+			_panel.add_child(_boton("Rearmar en el motor (con el motor parado)", _rearmar_maquina.bind(id)))
 	# Interruptores de los circuitos de distribución: se abren y se cierran desde aquí.
 	var circuitos := false
 	for id: String in mesa.piezas:
@@ -125,8 +137,9 @@ func _panel_mando() -> void:
 		for s: Dictionary in senales:
 			var sel: SimSelector = mesa.sim.componente(s["componente"])
 			var activa := sel.cerrado("13-14")
-			_panel.add_child(_etiqueta("%s: %s." % [s["texto"], "dada" if activa else "sin orden"]))
-			_panel.add_child(_boton("Quitar la orden" if activa else "Dar la orden", _alternar_senal.bind(s["componente"])))
+			# Cada señal puede nombrar sus dos estados y sus botones, como el virador.
+			_panel.add_child(_etiqueta("%s: %s." % [s["texto"], s.get("si", "dada") if activa else s.get("no", "sin orden")]))
+			_panel.add_child(_boton(s.get("boton_quitar", "Quitar la orden") if activa else s.get("boton_dar", "Dar la orden"), _alternar_senal.bind(s["componente"])))
 	var averias: Array = tablero.get("averias", [])
 	if not averias.is_empty():
 		_panel.add_child(_rotulo("Averías de práctica"))
@@ -175,7 +188,7 @@ func _averia_puesta(a: Dictionary) -> bool:
 func _alternar_averia(a: Dictionary) -> void:
 	var c := mesa.sim.componente(a["componente"])
 	if _averia_puesta(a):
-		var original := SimSimulacion.desde_dict(raiz.contenido.leer("circuitos/%s.json" % tablero["circuito"]).duplicate(true))
+		var original := SimSimulacion.desde_dict(raiz.contenido.circuito_datos(tablero["circuito"]).duplicate(true))
 		c.params[a["param"]] = original.componente(a["componente"]).params[a["param"]]
 	else:
 		c.params[a["param"]] = a["valor"]
@@ -202,6 +215,10 @@ func _panel_pieza() -> void:
 			_agregar_ajuste(c, "Ajuste", 1.0, maxf(40.0, float(c.params["ajuste_a"]) * 2.0))
 			if c.estado["disparado"]:
 				_panel.add_child(_boton("Rearmar (botón azul)", _rearmar_rele.bind(id)))
+		"plc":
+			_agregar_io_plc(c)
+		"maquina_principal":
+			_agregar_maquina(c)
 		"arrancador_suave":
 			_panel.add_child(_etiqueta("Ajustes: Ie %s A · tensión inicial %d %% · rampa %s s · límite %s × Ie." % [
 				TextoTecnico.numero(c.params["ie_a"], 0), roundi(float(c.params["u_inicial"]) * 100.0),
@@ -223,5 +240,5 @@ func _panel_datos() -> void:
 	_panel.add_child(_etiqueta(tablero.get("nota", ""), "Nota"))
 	if tablero.has("foto"):
 		_panel.add_child(_etiqueta("Referencia: %s." % tablero["foto"], "Nota"))
-	var circuito := raiz.contenido.leer("circuitos/%s.json" % tablero["circuito"])
+	var circuito := raiz.contenido.circuito_datos(tablero["circuito"])
 	_panel.add_child(_etiqueta(circuito.get("nota", ""), "Nota"))

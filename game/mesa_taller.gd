@@ -449,6 +449,11 @@ func estado_pieza(id: String) -> String:
 			return "Cerrado" if e["encendido"] else "Abierto"
 		"consumidor":
 			return "Con tensión" if e["alimentado"] else "Sin tensión"
+		"maquina_principal":
+			var mp := c as SimMaquinaPrincipal
+			return "%s · %s rpm" % ["Encendida" if mp.encendida() else ("Girando" if mp.rpm() > 1.0 else "Parada"), TextoTecnico.numero(mp.rpm(), 0)]
+		"transmisor_4_20":
+			return "%s %s" % [TextoTecnico.numero((c as SimTransmisor420).valor(), 1), c.params["unidad"]]
 		"power_block":
 			return "%s · %s rpm" % [(c as SimPowerBlock).sentido().capitalize(), TextoTecnico.numero(absf(e["rpm"]), 0)]
 		"motor_trifasico":

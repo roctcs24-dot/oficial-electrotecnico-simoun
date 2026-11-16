@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400">
+  <defs>
+    <linearGradient id="bloque" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9c0a6"/><stop offset="1" stop-color="#8d957c"/></linearGradient>
+    <linearGradient id="caja" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b6268"/><stop offset="1" stop-color="#3d4348"/></linearGradient>
+    <radialGradient id="tornillo" cx="0.38" cy="0.32" r="0.8"><stop offset="0" stop-color="#f4f6f6"/><stop offset="0.55" stop-color="#b3b8ba"/><stop offset="1" stop-color="#5f6568"/></radialGradient>
+  </defs>
+  <rect x="20" y="236" width="960" height="40" rx="4" fill="#6f7563"/>
+  <rect x="60" y="120" width="800" height="120" rx="8" fill="url(#bloque)" stroke="#5d6452" stroke-width="2"/>
+  <rect x="80" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="120" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="176" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="216" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="272" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="312" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="368" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="408" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="464" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="504" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="560" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="600" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="656" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="696" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="752" y="72" width="80" height="52" rx="6" fill="#a7ae94" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="792" cy="98" r="7" fill="url(#tornillo)"/>
+  <rect x="76" y="46" width="776" height="24" rx="10" fill="#d9cfb4" stroke="#9f9478" stroke-width="2"/>
+  <circle cx="880" cy="120" r="34" fill="#8a9178" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="880" cy="120" r="14" fill="#5d6452"/>
+  <circle cx="940" cy="120" r="34" fill="#8a9178" stroke="#5d6452" stroke-width="2"/>
+  <circle cx="940" cy="120" r="14" fill="#5d6452"/>
+  <circle cx="40" cy="180" r="34" fill="#7b8270" stroke="#4f5546" stroke-width="2"/>
+  <text x="40" y="230" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#20242a">virador</text>
+  <rect x="420" y="190" width="70" height="40" rx="4" fill="#9aa0a3" stroke="#555b5f" stroke-width="2"/>
+  <text x="455" y="215" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#20242a">CMR</text>
+  <text x="460" y="160" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="22" fill="#2f3528">MÁQUINA PRINCIPAL</text>
+  <rect x="30" y="296" width="940" height="96" rx="8" fill="url(#caja)" stroke="#2a2f33" stroke-width="2"/>
+  <rect x="37.0" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="52.0" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="75.9" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="90.9" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="114.8" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="129.8" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="153.7" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="168.7" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="192.6" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="207.6" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="231.5" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="246.5" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="270.4" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="285.4" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="309.3" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="324.3" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="348.2" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="363.2" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="387.1" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="402.1" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="426.0" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="441.0" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="464.9" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="479.9" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="503.8" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="518.8" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="542.7" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="557.7" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="581.6" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="596.6" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="620.5" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="635.5" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="659.4" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="674.4" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="698.3" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="713.3" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="737.2" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="752.2" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="776.1" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="791.1" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="815.0" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="830.0" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="853.9" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="868.9" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="892.8" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="907.8" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+  <rect x="931.7" y="337" width="30" height="30" rx="3" fill="#20252a"/>
+  <circle cx="946.7" cy="352" r="9" fill="url(#tornillo)" stroke="#3b4043" stroke-width="1.2"/>
+</svg>

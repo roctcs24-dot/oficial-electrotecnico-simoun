@@ -378,7 +378,17 @@ func _completar_misiones(raiz: Raiz) -> Array[String]:
 			fallos.append("%s: %s, %d estrellas, %s" % [id, m.fin, m.estrellas(), str(m.faltas)])
 		raiz.partida.registrar_mision(id, m.estrellas(), m.fin == "completada")
 	var red = load("res://tests/test_guardia_red.gd").new()
+	var mp = load("res://tests/test_guardia_maquina.gd").new()
 	for id: String in raiz.contenido.sistema(6)["modos"]["guardia"]["misiones"]:
+		# Las misiones de la máquina principal son de tablero; las demás, de la red de alarmas.
+		if raiz.contenido.mision(id).get("tipo", "") != "red":
+			var t: MisionGuardia = mp.resolver(id)
+			gt._observar(t, t.tiempo_de_prueba())
+			t.firmar(gt._respuestas_correctas(t))
+			if t.fin != "completada" or t.estrellas() != 3:
+				fallos.append("%s: %s, %d estrellas, %s" % [id, t.fin, t.estrellas(), str(t.faltas)])
+			raiz.partida.registrar_mision(id, t.estrellas(), t.fin == "completada")
+			continue
 		var m: MisionRed = red.resolver(id)
 		red._observar(m)
 		red._firmar(m)

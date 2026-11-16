@@ -63,6 +63,7 @@
     }
   },
   "preguntas": {
+    "puente_seguridad": { "pregunta": "La máquina principal no da LISTO por el presostato de aire, y el buque debe salir en una hora. ¿Qué hace?", "opciones": ["Puentear el presostato para salir a la hora", "Buscar la causa, aislar el aire y el panel y cambiar el presostato; avisar al jefe de máquinas del retraso", "Pasar el selector a REMOTO"], "correcta": 1, "explicacion": "Un permisivo puenteado deja arrancar sin aire suficiente o con una protección anulada. Se repara la causa y se informa del retraso." },
     "ajuste_red_innecesario": { "pregunta": "El puesto da falla de comunicación solo con el MYCOM nº 4. Los AX4 de los generadores comunican sin errores. ¿Qué ajustes revisa?", "opciones": ["Los de todos los equipos, empezando por los AX4", "Los del MYCOM nº 4: dirección, velocidad, formato y conexión de A y B", "La velocidad del maestro"], "correcta": 1, "explicacion": "Solo se cambia lo que el diagnóstico señala. Tocar un equipo que comunica bien puede dejarlo sin comunicación a él o a toda la red." },
     "limite_alarma_alterado": { "pregunta": "Una alarma de alta temperatura salta varias veces por guardia. ¿Qué hace con su límite?", "opciones": ["Subirlo un poco para que no moleste", "Dejarlo como está, buscar la causa e informar al jefe de máquinas", "Inhibir la alarma hasta llegar a puerto"], "correcta": 1, "explicacion": "El límite lo fija el fabricante o el jefe de máquinas. Moverlo hacia el lado inseguro esconde un problema real." },
     "sin_aviso_alarmas": { "pregunta": "Un equipo de la red del puesto deja de comunicar. ¿Qué hace mientras busca la avería?", "opciones": ["Nada especial: las alarmas siguen funcionando", "Avisar al jefe de máquinas y vigilar en sitio las señales de ese equipo", "Inhibir su alarma de comunicación"], "correcta": 1, "explicacion": "Sin comunicación, las alarmas de ese equipo no llegan al puesto: hay que vigilarlas en sitio." },
@@ -130,6 +131,7 @@
     "sin_ventilacion": { "titulo": "Búsqueda de la fuga sin ventilación", "texto": "Entró a buscar la fuga sin arrancar la ventilación de emergencia. Con ella arrancada antes, la concentración en la sala baja y el riesgo para quien entra es menor." },
     "sin_epp_quimico": { "titulo": "Salmuera manipulada sin protección", "texto": "Manejó la sal y la salmuera sin guantes ni gafas. La salmuera fría irrita la piel y los ojos: colóquese guantes, gafas y delantal antes." },
     "sin_evacuar": { "titulo": "Sala sin evacuar", "texto": "Con la alarma de amoníaco, lo primero es que salga de la sala quien no lleve equipo de respiración y que se cierre la puerta. Buscar la fuga antes deja gente expuesta." },
+    "puente_seguridad": { "titulo": "Protección puenteada", "texto": "Un permisivo o una parada de seguridad no se puentea para salir del paso: deja la máquina sin la protección que evita el daño o el accidente. Se busca la causa y se repara." },
     "rearme_sin_causa": { "titulo": "Rearme sin buscar la causa", "texto": "Rearmó y arrancó de nuevo sin corregir la causa, y la protección volvió a disparar. Cada rearme sin causa somete otra vez al compresor a la falla." }
   }
 }

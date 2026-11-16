@@ -57,6 +57,8 @@ func _capturar() -> void:
 		await _capturar_instrumentos(carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "tablero":
 		await _capturar_tablero(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "maquina":
+		await _capturar_maquina(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -564,6 +566,30 @@ func _capturar_red(raiz: Raiz, carpeta: String) -> void:
 		raiz.volver()
 		raiz.ir_a("minijuego_simbolos", {"sistema": 6, "registro": "simbolos_electronica"})
 		await _guardar(carpeta, "red_simbolos", tam)
+		raiz.volver()
+
+
+## Panel local de la máquina principal: parado y listo, en marcha y por dentro.
+func _capturar_maquina(raiz: Raiz, carpeta: String) -> void:
+	for tam: Vector2i in TAMANOS:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("tablero", {"tablero": "maquina_principal"})
+		var t = raiz.pantalla_actual()
+		var sim: SimSimulacion = t.mesa.sim
+		sim.avanzar_tiempo(10.0)
+		t._reconstruir_panel()
+		await _guardar(carpeta, "mp_listo", tam)
+		(sim.componente("SRS") as SimSelector).poner("START")
+		sim.avanzar_tiempo(0.3)
+		(sim.componente("SRS") as SimSelector).soltar()
+		sim.avanzar_tiempo(20.0)
+		t._reconstruir_panel()
+		await _guardar(carpeta, "mp_marcha", tam)
+		t._alternar_puerta()
+		t.args["pieza"] = "PLC"
+		t._elegir_pestana("pieza")
+		await _guardar(carpeta, "mp_interior", tam)
 		raiz.volver()
 
 

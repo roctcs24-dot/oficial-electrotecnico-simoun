@@ -1,0 +1,209 @@
+{
+  "id": "m2_mp_parada_cop",
+  "titulo": "La máquina principal se para con COP / OVERSPEED",
+  "resumen": "En la prueba en puerto, la máquina arranca y a los 20 s se para con la luz COP / OVERSPEED.",
+  "equipo": "Panel local de la máquina principal",
+  "tablero": "maquina_principal",
+  "reporte": {
+    "de": "Oficial de guardia de máquinas",
+    "texto": "Probando la máquina principal en puerto, arranca bien desde el Main Engine Control Panel, pero a unos 20 segundos se para sola y se enciende COP / OVERSPEED. En la pantalla del MEC2+ la velocidad era de 440 rpm y el cárter marcaba unos −0,5 mbar. Lo intentamos dos veces con el mismo resultado. El jefe de máquinas pide al ETO que averigüe qué la para.",
+    "nota": "Frente del panel y valores de la pantalla del MEC2+ según el vídeo del buque. Presostato COP, interior y lógica típicos: verificar a bordo."
+  },
+  "params_iniciales": {
+    "MP": {
+      "averia": "cop"
+    }
+  },
+  "aisladores": [
+    "Q0"
+  ],
+  "nombres_aisladores": {
+    "Q0": "el interruptor Q0 de 24 V DC del panel"
+  },
+  "verificacion": {
+    "modo": "vdc",
+    "fuente_conocida": [
+      "F.+",
+      "F.-"
+    ],
+    "puntos": [
+      {
+        "texto": "Salida de Q0: + y −",
+        "a": "Q0.2",
+        "b": "Q0.4"
+      }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se trabajaba en el presostato COP, montado en el cárter, con el panel en tensión. Desde el puente se dio orden de arranque en REMOTE para probar el telégrafo: el motor giró con el aire y la mano del oficial quedó atrapada junto al volante.",
+      "causa": "El motor podía arrancar desde otro puesto: no se bloqueó el panel ni el aire de arranque, ni se avisó al puente.",
+      "como_evitar": "• Avise al jefe de máquinas y al puente: la máquina queda fuera de servicio.\n• Abra y bloquee Q0 y verifique la ausencia de tensión con el multímetro en V=.\n• Cierre y tarjetee la válvula de aire de arranque, y acople el virador si hay que trabajar junto a partes que giran."
+    }
+  },
+  "evidencias": [
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "vdc"
+      ],
+      "a": "MP.CP1",
+      "b": "Q0.4"
+    },
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "vdc"
+      ],
+      "a": "MP.CP2",
+      "b": "Q0.4"
+    }
+  ],
+  "remediciones": [
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "ohm",
+        "continuidad"
+      ],
+      "a": "MP.CP1",
+      "b": "MP.CP2",
+      "despues_de": "cambiar_cop"
+    }
+  ],
+  "pistas": [
+    "COP / OVERSPEED es la parada por la cadena: sobrevelocidad SB, sobrepresión del cárter CP, niebla de aceite NA y alta temperatura TA, en serie en la entrada I0.7. La pantalla del MEC2+ mostraba 440 rpm: no hubo sobrevelocidad.",
+    "Recorra la cadena con el multímetro en V= contra 0 V (Q0.4): SB1, SB2, CP1, CP2, NA1, NA2, TA1, TA2. Donde hay tensión por un lado y no por el otro está el contacto abierto.",
+    "Una sobrepresión del cárter puede anunciar una explosión. No se rearma ni se arranca hasta que el jefe de máquinas revise el cárter, después del tiempo de enfriamiento."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Qué para la máquina a los 20 s?",
+    "opciones": [
+      {
+        "texto": "El presostato de sobrepresión del cárter (COP) abre su contacto en la cadena aunque el cárter no tiene sobrepresión",
+        "correcta": true,
+        "explicacion": "La entrada I0.7 está apagada. En la cadena hay 24 V hasta CP1 y 0 V en CP2: el COP está abierto y retenido. La pantalla del MEC2+ marcaba −0,5 mbar en el cárter, una depresión normal: el disparo no viene de una sobrepresión real."
+      },
+      {
+        "texto": "Una sobrevelocidad",
+        "explicacion": "La pantalla del MEC2+ marcaba 440 rpm, el ralentí, lejos de las 1150 del disparo, y el contacto SB sigue cerrado."
+      },
+      {
+        "texto": "La baja presión de aceite",
+        "explicacion": "Esa parada enciende LOW OIL PRESSURE, no COP / OVERSPEED, y el aceite estaba a unos 2,8 bar."
+      },
+      {
+        "texto": "El detector de niebla de aceite",
+        "explicacion": "El contacto NA sigue cerrado: la tensión pasa de NA1 a NA2."
+      }
+    ]
+  },
+  "acciones": [
+    {
+      "id": "revisar_carter",
+      "boton": "Pedir al jefe de máquinas la inspección del cárter, tras el tiempo de enfriamiento",
+      "titulo": "Cárter revisado",
+      "texto": "Pasado el tiempo de enfriamiento, el jefe de máquinas abrió las puertas del cárter: sin puntos calientes, cojinetes y pistones sin marcas, respiradero del cárter libre. No hay sobrepresión real.",
+      "pone": {
+        "carter_revisado": true
+      }
+    },
+    {
+      "id": "cambiar_cop",
+      "boton": "Cambiar el presostato COP por el de respeto, probarlo y rearmar",
+      "necesita": [
+        "carter_revisado"
+      ],
+      "si_falta": "Un disparo de sobrepresión del cárter se trata como real: el cárter se revisa antes de tocar el presostato.",
+      "titulo": "COP cambiado y rearmado",
+      "texto": "El microrruptor del presostato COP abría con la vibración del motor en marcha. Se montó el de respeto, se comprobó su disparo con un generador de presión según el manual (valor del fabricante — verificar) y se rearmó.",
+      "efecto": [
+        {
+          "op": "param",
+          "id": "MP",
+          "clave": "averia",
+          "valor": ""
+        },
+        {
+          "op": "rearmar",
+          "id": "MP"
+        }
+      ]
+    },
+    {
+      "id": "rearmar_sin_revisar",
+      "boton": "Pulsar RESET ALARM y arrancar otra vez",
+      "titulo": "Rearme sin revisar el cárter",
+      "texto": "Un disparo de sobrepresión del cárter puede venir de un pistón o un cojinete dañado: arrancar sin revisar el cárter arriesga una explosión. No se rearma hasta descartar la causa.",
+      "innecesaria": true,
+      "tema": "rearme_sin_causa"
+    },
+    {
+      "id": "puentear_cp",
+      "boton": "Puentear CP1-CP2 para hacer la prueba",
+      "titulo": "Protección anulada",
+      "texto": "Con el COP puenteado, una sobrepresión real no pararía el motor: el cárter podría explotar. Las protecciones de la cadena de paradas no se puentean. Se retiró el puente.",
+      "innecesaria": true,
+      "tema": "puente_seguridad"
+    }
+  ],
+  "prueba": {
+    "interruptores": [],
+    "observar_s": 90,
+    "superada": "La máquina principal trabajó minuto y medio al ralentí sin parada de seguridad.",
+    "condiciones": [
+      {
+        "componente": "MP",
+        "estado": "cop",
+        "max": 0,
+        "falla": "El presostato COP sigue disparado"
+      },
+      {
+        "componente": "MP",
+        "estado": "rpm",
+        "min": 400,
+        "falla": "La máquina principal no está en marcha: pulse RESET ALARM y arránquela con START"
+      }
+    ]
+  },
+  "libro": {
+    "campos": [
+      {
+        "etiqueta": "Contacto abierto en la cadena de paradas",
+        "opciones": [
+          "SB, sobrevelocidad",
+          "CP, sobrepresión del cárter",
+          "TA, alta temperatura"
+        ],
+        "correcta": 1,
+        "explicacion": "La tensión llegaba a CP1 y no salía por CP2."
+      },
+      {
+        "etiqueta": "Comprobación antes de tocar el presostato",
+        "opciones": [
+          "Ninguna",
+          "Inspección del cárter por el jefe de máquinas, tras enfriarse",
+          "RESET ALARM y arrancar"
+        ],
+        "correcta": 1,
+        "explicacion": "El disparo del cárter se trata como real hasta descartarlo."
+      },
+      {
+        "etiqueta": "Causa y reparación",
+        "opciones": [
+          "Pistón dañado",
+          "Microrruptor del COP averiado: cambio, prueba y rearme",
+          "Termostato averiado"
+        ],
+        "correcta": 1,
+        "explicacion": "El cárter estaba bien y el MEC2+ marcaba una presión normal."
+      }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección Arranque y paradas de la máquina principal.",
+    "SOLAS II-1, regla 47, e IACS UR M10: protección contra explosiones del cárter.",
+    "Manuales del motor Wabtec (GE) 16V250 y de su controlador MEC2+.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

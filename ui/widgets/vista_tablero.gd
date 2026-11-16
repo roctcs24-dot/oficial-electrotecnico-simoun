@@ -18,6 +18,7 @@ const COLORES_LUZ := {
 	"ambar": [Color("3d2a0c"), Color("ffbf3a")],
 	"blanco": [Color("4a4c4e"), Color("fffbea")],
 	"azul": [Color("102438"), Color("4ab4ff")],
+	"negro": [Color("1b1d1f"), Color("3a3e42")],
 }
 const ACABADOS := {
 	"inox": [Color("c3c8cb"), Color("a9afb3"), Color("7d8488")],
@@ -230,6 +231,8 @@ func _draw() -> void:
 						_texto(c + Vector2(-26.0, (-4.0 + 12.0 * j) * (1.0 if lineas.size() > 1 else 0.0) + 4.0) * s, lineas[j], 9.0 * s, Color(0, 0, 0, 0.55), 52.0 * s, HORIZONTAL_ALIGNMENT_CENTER)
 			"pantalla_vlt":
 				_pantalla_vlt(c, s, e)
+			"pantalla_mec":
+				_pantalla_mec(c, s, e)
 			"pulsador":
 				var comp := _componente(e)
 				var pulsado: bool = comp != null and comp.estado.get("presionado", false)
@@ -246,7 +249,7 @@ func _draw() -> void:
 			"horometro":
 				var comp := _componente(e)
 				_horometro(c, s, float(comp.estado.get("horas", 0.0)) if comp != null else 0.0)
-			"amperimetro":
+			"amperimetro", "indicador":
 				_amperimetro(c, s, e)
 			"cerradura":
 				_cerradura(c, s)
@@ -440,12 +443,22 @@ func _amperimetro(c: Vector2, s: float, e: Dictionary) -> void:
 	var fondo := float(e.get("fondo", 100.0))
 	var tam := maxi(int(radio * 0.24), 6)
 	DibujoInstrumentos.escala(self, _fuente(), centro, radio, 0.0, fondo, 240.0, float(e.get("nominal", INF)), DibujoInstrumentos.TINTA, tam)
-	var t_unidad := maxi(int(h * 0.14), 7)
-	var ancho := _fuente().get_string_size("A", HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad).x
-	draw_string(_fuente(), Vector2(centro.x - ancho / 2.0, cara.end.y - h * 0.1), "A", HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad, DibujoInstrumentos.TINTA)
-	var a := DibujoInstrumentos.angulo_escala(_corriente(e), 0.0, fondo, 240.0)
+	var unidad := str(e.get("unidad", "A"))
+	var t_unidad := maxi(int(h * (0.14 if unidad.length() <= 2 else 0.1)), 7)
+	var ancho := _fuente().get_string_size(unidad, HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad).x
+	draw_string(_fuente(), Vector2(centro.x - ancho / 2.0, cara.end.y - h * 0.1), unidad, HORIZONTAL_ALIGNMENT_LEFT, -1, t_unidad, DibujoInstrumentos.TINTA)
+	var a := DibujoInstrumentos.angulo_escala(_valor_indicador(e), 0.0, fondo, 240.0)
 	DibujoInstrumentos.aguja(self, centro, a, radio * 0.98, Color("15171a"))
 	DibujoInstrumentos.reflejo(self, cara.get_center(), h * 0.5)
+
+
+## Amperímetros: la corriente de su componente. Indicadores (tacómetro, manómetros,
+## termómetros): la lectura que da el componente con su método lectura().
+func _valor_indicador(e: Dictionary) -> float:
+	if e["tipo"] == "indicador":
+		var comp := _componente(e)
+		return float(comp.call("lectura", str(e["lectura"]))) if comp != null and comp.has_method("lectura") else 0.0
+	return _corriente(e)
 
 
 func _corriente(e: Dictionary) -> float:
@@ -486,6 +499,40 @@ func _seccionador_negro(c: Vector2, s: float, cerrado: bool, candado: bool) -> v
 
 ## Teclado y pantalla de un variador Danfoss VLT, como los del servotimón. Lee el contactor que hace
 ## de variador, su motor y su horómetro.
+## Pantalla del controlador del motor principal, como la del MEC2+: marco negro con asa, texto
+## claro sobre fondo oscuro y la fila de teclas F1-F8. Sin tensión en el panel queda apagada.
+func _pantalla_mec(c: Vector2, s: float, e: Dictionary) -> void:
+	var medida := Vector2(float(e.get("ancho", 620)), float(e.get("alto", 300))) * s
+	var marco := Rect2(c - medida / 2.0 - Vector2(20, 20) * s, medida + Vector2(40, 80) * s)
+	draw_rect(marco, Color("1b1d1f"))
+	var r := Rect2(c - medida / 2.0, medida)
+	var comp := _componente(e)
+	var con_tension := comp != null and sim != null and sim.solucion != null and _alimentada(e)
+	draw_rect(r, Color("0d1418") if con_tension else Color("161a1d"))
+	if con_tension and comp.has_method("pantalla"):
+		var lineas: Array = comp.call("pantalla")
+		for j in lineas.size():
+			var color := Color("7dff9a") if j == 0 and str(lineas[j]).contains("Running") else Color("e6edf2")
+			if str(lineas[j]).contains("Shutdown"):
+				color = Color("ff6a5a")
+			_texto(r.position + Vector2(14 * s, (34 + 50 * j) * s), str(lineas[j]), 20.0 * s, color)
+	for j in 8:
+		var tecla := Rect2(r.position + Vector2(10 + j * medida.x / s / 8.4, medida.y / s + 14) * s, Vector2(56, 26) * s)
+		draw_rect(tecla, Color("e8c43a"))
+		_texto(tecla.position + Vector2(0, 19 * s), "F%d" % (j + 1), 12.0 * s, Color("15171a"), tecla.size.x, HORIZONTAL_ALIGNMENT_CENTER)
+
+
+## La pantalla se enciende si el elemento nombra un componente de alimentación y está cerrado.
+func _alimentada(e: Dictionary) -> bool:
+	var id := str(e.get("alimentacion", ""))
+	if id.is_empty() or not sim.componentes.has(id):
+		return true
+	var a := sim.componente(id)
+	if a is SimSelector:
+		return (a as SimSelector).cerrado("13-14") and (not sim.componentes.has("Q0") or (sim.componente("Q0") as SimSeccionador).cerrado())
+	return (a as SimSeccionador).cerrado()
+
+
 func _pantalla_vlt(c: Vector2, s: float, e: Dictionary) -> void:
 	var medida := Vector2(300, 330) * s
 	var r := Rect2(c - medida / 2.0, medida)

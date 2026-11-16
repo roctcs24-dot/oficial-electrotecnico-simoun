@@ -45,8 +45,18 @@ func poner(nombre: String) -> void:
 
 
 ## Al soltar el mando, una posición con resorte vuelve a la anterior.
+## Vuelve a la posición vecina sin resorte: START vuelve a RUN, y en un selector de velocidad
+## DECR-0-INCR, los dos extremos vuelven al centro.
 func soltar() -> void:
-	if params["retorno"].has(nombre_posicion()):
+	if not params["retorno"].has(nombre_posicion()):
+		return
+	var i := int(estado["posicion"])
+	var nombres := posiciones()
+	if i > 0 and not params["retorno"].has(nombres[i - 1]):
+		girar(-1)
+	elif i + 1 < nombres.size() and not params["retorno"].has(nombres[i + 1]):
+		girar(1)
+	else:
 		girar(-1)
 
 

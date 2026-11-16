@@ -1,0 +1,238 @@
+{
+  "id": "m1_mp_no_queda_lista",
+  "titulo": "La máquina principal no gira al dar START",
+  "resumen": "Preparando la salida, al girar el selector a START no ocurre nada, aunque hay aire.",
+  "equipo": "Panel local de la máquina principal",
+  "tablero": "maquina_principal",
+  "reporte": {
+    "de": "Jefe de máquinas",
+    "texto": "Preparamos la salida de puerto. En el Main Engine Control Panel, SYSTEM OK está encendida, el selector en LOCAL y la prelubricación en marcha. Pero al girar STOP-RUN-START a START no se abre el aire y la máquina no gira. En el monitor de la sala de control el aire de arranque marca 123 psi, unos 8,5 bar. Encuentre la falla y deje la máquina arrancando desde el panel.",
+    "nota": "Frente del panel según el vídeo del buque. Lógica e interior típicos; el real es el MEC2+ de Wabtec: verificar a bordo. Presostato de aire con cierre a 6 bar: valor típico."
+  },
+  "params_iniciales": {
+    "MP": {
+      "averia": "presostato_aire"
+    }
+  },
+  "aisladores": [
+    "Q0"
+  ],
+  "nombres_aisladores": {
+    "Q0": "el interruptor Q0 de 24 V DC del panel"
+  },
+  "verificacion": {
+    "modo": "vdc",
+    "fuente_conocida": [
+      "F.+",
+      "F.-"
+    ],
+    "puntos": [
+      {
+        "texto": "Salida de Q0: + y −",
+        "a": "Q0.2",
+        "b": "Q0.4"
+      }
+    ]
+  },
+  "accidentes": {
+    "sin_bloqueo": {
+      "que_ocurrio": "Se aflojó el presostato de la línea de aire con la línea a 29 bar. El racor salió despedido, el aire comprimido golpeó la mano del oficial y le metió suciedad bajo la piel. Fue atendido por el oficial sanitario.",
+      "causa": "La línea de aire de arranque seguía con presión y el panel en tensión: el trabajo empezó sin aislar ninguna de las dos energías.",
+      "como_evitar": "• Avise al jefe de máquinas y al puente: la máquina queda sin poder arrancar.\n• Abra y bloquee Q0, y verifique la ausencia de tensión con el multímetro en V=.\n• Cierre la válvula de la botella, purgue la línea de aire hasta ver el manómetro a cero y ponga la tarjeta en la válvula."
+    }
+  },
+  "evidencias": [
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "vdc"
+      ],
+      "a": "MP.PA1",
+      "b": "Q0.4"
+    },
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "vdc"
+      ],
+      "a": "MP.PA2",
+      "b": "Q0.4"
+    }
+  ],
+  "remediciones": [
+    {
+      "instrumento": "multimetro",
+      "modos": [
+        "ohm",
+        "continuidad"
+      ],
+      "a": "MP.PA1",
+      "b": "MP.PA2",
+      "despues_de": "cambiar_presostato"
+    }
+  ],
+  "pistas": [
+    "Si SYSTEM OK está encendida pero START no hace nada, falta un permisivo. Abra la puerta, toque el controlador PLC en la pestaña Equipo y busque la entrada apagada.",
+    "I0.5 es el presostato de aire de arranque. Con el panel en tensión y el multímetro en V=, mida de MP.PA1 a 0 V (Q0.4) y de MP.PA2 a 0 V. Con 8,5 bar en la línea, el contacto debe estar cerrado y dar 24 V en los dos bornes.",
+    "El presostato está en la línea de aire: antes de soltarlo, bloquee Q0, cierre la válvula de la botella y purgue la línea.",
+    "Después del cambio, abra el aire y, con Q0 todavía bloqueado, compruebe con el óhmetro que PA1-PA2 cierra con presión."
+  ],
+  "diagnostico": {
+    "pregunta": "¿Por qué no gira la máquina al dar START?",
+    "opciones": [
+      {
+        "texto": "El presostato de aire de arranque no cierra aunque la línea tiene 8,5 bar: sus contactos están averiados",
+        "correcta": true,
+        "explicacion": "La entrada I0.5 está apagada. En MP.PA1 hay 24 V y en MP.PA2, 0 V: el contacto está abierto con presión de sobra. El controlador ve que falta el aire, no completa los permisivos e ignora START."
+      },
+      {
+        "texto": "Falta aire en las botellas",
+        "explicacion": "El monitor marca 123 psi, unos 8,5 bar, por encima de los 6 bar a los que cierra el presostato."
+      },
+      {
+        "texto": "La entrada I0.5 del controlador está averiada",
+        "explicacion": "A la entrada no le llega tensión: MP.PA2 marca 0 V. Una entrada averiada tendría sus 24 V en el borne con el LED apagado."
+      },
+      {
+        "texto": "Falta la prelubricación",
+        "explicacion": "La entrada I0.3 del presostato de aceite está encendida y el manómetro de aceite marca presión."
+      }
+    ]
+  },
+  "acciones": [
+    {
+      "id": "cerrar_aire",
+      "boton": "Cerrar la válvula de la botella, purgar la línea de aire y poner la tarjeta",
+      "titulo": "Línea de aire aislada",
+      "texto": "Se cerró la válvula de la botella de aire de arranque, se purgó la línea hasta ver el manómetro a cero y se colgó la tarjeta en la válvula.",
+      "impide": [
+        "aire_cerrado"
+      ],
+      "si_impide": "La línea ya está cerrada y purgada.",
+      "pone": {
+        "aire_cerrado": true
+      },
+      "efecto": [
+        {
+          "op": "param",
+          "id": "MP",
+          "clave": "aire_cerrado",
+          "valor": true
+        }
+      ]
+    },
+    {
+      "id": "cambiar_presostato",
+      "boton": "Cambiar el presostato de aire de arranque por el de respeto",
+      "necesita": [
+        "aire_cerrado"
+      ],
+      "si_falta": "La línea de aire tiene 29 bar: ciérrela y púrguela antes de soltar el presostato.",
+      "titulo": "Presostato cambiado",
+      "texto": "El presostato tenía los contactos picados y oxidados por la humedad del aire. Se montó el de respeto, del mismo rango, y se ajustó para cerrar a 6 bar con un manómetro patrón (valor típico — verificar a bordo).",
+      "efecto": [
+        {
+          "op": "param",
+          "id": "MP",
+          "clave": "averia",
+          "valor": ""
+        }
+      ]
+    },
+    {
+      "id": "abrir_aire",
+      "boton": "Quitar la tarjeta y abrir la válvula de la botella",
+      "necesita": [
+        "aire_cerrado"
+      ],
+      "si_falta": "La válvula de la botella ya está abierta.",
+      "titulo": "Aire restablecido",
+      "texto": "Se quitó la tarjeta, se abrió despacio la válvula de la botella y se comprobó que no hay fugas en el racor del presostato.",
+      "pone": {
+        "aire_cerrado": false
+      },
+      "efecto": [
+        {
+          "op": "param",
+          "id": "MP",
+          "clave": "aire_cerrado",
+          "valor": false
+        }
+      ]
+    },
+    {
+      "id": "puentear_presostato",
+      "boton": "Puentear PA1-PA2 para poder salir a la hora",
+      "titulo": "Permisivo anulado",
+      "texto": "Un puente en el presostato deja arrancar aunque falte aire: los motores de arranque gastarían el aire de las botellas sin llegar a encender y el buque quedaría sin poder arrancar. Se retiró el puente.",
+      "innecesaria": true,
+      "tema": "puente_seguridad"
+    },
+    {
+      "id": "cambiar_controlador",
+      "boton": "Cambiar el controlador del panel",
+      "titulo": "Repuesto innecesario",
+      "texto": "El controlador leía bien su entrada: no le llegaba tensión porque el presostato estaba abierto.",
+      "innecesaria": true
+    }
+  ],
+  "prueba": {
+    "interruptores": [],
+    "observar_s": 60,
+    "superada": "La máquina principal arrancó desde el panel local y trabajó un minuto al ralentí.",
+    "condiciones": [
+      {
+        "componente": "MP",
+        "param": "aire_cerrado",
+        "max": 0,
+        "falla": "La válvula de la botella de aire sigue cerrada"
+      },
+      {
+        "componente": "MP",
+        "estado": "rpm",
+        "min": 400,
+        "falla": "La máquina principal no está en marcha: arránquela desde el panel con START"
+      }
+    ]
+  },
+  "libro": {
+    "campos": [
+      {
+        "etiqueta": "Entrada del controlador apagada",
+        "opciones": [
+          "I0.3, presión de aceite",
+          "I0.5, aire de arranque",
+          "I0.7, cadena de paradas"
+        ],
+        "correcta": 1,
+        "explicacion": "Con el presostato abierto, I0.5 no recibía tensión."
+      },
+      {
+        "etiqueta": "Tensiones medidas en el presostato",
+        "opciones": [
+          "24 V en PA1 y 0 V en PA2",
+          "24 V en PA1 y en PA2",
+          "0 V en los dos"
+        ],
+        "correcta": 0,
+        "explicacion": "La tensión llegaba al presostato y no salía: su contacto estaba abierto."
+      },
+      {
+        "etiqueta": "Energías aisladas para el trabajo",
+        "opciones": [
+          "Solo Q0",
+          "Q0 bloqueado y la línea de aire cerrada y purgada",
+          "Ninguna"
+        ],
+        "correcta": 1,
+        "explicacion": "El aire comprimido es una energía tan peligrosa como la eléctrica."
+      }
+    ]
+  },
+  "para_saber_mas": [
+    "Lección Arranque y paradas de la máquina principal.",
+    "SOLAS II-1, reglas 31 y 34: mandos de las máquinas y sistemas de aire a presión.",
+    "Manual del motor Wabtec (GE) 16V250 y de su controlador MEC2+.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

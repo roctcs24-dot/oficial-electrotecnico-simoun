@@ -33,7 +33,7 @@ func _init(contenido_juego: Contenido, id_mision: String, danos_previos := {}) -
 	if datos.has("tablero"):
 		# La misión ocurre en un tablero del buque: su circuito y su interior salen de él.
 		var t := contenido.tablero(datos["tablero"])
-		mesa.cargar_circuito(contenido.leer("circuitos/%s.json" % t["circuito"]), t["interior"])
+		mesa.cargar_circuito(contenido.circuito_datos(t["circuito"]), t["interior"])
 	else:
 		mesa.cargar_circuito(datos["circuito"], datos["posiciones"])
 	# Averías y estados con que empieza la misión: {"id": {"param": valor}}.
@@ -255,18 +255,28 @@ func lectura_verificacion(paso_id: String) -> Dictionary:
 	return _verificacion.get(paso_id, {})
 
 
+## Los mandos de 24 V DC, como el panel de la máquina principal, se verifican en V=: ahí
+## cualquier tensión por encima de 12 V es presencia.
+func _modo_verificacion() -> String:
+	return datos.get("verificacion", {}).get("modo", "vac")
+
+
+func _umbral_presencia() -> float:
+	return 12.0 if _modo_verificacion() == "vdc" else V_PRESENCIA
+
+
 func verificar(paso: Dictionary, multimetro: SimMultimetro) -> Dictionary:
-	var r := multimetro.medir(mesa.sim, "vac", paso["a"], paso["b"])
-	var valor: float = r["valor"]
+	var r := multimetro.medir(mesa.sim, _modo_verificacion(), paso["a"], paso["b"])
+	var valor: float = absf(float(r["valor"]))
 	var es_fuente: bool = paso["id"] == "antes" or paso["id"] == "despues"
 	_orden_verificacion += 1
 	_verificacion[paso["id"]] = {"valor": valor, "orden": _orden_verificacion}
-	registrar_medicion("multimetro", "vac", paso["a"], paso["b"], r)
+	registrar_medicion("multimetro", _modo_verificacion(), paso["a"], paso["b"], r)
 	if not r["averia"].is_empty():
 		return _aviso("aviso", "Instrumento averiado", "El multímetro no puede medir. Cámbielo antes de continuar.")
-	if es_fuente and valor < V_PRESENCIA:
+	if es_fuente and valor < _umbral_presencia():
 		return _aviso("aviso", "El instrumento no indica tensión", "En la fuente conocida debe leer tensión. Sin esa comprobación, un 0 V no demuestra nada: cambie el instrumento.")
-	if not es_fuente and valor >= V_PRESENCIA:
+	if not es_fuente and valor >= _umbral_presencia():
 		return _aviso("aviso", "Hay tensión: %s V" % TextoTecnico.numero(valor, 0), "El punto sigue energizado. No intervenga: busque de dónde llega esa tensión, abra esa alimentación y bloquéela.")
 	return _aviso("hecho", "", "")
 
@@ -278,13 +288,14 @@ func verificado() -> bool:
 		return false
 	var antes := lectura_verificacion("antes")
 	var despues := lectura_verificacion("despues")
-	if antes.is_empty() or despues.is_empty() or antes["valor"] < V_PRESENCIA or despues["valor"] < V_PRESENCIA:
+	var umbral := _umbral_presencia()
+	if antes.is_empty() or despues.is_empty() or antes["valor"] < umbral or despues["valor"] < umbral:
 		return false
 	for p in pasos_verificacion():
 		if p["id"] == "antes" or p["id"] == "despues":
 			continue
 		var l := lectura_verificacion(p["id"])
-		if l.is_empty() or l["valor"] >= V_PRESENCIA or l["orden"] < antes["orden"] or l["orden"] > despues["orden"]:
+		if l.is_empty() or l["valor"] >= umbral or l["orden"] < antes["orden"] or l["orden"] > despues["orden"]:
 			return false
 	return true
 
@@ -420,6 +431,8 @@ func _aplicar(efectos: Array) -> void:
 			"reemplazar":
 				mesa.reparar(ef["id"])
 				mesa.ocultas.erase(ef["id"])
+			"rearmar":
+				mesa.sim.componente(ef["id"]).call("rearmar")
 			"desconectar":
 				for c: Array in ef["cables"]:
 					mesa.sim.desconectar(c[0], c[1])
@@ -537,15 +550,20 @@ func _motivo_circuito(p: Dictionary) -> String:
 			if v < float(c["min"]):
 				return c["falla"]
 		elif c.has("estado"):
-			if float(mesa.sim.componente(c["componente"]).estado[c["estado"]]) < float(c["min"]):
+			if _fuera_de_rango(float(mesa.sim.componente(c["componente"]).estado[c["estado"]]), c):
 				return c["falla"]
 		elif c.has("param"):
-			if float(mesa.sim.componente(c["componente"]).params[c["param"]]) < float(c["min"]):
+			if _fuera_de_rango(float(mesa.sim.componente(c["componente"]).params[c["param"]]), c):
 				return c["falla"]
 		elif c.has("corriente_max"):
 			if corriente_maxima() > float(c["corriente_max"]):
 				return c["falla"]
 	return ""
+
+
+## Una condición puede pedir un mínimo, un máximo o los dos; los valores lógicos valen 0 o 1.
+func _fuera_de_rango(valor: float, c: Dictionary) -> bool:
+	return (c.has("min") and valor < float(c["min"])) or (c.has("max") and valor > float(c["max"]))
 
 
 func _minutos(segundos: float) -> String:

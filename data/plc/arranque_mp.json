@@ -1,0 +1,113 @@
+{
+  "id": "arranque_mp",
+  "nombre": "Arranque y paradas de la máquina principal",
+  "nota": "Lógica típica del Main Engine Control Panel, escrita en ladder para poder leerla. En el buque la hace el controlador MEC2+ de Wabtec con su propio programa, entradas y retardos: verificar con su manual.",
+  "etiquetas": {
+    "%I0.0": "S0 y SRS · Emergencia y selector fuera de STOP",
+    "%I0.1": "SRS · Selector en START",
+    "%I0.2": "SL · Mando en LOCAL",
+    "%I0.3": "PL · Presión de aceite (prelubricación)",
+    "%I0.4": "RA · RESET ALARM",
+    "%I0.5": "PA · Presión de aire de arranque",
+    "%I0.6": "SV · Motor encendido (relé de velocidad)",
+    "%I0.7": "Cadena de paradas: SB, CP, NA y TA",
+    "%Q0.0": "Y1 · Aire de arranque (pasa por el virador VG)",
+    "%Q0.1": "Y2 · Solenoide de parada",
+    "%Q0.2": "KP · Orden de prelubricación",
+    "%Q0.3": "H1 · SYSTEM OK",
+    "%Q0.4": "H5 · LOW OIL PRESSURE",
+    "%Q0.5": "H3 · COP / OVERSPEED",
+    "%M0.0": "Permisivos completos",
+    "%M0.1": "Secuencia de arranque",
+    "%M0.2": "Parada por la cadena, retenida",
+    "%M0.3": "Arranque fallido",
+    "%M0.5": "Parada por baja presión de aceite, retenida",
+    "%T0": "Tiempo máximo de giro con aire, 8 s",
+    "%T1": "Retardo de la baja presión de aceite, 3 s",
+    "%T2": "Inhibición de la baja presión al encender, 15 s",
+    "%IW0": "PT1 · Presión de aceite, bar",
+    "%AE0": "PT1 · Error del lazo de 4–20 mA"
+  },
+  "programa": [
+    {
+      "comentario": "Permisivos: mando en LOCAL, aceite con presión, aire en la línea, cadena de paradas cerrada, sin emergencia ni STOP, motor parado y sin paradas retenidas. El virador no entra aquí: su final de carrera corta el aire directamente.",
+      "logica": [{ "na": "%I0.2" }, { "na": "%I0.3" }, { "na": "%I0.5" }, { "na": "%I0.7" }, { "na": "%I0.0" }, { "nc": "%I0.6" }, { "nc": "%M0.2" }, { "nc": "%M0.3" }, { "nc": "%M0.5" }],
+      "salidas": [{ "bobina": "%M0.0" }]
+    },
+    {
+      "comentario": "Al girar el selector a START con los permisivos completos empieza la secuencia.",
+      "logica": [{ "flanco": "%I0.1" }, { "na": "%M0.0" }],
+      "salidas": [{ "set": "%M0.1" }]
+    },
+    {
+      "comentario": "Tiempo máximo con aire: si el motor no enciende en 8 s, se corta para no vaciar las botellas.",
+      "logica": [{ "na": "%M0.1" }, { "nc": "%I0.6" }],
+      "salidas": [{ "ton": "%T0", "ms": 8000 }]
+    },
+    {
+      "comentario": "Aire de arranque: solo durante la secuencia, con el motor sin encender y sin emergencia ni STOP.",
+      "logica": [{ "na": "%M0.1" }, { "nc": "%I0.6" }, { "nc": "%T0" }, { "na": "%I0.0" }],
+      "salidas": [{ "bobina": "%Q0.0" }]
+    },
+    {
+      "comentario": "Si se acabó el tiempo sin encender, queda retenido el arranque fallido.",
+      "logica": [{ "na": "%T0" }, { "nc": "%I0.6" }],
+      "salidas": [{ "set": "%M0.3" }]
+    },
+    {
+      "comentario": "Fin de la secuencia: el motor encendió, se acabó el tiempo, o emergencia o STOP.",
+      "logica": [{ "paralelo": [[{ "na": "%I0.6" }], [{ "na": "%T0" }], [{ "nc": "%I0.0" }]] }],
+      "salidas": [{ "reset": "%M0.1" }]
+    },
+    {
+      "comentario": "Tras encender, la baja presión de aceite no se vigila durante 15 s, mientras sube.",
+      "logica": [{ "na": "%I0.6" }],
+      "salidas": [{ "ton": "%T2", "ms": 15000 }]
+    },
+    {
+      "comentario": "Baja presión de aceite en marcha, por debajo de 1,2 bar durante 3 s. Con el lazo de 4–20 mA en error no para: el error se avisa aparte.",
+      "logica": [{ "na": "%I0.6" }, { "na": "%T2" }, { "cmp": "<", "a": "%IW0", "b": 1.2 }, { "nc": "%AE0" }],
+      "salidas": [{ "ton": "%T1", "ms": 3000 }]
+    },
+    {
+      "comentario": "Parada por baja presión de aceite, retenida.",
+      "logica": [{ "na": "%T1" }],
+      "salidas": [{ "set": "%M0.5" }]
+    },
+    {
+      "comentario": "Parada por la cadena: se abre con el motor en marcha. Queda retenida.",
+      "logica": [{ "na": "%I0.6" }, { "nc": "%I0.7" }],
+      "salidas": [{ "set": "%M0.2" }]
+    },
+    {
+      "comentario": "Solenoide de parada: con emergencia o STOP, y con cualquier parada retenida.",
+      "logica": [{ "paralelo": [[{ "nc": "%I0.0" }], [{ "na": "%M0.2" }], [{ "na": "%M0.5" }]] }],
+      "salidas": [{ "bobina": "%Q0.1" }]
+    },
+    {
+      "comentario": "RESET ALARM: con el motor parado y la cadena ya cerrada, borra las paradas retenidas y el arranque fallido.",
+      "logica": [{ "flanco": "%I0.4" }, { "nc": "%I0.6" }, { "na": "%I0.7" }],
+      "salidas": [{ "reset": "%M0.2" }, { "reset": "%M0.3" }, { "reset": "%M0.5" }]
+    },
+    {
+      "comentario": "Prelubricación continua mientras el motor está parado.",
+      "logica": [{ "nc": "%I0.6" }],
+      "salidas": [{ "bobina": "%Q0.2" }]
+    },
+    {
+      "comentario": "SYSTEM OK: sin paradas retenidas ni arranque fallido, y la cadena cerrada.",
+      "logica": [{ "nc": "%M0.2" }, { "nc": "%M0.3" }, { "nc": "%M0.5" }, { "na": "%I0.7" }],
+      "salidas": [{ "bobina": "%Q0.3" }]
+    },
+    {
+      "comentario": "Luz LOW OIL PRESSURE.",
+      "logica": [{ "na": "%M0.5" }],
+      "salidas": [{ "bobina": "%Q0.4" }]
+    },
+    {
+      "comentario": "Luz COP / OVERSPEED: parada por la cadena.",
+      "logica": [{ "na": "%M0.2" }],
+      "salidas": [{ "bobina": "%Q0.5" }]
+    }
+  ]
+}

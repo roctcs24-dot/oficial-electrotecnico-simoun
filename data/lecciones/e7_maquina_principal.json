@@ -1,0 +1,70 @@
+{
+  "id": "e7_maquina_principal",
+  "titulo": "Arranque y paradas de la máquina principal",
+  "resumen": "El Main Engine Control Panel y el MEC2+: permisivos, arranque con aire, paradas de seguridad y diagnóstico con los LED del controlador.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El panel y la pantalla del MEC2+",
+      "bloques": [
+        { "tipo": "texto", "texto": "La {{maquina_principal}} del buque es un Wabtec (GE) 16V250 gobernado por su controlador MEC2+. En la sala de control están:\n• [b]Main Engine Control Panel:[/b] luces COP / OVERSPEED, LOAD LIMIT, LOW OIL PRESSURE, SYSTEM OK y ENGINE RUNNING; pulsador RESET ALARM; seta EMERGENCY STOP; selectores SYSTEM POWER, STOP-RUN-START, LOCAL-REMOTE y SPEED DECR-INCR.\n• [b]Pantalla del MEC2+:[/b] velocidad real y de referencia, modo de mando, temperaturas, presiones y velocidad de los turbos. Al ralentí se vio: 440 rpm, aceite a la entrada 2,8 bar, agua de salida 59 °C, cárter −0,51 mbar.\n• [b]Consola de propulsión Marinsa[/b] con la palanca, para el mando REMOTE.\n\nAquí se estudia una lógica típica con la misma forma ([i]lógica, umbrales y retardos reales: verificar con el manual del MEC2+[/i])." },
+        {
+          "tipo": "quiz",
+          "tema": "mp_panel",
+          "pregunta": "En el panel, el selector está en REMOTE. ¿Qué ocurre al girar STOP-RUN-START a START?",
+          "opciones": ["Arranca igual", "No arranca: el mando lo tiene la consola de propulsión; para arrancar desde el panel hay que pasar a LOCAL", "Se para el motor"],
+          "correcta": 1,
+          "explicacion": "Solo un puesto tiene el mando cada vez. En REMOTE, el START del panel local no tiene efecto."
+        }
+      ]
+    },
+    {
+      "titulo": "Permisivos y arranque",
+      "bloques": [
+        { "tipo": "texto", "texto": "El controlador solo acepta START si se cumplen todos los {{permisivo}}: mando en LOCAL, aceite con presión de {{prelubricacion}}, {{aire_arranque}} en la línea, cadena de paradas cerrada, sin emergencia ni STOP y sin paradas retenidas. El final de carrera del {{virador}} va además en serie con la solenoide de aire: con el virador acoplado, el aire no llega aunque el controlador lo pida.\n\nSecuencia:\n1. START abre la solenoide de aire: los motores de arranque, a unos 8,5 bar (123 psi en el monitor del buque), hacen girar el motor.\n2. El motor enciende. El {{rele_velocidad}} cierra a unas 200 rpm y el controlador corta el aire. Se enciende ENGINE RUNNING y el motor queda al ralentí, 440 rpm.\n3. Si en unos 8 s no enciende, corta el aire, marca arranque fallido y apaga SYSTEM OK.\n4. Con el motor frío se enciende LOAD LIMIT: el controlador no deja cargarlo hasta que se calienta.\n5. SPEED DECR-INCR baja o sube la velocidad entre el ralentí y la nominal, 1050 rpm." },
+        {
+          "tipo": "ordenar",
+          "tema": "mp_secuencia",
+          "pregunta": "Ordene un arranque desde el panel local:",
+          "pasos": ["Prelubricar hasta tener presión de aceite", "Comprobar virador desacoplado, aire, LOCAL y SYSTEM OK", "Girar a START: se abre el aire y el motor gira", "El relé de velocidad ve el encendido y se corta el aire", "Esperar a que se apague LOAD LIMIT antes de dar carga"],
+          "explicacion": "El aire solo se da con los permisivos completos y se corta en cuanto el motor enciende."
+        }
+      ]
+    },
+    {
+      "titulo": "Paradas de seguridad",
+      "bloques": [
+        { "tipo": "texto", "texto": "Las condiciones que exigen parar el motor de inmediato se cablean como contactos NC en serie, la cadena de paradas, que enciende COP / OVERSPEED:\n• [b]{{Sobrevelocidad}}:[/b] además, un dispositivo mecánico del motor corta el combustible.\n• [b]COP, sobrepresión del cárter:[/b] el cárter trabaja en ligera depresión, unos −0,5 mbar; una sobrepresión puede anunciar una explosión.\n• [b]{{Niebla_aceite}}:[/b] el detector CMR del cárter.\n• [b]Alta temperatura del agua.[/b]\n\nLa baja presión de aceite tiene su propia luz, LOW OIL PRESSURE, y se lee con un transmisor de 4-20 mA.\n\nUn contacto NC es seguro ante fallas: un cable cortado para el motor en vez de dejarlo sin protección. La {{parada_seguridad}} queda retenida: RESET ALARM la borra cuando el motor está parado y la cadena vuelve a estar cerrada." },
+        {
+          "tipo": "quiz",
+          "tema": "mp_cop",
+          "pregunta": "La máquina principal se paró con COP / OVERSPEED y la pantalla marcaba 440 rpm. ¿Qué hace?",
+          "opciones": ["RESET ALARM y arrancar", "Dejarla parada y avisar: el jefe de máquinas revisa el cárter tras el tiempo de enfriamiento, y solo después se revisa el presostato COP", "Puentear el COP para llegar a puerto"],
+          "correcta": 1,
+          "explicacion": "Sin sobrevelocidad, la parada viene del cárter o de otro contacto de la cadena. Se trata como real hasta descartarlo: abrir el cárter en caliente o arrancar sin revisarlo arriesga una explosión."
+        }
+      ]
+    },
+    {
+      "titulo": "Diagnóstico y seguridad",
+      "bloques": [
+        { "tipo": "texto", "texto": "• [b]Pantalla del MEC2+:[/b] compare lo que marca con la luz encendida. Una parada por COP con el cárter en −0,5 mbar apunta al presostato o a su cable.\n• [b]LED del controlador:[/b] entrada apagada con su contacto cerrado: cable o borne. Entrada encendida con el contacto abierto: corto o puente.\n• [b]Cadena de paradas:[/b] con el multímetro en V= contra el 0 V, recorra la cadena borne a borne. Donde hay 24 V a un lado y 0 V al otro está el contacto abierto.\n• [b]Antes de trabajar en el motor:[/b] avise al puente, ponga SYSTEM POWER en OFF y bloquee el panel, cierre y tarjetee la válvula de la botella de aire y purgue la línea. Si va a trabajar junto a partes que giran, acople el virador.\n• [b]Nunca[/b] se puentea un permisivo ni una parada de seguridad para salir del paso." },
+        {
+          "tipo": "quiz",
+          "tema": "mp_cadena",
+          "pregunta": "En la cadena de paradas mide 24 V en TA1 y 0 V en TA2 contra el 0 V, con el agua a 60 °C. ¿Qué indica?",
+          "opciones": ["El termostato de alta temperatura está abierto aunque el agua está fría: termostato o cable averiado", "Todo es normal", "El presostato COP está disparado"],
+          "correcta": 0,
+          "explicacion": "La tensión llega al termostato y no sale. Con el agua a 60 °C debería estar cerrado: se revisa el termostato y su cableado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SOLAS II-1, reglas 31 y 34: mandos de las máquinas y sistemas de aire a presión.",
+    "SOLAS II-1, regla 47, e IACS UR M10: protección contra explosiones del cárter.",
+    "IEC 60092-504: automatización y control de las máquinas.",
+    "Manuales del motor Wabtec (GE) 16V250, de su controlador MEC2+ y del detector CMR del buque.",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

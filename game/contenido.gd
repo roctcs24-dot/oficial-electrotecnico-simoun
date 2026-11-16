@@ -99,9 +99,17 @@ func mision(id: String) -> Dictionary:
 
 ## Un PLC del circuito con "programa_de" carga el programa de data/plc/<id>.json.
 func circuito(nombre: String) -> SimSimulacion:
-	var datos := leer("circuitos/%s.json" % nombre)
+	var datos := circuito_datos(nombre)
 	if datos.is_empty():
 		return null
+	return SimSimulacion.desde_dict(datos)
+
+
+## Los datos de un circuito, copiados y con los programas de sus PLC ya cargados.
+func circuito_datos(nombre: String) -> Dictionary:
+	var datos := leer("circuitos/%s.json" % nombre)
+	if datos.is_empty():
+		return {}
 	datos = datos.duplicate(true)
 	for c: Dictionary in datos.get("componentes", []):
 		var p: Dictionary = c.get("params", {})
@@ -109,7 +117,7 @@ func circuito(nombre: String) -> SimSimulacion:
 			var programa := plc(p["programa_de"])
 			p["programa"] = programa.get("programa", [])
 			p["etiquetas"] = programa.get("etiquetas", {})
-	return SimSimulacion.desde_dict(datos)
+	return datos
 
 
 ## Un tablero del buque: frente, circuito, posiciones del interior, señales y averías.
