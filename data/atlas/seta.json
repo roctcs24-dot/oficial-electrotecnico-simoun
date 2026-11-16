@@ -1,0 +1,374 @@
+{
+ "id": "seta",
+ "ficha": "seta",
+ "titulo": "Seta de emergencia",
+ "termino": "seta",
+ "icono": "seta",
+ "resumen": "Pulsador que queda enclavado al pulsarlo y para el equipo.",
+ "bornes_dibujo": {
+  "11": [
+   36,
+   212
+  ],
+  "12": [
+   76,
+   212
+  ],
+  "13": [
+   124,
+   212
+  ],
+  "14": [
+   164,
+   212
+  ]
+ },
+ "que_es": {
+  "texto": "La {{seta}} para el equipo de inmediato y queda enclavada: no puede volver a arrancar hasta que se libere girándola y se dé otra vez la marcha. Su contacto NC es de {{apertura_positiva}}.",
+  "partes": [
+   {
+    "texto": "Seta roja sobre fondo amarillo, con enclavamiento.",
+    "marca": [
+     20,
+     80
+    ]
+   },
+   {
+    "texto": "Desbloqueo: se gira la seta en el sentido de la flecha.",
+    "marca": [
+     180,
+     60
+    ]
+   },
+   {
+    "texto": "NC 11-12 de apertura positiva y NA 13-14 de señal.",
+    "marca": [
+     180,
+     212
+    ]
+   }
+  ],
+  "placa": "40 mm · 1 NC + 1 NA · desbloqueo por giro",
+  "a_bordo": "Junto a las bombas, compresores, grúas y en el puente. Ubicación — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "seta",
+   "titulo": "CORTE DE UNA SETA DE EMERGENCIA",
+   "contactos": [
+    {
+     "bornes": "11-12",
+     "tipo": "NC"
+    },
+    {
+     "bornes": "13-14",
+     "tipo": "NA"
+    }
+   ],
+   "rotulos": {
+    "accionado": "ENCLAVADA",
+    "reposo": "LIBERADA"
+   },
+   "notas": {
+    "reposo": "Liberada: 11-12 cerrado y el mando tiene tensión.",
+    "accionado": "Enclavada: 11-12 abierto a la fuerza y 13-14 da la alarma. Hay que girarla para liberarla."
+   }
+  },
+  "pasos": [
+   "Al pulsarla, el vástago baja y se engancha.",
+   "El mecanismo abre 11-12 a la fuerza y cierra 13-14.",
+   "Queda enclavada hasta que se gire: el equipo no vuelve a arrancar solo."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_seta.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "SE",
+     "x": 60,
+     "y": 64,
+     "tam": 12
+    },
+    {
+     "texto": "11",
+     "x": 88,
+     "y": 58,
+     "tam": 11
+    },
+    {
+     "texto": "12",
+     "x": 88,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "13",
+     "x": 274,
+     "y": 58,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 274,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 100,
+     "y": 180,
+     "tam": 12
+    },
+    {
+     "texto": "H3 alarma",
+     "x": 312,
+     "y": 180,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "11": [
+    100,
+    55
+   ],
+   "12": [
+    100,
+    105
+   ],
+   "13": [
+    260,
+    55
+   ],
+   "14": [
+    260,
+    105
+   ]
+  },
+  "bornes": {
+   "11": "Llega la fase de mando, al principio del circuito.",
+   "12": "Sale hacia todo el mando del equipo: al pulsarla, queda sin tensión.",
+   "13": "Llega la fase de mando para la señal.",
+   "14": "Va a la alarma de seta pulsada."
+  },
+  "grupos": [
+   {
+    "nombre": "Parada 11-12",
+    "bornes": [
+     "11",
+     "12"
+    ],
+    "texto": "NC al principio del mando: corta todo."
+   },
+   {
+    "nombre": "Señal 13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "NA que avisa de que está pulsada."
+   }
+  ],
+  "taller": "mando_seta",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "taller": "mando_seta",
+  "grupos": [
+   {
+    "nombre": "Contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "11",
+    "negra": "12",
+    "como": "Escala Ω · sin tensión",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Qué marca cada contacto",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_seta",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "SE.11",
+     "b": "SE.12"
+    },
+    "filas": [
+     {
+      "estado": "11-12 liberada",
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "11-12 pulsada",
+      "cambios": {
+       "estado": {
+        "SE": {
+         "enclavada": true
+        }
+       }
+      },
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "13-14 pulsada",
+      "cambios": {
+       "a": "SE.13",
+       "b": "SE.14",
+       "estado": {
+        "SE": {
+         "enclavada": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "11",
+    "negra": "12",
+    "como": "Escala V~ · entre 11 y 12",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión entre 11 y 12",
+    "columna": "11-12",
+    "medida": {
+     "circuito": "mando_seta",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "SE.11",
+     "b": "SE.12"
+    },
+    "filas": [
+     {
+      "estado": "Liberada",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Pulsada",
+      "cambios": {
+       "estado": {
+        "SE": {
+         "enclavada": true
+        }
+       }
+      },
+      "hacer": "Todo el mando sin tensión",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No para",
+    "sintoma": "Se pulsa la seta y el equipo sigue.",
+    "mide": [
+     {
+      "donde": "11-12 pulsada",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Contacto puenteado o bloque desencajado del mecanismo. Es muy grave.",
+    "reparacion": "Parar con el interruptor, bloquear y cambiar la seta; probarla antes de devolver el equipo."
+   },
+   {
+    "nombre": "No libera",
+    "sintoma": "Al girarla no vuelve.",
+    "mide": [
+     {
+      "donde": "11-12 tras girarla",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_seta",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "SE.11",
+       "b": "SE.12",
+       "estado": {
+        "SE": {
+         "enclavada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Mecanismo roto.",
+    "reparacion": "Cambiar la seta."
+   },
+   {
+    "nombre": "Arranca al liberarla",
+    "sintoma": "El equipo arranca solo al girar la seta.",
+    "mide": [
+     {
+      "donde": "retención del contactor",
+      "bien": false,
+      "valor": "puenteada"
+     }
+    ],
+    "causa": "Mando sin retención o con la marcha puenteada.",
+    "reparacion": "Corregir el mando: tras una emergencia, siempre hay que dar la marcha de nuevo."
+   },
+   {
+    "nombre": "Alarma falsa",
+    "sintoma": "Da alarma de seta sin estar pulsada.",
+    "mide": [
+     {
+      "donde": "13-14 liberada",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Agua en el bloque o bloque NA dañado.",
+    "reparacion": "Secar, cambiar el bloque y revisar la junta."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de las setas de equipos críticos"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "estado de juntas y fondo amarillo"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de todas las setas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-5-5 e ISO 13850: parada de emergencia.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

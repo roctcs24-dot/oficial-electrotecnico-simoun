@@ -42,6 +42,9 @@ func estampar(e: SimEstampa) -> void:
 ## Rearme manual: solo si la presión ya volvió a un valor correcto. El que vigila solo en
 ## marcha, como el de aceite, rearma con el compresor parado: el retardo cuenta al arrancar.
 func rearmar() -> bool:
+	if not _con_planta():
+		estado["disparado"] = false
+		return true
 	var vigila: bool = not params["solo_en_marcha"] or _planta().compresor_en_marcha()
 	if vigila and (_fuera_de_corte(_presion()) or _en_diferencial(_presion())):
 		return false
@@ -70,8 +73,13 @@ func _en_diferencial(p: float) -> bool:
 	return p < float(params["corte_bar"]) + d
 
 
+## Suelto, como en el banco de medida del atlas, no tiene planta que vigilar.
+func _con_planta() -> bool:
+	return sim() != null and sim().componentes.has(params["planta"])
+
+
 func avanzar(dt: float, _sol: SimSolver.Solucion) -> void:
-	if sim() == null:
+	if not _con_planta():
 		return
 	var p := _presion()
 	var vigila: bool = not params["solo_en_marcha"] or _planta().compresor_en_marcha()

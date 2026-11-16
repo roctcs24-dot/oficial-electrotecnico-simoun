@@ -1,0 +1,83 @@
+{
+  "id": "interruptor_nivel",
+  "titulo": "Interruptor de nivel",
+  "resumen": "Un flotador cierra o abre un contacto cuando el líquido llega a su altura.",
+  "dibujo": {
+    "svg": "res://art/equipos/interruptor_nivel.svg",
+    "tamano": [
+      320,
+      380
+    ],
+    "nota": "Interruptor de nivel de flotador con su cámara en corte, dibujado de forma general. En el buque, los de la botella de baja son Parker LLSS; modelos y ubicación: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "LEVEL SWITCH",
+        "x": 160,
+        "y": 50,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "Flotador",
+        "x": 160,
+        "y": 266,
+        "tam": 11,
+        "color": "#20242a"
+      },
+      {
+        "texto": "Líquido",
+        "x": 160,
+        "y": 330,
+        "tam": 11,
+        "color": "#20242a"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Interruptor de nivel según IEC 60617, y LSH o LSL según ISA 5.1. Verificar contra la norma.",
+    "lista": [
+      "interruptor_nivel"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{interruptor_nivel}} vigila la altura de un líquido: su {{flotador}} cierra o abre un contacto al llegar a un nivel. En la planta de frío, el de nivel alto de la botella de baja para el compresor para que no aspire líquido; en sentinas y tanques, da la alarma o arranca una bomba."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Flotador[/b] dentro de una cámara unida al recipiente.\n• [b]Imán o varilla[/b] que transmite el movimiento al contacto, sin que el líquido llegue a la caja.\n• [b]Contacto[/b] NA o NC, o conmutado. En el LLSS: gris común, negro NA, rojo NC y verde tierra ([i]verificar en su etiqueta[/i])."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• El contacto que debe parar el compresor, en serie con su mando, como los presostatos.\n• La caja, con su prensaestopas bien cerrado: la humedad es su peor enemigo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por el líquido (apto para amoníaco en la planta), la presión, el nivel de actuación y el tipo de contacto. Algunos permiten ajustar la altura."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Prueba funcional[/b] según el procedimiento de la planta: subir el nivel o mover el flotador con el imán de prueba, si lo tiene.\n• [b]Sin tensión:[/b] continuidad del contacto en reposo y accionado."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Flotador pegado[/b] por suciedad o aceite: no avisa.\n• [b]Flotador perforado[/b] que se hunde: da alarma siempre o nunca, según el contacto.\n• [b]Agua en la caja[/b]: contacto corroído."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: prueba funcional y estado de la caja.\n\n[b]Correctivo:[/b] limpieza de la cámara o cambio del flotador o del interruptor, con la planta aislada y sin amoníaco."
+    }
+  ],
+  "para_saber_mas": [
+    "ISA 5.1: identificación de instrumentos.",
+    "IIAR: buenas prácticas en refrigeración por amoníaco."
+  ]
+}

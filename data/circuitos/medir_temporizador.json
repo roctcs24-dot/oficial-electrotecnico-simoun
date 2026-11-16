@@ -1,0 +1,15 @@
+{
+  "nombre": "Temporizador suelto",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "KT",
+      "tipo": "temporizador",
+      "params": {
+        "modo": "on_delay",
+        "retardo_s": 5
+      }
+    }
+  ],
+  "cables": []
+}

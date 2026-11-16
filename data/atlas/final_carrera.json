@@ -1,0 +1,369 @@
+{
+ "id": "final_carrera",
+ "ficha": "final_carrera",
+ "titulo": "Final de carrera",
+ "termino": "final_carrera",
+ "icono": "final_carrera",
+ "resumen": "Detecta que una pieza llegó a su posición: la leva empuja el rodillo.",
+ "bornes_dibujo": {},
+ "que_es": {
+  "texto": "El {{final_carrera}} detecta que una máquina llegó a una posición: una leva empuja su rodillo, la palanca gira y cambian sus contactos. Para un movimiento al llegar al tope o confirma que una puerta o una tapa están cerradas.",
+  "partes": [
+   {
+    "texto": "Rodillo y palanca, que empuja la leva.",
+    "marca": [
+     292,
+     80
+    ]
+   },
+   {
+    "texto": "Caja con 1 NA y 1 NC de apertura positiva.",
+    "marca": [
+     24,
+     186
+    ]
+   },
+   {
+    "texto": "Prensaestopas del cable.",
+    "marca": [
+     292,
+     340
+    ]
+   }
+  ],
+  "placa": "1 NA + 1 NC · IP67 · 10 A 400 V",
+  "a_bordo": "Grúas, power block, puertas estancas y escotillas. Ubicación — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "final_carrera",
+   "titulo": "FINAL DE CARRERA DE RODILLO",
+   "magnitud": "Posición de la leva",
+   "minimo": 0,
+   "maximo": 1,
+   "inicial": 0.1,
+   "unidad": "%",
+   "escala_valor": 100,
+   "contactos": [
+    {
+     "bornes": "13-14",
+     "tipo": "NA"
+    },
+    {
+     "bornes": "21-22",
+     "tipo": "NC"
+    }
+   ],
+   "notas": {
+    "reposo": "La leva aún no llega al rodillo: 21-22 cerrado y el movimiento sigue.",
+    "accionado": "La leva empuja el rodillo: 21-22 abre y para el movimiento; 13-14 confirma la posición."
+   }
+  },
+  "pasos": [
+   "La máquina se mueve y su leva se acerca al rodillo.",
+   "La leva empuja el rodillo y la palanca gira.",
+   "El NC 21-22 abre y para el movimiento; el NA 13-14 cierra y lo señala."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_final_carrera.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "SQ",
+     "x": 60,
+     "y": 70,
+     "tam": 12
+    },
+    {
+     "texto": "21",
+     "x": 88,
+     "y": 68,
+     "tam": 11
+    },
+    {
+     "texto": "22",
+     "x": 88,
+     "y": 114,
+     "tam": 11
+    },
+    {
+     "texto": "13",
+     "x": 274,
+     "y": 68,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 274,
+     "y": 114,
+     "tam": 11
+    },
+    {
+     "texto": "K1 virar",
+     "x": 100,
+     "y": 236,
+     "tam": 11
+    },
+    {
+     "texto": "H1 en tope",
+     "x": 312,
+     "y": 180,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "21": [
+    100,
+    65
+   ],
+   "22": [
+    100,
+    115
+   ],
+   "13": [
+    260,
+    65
+   ],
+   "14": [
+    260,
+    115
+   ]
+  },
+  "bornes": {
+   "21": "Llega la fase de mando.",
+   "22": "Sale hacia el contactor del movimiento: al llegar al tope abre y lo para.",
+   "13": "Llega la fase de mando para la señal.",
+   "14": "Va a la luz o al PLC que confirma la posición."
+  },
+  "grupos": [
+   {
+    "nombre": "NC 21-22",
+    "bornes": [
+     "21",
+     "22"
+    ],
+    "texto": "Para el movimiento al llegar: es de apertura positiva."
+   },
+   {
+    "nombre": "NA 13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "Señala que la máquina está en posición."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "grupos": [
+   {
+    "nombre": "Contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "21",
+    "negra": "22",
+    "como": "Escala Ω · sin tensión",
+    "nota": "Sin tensión; acciónelo con la mano.",
+    "titulo_tabla": "Qué marca cada contacto",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_final_carrera",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "SQ.21",
+     "b": "SQ.22"
+    },
+    "filas": [
+     {
+      "estado": "21-22 libre",
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "21-22 accionado",
+      "cambios": {
+       "estado": {
+        "SQ": {
+         "accionado": true
+        }
+       }
+      },
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "13-14 accionado",
+      "cambios": {
+       "a": "SQ.13",
+       "b": "SQ.14",
+       "estado": {
+        "SQ": {
+         "accionado": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "21-22 libre, palanca atascada",
+      "cambios": {
+       "params": {
+        "SQ": {
+         "atascado": true
+        }
+       }
+      },
+      "hacer": "Liberar o cambiar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "22",
+    "negra": "21",
+    "como": "Escala V~ · en la carga",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "La carga tras el NC",
+    "columna": "V",
+    "medida": {
+     "circuito": "mando_final_carrera",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "H1.X1",
+     "b": "H1.X2"
+    },
+    "filas": [
+     {
+      "estado": "Libre",
+      "hacer": "El movimiento sigue",
+      "bien": true
+     },
+     {
+      "estado": "Accionado",
+      "cambios": {
+       "estado": {
+        "SQ": {
+         "accionado": true
+        }
+       }
+      },
+      "hacer": "Se para",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No para en el tope",
+    "sintoma": "La máquina pasa del tope.",
+    "mide": [
+     {
+      "donde": "21-22 accionado",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Final de carrera desajustado (la leva no lo empuja) o contacto puenteado.",
+    "reparacion": "Ajustar la leva o la palanca y probarlo a mano antes de mover la máquina."
+   },
+   {
+    "nombre": "No arranca",
+    "sintoma": "La máquina no se mueve aunque no está en el tope.",
+    "mide": [
+     {
+      "donde": "21-22 libre",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_final_carrera",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "SQ.21",
+       "b": "SQ.22",
+       "params": {
+        "SQ": {
+         "atascado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Palanca atascada o rodillo roto.",
+    "reparacion": "Liberar o cambiar el final de carrera."
+   },
+   {
+    "nombre": "Falla con agua",
+    "sintoma": "Da señales falsas tras baldear la cubierta.",
+    "mide": [
+     {
+      "donde": "13-14 libre",
+      "bien": false,
+      "valor": "2 kΩ"
+     }
+    ],
+    "causa": "Agua dentro: prensaestopas o tapa mal cerrados.",
+    "reparacion": "Secar, cambiar la junta y cerrar bien el prensaestopas."
+   },
+   {
+    "nombre": "Rodillo gastado",
+    "sintoma": "Actúa tarde o no siempre.",
+    "mide": [
+     {
+      "donde": "recorrido de la palanca",
+      "bien": false,
+      "valor": "insuficiente"
+     }
+    ],
+    "causa": "Rodillo o leva desgastados.",
+    "reparacion": "Cambiar el rodillo y reajustar."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de los finales de carrera de grúas y power block"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "estado de juntas y prensaestopas"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "ajuste de levas y palancas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-5-1: interruptores de posición.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

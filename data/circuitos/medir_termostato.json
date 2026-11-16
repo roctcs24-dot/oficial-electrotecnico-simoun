@@ -1,0 +1,11 @@
+{
+  "nombre": "Termostato suelto",
+  "nota": "Sin cables: se mide sin tensión. Consigna −18 °C y diferencial 2 K: valores típicos, verificar a bordo.",
+  "componentes": [
+    {
+      "id": "TS",
+      "tipo": "termostato"
+    }
+  ],
+  "cables": []
+}

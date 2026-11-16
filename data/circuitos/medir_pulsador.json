@@ -1,0 +1,21 @@
+{
+  "nombre": "Pulsadores sueltos",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "S0",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NC"
+      }
+    }
+  ],
+  "cables": []
+}

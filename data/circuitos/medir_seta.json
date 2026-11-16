@@ -1,0 +1,11 @@
+{
+  "nombre": "Seta de emergencia suelta",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "SE",
+      "tipo": "seta"
+    }
+  ],
+  "cables": []
+}

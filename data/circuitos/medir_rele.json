@@ -1,0 +1,17 @@
+{
+  "nombre": "Relé auxiliar de 110 V AC suelto",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "KA",
+      "tipo": "rele_dc",
+      "params": {
+        "v_bobina": 110.0,
+        "r_bobina": 4400.0,
+        "alterna": true,
+        "pieza": "rele_110"
+      }
+    }
+  ],
+  "cables": []
+}

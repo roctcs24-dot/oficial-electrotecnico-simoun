@@ -1,0 +1,27 @@
+{
+  "nombre": "Selector MAN-OFF-AUT suelto",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "SA",
+      "tipo": "selector",
+      "params": {
+        "posiciones": [
+          "MAN",
+          "OFF",
+          "AUT"
+        ],
+        "contactos": {
+          "13-14": [
+            "MAN"
+          ],
+          "23-24": [
+            "AUT"
+          ]
+        },
+        "inicial": "OFF"
+      }
+    }
+  ],
+  "cables": []
+}

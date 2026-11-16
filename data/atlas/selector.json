@@ -1,0 +1,409 @@
+{
+ "id": "selector",
+ "ficha": "selector",
+ "titulo": "Selector",
+ "termino": "selector",
+ "icono": "selector",
+ "resumen": "Mando giratorio que mantiene la posición elegida, como MAN-OFF-AUT.",
+ "bornes_dibujo": {
+  "13": [
+   42,
+   212
+  ],
+  "14": [
+   82,
+   212
+  ],
+  "23": [
+   138,
+   212
+  ],
+  "24": [
+   178,
+   212
+  ]
+ },
+ "que_es": {
+  "texto": "El {{selector}} elige cómo trabaja un equipo y se queda en la posición elegida: en MAN la bomba trabaja a mano, en OFF está parada y en AUT la manda un presostato o el PLC.",
+  "partes": [
+   {
+    "texto": "Mando con sus posiciones MAN, OFF y AUT.",
+    "marca": [
+     20,
+     100
+    ]
+   },
+   {
+    "texto": "Bloques de contacto 13-14 y 23-24.",
+    "marca": [
+     200,
+     212
+    ]
+   },
+   {
+    "texto": "Bloque 33-34 libre, para otra señal si hace falta.",
+    "marca": [
+     20,
+     150
+    ]
+   }
+  ],
+  "placa": "22 mm · 3 posiciones fijas · 2 NA",
+  "a_bordo": "Bombas de prelubricación, purificadoras y ventiladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "selector",
+   "titulo": "SELECTOR MAN-OFF-AUT Y SUS CONTACTOS",
+   "posiciones": [
+    "MAN",
+    "OFF",
+    "AUT"
+   ],
+   "inicial_posicion": "OFF",
+   "tabla": {
+    "13-14": [
+     "MAN"
+    ],
+    "23-24": [
+     "AUT"
+    ]
+   },
+   "contactos": [
+    {
+     "bornes": "13-14",
+     "tipo": "NA"
+    },
+    {
+     "bornes": "23-24",
+     "tipo": "NA"
+    }
+   ],
+   "notas": {
+    "MAN": "MAN: cierra 13-14 y la bomba trabaja a mano.",
+    "OFF": "OFF: los dos contactos abiertos; el equipo no arranca.",
+    "AUT": "AUT: cierra 23-24 y manda el automático."
+   }
+  },
+  "pasos": [
+   "En MAN, la leva cierra el 13-14: trabajo a mano.",
+   "En OFF, los dos abiertos: parado.",
+   "En AUT, cierra el 23-24: manda el presostato o el PLC."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_selector.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "SA",
+     "x": 66,
+     "y": 84,
+     "tam": 12
+    },
+    {
+     "texto": "13",
+     "x": 88,
+     "y": 78,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 88,
+     "y": 124,
+     "tam": 11
+    },
+    {
+     "texto": "23",
+     "x": 208,
+     "y": 78,
+     "tam": 11
+    },
+    {
+     "texto": "24",
+     "x": 208,
+     "y": 124,
+     "tam": 11
+    },
+    {
+     "texto": "H1 MAN",
+     "x": 140,
+     "y": 180,
+     "tam": 11
+    },
+    {
+     "texto": "H2 AUT",
+     "x": 262,
+     "y": 180,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "13": [
+    100,
+    75
+   ],
+   "14": [
+    100,
+    125
+   ],
+   "23": [
+    220,
+    75
+   ],
+   "24": [
+    220,
+    125
+   ]
+  },
+  "bornes": {
+   "13": "Llega la fase de mando.",
+   "14": "Sale hacia el mando manual (la luz H1).",
+   "23": "Llega la fase de mando.",
+   "24": "Sale hacia el mando automático (la luz H2)."
+  },
+  "grupos": [
+   {
+    "nombre": "MAN 13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "Cierra solo en MAN."
+   },
+   {
+    "nombre": "AUT 23-24",
+    "bornes": [
+     "23",
+     "24"
+    ],
+    "texto": "Cierra solo en AUT."
+   }
+  ],
+  "taller": "mando_selector",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "taller": "mando_selector",
+  "grupos": [
+   {
+    "nombre": "Tabla de contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "13",
+    "negra": "14",
+    "como": "Escala Ω · posición por posición",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Qué contacto cierra en cada posición",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_selector",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "SA.13",
+     "b": "SA.14"
+    },
+    "filas": [
+     {
+      "estado": "13-14 en MAN",
+      "cambios": {
+       "estado": {
+        "SA": {
+         "posicion": 0
+        }
+       }
+      },
+      "hacer": "Cerrado",
+      "bien": true
+     },
+     {
+      "estado": "13-14 en OFF",
+      "cambios": {
+       "estado": {
+        "SA": {
+         "posicion": 1
+        }
+       }
+      },
+      "hacer": "Abierto",
+      "bien": true
+     },
+     {
+      "estado": "23-24 en AUT",
+      "cambios": {
+       "a": "SA.23",
+       "b": "SA.24",
+       "estado": {
+        "SA": {
+         "posicion": 2
+        }
+       }
+      },
+      "hacer": "Cerrado",
+      "bien": true
+     },
+     {
+      "estado": "23-24 en MAN",
+      "cambios": {
+       "a": "SA.23",
+       "b": "SA.24",
+       "estado": {
+        "SA": {
+         "posicion": 0
+        }
+       }
+      },
+      "hacer": "Abierto",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "14",
+    "negra": "13",
+    "como": "Escala V~ · en cada luz",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Luces según la posición",
+    "columna": "V",
+    "medida": {
+     "circuito": "mando_selector",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "H1.X1",
+     "b": "H1.X2"
+    },
+    "filas": [
+     {
+      "estado": "H1 en MAN",
+      "cambios": {
+       "estado": {
+        "SA": {
+         "posicion": 0
+        }
+       }
+      },
+      "hacer": "Manual activo",
+      "bien": true
+     },
+     {
+      "estado": "H1 en OFF",
+      "hacer": "Parado",
+      "bien": true
+     },
+     {
+      "estado": "H2 en AUT",
+      "cambios": {
+       "a": "H2.X1",
+       "b": "H2.X2",
+       "estado": {
+        "SA": {
+         "posicion": 2
+        }
+       }
+      },
+      "hacer": "Automático activo",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No arranca en AUT",
+    "sintoma": "En AUT la bomba no arranca aunque el presostato lo pide.",
+    "mide": [
+     {
+      "donde": "23-24 en AUT",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Bloque 23-24 suelto o quemado.",
+    "reparacion": "Bloquear, encajar o cambiar el bloque."
+   },
+   {
+    "nombre": "Funciona en OFF",
+    "sintoma": "Con el selector en OFF la bomba sigue.",
+    "mide": [
+     {
+      "donde": "13-14 en OFF",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Bloque mal montado o leva rota: cierra en otra posición.",
+    "reparacion": "Comprobar la tabla de contactos y montar el bloque según el esquema."
+   },
+   {
+    "nombre": "Gira loco",
+    "sintoma": "El mando gira sin topes y no cambia nada.",
+    "mide": [
+     {
+      "donde": "13-14 en MAN",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Leva o mecanismo roto.",
+    "reparacion": "Cambiar el mando del selector."
+   },
+   {
+    "nombre": "Tabla equivocada",
+    "sintoma": "Tras una reparación, MAN y AUT están cambiados.",
+    "mide": [
+     {
+      "donde": "H2 en MAN",
+      "bien": false,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Bloques intercambiados.",
+    "reparacion": "Recablear según el esquema y probar cada posición."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "posición de cada selector según la guardia"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de cada posición"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-5-1: aparatos de mando.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

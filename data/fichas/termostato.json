@@ -1,0 +1,122 @@
+{
+  "id": "termostato",
+  "titulo": "Termostato",
+  "resumen": "Contacto que cambia con la temperatura de su bulbo.",
+  "dibujo": {
+    "svg": "res://art/equipos/termostato.svg",
+    "tamano": [
+      300,
+      380
+    ],
+    "nota": "Termostato de bulbo y capilar con escalas de consigna y diferencial, dibujado de forma general. Modelo y ajustes de cada cámara: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "°C",
+        "x": 150,
+        "y": 46,
+        "tam": 13,
+        "color": "#20242a"
+      },
+      {
+        "texto": "−30",
+        "x": 80,
+        "y": 106,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "+10",
+        "x": 220,
+        "y": 106,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "RANGE",
+        "x": 100,
+        "y": 182,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "DIFF",
+        "x": 200,
+        "y": 182,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "1",
+        "x": 100,
+        "y": 232,
+        "tam": 10
+      },
+      {
+        "texto": "2",
+        "x": 150,
+        "y": 232,
+        "tam": 10
+      },
+      {
+        "texto": "4",
+        "x": 200,
+        "y": 232,
+        "tam": 10
+      },
+      {
+        "texto": "Bulbo",
+        "x": 210,
+        "y": 352,
+        "tam": 12,
+        "color": "#20242a"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Termostato: contacto accionado por temperatura según IEC 60617, y TSH o TSL según ISA 5.1. Verificar contra la norma.",
+    "lista": [
+      "termostato"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{termostato}} abre o cierra un contacto según la temperatura de su bulbo. Mantiene una cámara o la salmuera entre su {{consigna}} y la consigna menos su {{diferencial_ajuste}}, o protege un equipo contra el exceso de temperatura."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Bulbo y capilar[/b] con un gas o líquido que se dilata con la temperatura.\n• [b]Fuelle[/b] que empuja el mecanismo.\n• [b]Ajustes[/b] de consigna (RANGE) y de diferencial (DIFF).\n• [b]Contacto conmutado[/b]: 1 común; en el de frío, 1-4 cierra al subir la temperatura y 1-2 abre."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• El bulbo, bien sujeto donde se mide, sin doblar el capilar.\n• El contacto que pide frío, en serie con la válvula solenoide o el mando del equipo.\n• Bornes 1-2-4 a la tensión de mando."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Consigna:[/b] la temperatura a la que actúa.\n• [b]Diferencial:[/b] cuánto debe bajar para volver; uno pequeño hace arrancar y parar muy seguido.\n• Valores típicos de una bodega de pescado congelado: −18 °C con 2 K ([i]verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• Compare la temperatura real con un termómetro calibrado con la escala del termostato.\n• [b]Sin tensión:[/b] según la temperatura, 1-4 o 1-2 casi 0 Ω.\n• [b]Con tensión:[/b] mida la salida al pasar la consigna."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Nunca pide frío:[/b] capilar roto y bulbo descargado; queda como frío.\n• [b]Temperatura fuera de margen:[/b] bulbo suelto o en una corriente de aire.\n• [b]Arranca y para muy seguido:[/b] diferencial demasiado pequeño."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: comparación con un termómetro calibrado y sujeción del bulbo.\n\n[b]Correctivo:[/b] un capilar roto obliga a cambiar el termostato completo."
+    }
+  ],
+  "para_saber_mas": [
+    "ISA 5.1: identificación de instrumentos.",
+    "IEC 60617: símbolos gráficos."
+  ]
+}

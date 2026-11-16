@@ -1,0 +1,104 @@
+{
+  "id": "temporizador",
+  "titulo": "Temporizador",
+  "resumen": "Conmuta su contacto cuando ha pasado un tiempo ajustado.",
+  "dibujo": {
+    "svg": "res://art/taller/temporizador.svg",
+    "tamano": [
+      260,
+      300
+    ],
+    "nota": "Temporizador electrónico de carril DIN con contacto conmutado 15-16-18, dibujado de forma general. Modelo y tiempos del buque: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A1",
+        "x": 60,
+        "y": 22,
+        "tam": 16
+      },
+      {
+        "texto": "A2",
+        "x": 200,
+        "y": 22,
+        "tam": 16
+      },
+      {
+        "texto": "15",
+        "x": 50,
+        "y": 214,
+        "tam": 16
+      },
+      {
+        "texto": "16",
+        "x": 130,
+        "y": 214,
+        "tam": 16
+      },
+      {
+        "texto": "18",
+        "x": 210,
+        "y": 214,
+        "tam": 16
+      },
+      {
+        "texto": "TEMPORIZADOR",
+        "x": 130,
+        "y": 100,
+        "tam": 15
+      },
+      {
+        "texto": "6 s",
+        "x": 130,
+        "y": 150,
+        "tam": 20
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Bobina de temporizador y contactos temporizados según IEC 60617. Verificar contra la norma.",
+    "lista": [
+      "temporizador"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{temporizador}} cambia su contacto un tiempo después de una orden. El {{temporizador_conexion}} espera el {{retardo}} con la bobina alimentada, como el paso de estrella a triángulo. El {{temporizador_desconexion}} conmuta al momento y vuelve cuando se le quita la tensión, como un ventilador que sigue un rato tras parar."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Alimentación[/b] A1-A2, que hace de bobina.\n• [b]Electrónica[/b] que cuenta el tiempo, con su escala y su ajuste fino.\n• [b]Relé de salida[/b] con contacto conmutado: 15 común, 16 NC y 18 NA.\n• [b]LED[/b] de alimentación y de salida."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• A1-A2 a la tensión de mando.\n• El contacto 15-18 en serie con lo que debe arrancar tras el retardo; el 15-16 con lo que debe parar.\n• En los multifunción, un selector elige a la conexión, a la desconexión u otras funciones."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]Escala y ajuste:[/b] elija primero la escala (por ejemplo, de 1 a 10 s) y después el valor.\n• [b]Función:[/b] a la conexión o a la desconexión, según el esquema.\n• En el arranque estrella-triángulo, el tiempo típico es de 5 a 10 s ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con tensión:[/b] mida A1-A2 y cronometre cuándo cambia la salida. Debe coincidir con el ajuste.\n• [b]Sin tensión:[/b] 15-16 casi 0 Ω y 15-18 OL.\n• Mida la alimentación: muchos aceptan un margen amplio, pero no cualquier tensión."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Nunca conmuta:[/b] sin alimentación, o la escala está en un tiempo muy largo.\n• [b]Conmuta al momento:[/b] función equivocada o escala muy corta.\n• [b]Relé de salida quemado:[/b] el LED dice que conmutó y la carga no recibe nada."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada año: cronometrar los tiempos de los temporizadores de arranque y comprobar el ajuste contra el esquema.\n\n[b]Correctivo:[/b] se cambia por otro de la misma tensión y función, y se copia el ajuste."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61812-1: relés temporizados.",
+    "IEC 60617: símbolos gráficos."
+  ]
+}

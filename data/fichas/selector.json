@@ -1,0 +1,93 @@
+{
+  "id": "selector",
+  "titulo": "Selector",
+  "resumen": "Mando giratorio de varias posiciones, como MAN-OFF-AUT.",
+  "dibujo": {
+    "svg": "res://art/taller/selector.svg",
+    "tamano": [
+      220,
+      260
+    ],
+    "nota": "Selector de 22 mm de tres posiciones MAN-OFF-AUT con sus bloques de contacto, dibujado de forma general. Posiciones y contactos de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "13",
+        "x": 42,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "14",
+        "x": 82,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "23",
+        "x": 138,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "24",
+        "x": 178,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "MAN  OFF  AUT",
+        "x": 110,
+        "y": 150,
+        "tam": 15,
+        "color": "#eef3f7"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Selector de tres posiciones según IEC 60617, con la tabla de qué contacto cierra en cada posición. Verificar contra la norma.",
+    "lista": [
+      "selector_tres_posiciones"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{selector}} elige cómo trabaja un equipo y mantiene la posición elegida: por ejemplo, una bomba en manual (MAN), parada (OFF) o en automático (AUT), mandada entonces por un presostato o un PLC."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Mando giratorio[/b] de manivela o de llave, con sus posiciones marcadas.\n• [b]Bloques de contacto[/b] detrás del frente: 13-14 y 23-24 son NA, 21-22 NC.\n• [b]Leva[/b] que cierra cada bloque en las posiciones que indica su tabla.\n• Algunas posiciones tienen [b]retorno por resorte[/b], como START."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Cada contacto alimenta el modo que le toca: en el MAN-OFF-AUT del Taller, 13-14 cierra en MAN y 23-24 en AUT.\n• La tabla de contactos del esquema dice qué cierra en cada posición: léala antes de cablear."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por el número de posiciones, si alguna vuelve por resorte, si es de llave y por los bloques de contacto que lleva."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b], en continuidad: gire posición por posición y compruebe la tabla de contactos.\n• [b]Con tensión:[/b] mida la salida de cada contacto en su posición."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Un modo no responde:[/b] bloque de contacto suelto o quemado.\n• [b]Mando que gira loco:[/b] leva rota; el indicador ya no dice la verdad.\n• [b]Bloque mal montado[/b] después de una reparación: cierra en otra posición."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada año: prueba de cada posición y apriete de los bloques.\n\n[b]Correctivo:[/b] se cambia el bloque de contacto o el mando completo."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-1: aparatos de mando.",
+    "IEC 60617: símbolos gráficos."
+  ]
+}

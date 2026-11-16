@@ -134,6 +134,9 @@ func _cabecera_atlas() -> void:
 
 
 func _subtitulo() -> String:
+	var propio: String = atlas.get(pestana, {}).get("subtitulo", "") if atlas.get(pestana) is Dictionary else ""
+	if not propio.is_empty():
+		return propio
 	if SUBTITULOS.has(pestana):
 		return SUBTITULOS[pestana]
 	var termino: Dictionary = _glosario.get(str(atlas.get("termino", "")), {})

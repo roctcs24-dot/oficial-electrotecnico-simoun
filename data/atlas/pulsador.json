@@ -1,0 +1,380 @@
+{
+ "id": "pulsador",
+ "ficha": "pulsador",
+ "titulo": "Pulsador",
+ "termino": "pulsador",
+ "icono": "pulsador",
+ "resumen": "Da una orden mientras se pulsa: un resorte lo devuelve al soltarlo.",
+ "bornes_dibujo": {
+  "13": [
+   125,
+   284
+  ],
+  "14": [
+   125,
+   346
+  ],
+  "21": [
+   355,
+   284
+  ],
+  "22": [
+   355,
+   346
+  ]
+ },
+ "que_es": {
+  "texto": "El {{pulsador}} da una orden solo mientras se mantiene pulsado: al soltarlo, un resorte lo devuelve. El de marcha lleva un contacto {{na}} 13-14; el de parada, un {{nc}} 21-22. La marcha se mantiene con el {{retencion}} del contactor.",
+  "partes": [
+   {
+    "texto": "Cabeza en el frente: verde I para marcha, roja O para parada.",
+    "marca": [
+     30,
+     90
+    ]
+   },
+   {
+    "texto": "Bloque NA 13-14 detrás del tablero.",
+    "marca": [
+     30,
+     316
+    ]
+   },
+   {
+    "texto": "Bloque NC 21-22.",
+    "marca": [
+     452,
+     316
+    ]
+   }
+  ],
+  "placa": "22 mm · 1 NA o 1 NC · 10 A 600 V",
+  "a_bordo": "Botoneras locales de bombas, compresores y ventiladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "pulsador",
+   "titulo": "CORTE DE UN PULSADOR CON SUS BLOQUES",
+   "marca": "I",
+   "color": "#2f9e57",
+   "contactos": [
+    {
+     "bornes": "13-14",
+     "tipo": "NA"
+    },
+    {
+     "bornes": "21-22",
+     "tipo": "NC"
+    }
+   ],
+   "rotulos": {
+    "accionado": "PULSADO",
+    "reposo": "EN REPOSO"
+   },
+   "notas": {
+    "reposo": "En reposo, el resorte mantiene arriba el vástago: 13-14 abierto y 21-22 cerrado.",
+    "accionado": "Pulsado: 13-14 cierra y 21-22 abre. Al soltarlo, vuelve solo."
+   }
+  },
+  "pasos": [
+   "En reposo, el resorte mantiene el puente arriba.",
+   "Al pulsar, el vástago baja el puente.",
+   "El NA 13-14 cierra y el NC 21-22 abre; al soltar, el resorte los devuelve."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_pulsador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "S0 parada",
+     "x": 168,
+     "y": 80,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 84,
+     "y": 150,
+     "tam": 12
+    },
+    {
+     "texto": "K1 13-14",
+     "x": 246,
+     "y": 150,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 160,
+     "y": 225,
+     "tam": 12
+    },
+    {
+     "texto": "21",
+     "x": 108,
+     "y": 58,
+     "tam": 11
+    },
+    {
+     "texto": "22",
+     "x": 108,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "13",
+     "x": 108,
+     "y": 128,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 108,
+     "y": 174,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "21": [
+    120,
+    55
+   ],
+   "22": [
+    120,
+    105
+   ],
+   "13": [
+    120,
+    125
+   ],
+   "14": [
+    120,
+    175
+   ]
+  },
+  "bornes": {
+   "21": "Llega la fase de mando.",
+   "22": "Sale hacia la marcha: al pulsar parada se abre y el contactor suelta.",
+   "13": "Llega la fase después de la parada, igual que al 13 del contactor.",
+   "14": "Va a A1 del contactor: al pulsar marcha cierra; al soltar, sigue la retención."
+  },
+  "grupos": [
+   {
+    "nombre": "Parada 21-22",
+    "bornes": [
+     "21",
+     "22"
+    ],
+    "texto": "NC en serie: cualquier parada abre el circuito. Por seguridad, las paradas siempre son NC."
+   },
+   {
+    "nombre": "Marcha 13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "NA en paralelo con el 13-14 del contactor: da la orden y la retención la mantiene."
+   }
+  ],
+  "taller": "arranque_directo",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "taller": "mando_pulsador",
+  "grupos": [
+   {
+    "nombre": "Contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "13",
+    "negra": "14",
+    "como": "Escala Ω · en los bornes del bloque",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Qué debe marcar cada bloque",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_pulsador",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "S1.13",
+     "b": "S1.14"
+    },
+    "filas": [
+     {
+      "estado": "13-14 en reposo",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "13-14 pulsado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "21-22 en reposo",
+      "cambios": {
+       "a": "S0.21",
+       "b": "S0.22"
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "21-22 pulsado",
+      "cambios": {
+       "a": "S0.21",
+       "b": "S0.22",
+       "estado": {
+        "S0": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: abierto",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "13",
+    "negra": "14",
+    "como": "Escala V~ · entre los bornes del contacto",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión entre los bornes de S1",
+    "columna": "13-14",
+    "medida": {
+     "circuito": "mando_pulsador",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "S1.13",
+     "b": "S1.14"
+    },
+    "filas": [
+     {
+      "estado": "Sin pulsar",
+      "hacer": "Abierto: toda la tensión",
+      "bien": true
+     },
+     {
+      "estado": "Pulsado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Cerrado: casi 0 V",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "La marcha no arranca",
+    "sintoma": "Se pulsa marcha y no pasa nada.",
+    "mide": [
+     {
+      "donde": "13-14 pulsado, con tensión",
+      "bien": false,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Bloque NA sucio o suelto del mando: al pulsar no cierra.",
+    "reparacion": "Bloquear, encajar o cambiar el bloque de contacto."
+   },
+   {
+    "nombre": "La parada no para",
+    "sintoma": "Se pulsa parada y el motor sigue.",
+    "mide": [
+     {
+      "donde": "21-22 pulsado, sin tensión",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Bloque NC soldado o puenteado. Es peligroso.",
+    "reparacion": "Parar con el guardamotor, bloquear y cambiar el bloque; nunca dejar una parada puenteada."
+   },
+   {
+    "nombre": "Arranca solo",
+    "sintoma": "El motor arranca sin pulsar marcha.",
+    "mide": [
+     {
+      "donde": "13-14 en reposo",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Pulsador atascado o agua en el bloque.",
+    "reparacion": "Bloquear, secar o cambiar el pulsador y revisar la junta."
+   },
+   {
+    "nombre": "Para solo",
+    "sintoma": "El motor para sin tocar nada, sobre todo con vibración.",
+    "mide": [
+     {
+      "donde": "21-22 en reposo",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Bloque NC flojo o borne suelto.",
+    "reparacion": "Reapretar y encajar el bloque."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "estado de las cabezas y las juntas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y bloques"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de cada marcha y parada"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-5-1: aparatos de mando.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "nombre": "Presostato de alta suelto",
+  "nota": "Sin cables ni planta: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "PS",
+      "tipo": "presostato"
+    }
+  ],
+  "cables": []
+}

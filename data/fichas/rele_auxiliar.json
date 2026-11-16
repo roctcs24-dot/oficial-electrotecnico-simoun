@@ -1,0 +1,119 @@
+{
+  "id": "rele_auxiliar",
+  "titulo": "Relé auxiliar",
+  "resumen": "Una bobina pequeña mueve varios contactos conmutados del mando.",
+  "dibujo": {
+    "svg": "res://art/taller/rele_24v.svg",
+    "tamano": [
+      240,
+      310
+    ],
+    "nota": "Relé auxiliar enchufable de 110 V AC con dos contactos conmutados, dibujado de forma general. Modelo y tensión de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A1",
+        "x": 70,
+        "y": 72,
+        "tam": 14
+      },
+      {
+        "texto": "A2",
+        "x": 170,
+        "y": 72,
+        "tam": 14
+      },
+      {
+        "texto": "12",
+        "x": 46,
+        "y": 234,
+        "tam": 13
+      },
+      {
+        "texto": "14",
+        "x": 96,
+        "y": 234,
+        "tam": 13
+      },
+      {
+        "texto": "22",
+        "x": 146,
+        "y": 234,
+        "tam": 13
+      },
+      {
+        "texto": "24",
+        "x": 196,
+        "y": 234,
+        "tam": 13
+      },
+      {
+        "texto": "11",
+        "x": 70,
+        "y": 296,
+        "tam": 13
+      },
+      {
+        "texto": "21",
+        "x": 170,
+        "y": 296,
+        "tam": 13
+      },
+      {
+        "texto": "110 V AC",
+        "x": 150,
+        "y": 160,
+        "tam": 13,
+        "color": "#20242a"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "En IEC 60617 la bobina es un rectángulo y cada contacto se dibuja aparte, con el nombre del relé. Verificar contra la norma.",
+    "lista": [
+      "bobina",
+      "contacto_na",
+      "contacto_nc"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{rele_auxiliar}} multiplica y separa señales del mando: con una sola orden en su {{bobina}} cambia varios {{contacto_conmutado}} a la vez. Sirve para dar alarmas, enclavar dos mandos o pasar una señal de 24 V DC a 110 V AC. No maneja la potencia de un motor: para eso está el {{contactor}}."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Bobina[/b] A1-A2, de alterna o de continua.\n• [b]Contactos conmutados:[/b] común 11 con NC 12 y NA 14; común 21 con NC 22 y NA 24.\n• [b]Zócalo[/b] enchufable con los bornes: se cambia el relé sin tocar los cables.\n• Muchos llevan [b]LED[/b] de bobina activada y un botón de prueba."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• A1-A2 a la tensión de mando de la etiqueta del relé.\n• Los contactos en los circuitos que gobierna: el común a la alimentación y el NA o el NC hacia la carga.\n• Las bobinas de continua llevan a veces un diodo en paralelo: entonces A1 es el + ([i]verificar en el relé[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la tensión y el tipo de corriente de la bobina, el número de contactos y su corriente. Los contactos de un relé de mando no son para motores."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Bobina[/b] sin tensión, en Ω entre A1 y A2: un valor finito, de cientos a miles de ohmios. OL: cortada.\n• [b]Contactos[/b] sin tensión: en reposo 11-12 casi 0 Ω y 11-14 OL; accionando el botón de prueba, al revés.\n• [b]Con tensión:[/b] mida A1-A2 cuando debería estar activado."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No activa:[/b] sin tensión en A1-A2 o bobina cortada.\n• [b]Contacto quemado o sucio:[/b] activa (se ve el LED) pero la carga no recibe nada.\n• [b]Relé mal enchufado[/b] en su zócalo tras una vibración.\n• [b]Bobina de otra tensión[/b] puesta por error."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: que esté bien enchufado y sin signos de calentamiento.\n• Cada año: prueba de cada relé de alarma.\n\n[b]Correctivo:[/b] se cambia el relé por otro de la misma tensión y contactos."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61810: relés electromecánicos.",
+    "IEC 60617: símbolos gráficos."
+  ]
+}

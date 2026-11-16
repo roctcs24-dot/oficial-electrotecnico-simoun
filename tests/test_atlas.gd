@@ -34,10 +34,11 @@ func _terminos_fuera(texto: String, glosario: Dictionary) -> String:
 	return ""
 
 
-func test_el_modulo_7_publica_las_etapas_33_y_34() -> String:
+func test_el_modulo_7_publica_las_etapas_33_a_35() -> String:
 	var c := Contenido.new()
 	var m := c.sistema(7)
-	var esperados := ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento"]
+	var esperados := ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento",
+		"rele_auxiliar", "temporizador", "pulsador", "selector", "luz_piloto", "seta", "final_carrera", "presostato", "termostato", "interruptor_nivel"]
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 7 debe estar activo"),
 		A.cierto(_ids(c) == esperados, "atlas del módulo 7: %s" % str(_ids(c))),
@@ -345,8 +346,8 @@ func test_avance_del_modulo_y_mantenimiento_guardado() -> String:
 	var guardada := Partida.new(RUTA_PARTIDA)
 	guardada.cargar()
 	return A.primero([
-		A.cierto(antes == [0, 9], "al empezar: %s" % str(antes)),
-		A.cierto(despues == [1, 9], "tras ver las cinco pestañas: %s" % str(despues)),
+		A.cierto(antes == [0, 19], "al empezar: %s" % str(antes)),
+		A.cierto(despues == [1, 19], "tras ver las cinco pestañas: %s" % str(despues)),
 		A.cierto(guardada.tarea_atlas_hecha("contactor", 1), "la tarea marcada debe quedar guardada"),
 		A.cierto(guardada.atlas_completo("rele_termico"), "la ficha vista debe quedar guardada"),
 	])
@@ -437,4 +438,66 @@ func test_cortes_de_la_proteccion() -> String:
 		A.cierto(not candado_cerrado and candado_abierto and not cierra_con_candado, "el candado solo en 0, y con él no cierra"),
 		A.cierto(activo_al_empezar and suelta and inversa, "relé de fases: activo con la red bien, suelta sin L3 y con secuencia inversa"),
 		A.cierto(sin_alarma and alarma and retenida and borrada, "monitor: alarma bajo 1 MΩ, retenida hasta RESET"),
+	])
+
+
+func test_medir_del_mando() -> String:
+	var c := Contenido.new()
+	return A.primero([
+		A.cierto(_lectura(c, "rele_auxiliar", "Bobina", "Sana") == "4,4 kΩ", "bobina del relé: %s" % _lectura(c, "rele_auxiliar", "Bobina", "Sana")),
+		A.cierto(_lectura(c, "temporizador", "Salida con el tiempo", "A la conexión, a los 2 s") == "0,0 V", "a los 2 s aún cuenta"),
+		A.cierto(_lectura(c, "temporizador", "Salida con el tiempo", "A la conexión, a los 7 s") == "110 V", "a los 7 s ya conmutó"),
+		A.cierto(_lectura(c, "temporizador", "Salida con el tiempo", "A la desconexión, 2 s tras quitar la orden") == "110 V", "a la desconexión sigue 2 s después"),
+		A.cierto(_lectura(c, "temporizador", "Salida con el tiempo", "A la desconexión, a los 7 s") == "0,0 V", "a la desconexión vuelve a los 7 s"),
+		A.cierto(_lectura(c, "pulsador", "Con tensión", "Sin pulsar") == "110 V", "pulsador abierto: toda la tensión"),
+		A.cierto(_lectura(c, "seta", "Con tensión", "Pulsada") == "110 V", "seta pulsada: toda la tensión entre 11 y 12"),
+		A.cierto(_lectura(c, "selector", "Tabla de contactos", "13-14 en MAN") == "0,0 Ω", "13-14 cierra en MAN"),
+		A.cierto(_lectura(c, "selector", "Tabla de contactos", "13-14 en OFF") == "OL", "13-14 abierto en OFF"),
+		A.cierto(_lectura(c, "termostato", "Contacto 1-4", "Bulbo a −10 °C") == "0,0 Ω", "termostato pide frío a −10 °C"),
+		A.cierto(_lectura(c, "termostato", "Contacto 1-4", "−10 °C, capilar roto") == "OL", "capilar roto: no pide"),
+		A.cierto(_lectura(c, "final_carrera", "Contactos", "21-22 accionado") == "OL", "final de carrera accionado abre 21-22"),
+		A.cierto(_lectura(c, "luz_piloto", "Sin tensión", "Fundida") == "OL", "luz fundida: OL"),
+	])
+
+
+func test_cortes_del_mando() -> String:
+	var p = _animacion("corte_mando", {"tipo": "presostato", "minimo": 0, "maximo": 25, "corte": 16, "diferencial": 2, "inicial": 12})
+	p.poner_valor(17.0)
+	var dispara: bool = p.accionado
+	p.poner_valor(15.0)
+	var no_rearma: bool = not p.rearmar()
+	p.poner_valor(13.0)
+	var rearma: bool = p.rearmar()
+	p.free()
+	var t = _animacion("corte_mando", {"tipo": "termostato", "minimo": -30, "maximo": 0, "corte": -18, "diferencial": 2, "inicial": -20})
+	t.poner_valor(-18.0)
+	var pide: bool = t.accionado
+	t.poner_valor(-19.0)
+	var sigue: bool = t.accionado
+	t.poner_valor(-20.5)
+	var para: bool = not t.accionado
+	t.free()
+	var b = _animacion("corte_mando", {"tipo": "pulsador", "contactos": [{"bornes": "13-14", "tipo": "NA"}]})
+	b.pulsar()
+	var cerrado_pulsado: bool = b.cerrado({"bornes": "13-14", "tipo": "NA"})
+	b.avanzar(1.5)
+	var vuelve: bool = not b.accionado
+	b.free()
+	var k = _animacion("corte_temporizador", {"modo": "on_delay", "retardo_s": 5})
+	k.poner_tension(true)
+	k.avanzar(3.0)
+	var antes: bool = not k.conmutado
+	k.avanzar(3.0)
+	var despues: bool = k.conmutado
+	k.free()
+	var h = _animacion("corte_piloto", {})
+	h.fundir(true)
+	var fundida: bool = h.fase() == 2 and not h.encendida()
+	h.free()
+	return A.primero([
+		A.cierto(dispara and no_rearma and rearma, "presostato: dispara, no rearma en el diferencial y rearma por debajo"),
+		A.cierto(pide and sigue and para, "termostato: pide a la consigna, sigue en el diferencial y para debajo"),
+		A.cierto(cerrado_pulsado and vuelve, "pulsador: cierra al pulsar y vuelve por resorte"),
+		A.cierto(antes and despues, "temporizador: conmuta pasados 5 s"),
+		A.cierto(fundida, "luz fundida con tensión: no enciende"),
 	])

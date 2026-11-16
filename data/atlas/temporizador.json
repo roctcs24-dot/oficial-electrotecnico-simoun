@@ -1,0 +1,431 @@
+{
+ "id": "temporizador",
+ "ficha": "temporizador",
+ "titulo": "Temporizador",
+ "termino": "temporizador",
+ "icono": "temporizador",
+ "resumen": "Conmuta su contacto cuando ha pasado un tiempo ajustado.",
+ "bornes_dibujo": {
+  "A1": [
+   60,
+   54
+  ],
+  "A2": [
+   200,
+   54
+  ],
+  "15": [
+   50,
+   246
+  ],
+  "16": [
+   130,
+   246
+  ],
+  "18": [
+   210,
+   246
+  ]
+ },
+ "que_es": {
+  "texto": "El {{temporizador}} cambia su contacto un tiempo después de una orden. El {{temporizador_conexion}} espera el {{retardo}} con la orden dada; el {{temporizador_desconexion}} conmuta al momento y vuelve un tiempo después de quitarla.",
+  "partes": [
+   {
+    "texto": "Alimentación A1-A2.",
+    "marca": [
+     20,
+     54
+    ]
+   },
+   {
+    "texto": "Ajuste del tiempo, con su escala.",
+    "marca": [
+     240,
+     150
+    ]
+   },
+   {
+    "texto": "Contacto conmutado: 15 común, 16 NC y 18 NA.",
+    "marca": [
+     20,
+     246
+    ]
+   }
+  ],
+  "placa": "110 V AC · 0,1 s a 10 min · 15-16-18 5 A 250 V~",
+  "a_bordo": "Arrancadores estrella-triángulo, ventiladores y bombas con arranque escalonado. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_temporizador",
+  "params": {
+   "modo": "on_delay",
+   "retardo_s": 5
+  },
+  "pasos": [
+   "Llega la orden a A1-A2 (o se quita, en el de desconexión).",
+   "Cuenta el {{retardo}} ajustado.",
+   "Al terminar la cuenta, el contacto 15 pasa de 16 a 18 (o vuelve, en el de desconexión)."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_temporizador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 86,
+     "y": 90,
+     "tam": 12
+    },
+    {
+     "texto": "KT",
+     "x": 96,
+     "y": 175,
+     "tam": 12
+    },
+    {
+     "texto": "A1",
+     "x": 78,
+     "y": 148,
+     "tam": 11
+    },
+    {
+     "texto": "A2",
+     "x": 78,
+     "y": 204,
+     "tam": 11
+    },
+    {
+     "texto": "15",
+     "x": 266,
+     "y": 62,
+     "tam": 11
+    },
+    {
+     "texto": "18",
+     "x": 226,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "16",
+     "x": 276,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "KT",
+     "x": 284,
+     "y": 82,
+     "tam": 12
+    },
+    {
+     "texto": "H1",
+     "x": 176,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "H2",
+     "x": 326,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "tras el retardo",
+     "x": 200,
+     "y": 210,
+     "tam": 10
+    },
+    {
+     "texto": "antes",
+     "x": 300,
+     "y": 210,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A1": [
+    60,
+    150
+   ],
+   "A2": [
+    60,
+    200
+   ],
+   "15": [
+    250,
+    65
+   ],
+   "18": [
+    238,
+    115
+   ],
+   "16": [
+    262,
+    115
+   ]
+  },
+  "bornes": {
+   "A1": "Llega la orden a través de S1.",
+   "A2": "Va al neutro del mando.",
+   "15": "Común: llega la fase de mando.",
+   "18": "NA temporizado: da tensión a H1 cuando pasa el retardo.",
+   "16": "NC temporizado: da tensión a H2 hasta que pasa el retardo."
+  },
+  "grupos": [
+   {
+    "nombre": "Alimentación A1-A2",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "La orden que pone en marcha la cuenta."
+   },
+   {
+    "nombre": "Conmutado 15-16-18",
+    "bornes": [
+     "15",
+     "16",
+     "18"
+    ],
+    "texto": "En el arranque estrella-triángulo, 15-16 mantiene la estrella y 15-18 pasa a triángulo."
+   }
+  ],
+  "taller": "mando_temporizador",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un retardo de 5 s.",
+  "taller": "mando_temporizador",
+  "grupos": [
+   {
+    "nombre": "Salida con el tiempo",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "18",
+    "negra": "15",
+    "como": "Escala V~ · en la luz H1 que alimenta el 15-18",
+    "nota": "Con tensión: use el EPP y cronometre.",
+    "titulo_tabla": "La luz H1 según el tiempo",
+    "columna": "H1",
+    "medida": {
+     "circuito": "mando_temporizador",
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "H1.X1",
+     "b": "H1.X2",
+     "estado": {
+      "S1": {
+       "presionado": true
+      }
+     },
+     "segundos": 2
+    },
+    "filas": [
+     {
+      "estado": "A la conexión, a los 2 s",
+      "hacer": "Aún cuenta",
+      "bien": true
+     },
+     {
+      "estado": "A la conexión, a los 7 s",
+      "cambios": {
+       "segundos": 7
+      },
+      "hacer": "Ya conmutó",
+      "bien": true
+     },
+     {
+      "estado": "A la desconexión, 2 s tras quitar la orden",
+      "cambios": {
+       "circuito": "mando_temporizador",
+       "params": {
+        "KT": {
+         "modo": "off_delay"
+        }
+       },
+       "estado": {
+        "S1": {
+         "presionado": false
+        },
+        "KT": {
+         "bobina": true,
+         "conmutado": true
+        }
+       }
+      },
+      "hacer": "Aún sigue",
+      "bien": true
+     },
+     {
+      "estado": "A la desconexión, a los 7 s",
+      "cambios": {
+       "segundos": 7,
+       "params": {
+        "KT": {
+         "modo": "off_delay"
+        }
+       },
+       "estado": {
+        "S1": {
+         "presionado": false
+        },
+        "KT": {
+         "bobina": true,
+         "conmutado": true
+        }
+       }
+      },
+      "hacer": "Ya volvió",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "En reposo",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "15",
+    "negra": "16",
+    "como": "Escala Ω · sin alimentación",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Qué marca sin alimentación",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_temporizador",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "KT.15",
+     "b": "KT.16"
+    },
+    "filas": [
+     {
+      "estado": "15-16",
+      "hacer": "Normal: NC cerrado",
+      "bien": true
+     },
+     {
+      "estado": "15-18",
+      "cambios": {
+       "b": "KT.18"
+      },
+      "hacer": "Normal: NA abierto",
+      "bien": true
+     },
+     {
+      "estado": "A1-A2",
+      "cambios": {
+       "a": "KT.A1",
+       "b": "KT.A2"
+      },
+      "hacer": "Alimentación sana",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Nunca conmuta",
+    "sintoma": "El motor se queda en estrella y nunca pasa a triángulo.",
+    "mide": [
+     {
+      "donde": "A1-A2 con la orden",
+      "bien": false,
+      "valor": "0 V"
+     },
+     {
+      "donde": "H1 a los 7 s",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Sin alimentación en A1-A2, o el ajuste en una escala de minutos.",
+    "reparacion": "Comprobar la orden y la escala; ajustar el tiempo del esquema."
+   },
+   {
+    "nombre": "Conmuta al momento",
+    "sintoma": "El motor pasa a triángulo nada más arrancar y salta la protección.",
+    "mide": [
+     {
+      "donde": "H1 a los 2 s",
+      "bien": false,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Función equivocada (a la desconexión) o escala muy corta.",
+    "reparacion": "Poner la función a la conexión y el tiempo del esquema."
+   },
+   {
+    "nombre": "Tiempo distinto",
+    "sintoma": "El cambio llega mucho antes o después de lo ajustado.",
+    "mide": [
+     {
+      "donde": "tiempo cronometrado",
+      "bien": false,
+      "valor": "12 s"
+     },
+     {
+      "donde": "ajuste",
+      "bien": true,
+      "valor": "5 s"
+     }
+    ],
+    "causa": "Escala mal elegida o temporizador averiado.",
+    "reparacion": "Revisar la escala; si no cumple, cambiarlo y copiar el ajuste."
+   },
+   {
+    "nombre": "Salida quemada",
+    "sintoma": "El LED de salida enciende y la carga no recibe nada.",
+    "mide": [
+     {
+      "donde": "15-18 conmutado",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Contacto de salida quemado.",
+    "reparacion": "Cambiar el temporizador."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "LED de alimentación y de salida"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "cronometrar los tiempos contra el esquema"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61812-1: relés temporizados.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

@@ -62,6 +62,8 @@ static func tipos() -> Dictionary:
 		"arrancador_suave": SimArrancadorSuave,
 		"diferencial": SimDiferencial,
 		"rele_control_fases": SimReleControlFases,
+		"final_carrera": SimFinalCarrera,
+		"termostato": SimTermostato,
 	}
 
 

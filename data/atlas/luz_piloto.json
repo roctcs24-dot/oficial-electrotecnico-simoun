@@ -1,0 +1,323 @@
+{
+ "id": "luz_piloto",
+ "ficha": "luz_piloto",
+ "titulo": "Luz piloto",
+ "termino": "luz_piloto",
+ "icono": "piloto",
+ "resumen": "Señal luminosa del tablero: su color indica qué pasa.",
+ "bornes_dibujo": {
+  "X1": [
+   60,
+   176
+  ],
+  "X2": [
+   140,
+   176
+  ]
+ },
+ "que_es": {
+  "texto": "La {{luz_piloto}} muestra el estado de un equipo sin abrir el tablero. Su color tiene un significado: rojo peligro o parada por falla, amarillo anormal, verde normal, azul acción obligatoria y blanco información.",
+  "partes": [
+   {
+    "texto": "Lente de color y portalámparas de 22 mm.",
+    "marca": [
+     20,
+     70
+    ]
+   },
+   {
+    "texto": "LED con su resistencia y su rectificador, dentro del portalámparas.",
+    "marca": [
+     180,
+     110
+    ]
+   },
+   {
+    "texto": "Bornes X1 y X2.",
+    "marca": [
+     20,
+     176
+    ]
+   }
+  ],
+  "placa": "22 mm · LED 110 V AC/DC",
+  "a_bordo": "En todos los tableros: marcha, parada, disparo y alarmas. Colores según el fabricante — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_piloto",
+  "params": {},
+  "pasos": [
+   "Llega la tensión a X1-X2.",
+   "El puente rectificador y la resistencia la adaptan al LED.",
+   "El LED enciende la lente: su color dice qué indica."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_luz_piloto.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "K1 13-14",
+     "x": 162,
+     "y": 90,
+     "tam": 11
+    },
+    {
+     "texto": "S9 prueba",
+     "x": 312,
+     "y": 90,
+     "tam": 11
+    },
+    {
+     "texto": "H1",
+     "x": 148,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "X1",
+     "x": 104,
+     "y": 146,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 104,
+     "y": 196,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "X1": [
+    120,
+    145
+   ],
+   "X2": [
+    120,
+    195
+   ]
+  },
+  "bornes": {
+   "X1": "Llega la fase a través del 13-14 del contactor (en marcha) o del pulsador de prueba de lámparas.",
+   "X2": "Va al neutro del mando."
+  },
+  "grupos": [
+   {
+    "nombre": "X1-X2",
+    "bornes": [
+     "X1",
+     "X2"
+    ],
+    "texto": "En paralelo con lo que indica, o detrás del contacto que lo señala."
+   }
+  ],
+  "taller": "mando_piloto",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con una luz de 110 V.",
+  "taller": "mando_piloto",
+  "grupos": [
+   {
+    "nombre": "Sin tensión",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "X1",
+    "negra": "X2",
+    "como": "Escala Ω · en X1 y X2",
+    "nota": "Sin tensión, desconectada.",
+    "titulo_tabla": "Qué marca la luz",
+    "columna": "X1-X2",
+    "medida": {
+     "circuito": "medir_piloto",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "H1.X1",
+     "b": "H1.X2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Nada",
+      "bien": true
+     },
+     {
+      "estado": "Fundida",
+      "cambios": {
+       "estado": {
+        "H1": {
+         "quemada": true
+        }
+       }
+      },
+      "hacer": "Cambiar el LED",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "X1",
+    "negra": "X2",
+    "como": "Escala V~ · en X1 y X2",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en sus bornes",
+    "columna": "X1-X2",
+    "medida": {
+     "circuito": "mando_piloto",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "H1.X1",
+     "b": "H1.X2"
+    },
+    "filas": [
+     {
+      "estado": "Encendida",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Apagada con tensión",
+      "cambios": {
+       "estado": {
+        "H1": {
+         "quemada": true
+        }
+       }
+      },
+      "hacer": "Está fundida",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No enciende",
+    "sintoma": "El equipo está en marcha y la luz apagada.",
+    "mide": [
+     {
+      "donde": "X1-X2 con tensión",
+      "bien": true,
+      "medida": {
+       "circuito": "mando_piloto",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "H1.X1",
+       "b": "H1.X2",
+       "estado": {
+        "H1": {
+         "quemada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "X1-X2 sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_piloto",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "H1.X1",
+       "b": "H1.X2",
+       "estado": {
+        "H1": {
+         "quemada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "LED fundido.",
+    "reparacion": "Cambiar el LED o la luz por otra de la misma tensión y color."
+   },
+   {
+    "nombre": "Encendida débil",
+    "sintoma": "Brilla un poco aunque el equipo está parado.",
+    "mide": [
+     {
+      "donde": "X1-X2",
+      "bien": false,
+      "valor": "25 V"
+     }
+    ],
+    "causa": "Tensión inducida en un cable largo: los LED encienden con muy poca corriente.",
+    "reparacion": "Poner una resistencia de carga o un LED con supresión, según el fabricante."
+   },
+   {
+    "nombre": "Se funde a menudo",
+    "sintoma": "Hay que cambiarla cada poco.",
+    "mide": [
+     {
+      "donde": "tensión de la etiqueta",
+      "bien": false,
+      "valor": "24 V"
+     },
+     {
+      "donde": "tensión del mando",
+      "bien": true,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Luz de menos tensión que el mando.",
+    "reparacion": "Poner la de la tensión correcta."
+   },
+   {
+    "nombre": "Color equivocado",
+    "sintoma": "Una alarma se ve en verde.",
+    "mide": [
+     {
+      "donde": "color de la lente",
+      "bien": false,
+      "valor": "verde"
+     }
+    ],
+    "causa": "Se cambió la lente sin respetar el esquema.",
+    "reparacion": "Poner el color que indica el esquema."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de lámparas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza de lentes y reapriete"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "repuestos de cada color y tensión"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60204-1 e IEC 60073: colores de señalización.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

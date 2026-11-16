@@ -1,0 +1,11 @@
+{
+  "nombre": "Final de carrera suelto",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "SQ",
+      "tipo": "final_carrera"
+    }
+  ],
+  "cables": []
+}

@@ -1,0 +1,70 @@
+{
+  "nombre": "Temporizador a la conexión con su luz",
+  "nota": "Mando de 110 V AC: valor típico, verificar a bordo. Retardo de 5 s.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando"
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "KT",
+      "tipo": "temporizador",
+      "params": {
+        "modo": "on_delay",
+        "retardo_s": 5
+      }
+    },
+    {
+      "id": "H1",
+      "tipo": "lampara"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "KT.A1"
+    ],
+    [
+      "KT.A2",
+      "T1.X2"
+    ],
+    [
+      "T1.X1",
+      "KT.15"
+    ],
+    [
+      "KT.18",
+      "H1.X1"
+    ],
+    [
+      "H1.X2",
+      "T1.X2"
+    ]
+  ]
+}

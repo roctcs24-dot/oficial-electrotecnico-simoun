@@ -180,7 +180,8 @@ func _recorrer(raiz: Raiz) -> String:
 	pasos.append(["prueba_examen", {"id": "v5"}])
 	pasos.append(["sistema", {"id": 7}])
 	pasos.append(["aprender", {"id": 7}])
-	for id: String in raiz.contenido.sistema(7)["modos"]["aprender"]["atlas"]:
+	# Una ficha del atlas basta aquí: test_atlas recorre todas en las dos orientaciones.
+	for id: String in ["contactor"]:
 		for pestana: String in ["que_es", "funciona", "conexion", "medir", "fallas"]:
 			pasos.append(["atlas", {"id": id, "pestana": pestana}])
 	pasos.append(["repaso", {}])

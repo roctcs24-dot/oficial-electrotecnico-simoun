@@ -1,0 +1,11 @@
+{
+  "nombre": "Luz piloto suelta",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "H1",
+      "tipo": "lampara"
+    }
+  ],
+  "cables": []
+}

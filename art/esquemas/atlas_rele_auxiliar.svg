@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="290" viewBox="0 0 400 290">
+  <defs>
+    <g id="na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9"/></g>
+    <g id="nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13"/></g>
+    <g id="conm" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 L12,9 M12,25 V9 M-12,25 V10 H-6"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15"/></g>
+    <g id="bobina_t" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15 M-20,-15 L-8,15 M-8,-15 L-20,15"/></g>
+    <g id="lampara" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><circle r="13"/><path d="M-9.2,-9.2 L9.2,9.2 M9.2,-9.2 L-9.2,9.2 M0,-25 V-13 M0,25 V13"/></g>
+    <g id="act_pulsador" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-24 M-24,-7 V7"/></g>
+    <g id="act_seta" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-22 M-22,-9 A9,9 0 0 0 -22,9"/></g>
+    <g id="act_selector" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-22 M-28,-7 L-22,0 L-28,7"/></g>
+    <g id="act_rodillo" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-20"/><circle cx="-26" cy="0" r="6"/></g>
+    <g id="act_caja" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-18"/><rect x="-38" y="-10" width="20" height="20"/></g>
+    <g id="act_flotador" fill="none" stroke="#20242a" stroke-width="2.5" stroke-linecap="round"><path d="M-6,0 H-18 M-18,0 V10"/><circle cx="-18" cy="17" r="7"/></g>
+  </defs>
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,20 V65 M60,115 V150 M60,200 V268 M250,20 V65"/>
+    <path d="M238,115 V130 H200 V145 M262,115 V130 H300 V145 M200,195 V268 M300,195 V268 M20,20 H300 M20,268 H300"/>
+  </g>
+  <use xlink:href="#na" x="60" y="90"/>
+  <use xlink:href="#act_pulsador" x="60" y="90"/>
+  <use xlink:href="#bobina" x="60" y="175"/>
+  <use xlink:href="#conm" x="250" y="90"/>
+  <use xlink:href="#lampara" x="200" y="170"/>
+  <use xlink:href="#lampara" x="300" y="170"/>
+</svg>

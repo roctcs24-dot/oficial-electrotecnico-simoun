@@ -1,0 +1,318 @@
+{
+ "id": "presostato",
+ "ficha": "presostato",
+ "titulo": "Presostato",
+ "termino": "presostato",
+ "icono": "presostato",
+ "resumen": "Abre su contacto cuando la presión pasa del corte y para el compresor.",
+ "bornes_dibujo": {},
+ "que_es": {
+  "texto": "El {{presostato}} vigila una presión y abre su contacto cuando pasa del corte. El de alta para el compresor si la descarga sube demasiado; el de baja, si la aspiración cae. Su {{diferencial_ajuste}} fija cuánto debe volver la presión para poder rearmar.",
+  "partes": [
+   {
+    "texto": "Escala y tornillo del corte.",
+    "marca": [
+     270,
+     70
+    ]
+   },
+   {
+    "texto": "Escala del diferencial.",
+    "marca": [
+     270,
+     144
+    ]
+   },
+   {
+    "texto": "Botón de rearme manual.",
+    "marca": [
+     270,
+     270
+    ]
+   },
+   {
+    "texto": "Conexión de presión.",
+    "marca": [
+     270,
+     360
+    ]
+   }
+  ],
+  "placa": "Alta · corte 16 bar · diferencial 2 bar · rearme manual",
+  "a_bordo": "Compresores de amoníaco (Penn, de Johnson Controls) y compresores de aire. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "presostato",
+   "titulo": "PRESOSTATO DE ALTA CON REARME MANUAL",
+   "magnitud": "Presión de descarga",
+   "minimo": 0,
+   "maximo": 25,
+   "corte": 16,
+   "diferencial": 2,
+   "unidad": "bar",
+   "inicial": 12,
+   "contactos": [
+    {
+     "bornes": "1-2",
+     "tipo": "NC"
+    }
+   ],
+   "rotulos": {
+    "accionado": "DISPARADO",
+    "reposo": "PRESIÓN CORRECTA"
+   },
+   "notas": {
+    "reposo": "Presión por debajo del corte: 1-2 cerrado y el compresor puede trabajar.",
+    "accionado": "Pasó del corte: 1-2 abierto y el compresor para. Con rearme manual, queda así hasta que la presión baje del corte menos el diferencial y se rearme."
+   }
+  },
+  "pasos": [
+   "La presión empuja el fuelle contra el muelle del corte.",
+   "Al pasar del corte, el contacto 1-2 abre y para el compresor.",
+   "Rearma cuando la presión baja del corte menos el diferencial."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_presostato.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "PSH",
+     "x": 62,
+     "y": 72,
+     "tam": 12
+    },
+    {
+     "texto": "p",
+     "x": 92,
+     "y": 90,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 108,
+     "y": 68,
+     "tam": 11
+    },
+    {
+     "texto": "2",
+     "x": 108,
+     "y": 114,
+     "tam": 11
+    },
+    {
+     "texto": "K1 compresor",
+     "x": 190,
+     "y": 190,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    120,
+    65
+   ],
+   "2": [
+    120,
+    115
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase de mando del compresor.",
+   "2": "Sale hacia la bobina del contactor del compresor, en serie con los demás presostatos."
+  },
+  "grupos": [
+   {
+    "nombre": "Contacto 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con el mando del compresor: si abre cualquier presostato, el compresor para."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "grupos": [
+   {
+    "nombre": "Contacto 1-2",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · sin tensión",
+    "nota": "Sin tensión y con el permiso de la planta.",
+    "titulo_tabla": "Qué marca el contacto",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "medir_presostato",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "PS.1",
+     "b": "PS.2"
+    },
+    "filas": [
+     {
+      "estado": "Presión correcta",
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "PS": {
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Buscar la causa y rearmar",
+      "bien": false
+     },
+     {
+      "estado": "Disparado pero puenteado",
+      "cambios": {
+       "estado": {
+        "PS": {
+         "disparado": true,
+         "puenteado": true
+        }
+       }
+      },
+      "hacer": "¡Sin protección: quitar el puente!",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Disparo por alta",
+    "sintoma": "El compresor para y el presostato de alta está disparado.",
+    "mide": [
+     {
+      "donde": "descarga",
+      "bien": false,
+      "valor": "16,5 bar"
+     },
+     {
+      "donde": "1-2",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_presostato",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "PS.1",
+       "b": "PS.2",
+       "estado": {
+        "PS": {
+         "disparado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Condensación deficiente: falta agua de mar, condensador sucio o aire en el sistema.",
+    "reparacion": "Corregir la condensación y rearmar cuando la presión haya bajado."
+   },
+   {
+    "nombre": "No rearma",
+    "sintoma": "Se pulsa el rearme y no engancha.",
+    "mide": [
+     {
+      "donde": "descarga",
+      "bien": false,
+      "valor": "15 bar"
+     }
+    ],
+    "causa": "La presión aún está por encima del corte menos el diferencial.",
+    "reparacion": "Esperar a que baje y buscar la causa."
+   },
+   {
+    "nombre": "Dispara a baja presión",
+    "sintoma": "Dispara con la presión normal.",
+    "mide": [
+     {
+      "donde": "descarga real",
+      "bien": true,
+      "valor": "12 bar"
+     },
+     {
+      "donde": "corte ajustado",
+      "bien": false,
+      "valor": "11 bar"
+     }
+    ],
+    "causa": "Corte mal ajustado o fuelle dañado.",
+    "reparacion": "Ajustar el corte con un manómetro patrón; si no responde, cambiarlo."
+   },
+   {
+    "nombre": "Puenteado",
+    "sintoma": "El presostato está disparado y el compresor sigue.",
+    "mide": [
+     {
+      "donde": "1-2 disparado",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_presostato",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "PS.1",
+       "b": "PS.2",
+       "estado": {
+        "PS": {
+         "disparado": true,
+         "puenteado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Alguien puenteó el contacto. Es muy peligroso con amoníaco.",
+    "reparacion": "Parar, quitar el puente, anotarlo y avisar al jefe de máquinas."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura de los cortes en el libro de la planta"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "prueba de disparo con manómetro patrón"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "calibración de todos los presostatos"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IIAR y EN 378: seguridad en refrigeración.",
+  "ISA 5.1: identificación de instrumentos."
+ ]
+}

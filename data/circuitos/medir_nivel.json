@@ -1,0 +1,11 @@
+{
+  "nombre": "Interruptor de nivel suelto",
+  "nota": "Sin cables ni planta: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "LS",
+      "tipo": "interruptor_nivel"
+    }
+  ],
+  "cables": []
+}

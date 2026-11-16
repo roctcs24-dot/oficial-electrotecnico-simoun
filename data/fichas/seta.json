@@ -1,0 +1,86 @@
+{
+  "id": "seta",
+  "titulo": "Seta de emergencia",
+  "resumen": "Pulsador que queda enclavado al pulsarlo y para el equipo.",
+  "dibujo": {
+    "svg": "res://art/taller/seta.svg",
+    "tamano": [
+      200,
+      260
+    ],
+    "nota": "Seta de emergencia de 40 mm con desenclavamiento por giro, sobre fondo amarillo, dibujada de forma general. Ubicación de las del buque: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "11",
+        "x": 36,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "12",
+        "x": 76,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "13",
+        "x": 124,
+        "y": 182,
+        "tam": 16
+      },
+      {
+        "texto": "14",
+        "x": 164,
+        "y": 182,
+        "tam": 16
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Pulsador de seta enclavado según IEC 60617. Verificar contra la norma.",
+    "lista": [
+      "seta_emergencia"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{seta}} para un equipo de inmediato en una emergencia. Al pulsarla queda enclavada: el equipo no puede volver a arrancar hasta que se libere girándola, y aun así hay que dar otra vez la marcha."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Seta roja[/b] sobre fondo amarillo.\n• [b]Enclavamiento[/b] mecánico que la mantiene pulsada.\n• [b]Contacto NC[/b] 11-12 de {{apertura_positiva}}: el mecanismo lo abre a la fuerza.\n• [b]Contacto NA[/b] 13-14 para la alarma o la señal."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• El 11-12 en serie con el mando, normalmente al principio, para que corte todo.\n• En equipos importantes corta un relé de seguridad o el contactor general.\n• El 13-14, a la alarma de seta pulsada."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige con contacto de apertura positiva, enclavamiento y desbloqueo por giro o llave. No se ajusta."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Prueba periódica:[/b] pulsarla con el equipo en marcha debe pararlo; liberada, no debe arrancar sola.\n• [b]Sin tensión:[/b] 11-12 casi 0 Ω liberada y OL pulsada.\n• [b]Con tensión:[/b] pulsada, entre 11 y 12 se mide toda la tensión del mando."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No para:[/b] contacto soldado o puenteado. Es una falla grave.\n• [b]No libera:[/b] mecanismo roto.\n• [b]El equipo arranca solo al liberarla:[/b] el mando no tiene retención o tiene un error de diseño."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada mes: prueba de las setas de los equipos críticos, avisando antes.\n\n[b]Correctivo:[/b] se cambia la seta o su bloque de contacto, y se prueba."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-5-5: dispositivos de parada de emergencia.",
+    "ISO 13850: parada de emergencia."
+  ]
+}

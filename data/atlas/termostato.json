@@ -1,0 +1,351 @@
+{
+ "id": "termostato",
+ "ficha": "termostato",
+ "titulo": "Termostato",
+ "termino": "termostato",
+ "icono": "termico",
+ "resumen": "Cambia su contacto con la temperatura del bulbo y mantiene la consigna.",
+ "bornes_dibujo": {
+  "1": [
+   100,
+   212
+  ],
+  "2": [
+   150,
+   212
+  ],
+  "4": [
+   200,
+   212
+  ]
+ },
+ "que_es": {
+  "texto": "El {{termostato}} cambia su contacto según la temperatura de su bulbo: mantiene una bodega o la salmuera entre su {{consigna}} y la consigna menos el {{diferencial_ajuste}}.",
+  "partes": [
+   {
+    "texto": "Escala de temperatura.",
+    "marca": [
+     30,
+     70
+    ]
+   },
+   {
+    "texto": "Tornillos de consigna (RANGE) y diferencial (DIFF).",
+    "marca": [
+     30,
+     150
+    ]
+   },
+   {
+    "texto": "Bornes 1, 2 y 4.",
+    "marca": [
+     270,
+     212
+    ]
+   },
+   {
+    "texto": "Bulbo y capilar.",
+    "marca": [
+     30,
+     340
+    ]
+   }
+  ],
+  "placa": "−30 a +10 °C · diferencial 1,5 a 10 K · 1-2-4",
+  "a_bordo": "Bodegas de pescado, gambuza y salmuera. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "termostato",
+   "titulo": "TERMOSTATO DE FRÍO",
+   "magnitud": "Temperatura del bulbo",
+   "minimo": -30,
+   "maximo": 0,
+   "corte": -18,
+   "diferencial": 2,
+   "unidad": "°C",
+   "inicial": -20,
+   "nombre_corte": "consigna",
+   "contactos": [
+    {
+     "bornes": "1-2-4",
+     "tipo": "conmutado"
+    }
+   ],
+   "rotulos": {
+    "accionado": "PIDE FRÍO",
+    "reposo": "TEMPERATURA ALCANZADA"
+   },
+   "notas": {
+    "reposo": "Por debajo de la consigna menos el diferencial: 1-2 cerrado, no pide frío.",
+    "accionado": "Llegó a la consigna: 1-4 cierra y abre la solenoide del frío; vuelve 2 °C más abajo."
+   }
+  },
+  "pasos": [
+   "El bulbo se calienta y el gas de su capilar empuja el fuelle.",
+   "Al llegar a la consigna, 1-4 cierra y pide frío.",
+   "Cuando baja la consigna menos el diferencial, vuelve 1-2."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_termostato.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "TS",
+     "x": 140,
+     "y": 74,
+     "tam": 12
+    },
+    {
+     "texto": "θ",
+     "x": 166,
+     "y": 90,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 214,
+     "y": 62,
+     "tam": 11
+    },
+    {
+     "texto": "4",
+     "x": 176,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "2",
+     "x": 226,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "YV frío",
+     "x": 140,
+     "y": 222,
+     "tam": 11
+    },
+    {
+     "texto": "H1",
+     "x": 296,
+     "y": 175,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    200,
+    65
+   ],
+   "4": [
+    188,
+    115
+   ],
+   "2": [
+    212,
+    115
+   ]
+  },
+  "bornes": {
+   "1": "Común: llega la fase de mando.",
+   "4": "Pide frío: alimenta la válvula solenoide del frío al llegar a la consigna.",
+   "2": "Temperatura alcanzada: da tensión a la luz H1."
+  },
+  "grupos": [
+   {
+    "nombre": "1-4 pide frío",
+    "bornes": [
+     "1",
+     "4"
+    ],
+    "texto": "Cierra al subir la temperatura hasta la consigna."
+   },
+   {
+    "nombre": "1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "Cerrado mientras la temperatura está por debajo."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con consigna de −18 °C y diferencial de 2 K.",
+  "grupos": [
+   {
+    "nombre": "Contacto 1-4",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "4",
+    "como": "Escala Ω · sin tensión",
+    "nota": "Sin tensión; la temperatura del bulbo manda.",
+    "titulo_tabla": "1-4 según la temperatura",
+    "columna": "1-4",
+    "medida": {
+     "circuito": "medir_termostato",
+     "segundos": 0.1,
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "TS.1",
+     "b": "TS.4"
+    },
+    "filas": [
+     {
+      "estado": "Bulbo a −20 °C",
+      "hacer": "No pide frío",
+      "bien": true
+     },
+     {
+      "estado": "Bulbo a −10 °C",
+      "cambios": {
+       "params": {
+        "TS": {
+         "temperatura_c": -10
+        }
+       }
+      },
+      "hacer": "Pide frío",
+      "bien": true
+     },
+     {
+      "estado": "−10 °C, capilar roto",
+      "cambios": {
+       "params": {
+        "TS": {
+         "temperatura_c": -10,
+         "capilar_roto": true
+        }
+       }
+      },
+      "hacer": "No pide: cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "1-2 a −20 °C",
+      "cambios": {
+       "b": "TS.2"
+      },
+      "hacer": "Cerrado",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No pide frío",
+    "sintoma": "La bodega se calienta y la solenoide no abre.",
+    "mide": [
+     {
+      "donde": "1-4 con la bodega caliente",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_termostato",
+       "segundos": 0.1,
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "TS.1",
+       "b": "TS.4",
+       "params": {
+        "TS": {
+         "temperatura_c": -10,
+         "capilar_roto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Capilar roto: el bulbo perdió su carga.",
+    "reparacion": "Cambiar el termostato y ajustar consigna y diferencial."
+   },
+   {
+    "nombre": "Temperatura fuera",
+    "sintoma": "La bodega queda varios grados por encima de la consigna.",
+    "mide": [
+     {
+      "donde": "termómetro patrón",
+      "bien": false,
+      "valor": "−14 °C"
+     },
+     {
+      "donde": "consigna",
+      "bien": true,
+      "valor": "−18 °C"
+     }
+    ],
+    "causa": "Bulbo suelto o en una corriente de aire.",
+    "reparacion": "Sujetar el bulbo donde se mide de verdad."
+   },
+   {
+    "nombre": "Arranca y para seguido",
+    "sintoma": "La solenoide abre y cierra cada pocos minutos.",
+    "mide": [
+     {
+      "donde": "diferencial ajustado",
+      "bien": false,
+      "valor": "0,5 K"
+     }
+    ],
+    "causa": "Diferencial demasiado pequeño.",
+    "reparacion": "Ajustar el diferencial del plan, por ejemplo 2 K (valor típico — verificar)."
+   },
+   {
+    "nombre": "Contacto quemado",
+    "sintoma": "El termostato conmuta (se oye) pero la solenoide no recibe tensión.",
+    "mide": [
+     {
+      "donde": "1-4 pidiendo frío",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Contacto quemado por la corriente de la bobina.",
+    "reparacion": "Cambiar el termostato; si se repite, mandar la solenoide con un relé."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "temperaturas de bodega en el libro"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "comparación con termómetro patrón y sujeción del bulbo"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisión de capilares y ajustes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISA 5.1: identificación de instrumentos.",
+  "EN 378: sistemas de refrigeración."
+ ]
+}

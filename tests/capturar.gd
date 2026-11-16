@@ -688,6 +688,31 @@ func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
 							a.avanzar(2.0)
 						"monitor_aislamiento":
 							a.poner_aislamiento(0.4)
+						"rele_auxiliar":
+							a.poner_bobina(true)
+							a.avanzar(1.0)
+						"pulsador":
+							a.pulsar()
+							a.avanzar(0.3)
+						"seta":
+							a.enclavar(true)
+						"selector":
+							a.girar(1)
+						"final_carrera":
+							a.poner_valor(0.8)
+							a.avanzar(1.0)
+						"presostato":
+							a.poner_valor(17.0)
+						"termostato":
+							a.poner_valor(-15.0)
+						"interruptor_nivel":
+							a.poner_valor(0.85)
+						"temporizador":
+							a.poner_tension(true)
+							a.avanzar(6.0)
+						"luz_piloto":
+							a.elegir(0)
+							a.fundir(true)
 					await _guardar(carpeta, "%s_funciona_2" % id, tam)
 				elif pestana == "conexion":
 					p.tocar_borne(p.atlas["conexion"]["bornes_esquema"].keys()[0])

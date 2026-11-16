@@ -1,0 +1,511 @@
+{
+ "id": "rele_auxiliar",
+ "ficha": "rele_auxiliar",
+ "titulo": "Relé auxiliar",
+ "termino": "rele_auxiliar",
+ "icono": "rele",
+ "resumen": "Una bobina pequeña cambia varios contactos del mando a la vez.",
+ "bornes_dibujo": {
+  "A1": [
+   70,
+   38
+  ],
+  "A2": [
+   170,
+   38
+  ],
+  "12": [
+   46,
+   206
+  ],
+  "14": [
+   96,
+   206
+  ],
+  "22": [
+   146,
+   206
+  ],
+  "24": [
+   196,
+   206
+  ],
+  "11": [
+   70,
+   266
+  ],
+  "21": [
+   170,
+   266
+  ]
+ },
+ "que_es": {
+  "texto": "El {{rele_auxiliar}} multiplica y separa señales del mando: con una orden en su {{bobina}} cambia a la vez varios {{contacto_conmutado}}. Da alarmas, enclava mandos o pasa una señal de un circuito a otro, pero no maneja la potencia de un motor.",
+  "partes": [
+   {
+    "texto": "Bobina A1-A2, a la tensión de mando de su etiqueta.",
+    "marca": [
+     20,
+     38
+    ]
+   },
+   {
+    "texto": "Contactos NC 12 y 22, y NA 14 y 24.",
+    "marca": [
+     220,
+     206
+    ]
+   },
+   {
+    "texto": "Comunes 11 y 21.",
+    "marca": [
+     20,
+     266
+    ]
+   }
+  ],
+  "placa": "Bobina 110 V AC · 2 conmutados · 5 A 250 V~",
+  "a_bordo": "Tableros de bombas de la máquina principal y de alarmas, enchufado en su zócalo. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "rele",
+   "titulo": "CORTE DE UN RELÉ AUXILIAR",
+   "contactos": [
+    {
+     "bornes": "11-12-14",
+     "tipo": "conmutado"
+    },
+    {
+     "bornes": "21-22-24",
+     "tipo": "conmutado"
+    }
+   ],
+   "rotulos": {
+    "accionado": "ACTIVADO",
+    "reposo": "EN REPOSO"
+   },
+   "notas": {
+    "reposo": "Sin tensión, el muelle mantiene la armadura arriba: 11-12 y 21-22 cerrados.",
+    "accionado": "Activado: 11-14 y 21-24 cerrados; 11-12 y 21-22 abiertos."
+   }
+  },
+  "pasos": [
+   "La {{bobina}} recibe la tensión de mando y atrae la armadura.",
+   "La armadura mueve la leva que lleva todos los contactos.",
+   "Cada común pasa del NC al NA: 11-12 abre y 11-14 cierra, y lo mismo 21-22-24."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_rele_auxiliar.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 86,
+     "y": 90,
+     "tam": 12
+    },
+    {
+     "texto": "KA",
+     "x": 96,
+     "y": 175,
+     "tam": 12
+    },
+    {
+     "texto": "A1",
+     "x": 78,
+     "y": 148,
+     "tam": 11
+    },
+    {
+     "texto": "A2",
+     "x": 78,
+     "y": 204,
+     "tam": 11
+    },
+    {
+     "texto": "11",
+     "x": 266,
+     "y": 62,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 226,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "12",
+     "x": 276,
+     "y": 112,
+     "tam": 11
+    },
+    {
+     "texto": "KA",
+     "x": 284,
+     "y": 82,
+     "tam": 12
+    },
+    {
+     "texto": "H1",
+     "x": 176,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "H2",
+     "x": 326,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "marcha",
+     "x": 200,
+     "y": 210,
+     "tam": 10
+    },
+    {
+     "texto": "parado",
+     "x": 300,
+     "y": 210,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A1": [
+    60,
+    150
+   ],
+   "A2": [
+    60,
+    200
+   ],
+   "11": [
+    250,
+    65
+   ],
+   "14": [
+    238,
+    115
+   ],
+   "12": [
+    262,
+    115
+   ]
+  },
+  "bornes": {
+   "A1": "Llega la fase de mando a través de S1: con S1 pulsado, la bobina se activa.",
+   "A2": "Va al neutro del mando.",
+   "11": "Común: llega la fase de mando.",
+   "14": "NA: con el relé activado da tensión a H1.",
+   "12": "NC: con el relé en reposo da tensión a H2."
+  },
+  "grupos": [
+   {
+    "nombre": "Bobina A1-A2",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "La bobina a la tensión de su etiqueta: 110 V AC en los enchufables del tablero de bombas (valor típico — verificar a bordo)."
+   },
+   {
+    "nombre": "Conmutado 11-12-14",
+    "bornes": [
+     "11",
+     "12",
+     "14"
+    ],
+    "texto": "El común 11 se une al 12 en reposo y al 14 activado. El otro conmutado, 21-22-24, hace lo mismo a la vez."
+   }
+  ],
+  "taller": "mando_rele",
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un relé enchufable de 110 V AC.",
+  "taller": "mando_rele",
+  "grupos": [
+   {
+    "nombre": "Bobina",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala Ω · puntas en A1 y A2",
+    "nota": "Sin tensión, con el relé fuera del zócalo.",
+    "titulo_tabla": "Qué debe marcar la bobina",
+    "columna": "A1-A2",
+    "medida": {
+     "circuito": "medir_rele",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "KA.A1",
+     "b": "KA.A2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Nada",
+      "bien": true
+     },
+     {
+      "estado": "Cortada",
+      "cambios": {
+       "estado": {
+        "KA": {
+         "bobina_quemada": true
+        }
+       }
+      },
+      "hacer": "Cambiar el relé",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Contactos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "11",
+    "negra": "14",
+    "como": "Escala Ω · común y salida",
+    "nota": "Sin tensión; activado con el botón de prueba.",
+    "titulo_tabla": "Qué debe marcar cada contacto",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_rele",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "KA.11",
+     "b": "KA.12"
+    },
+    "filas": [
+     {
+      "estado": "11-12 en reposo",
+      "hacer": "Normal: NC cerrado",
+      "bien": true
+     },
+     {
+      "estado": "11-14 en reposo",
+      "cambios": {
+       "b": "KA.14"
+      },
+      "hacer": "Normal: NA abierto",
+      "bien": true
+     },
+     {
+      "estado": "11-14 activado",
+      "cambios": {
+       "b": "KA.14",
+       "estado": {
+        "KA": {
+         "energizado": true
+        }
+       }
+      },
+      "hacer": "Normal: NA cerrado",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Con tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala V~",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensiones del mando",
+    "columna": "V",
+    "medida": {
+     "circuito": "mando_rele",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "KA.A1",
+     "b": "KA.A2",
+     "estado": {
+      "S1": {
+       "presionado": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "A1-A2 con S1 pulsado",
+      "hacer": "Normal: activa",
+      "bien": true
+     },
+     {
+      "estado": "H1 con S1 pulsado",
+      "cambios": {
+       "a": "H1.X1",
+       "b": "H1.X2"
+      },
+      "hacer": "Normal: 14 da tensión",
+      "bien": true
+     },
+     {
+      "estado": "H1 sin pulsar",
+      "cambios": {
+       "a": "H1.X1",
+       "b": "H1.X2",
+       "estado": {
+        "S1": {
+         "presionado": false
+        }
+       }
+      },
+      "hacer": "Normal: relé en reposo",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No activa",
+    "sintoma": "Se da la orden y el LED del relé no enciende.",
+    "mide": [
+     {
+      "donde": "A1-A2 con la orden",
+      "bien": true,
+      "medida": {
+       "circuito": "mando_rele",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "KA.A1",
+       "b": "KA.A2",
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "KA": {
+         "bobina_quemada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "bobina, sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_rele",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "KA.A1",
+       "b": "KA.A2",
+       "estado": {
+        "KA": {
+         "bobina_quemada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Bobina cortada: llega la orden pero no hay campo.",
+    "reparacion": "Cambiar el relé por otro de la misma tensión."
+   },
+   {
+    "nombre": "Activa y no da salida",
+    "sintoma": "El LED enciende pero la carga no recibe tensión.",
+    "mide": [
+     {
+      "donde": "11-14 activado",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Contacto quemado o sucio.",
+    "reparacion": "Cambiar el relé; si se quema a menudo, la carga pide más corriente de la que admite."
+   },
+   {
+    "nombre": "Suelta solo",
+    "sintoma": "El relé cae de vez en cuando con el buque vibrando.",
+    "mide": [
+     {
+      "donde": "A1-A2",
+      "bien": true,
+      "medida": {
+       "circuito": "mando_rele",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "KA.A1",
+       "b": "KA.A2",
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Relé mal enchufado en su zócalo o clip de sujeción roto.",
+    "reparacion": "Enchufarlo a fondo y poner el clip."
+   },
+   {
+    "nombre": "Bobina quemada",
+    "sintoma": "Huele a quemado y el relé está oscuro.",
+    "mide": [
+     {
+      "donde": "tensión de la etiqueta",
+      "bien": false,
+      "valor": "24 V"
+     },
+     {
+      "donde": "tensión del mando",
+      "bien": true,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Se puso un relé de otra tensión.",
+    "reparacion": "Poner uno de la tensión del mando y revisar el resto del tablero."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "LED de los relés de alarma"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "que estén enchufados y con su clip"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de cada relé de alarma"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61810: relés electromecánicos.",
+  "IEC 60617: símbolos gráficos."
+ ]
+}

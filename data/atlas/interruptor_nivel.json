@@ -1,0 +1,272 @@
+{
+ "id": "interruptor_nivel",
+ "ficha": "interruptor_nivel",
+ "titulo": "Interruptor de nivel",
+ "termino": "interruptor_nivel",
+ "icono": "nivel",
+ "resumen": "Un flotador abre su contacto cuando el líquido llega a su altura.",
+ "bornes_dibujo": {},
+ "que_es": {
+  "texto": "El {{interruptor_nivel}} vigila la altura de un líquido con su {{flotador}}. El de nivel alto de la botella de baja abre su contacto y para el compresor antes de que aspire amoníaco líquido.",
+  "partes": [
+   {
+    "texto": "Caja de conexiones con su prensaestopas.",
+    "marca": [
+     80,
+     40
+    ]
+   },
+   {
+    "texto": "Brida al recipiente.",
+    "marca": [
+     270,
+     112
+    ]
+   },
+   {
+    "texto": "Flotador en su cámara.",
+    "marca": [
+     270,
+     262
+    ]
+   }
+  ],
+  "placa": "Parker LLSS · nivel alto · contacto conmutado",
+  "a_bordo": "Botellas de baja de la planta de frío, sentinas y tanques. Modelos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mando",
+  "params": {
+   "tipo": "nivel",
+   "titulo": "INTERRUPTOR DE NIVEL ALTO",
+   "magnitud": "Nivel del líquido",
+   "minimo": 0,
+   "maximo": 1,
+   "corte": 0.8,
+   "diferencial": 0.1,
+   "unidad": "%",
+   "escala_valor": 100,
+   "inicial": 0.5,
+   "nombre_corte": "alto",
+   "contactos": [
+    {
+     "bornes": "1-2",
+     "tipo": "NC"
+    }
+   ],
+   "rotulos": {
+    "accionado": "NIVEL ALTO: PARA",
+    "reposo": "NIVEL NORMAL"
+   },
+   "notas": {
+    "reposo": "Nivel normal: 1-2 cerrado y el compresor puede trabajar.",
+    "accionado": "Nivel alto: el flotador abre 1-2 y para el compresor. Rearma solo al bajar 10 puntos."
+   }
+  },
+  "pasos": [
+   "El líquido sube y el flotador con él.",
+   "Al llegar al nivel alto, el flotador abre 1-2.",
+   "Al bajar el nivel, rearma solo."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_interruptor_nivel.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 110 V",
+     "x": 30,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 30,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "LSH",
+     "x": 70,
+     "y": 74,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 108,
+     "y": 68,
+     "tam": 11
+    },
+    {
+     "texto": "2",
+     "x": 108,
+     "y": 114,
+     "tam": 11
+    },
+    {
+     "texto": "K1 compresor",
+     "x": 190,
+     "y": 190,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    120,
+    65
+   ],
+   "2": [
+    120,
+    115
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase de mando del compresor.",
+   "2": "Sale hacia la bobina del compresor, en serie con los presostatos."
+  },
+  "grupos": [
+   {
+    "nombre": "Contacto 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con el mando del compresor, como los presostatos."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el mando"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación.",
+  "grupos": [
+   {
+    "nombre": "Contacto 1-2",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · sin tensión",
+    "nota": "Sin tensión y con el permiso de la planta.",
+    "titulo_tabla": "Qué marca el contacto",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "medir_nivel",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "LS.1",
+     "b": "LS.2"
+    },
+    "filas": [
+     {
+      "estado": "Nivel normal",
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "Nivel alto",
+      "cambios": {
+       "estado": {
+        "LS": {
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Para el compresor",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Para sin nivel alto",
+    "sintoma": "El compresor para por nivel alto y la botella está normal.",
+    "mide": [
+     {
+      "donde": "1-2",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_nivel",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "LS.1",
+       "b": "LS.2",
+       "estado": {
+        "LS": {
+         "disparado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Flotador perforado y hundido, o agua en la caja.",
+    "reparacion": "Con la planta aislada y sin amoníaco, cambiar el flotador o el interruptor."
+   },
+   {
+    "nombre": "No para con nivel alto",
+    "sintoma": "La botella se llenó y el compresor siguió.",
+    "mide": [
+     {
+      "donde": "1-2 con nivel alto",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Flotador pegado por aceite o suciedad.",
+    "reparacion": "Limpiar la cámara del flotador según el procedimiento de la planta."
+   },
+   {
+    "nombre": "Señal intermitente",
+    "sintoma": "Da alarmas sueltas con la planta estable.",
+    "mide": [
+     {
+      "donde": "1-2",
+      "bien": false,
+      "valor": "a ratos OL"
+     }
+    ],
+    "causa": "Borne flojo o humedad en la caja.",
+    "reparacion": "Reapretar, secar y cerrar bien el prensaestopas."
+   },
+   {
+    "nombre": "Cableado al revés",
+    "sintoma": "Tras cambiarlo, para con nivel bajo y no con alto.",
+    "mide": [
+     {
+      "donde": "colores usados",
+      "bien": false,
+      "valor": "gris-negro"
+     }
+    ],
+    "causa": "Se usó el NA en lugar del NC.",
+    "reparacion": "Cablear gris común y rojo NC según la etiqueta (verificar el modelo)."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura de nivel en la planta"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "prueba funcional y estado de la caja"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de la cámara del flotador"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IIAR: buenas prácticas en refrigeración por amoníaco.",
+  "ISA 5.1: identificación de instrumentos."
+ ]
+}

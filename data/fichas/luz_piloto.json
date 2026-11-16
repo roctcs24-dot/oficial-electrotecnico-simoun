@@ -1,0 +1,74 @@
+{
+  "id": "luz_piloto",
+  "titulo": "Luz piloto",
+  "resumen": "Señal luminosa del tablero: su color indica qué pasa.",
+  "dibujo": {
+    "svg": "res://art/taller/lampara.svg",
+    "tamano": [
+      200,
+      220
+    ],
+    "nota": "Luz piloto de 22 mm con LED de 110 V, dibujada de forma general. Colores y tensiones de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "X1",
+        "x": 60,
+        "y": 146,
+        "tam": 16
+      },
+      {
+        "texto": "X2",
+        "x": 140,
+        "y": 146,
+        "tam": 16
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Lámpara de señalización según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "luz_piloto"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{luz_piloto}} informa del estado de un equipo sin abrir el tablero. Su color tiene un significado (IEC 60204-1 y 60073): rojo emergencia o peligro, amarillo anormal, verde normal, azul acción obligatoria y blanco información. En el buque se usan también según la costumbre de cada fabricante ([i]verificar a bordo[/i])."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Portalámparas[/b] de 22 mm con su lente de color.\n• [b]LED[/b] con su resistencia o su pequeño rectificador, o una lámpara de filamento en los equipos antiguos.\n• Bornes X1-X2.\n• Algunas tienen [b]prueba de lámparas[/b] desde un pulsador común."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• X1-X2 en paralelo con lo que indica, o tras un contacto que lo señala: por ejemplo, el 13-14 del contactor para «en marcha».\n• A la tensión de la etiqueta: una de 24 V en 110 V se quema."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la tensión, el tipo de corriente y el color. El color se elige por lo que indica, no por gusto."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con tensión:[/b] mida X1-X2. Con tensión y apagada, está fundida.\n• [b]Sin tensión:[/b] en Ω, un LED de 110 V marca miles de ohmios; fundida, OL.\n• La prueba de lámparas enciende todas a la vez."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Apagada con tensión:[/b] LED o lámpara fundidos.\n• [b]Encendida débil sin orden:[/b] tensión inducida en un cable largo; los LED son muy sensibles.\n• [b]Color equivocado[/b] tras cambiar una lente."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada mes: prueba de lámparas en los tableros que la tengan.\n\n[b]Correctivo:[/b] se cambia el LED o la luz completa, de la misma tensión y color."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60204-1 e IEC 60073: colores de señalización.",
+    "IEC 60617: símbolos gráficos."
+  ]
+}
