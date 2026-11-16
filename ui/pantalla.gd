@@ -17,6 +17,17 @@ func iniciar(raiz_juego: Raiz, argumentos: Dictionary) -> void:
 	args = argumentos
 	add_theme_constant_override("separation", 10)
 	construir()
+	if raiz.es_seccion():
+		# Empuja la barra al pie aunque la pantalla no tenga nada que se estire; con una
+		# proporción ínfima no le quita sitio a la lista desplazable.
+		var hueco := Control.new()
+		hueco.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		hueco.size_flags_stretch_ratio = 0.0001
+		hueco.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(hueco)
+		var barra := BarraNavegacion.new()
+		barra.iniciar(raiz, raiz.nombre_actual())
+		add_child(barra)
 
 
 func construir() -> void:
@@ -29,11 +40,13 @@ func _cabecera(titulo: String, nota := "") -> void:
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 12)
 	barra.add_child(fila)
-	var volver := _boton("‹ Volver", raiz.volver)
-	# Con ajuste de línea, el contenedor lo aplastaría hasta dejarlo sin ancho.
-	volver.autowrap_mode = TextServer.AUTOWRAP_OFF
-	volver.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	fila.add_child(volver)
+	# En las secciones de la barra de navegación no hay a dónde volver.
+	if raiz.nivel() > 1:
+		var volver := _boton("‹ Volver", raiz.volver)
+		# Con ajuste de línea, el contenedor lo aplastaría hasta dejarlo sin ancho.
+		volver.autowrap_mode = TextServer.AUTOWRAP_OFF
+		volver.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(volver)
 	var textos := VBoxContainer.new()
 	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	textos.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -42,6 +55,16 @@ func _cabecera(titulo: String, nota := "") -> void:
 	textos.add_child(_etiqueta(titulo, "Titulo"))
 	if not nota.is_empty():
 		textos.add_child(_etiqueta(nota, "Nota"))
+	# Desde el tercer nivel, un atajo de vuelta al inicio.
+	if raiz.nivel() >= 3:
+		var inicio := _boton("", raiz.ir_a_seccion.bind("inicio"))
+		inicio.icon = VistaSvg.rasterizar("res://art/iconos/inicio.svg", 0.75)
+		inicio.expand_icon = true
+		inicio.tooltip_text = "Inicio"
+		inicio.custom_minimum_size = Vector2(48, 48)
+		inicio.add_theme_constant_override("icon_max_width", 24)
+		inicio.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(inicio)
 
 
 func _etiqueta(texto: String, variante := "") -> Label:

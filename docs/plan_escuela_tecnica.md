@@ -2,7 +2,7 @@
 
 Estilo visual elegido por el usuario entre maquetas (2026-11-15): variante «Oscuro» con color por área.
 
-Plan redactado por Claude Fable a petición del usuario (2026-11-15) y revisado por Claude Opus contra el código. Pendiente de aprobación: no se ha programado nada.
+Plan redactado por Claude Fable a petición del usuario (2026-11-15) y revisado por Claude Opus contra el código. Aprobado por el usuario el 2026-11-15; en ejecución desde la etapa 30.
 
 ## A. Interfaz: qué falla hoy y qué cambia
 

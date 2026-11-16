@@ -39,7 +39,7 @@ func _ready() -> void:
 	_ajustar_margenes()
 	vertical = _calcular_vertical()
 	resized.connect(_al_cambiar_tamano)
-	ir_a("plano_barco")
+	ir_a("inicio")
 
 
 func ir_a(nombre: String, argumentos := {}) -> void:
@@ -51,6 +51,25 @@ func volver() -> void:
 	if _pila.size() > 1:
 		_pila.pop_back()
 		reconstruir()
+
+
+## Una sección de la barra de navegación empieza una pila nueva.
+func ir_a_seccion(nombre: String) -> void:
+	_pila = [{"nombre": nombre, "args": {}}]
+	reconstruir()
+
+
+## 1 en las pantallas de la barra de navegación; más, al entrar en ellas.
+func nivel() -> int:
+	return _pila.size()
+
+
+func nombre_actual() -> String:
+	return _pila.back()["nombre"] if not _pila.is_empty() else ""
+
+
+func es_seccion() -> bool:
+	return _pila.size() == 1 and BarraNavegacion.SECCIONES.any(func(s: Array) -> bool: return s[0] == nombre_actual())
 
 
 func pantalla_actual() -> Pantalla:
@@ -73,6 +92,8 @@ func _notification(que: int) -> void:
 	if que == NOTIFICATION_WM_GO_BACK_REQUEST:
 		if _pila.size() > 1:
 			volver()
+		elif nombre_actual() != "inicio":
+			ir_a_seccion("inicio")
 		else:
 			get_tree().quit()
 

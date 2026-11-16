@@ -8,6 +8,8 @@ signal tablero_tocado(id: String)
 
 const LADO_MIN := 19.0
 const LADO_MAX := 27.0
+## Mitad del área táctil mínima de 48 puntos.
+const RADIO_TOQUE := 24.0
 
 var sistemas: Array = []
 ## {id, x, y} en coordenadas del dibujo del plano.
@@ -43,12 +45,28 @@ func tablero_en(punto: Vector2) -> String:
 	return ""
 
 
-## Sistema activo cuya zona contiene el punto, o -1.
+## Sistema activo cuya zona contiene el punto, o -1. Si el dedo cae fuera de todas las
+## zonas, vale la más cercana a menos de RADIO_TOQUE: en un celular las zonas miden pocos
+## puntos y el área tocable debe llegar a los 48.
 func zona_en(punto: Vector2) -> int:
+	var cercana := -1
+	var mejor := RADIO_TOQUE
 	for s: Dictionary in sistemas:
-		if s["estado"] == "activo" and _rect_zona(s).has_point(punto):
+		if s["estado"] != "activo":
+			continue
+		var r := _rect_zona(s)
+		if r.has_point(punto):
 			return int(s["id"])
-	return -1
+		var d := _distancia_a(r, punto)
+		if d < mejor:
+			mejor = d
+			cercana = int(s["id"])
+	return cercana
+
+
+static func _distancia_a(r: Rect2, punto: Vector2) -> float:
+	var dentro := Vector2(clampf(punto.x, r.position.x, r.end.x), clampf(punto.y, r.position.y, r.end.y))
+	return dentro.distance_to(punto)
 
 
 func _rect_zona(s: Dictionary) -> Rect2:

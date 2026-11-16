@@ -17,7 +17,7 @@ Estado: **v4.0**, con la v1 a la v5 completas: los siete sistemas del buque est�
 - 6 misiones de Guardia de la planta de frío: alta presión de descarga, hielo en el evaporador, presión de aceite en el Vilter nº 5, fuga de amoníaco con evacuación, nivel alto en la botella de baja y, frente al tablero de compresores, la bomba de amoníaco nº 1 sin luces.
 - Exámenes de la v1 a la v5, rangos, repaso de errores y traspaso de partida.
 - Planta de frío por amoníaco en el Taller del sistema 4: esquema del ciclo, manómetros en bar y psi, termómetro, presostatos, bombas, diagrama presión–entalpía y detector de amoníaco.
-- Glosario y plano del barco.
+- Inicio con la lección recomendada, el repaso pendiente y una tarjeta de color por sistema; barra de navegación (Inicio, Buque, Repaso, Progreso, Glosario); estilo oscuro elegido por el usuario. Glosario y plano del barco.
 
 Los requisitos completos están en [CLAUDE.md](CLAUDE.md). Están completas la v2 (generadores, paneles y cuadro principal), la v3 (refrigeración por amoníaco), la v4 (electrónica, sensores, PLC, red Modbus, HMI, puesto de alarmas y detección de incendios) y la v5 (distribución, alumbrado, baterías y cubierta). La v6 de la hoja de ruta, una vista 3D con recorrido por el buque, no está empezada: cambia el tipo de juego (2D) y requiere decidir antes su alcance. El Main Engine Control Panel de la máquina principal (Wabtec 16V250 con MEC2+) está en el sistema 6, con su frente y los valores de la pantalla tomados de un vídeo del buque; su interior y su lógica son típicos.
 

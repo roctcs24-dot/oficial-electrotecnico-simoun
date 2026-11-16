@@ -70,7 +70,10 @@ func _capturar_general(raiz: Raiz, carpeta: String) -> void:
 	for tam: Vector2i in TAMANOS:
 		root.size = tam
 		await _esperar()
+		await _guardar(carpeta, "inicio", tam)
+		raiz.ir_a_seccion("plano_barco")
 		await _guardar(carpeta, "plano", tam)
+		raiz.ir_a_seccion("inicio")
 		raiz.ir_a("sistema", {"id": 3})
 		await _guardar(carpeta, "sistema", tam)
 		raiz.volver()

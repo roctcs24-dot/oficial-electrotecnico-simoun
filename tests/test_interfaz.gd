@@ -119,3 +119,65 @@ func test_avance_cuenta_lecciones_misiones_y_examenes() -> String:
 		A.cierto(total[0] == 2, "el sistema suma lo hecho: %s" % str(total)),
 		A.cierto(Avance.siguiente_leccion(s, p) == lecciones[1], "la siguiente es la segunda lección"),
 	])
+
+
+func _barras(nodo: Node) -> int:
+	var n := 1 if nodo is BarraNavegacion else 0
+	for hijo in nodo.get_children():
+		n += _barras(hijo)
+	return n
+
+
+func test_ruta_recomienda_la_primera_leccion_pendiente() -> String:
+	var c := Contenido.new()
+	var p := Partida.new("user://pruebas_ruta.json")
+	var primera := Ruta.siguiente(c, p)
+	var s0: Array = c.sistema(0)["modos"]["aprender"]["lecciones"]
+	for id: String in s0:
+		p.datos["lecciones"][id] = {"aciertos": 1, "total": 1}
+	var tras_sistema_0 := Ruta.siguiente(c, p)
+	return A.primero([
+		A.cierto(primera["sistema"] == 0 and primera["numero"] == 1, "empieza por la primera lección del sistema 0: %s" % str(primera)),
+		A.cierto(tras_sistema_0["sistema"] == 1 and tras_sistema_0["numero"] == 1, "hecho el sistema 0, sigue el 1: %s" % str(tras_sistema_0)),
+	])
+
+
+func test_barra_solo_en_las_secciones_y_atajo_al_inicio() -> String:
+	var raiz := _raiz()
+	var en_inicio := _barras(raiz.pantalla_actual())
+	var es_inicio := raiz.nombre_actual() == "inicio"
+	raiz.ir_a("sistema", {"id": 3})
+	var en_sistema := _barras(raiz.pantalla_actual())
+	raiz.ir_a("aprender", {"id": 3})
+	var atajo := raiz.pantalla_actual().find_children("*", "Button", true, false).any(func(b: Node) -> bool: return (b as Button).tooltip_text == "Inicio")
+	raiz.ir_a_seccion("progreso")
+	var en_progreso := _barras(raiz.pantalla_actual())
+	var nivel := raiz.nivel()
+	raiz._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	var vuelve_al_inicio := raiz.nombre_actual() == "inicio"
+	raiz.free()
+	return A.primero([
+		A.cierto(es_inicio and en_inicio == 1, "el juego abre en el inicio con su barra"),
+		A.cierto(en_sistema == 0, "dentro de un sistema no hay barra"),
+		A.cierto(atajo, "en el tercer nivel hay un atajo al inicio"),
+		A.cierto(en_progreso == 1 and nivel == 1, "cada sección empieza una pila nueva con su barra"),
+		A.cierto(vuelve_al_inicio, "atrás en una sección vuelve al inicio"),
+	])
+
+
+func test_zona_del_plano_alcanzable_con_el_dedo() -> String:
+	var plano := PlanoInteractivo.new()
+	var c := Contenido.new()
+	plano.sistemas = c.sistemas()
+	plano.cargar(c.plano())
+	plano.size = Vector2(380, 170)
+	var fallos := []
+	for s: Dictionary in plano.sistemas:
+		var r := plano._rect_zona(s)
+		# A 20 puntos del borde de la zona, el dedo todavía la alcanza.
+		var punto := Vector2(r.get_center().x, r.position.y - 20.0)
+		var tocado := plano.zona_en(punto)
+		if tocado == -1:
+			fallos.append(int(s["id"]))
+	plano.free()
+	return "" if fallos.is_empty() else "zonas sin margen táctil: %s" % str(fallos)
