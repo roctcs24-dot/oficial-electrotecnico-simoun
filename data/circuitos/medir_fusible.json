@@ -1,0 +1,11 @@
+{
+  "nombre": "Fusible suelto para medir",
+  "nota": "Cartucho de 2 A fuera del portafusible: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "F1",
+      "tipo": "fusible"
+    }
+  ],
+  "cables": []
+}

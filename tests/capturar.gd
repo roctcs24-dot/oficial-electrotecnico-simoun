@@ -657,20 +657,37 @@ func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "modulo_7_aprender", tam)
 		raiz.volver()
 		raiz.volver()
-		for id: String in ["contactor", "rele_termico", "guardamotor"]:
+		var ids: Array = raiz.contenido.sistema(7)["modos"]["aprender"]["atlas"]
+		var solo := OS.get_environment("CAPTURA_ATLAS")
+		if not solo.is_empty():
+			ids = Array(solo.split(","))
+		for id: String in ids:
 			for pestana: String in ["que_es", "funciona", "conexion", "medir", "fallas"]:
 				raiz.ir_a("atlas", {"id": id, "pestana": pestana})
 				await _guardar(carpeta, "%s_%s" % [id, pestana], tam)
 				var p = raiz.pantalla_actual()
 				if pestana == "funciona":
 					var a = p.animacion
-					if id == "contactor":
-						a.poner_tension(false)
-						a.campo = 0.0
-						a.posicion = 0.0
-					else:
-						a.poner_corriente(7.2 if id == "rele_termico" else 1.5)
-						a.avanzar(400.0)
+					match id:
+						"contactor":
+							a.poner_tension(false)
+							a.campo = 0.0
+							a.posicion = 0.0
+						"rele_termico", "guardamotor", "interruptor_automatico", "fusible":
+							a.poner_corriente(7.2 if id == "rele_termico" else (3.0 if id == "fusible" else 1.5))
+							a.avanzar(400.0)
+						"diferencial":
+							a.poner_fuga(45.0)
+							a.avanzar(0.5)
+						"seccionador":
+							a.accionar(false)
+							a.poner_candado(true)
+							a.giro = 0.0
+						"rele_control_fases":
+							a.quitar_fase(true)
+							a.avanzar(2.0)
+						"monitor_aislamiento":
+							a.poner_aislamiento(0.4)
 					await _guardar(carpeta, "%s_funciona_2" % id, tam)
 				elif pestana == "conexion":
 					p.tocar_borne(p.atlas["conexion"]["bornes_esquema"].keys()[0])

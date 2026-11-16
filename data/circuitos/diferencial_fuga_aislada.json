@@ -1,0 +1,70 @@
+{
+  "nombre": "Tomas de 230 V con diferencial en la red aislada",
+  "nota": "El mismo circuito sin unir el secundario al casco, como la red aislada del buque.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "ID",
+      "tipo": "diferencial",
+      "estado": {
+        "encendido": true
+      }
+    },
+    {
+      "id": "C1",
+      "tipo": "consumidor",
+      "params": {
+        "ohm": 50,
+        "v_nominal": 230,
+        "pieza": "consumidor_tomas"
+      }
+    },
+    {
+      "id": "M",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "ID.1"
+    ],
+    [
+      "T1.X2",
+      "ID.3"
+    ],
+    [
+      "ID.2",
+      "C1.A"
+    ],
+    [
+      "ID.4",
+      "C1.B"
+    ],
+    [
+      "C1.PE",
+      "M.PE"
+    ]
+  ]
+}

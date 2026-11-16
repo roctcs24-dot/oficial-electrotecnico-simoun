@@ -1,0 +1,47 @@
+{
+  "nombre": "Mando de 110 V con su fusible y una luz piloto",
+  "nota": "Mando de 110 V AC: valor típico, verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando"
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible"
+    },
+    {
+      "id": "H1",
+      "tipo": "lampara"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "H1.X1"
+    ],
+    [
+      "H1.X2",
+      "T1.X2"
+    ]
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "nombre": "Consumidor desconectado para medir su aislamiento",
+  "nota": "Aislado de la red, para medir con el megóhmetro contra la masa.",
+  "componentes": [
+    {
+      "id": "C1",
+      "tipo": "consumidor",
+      "params": {
+        "ohm": 60,
+        "v_nominal": 380,
+        "pieza": "consumidor_cocina"
+      }
+    },
+    {
+      "id": "M",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "C1.PE",
+      "M.PE"
+    ]
+  ]
+}

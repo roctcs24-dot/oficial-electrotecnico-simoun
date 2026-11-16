@@ -1,0 +1,78 @@
+{
+  "nombre": "Relé de control de fases con su luz de red correcta",
+  "nota": "El relé mide las tres fases después del interruptor general; su 11-14 enciende la luz H1 de 110 V. Ajustes típicos: verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "Q0",
+      "tipo": "seccionador",
+      "estado": {
+        "cerrado": true
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "rele_control_fases"
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando"
+    },
+    {
+      "id": "H1",
+      "tipo": "lampara"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "Q0.1"
+    ],
+    [
+      "B.L2",
+      "Q0.3"
+    ],
+    [
+      "B.L3",
+      "Q0.5"
+    ],
+    [
+      "Q0.2",
+      "R1.L1"
+    ],
+    [
+      "Q0.4",
+      "R1.L2"
+    ],
+    [
+      "Q0.6",
+      "R1.L3"
+    ],
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "R1.11"
+    ],
+    [
+      "R1.14",
+      "H1.X1"
+    ],
+    [
+      "H1.X2",
+      "T1.X2"
+    ]
+  ]
+}

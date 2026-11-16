@@ -1,0 +1,11 @@
+{
+  "nombre": "Relé de control de fases suelto para medir",
+  "nota": "Sin tensión, su relé está en reposo: 11-12 cerrado y 11-14 abierto.",
+  "componentes": [
+    {
+      "id": "R1",
+      "tipo": "rele_control_fases"
+    }
+  ],
+  "cables": []
+}

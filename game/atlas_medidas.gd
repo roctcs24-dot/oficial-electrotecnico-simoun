@@ -6,8 +6,10 @@ extends RefCounted
 ##   {"circuito": "medir_contactor", "estado": {"K1": {"bobina_quemada": true}},
 ##    "params": {"B": {"v_linea": 300}}, "segundos": 2, "instrumento": "multimetro",
 ##    "modo": "ohm", "a": "K1.A1", "b": "K1.A2"}
-## Con la pinza, "cable": ["F2.2", "M1.U1"] dice qué conductor abraza. Con el megóhmetro,
-## "v_prueba" elige 250, 500 o 1000 V. Una medida puede llevar "valor" escrito en su lugar:
+## Con la pinza, "cable": ["F2.2", "M1.U1"] dice qué conductor abraza, o "cables" varios a la
+## vez; la pinza de fugas mide en mA lo que no vuelve por los conductores que abraza. Con el
+## megóhmetro, "v_prueba" elige 250, 500 o 1000 V. "monitor" lee el monitor de aislamiento
+## "id" de la propia red. Una medida puede llevar "valor" escrito en su lugar:
 ## solo se admite en las fallas, para lo que la simulación no modela.
 
 
@@ -75,12 +77,39 @@ static func _medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
 		"pinza":
 			var pz := SimPinza.new()
 			pz.ruido = 0.0
-			var indice := _indice_cable(sim, medida.get("cable", []))
-			r = pz.medir(sim, [] if indice < 0 else [indice])
+			r = pz.medir(sim, _indices(sim, medida))
+		"pinza_fugas":
+			r = {"valor": _suma_corrientes(sim, _indices(sim, medida)) * 1000.0, "unidad": "mA", "fuera_de_rango": false, "averia": ""}
+		"monitor":
+			var mohm: float = (sim.componente(str(medida.get("id", ""))) as SimMonitorAislamiento).medir()
+			r = {"valor": mohm, "unidad": "MΩ", "fuera_de_rango": mohm >= SimMonitorAislamiento.MOHM_MAX, "averia": ""}
 		_:
 			return {"texto": "?", "averia": "instrumento_desconocido"}
 	r["texto"] = texto(r)
 	return r
+
+
+static func _indices(sim: SimSimulacion, medida: Dictionary) -> Array:
+	var lista: Array = []
+	var cables: Array = medida.get("cables", [medida.get("cable", [])])
+	for c: Array in cables:
+		var i := _indice_cable(sim, c)
+		if i >= 0:
+			lista.append(i)
+	return lista
+
+
+## Suma de las corrientes de los cables abrazados, como la pinza pero sin su resolución de 0,1 A.
+static func _suma_corrientes(sim: SimSimulacion, cables: Array) -> float:
+	if cables.is_empty():
+		return 0.0
+	var sol := sim.resolver(false, func(e: SimEstampa) -> void:
+		for i: int in cables:
+			e.impedancia(sim.cables[i][0], sim.cables[i][1], SimPinza.R_SONDA), cables)
+	var suma := Cx.new(0.0, 0.0)
+	for i: int in cables:
+		suma = suma.mas(sol.entre(sim.cables[i][0], sim.cables[i][1]).escala(1.0 / SimPinza.R_SONDA))
+	return suma.modulo()
 
 
 static func _indice_cable(sim: SimSimulacion, cable: Array) -> int:
@@ -108,7 +137,7 @@ static func texto(r: Dictionary) -> String:
 			if v >= 1000.0:
 				return "%s kΩ" % _numero(v / 1000.0, 1)
 			return "%d Ω" % roundi(v)
-		"V", "A":
+		"V", "A", "mA":
 			return "%s %s" % [_numero(v, 0 if v >= 20.0 else 1), unidad]
 		"MΩ":
 			return "%s MΩ" % _numero(v, 0 if v >= 20.0 else 1)

@@ -10,6 +10,7 @@ const CUERPOS := {
 	"multimetro": [Color("e8c43a"), Color("7a6416"), "MULTÍMETRO"],
 	"megohmetro": [Color("d9622b"), Color("7a3212"), "MEGÓHMETRO"],
 	"pinza": [Color("e8c43a"), Color("7a6416"), "PINZA"],
+	"monitor": [Color("e9ebe8"), Color("3b444b"), "MONITOR"],
 }
 
 var dibujo: VistaBornes
@@ -60,7 +61,9 @@ func _colocar() -> void:
 	if dibujo == null:
 		return
 	dibujo.position = Vector2(4.0, 4.0)
-	dibujo.size = Vector2(size.x * 0.5, size.y - 8.0)
+	# El monitor es el propio instrumento: su dibujo ocupa todo y solo se añade la lectura.
+	var ancho := size.x - 170.0 if instrumento == "monitor" else size.x * 0.5
+	dibujo.size = Vector2(ancho, size.y - 8.0)
 	_cables.size = size
 
 
@@ -73,6 +76,9 @@ func _rect_instrumento() -> Rect2:
 
 
 func _draw() -> void:
+	if instrumento == "monitor":
+		_dibujar_lectura()
+		return
 	var r := _rect_instrumento()
 	var cuerpo: Array = CUERPOS.get(instrumento, CUERPOS["multimetro"])
 	var fuente := get_theme_default_font()
@@ -112,6 +118,16 @@ func _draw() -> void:
 		draw_circle(hembra, 6.0, ROJO if i == 0 else NEGRO)
 
 
+## Lectura del monitor en una pantalla pequeña, abajo a la derecha.
+func _dibujar_lectura() -> void:
+	var fuente := get_theme_default_font()
+	var caja := Rect2(Vector2(size.x - 152.0, size.y / 2.0 - 26.0), Vector2(140.0, 52.0))
+	draw_style_box(Tema.caja(Color("1c2a22"), 6, 0, 0, Color("3b444b")), caja)
+	var tam := 22
+	var ancho := fuente.get_string_size(lectura, HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x
+	draw_string(fuente, caja.get_center() + Vector2(-ancho / 2.0, tam * 0.36), lectura, HORIZONTAL_ALIGNMENT_LEFT, -1, tam, Color("9df0b8"))
+
+
 ## Bornes del instrumento: 0 la roja, 1 la negra (la común).
 func _hembra(i: int) -> Vector2:
 	var r := _rect_instrumento()
@@ -128,6 +144,8 @@ func _punto(borne: String, i: int) -> Vector2:
 
 
 func _dibujar_cables() -> void:
+	if instrumento == "monitor":
+		return
 	if instrumento == "pinza":
 		if roja.is_empty():
 			return

@@ -1,0 +1,231 @@
+{
+  "id": "rele_control_fases",
+  "titulo": "Relé de control de fases",
+  "resumen": "Vigila la secuencia, la falta de fase y la tensión de la red, y suelta su contacto si hay falla.",
+  "dibujo": {
+    "svg": "res://art/equipos/rele_control_fases.svg",
+    "tamano": [
+      220,
+      380
+    ],
+    "nota": "Relé de control de fases y de tensión de carril DIN, dibujado de forma general. Modelo y ajustes de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "L1",
+        "x": 62,
+        "y": 80,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "L2",
+        "x": 110,
+        "y": 80,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "L3",
+        "x": 158,
+        "y": 80,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "11",
+        "x": 62,
+        "y": 301,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "12",
+        "x": 110,
+        "y": 301,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "14",
+        "x": 158,
+        "y": 301,
+        "tam": 10,
+        "color": "#20242a"
+      },
+      {
+        "texto": "PHASE MONITOR",
+        "x": 110,
+        "y": 103,
+        "tam": 11,
+        "color": "#20242a"
+      },
+      {
+        "texto": "U",
+        "x": 78,
+        "y": 156,
+        "tam": 11
+      },
+      {
+        "texto": "R",
+        "x": 142,
+        "y": 156,
+        "tam": 11
+      },
+      {
+        "texto": "Umin",
+        "x": 78,
+        "y": 228,
+        "tam": 10
+      },
+      {
+        "texto": "Umax",
+        "x": 142,
+        "y": 228,
+        "tam": 10
+      },
+      {
+        "texto": "T",
+        "x": 110,
+        "y": 287,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "En IEC 60617 se dibuja como un bloque con su función y el contacto conmutado 11-12-14; en ANSI se identifica por sus números de función (IEEE C37.2): 47 secuencia y falta de fase, 27 mínima y 59 máxima tensión. Verificar contra la norma.",
+    "iec": {
+      "titulo": "IEC 60617",
+      "svg": "res://art/simbolos/iec/rele_control_fases.svg",
+      "tamano": [
+        300,
+        220
+      ],
+      "etiquetas": [
+        {
+          "texto": "3~",
+          "x": 80,
+          "y": 96,
+          "tam": 20
+        },
+        {
+          "texto": "U<>",
+          "x": 80,
+          "y": 122,
+          "tam": 16
+        },
+        {
+          "texto": "L1",
+          "x": 28,
+          "y": 26,
+          "tam": 15
+        },
+        {
+          "texto": "L2",
+          "x": 68,
+          "y": 26,
+          "tam": 15
+        },
+        {
+          "texto": "L3",
+          "x": 108,
+          "y": 26,
+          "tam": 15
+        },
+        {
+          "texto": "11",
+          "x": 206,
+          "y": 196,
+          "tam": 15
+        },
+        {
+          "texto": "12",
+          "x": 274,
+          "y": 26,
+          "tam": 15
+        },
+        {
+          "texto": "14",
+          "x": 206,
+          "y": 26,
+          "tam": 15
+        }
+      ]
+    },
+    "ansi": {
+      "titulo": "ANSI/IEEE 315 (NEMA)",
+      "svg": "res://art/simbolos/ansi/rele_control_fases.svg",
+      "tamano": [
+        300,
+        220
+      ],
+      "etiquetas": [
+        {
+          "texto": "47",
+          "x": 90,
+          "y": 100,
+          "tam": 24
+        },
+        {
+          "texto": "27/59",
+          "x": 90,
+          "y": 126,
+          "tam": 14
+        },
+        {
+          "texto": "NO",
+          "x": 200,
+          "y": 210,
+          "tam": 13
+        },
+        {
+          "texto": "NC",
+          "x": 236,
+          "y": 210,
+          "tam": 13
+        }
+      ]
+    }
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{rele_control_fases}} vigila la red trifásica que alimenta un tablero o un motor: la {{secuencia_fases}}, que no falte una fase, la {{subtension}}, la {{sobretension}} y la {{asimetria}}. Si todo está bien, su relé se activa y deja arrancar. Si no, suelta: así un motor no arranca al revés, por ejemplo con la toma de tierra mal conectada en puerto, ni trabaja con dos fases."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Entradas de medida y alimentación[/b] L1, L2 y L3: el relé se alimenta de la propia red que vigila.\n• [b]Electrónica de medida[/b] que compara las tres tensiones y el orden de las fases.\n• [b]Ajustes[/b] de tensión mínima, máxima y del retardo.\n• [b]Relé de salida[/b] con contacto conmutado: 11 común, 12 NC y 14 NA.\n• [b]LED[/b] U de red presente y R de relé activado."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• L1, L2 y L3 a la red vigilada, después del interruptor general y con fusibles o un interruptor de protección ([i]verificar en el esquema[/i]).\n• El contacto 11-14 en serie con el mando de los contactores, o hacia el PLC o el sistema de alarmas.\n• Si se intercambian dos fases de la entrada, el relé ve la secuencia inversa y no deja arrancar."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta",
+      "texto": "• [b]Umin y Umax:[/b] típicamente 85 % y 110 % de la nominal ([i]valor típico — verificar a bordo[/i]).\n• [b]Asimetría:[/b] típicamente 10 %.\n• [b]Retardo T:[/b] de unas décimas de segundo a unos segundos, para no soltar con un hueco breve de tensión.\n• Lea la tensión nominal en la placa: hay modelos para 380, 400 y 440 V."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con tensión,[/b] con EPP: mida las tres tensiones de línea en L1-L2, L2-L3 y L3-L1. Deben ser iguales y dentro del margen.\n• [b]Secuencia[/b] con el secuencímetro en sus bornes.\n• [b]Salida:[/b] con la red bien, el LED R encendido y 11-14 cerrado; mida la tensión de mando después de 14.\n• [b]Sin tensión:[/b] en Ω, 11-12 cerrado y 11-14 abierto."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No deja arrancar tras conectar la toma de tierra:[/b] secuencia inversa en la toma de puerto. Se corrige en la conexión de tierra, no en el relé.\n• [b]Suelta de vez en cuando:[/b] tensión baja o asimetría con mucha carga, o retardo demasiado corto.\n• [b]Falta de fase:[/b] fusible fundido o polo quemado aguas arriba.\n• [b]Relé averiado:[/b] la red está bien y 11-14 sigue abierto."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: reapriete de bornes y comprobación de los ajustes.\n• Cada año: prueba de disparo quitando una fase con el tablero en vacío, según el procedimiento del buque.\n\n[b]Correctivo:[/b] se cambia por otro de la misma tensión y función, y se copian los ajustes."
+    }
+  ],
+  "para_saber_mas": [
+    "IEEE C37.2: números de función de los dispositivos (27, 47, 59).",
+    "IEC 60255: relés de medida y de protección.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

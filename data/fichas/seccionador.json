@@ -1,0 +1,201 @@
+{
+  "id": "seccionador",
+  "titulo": "Interruptor seccionador",
+  "resumen": "Interruptor general del tablero: abre con carga, separa la red y admite candado.",
+  "dibujo": {
+    "svg": "res://art/taller/seccionador.svg",
+    "tamano": [
+      320,
+      440
+    ],
+    "nota": "Interruptor general rotativo de tablero con su candado de bloqueo, dibujado de forma general. Modelo y calibre de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 80,
+        "y": 88,
+        "tam": 16
+      },
+      {
+        "texto": "3",
+        "x": 160,
+        "y": 88,
+        "tam": 16
+      },
+      {
+        "texto": "5",
+        "x": 240,
+        "y": 88,
+        "tam": 16
+      },
+      {
+        "texto": "2",
+        "x": 80,
+        "y": 356,
+        "tam": 16
+      },
+      {
+        "texto": "4",
+        "x": 160,
+        "y": 356,
+        "tam": 16
+      },
+      {
+        "texto": "6",
+        "x": 240,
+        "y": 356,
+        "tam": 16
+      },
+      {
+        "texto": "13",
+        "x": 248,
+        "y": 170,
+        "tam": 14
+      },
+      {
+        "texto": "14",
+        "x": 248,
+        "y": 240,
+        "tam": 14
+      },
+      {
+        "texto": "0 OFF   I ON",
+        "x": 140,
+        "y": 326,
+        "tam": 16,
+        "color": "#eef3f7"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Interruptor seccionador según IEC 60617 (contacto con la marca de seccionador y la de interruptor) y ANSI/IEEE 315 (seccionador). Verificar contra la norma.",
+    "iec": {
+      "titulo": "IEC 60617",
+      "svg": "res://art/simbolos/iec/seccionador.svg",
+      "tamano": [
+        300,
+        220
+      ],
+      "etiquetas": [
+        {
+          "texto": "1",
+          "x": 44,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "3",
+          "x": 114,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "5",
+          "x": 184,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "2",
+          "x": 44,
+          "y": 196,
+          "tam": 18
+        },
+        {
+          "texto": "4",
+          "x": 114,
+          "y": 196,
+          "tam": 18
+        },
+        {
+          "texto": "6",
+          "x": 184,
+          "y": 196,
+          "tam": 18
+        },
+        {
+          "texto": "Q0",
+          "x": 280,
+          "y": 112,
+          "tam": 18
+        }
+      ]
+    },
+    "ansi": {
+      "titulo": "ANSI/IEEE 315 (NEMA)",
+      "svg": "res://art/simbolos/ansi/seccionador.svg",
+      "tamano": [
+        300,
+        220
+      ],
+      "etiquetas": [
+        {
+          "texto": "L1",
+          "x": 40,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "L2",
+          "x": 110,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "L3",
+          "x": 180,
+          "y": 26,
+          "tam": 18
+        },
+        {
+          "texto": "DS",
+          "x": 276,
+          "y": 112,
+          "tam": 18
+        }
+      ]
+    }
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{seccionador}} es el interruptor general de un tablero o de un equipo: lo conecta y lo separa de la red. Abre con la carga en servicio y deja una separación segura entre sus contactos. En la posición 0 admite el {{candado}}: es el punto de bloqueo para trabajar con {{loto}}. No protege: no dispara solo."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Mando rotativo[/b] con posiciones 0-OFF e I-ON, con un mecanismo de resorte que abre y cierra rápido, sea cual sea la velocidad de la mano.\n• [b]Contactos de doble ruptura[/b] en cada polo, con cámaras que apagan el arco.\n• [b]Contacto auxiliar[/b] 13-14, que en muchos modelos abre antes que los polos para soltar el mando.\n• [b]Enclavamiento de puerta[/b] y [b]bloqueo con candado[/b] en 0."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• La red llega a 1, 3 y 5 y sale por 2, 4 y 6 hacia las protecciones del tablero.\n• [b]Aguas arriba sigue habiendo tensión[/b] aunque esté en 0: los bornes 1, 3 y 5 están vivos.\n• El 13-14 va en serie con el mando, para que los contactores suelten antes de abrir los polos."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se elige",
+      "texto": "No tiene ajustes. Se elige por:\n• Su corriente asignada y su {{categoria_empleo}}: AC-22 o AC-23 si debe abrir motores con carga.\n• La tensión de la red y el número de polos: en la red aislada, todos los conductores activos.\n• El bloqueo con candado en 0 y el enclavamiento de la puerta."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Continuidad[/b] con el tablero aislado aguas arriba: en I, casi 0 Ω en cada polo; en 0, abierto (OL).\n• [b]Tensión[/b] con EPP: en 0, entre las salidas 2-4, 4-6 y 6-2 debe marcar 0 V; entre las entradas, la tensión de la red.\n• [b]Bloqueo:[/b] con el candado puesto no debe poder girarse a I.\n• Verificar la ausencia de tensión aguas abajo es obligatorio antes de trabajar, aunque el mando esté en 0."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Un polo quemado:[/b] el equipo trabaja con dos fases; un motor zumba y se calienta.\n• [b]Mecanismo duro o roto:[/b] el mando gira pero los contactos no siguen. Es peligroso: el indicador miente.\n• [b]Bornes recalentados[/b] por mal apriete: plástico deformado, olor.\n• [b]Candado que no entra[/b] o enclavamiento de puerta anulado."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: reapriete de bornes y termografía en servicio.\n• Cada año: maniobras en vacío, prueba del bloqueo con candado y del enclavamiento de puerta.\n\n[b]Correctivo:[/b] un polo quemado o un mecanismo dañado obliga a cambiar el interruptor por otro de la misma corriente y categoría."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-3: interruptores, seccionadores e interruptores seccionadores.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+    "NFPA 70E: bloqueo y etiquetado."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "fusible",
+  "titulo": "Fusible y portafusible",
+  "resumen": "Protege un circuito fundiéndose ante una sobrecorriente; se cambia el cartucho.",
+  "dibujo": {
+    "svg": "res://art/equipos/portafusible.svg",
+    "tamano": [
+      200,
+      380
+    ],
+    "nota": "Portafusible seccionable de carril DIN con un cartucho cilíndrico de 10 × 38 mm, dibujado de forma general. Tamaño, tipo y calibre de cada fusible del buque: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 178,
+        "y": 46,
+        "tam": 16,
+        "color": "#20242a"
+      },
+      {
+        "texto": "2",
+        "x": 178,
+        "y": 334,
+        "tam": 16,
+        "color": "#20242a"
+      },
+      {
+        "texto": "10×38",
+        "x": 100,
+        "y": 176,
+        "tam": 12,
+        "color": "#20242a"
+      },
+      {
+        "texto": "gG 2 A",
+        "x": 100,
+        "y": 198,
+        "tam": 12,
+        "color": "#20242a"
+      },
+      {
+        "texto": "500 V",
+        "x": 100,
+        "y": 220,
+        "tam": 12,
+        "color": "#20242a"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Fusible según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "fusible"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{fusible}} protege un circuito contra el {{cortocircuito}} y la {{sobrecarga}}: su elemento se funde y abre el circuito. Es sencillo, muy rápido ante un cortocircuito y corta corrientes enormes. A bordo protege sobre todo los circuitos de mando, los transformadores de mando y los instrumentos. A diferencia del {{interruptor_automatico}}, no se rearma: se cambia el {{cartucho}}."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cartucho:[/b] cuerpo cerámico con dos casquillos metálicos.\n• [b]Elemento fusible:[/b] una cinta de plata o cobre con estrechamientos. La corriente la calienta, y en un estrechamiento se funde.\n• [b]Arena de cuarzo[/b] que rodea el elemento: enfría y apaga el arco al fundirse.\n• [b]Indicador[/b] de fusión en algunos cartuchos.\n• [b]{{Portafusible}}[/b] con sus bornes 1 y 2. El seccionable se abre para aislar el circuito y cambiar el cartucho sin tocar partes con tensión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• La alimentación entra por el borne 1 y sale por el 2, en serie con lo que protege.\n• En la red aislada del buque, el mando entre dos fases lleva un fusible en cada conductor activo ([i]verificar en el esquema del tablero[/i]).\n• Apriete los bornes al par del fabricante: un borne flojo calienta el portafusible."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se elige",
+      "texto": "El fusible no se ajusta: se elige.\n• [b]Calibre:[/b] el que indica el esquema. Nunca uno mayor.\n• [b]Tipo:[/b] gG para uso general y cables; aM para motores, porque aguanta su arranque; los rápidos para electrónica.\n• [b]Tensión y {{poder_corte}}[/b] iguales o mayores que los de la red.\n• [b]Tamaño[/b] del cartucho, como 10 × 38 mm o 14 × 51 mm, el de su portafusible."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión,[/b] con el portafusible abierto y el cartucho fuera: multímetro en Ω o continuidad entre los casquillos. Sano: casi 0 Ω. Fundido: fuera de rango (OL).\n• [b]Con tensión,[/b] con EPP: mida entre los bornes 1 y 2. Un fusible sano casi no tiene caída: unos 0 V. Si marca la tensión del circuito, está fundido.\n• Antes de cambiarlo, busque la causa: un fusible que se funde una vez es un aviso; dos veces, una avería."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Fundido por cortocircuito:[/b] el elemento se vaporiza; a veces el cartucho queda ennegrecido.\n• [b]Fundido por sobrecarga:[/b] el elemento se corta en un estrechamiento, sin señales por fuera.\n• [b]Portafusible recalentado:[/b] contacto flojo u oxidado; se ve plástico deformado o casquillos oscuros.\n• [b]Fusible de más calibre[/b] puesto «para que no salte»: deja el cable sin protección. Es una falta grave."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: reapriete de bornes y revisión de signos de calentamiento.\n• Repuestos de cada calibre y tipo en el pañol, identificados.\n\n[b]Correctivo:[/b] cambie el cartucho por otro igual en calibre, tipo, tensión y tamaño, después de encontrar la causa."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60269: fusibles de baja tensión.",
+    "IEC 60617 y ANSI/IEEE 315: símbolos gráficos.",
+    "IEC 60092: instalaciones eléctricas en buques."
+  ]
+}

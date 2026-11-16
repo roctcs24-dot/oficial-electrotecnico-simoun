@@ -1,0 +1,11 @@
+{
+  "nombre": "Interruptor general suelto para medir",
+  "nota": "Sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "Q0",
+      "tipo": "seccionador"
+    }
+  ],
+  "cables": []
+}

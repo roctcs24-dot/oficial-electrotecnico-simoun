@@ -1,0 +1,16 @@
+{
+  "nombre": "Interruptor automático suelto para medir",
+  "nota": "C16 de 2 polos, sin cables: se mide sin tensión. Calibre y curva típicos: verificar a bordo.",
+  "componentes": [
+    {
+      "id": "Q1",
+      "tipo": "interruptor_automatico",
+      "params": {
+        "in_a": 16,
+        "curva": "C",
+        "polos": 2
+      }
+    }
+  ],
+  "cables": []
+}

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="290" viewBox="0 0 400 290">
+  <defs>
+    <g id="principal" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-4,-10 A4,4 0 0 0 4,-10"/></g>
+    <g id="automatico" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9 M-4,-14 L4,-6 M4,-14 L-4,-6"/></g>
+    <g id="secc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-11 M-6,-11 H6 M0,25 V10 M0,10 L-11,-10"/></g>
+    <g id="na" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 M0,25 V10 M0,10 L-10,-9"/></g>
+    <g id="nc" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-25 V-10 H8 M0,25 V10 M0,10 L9,-13"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15"/></g>
+    <g id="lampara" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><circle r="13"/><path d="M-9.2,-9.2 L9.2,9.2 M9.2,-9.2 L-9.2,9.2 M0,-25 V-13 M0,25 V13"/></g>
+    <g id="fusible" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-7" y="-15" width="14" height="30"/><path d="M0,-25 V25"/></g>
+    <g id="tierra" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M0,-12 V0 M-14,0 H14 M-9,6 H9 M-4,12 H4"/></g>
+    <g id="trafo" fill="none" stroke="#20242a" stroke-width="3"><circle cx="0" cy="-10" r="14"/><circle cx="0" cy="10" r="14"/></g>
+  </defs>
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40,24 V55 M80,24 V55 M120,24 V55 M40,105 V160 M80,105 V160 M120,105 V160"/>
+    <rect x="24" y="160" width="112" height="44"/>
+    <path d="M250,24 V30 M250,30 V55 M250,105 V165 M250,215 V250"/>
+  </g>
+  <use xlink:href="#secc" x="40" y="80"/><use xlink:href="#secc" x="80" y="80"/><use xlink:href="#secc" x="120" y="80"/>
+  <use xlink:href="#na" x="250" y="80"/>
+  <use xlink:href="#bobina" x="250" y="190"/>
+  <g stroke="#20242a" stroke-width="2" stroke-dasharray="6 4" fill="none"><path d="M28,80 H240"/></g>
+</svg>

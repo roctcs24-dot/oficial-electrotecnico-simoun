@@ -91,6 +91,14 @@ func _panel_pieza() -> void:
 		"guardamotor":
 			_panel.add_child(_boton("Abrir" if c.estado["encendido"] else "Cerrar", _alternar_guardamotor.bind(id)))
 			_agregar_ajuste(c, "Ajuste térmico", 6.0, 40.0)
+		"interruptor_automatico":
+			_panel.add_child(_boton("Abrir" if c.estado["encendido"] else "Cerrar", _alternar_guardamotor.bind(id)))
+		"diferencial":
+			_panel.add_child(_boton("Bajar la maneta" if c.estado["encendido"] else "Subir la maneta", _alternar_diferencial.bind(id)))
+			_panel.add_child(_boton("Pulsar el botón de prueba T", _probar_diferencial.bind(id)))
+		"seccionador":
+			_panel.add_child(_boton("Abrir (0)" if c.estado["cerrado"] else "Cerrar (I)", _alternar_seccionador.bind(id)))
+			_panel.add_child(_boton("Quitar el candado" if c.estado["candado"] else "Poner el candado", _alternar_candado.bind(id)))
 		"rele_termico":
 			_panel.add_child(_boton("Rearmar", _rearmar_rele.bind(id)))
 			_agregar_ajuste(c, "Ajuste", 6.0, 50.0)
@@ -167,6 +175,35 @@ func _rearmar_barras(id: String) -> void:
 func _alternar_guardamotor(id: String) -> void:
 	var c: SimGuardamotor = mesa.sim.componente(id)
 	c.accionar(not c.estado["encendido"])
+	_reconstruir_panel()
+
+
+func _alternar_diferencial(id: String) -> void:
+	var c: SimDiferencial = mesa.sim.componente(id)
+	c.accionar(not c.estado["encendido"])
+	_reconstruir_panel()
+
+
+## El botón T se pulsa un instante: la fuga interna dispara un diferencial sano.
+func _probar_diferencial(id: String) -> void:
+	var c: SimDiferencial = mesa.sim.componente(id)
+	c.pulsar_prueba(true)
+	mesa.sim.paso()
+	c.pulsar_prueba(false)
+	_reconstruir_panel()
+
+
+func _alternar_seccionador(id: String) -> void:
+	var c: SimSeccionador = mesa.sim.componente(id)
+	if not c.accionar(not c.cerrado()):
+		_mostrar_aviso("Interruptor bloqueado", "Tiene puesto el candado de bloqueo y su tarjeta. Solo lo retira quien lo puso, cuando termina el trabajo.")
+	_reconstruir_panel()
+
+
+func _alternar_candado(id: String) -> void:
+	var c: SimSeccionador = mesa.sim.componente(id)
+	if not c.poner_candado(not c.estado["candado"]):
+		_mostrar_aviso("Primero, abrir", "El candado solo entra con el interruptor en 0 (abierto).")
 	_reconstruir_panel()
 
 

@@ -5,7 +5,9 @@ extends Animacion
 ## magnetico_veces × Ir, como en un cortocircuito. Al soltarse el cerrojo, el muelle abre los
 ## contactos principales y el auxiliar 13-14, y cierra el de señal 97-98. Para rearmar hay que
 ## llevar el mando a O y después a I, igual que SimGuardamotor.accionar.
-## Parámetros: ajuste_a (Ir, A), magnetico_veces y veces (corriente inicial en × Ir).
+## Parámetros: ajuste_a (Ir, A), magnetico_veces y veces (corriente inicial en × Ir). Con
+## "tipo": "interruptor" dibuja un interruptor automático: maneta en vez de mando giratorio,
+## cámara de arco en vez de auxiliares y corriente en × In.
 
 const ANCHO := 408.0
 const ALTO := 340.0
@@ -25,6 +27,8 @@ var reloj := 0.0
 var _nucleo := 0.0
 ## 0 contactos abiertos, 1 cerrados.
 var _contactos := 1.0
+## Segundos que le quedan al arco que se ve al abrir con corriente.
+var _arco := 0.0
 var _deslizador: HSlider
 var _valor: Label
 var _nota: Label
@@ -71,6 +75,15 @@ func preparar() -> void:
 	_actualizar_textos()
 
 
+func es_interruptor() -> bool:
+	return params.get("tipo", "guardamotor") == "interruptor"
+
+
+## Nombre de la corriente de ajuste: Ir en el guardamotor, In en el interruptor.
+func _i() -> String:
+	return "In" if es_interruptor() else "Ir"
+
+
 func ajuste() -> float:
 	return float(params.get("ajuste_a", 25.0))
 
@@ -96,6 +109,8 @@ func poner_corriente(v: float) -> void:
 
 ## Girar el mando: tras un disparo, primero a O, que rearma el cerrojo, y después a I.
 func accionar(encender: bool) -> void:
+	if not encender and cerrado() and corriente() > 0.01:
+		_arco = 0.4
 	if not encender or disparado:
 		encendido = false
 		disparado = false
@@ -115,6 +130,7 @@ func _comprobar_magnetico() -> void:
 func _disparar(por: String) -> void:
 	disparado = true
 	causa = por
+	_arco = 0.7 if por == "magnetico" else 0.4
 	if por == "magnetico":
 		_nucleo = 1.0
 	_actualizar_textos()
@@ -148,15 +164,27 @@ func _process(delta: float) -> void:
 	avanzar(delta * (ACELERACION if acelerado() else 1.0))
 	_contactos = move_toward(_contactos, 1.0 if cerrado() else 0.0, delta * 6.0)
 	_nucleo = move_toward(_nucleo, 0.0, delta * 1.5)
+	_arco = maxf(_arco - delta, 0.0)
 	super(delta)
 
 
 func _actualizar_textos() -> void:
-	_valor.text = "%s × Ir · %s A" % [_coma(veces), _coma(veces * ajuste())]
+	_valor.text = "%s × %s · %s A" % [_coma(veces), _i(), _coma(veces * ajuste())]
+	var causa_texto := "magnético: corriente de cortocircuito" if causa == "magnetico" else "térmico: sobrecarga mantenida"
+	if es_interruptor():
+		_mando.text = "Subir la maneta (ON)" if not cerrado() else "Bajar la maneta (OFF)"
+		if disparado:
+			_mando.text = "Rearmar: bajar la maneta"
+			_nota.text = "Disparo %s. La maneta queda abajo: busque la causa antes de volver a subirla." % causa_texto
+		elif not encendido:
+			_nota.text = "Abierto (OFF): el circuito no tiene tensión aguas abajo."
+		else:
+			_nota.text = "In = %s A, curva %s. Térmico: con 1,5 × In dispara en minutos. Magnético: al instante por encima de %s × In (la curva C abre entre 5 y 10 × In)." % [_coma(ajuste()), str(params.get("curva", "C")), _coma(magnetico())]
+		return
 	_mando.text = "Girar el mando a I (encender)" if not cerrado() else "Girar el mando a O (apagar)"
 	if disparado:
 		_mando.text = "Rearmar: girar el mando a O"
-		_nota.text = "Disparo %s. Para rearmar, lleve el mando a O y después a I; antes, busque la causa." % ("magnético: corriente de cortocircuito" if causa == "magnetico" else "térmico: sobrecarga mantenida")
+		_nota.text = "Disparo %s. Para rearmar, lleve el mando a O y después a I; antes, busque la causa." % causa_texto
 	elif not encendido:
 		_nota.text = "Apagado (O): los contactos principales y el 13-14 están abiertos."
 	else:
@@ -173,7 +201,7 @@ func dibujar() -> void:
 	fondo()
 	diseno(ANCHO, ALTO)
 	var l := lienzo
-	texto(Vector2(204, 14), "CORTE DE UNA FASE DEL GUARDAMOTOR", 12, Color("5b6267"))
+	texto(Vector2(204, 14), str(params.get("titulo", "CORTE DE UNA FASE DEL GUARDAMOTOR")), 12, Color("5b6267"))
 	var hay_corriente := corriente() > 0.01
 	# Conductor de la fase: 1 → contacto principal → bobina magnética → bimetal → 2.
 	texto(Vector2(36, 34), "1", 12, Tema.TINTA)
@@ -222,6 +250,21 @@ func dibujar() -> void:
 	# Cerrojo: lo sueltan el núcleo o el bimetal.
 	l.draw_style_box(Tema.caja(Color("8a949b") if not disparado else Color("c0392b"), 4, 0, 0, Color("3b444b")), Rect2(196, 110, 34, 110))
 	texto(Vector2(213, 236), "Cerrojo", 11, Tema.TINTA)
+	# El arco al abrir con corriente, que la cámara enfría y corta.
+	if _arco > 0.0:
+		var zig := PackedVector2Array()
+		var desde := punta + Vector2(6, 0)
+		var hasta := Vector2(256, 60) if es_interruptor() else punta + Vector2(30, -14)
+		for m in 9:
+			var u := m / 8.0
+			var desvio := 0.0 if m in [0, 8] else (-6.0 if m % 2 == 0 else 6.0)
+			zig.append(desde.lerp(hasta, u) + Vector2(0, desvio))
+		l.draw_polyline(zig, Color("ffd84a", minf(_arco * 2.0, 1.0)), 4.0, true)
+	if es_interruptor():
+		_dibujar_camara()
+		_dibujar_maneta()
+		l.draw_set_transform(Vector2.ZERO)
+		return
 	# Auxiliares y señal.
 	l.draw_style_box(Tema.caja(Color("dfe3e4"), 8, 0, 0, Color("5b6267")), Rect2(256, 40, 142, 128))
 	texto(Vector2(266, 60), "13-14 NA (auxiliar)", 12, Tema.TINTA, false)
@@ -255,6 +298,42 @@ func dibujar() -> void:
 	var ancho_reloj := fuente.get_string_size(reloj_texto, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
 	texto(Vector2(398 - ancho_reloj, 318), reloj_texto, 11, Color("3b444b"), false)
 	l.draw_set_transform(Vector2.ZERO)
+
+
+## Cámara de arco del interruptor: placas de acero que dividen y enfrían el arco.
+func _dibujar_camara() -> void:
+	var l := lienzo
+	l.draw_style_box(Tema.caja(Color("dfe3e4"), 8, 0, 0, Color("5b6267")), Rect2(256, 36, 142, 86))
+	for j in 7:
+		l.draw_rect(Rect2(266 + j * 18, 48, 8, 50), Color("6e7a83"))
+	texto(Vector2(327, 112), "Cámara de arco", 11, Tema.TINTA)
+
+
+## Maneta: arriba ON, abajo OFF; tras un disparo cae abajo sola.
+func _dibujar_maneta() -> void:
+	var l := lienzo
+	var fuente := get_theme_default_font()
+	var caja := Rect2(296, 150, 60, 96)
+	l.draw_style_box(Tema.caja(Color("2b2f32"), 8, 0, 0), caja)
+	var arriba := cerrado()
+	var palanca := Rect2(caja.position.x + 14, caja.position.y + (10.0 if arriba else 50.0), 32, 36)
+	l.draw_style_box(Tema.caja(Color("e9ebe8"), 5, 0, 0), palanca)
+	texto(Vector2(caja.get_center().x, caja.position.y - 10), "ON  I", 11, Tema.TINTA)
+	texto(Vector2(caja.get_center().x, caja.end.y + 10), "OFF  O", 11, Tema.TINTA)
+	var rotulo := "EN SERVICIO"
+	var color := Tema.ACIERTO
+	if disparado:
+		rotulo = "DISPARO " + ("MAGNÉTICO" if causa == "magnetico" else "TÉRMICO")
+		color = Color("c0392b")
+	elif not encendido:
+		rotulo = "ABIERTO (OFF)"
+		color = Color("5b6267")
+	var ancho := fuente.get_string_size(rotulo, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x + 20.0
+	l.draw_style_box(Tema.caja(color, 5, 0, 0), Rect2(326 - ancho / 2.0, 272, ancho, 24))
+	texto(Vector2(326, 284), rotulo, 12, Color.WHITE)
+	var reloj_texto := "Tiempo: %d min %02d s%s" % [int(reloj) / 60, int(reloj) % 60, "  (reloj × %d)" % int(ACELERACION) if acelerado() else ""]
+	var ancho_reloj := fuente.get_string_size(reloj_texto, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+	texto(Vector2(398 - ancho_reloj, 318), reloj_texto, 11, Color("3b444b"), false)
 
 
 func _discontinua(a: Vector2, b: Vector2) -> void:

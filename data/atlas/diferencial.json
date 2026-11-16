@@ -1,0 +1,538 @@
+{
+ "id": "diferencial",
+ "ficha": "diferencial",
+ "titulo": "Interruptor diferencial",
+ "termino": "diferencial",
+ "icono": "diferencial",
+ "resumen": "Abre cuando una parte de la corriente se va a tierra: protege a las personas.",
+ "bornes_dibujo": {
+  "1": [
+   80,
+   52
+  ],
+  "3": [
+   180,
+   52
+  ],
+  "2": [
+   80,
+   328
+  ],
+  "4": [
+   180,
+   328
+  ]
+ },
+ "que_es": {
+  "texto": "El {{diferencial}} compara la corriente que va por la fase con la que vuelve por el neutro. Si no son iguales, la diferencia se ha ido a tierra, quizá a través de una persona, y abre. Solo funciona donde la red tiene un punto unido a tierra: en la red aislada del buque la primera falla no hace circular corriente.",
+  "partes": [
+   {
+    "texto": "Bornes de entrada: 1 la fase y 3 el neutro.",
+    "marca": [
+     22,
+     52
+    ]
+   },
+   {
+    "texto": "Sensibilidad IΔn: 30 mA protege a las personas.",
+    "marca": [
+     238,
+     116
+    ]
+   },
+   {
+    "texto": "Botón de prueba T: crea una fuga interna y debe disparar.",
+    "marca": [
+     238,
+     192
+    ]
+   },
+   {
+    "texto": "Bornes de salida 2 y 4 hacia las tomas.",
+    "marca": [
+     22,
+     328
+    ]
+   }
+  ],
+  "placa": "40 A · IΔn 30 mA · tipo A · 230 V~",
+  "a_bordo": "Tomas de taller, de cubierta o de habilitación con un transformador de separación puesto a tierra. Que existan y dónde: verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_diferencial",
+  "params": {
+   "fuga_ma": 12
+  },
+  "pasos": [
+   "La fase y el neutro atraviesan el {{transformador_toroidal}}: si lo que va vuelve entero, sus campos se anulan.",
+   "Con una fuga a tierra, una parte no vuelve: es la {{corriente_diferencial}}, y el toroide da señal.",
+   "Si pasa de 30 mA, el relé de disparo abre los dos polos en menos de 300 ms."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_diferencial.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Tomas de 230 V con secundario a tierra",
+     "x": 160,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "T1",
+     "x": 144,
+     "y": 59,
+     "tam": 12
+    },
+    {
+     "texto": "X1",
+     "x": 78,
+     "y": 92,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 132,
+     "y": 92,
+     "tam": 11
+    },
+    {
+     "texto": "1",
+     "x": 78,
+     "y": 122,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 108,
+     "y": 122,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 78,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 108,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "ID",
+     "x": 150,
+     "y": 116,
+     "tam": 12
+    },
+    {
+     "texto": "toroide",
+     "x": 64,
+     "y": 206,
+     "tam": 10
+    },
+    {
+     "texto": "relé",
+     "x": 180,
+     "y": 192,
+     "tam": 10
+    },
+    {
+     "texto": "T",
+     "x": 30,
+     "y": 142,
+     "tam": 12
+    },
+    {
+     "texto": "Toma 230 V",
+     "x": 105,
+     "y": 233,
+     "tam": 11
+    },
+    {
+     "texto": "fuga",
+     "x": 278,
+     "y": 229,
+     "tam": 11
+    },
+    {
+     "texto": "tierra del secundario",
+     "x": 266,
+     "y": 124,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    90,
+    125
+   ],
+   "3": [
+    120,
+    125
+   ],
+   "2": [
+    90,
+    175
+   ],
+   "4": [
+    120,
+    175
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase del secundario del transformador (X1).",
+   "3": "Llega el neutro (X2), que está unido a tierra en el transformador: por eso el diferencial puede ver las fugas.",
+   "2": "Sale la fase hacia las tomas, después del toroide.",
+   "4": "Sale el neutro hacia las tomas. Nunca se une a tierra después del diferencial: lo haría disparar."
+  },
+  "grupos": [
+   {
+    "nombre": "Fase 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "La fase pasa por dentro del toroide. Por el mismo toroide pasa el neutro, nunca el conductor de protección."
+   },
+   {
+    "nombre": "Neutro 3-4",
+    "bornes": [
+     "3",
+     "4"
+    ],
+    "texto": "El neutro también atraviesa el toroide: en servicio normal su corriente anula la de la fase."
+   }
+  ],
+  "taller": "diferencial_fuga"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: tomas de 230 V con un consumidor de unos 1000 W y el secundario unido a tierra.",
+  "taller": "diferencial_fuga",
+  "grupos": [
+   {
+    "nombre": "Fuga",
+    "instrumento": "pinza",
+    "escala": "mA~",
+    "roja": "2",
+    "como": "Pinza de fugas abrazando la fase y el neutro juntos",
+    "nota": "Mide lo que no vuelve: la fuga a tierra.",
+    "titulo_tabla": "Corriente de fuga",
+    "columna": "Fuga",
+    "medida": {
+     "circuito": "diferencial_fuga",
+     "segundos": 0.3,
+     "instrumento": "pinza_fugas",
+     "cables": [
+      [
+       "ID.2",
+       "C1.A"
+      ],
+      [
+       "ID.4",
+       "C1.B"
+      ]
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Sin fuga",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Fuga de 20 kΩ",
+      "cambios": {
+       "params": {
+        "C1": {
+         "fuga_ohm": 20000
+        }
+       }
+      },
+      "hacer": "Por debajo de 30 mA: no dispara",
+      "bien": false
+     },
+     {
+      "estado": "Red aislada, fuga de 5 kΩ",
+      "cambios": {
+       "circuito": "diferencial_fuga_aislada",
+       "params": {
+        "C1": {
+         "fuga_ohm": 5000
+        }
+       }
+      },
+      "hacer": "No hay camino: avisa el monitor",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión en la toma",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "4",
+    "como": "Escala V~ · puntas en la toma",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en la toma",
+    "columna": "Toma",
+    "medida": {
+     "circuito": "diferencial_fuga",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "C1.A",
+     "b": "C1.B"
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Fuga de 5 kΩ",
+      "cambios": {
+       "params": {
+        "C1": {
+         "fuga_ohm": 5000
+        }
+       }
+      },
+      "hacer": "Disparó: buscar la fuga",
+      "bien": false
+     },
+     {
+      "estado": "Pulsando T",
+      "cambios": {
+       "estado": {
+        "ID": {
+         "prueba": true
+        }
+       }
+      },
+      "hacer": "Disparó: el diferencial funciona",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Polos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · punta roja en 1, negra en 2",
+    "nota": "Sin tensión, con el diferencial fuera del circuito.",
+    "titulo_tabla": "Qué debe marcar cada polo",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_diferencial",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "ID.1",
+     "b": "ID.2"
+    },
+    "filas": [
+     {
+      "estado": "1-2, maneta arriba",
+      "cambios": {
+       "estado": {
+        "ID": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "1-2, maneta abajo",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "3-4, maneta arriba",
+      "cambios": {
+       "a": "ID.3",
+       "b": "ID.4",
+       "estado": {
+        "ID": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Dispara sin causa",
+    "sintoma": "Salta de vez en cuando, sobre todo con humedad o con muchos equipos conectados.",
+    "mide": [
+     {
+      "donde": "fuga total con la pinza",
+      "bien": false,
+      "medida": {
+       "circuito": "diferencial_fuga",
+       "segundos": 0.3,
+       "instrumento": "pinza_fugas",
+       "cables": [
+        [
+         "ID.2",
+         "C1.A"
+        ],
+        [
+         "ID.4",
+         "C1.B"
+        ]
+       ],
+       "params": {
+        "C1": {
+         "fuga_ohm": 8000
+        }
+       }
+      }
+     },
+     {
+      "donde": "aislamiento de un consumidor",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_consumidor",
+       "instrumento": "megohmetro",
+       "v_prueba": 500,
+       "a": "C1.A",
+       "b": "M.PE",
+       "params": {
+        "C1": {
+         "fuga_ohm": 500000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Suma de pequeñas fugas de varios equipos, o humedad en una toma de cubierta, cerca de los 30 mA.",
+    "reparacion": "Medir el aislamiento de cada consumidor con el circuito aislado, secar o reparar el que falle y repartir los equipos electrónicos."
+   },
+   {
+    "nombre": "No dispara con T",
+    "sintoma": "Se pulsa T y no pasa nada.",
+    "mide": [
+     {
+      "donde": "toma pulsando T",
+      "bien": false,
+      "medida": {
+       "circuito": "diferencial_fuga",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "C1.A",
+       "b": "C1.B",
+       "estado": {
+        "ID": {
+         "prueba": true
+        }
+       },
+       "params": {
+        "ID": {
+         "averiado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Mecanismo o relé de disparo averiados: el diferencial ya no protege.",
+    "reparacion": "Cambiarlo por otro de la misma sensibilidad, tipo y calibre. No dejarlo en servicio."
+   },
+   {
+    "nombre": "No ve la fuga",
+    "sintoma": "Hay una fuga a masa y no dispara.",
+    "mide": [
+     {
+      "donde": "fuga en la red aislada",
+      "bien": false,
+      "medida": {
+       "circuito": "diferencial_fuga_aislada",
+       "segundos": 0.3,
+       "instrumento": "pinza_fugas",
+       "cables": [
+        [
+         "ID.2",
+         "C1.A"
+        ],
+        [
+         "ID.4",
+         "C1.B"
+        ]
+       ],
+       "params": {
+        "C1": {
+         "fuga_ohm": 5000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "No es una avería: en la red aislada la fuga no tiene camino de vuelta y casi no circula corriente.",
+    "reparacion": "Ahí la falla la detectan el monitor de aislamiento y las lámparas de tierra. Localícela abriendo salidas."
+   },
+   {
+    "nombre": "No sube la maneta",
+    "sintoma": "Al subirla, vuelve a saltar enseguida.",
+    "mide": [
+     {
+      "donde": "toma tras subirla",
+      "bien": false,
+      "medida": {
+       "circuito": "diferencial_fuga",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "C1.A",
+       "b": "C1.B",
+       "params": {
+        "C1": {
+         "fuga_ohm": 5000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "La fuga sigue conectada: dispara cada vez que se cierra.",
+    "reparacion": "Desenchufar todos los consumidores, subir la maneta y conectarlos uno a uno hasta encontrar el que dispara."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba con el botón T, avisando antes del corte"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y limpieza"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de tiempo y corriente con el comprobador"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61008 e IEC 61009: interruptores diferenciales.",
+  "IEC 60092: instalaciones eléctricas en buques."
+ ]
+}

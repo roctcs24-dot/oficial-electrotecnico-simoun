@@ -1,0 +1,49 @@
+{
+  "nombre": "Red aislada de 380 V con su monitor de aislamiento",
+  "nota": "Barras de 380 V, un consumidor con una posible fuga a masa y el monitor. Umbral de alarma de 1 MΩ: verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380,
+        "neutro_mohm": 100000
+      }
+    },
+    {
+      "id": "MA",
+      "tipo": "monitor_aislamiento"
+    },
+    {
+      "id": "C1",
+      "tipo": "consumidor",
+      "params": {
+        "ohm": 60,
+        "v_nominal": 380,
+        "pieza": "consumidor_cocina"
+      }
+    },
+    {
+      "id": "M",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "MA.L"
+    ],
+    [
+      "B.L1",
+      "C1.A"
+    ],
+    [
+      "B.L2",
+      "C1.B"
+    ],
+    [
+      "C1.PE",
+      "M.PE"
+    ]
+  ]
+}

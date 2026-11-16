@@ -1,0 +1,355 @@
+{
+ "id": "monitor_aislamiento",
+ "ficha": "monitor_aislamiento",
+ "titulo": "Monitor de aislamiento",
+ "termino": "monitor_aislamiento",
+ "icono": "monitor",
+ "resumen": "Mide en servicio la resistencia de la red aislada contra el casco y avisa si baja.",
+ "bornes_dibujo": {},
+ "que_es": {
+  "texto": "En el {{sistema_aislado}} del buque la primera {{falla_tierra}} no dispara ninguna protección. El {{monitor_aislamiento}} mide de forma continua la resistencia de toda la red contra el casco, con la red en servicio, y da la alarma si baja de su umbral.",
+  "partes": [
+   {
+    "texto": "Escala en MΩ: infinito a la izquierda, cero a la derecha.",
+    "marca": [
+     272,
+     150
+    ]
+   },
+   {
+    "texto": "LED ON y LED de alarma.",
+    "marca": [
+     150,
+     222
+    ]
+   },
+   {
+    "texto": "Pulsadores TEST, que simula una falla, y RESET, que borra la alarma retenida.",
+    "marca": [
+     150,
+     289
+    ]
+   }
+  ],
+  "placa": "Red 3 × 380 V aislada · alarma 1 MΩ · contacto de alarma 250 V",
+  "a_bordo": "En el cuadro principal; en el Vía Simoun están confirmadas las lámparas de tierra R-S-T. El modelo del monitor: verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_monitor",
+  "params": {
+   "aislamiento_mohm": 50
+  },
+  "pasos": [
+   "El monitor aplica una pequeña tensión continua entre la red y el casco.",
+   "Esa corriente solo vuelve a través de los defectos de aislamiento: cuanto más corriente, menos MΩ.",
+   "Por debajo del umbral da la alarma, que queda retenida hasta pulsar RESET."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_monitor_aislamiento.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Red aislada de 380 V",
+     "x": 200,
+     "y": 10,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 20,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "L2",
+     "x": 20,
+     "y": 50,
+     "tam": 11
+    },
+    {
+     "texto": "L3",
+     "x": 20,
+     "y": 70,
+     "tam": 11
+    },
+    {
+     "texto": "Consumidor",
+     "x": 105,
+     "y": 130,
+     "tam": 10
+    },
+    {
+     "texto": "defecto",
+     "x": 140,
+     "y": 192,
+     "tam": 10
+    },
+    {
+     "texto": "F",
+     "x": 270,
+     "y": 75,
+     "tam": 11
+    },
+    {
+     "texto": "MA",
+     "x": 250,
+     "y": 132,
+     "tam": 13
+    },
+    {
+     "texto": "L",
+     "x": 238,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "PE",
+     "x": 266,
+     "y": 182,
+     "tam": 11
+    },
+    {
+     "texto": "alarma",
+     "x": 360,
+     "y": 168,
+     "tam": 10
+    },
+    {
+     "texto": "Casco",
+     "x": 200,
+     "y": 280,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L": [
+    250,
+    110
+   ],
+   "PE": [
+    250,
+    170
+   ]
+  },
+  "bornes": {
+   "L": "Llega una fase de la red, a través de su fusible. Por aquí inyecta la señal de medida.",
+   "PE": "Va al casco con un cable propio y bien apretado. Si se suelta, el monitor deja de medir y marca infinito."
+  },
+  "grupos": [
+   {
+    "nombre": "L a la red",
+    "bornes": [
+     "L"
+    ],
+    "texto": "Basta una fase: toda la red está unida a través de los transformadores y los consumidores."
+   },
+   {
+    "nombre": "PE al casco",
+    "bornes": [
+     "PE"
+    ],
+    "texto": "La conexión al casco es tan importante como la de la red. Muchos modelos la vigilan."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores calculados con la simulación: la lectura del monitor con la red en servicio y la del megóhmetro con el consumidor aislado.",
+  "grupos": [
+   {
+    "nombre": "Lectura del monitor",
+    "instrumento": "monitor",
+    "escala": "MΩ",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura en la escala del monitor, con la red en servicio",
+    "nota": "No hace falta desconectar nada: el monitor mide en servicio.",
+    "titulo_tabla": "Lectura según el defecto (alarma bajo 1 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "circuito": "monitor_red",
+     "instrumento": "monitor",
+     "id": "MA"
+    },
+    "filas": [
+     {
+      "estado": "Red sana",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Defecto de 5 MΩ",
+      "cambios": {
+       "params": {
+        "C1": {
+         "fuga_ohm": 5000000
+        }
+       }
+      },
+      "hacer": "Vigilar la tendencia",
+      "bien": true
+     },
+     {
+      "estado": "Defecto de 500 kΩ",
+      "cambios": {
+       "params": {
+        "C1": {
+         "fuga_ohm": 500000
+        }
+       }
+      },
+      "hacer": "Alarma: localizar el defecto",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Megóhmetro en la salida",
+    "instrumento": "megohmetro",
+    "escala": "500 V",
+    "roja": "",
+    "negra": "",
+    "como": "Megóhmetro a 500 V entre el consumidor y la masa",
+    "nota": "Con la salida aislada y bloqueada: confirma qué consumidor tiene el defecto.",
+    "titulo_tabla": "Aislamiento del consumidor (mínimo 5 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "circuito": "medir_consumidor",
+     "instrumento": "megohmetro",
+     "v_prueba": 500,
+     "a": "C1.A",
+     "b": "M.PE"
+    },
+    "filas": [
+     {
+      "estado": "Consumidor sano",
+      "hacer": "Bueno",
+      "bien": true
+     },
+     {
+      "estado": "Con el defecto",
+      "cambios": {
+       "params": {
+        "C1": {
+         "fuga_ohm": 500000
+        }
+       }
+      },
+      "hacer": "Reparar o secar",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Alarma real",
+    "sintoma": "Suena la alarma de aislamiento y una lámpara de tierra brilla menos.",
+    "mide": [
+     {
+      "donde": "lectura del monitor",
+      "bien": false,
+      "medida": {
+       "circuito": "monitor_red",
+       "instrumento": "monitor",
+       "id": "MA",
+       "params": {
+        "C1": {
+         "fuga_ohm": 500000
+        }
+       }
+      }
+     },
+     {
+      "donde": "megóhmetro en la salida",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_consumidor",
+       "instrumento": "megohmetro",
+       "v_prueba": 500,
+       "a": "C1.A",
+       "b": "M.PE",
+       "params": {
+        "C1": {
+         "fuga_ohm": 500000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Defecto a masa en algún equipo de la red.",
+    "reparacion": "Localizarlo abriendo salidas una a una con permiso del jefe de máquinas, y medir con el megóhmetro la que tenga el defecto."
+   },
+   {
+    "nombre": "Siempre infinito",
+    "sintoma": "La lectura nunca baja, ni con TEST da alarma.",
+    "mide": [
+     {
+      "donde": "lectura con TEST pulsado",
+      "bien": false,
+      "valor": "∞"
+     }
+    ],
+    "causa": "Conexión al casco o a la red suelta, o su fusible fundido: el monitor no ve nada.",
+    "reparacion": "Revisar el fusible y las dos conexiones, y probar con TEST."
+   },
+   {
+    "nombre": "Baja al unir barras",
+    "sintoma": "Al unir dos secciones del cuadro, la lectura cae.",
+    "mide": [
+     {
+      "donde": "lectura con dos monitores",
+      "bien": false,
+      "valor": "0,3 MΩ"
+     }
+    ],
+    "causa": "Quedaron dos monitores en la misma red: se miden entre sí.",
+    "reparacion": "Desconectar uno según el procedimiento del buque."
+   },
+   {
+    "nombre": "Baja con humedad",
+    "sintoma": "La lectura cae con la humedad o al baldear la cubierta.",
+    "mide": [
+     {
+      "donde": "en seco",
+      "bien": true,
+      "valor": "20 MΩ"
+     },
+     {
+      "donde": "con humedad",
+      "bien": false,
+      "valor": "0,8 MΩ"
+     }
+    ],
+    "causa": "Aislamiento degradado en motores de cubierta o cajas mal cerradas.",
+    "reparacion": "Localizar la salida, secar y sellar las cajas, y medir con el megóhmetro."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba con TEST y anotación de la lectura"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "apriete de las conexiones a la red y al casco"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba con resistencia conocida según el manual"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61557-8: monitores de aislamiento.",
+  "IEC 60092-502: redes aisladas en buques."
+ ]
+}

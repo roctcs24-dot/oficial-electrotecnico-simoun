@@ -34,13 +34,25 @@ func _terminos_fuera(texto: String, glosario: Dictionary) -> String:
 	return ""
 
 
-func test_el_modulo_7_publica_los_tres_primeros() -> String:
+func test_el_modulo_7_publica_las_etapas_33_y_34() -> String:
 	var c := Contenido.new()
 	var m := c.sistema(7)
+	var esperados := ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento"]
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 7 debe estar activo"),
-		A.cierto(_ids(c) == ["contactor", "rele_termico", "guardamotor"], "atlas del módulo 7: %s" % str(_ids(c))),
+		A.cierto(_ids(c) == esperados, "atlas del módulo 7: %s" % str(_ids(c))),
 	])
+
+
+## Cada pieza de un circuito que se abre en el Taller debe tener su dibujo en el cajón.
+func _falta_en_el_cajon(c: Contenido, circuito: String) -> String:
+	var mesa := MesaTaller.new(c)
+	if not mesa.cargar_plantilla(circuito):
+		return "no carga"
+	for id: String in mesa.piezas:
+		if mesa.entrada(mesa.piezas[id]["tipo"]).is_empty():
+			return id
+	return ""
 
 
 func test_datos_del_atlas_bien_formados() -> String:
@@ -87,12 +99,15 @@ func test_datos_del_atlas_bien_formados() -> String:
 			for b: String in g["bornes"]:
 				if not en_esquema.has(b):
 					fallos.append("%s: el grupo %s usa %s, que no está en el esquema" % [id, g["nombre"], b])
-		if c.circuito_datos(str(con.get("taller", ""))).is_empty():
-			fallos.append("%s: el circuito del Taller no existe" % id)
 		# Medir: siempre con la simulación.
 		var med: Dictionary = a.get("medir", {})
-		if c.circuito_datos(str(med.get("taller", ""))).is_empty():
-			fallos.append("%s: el circuito para medir no existe" % id)
+		# El botón del Taller es opcional; si está, su circuito debe montarse en la mesa.
+		for taller: String in [str(con.get("taller", "")), str(med.get("taller", ""))]:
+			if taller.is_empty():
+				continue
+			var falta := _falta_en_el_cajon(c, taller)
+			if not falta.is_empty():
+				fallos.append("%s: el circuito %s del Taller falla en %s" % [id, taller, falta])
 		for g: Dictionary in med.get("grupos", []):
 			if g.get("filas", []).is_empty() or g.get("medida", {}).has("valor"):
 				fallos.append("%s: el grupo %s no se mide con la simulación" % [id, g["nombre"]])
@@ -330,8 +345,96 @@ func test_avance_del_modulo_y_mantenimiento_guardado() -> String:
 	var guardada := Partida.new(RUTA_PARTIDA)
 	guardada.cargar()
 	return A.primero([
-		A.cierto(antes == [0, 3], "al empezar: %s" % str(antes)),
-		A.cierto(despues == [1, 3], "tras ver las cinco pestañas: %s" % str(despues)),
+		A.cierto(antes == [0, 9], "al empezar: %s" % str(antes)),
+		A.cierto(despues == [1, 9], "tras ver las cinco pestañas: %s" % str(despues)),
 		A.cierto(guardada.tarea_atlas_hecha("contactor", 1), "la tarea marcada debe quedar guardada"),
 		A.cierto(guardada.atlas_completo("rele_termico"), "la ficha vista debe quedar guardada"),
+	])
+
+
+func test_medir_de_la_proteccion() -> String:
+	var c := Contenido.new()
+	var falta_l3 := _lectura(c, "rele_control_fases", "Tensiones de entrada", "L2-L3, falta L3").trim_suffix(" V").to_float()
+	return A.primero([
+		A.cierto(_lectura(c, "interruptor_automatico", "Tensión de salida", "En OFF") == "0,0 V", "interruptor en OFF sin tensión aguas abajo"),
+		A.cierto(_lectura(c, "interruptor_automatico", "Tensión de salida", "Cortocircuito en el alumbrado") == "0,0 V", "con un corto debe disparar"),
+		A.cierto(_lectura(c, "diferencial", "Fuga", "Fuga de 20 kΩ") == "11,4 mA", "fuga de 20 kΩ: %s" % _lectura(c, "diferencial", "Fuga", "Fuga de 20 kΩ")),
+		A.cierto(_lectura(c, "diferencial", "Fuga", "Red aislada, fuga de 5 kΩ") == "0,0 mA", "en la red aislada no hay fuga que medir"),
+		A.cierto(_lectura(c, "diferencial", "Tensión en la toma", "Fuga de 5 kΩ") == "0,0 V", "con 46 mA debe disparar"),
+		A.cierto(_lectura(c, "diferencial", "Tensión en la toma", "Pulsando T") == "0,0 V", "T debe disparar"),
+		A.cierto(_lectura(c, "fusible", "En servicio", "Fundido") == "110 V", "fusible fundido en servicio: toda la tensión"),
+		A.cierto(_lectura(c, "fusible", "Cartucho", "Fundido") == "OL", "cartucho fundido: OL"),
+		A.cierto(_lectura(c, "seccionador", "Ausencia de tensión", "Entradas 1-3, en 0") == "380 V", "las entradas siguen con tensión en 0"),
+		A.cierto(_lectura(c, "seccionador", "Ausencia de tensión", "Salidas 2-4, en 0") == "0,0 V", "las salidas sin tensión en 0"),
+		A.cierto(_lectura(c, "rele_control_fases", "Luz de red correcta", "Red correcta") == "110 V", "red correcta: la luz encendida"),
+		A.cierto(_lectura(c, "rele_control_fases", "Luz de red correcta", "Falta L3") == "0,0 V", "falta de fase: suelta"),
+		A.cierto(_lectura(c, "rele_control_fases", "Luz de red correcta", "Secuencia inversa") == "0,0 V", "secuencia inversa: suelta"),
+		A.cierto(falta_l3 > 150.0 and falta_l3 < 230.0, "sin L3, entre L2 y L3 queda media tensión: %s" % str(falta_l3)),
+		A.cierto(_lectura(c, "monitor_aislamiento", "Lectura del monitor", "Red sana") == "> 999 MΩ", "red sana: %s" % _lectura(c, "monitor_aislamiento", "Lectura del monitor", "Red sana")),
+		A.cierto(_lectura(c, "monitor_aislamiento", "Lectura del monitor", "Defecto de 500 kΩ") == "0,5 MΩ", "defecto de 500 kΩ: %s" % _lectura(c, "monitor_aislamiento", "Lectura del monitor", "Defecto de 500 kΩ")),
+	])
+
+
+func test_cortes_de_la_proteccion() -> String:
+	var d = _animacion("corte_diferencial", {"fuga_ma": 12})
+	d.avanzar(0.5)
+	var con_12: bool = not d.disparado()
+	d.poner_fuga(45.0)
+	d.avanzar(0.5)
+	var con_45: bool = d.disparado()
+	d.accionar(false)
+	d.poner_fuga(45.0)
+	d.poner_tierra(false)
+	d.accionar(true)
+	d.avanzar(0.5)
+	var aislada: bool = not d.disparado()
+	d.poner_tierra(true)
+	d.poner_fuga(0.0)
+	d.probar()
+	var prueba: bool = d.disparado()
+	d.free()
+	var f = _animacion("corte_fusible", {"veces": 2.0})
+	var t := 0.0
+	while not f.fundido and t < 60.0:
+		f.avanzar(0.5)
+		t += 0.5
+	f.free()
+	var aguanta = _animacion("corte_fusible", {"veces": 1.2})
+	aguanta.avanzar(3600.0)
+	var sin_fundir: bool = not aguanta.fundido
+	aguanta.free()
+	var s = _animacion("corte_seccionador", {"cerrado": true})
+	var candado_cerrado: bool = s.poner_candado(true)
+	s.accionar(false)
+	var candado_abierto: bool = s.poner_candado(true)
+	var cierra_con_candado: bool = s.accionar(true)
+	s.free()
+	var r = _animacion("corte_rele_fases", {})
+	var activo_al_empezar: bool = r.activado()
+	r.quitar_fase(true)
+	r.avanzar(1.0)
+	var suelta: bool = not r.activado()
+	r.quitar_fase(false)
+	r.invertir(true)
+	r.avanzar(1.0)
+	var inversa: bool = not r.activado()
+	r.free()
+	var mon = _animacion("corte_monitor", {"aislamiento_mohm": 50})
+	var sin_alarma: bool = not mon.alarma
+	mon.poner_aislamiento(0.4)
+	var alarma: bool = mon.alarma
+	mon.poner_aislamiento(50.0)
+	var retenida: bool = mon.alarma
+	mon.reset()
+	var borrada: bool = not mon.alarma
+	mon.free()
+	return A.primero([
+		A.cierto(con_12 and con_45, "diferencial: 12 mA no dispara y 45 mA sí"),
+		A.cierto(aislada, "en la red aislada la fuga no lo dispara"),
+		A.cierto(prueba, "T debe disparar"),
+		A.cierto(t > 10.0 and t < 15.0, "fusible a 2 × In: unos 12,5 s, y fue %s s" % str(t)),
+		A.cierto(sin_fundir, "a 1,2 × In no debe fundirse"),
+		A.cierto(not candado_cerrado and candado_abierto and not cierra_con_candado, "el candado solo en 0, y con él no cierra"),
+		A.cierto(activo_al_empezar and suelta and inversa, "relé de fases: activo con la red bien, suelta sin L3 y con secuencia inversa"),
+		A.cierto(sin_alarma and alarma and retenida and borrada, "monitor: alarma bajo 1 MΩ, retenida hasta RESET"),
 	])

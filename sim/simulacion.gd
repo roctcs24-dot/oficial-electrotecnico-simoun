@@ -60,6 +60,8 @@ static func tipos() -> Dictionary:
 		"hidroforo": SimHidroforo,
 		"timon": SimTimon,
 		"arrancador_suave": SimArrancadorSuave,
+		"diferencial": SimDiferencial,
+		"rele_control_fases": SimReleControlFases,
 	}
 
 

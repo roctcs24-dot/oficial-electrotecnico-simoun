@@ -1,0 +1,539 @@
+{
+ "id": "rele_control_fases",
+ "ficha": "rele_control_fases",
+ "titulo": "Relé de control de fases",
+ "termino": "rele_control_fases",
+ "icono": "fases",
+ "resumen": "Suelta su contacto si falta una fase, la secuencia es inversa o la tensión se sale del margen.",
+ "bornes_dibujo": {
+  "L1": [
+   62,
+   46
+  ],
+  "L2": [
+   110,
+   46
+  ],
+  "L3": [
+   158,
+   46
+  ],
+  "11": [
+   62,
+   334
+  ],
+  "12": [
+   110,
+   334
+  ],
+  "14": [
+   158,
+   334
+  ]
+ },
+ "que_es": {
+  "texto": "El {{rele_control_fases}} vigila la red que alimenta un tablero: la {{secuencia_fases}}, la falta de una fase, la {{subtension}}, la {{sobretension}} y la {{asimetria}}. Con la red bien activa su relé y deja arrancar; si no, suelta y protege los motores.",
+  "partes": [
+   {
+    "texto": "Bornes L1, L2 y L3: alimentación y medida.",
+    "marca": [
+     14,
+     46
+    ]
+   },
+   {
+    "texto": "LED U de red presente y R de relé activado.",
+    "marca": [
+     14,
+     136
+    ]
+   },
+   {
+    "texto": "Ajustes de tensión mínima, máxima y retardo.",
+    "marca": [
+     14,
+     226
+    ]
+   },
+   {
+    "texto": "Contacto conmutado: 11 común, 12 NC y 14 NA.",
+    "marca": [
+     14,
+     334
+    ]
+   }
+  ],
+  "placa": "3 × 380 V~ · Umin 85 % · Umax 110 % · 11-12-14 5 A 250 V",
+  "a_bordo": "Tableros de motores críticos y la llegada de la toma de tierra en puerto. Que exista y su modelo: verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_rele_fases",
+  "params": {},
+  "pasos": [
+   "El relé mide las tres tensiones de línea y el orden en que pasan las fases.",
+   "Si algo se sale del margen, espera su retardo por si es solo un hueco breve.",
+   "Si sigue mal, suelta: 11-14 abre y el mando no deja arrancar; 11-12 cierra y avisa."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_rele_control_fases.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Potencia",
+     "x": 40,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Mando a 110 V",
+     "x": 320,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 30,
+     "y": 22,
+     "tam": 11
+    },
+    {
+     "texto": "L2",
+     "x": 60,
+     "y": 22,
+     "tam": 11
+    },
+    {
+     "texto": "L3",
+     "x": 112,
+     "y": 22,
+     "tam": 11
+    },
+    {
+     "texto": "3~ U<>",
+     "x": 205,
+     "y": 107,
+     "tam": 13
+    },
+    {
+     "texto": "R1",
+     "x": 260,
+     "y": 92,
+     "tam": 12
+    },
+    {
+     "texto": "M",
+     "x": 70,
+     "y": 252,
+     "tam": 15
+    },
+    {
+     "texto": "11",
+     "x": 334,
+     "y": 96,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 288,
+     "y": 160,
+     "tam": 11
+    },
+    {
+     "texto": "12",
+     "x": 354,
+     "y": 160,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 300,
+     "y": 221,
+     "tam": 12
+    },
+    {
+     "texto": "H2",
+     "x": 366,
+     "y": 221,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 320,
+     "y": 284,
+     "tam": 11
+    },
+    {
+     "texto": "alarma",
+     "x": 362,
+     "y": 244,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L1": [
+    180,
+    80
+   ],
+   "L2": [
+    205,
+    80
+   ],
+   "L3": [
+    230,
+    80
+   ],
+   "11": [
+    320,
+    100
+   ],
+   "14": [
+    300,
+    150
+   ],
+   "12": [
+    340,
+    150
+   ]
+  },
+  "bornes": {
+   "L1": "Llega L1 de la red vigilada, después del interruptor general y con su protección.",
+   "L2": "Llega L2. Si se intercambia con L3, el relé ve la secuencia inversa y no deja arrancar.",
+   "L3": "Llega L3. Si falta, el relé lo detecta aunque siga habiendo tensión en las otras dos.",
+   "11": "Común del contacto: llega la fase de mando de 110 V.",
+   "14": "NA: con la red bien, cerrado; alimenta la bobina del contactor K1.",
+   "12": "NC: con falla o sin tensión, cerrado; enciende la luz H2 de alarma."
+  },
+  "grupos": [
+   {
+    "nombre": "Medida L1-L2-L3",
+    "bornes": [
+     "L1",
+     "L2",
+     "L3"
+    ],
+    "texto": "Se conectan a la red que alimenta los motores, en el mismo orden de fases que ellos."
+   },
+   {
+    "nombre": "11-14 marcha",
+    "bornes": [
+     "11",
+     "14"
+    ],
+    "texto": "En serie con el mando: sin red correcta no hay arranque."
+   },
+   {
+    "nombre": "11-12 alarma",
+    "bornes": [
+     "11",
+     "12"
+    ],
+    "texto": "Cierra cuando suelta: da la alarma de falla de red."
+   }
+  ],
+  "taller": "rele_fases_servicio"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: red de 380 V con el relé después del interruptor general y la luz H1 en su 11-14.",
+  "taller": "rele_fases_servicio",
+  "grupos": [
+   {
+    "nombre": "Luz de red correcta",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "14",
+    "negra": "11",
+    "como": "Escala V~ · en la luz H1 que alimenta el 11-14",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Qué hace el relé en cada caso",
+    "columna": "H1",
+    "medida": {
+     "circuito": "rele_fases_servicio",
+     "segundos": 1.5,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "H1.X1",
+     "b": "H1.X2"
+    },
+    "filas": [
+     {
+      "estado": "Red correcta",
+      "hacer": "Relé activado",
+      "bien": true
+     },
+     {
+      "estado": "Falta L3",
+      "cambios": {
+       "params": {
+        "Q0": {
+         "polo_danado": "5-6"
+        }
+       }
+      },
+      "hacer": "Suelta: falta de fase",
+      "bien": false
+     },
+     {
+      "estado": "Secuencia inversa",
+      "cambios": {
+       "params": {
+        "B": {
+         "secuencia": "inversa"
+        }
+       }
+      },
+      "hacer": "Suelta: no deja arrancar",
+      "bien": false
+     },
+     {
+      "estado": "Red a 300 V",
+      "cambios": {
+       "params": {
+        "B": {
+         "v_linea": 300
+        }
+       }
+      },
+      "hacer": "Suelta: tensión baja",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Tensiones de entrada",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "L2",
+    "negra": "L3",
+    "como": "Escala V~ · entre dos bornes de entrada",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión de línea en los bornes",
+    "columna": "V",
+    "medida": {
+     "circuito": "rele_fases_servicio",
+     "segundos": 1.5,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "R1.L1",
+     "b": "R1.L2"
+    },
+    "filas": [
+     {
+      "estado": "L1-L2, red correcta",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "L2-L3, falta L3",
+      "cambios": {
+       "a": "R1.L2",
+       "b": "R1.L3",
+       "params": {
+        "Q0": {
+         "polo_danado": "5-6"
+        }
+       }
+      },
+      "hacer": "Media tensión: falta una fase",
+      "bien": false
+     },
+     {
+      "estado": "L1-L2, red a 300 V",
+      "cambios": {
+       "params": {
+        "B": {
+         "v_linea": 300
+        }
+       }
+      },
+      "hacer": "Por debajo del 85 %",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Contacto en reposo",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "11",
+    "negra": "12",
+    "como": "Escala Ω · relé sin tensión",
+    "nota": "Sin tensión, con el relé desconectado.",
+    "titulo_tabla": "Contacto sin alimentación",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_rele_fases",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "R1.11",
+     "b": "R1.12"
+    },
+    "filas": [
+     {
+      "estado": "11-12",
+      "hacer": "Normal: NC cerrado",
+      "bien": true
+     },
+     {
+      "estado": "11-14",
+      "cambios": {
+       "b": "R1.14"
+      },
+      "hacer": "Normal: NA abierto",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No arranca en puerto",
+    "sintoma": "Al pasar a la toma de tierra, ningún motor del tablero arranca.",
+    "mide": [
+     {
+      "donde": "luz H1",
+      "bien": false,
+      "medida": {
+       "circuito": "rele_fases_servicio",
+       "segundos": 1.5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "H1.X1",
+       "b": "H1.X2",
+       "params": {
+        "B": {
+         "secuencia": "inversa"
+        }
+       }
+      }
+     },
+     {
+      "donde": "secuencímetro en L1-L2-L3",
+      "bien": false,
+      "valor": "inversa"
+     }
+    ],
+    "causa": "La toma de tierra llega con la secuencia inversa: los motores girarían al revés.",
+    "reparacion": "Corregir el orden de fases en la conexión de la toma, nunca puenteando el relé. Comprobar el giro de un motor después."
+   },
+   {
+    "nombre": "Suelta con carga",
+    "sintoma": "Con mucha carga en la red, el relé suelta y los motores paran.",
+    "mide": [
+     {
+      "donde": "L1-L2 con mucha carga",
+      "bien": false,
+      "medida": {
+       "circuito": "rele_fases_servicio",
+       "segundos": 1.5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "R1.L1",
+       "b": "R1.L2",
+       "params": {
+        "B": {
+         "v_linea": 300
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Subtensión: generación insuficiente, AVR mal ajustado o cables con mucha caída.",
+    "reparacion": "Revisar la tensión de los generadores y el reparto de carga; ajustar Umin solo si lo permite el fabricante del motor."
+   },
+   {
+    "nombre": "Falta de fase",
+    "sintoma": "El relé suelta y el LED U sigue encendido.",
+    "mide": [
+     {
+      "donde": "L2-L3",
+      "bien": false,
+      "medida": {
+       "circuito": "rele_fases_servicio",
+       "segundos": 1.5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "R1.L2",
+       "b": "R1.L3",
+       "params": {
+        "Q0": {
+         "polo_danado": "5-6"
+        }
+       }
+      }
+     },
+     {
+      "donde": "L1-L2",
+      "bien": true,
+      "medida": {
+       "circuito": "rele_fases_servicio",
+       "segundos": 1.5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "R1.L1",
+       "b": "R1.L2",
+       "params": {
+        "Q0": {
+         "polo_danado": "5-6"
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un fusible fundido o un polo quemado aguas arriba.",
+    "reparacion": "Bloquear, buscar el polo o el fusible abierto y repararlo."
+   },
+   {
+    "nombre": "Relé averiado",
+    "sintoma": "La red está bien y el relé no activa su salida.",
+    "mide": [
+     {
+      "donde": "entradas L1-L2",
+      "bien": true,
+      "medida": {
+       "circuito": "rele_fases_servicio",
+       "segundos": 1.5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "R1.L1",
+       "b": "R1.L2"
+      }
+     },
+     {
+      "donde": "luz H1",
+      "bien": false,
+      "valor": "0,0 V"
+     }
+    ],
+    "causa": "Relé averiado.",
+    "reparacion": "Cambiarlo por otro de la misma tensión y copiar los ajustes."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "LED U y R encendidos con la red bien"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y comprobación de ajustes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba quitando una fase con el tablero en vacío"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEEE C37.2: funciones 27, 47 y 59.",
+  "IEC 60255: relés de medida y de protección."
+ ]
+}

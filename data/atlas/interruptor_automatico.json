@@ -1,0 +1,521 @@
+{
+ "id": "interruptor_automatico",
+ "ficha": "interruptor_automatico",
+ "titulo": "Interruptor automático",
+ "termino": "interruptor_automatico",
+ "icono": "interruptor",
+ "resumen": "Protege cada circuito contra sobrecarga y cortocircuito; se rearma.",
+ "bornes_dibujo": {
+  "1": [
+   80,
+   52
+  ],
+  "3": [
+   180,
+   52
+  ],
+  "2": [
+   80,
+   328
+  ],
+  "4": [
+   180,
+   328
+  ]
+ },
+ "que_es": {
+  "texto": "El {{interruptor_automatico}} protege el cable y el consumidor de cada circuito de distribución: abre solo ante una {{sobrecarga}} o un {{cortocircuito}} y sirve para abrir el circuito a mano. Después de disparar se rearma, sin cambiar nada.",
+  "partes": [
+   {
+    "texto": "Bornes de entrada 1 y 3, desde las barras o el transformador.",
+    "marca": [
+     22,
+     52
+    ]
+   },
+   {
+    "texto": "Calibre y curva en el frente: C16 es 16 A de curva C.",
+    "marca": [
+     238,
+     116
+    ]
+   },
+   {
+    "texto": "Maneta: arriba I-ON, abajo O-OFF; tras un disparo cae abajo sola.",
+    "marca": [
+     238,
+     210
+    ]
+   },
+   {
+    "texto": "Bornes de salida 2 y 4, hacia el circuito.",
+    "marca": [
+     22,
+     328
+    ]
+   }
+  ],
+  "placa": "C16 · 2 polos · 230/400 V~ · poder de corte 6000 A",
+  "a_bordo": "Tableros de distribución de 220 V y 110 V: alumbrado, tomas, cocina y equipos de habilitación. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_guardamotor",
+  "params": {
+   "tipo": "interruptor",
+   "titulo": "CORTE DE UN POLO DEL INTERRUPTOR AUTOMÁTICO",
+   "ajuste_a": 16,
+   "magnetico_veces": 7.5,
+   "curva": "C",
+   "veces": 1.0
+  },
+  "pasos": [
+   "La corriente del circuito atraviesa el contacto, la bobina magnética y el {{bimetal}}.",
+   "Una sobrecarga curva el bimetal poco a poco; un cortocircuito atrae al instante el núcleo de la bobina.",
+   "Se suelta el {{cerrojo}}, los contactos abren y la {{camara_arco}} corta el arco. La maneta cae a OFF."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_interruptor_automatico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Circuito de 230 V",
+     "x": 70,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Curva de disparo",
+     "x": 300,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 70,
+     "y": 16,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 100,
+     "y": 16,
+     "tam": 12
+    },
+    {
+     "texto": "T1",
+     "x": 124,
+     "y": 59,
+     "tam": 12
+    },
+    {
+     "texto": "380/230 V",
+     "x": 150,
+     "y": 76,
+     "tam": 10
+    },
+    {
+     "texto": "1",
+     "x": 58,
+     "y": 112,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 88,
+     "y": 112,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 58,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 88,
+     "y": 170,
+     "tam": 12
+    },
+    {
+     "texto": "Q1",
+     "x": 120,
+     "y": 118,
+     "tam": 12
+    },
+    {
+     "texto": "C16",
+     "x": 155,
+     "y": 141,
+     "tam": 11
+    },
+    {
+     "texto": "Alumbrado",
+     "x": 85,
+     "y": 226,
+     "tam": 11
+    },
+    {
+     "texto": "t",
+     "x": 204,
+     "y": 36,
+     "tam": 12
+    },
+    {
+     "texto": "× In",
+     "x": 380,
+     "y": 266,
+     "tam": 11
+    },
+    {
+     "texto": "térmico",
+     "x": 268,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "magnético",
+     "x": 322,
+     "y": 172,
+     "tam": 11
+    },
+    {
+     "texto": "5 a 10 × In",
+     "x": 322,
+     "y": 262,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    70,
+    115
+   ],
+   "3": [
+    100,
+    115
+   ],
+   "2": [
+    70,
+    165
+   ],
+   "4": [
+    100,
+    165
+   ]
+  },
+  "bornes": {
+   "1": "Llega un conductor del secundario del transformador de 380/230 V. Tiene tensión aunque el interruptor esté abierto.",
+   "3": "Llega el otro conductor del secundario. En la red aislada se cortan los dos.",
+   "2": "Sale hacia el circuito de alumbrado. Sin tensión con el interruptor en OFF o disparado.",
+   "4": "Sale el otro conductor hacia el circuito de alumbrado."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada 1-3",
+    "bornes": [
+     "1",
+     "3"
+    ],
+    "texto": "La alimentación entra por arriba: los dos conductores activos del circuito de 230 V."
+   },
+   {
+    "nombre": "Salida 2-4",
+    "bornes": [
+     "2",
+     "4"
+    ],
+    "texto": "El circuito protegido sale por abajo. El calibre no debe superar la corriente que admite el cable."
+   }
+  ],
+  "taller": "interruptor_servicio"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación sobre un circuito de alumbrado de 230 V con un C16.",
+  "taller": "interruptor_servicio",
+  "grupos": [
+   {
+    "nombre": "Polos 1-2",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · punta roja en 1, negra en 2",
+    "nota": "Sin tensión, con el circuito aislado aguas arriba.",
+    "titulo_tabla": "Qué debe marcar cada polo",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "medir_interruptor",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "Q1.1",
+     "b": "Q1.2"
+    },
+    "filas": [
+     {
+      "estado": "En ON",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "En OFF",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Buscar la causa y rearmar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión de salida",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "4",
+    "como": "Escala V~ · puntas en las salidas 2 y 4",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión que llega al circuito",
+    "columna": "2-4",
+    "medida": {
+     "circuito": "interruptor_servicio",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "Q1.2",
+     "b": "Q1.4"
+    },
+    "filas": [
+     {
+      "estado": "En ON",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "En OFF",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "encendido": false
+        }
+       }
+      },
+      "hacer": "Sin tensión aguas abajo",
+      "bien": true
+     },
+     {
+      "estado": "Cortocircuito en el alumbrado",
+      "cambios": {
+       "params": {
+        "C1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "Disparó el magnético",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "2",
+    "como": "Pinza amperimétrica en la salida 2",
+    "nota": "Con el circuito en servicio y el tablero cerrado, si el modelo lo permite.",
+    "titulo_tabla": "Corriente del circuito, con un C16",
+    "columna": "Pinza",
+    "medida": {
+     "circuito": "interruptor_servicio",
+     "segundos": 0.3,
+     "instrumento": "pinza",
+     "cable": [
+      "Q1.2",
+      "C1.A"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Alumbrado normal",
+      "hacer": "Por debajo de In",
+      "bien": true
+     },
+     {
+      "estado": "Con más carga",
+      "cambios": {
+       "params": {
+        "C1": {
+         "ohm": 12
+        }
+       }
+      },
+      "hacer": "Por encima de In: disparará el térmico",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Dispara al conectar",
+    "sintoma": "Se sube la maneta y salta al momento.",
+    "mide": [
+     {
+      "donde": "salida 2-4",
+      "bien": false,
+      "medida": {
+       "circuito": "interruptor_servicio",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "Q1.2",
+       "b": "Q1.4",
+       "params": {
+        "C1": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "consumidor A-B, aislado",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_consumidor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "C1.A",
+       "b": "C1.B",
+       "params": {
+        "C1": {
+         "corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cortocircuito en el circuito: actúa el disparo magnético.",
+    "reparacion": "Bloquear, medir el circuito por tramos hasta encontrar el corto, repararlo y solo entonces rearmar."
+   },
+   {
+    "nombre": "Dispara tras un rato",
+    "sintoma": "Funciona un tiempo y salta; al rato se puede volver a subir.",
+    "mide": [
+     {
+      "donde": "corriente en 2",
+      "bien": false,
+      "medida": {
+       "circuito": "interruptor_servicio",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "Q1.2",
+        "C1.A"
+       ],
+       "params": {
+        "C1": {
+         "ohm": 12
+        }
+       }
+      }
+     },
+     {
+      "donde": "calibre del interruptor",
+      "bien": true,
+      "valor": "C16"
+     }
+    ],
+    "causa": "Sobrecarga: el circuito consume más que su calibre; actúa el disparo térmico.",
+    "reparacion": "Repartir los consumidores o revisar el que consume de más. No poner un calibre mayor que el que admite el cable."
+   },
+   {
+    "nombre": "Borne caliente",
+    "sintoma": "Un polo está mucho más caliente que el otro y el interruptor dispara sin sobrecarga.",
+    "mide": [
+     {
+      "donde": "borne flojo (infrarrojo)",
+      "bien": false,
+      "valor": "70 °C"
+     },
+     {
+      "donde": "borne sano",
+      "bien": true,
+      "valor": "35 °C"
+     }
+    ],
+    "causa": "Borne flojo u oxidado: la resistencia de contacto calienta el bimetal.",
+    "reparacion": "Bloquear, reapretar al par del fabricante; si la carcasa está dañada, cambiar el interruptor."
+   },
+   {
+    "nombre": "No rearma",
+    "sintoma": "La maneta no se queda arriba.",
+    "mide": [
+     {
+      "donde": "polo 1-2 tras subirla",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_interruptor",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q1.1",
+       "b": "Q1.2",
+       "estado": {
+        "Q1": {
+         "encendido": true,
+         "disparado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "La falla sigue presente o el mecanismo está dañado.",
+    "reparacion": "Desconectar el circuito aguas abajo y probar; si sigue sin rearmar en vacío, cambiar el interruptor por otro igual en calibre, curva y poder de corte."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "temperatura de los bornes con el infrarrojo"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y limpieza del tablero"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "maniobra de cada interruptor para que no se agarrote"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60898-1 e IEC 60947-2: interruptores automáticos.",
+  "IEC 60092: instalaciones eléctricas en buques."
+ ]
+}

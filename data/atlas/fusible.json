@@ -1,0 +1,392 @@
+{
+ "id": "fusible",
+ "ficha": "fusible",
+ "titulo": "Fusible y portafusible",
+ "termino": "fusible",
+ "icono": "fusible",
+ "resumen": "Se funde ante una sobrecorriente y abre el circuito; se cambia el cartucho.",
+ "bornes_dibujo": {
+  "1": [
+   100,
+   46
+  ],
+  "2": [
+   100,
+   334
+  ]
+ },
+ "que_es": {
+  "texto": "El {{fusible}} es la protección más sencilla: un elemento que se funde con la sobrecorriente y abre el circuito. Corta corrientes enormes muy rápido, pero no se rearma: se cambia el {{cartucho}} por otro igual.",
+  "partes": [
+   {
+    "texto": "Borne 1, de entrada.",
+    "marca": [
+     22,
+     46
+    ]
+   },
+   {
+    "texto": "{{Cartucho}} de 10 × 38 mm con su calibre y tipo: gG 2 A.",
+    "marca": [
+     176,
+     196
+    ]
+   },
+   {
+    "texto": "Indicador de fusión del cartucho.",
+    "marca": [
+     130,
+     286
+    ]
+   },
+   {
+    "texto": "Borne 2, de salida. El {{portafusible}} se abre para aislar el circuito.",
+    "marca": [
+     22,
+     334
+    ]
+   }
+  ],
+  "placa": "10 × 38 mm · gG · 2 A · 500 V~",
+  "a_bordo": "Mando de los tableros de motores, transformadores de mando, instrumentos y monitores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_fusible",
+  "params": {
+   "i_nominal": 2,
+   "energia_fusion": 50,
+   "veces": 1.0
+  },
+  "pasos": [
+   "La corriente calienta el elemento, sobre todo en sus estrechamientos.",
+   "Por encima de 1,25 × In acumula calor más rápido de lo que lo pierde.",
+   "Se funde en un estrechamiento; la arena apaga el arco y el circuito queda abierto."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_fusible.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Mando de 110 V",
+     "x": 110,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Curva de fusión",
+     "x": 300,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "T1",
+     "x": 134,
+     "y": 59,
+     "tam": 12
+    },
+    {
+     "texto": "X1",
+     "x": 68,
+     "y": 92,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 152,
+     "y": 92,
+     "tam": 11
+    },
+    {
+     "texto": "F1",
+     "x": 58,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "F2",
+     "x": 162,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 92,
+     "y": 82,
+     "tam": 11
+    },
+    {
+     "texto": "2",
+     "x": 92,
+     "y": 140,
+     "tam": 11
+    },
+    {
+     "texto": "H1",
+     "x": 138,
+     "y": 205,
+     "tam": 12
+    },
+    {
+     "texto": "N",
+     "x": 110,
+     "y": 264,
+     "tam": 11
+    },
+    {
+     "texto": "t",
+     "x": 204,
+     "y": 36,
+     "tam": 12
+    },
+    {
+     "texto": "I",
+     "x": 386,
+     "y": 264,
+     "tam": 12
+    },
+    {
+     "texto": "1,25 × In",
+     "x": 248,
+     "y": 266,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    80,
+    85
+   ],
+   "2": [
+    80,
+    135
+   ]
+  },
+  "bornes": {
+   "1": "Llega X1 del transformador de mando, a 110 V. Tiene tensión aunque el fusible esté fundido.",
+   "2": "Sale hacia el mando. Con el fusible fundido no hay tensión aquí, y entre 1 y 2 se mide toda la tensión del mando."
+  },
+  "grupos": [
+   {
+    "nombre": "F1 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "El fusible va en serie con lo que protege. En la red aislada, el mando lleva uno en cada conductor: F1 y F2."
+   }
+  ],
+  "taller": "fusible_servicio"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación sobre un mando de 110 V con una luz piloto.",
+  "taller": "fusible_servicio",
+  "grupos": [
+   {
+    "nombre": "Cartucho",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · cartucho fuera del portafusible",
+    "nota": "Sin tensión: abra el portafusible y saque el cartucho.",
+    "titulo_tabla": "Qué debe marcar el cartucho",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "medir_fusible",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "F1.1",
+     "b": "F1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Nada",
+      "bien": true
+     },
+     {
+      "estado": "Fundido",
+      "cambios": {
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      },
+      "hacer": "Buscar la causa y cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala V~ · una punta en cada borne del fusible",
+    "nota": "Con tensión: use el EPP. Se mide sin abrir el portafusible.",
+    "titulo_tabla": "Tensión entre los bornes del fusible",
+    "columna": "1-2",
+    "medida": {
+     "circuito": "fusible_servicio",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "F1.1",
+     "b": "F1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: casi sin caída",
+      "bien": true
+     },
+     {
+      "estado": "Fundido",
+      "cambios": {
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      },
+      "hacer": "Toda la tensión: está fundido",
+      "bien": false
+     },
+     {
+      "estado": "Luz H1, fusible sano",
+      "cambios": {
+       "a": "H1.X1",
+       "b": "H1.X2"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Luz H1, fusible fundido",
+      "cambios": {
+       "a": "H1.X1",
+       "b": "H1.X2",
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      },
+      "hacer": "Sin tensión de mando",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Fundido por corto",
+    "sintoma": "El mando se queda sin tensión de golpe; el cartucho puede estar ennegrecido.",
+    "mide": [
+     {
+      "donde": "entre 1 y 2 en servicio",
+      "bien": false,
+      "medida": {
+       "circuito": "fusible_servicio",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "F1.1",
+       "b": "F1.2",
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "salida a masa, aislada",
+      "bien": false,
+      "valor": "0,1 Ω"
+     }
+    ],
+    "causa": "Cortocircuito en el mando: un cable pelado contra la masa o una bobina en corto.",
+    "reparacion": "Bloquear, buscar el corto midiendo por tramos, repararlo y cambiar el cartucho por otro igual."
+   },
+   {
+    "nombre": "Se funde a menudo",
+    "sintoma": "Hay que cambiarlo cada pocos días, sin corto aparente.",
+    "mide": [
+     {
+      "donde": "corriente del mando",
+      "bien": false,
+      "valor": "1,9 A"
+     },
+     {
+      "donde": "calibre del cartucho",
+      "bien": true,
+      "valor": "2 A"
+     }
+    ],
+    "causa": "El mando consume casi todo el calibre: alguien añadió cargas, o una bobina empieza a fallar.",
+    "reparacion": "Medir el consumo de cada carga del mando y corregir la que sobra. No subir el calibre sin revisar el esquema."
+   },
+   {
+    "nombre": "Portafusible caliente",
+    "sintoma": "El portafusible se ve deformado o los casquillos oscuros.",
+    "mide": [
+     {
+      "donde": "portafusible (infrarrojo)",
+      "bien": false,
+      "valor": "75 °C"
+     }
+    ],
+    "causa": "Contacto flojo u oxidado entre el cartucho y el portafusible.",
+    "reparacion": "Bloquear, cambiar el portafusible dañado y el cartucho, y reapretar los bornes."
+   },
+   {
+    "nombre": "Calibre mayor",
+    "sintoma": "El cable del mando se calentó y no se fundió nada.",
+    "mide": [
+     {
+      "donde": "cartucho puesto",
+      "bien": false,
+      "valor": "10 A"
+     },
+     {
+      "donde": "calibre del esquema",
+      "bien": true,
+      "valor": "2 A"
+     }
+    ],
+    "causa": "Alguien puso un fusible mayor «para que no salte»: el cable queda sin protección.",
+    "reparacion": "Poner el calibre del esquema, revisar el cable y anotarlo en el libro de registro."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "repuestos de cada calibre en el pañol"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y signos de calentamiento"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisión de calibres contra el esquema"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60269: fusibles de baja tensión.",
+  "IEC 60092: instalaciones eléctricas en buques."
+ ]
+}

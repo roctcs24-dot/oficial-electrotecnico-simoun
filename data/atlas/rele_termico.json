@@ -432,7 +432,7 @@
     "roja": "2",
     "como": "Pinza amperimétrica abrazando un solo cable de salida",
     "nota": "Con el motor en marcha y el tablero cerrado, si el modelo lo permite.",
-    "titulo_tabla": "Corriente del motor en marcha (Ir = 29,5 A)",
+    "titulo_tabla": "Corriente del motor en marcha, con el relé a 29,5 A",
     "columna": "Pinza",
     "medida": {
      "circuito": "arranque_directo",

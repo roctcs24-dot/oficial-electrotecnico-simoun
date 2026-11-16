@@ -1,0 +1,11 @@
+{
+  "nombre": "Diferencial suelto para medir",
+  "nota": "Diferencial de 40 A y 30 mA, sin cables: se mide sin tensión.",
+  "componentes": [
+    {
+      "id": "ID",
+      "tipo": "diferencial"
+    }
+  ],
+  "cables": []
+}

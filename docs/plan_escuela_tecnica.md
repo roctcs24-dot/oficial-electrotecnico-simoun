@@ -145,7 +145,7 @@ Reordenadas el 2026-11-15 tras la petición del usuario: primero la interfaz y e
 | 31 | 4.4.0 | Inicio nuevo con «Continuar», barra de navegación, plano con zonas de 48 pt o más |
 | 32 | 4.5.0 | Escuela y Pañol navegables, bienvenida y tamaño de texto |
 | 33 | 4.6.0 | Ficha visual de componente con cinco pestañas (qué es, cómo funciona, cómo se conecta, cómo se mide, fallas y mantenimiento) en `data/atlas/<id>.json`; se estrena con el contactor, el relé térmico y el guardamotor y abre el módulo 7 |
-| 34 | 4.7.0 | Electricidad industrial I, protección: interruptor automático, diferencial, fusible y portafusible, seccionador, relé de control de fases y de tensión, monitor de aislamiento |
+| 34 | 4.7.0 | Electricidad industrial I, protección: interruptor automático, diferencial, fusible y portafusible, seccionador, relé de control de fases y de tensión, monitor de aislamiento. Hecha: fichas nuevas del fusible, el seccionador y el relé de fases; componentes de simulación del diferencial y del relé de fases, y sus piezas en el Taller |
 | 35 | 4.8.0 | Electricidad industrial II, mando: relé auxiliar, temporizadores a la conexión y a la desconexión, pulsadores, selectores, pilotos, seta, finales de carrera, presostato, termostato, interruptor de nivel |
 | 36 | 4.9.0 | Electricidad industrial III, potencia y medida: transformador y transformador de intensidad, motor, arrancador estrella-triángulo, arrancador suave, variador, resistencia de caldeo, condensadores de compensación, amperímetro y voltímetro, analizador de red, horómetro, borneras |
 | 37 | 4.10.0 | Lecciones de electricidad desde cero (9) |

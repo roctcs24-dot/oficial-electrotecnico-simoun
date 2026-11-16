@@ -1,0 +1,67 @@
+{
+  "nombre": "Circuito de alumbrado de 230 V con su interruptor automático",
+  "nota": "Transformador de 380/230 V, interruptor C16 y un circuito de alumbrado de unos 2,6 kW. Valores típicos: verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "Q1",
+      "tipo": "interruptor_automatico",
+      "params": {
+        "in_a": 16,
+        "curva": "C",
+        "polos": 2
+      },
+      "estado": {
+        "encendido": true
+      }
+    },
+    {
+      "id": "C1",
+      "tipo": "consumidor",
+      "params": {
+        "ohm": 20,
+        "v_nominal": 230,
+        "pieza": "consumidor_alumbrado"
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "Q1.1"
+    ],
+    [
+      "T1.X2",
+      "Q1.3"
+    ],
+    [
+      "Q1.2",
+      "C1.A"
+    ],
+    [
+      "Q1.4",
+      "C1.B"
+    ]
+  ]
+}

@@ -447,6 +447,14 @@ func estado_pieza(id: String) -> String:
 			if e["disparado"]:
 				return "Disparado"
 			return "Cerrado" if e["encendido"] else "Abierto"
+		"diferencial":
+			if e["disparado"]:
+				return "Disparado · %s mA de fuga" % TextoTecnico.numero(float(e["residual_a"]) * 1000.0, 1)
+			return ("Cerrado · %s mA de fuga" % TextoTecnico.numero(float(e["residual_a"]) * 1000.0, 1)) if e["encendido"] else "Abierto"
+		"rele_control_fases":
+			if e["rele"]:
+				return "Red correcta: 11-14 cerrado"
+			return "Relé suelto: %s" % str(e["falla"]).replace("_", " ")
 		"consumidor":
 			return "Con tensión" if e["alimentado"] else "Sin tensión"
 		"maquina_principal":

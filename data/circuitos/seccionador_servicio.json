@@ -1,0 +1,31 @@
+{
+  "nombre": "Interruptor general de un tablero, con las barras de 380 V",
+  "nota": "Red de 380 V, 50 Hz.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "Q0",
+      "tipo": "seccionador"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "Q0.1"
+    ],
+    [
+      "B.L2",
+      "Q0.3"
+    ],
+    [
+      "B.L3",
+      "Q0.5"
+    ]
+  ]
+}

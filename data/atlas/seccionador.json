@@ -1,0 +1,528 @@
+{
+ "id": "seccionador",
+ "ficha": "seccionador",
+ "titulo": "Interruptor seccionador",
+ "termino": "seccionador",
+ "icono": "seccionador",
+ "resumen": "Interruptor general del tablero: separa la red y admite candado para el bloqueo.",
+ "bornes_dibujo": {
+  "1": [
+   80,
+   52
+  ],
+  "3": [
+   160,
+   52
+  ],
+  "5": [
+   240,
+   52
+  ],
+  "2": [
+   80,
+   392
+  ],
+  "4": [
+   160,
+   392
+  ],
+  "6": [
+   240,
+   392
+  ],
+  "13": [
+   278,
+   170
+  ],
+  "14": [
+   278,
+   240
+  ]
+ },
+ "que_es": {
+  "texto": "El {{seccionador}} es el interruptor general de un tablero: lo conecta y lo separa de la red, abre con la carga en servicio y en la posición 0 admite el {{candado}}. Es el punto de bloqueo del {{loto}}. No protege: no dispara solo.",
+  "partes": [
+   {
+    "texto": "Bornes de entrada 1, 3 y 5, desde las barras: siempre con tensión.",
+    "marca": [
+     24,
+     52
+    ]
+   },
+   {
+    "texto": "Contacto auxiliar 13-14, que abre antes que los polos.",
+    "marca": [
+     300,
+     205
+    ]
+   },
+   {
+    "texto": "Mando rotativo 0-OFF / I-ON, con su sitio para el candado.",
+    "marca": [
+     24,
+     300
+    ]
+   },
+   {
+    "texto": "Bornes de salida 2, 4 y 6, hacia las protecciones del tablero.",
+    "marca": [
+     24,
+     392
+    ]
+   }
+  ],
+  "placa": "AC-23 · 63 A · 690 V · 3 polos + 13-14",
+  "a_bordo": "Interruptor general de cada tablero de bombas, de compresores y de distribución. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_seccionador",
+  "params": {
+   "cerrado": true
+  },
+  "pasos": [
+   "En I, los puentes de doble ruptura unen 1-2, 3-4 y 5-6: el tablero recibe la red.",
+   "Al girar a 0, el 13-14 abre primero y suelta el mando; después los polos abren a la vez y queda una separación visible.",
+   "En 0 se ponen el candado y la tarjeta: nadie puede cerrar. Los bornes 1, 3 y 5 siguen con tensión."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_seccionador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Potencia",
+     "x": 46,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "Mando",
+     "x": 262,
+     "y": 8,
+     "tam": 13
+    },
+    {
+     "texto": "L1",
+     "x": 40,
+     "y": 16,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 80,
+     "y": 16,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 120,
+     "y": 16,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 28,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 68,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "5",
+     "x": 108,
+     "y": 52,
+     "tam": 12
+    },
+    {
+     "texto": "2",
+     "x": 28,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "4",
+     "x": 68,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "6",
+     "x": 108,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "Q0",
+     "x": 150,
+     "y": 70,
+     "tam": 12
+    },
+    {
+     "texto": "Protecciones",
+     "x": 80,
+     "y": 176,
+     "tam": 11
+    },
+    {
+     "texto": "del tablero",
+     "x": 80,
+     "y": 192,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 238,
+     "y": 24,
+     "tam": 12
+    },
+    {
+     "texto": "13",
+     "x": 266,
+     "y": 56,
+     "tam": 11
+    },
+    {
+     "texto": "14",
+     "x": 266,
+     "y": 106,
+     "tam": 11
+    },
+    {
+     "texto": "Q0",
+     "x": 276,
+     "y": 80,
+     "tam": 12
+    },
+    {
+     "texto": "Mando de los",
+     "x": 330,
+     "y": 182,
+     "tam": 11
+    },
+    {
+     "texto": "contactores",
+     "x": 330,
+     "y": 198,
+     "tam": 11
+    },
+    {
+     "texto": "N",
+     "x": 250,
+     "y": 262,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    40,
+    55
+   ],
+   "3": [
+    80,
+    55
+   ],
+   "5": [
+    120,
+    55
+   ],
+   "2": [
+    40,
+    105
+   ],
+   "4": [
+    80,
+    105
+   ],
+   "6": [
+    120,
+    105
+   ],
+   "13": [
+    250,
+    55
+   ],
+   "14": [
+    250,
+    105
+   ]
+  },
+  "bornes": {
+   "1": "Llega L1 de las barras. Siempre tiene tensión, también con el interruptor en 0.",
+   "3": "Llega L2 de las barras. Siempre con tensión.",
+   "5": "Llega L3 de las barras. Siempre con tensión.",
+   "2": "Sale L1 hacia los guardamotores e interruptores del tablero. Sin tensión en 0.",
+   "4": "Sale L2 hacia las protecciones del tablero.",
+   "6": "Sale L3 hacia las protecciones del tablero.",
+   "13": "Llega la fase de mando.",
+   "14": "Va al mando de los contactores: al girar a 0 abre antes que los polos y los contactores sueltan."
+  },
+  "grupos": [
+   {
+    "nombre": "Entradas 1-3-5",
+    "bornes": [
+     "1",
+     "3",
+     "5"
+    ],
+    "texto": "Vienen de las barras del cuadro: tienen tensión siempre. Para trabajar en ellas hay que abrir y bloquear el interruptor aguas arriba."
+   },
+   {
+    "nombre": "Salidas 2-4-6",
+    "bornes": [
+     "2",
+     "4",
+     "6"
+    ],
+    "texto": "Alimentan el tablero. Con el interruptor en 0 y bloqueado, verifique la ausencia de tensión aquí antes de trabajar."
+   },
+   {
+    "nombre": "13-14",
+    "bornes": [
+     "13",
+     "14"
+    ],
+    "texto": "Auxiliar en serie con el mando: abre antes que los polos, así los contactores cortan la carga."
+   }
+  ],
+  "taller": "seccionador_servicio"
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación sobre un tablero alimentado desde las barras de 380 V.",
+  "taller": "seccionador_servicio",
+  "grupos": [
+   {
+    "nombre": "Ausencia de tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "4",
+    "como": "Escala V~ · entre salidas, y entre entradas",
+    "nota": "Compruebe antes el voltímetro en una fuente conocida.",
+    "titulo_tabla": "Qué marca en cada posición",
+    "columna": "V",
+    "medida": {
+     "circuito": "seccionador_servicio",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "Q0.2",
+     "b": "Q0.4"
+    },
+    "filas": [
+     {
+      "estado": "Salidas 2-4, en 0",
+      "hacer": "Sin tensión aguas abajo",
+      "bien": true
+     },
+     {
+      "estado": "Salidas 2-4, en I",
+      "cambios": {
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       }
+      },
+      "hacer": "Tablero en servicio",
+      "bien": true
+     },
+     {
+      "estado": "Entradas 1-3, en 0",
+      "cambios": {
+       "a": "Q0.1",
+       "b": "Q0.3"
+      },
+      "hacer": "¡Siguen con tensión!",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Polos",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · punta roja en 1, negra en 2",
+    "nota": "Sin tensión, con el tablero aislado aguas arriba.",
+    "titulo_tabla": "Qué debe marcar cada polo",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_seccionador",
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "a": "Q0.1",
+     "b": "Q0.2"
+    },
+    "filas": [
+     {
+      "estado": "1-2 en I",
+      "cambios": {
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "1-2 en 0",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "3-4 quemado, en I",
+      "cambios": {
+       "a": "Q0.3",
+       "b": "Q0.4",
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       },
+       "params": {
+        "Q0": {
+         "polo_danado": "3-4"
+        }
+       }
+      },
+      "hacer": "Cambiar el interruptor",
+      "bien": false
+     },
+     {
+      "estado": "13-14 en I",
+      "cambios": {
+       "a": "Q0.13",
+       "b": "Q0.14",
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       }
+      },
+      "hacer": "Normal: cerrado",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Falta una fase",
+    "sintoma": "Los motores del tablero zumban y se calientan, o no arrancan.",
+    "mide": [
+     {
+      "donde": "polo 3-4 en I, sin tensión",
+      "bien": false,
+      "medida": {
+       "circuito": "medir_seccionador",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q0.3",
+       "b": "Q0.4",
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       },
+       "params": {
+        "Q0": {
+         "polo_danado": "3-4"
+        }
+       }
+      }
+     },
+     {
+      "donde": "polo sano en I",
+      "bien": true,
+      "medida": {
+       "circuito": "medir_seccionador",
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "a": "Q0.1",
+       "b": "Q0.2",
+       "estado": {
+        "Q0": {
+         "cerrado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un polo quemado o un borne flojo.",
+    "reparacion": "Bloquear aguas arriba, reapretar; si el polo mide OL en I, cambiar el interruptor."
+   },
+   {
+    "nombre": "Tensión en 0",
+    "sintoma": "Con el mando en 0 se mide tensión en las salidas.",
+    "mide": [
+     {
+      "donde": "salidas 2-4 en 0",
+      "bien": false,
+      "valor": "220 V"
+     }
+    ],
+    "causa": "Hay otra alimentación: un retorno desde otro tablero, un generador o un transformador conectado al revés.",
+    "reparacion": "No trabajar. Buscar y bloquear la otra fuente, y volver a verificar la ausencia de tensión."
+   },
+   {
+    "nombre": "El candado no entra",
+    "sintoma": "No se puede poner el candado de bloqueo.",
+    "mide": [
+     {
+      "donde": "posición del mando",
+      "bien": false,
+      "valor": "I"
+     }
+    ],
+    "causa": "El mando no está en 0, o el bloqueo está roto.",
+    "reparacion": "Girar a 0; si el bloqueo está roto, bloquear aguas arriba y cambiar el interruptor."
+   },
+   {
+    "nombre": "Mecanismo roto",
+    "sintoma": "El mando gira a 0, pero el tablero sigue con tensión.",
+    "mide": [
+     {
+      "donde": "polo 1-2 con el mando en 0",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Mecanismo roto o contactos soldados: el indicador no dice la verdad.",
+    "reparacion": "Bloquear aguas arriba, verificar la ausencia de tensión y cambiar el interruptor. Por eso siempre se verifica, aunque el mando diga 0."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "candados y tarjetas de bloqueo disponibles"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y termografía en servicio"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "maniobras en vacío y prueba del bloqueo"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-3: interruptores seccionadores.",
+  "NFPA 70E: bloqueo y etiquetado."
+ ]
+}

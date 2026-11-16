@@ -44,7 +44,7 @@
       "zona": [472, 210, 124, 44],
       "modos": {
         "aprender": { "lecciones": ["d1_transformadores", "d2_protecciones", "d3_alumbrado", "d4_baterias_24v"],
-          "fichas": ["transformador", "interruptor_automatico", "diferencial", "baterias_24v"] },
+          "fichas": ["transformador", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "baterias_24v"] },
         "taller": { "pantalla": "tableros", "detalle": "Tableros de 220 V y 110 V del buque y banco libre", "tableros": ["distribucion_220", "habitabilidad_110"] },
         "guardia": { "misiones": ["h1_corto_alumbrado", "h2_tierra_tomas", "h3_sobrecarga_cocina"] },
         "examen": { "examenes": ["v5"], "minijuegos": ["simbolos_distribucion"] }
@@ -114,7 +114,7 @@
     }
   ],
   "escuela": [
-    { "id": 7, "color": "#f2b705", "icono": "electricidad", "nombre": "Electricidad industrial", "resumen": "Componentes de protección, mando, potencia y medida: cómo funcionan, se conectan, se miden y fallan; y la electricidad desde cero.", "estado": "activo", "etapa": 33, "modos": { "aprender": { "detalle": "Atlas de componentes: qué es, cómo funciona, cómo se conecta, cómo se mide y sus fallas", "atlas": ["contactor", "rele_termico", "guardamotor"] } } },
+    { "id": 7, "color": "#f2b705", "icono": "electricidad", "nombre": "Electricidad industrial", "resumen": "Componentes de protección, mando, potencia y medida: cómo funcionan, se conectan, se miden y fallan; y la electricidad desde cero.", "estado": "activo", "etapa": 33, "modos": { "aprender": { "detalle": "Atlas de componentes: qué es, cómo funciona, cómo se conecta, cómo se mide y sus fallas", "atlas": ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento"] } } },
     { "id": 8, "color": "#8e5bd6", "icono": "electronica", "nombre": "Electrónica", "resumen": "Resistencia, condensador, diodo, transistor, fuentes, señales de proceso y lógica, desde cero.", "estado": "en_preparacion", "etapa": 38, "modos": {} },
     { "id": 9, "color": "#1f7fd1", "icono": "hidraulica", "nombre": "Hidráulica y neumática", "resumen": "Presión, bombas, cilindros, válvulas, aire comprimido y electroneumática.", "estado": "en_preparacion", "etapa": 45, "modos": {} },
     { "id": 10, "color": "#2e9e6a", "icono": "valvulas", "nombre": "Válvulas y líneas", "resumen": "¿Abierta o cerrada?, colores de tubería y cómo seguir una línea a bordo.", "estado": "en_preparacion", "etapa": 41, "modos": {} },
