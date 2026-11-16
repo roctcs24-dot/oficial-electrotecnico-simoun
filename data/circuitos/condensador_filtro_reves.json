@@ -1,0 +1,33 @@
+{
+  "nombre": "Electrolítico montado al revés",
+  "nota": "El mismo C2 con el + hacia 0 V: con la tensión al revés se calienta y queda en corto. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "C2",
+      "tipo": "condensador_electrico",
+      "params": {
+        "uf": 4700,
+        "v_nominal": 35,
+        "polarizado": true
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "C2.-"
+    ],
+    [
+      "C2.+",
+      "F.-"
+    ]
+  ]
+}

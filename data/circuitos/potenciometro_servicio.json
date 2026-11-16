@@ -1,0 +1,31 @@
+{
+  "nombre": "Consigna de velocidad de 0 a 10 V",
+  "nota": "Potenciómetro de 10 kΩ entre +10 V y 0 V de la tarjeta de un variador: el cursor da la consigna de 0 a 10 V a la entrada analógica AI1. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 10
+      }
+    },
+    {
+      "id": "P1",
+      "tipo": "potenciometro",
+      "params": {
+        "ohm": 10000
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "P1.3"
+    ],
+    [
+      "P1.1",
+      "F.-"
+    ]
+  ]
+}

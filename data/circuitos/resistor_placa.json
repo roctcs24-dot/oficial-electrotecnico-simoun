@@ -1,0 +1,32 @@
+{
+  "nombre": "Resistencia medida en la tarjeta",
+  "nota": "La misma resistencia R1 de 4,7 kΩ medida sin desoldar: R2 de 10 kΩ queda en paralelo con ella por las pistas de la tarjeta. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 4700,
+        "w": 0.25
+      }
+    },
+    {
+      "id": "R2",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000,
+        "w": 0.25
+      }
+    }
+  ],
+  "cables": [
+    [
+      "R1.A",
+      "R2.A"
+    ],
+    [
+      "R1.B",
+      "R2.B"
+    ]
+  ]
+}

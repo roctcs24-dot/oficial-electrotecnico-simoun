@@ -486,6 +486,36 @@
       "id": "arrancador_yd", "nombre": "Arrancador estrella-triángulo", "sistema": 3, "similares": [],
       "iec": { "svg": "res://art/simbolos/iec/arrancador_yd.svg", "tamano": [240, 200], "etiquetas": [] },
       "ansi": { "svg": "res://art/simbolos/ansi/arrancador_yd.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "Y-Δ", "x": 120, "y": 100, "tam": 26 }] }
+    },
+    {
+      "id": "potenciometro", "nombre": "Potenciómetro", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/potenciometro.svg", "tamano": [240, 200], "etiquetas": [{"texto": "1", "x": 30, "y": 80, "tam": 18}, {"texto": "3", "x": 210, "y": 80, "tam": 18}, {"texto": "2", "x": 140, "y": 170, "tam": 18}, {"texto": "R1", "x": 120, "y": 60, "tam": 20}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/potenciometro.svg", "tamano": [240, 200], "etiquetas": [{"texto": "1", "x": 30, "y": 80, "tam": 18}, {"texto": "3", "x": 210, "y": 80, "tam": 18}, {"texto": "2", "x": 140, "y": 170, "tam": 18}, {"texto": "R1", "x": 120, "y": 60, "tam": 20}] }
+    },
+    {
+      "id": "termistor_ntc", "nombre": "Termistor NTC", "sistema": 6, "similares": ["termistor_ptc"],
+      "iec": { "svg": "res://art/simbolos/iec/termistor_ntc.svg", "tamano": [240, 200], "etiquetas": [{"texto": "−θ", "x": 186, "y": 56, "tam": 20}, {"texto": "RT1", "x": 100, "y": 60, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/termistor_ntc.svg", "tamano": [240, 200], "etiquetas": [{"texto": "−θ", "x": 186, "y": 56, "tam": 20}, {"texto": "RT1", "x": 100, "y": 60, "tam": 18}] }
+    },
+    {
+      "id": "termistor_ptc", "nombre": "Termistor PTC", "sistema": 6, "similares": ["termistor_ntc"],
+      "iec": { "svg": "res://art/simbolos/iec/termistor_ptc.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+θ", "x": 186, "y": 56, "tam": 20}, {"texto": "RT2", "x": 100, "y": 60, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/termistor_ptc.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+θ", "x": 186, "y": 56, "tam": 20}, {"texto": "RT2", "x": 100, "y": 60, "tam": 18}] }
+    },
+    {
+      "id": "varistor", "nombre": "Varistor", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/varistor.svg", "tamano": [240, 200], "etiquetas": [{"texto": "U", "x": 186, "y": 56, "tam": 20}, {"texto": "RV1", "x": 100, "y": 60, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/varistor.svg", "tamano": [240, 200], "etiquetas": [{"texto": "V", "x": 186, "y": 56, "tam": 20}, {"texto": "RV1", "x": 100, "y": 60, "tam": 18}] }
+    },
+    {
+      "id": "zener", "nombre": "Diodo Zener", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/zener.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 30, "y": 78, "tam": 18}, {"texto": "K", "x": 210, "y": 78, "tam": 18}, {"texto": "V1", "x": 110, "y": 44, "tam": 20}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/zener.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 30, "y": 78, "tam": 18}, {"texto": "K", "x": 210, "y": 78, "tam": 18}, {"texto": "DZ1", "x": 110, "y": 44, "tam": 20}] }
+    },
+    {
+      "id": "condensador_polarizado", "nombre": "Condensador electrolítico", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/condensador_polarizado.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+", "x": 96, "y": 58, "tam": 18}, {"texto": "C2", "x": 124, "y": 40, "tam": 20}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/condensador_polarizado.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+", "x": 96, "y": 58, "tam": 18}, {"texto": "C2", "x": 124, "y": 40, "tam": 20}] }
     }
   ]
 }

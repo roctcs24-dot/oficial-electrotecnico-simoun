@@ -1,0 +1,99 @@
+{
+  "id": "diodo",
+  "titulo": "Diodo",
+  "resumen": "Deja pasar la corriente en un solo sentido.",
+  "dibujo": {
+    "svg": "res://art/equipos/diodo.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Diodo rectificador 1N4007 de 1 A y 1000 V con la franja del cátodo, y su símbolo debajo. Dibujo general: tipo de cada equipo, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1N4007",
+        "x": 188,
+        "y": 100,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "A",
+        "x": 40,
+        "y": 82,
+        "tam": 11
+      },
+      {
+        "texto": "K",
+        "x": 360,
+        "y": 82,
+        "tam": 11
+      },
+      {
+        "texto": "A",
+        "x": 126,
+        "y": 164,
+        "tam": 11
+      },
+      {
+        "texto": "K",
+        "x": 268,
+        "y": 164,
+        "tam": 11
+      },
+      {
+        "texto": "La franja marca el cátodo",
+        "x": 200,
+        "y": 204,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Diodo según IEC 60617 y ANSI/IEEE 315: el triángulo apunta al cátodo. Verificar contra la norma.",
+    "lista": [
+      "diodo"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{diodo}} deja pasar la corriente del {{anodo}} al {{catodo}} y la bloquea al revés. En directa pierde su {{caida_directa}}, unos 0,7 V en los de silicio. A bordo rectifica la alterna en las fuentes y los cargadores, separa dos alimentaciones de 24 V (fuente y baterías) para que una no devuelva corriente a la otra y, como {{diodo_supresor}}, protege los contactos que mandan bobinas de continua."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Unión PN[/b] de silicio dentro de un cuerpo de plástico negro, de vidrio o, en los de potencia, con un tornillo para el disipador.\n• [b]Ánodo (A)[/b] y [b]cátodo (K)[/b]: la franja del cuerpo está del lado del cátodo.\n• [b]Marca:[/b] el tipo, por ejemplo 1N4007; su hoja de datos da la corriente y la tensión inversa que aguanta."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Rectificador o desacople:[/b] en serie, con el ánodo hacia la fuente y el cátodo hacia la carga.\n• [b]Supresor de una bobina de continua:[/b] en paralelo con la bobina y al revés, con el cátodo en el +. Al abrir el contacto, la corriente de la bobina se descarga por el diodo y no salta chispa.\n• Corriente y tensión inversa del diodo, por encima de las del circuito."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la corriente media, la tensión inversa (1000 V para trabajar holgado en 230 V) y la velocidad en las fuentes conmutadas ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y con un terminal suelto: escala de diodo del multímetro (→|). Roja en el ánodo: 0,5 a 0,7 V. Roja en el cátodo: OL.\n• [b]0 V en los dos sentidos:[/b] en corto. [b]OL en los dos:[/b] abierto.\n• [b]En servicio:[/b] V= entre ánodo y cátodo: 0,7 V conduciendo; toda la tensión si está abierto o al revés."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Abierto:[/b] la carga queda sin tensión y el diodo tiene toda la tensión entre sus patas.\n• [b]En corto:[/b] la carga funciona, pero el diodo ya no separa ni rectifica; en un puente, funde el fusible.\n• [b]Montado al revés:[/b] no conduce; un supresor al revés pone en corto la fuente al cerrar el contacto."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Anual: comprobar uno a uno los diodos de desacople de las alimentaciones de 24 V de alarmas y de la máquina principal.\n• Revisar el apriete y la pasta térmica de los diodos de potencia en sus disipadores.\n\n[b]Correctivo:[/b] se cambia por otro de igual o mayor corriente y tensión inversa, respetando el sentido."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-2: dispositivos semiconductores, diodos rectificadores.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

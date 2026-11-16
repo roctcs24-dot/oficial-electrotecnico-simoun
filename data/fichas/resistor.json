@@ -1,0 +1,105 @@
+{
+  "id": "resistor",
+  "titulo": "Resistencia",
+  "resumen": "Limita la corriente y reparte la tensión en las tarjetas electrónicas.",
+  "dibujo": {
+    "svg": "res://art/equipos/resistor.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Resistencia de película de 1/4 W con su código de colores, una de montaje superficial (SMD) y una de potencia cementada, dibujadas de forma general. Valores de cada tarjeta: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A",
+        "x": 40,
+        "y": 90,
+        "tam": 11
+      },
+      {
+        "texto": "B",
+        "x": 360,
+        "y": 90,
+        "tam": 11
+      },
+      {
+        "texto": "4,7 kΩ ±5 % · 1/4 W",
+        "x": 200,
+        "y": 154,
+        "tam": 11
+      },
+      {
+        "texto": "472",
+        "x": 80,
+        "y": 182,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "SMD",
+        "x": 80,
+        "y": 206,
+        "tam": 10
+      },
+      {
+        "texto": "5 W 10 Ω J",
+        "x": 329,
+        "y": 177,
+        "tam": 10
+      },
+      {
+        "texto": "De potencia",
+        "x": 329,
+        "y": 206,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Resistencia fija según IEC 60617 (rectángulo) y ANSI/IEEE 315 (zigzag). Verificar contra la norma.",
+    "lista": [
+      "resistencia"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{resistor}} se opone al paso de la corriente con un valor fijo en ohmios. En las tarjetas electrónicas del buque limita la corriente de un LED o de la base de un transistor, reparte la tensión en un divisor, fija una referencia y descarga los condensadores al apagar el equipo."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cuerpo:[/b] una película de carbón o de metal, o un hilo bobinado en las de potencia, sobre un soporte cerámico.\n• [b]Terminales[/b] para soldar en la tarjeta, o dos contactos metálicos en las de montaje superficial (SMD).\n• [b]Marcas:[/b] el {{codigo_colores}} en las de terminales, tres cifras en las SMD («472» = 47 × 10² = 4,7 kΩ) y el valor impreso en las de potencia."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• No tiene polaridad: los dos terminales son iguales.\n• En serie limita la corriente; dos en serie entre una tensión y 0 V forman un divisor: la tensión del punto medio es V · R2 / (R1 + R2).\n• Se elige por su valor, su {{tolerancia}} y su potencia: P = V² / R debe quedar holgada por debajo de la nominal."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. El {{codigo_colores}} de cuatro bandas se lee desde el lado contrario a la banda separada: la primera y la segunda son cifras, la tercera el multiplicador y la cuarta la tolerancia. Negro 0, marrón 1, rojo 2, naranja 3, amarillo 4, verde 5, azul 6, violeta 7, gris 8, blanco 9; oro ±5 % y plata ±10 %. Amarillo, violeta, rojo y oro: 47 × 100 = 4,7 kΩ ±5 %."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y con un extremo desoldado: Ω entre sus terminales. Debe quedar dentro de la tolerancia del valor marcado.\n• [b]En la tarjeta[/b], lo que está en paralelo hace marcar menos: 4,7 kΩ en paralelo con 10 kΩ marcan 3,2 kΩ.\n• [b]En servicio:[/b] V= entre sus terminales y, con la ley de Ohm, la corriente que pasa."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Cortada:[/b] OL; suele verse oscurecida o con el cuerpo agrietado por exceso de potencia.\n• [b]Valor cambiado:[/b] con el calor y los años, una de película de carbón sube de valor.\n• [b]Soldadura fría:[/b] mide bien suelta y falla en la tarjeta con las vibraciones."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• En las paradas: buscar resistencias oscurecidas o la tarjeta tostada debajo; trabajan calientes.\n• Mantener las tarjetas limpias y secas: el polvo húmedo y salino crea fugas entre pistas.\n\n[b]Correctivo:[/b] se cambia por otra del mismo valor y tolerancia, y de igual o mayor potencia, y se busca por qué se quemó."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60062: códigos de marcado de resistencias y condensadores.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

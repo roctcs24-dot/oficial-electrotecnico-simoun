@@ -1,0 +1,39 @@
+{
+  "nombre": "LED con el amperímetro en serie",
+  "nota": "El mismo circuito abierto entre R1 y el ánodo del LED, para poner el multímetro en mA en serie. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 1100,
+        "w": 0.5
+      }
+    },
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "R1.A"
+    ],
+    [
+      "LD1.K",
+      "F.-"
+    ]
+  ]
+}

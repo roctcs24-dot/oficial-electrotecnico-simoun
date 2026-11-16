@@ -1,0 +1,88 @@
+{
+  "id": "varistor",
+  "titulo": "Varistor",
+  "resumen": "Recorta las sobretensiones rápidas a la entrada de los equipos.",
+  "dibujo": {
+    "svg": "res://art/equipos/varistor.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Varistor de óxido de cinc de disco de 14 mm para 275 V AC, dibujado de forma general. Tensión y tamaño de cada equipo: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "14D431K",
+        "x": 200,
+        "y": 74,
+        "tam": 13,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "275 V~",
+        "x": 200,
+        "y": 96,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "1",
+        "x": 164,
+        "y": 196,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 236,
+        "y": 196,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Varistor según IEC 60617 (rectángulo con el trazo de variación no lineal) y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "varistor"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{varistor}} se pone en paralelo con la entrada de un equipo. A su tensión de servicio casi no conduce; ante una {{sobretension}} rápida, como la del corte de una carga inductiva o un rayo, su resistencia cae de golpe y deriva el pico, que se queda en unos cientos de voltios en lugar de miles. Protege fuentes de 24 V, cargadores, tarjetas y luminarias."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Disco[/b] de óxido de cinc (de ahí MOV, metal oxide varistor) entre dos electrodos, con recubrimiento de epoxi azul o negro.\n• [b]Dos terminales[/b] sin polaridad.\n• [b]Marca:[/b] diámetro y tensión a 1 mA: «14D431K» = 14 mm, 430 V a 1 mA, ±10 %; para 230 V AC."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Entre fase y neutro, o entre fases, a la entrada del equipo, siempre detrás de un fusible: cuando se agota queda en corto y el fusible lo separa.\n• En la red aislada del buque, en algunos protectores también entre cada fase y masa: con una fase a masa, las otras quedan con tensión de línea contra masa.\n• Cables cortos y rectos: cada centímetro de cable añade tensión al pico."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la tensión de servicio (275 V AC para 230 V), la energía que absorbe y su diámetro ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y con un terminal suelto: Ω con el multímetro; OL es lo normal.\n• Una lectura en kΩ indica fuga: está degradado.\n• [b]Inspección:[/b] grietas, quemaduras o el disco abombado.\n• No se prueba con el megóhmetro a 500 o 1000 V: conduce y parece averiado. Al medir el aislamiento de un tablero, desconéctelo."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]En corto:[/b] funde el fusible de delante en cuanto se da tensión; el equipo queda sin alimentación.\n• [b]Degradado[/b] tras muchos picos: fuga de kΩ, se calienta y acaba en corto.\n• [b]Reventado[/b] o abierto: el equipo funciona, pero ya no está protegido."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Anual: inspección de los varistores y de los protectores de sobretensión, con su indicador si lo tienen.\n• Tras una tormenta eléctrica o una avería con arco: revisarlos.\n\n[b]Correctivo:[/b] se cambia por otro de la misma tensión y diámetro, y se cambia también el fusible."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61643-11: protectores contra sobretensiones de baja tensión.",
+    "IEC 61051-1: varistores para equipos electrónicos."
+  ]
+}

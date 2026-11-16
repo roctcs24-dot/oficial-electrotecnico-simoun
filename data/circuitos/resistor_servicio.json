@@ -1,0 +1,44 @@
+{
+  "nombre": "Divisor de tensión de 24 V",
+  "nota": "Dos resistencias de 4,7 kΩ en serie entre +24 V y 0 V: en el punto medio quedan 12 V, como la referencia de una entrada de una tarjeta. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 4700,
+        "w": 0.25
+      }
+    },
+    {
+      "id": "R2",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 4700,
+        "w": 0.25
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "R2.A"
+    ],
+    [
+      "R2.B",
+      "F.-"
+    ]
+  ]
+}

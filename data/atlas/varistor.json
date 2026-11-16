@@ -1,0 +1,459 @@
+{
+ "id": "varistor",
+ "ficha": "varistor",
+ "titulo": "Varistor",
+ "termino": "varistor",
+ "icono": "varistor",
+ "resumen": "Recorta los picos de tensión a la entrada de un equipo.",
+ "bornes_dibujo": {
+  "1": [
+   180,
+   190
+  ],
+  "2": [
+   220,
+   190
+  ]
+ },
+ "que_es": {
+  "texto": "El {{varistor}} va en paralelo con la entrada de un equipo y recorta los picos de {{sobretension}}.",
+  "partes": [
+   {
+    "texto": "Disco de óxido de cinc con recubrimiento de epoxi.",
+    "marca": [
+     200,
+     50
+    ]
+   },
+   {
+    "texto": "Marca: 14D431K = 14 mm y 430 V a 1 mA.",
+    "marca": [
+     200,
+     86
+    ]
+   },
+   {
+    "texto": "Dos terminales sin polaridad.",
+    "marca": [
+     200,
+     176
+    ]
+   }
+  ],
+  "placa": "14D431K · 275 V~ · disco de 14 mm",
+  "a_bordo": "A la entrada de las fuentes de 24 V, de los cargadores y de las tarjetas, y en los protectores de sobretensión de los tableros. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_varistor",
+  "params": {},
+  "pasos": [
+   "A 230 V casi no conduce: solo una fuga de microamperios.",
+   "Ante un pico de miles de voltios conduce de golpe y lo recorta a unos 700 V.",
+   "Cada pico lo desgasta: al final queda en corto y funde el fusible de delante."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_varistor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "X1 230 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "X2",
+     "x": 60,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "F1 2 A",
+     "x": 100,
+     "y": 65,
+     "tam": 11
+    },
+    {
+     "texto": "RV1 275 V",
+     "x": 212,
+     "y": 195,
+     "tam": 11
+    },
+    {
+     "texto": "1",
+     "x": 176,
+     "y": 152,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 176,
+     "y": 238,
+     "tam": 10
+    },
+    {
+     "texto": "U1",
+     "x": 340,
+     "y": 128,
+     "tam": 12
+    },
+    {
+     "texto": "Fuente 24 V",
+     "x": 340,
+     "y": 150,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 312,
+     "y": 120,
+     "tam": 10
+    },
+    {
+     "texto": "N",
+     "x": 312,
+     "y": 180,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    160,
+    165
+   ],
+   "2": [
+    160,
+    225
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase de 230 V, detrás del fusible F1.",
+   "2": "Va al otro conductor (X2) del secundario."
+  },
+  "grupos": [
+   {
+    "nombre": "RV1 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En paralelo con la entrada L-N de la fuente y detrás de F1: si queda en corto, F1 lo separa."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un varistor de 275 V AC a la entrada de una fuente de 24 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Fuga",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Sin tensión y con un terminal suelto.",
+    "titulo_tabla": "Resistencia (debe marcar OL)",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_varistor",
+     "a": "RV1.1",
+     "b": "RV1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Degradado",
+      "cambios": {
+       "estado": {
+        "RV1": {
+         "degradado_kohm": 50
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "RV1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo, y también el fusible",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala V~ · entre 1 y 2",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en la entrada",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "varistor_servicio",
+     "a": "RV1.1",
+     "b": "RV1.2",
+     "segundos": 0.5
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "RV1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "F1 fundido: cambiar RV1 y F1",
+      "bien": false
+     },
+     {
+      "estado": "Reventado",
+      "cambios": {
+       "estado": {
+        "RV1": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "Funciona, pero sin protección",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente de fuga",
+    "instrumento": "pinza",
+    "escala": "mA",
+    "roja": "1",
+    "negra": "",
+    "como": "Pinza de fugas en el cable del borne 1",
+    "nota": "Con tensión: solo abraza el cable del varistor.",
+    "titulo_tabla": "Fuga en servicio",
+    "columna": "mA",
+    "medida": {
+     "circuito": "varistor_servicio",
+     "segundos": 0.5,
+     "instrumento": "pinza_fugas",
+     "cable": [
+      "F1.2",
+      "RV1.1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Degradado",
+      "cambios": {
+       "estado": {
+        "RV1": {
+         "degradado_kohm": 50
+        }
+       }
+      },
+      "hacer": "Se calienta: cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "El fusible de la fuente se funde en cuanto se le da tensión.",
+    "mide": [
+     {
+      "donde": "V~ en la entrada de la fuente",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "varistor_servicio",
+       "a": "RV1.1",
+       "b": "RV1.2",
+       "segundos": 0.5,
+       "estado": {
+        "RV1": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V~ entre los bornes de F1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "varistor_servicio",
+       "a": "F1.1",
+       "b": "F1.2",
+       "segundos": 0.5,
+       "estado": {
+        "RV1": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2, desconectado",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_varistor",
+       "a": "RV1.1",
+       "b": "RV1.2",
+       "estado": {
+        "RV1": {
+         "corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Agotado por muchos picos o por una sobretensión larga.",
+    "reparacion": "Cambiar el varistor y el fusible."
+   },
+   {
+    "nombre": "Degradado",
+    "sintoma": "El varistor está caliente al tacto y oscurecido.",
+    "mide": [
+     {
+      "donde": "Ω 1-2, desconectado",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_varistor",
+       "a": "RV1.1",
+       "b": "RV1.2",
+       "estado": {
+        "RV1": {
+         "degradado_kohm": 50
+        }
+       }
+      }
+     },
+     {
+      "donde": "fuga con la pinza",
+      "bien": false,
+      "medida": {
+       "circuito": "varistor_servicio",
+       "segundos": 0.5,
+       "instrumento": "pinza_fugas",
+       "cable": [
+        "F1.2",
+        "RV1.1"
+       ],
+       "estado": {
+        "RV1": {
+         "degradado_kohm": 50
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Picos repetidos.",
+    "reparacion": "Cambiarlo antes de que quede en corto."
+   },
+   {
+    "nombre": "Reventado",
+    "sintoma": "Disco partido o quemado; el equipo sigue funcionando.",
+    "mide": [
+     {
+      "donde": "V~ en la entrada",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "varistor_servicio",
+       "a": "RV1.1",
+       "b": "RV1.2",
+       "segundos": 0.5,
+       "estado": {
+        "RV1": {
+         "abierto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "inspección",
+      "bien": false,
+      "valor": "disco partido"
+     }
+    ],
+    "causa": "Un pico con más energía de la que aguanta.",
+    "reparacion": "Cambiarlo: sin él, el próximo pico llega a la fuente."
+   },
+   {
+    "nombre": "Sin fusible delante",
+    "sintoma": "Al quedar en corto dispara el interruptor del tablero y deja sin tensión a otros equipos.",
+    "mide": [
+     {
+      "donde": "esquema del equipo",
+      "bien": false,
+      "valor": "RV1 antes de F1"
+     }
+    ],
+    "causa": "Varistor conectado antes del fusible del equipo.",
+    "reparacion": "Conectarlo detrás del fusible."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "indicador de los protectores de sobretensión"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "inspección de los varistores"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "Ω con un terminal suelto"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61643-11: protectores contra sobretensiones de baja tensión.",
+  "IEC 61051-1: varistores para equipos electrónicos."
+ ]
+}

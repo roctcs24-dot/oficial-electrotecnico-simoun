@@ -1,0 +1,550 @@
+{
+ "id": "puente_rectificador",
+ "ficha": "puente_rectificador",
+ "titulo": "Puente rectificador",
+ "termino": "puente_rectificador",
+ "icono": "puente",
+ "resumen": "Convierte la alterna en continua.",
+ "bornes_dibujo": {
+  "+": [
+   121,
+   35
+  ],
+  "~1": [
+   279,
+   35
+  ],
+  "-": [
+   279,
+   185
+  ],
+  "~2": [
+   121,
+   185
+  ]
+ },
+ "que_es": {
+  "texto": "El {{puente_rectificador}} convierte la alterna en continua con cuatro diodos; el {{condensador_filtro}} alisa la salida.",
+  "partes": [
+   {
+    "texto": "Cuatro diodos en un bloque de resina.",
+    "marca": [
+     200,
+     70
+    ]
+   },
+   {
+    "texto": "Terminales ~ de alterna, + y −; el + en la esquina achaflanada.",
+    "marca": [
+     140,
+     50
+    ]
+   },
+   {
+    "texto": "Agujero para atornillarlo al disipador.",
+    "marca": [
+     200,
+     110
+    ]
+   }
+  ],
+  "placa": "KBPC2510 · 25 A · 1000 V",
+  "a_bordo": "En los cargadores de baterías de 24 V, en las fuentes de los tableros y en los frenos y embragues de continua de los winches. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_puente",
+  "params": {},
+  "pasos": [
+   "En el semiciclo positivo conducen dos diodos y la corriente sale por el +.",
+   "En el negativo conducen los otros dos, y la corriente vuelve a salir por el +.",
+   "El condensador de filtro llena los huecos: queda continua con poco rizado."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_puente_rectificador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "T3",
+     "x": 18,
+     "y": 140,
+     "tam": 12
+    },
+    {
+     "texto": "24 V~",
+     "x": 18,
+     "y": 160,
+     "tam": 10
+    },
+    {
+     "texto": "F1",
+     "x": 110,
+     "y": 40,
+     "tam": 11
+    },
+    {
+     "texto": "~",
+     "x": 196,
+     "y": 68,
+     "tam": 16
+    },
+    {
+     "texto": "~",
+     "x": 196,
+     "y": 236,
+     "tam": 16
+    },
+    {
+     "texto": "+",
+     "x": 262,
+     "y": 136,
+     "tam": 16
+    },
+    {
+     "texto": "−",
+     "x": 98,
+     "y": 136,
+     "tam": 18
+    },
+    {
+     "texto": "C1",
+     "x": 316,
+     "y": 212,
+     "tam": 11
+    },
+    {
+     "texto": "RL",
+     "x": 382,
+     "y": 210,
+     "tam": 11
+    },
+    {
+     "texto": "+32 V",
+     "x": 320,
+     "y": 138,
+     "tam": 11
+    },
+    {
+     "texto": "0 V",
+     "x": 220,
+     "y": 286,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "~1": [
+    180,
+    80
+   ],
+   "~2": [
+    180,
+    220
+   ],
+   "+": [
+    250,
+    150
+   ],
+   "-": [
+    110,
+    150
+   ]
+  },
+  "bornes": {
+   "~1": "Llega del secundario de 24 V del transformador T3, por el fusible F1.",
+   "~2": "Vuelve al otro extremo del secundario.",
+   "+": "Sale el + de la continua: al condensador de filtro y a la carga.",
+   "-": "El − de la continua: el 0 V del circuito."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada ~",
+    "bornes": [
+     "~1",
+     "~2"
+    ],
+    "texto": "24 V de alterna del transformador."
+   },
+   {
+    "nombre": "Salida + −",
+    "bornes": [
+     "+",
+     "-"
+    ],
+    "texto": "Continua: unos 32 V con el filtro y poca carga."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un puente de 25 A, 24 V de alterna y un filtro de 4700 µF. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Diodos",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "~1",
+    "negra": "+",
+    "como": "Escala de diodo · roja en ~, negra en +",
+    "nota": "Sin tensión y desconectado.",
+    "titulo_tabla": "Diodo a diodo",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_puente",
+     "a": "P1.~1",
+     "b": "P1.+"
+    },
+    "filas": [
+     {
+      "estado": "~ → +",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "+ → ~",
+      "cambios": {
+       "a": "P1.+",
+       "b": "P1.~1"
+      },
+      "hacer": "Normal: bloquea",
+      "bien": true
+     },
+     {
+      "estado": "− → ~",
+      "cambios": {
+       "a": "P1.-",
+       "b": "P1.~1"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "− → +, dos diodos",
+      "cambios": {
+       "a": "P1.-",
+       "b": "P1.+"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Diodo ~ → + en corto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      },
+      "hacer": "Cambiar el puente",
+      "bien": false
+     },
+     {
+      "estado": "Diodo ~ → + abierto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_abierto": true
+        }
+       }
+      },
+      "hacer": "Cambiar el puente",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Entrada",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "~1",
+    "negra": "~2",
+    "como": "Escala V~ · entre ~ y ~",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Alterna de entrada",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "puente_servicio",
+     "a": "P1.~1",
+     "b": "P1.~2",
+     "segundos": 0.5
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Un diodo en corto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      },
+      "hacer": "F1 fundido: cambiar el puente",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Salida",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "+",
+    "negra": "-",
+    "como": "Escala V= · entre + y −",
+    "nota": "Con tensión y la carga conectada.",
+    "titulo_tabla": "Continua de salida",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "puente_servicio",
+     "a": "P1.+",
+     "b": "P1.-",
+     "segundos": 0.5
+    },
+    "filas": [
+     {
+      "estado": "Con filtro",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Filtro seco",
+      "cambios": {
+       "params": {
+        "P1": {
+         "filtro": false
+        }
+       }
+      },
+      "hacer": "Cambiar el condensador",
+      "bien": false
+     },
+     {
+      "estado": "Un diodo abierto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_abierto": true
+        }
+       }
+      },
+      "hacer": "Media onda: cambiar el puente",
+      "bien": false
+     },
+     {
+      "estado": "Un diodo abierto, sin filtro",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_abierto": true
+        }
+       },
+       "params": {
+        "P1": {
+         "filtro": false
+        }
+       }
+      },
+      "hacer": "La mitad: cambiar el puente",
+      "bien": false
+     },
+     {
+      "estado": "Un diodo en corto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      },
+      "hacer": "F1 fundido: cambiar el puente",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Diodo en corto",
+    "sintoma": "Se funde el fusible de entrada en cuanto se conecta el cargador.",
+    "mide": [
+     {
+      "donde": "V~ entre los bornes de F1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "puente_servicio",
+       "a": "F1.1",
+       "b": "F1.2",
+       "segundos": 0.5,
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo ~ → +",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_puente",
+       "a": "P1.~1",
+       "b": "P1.+",
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo + → ~",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_puente",
+       "a": "P1.+",
+       "b": "P1.~1",
+       "estado": {
+        "P1": {
+         "diodo_corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecarga o sobretensión.",
+    "reparacion": "Cambiar el puente completo y el fusible."
+   },
+   {
+    "nombre": "Diodo abierto",
+    "sintoma": "Zumbido, relés que vibran y la tensión de salida algo baja.",
+    "mide": [
+     {
+      "donde": "V= entre + y −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "puente_servicio",
+       "a": "P1.+",
+       "b": "P1.-",
+       "segundos": 0.5,
+       "estado": {
+        "P1": {
+         "diodo_abierto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo ~ → +",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_puente",
+       "a": "P1.~1",
+       "b": "P1.+",
+       "estado": {
+        "P1": {
+         "diodo_abierto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Calentamiento.",
+    "reparacion": "Cambiar el puente."
+   },
+   {
+    "nombre": "Filtro seco",
+    "sintoma": "La salida baja a unos 20 V con mucho rizado.",
+    "mide": [
+     {
+      "donde": "V= entre + y −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "puente_servicio",
+       "a": "P1.+",
+       "b": "P1.-",
+       "segundos": 0.5,
+       "params": {
+        "P1": {
+         "filtro": false
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo ~ → +",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_puente",
+       "a": "P1.~1",
+       "b": "P1.+"
+      }
+     }
+    ],
+    "causa": "El condensador de filtro ha perdido su capacidad.",
+    "reparacion": "Cambiar el condensador de filtro."
+   },
+   {
+    "nombre": "Calentamiento",
+    "sintoma": "El puente quema al tacto y acaba fallando.",
+    "mide": [
+     {
+      "donde": "temperatura del disipador",
+      "bien": false,
+      "valor": "más de 90 °C"
+     }
+    ],
+    "causa": "Disipador flojo, sucio o sin pasta térmica.",
+    "reparacion": "Limpiar, poner pasta térmica nueva y reapretar."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "tensión de salida del cargador"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "temperatura del puente con el termómetro infrarrojo"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza del disipador y reapriete"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60146-1-1: convertidores de semiconductores.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

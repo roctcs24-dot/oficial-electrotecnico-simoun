@@ -1,0 +1,451 @@
+{
+ "id": "led",
+ "ficha": "led",
+ "titulo": "LED",
+ "termino": "led",
+ "icono": "led",
+ "resumen": "Diodo que da luz: necesita su resistencia.",
+ "bornes_dibujo": {
+  "A": [
+   185,
+   200
+  ],
+  "K": [
+   215,
+   182
+  ]
+ },
+ "que_es": {
+  "texto": "El {{led}} es un diodo que da luz: necesita una resistencia en serie que limite su corriente.",
+  "partes": [
+   {
+    "texto": "Cápsula de epoxi que hace de lente.",
+    "marca": [
+     200,
+     56
+    ]
+   },
+   {
+    "texto": "Cátodo en forma de copa, con la pastilla.",
+    "marca": [
+     214,
+     92
+    ]
+   },
+   {
+    "texto": "Ánodo: la pata larga; cátodo: la corta, del lado plano.",
+    "marca": [
+     200,
+     150
+    ]
+   },
+   {
+    "texto": "Piloto LED de panel, con su resistencia dentro.",
+    "marca": [
+     330,
+     88
+    ]
+   }
+  ],
+  "placa": "LED rojo de 5 mm · 2 V · 20 mA",
+  "a_bordo": "En los pilotos de los tableros, en las tarjetas y los PLC (alimentación, entradas y salidas), en las balizas y en el alumbrado. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_led",
+  "params": {},
+  "pasos": [
+   "La resistencia limita la corriente: (24 − 2) / 1,1 kΩ = 20 mA.",
+   "Con unos 20 mA el LED luce; con más resistencia, más débil.",
+   "Sin resistencia, o con una muy pequeña, la corriente lo funde en un instante."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_led.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 60,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "R1 1,1 kΩ · 0,5 W",
+     "x": 140,
+     "y": 80,
+     "tam": 11
+    },
+    {
+     "texto": "LD1",
+     "x": 132,
+     "y": 172,
+     "tam": 12
+    },
+    {
+     "texto": "A",
+     "x": 44,
+     "y": 140,
+     "tam": 10
+    },
+    {
+     "texto": "K",
+     "x": 44,
+     "y": 210,
+     "tam": 10
+    },
+    {
+     "texto": "R = (24 − 2) / 0,02 = 1,1 kΩ",
+     "x": 290,
+     "y": 120,
+     "tam": 11
+    },
+    {
+     "texto": "P = 22 V × 20 mA ≈ 0,44 W",
+     "x": 290,
+     "y": 145,
+     "tam": 11
+    },
+    {
+     "texto": "Con más de 30 mA se funde",
+     "x": 290,
+     "y": 170,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    60,
+    140
+   ],
+   "K": [
+    60,
+    210
+   ]
+  },
+  "bornes": {
+   "A": "Llega desde R1: unos 2 V por encima del cátodo.",
+   "K": "Va al 0 V."
+  },
+  "grupos": [
+   {
+    "nombre": "LD1 A-K",
+    "bornes": [
+     "A",
+     "K"
+    ],
+    "texto": "En serie con R1, que deja pasar unos 20 mA."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un LED rojo y R1 de 1,1 kΩ a 24 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Prueba de diodo",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala de diodo · roja en A, negra en K",
+    "nota": "Sin tensión: luce un poco.",
+    "titulo_tabla": "Directa (A → K)",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_led",
+     "a": "LD1.A",
+     "b": "LD1.K"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Fundido",
+      "cambios": {
+       "estado": {
+        "LD1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala V= · entre A y K",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Tensión en el LED",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "led_servicio",
+     "a": "LD1.A",
+     "b": "LD1.K",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: luce",
+      "bien": true
+     },
+     {
+      "estado": "Fundido",
+      "cambios": {
+       "estado": {
+        "LD1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "Al revés",
+      "cambios": {
+       "circuito": "led_reves"
+      },
+      "hacer": "Darle la vuelta",
+      "bien": false
+     },
+     {
+      "estado": "R1 cortada",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiar R1",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "multimetro",
+    "escala": "mA",
+    "roja": "A",
+    "negra": "",
+    "como": "Escala mA · en serie entre R1 y el ánodo",
+    "nota": "Abra el circuito y ponga el multímetro en serie.",
+    "titulo_tabla": "Corriente del LED",
+    "columna": "mA",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ma",
+     "circuito": "led_lazo",
+     "a": "R1.B",
+     "b": "LD1.A",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Con R1 de 1,1 kΩ",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Con R1 de 2,2 kΩ",
+      "cambios": {
+       "params": {
+        "R1": {
+         "ohm": 2200
+        }
+       }
+      },
+      "hacer": "Luce más débil",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Sin resistencia",
+    "sintoma": "El LED da un destello y se apaga para siempre.",
+    "mide": [
+     {
+      "donde": "V= en el LED",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "led_sin_resistencia",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "segundos": 0.3
+      }
+     },
+     {
+      "donde": "prueba de diodo",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_led",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "estado": {
+        "LD1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Conectado directo a 24 V.",
+    "reparacion": "Poner un LED nuevo con su resistencia: R = (V − 2) / 0,02."
+   },
+   {
+    "nombre": "Al revés",
+    "sintoma": "No se enciende, y el LED es nuevo.",
+    "mide": [
+     {
+      "donde": "V= A-K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "led_reves",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "segundos": 0.3
+      }
+     }
+    ],
+    "causa": "Patas cambiadas.",
+    "reparacion": "Darle la vuelta: la pata larga al +."
+   },
+   {
+    "nombre": "Fundido",
+    "sintoma": "No se enciende y tiene tensión.",
+    "mide": [
+     {
+      "donde": "V= A-K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "led_servicio",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "segundos": 0.3,
+       "estado": {
+        "LD1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_led",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "estado": {
+        "LD1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fin de vida o un pico de corriente.",
+    "reparacion": "Cambiarlo."
+   },
+   {
+    "nombre": "Resistencia cortada",
+    "sintoma": "No se enciende y no tiene tensión.",
+    "mide": [
+     {
+      "donde": "V= A-K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "led_servicio",
+       "a": "LD1.A",
+       "b": "LD1.K",
+       "segundos": 0.3,
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= en R1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "led_servicio",
+       "a": "R1.A",
+       "b": "R1.B",
+       "segundos": 0.3,
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "R1 de poca potencia: a 24 V disipa casi medio vatio.",
+    "reparacion": "Cambiarla por una de 0,5 W o más."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de lámparas de los paneles"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "pilotos de los tableros sin fundir"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de los pilotos y de sus lentes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60073: colores de los indicadores y de los pulsadores.",
+  "IEC 60747-5: dispositivos optoelectrónicos."
+ ]
+}

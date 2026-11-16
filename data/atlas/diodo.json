@@ -1,0 +1,481 @@
+{
+ "id": "diodo",
+ "ficha": "diodo",
+ "titulo": "Diodo",
+ "termino": "diodo",
+ "icono": "diodo",
+ "resumen": "Deja pasar la corriente en un solo sentido.",
+ "bornes_dibujo": {
+  "A": [
+   40,
+   100
+  ],
+  "K": [
+   360,
+   100
+  ]
+ },
+ "que_es": {
+  "texto": "El {{diodo}} deja pasar la corriente del {{anodo}} al {{catodo}} y la bloquea al revés.",
+  "partes": [
+   {
+    "texto": "Cuerpo negro con la unión PN de silicio.",
+    "marca": [
+     180,
+     100
+    ]
+   },
+   {
+    "texto": "La franja marca el cátodo (K).",
+    "marca": [
+     229,
+     100
+    ]
+   },
+   {
+    "texto": "Ánodo (A), del otro lado.",
+    "marca": [
+     70,
+     100
+    ]
+   }
+  ],
+  "placa": "1N4007 · 1 A · 1000 V",
+  "a_bordo": "En los cargadores de baterías y las fuentes, en el desacople de las alimentaciones de 24 V de alarmas y de la máquina principal, y en paralelo con las bobinas de 24 V DC. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_diodo",
+  "params": {},
+  "pasos": [
+   "Con el ánodo hacia el +, la unión conduce y la carga se enciende.",
+   "En el diodo quedan unos 0,7 V: su {{caida_directa}}.",
+   "Al revés, la unión se ensancha y bloquea: la carga se apaga y el diodo aguanta toda la tensión."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_diodo.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Fuente 24 V",
+     "x": 60,
+     "y": 10,
+     "tam": 11
+    },
+    {
+     "texto": "Baterías",
+     "x": 200,
+     "y": 10,
+     "tam": 11
+    },
+    {
+     "texto": "D1",
+     "x": 92,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "D2",
+     "x": 232,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "A",
+     "x": 44,
+     "y": 80,
+     "tam": 10
+    },
+    {
+     "texto": "K",
+     "x": 44,
+     "y": 140,
+     "tam": 10
+    },
+    {
+     "texto": "RL",
+     "x": 90,
+     "y": 200,
+     "tam": 12
+    },
+    {
+     "texto": "Panel de alarmas",
+     "x": 120,
+     "y": 248,
+     "tam": 10
+    },
+    {
+     "texto": "0 V",
+     "x": 60,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "+24 V",
+     "x": 320,
+     "y": 10,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 290,
+     "y": 150,
+     "tam": 12
+    },
+    {
+     "texto": "D3",
+     "x": 390,
+     "y": 128,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    60,
+    80
+   ],
+   "K": [
+    60,
+    140
+   ]
+  },
+  "bornes": {
+   "A": "Llega el +24 V de la fuente.",
+   "K": "Sale hacia el panel de alarmas, unido al de las baterías por D2."
+  },
+  "grupos": [
+   {
+    "nombre": "D1 A-K",
+    "bornes": [
+     "A",
+     "K"
+    ],
+    "texto": "Desacople: la fuente alimenta el panel, pero las baterías no pueden devolverle corriente."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un diodo 1N4007 y un panel de 240 Ω. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Prueba de diodo",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala de diodo · roja en A, negra en K",
+    "nota": "Sin tensión y con un terminal suelto.",
+    "titulo_tabla": "Directa (A → K)",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_diodo",
+     "a": "D1.A",
+     "b": "D1.K"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "Abierto",
+      "cambios": {
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       },
+       "params": {
+        "D1": {
+         "falla": "abierto"
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Al revés",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "K",
+    "negra": "A",
+    "como": "Escala de diodo · roja en K, negra en A",
+    "nota": "Sin tensión y con un terminal suelto.",
+    "titulo_tabla": "Inversa (K → A)",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_diodo",
+     "a": "D1.K",
+     "b": "D1.A"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: bloquea",
+      "bien": true
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala V= · entre A y K",
+    "nota": "Con el panel alimentado.",
+    "titulo_tabla": "Tensión en el diodo",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "diodo_servicio",
+     "a": "D1.A",
+     "b": "D1.K",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: conduce",
+      "bien": true
+     },
+     {
+      "estado": "Abierto",
+      "cambios": {
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       },
+       "params": {
+        "D1": {
+         "falla": "abierto"
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Ya no separa: cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "Al revés",
+      "cambios": {
+       "circuito": "diodo_reves"
+      },
+      "hacer": "Darle la vuelta",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Abierto",
+    "sintoma": "El panel de alarmas se apaga si falla la otra alimentación.",
+    "mide": [
+     {
+      "donde": "V= A-K en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "diodo_servicio",
+       "a": "D1.A",
+       "b": "D1.K",
+       "segundos": 0.3,
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       },
+       "params": {
+        "D1": {
+         "falla": "abierto"
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo A-K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_diodo",
+       "a": "D1.A",
+       "b": "D1.K",
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       },
+       "params": {
+        "D1": {
+         "falla": "abierto"
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente o sobretensión.",
+    "reparacion": "Cambiarlo por otro de igual o mayor corriente."
+   },
+   {
+    "nombre": "En corto",
+    "sintoma": "Al quitar la fuente, las baterías alimentan también su salida y se descargan.",
+    "mide": [
+     {
+      "donde": "V= A-K en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "diodo_servicio",
+       "a": "D1.A",
+       "b": "D1.K",
+       "segundos": 0.3,
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo K-A",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_diodo",
+       "a": "D1.K",
+       "b": "D1.A",
+       "estado": {
+        "D1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente.",
+    "reparacion": "Cambiarlo."
+   },
+   {
+    "nombre": "Montado al revés",
+    "sintoma": "El panel no recibe tensión de la fuente.",
+    "mide": [
+     {
+      "donde": "V= en el panel",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "diodo_reves",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3
+      }
+     },
+     {
+      "donde": "V= A-K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "diodo_reves",
+       "a": "D1.A",
+       "b": "D1.K",
+       "segundos": 0.3
+      }
+     }
+    ],
+    "causa": "Cambiado con la franja hacia la fuente.",
+    "reparacion": "Montarlo con la franja (cátodo) hacia la carga."
+   },
+   {
+    "nombre": "Sin supresor en una bobina",
+    "sintoma": "Los contactos que mandan una bobina de 24 V DC se queman y la tarjeta se reinicia.",
+    "mide": [
+     {
+      "donde": "pico al abrir el contacto",
+      "bien": false,
+      "valor": "cientos de voltios"
+     }
+    ],
+    "causa": "Falta el diodo en paralelo con la bobina, o está abierto.",
+    "reparacion": "Poner un diodo en paralelo con la bobina, con el cátodo en el +."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "panel de alarmas con sus dos alimentaciones"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "prueba: quitar la fuente y seguir con baterías"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "prueba de diodo de los desacoples"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-2: dispositivos semiconductores, diodos rectificadores.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

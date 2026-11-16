@@ -1,0 +1,100 @@
+{
+  "id": "termistor",
+  "titulo": "Termistor NTC/PTC",
+  "resumen": "Resistencia que cambia mucho con la temperatura: sonda o protección del motor.",
+  "dibujo": {
+    "svg": "res://art/equipos/termistor.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "A la izquierda, una NTC de gota de 10 kΩ; a la derecha, las tres PTC del bobinado de un motor con su salida a los bornes T1-T2 de la caja de bornes. Dibujo general: tipo y TNF de cada motor, verificar a bordo en su placa.",
+    "etiquetas": [
+      {
+        "texto": "NTC 10 kΩ",
+        "x": 90,
+        "y": 36,
+        "tam": 11
+      },
+      {
+        "texto": "1",
+        "x": 62,
+        "y": 160,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 118,
+        "y": 160,
+        "tam": 11
+      },
+      {
+        "texto": "PTC 130 °C ×3",
+        "x": 270,
+        "y": 58,
+        "tam": 11
+      },
+      {
+        "texto": "T1",
+        "x": 250,
+        "y": 198,
+        "tam": 11
+      },
+      {
+        "texto": "T2",
+        "x": 290,
+        "y": 198,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Termistores según IEC 60617 (rectángulo con el trazo de variación no lineal) y ANSI/IEEE 315; el signo −θ o +θ distingue la NTC de la PTC. Verificar contra la norma.",
+    "lista": [
+      "termistor_ntc",
+      "termistor_ptc"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El termistor es una resistencia hecha para cambiar mucho con la temperatura. La {{termistor_ntc}} baja al calentarse y se usa como sonda: aire acondicionado, cargadores de baterías, cámaras frigoríficas y tarjetas de los equipos. La {{termistor_ptc}} sube de golpe a su temperatura de respuesta y va dentro del bobinado de los motores grandes, como los compresores, para que el {{rele_termistores}} los pare si se calientan."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]NTC:[/b] una pastilla de óxidos metálicos en una gota de epoxi o dentro de una vaina de acero; dos hilos.\n• [b]PTC de motor:[/b] tres pastillas cerámicas, una por fase, en serie y metidas en las cabezas de bobina; salen dos hilos a los bornes T1-T2.\n• [b]Marcas:[/b] la NTC, su valor a 25 °C (10 kΩ) y su constante B; la PTC, su temperatura nominal de respuesta (TNF), por ejemplo 130 °C, en la placa del motor."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]NTC:[/b] el controlador la alimenta a través de una resistencia fija y lee la tensión del punto medio: 2,5 V de 5 V a 25 °C; menos tensión, más temperatura.\n• [b]PTC:[/b] T1-T2 del motor van al {{rele_termistores}}, cuyo contacto está en serie con la bobina del contactor. Con el motor frío, unos 300 Ω las tres; pasada la TNF, más de 3,6 kΩ y el relé dispara.\n• Cable de sonda propio y separado de los de potencia."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajustan: la NTC se configura en el controlador por su tipo (10 kΩ, B 3950) y la PTC viene fijada por el fabricante del motor con su TNF ([i]valores típicos — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]NTC, sin tensión:[/b] Ω, y comparar con la tabla del fabricante a la temperatura del momento: 10 kΩ a 25 °C, 2,5 kΩ a 60 °C.\n• [b]PTC, sin tensión:[/b] Ω entre T1 y T2 con el multímetro: de 60 a 750 Ω las tres en frío.\n• [b]Nunca con el megóhmetro[/b] ni con más de 2,5 V por sonda: se destruyen. Al medir el aislamiento del motor, siga el manual con T1-T2."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sonda abierta:[/b] la NTC marca «sonda rota» o la temperatura mínima; la PTC hace disparar el relé con el motor frío y no deja arrancar.\n• [b]Sonda en corto:[/b] la NTC marca una temperatura altísima; la PTC deja el motor sin protección (los relés modernos avisan del corto).\n• [b]Ruido[/b] por llevar el cable junto a los de potencia: lecturas que saltan o disparos sin causa."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: comprobar la lectura de las sondas NTC con un termómetro de contacto.\n• Anual: Ω de las PTC en frío y prueba del {{rele_termistores}} con su botón de test.\n\n[b]Correctivo:[/b] una NTC se cambia por otra del mismo valor y constante B; una PTC rota dentro del bobinado no se cambia a bordo: el motor va al taller o se protege por otro medio aprobado."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-11: protección térmica de máquinas rotativas.",
+    "DIN 44081 y DIN 44082: termistores PTC para la protección de motores.",
+    "IEC 60947-8: relés de protección por termistores."
+  ]
+}

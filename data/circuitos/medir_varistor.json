@@ -1,0 +1,11 @@
+{
+  "nombre": "Varistor suelto para medir",
+  "nota": "Varistor de óxido metálico de 275 V AC (disco de 14 mm), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "RV1",
+      "tipo": "varistor"
+    }
+  ],
+  "cables": []
+}

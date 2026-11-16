@@ -1,0 +1,11 @@
+{
+  "nombre": "Zener suelto para medir",
+  "nota": "Diodo Zener de 12 V y 1,3 W (BZX85C12), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "DZ1",
+      "tipo": "zener"
+    }
+  ],
+  "cables": []
+}

@@ -1,0 +1,39 @@
+{
+  "nombre": "Diodo de desacople montado al revés",
+  "nota": "El mismo circuito con D1 al revés: el cátodo hacia la fuente. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "D1",
+      "tipo": "diodo"
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 240
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "D1.K"
+    ],
+    [
+      "D1.A",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "F.-"
+    ]
+  ]
+}

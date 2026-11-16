@@ -1,0 +1,499 @@
+{
+ "id": "condensador_electrico",
+ "ficha": "condensador_electrico",
+ "titulo": "Condensador",
+ "termino": "condensador_electrico",
+ "icono": "condensador_electrico",
+ "resumen": "Arranca motores monofásicos y filtra la continua.",
+ "bornes_dibujo": {
+  "1": [
+   80,
+   30
+  ],
+  "2": [
+   120,
+   30
+  ],
+  "+": [
+   268,
+   198
+  ],
+  "-": [
+   314,
+   192
+  ]
+ },
+ "que_es": {
+  "texto": "El {{condensador_electrico}} guarda carga. En alterna deja pasar corriente según su {{capacidad}}; en continua, una vez cargado, no.",
+  "partes": [
+   {
+    "texto": "De marcha: película, sin polaridad.",
+    "marca": [
+     62,
+     170
+    ]
+   },
+   {
+    "texto": "Terminales faston dobles 1 y 2.",
+    "marca": [
+     100,
+     38
+    ]
+   },
+   {
+    "texto": "Electrolítico: la franja marca el negativo.",
+    "marca": [
+     322,
+     120
+    ]
+   },
+   {
+    "texto": "Válvula de seguridad en la tapa.",
+    "marca": [
+     291,
+     64
+    ]
+   }
+  ],
+  "placa": "Marcha: 20 µF ±5 % · 450 V~ · Electrolítico: 4700 µF · 35 V · 105 °C",
+  "a_bordo": "Los de marcha, en los motores monofásicos de ventiladores y bombas pequeñas; los electrolíticos, en las fuentes, los cargadores y los variadores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_condensador",
+  "params": {},
+  "pasos": [
+   "Al dar tensión se carga a través de la resistencia: en cinco constantes de tiempo está lleno.",
+   "Sin tensión guarda la carga: sus bornes siguen con tensión.",
+   "Descargado con una resistencia, la tensión cae a cero: ya se puede tocar."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_condensador_electrico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L 230 V",
+     "x": 40,
+     "y": 16,
+     "tam": 11
+    },
+    {
+     "texto": "N",
+     "x": 24,
+     "y": 276,
+     "tam": 11
+    },
+    {
+     "texto": "C1",
+     "x": 30,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 78,
+     "y": 90,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 78,
+     "y": 130,
+     "tam": 10
+    },
+    {
+     "texto": "M1 1~",
+     "x": 120,
+     "y": 145,
+     "tam": 11
+    },
+    {
+     "texto": "+24 V",
+     "x": 310,
+     "y": 46,
+     "tam": 11
+    },
+    {
+     "texto": "0 V",
+     "x": 310,
+     "y": 224,
+     "tam": 11
+    },
+    {
+     "texto": "C2 4700 µF",
+     "x": 362,
+     "y": 130,
+     "tam": 11
+    },
+    {
+     "texto": "+",
+     "x": 326,
+     "y": 108,
+     "tam": 12
+    },
+    {
+     "texto": "−",
+     "x": 326,
+     "y": 152,
+     "tam": 14
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    60,
+    92
+   ],
+   "2": [
+    60,
+    128
+   ],
+   "+": [
+    310,
+    112
+   ],
+   "-": [
+    310,
+    148
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase de 230 V.",
+   "2": "Va al bobinado auxiliar del motor M1.",
+   "+": "Al +24 V de la fuente: la pata larga, sin franja.",
+   "-": "Al 0 V: el lado de la franja."
+  },
+  "grupos": [
+   {
+    "nombre": "C1 de marcha",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con el bobinado auxiliar: desfasa su corriente y hace girar el motor."
+   },
+   {
+    "nombre": "C2 electrolítico",
+    "bornes": [
+     "+",
+     "-"
+    ],
+    "texto": "Filtra la salida de 24 V; con la polaridad al revés revienta."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un condensador de marcha de 20 µF y 450 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Capacidad",
+    "instrumento": "multimetro",
+    "escala": "µF",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala de capacidad · entre 1 y 2",
+    "nota": "Descargado y con un terminal suelto.",
+    "titulo_tabla": "Capacidad de C1",
+    "columna": "µF",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "capacidad",
+     "circuito": "medir_condensador",
+     "a": "C1.+",
+     "b": "C1.-"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: 20 µF ±5 %",
+      "bien": true
+     },
+     {
+      "estado": "Seco",
+      "cambios": {
+       "estado": {
+        "C1": {
+         "perdida": 0.5
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "C1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "Terminal suelto por dentro",
+      "cambios": {
+       "estado": {
+        "C1": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Resistencia",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Descargado: al principio marca poco y sube hasta OL.",
+    "titulo_tabla": "Resistencia ya cargado",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_condensador",
+     "a": "C1.+",
+     "b": "C1.-"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "En corto",
+      "cambios": {
+       "estado": {
+        "C1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "1",
+    "negra": "",
+    "como": "Pinza en el cable del borne 1",
+    "nota": "Banco de prueba a 230 V: C ≈ 13,8 × I.",
+    "titulo_tabla": "Corriente a 230 V",
+    "columna": "A",
+    "medida": {
+     "circuito": "condensador_servicio",
+     "segundos": 0.5,
+     "instrumento": "pinza",
+     "cable": [
+      "F1.2",
+      "C1.+"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: 1,4 × 13,8 = 20 µF",
+      "bien": true
+     },
+     {
+      "estado": "Seco",
+      "cambios": {
+       "estado": {
+        "C1": {
+         "perdida": 0.5
+        }
+       }
+      },
+      "hacer": "Solo 10 µF: cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Seco",
+    "sintoma": "El ventilador arranca con dificultad, zumba y se calienta.",
+    "mide": [
+     {
+      "donde": "capacidad",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "capacidad",
+       "circuito": "medir_condensador",
+       "a": "C1.+",
+       "b": "C1.-",
+       "estado": {
+        "C1": {
+         "perdida": 0.5
+        }
+       }
+      }
+     },
+     {
+      "donde": "corriente a 230 V",
+      "bien": false,
+      "medida": {
+       "circuito": "condensador_servicio",
+       "segundos": 0.5,
+       "instrumento": "pinza",
+       "cable": [
+        "F1.2",
+        "C1.+"
+       ],
+       "estado": {
+        "C1": {
+         "perdida": 0.5
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Envejecimiento y calor.",
+    "reparacion": "Cambiarlo por otro de la misma capacidad y tensión."
+   },
+   {
+    "nombre": "En corto",
+    "sintoma": "Se funde el fusible del motor al arrancarlo.",
+    "mide": [
+     {
+      "donde": "Ω 1-2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_condensador",
+       "a": "C1.+",
+       "b": "C1.-",
+       "estado": {
+        "C1": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "capacidad",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "capacidad",
+       "circuito": "medir_condensador",
+       "a": "C1.+",
+       "b": "C1.-",
+       "estado": {
+        "C1": {
+         "corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Aislante perforado por una sobretensión o por calor.",
+    "reparacion": "Cambiarlo, y también el fusible."
+   },
+   {
+    "nombre": "Electrolítico al revés",
+    "sintoma": "La fuente se apaga al encenderla y el condensador se calienta o revienta.",
+    "mide": [
+     {
+      "donde": "V= en la salida de 24 V",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "condensador_filtro_reves",
+       "a": "F.+",
+       "b": "F.-",
+       "segundos": 0.5
+      }
+     },
+     {
+      "donde": "V= con C2 bien puesto",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "condensador_filtro",
+       "a": "C2.+",
+       "b": "C2.-",
+       "segundos": 0.5
+      }
+     }
+    ],
+    "causa": "Montado con la franja hacia el +.",
+    "reparacion": "Cambiarlo y montarlo con la franja hacia el 0 V."
+   },
+   {
+    "nombre": "Hinchado",
+    "sintoma": "Tapa abombada o electrolito seco alrededor; la fuente da tensión inestable.",
+    "mide": [
+     {
+      "donde": "inspección",
+      "bien": false,
+      "valor": "tapa abombada"
+     },
+     {
+      "donde": "capacidad",
+      "bien": false,
+      "valor": "menos del 80 % de la marcada"
+     }
+    ],
+    "causa": "Calor y años: el electrolito se seca.",
+    "reparacion": "Cambiar todos los electrolíticos de la fuente por otros de 105 °C."
+   },
+   {
+    "nombre": "Carga guardada",
+    "sintoma": "Descarga al tocar los bornes con el equipo apagado.",
+    "mide": [
+     {
+      "donde": "V= entre + y − tras apagar",
+      "bien": false,
+      "valor": "24 V"
+     }
+    ],
+    "causa": "No se descargó antes de trabajar.",
+    "reparacion": "Descargarlo con una resistencia y comprobar 0 V antes de tocar."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "fuentes sin condensadores hinchados"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "capacidad de los condensadores de marcha"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisión de los electrolíticos de las fuentes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60252-1: condensadores para motores de corriente alterna.",
+  "IEC 60384-4: condensadores electrolíticos de aluminio."
+ ]
+}

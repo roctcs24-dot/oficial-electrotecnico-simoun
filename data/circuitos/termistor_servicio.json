@@ -1,0 +1,44 @@
+{
+  "nombre": "Sonda NTC leída por un controlador",
+  "nota": "El controlador alimenta la NTC RT1 con 5 V a través de una resistencia fija R1 de 10 kΩ y lee la tensión de la sonda: a 25 °C, la mitad. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 5
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "RT1",
+      "tipo": "termistor",
+      "params": {
+        "tipo": "ntc",
+        "r25": 10000,
+        "beta": 3950
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "RT1.1"
+    ],
+    [
+      "RT1.2",
+      "F.-"
+    ]
+  ]
+}

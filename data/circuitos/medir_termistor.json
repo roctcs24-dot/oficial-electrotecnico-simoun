@@ -1,0 +1,25 @@
+{
+  "nombre": "Termistores sueltos para medir",
+  "nota": "RT1: sonda NTC de 10 kΩ a 25 °C (B 3950). RT2: las tres PTC en serie del bobinado de un motor, con TNF de 130 °C. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "RT1",
+      "tipo": "termistor",
+      "params": {
+        "tipo": "ntc",
+        "r25": 10000,
+        "beta": 3950
+      }
+    },
+    {
+      "id": "RT2",
+      "tipo": "termistor",
+      "params": {
+        "tipo": "ptc",
+        "tnf": 130,
+        "sensores": 3
+      }
+    }
+  ],
+  "cables": []
+}

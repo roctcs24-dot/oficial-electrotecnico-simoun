@@ -1,0 +1,457 @@
+{
+ "id": "potenciometro",
+ "ficha": "potenciometro",
+ "titulo": "Potenciómetro",
+ "termino": "potenciometro",
+ "icono": "potenciometro",
+ "resumen": "Da una tensión ajustable con un cursor.",
+ "bornes_dibujo": {
+  "1": [
+   165,
+   190
+  ],
+  "2": [
+   200,
+   190
+  ],
+  "3": [
+   235,
+   190
+  ]
+ },
+ "que_es": {
+  "texto": "El {{potenciometro}} es una resistencia con un {{cursor}} que se mueve sobre la pista: entre el cursor y un extremo da una parte de la tensión.",
+  "partes": [
+   {
+    "texto": "Pista resistiva en arco: 1 y 3 en sus extremos.",
+    "marca": [
+     200,
+     124
+    ]
+   },
+   {
+    "texto": "Cursor 2, en el centro, que gira con el eje.",
+    "marca": [
+     200,
+     176
+    ]
+   },
+   {
+    "texto": "Marca: B10K = 10 kΩ lineal.",
+    "marca": [
+     200,
+     76
+    ]
+   },
+   {
+    "texto": "Trimmer de tarjeta: «103» = 10 kΩ.",
+    "marca": [
+     330,
+     90
+    ]
+   }
+  ],
+  "placa": "B10K · 10 kΩ lineal · 0,5 W",
+  "a_bordo": "En la puerta de los variadores (consigna de velocidad), en los reguladores de brillo de los paneles del puente y, como trimmer, dentro de las tarjetas. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_potenciometro",
+  "params": {},
+  "pasos": [
+   "Entre 1 y 3 está la pista entera: 10 kΩ y los 10 V de la referencia.",
+   "Al girar, el cursor 2 toma una parte: de 0 a 10 V.",
+   "El variador lee esa tensión como consigna: 5 V son 25 Hz."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_potenciometro.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+10 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 42,
+     "y": 110,
+     "tam": 10
+    },
+    {
+     "texto": "1",
+     "x": 42,
+     "y": 170,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 118,
+     "y": 126,
+     "tam": 10
+    },
+    {
+     "texto": "P1 10 kΩ",
+     "x": 112,
+     "y": 186,
+     "tam": 11
+    },
+    {
+     "texto": "Variador",
+     "x": 310,
+     "y": 130,
+     "tam": 12
+    },
+    {
+     "texto": "AI1 · 0-10 V",
+     "x": 310,
+     "y": 152,
+     "tam": 11
+    },
+    {
+     "texto": "COM 0 V",
+     "x": 190,
+     "y": 280,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "3": [
+    60,
+    110
+   ],
+   "1": [
+    60,
+    170
+   ],
+   "2": [
+    110,
+    140
+   ]
+  },
+  "bornes": {
+   "3": "Llega la referencia de +10 V del variador.",
+   "1": "Va al común (0 V) del variador.",
+   "2": "El cursor: lleva la consigna de 0 a 10 V a la entrada AI1."
+  },
+  "grupos": [
+   {
+    "nombre": "Pista 1-3",
+    "bornes": [
+     "1",
+     "3"
+    ],
+    "texto": "Entre la referencia y el común: siempre 10 kΩ y 10 V."
+   },
+   {
+    "nombre": "Cursor 2",
+    "bornes": [
+     "2"
+    ],
+    "texto": "Su tensión respecto a 1 es la consigna de velocidad."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un potenciómetro de 10 kΩ y la referencia de 10 V del variador. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Pista",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "3",
+    "como": "Escala Ω · entre 1 y 3",
+    "nota": "Sin tensión y desconectado.",
+    "titulo_tabla": "Pista completa (10 kΩ)",
+    "columna": "1-3",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_potenciometro",
+     "a": "P1.1",
+     "b": "P1.3"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Pista cortada",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "pista_cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Cursor",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2, girando",
+    "nota": "Sin tensión: debe cambiar suave, sin saltos.",
+    "titulo_tabla": "Resistencia del cursor",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_potenciometro",
+     "a": "P1.1",
+     "b": "P1.2"
+    },
+    "filas": [
+     {
+      "estado": "Girado un cuarto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "posicion": 0.25
+        }
+       }
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "A la mitad",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Cursor sin contacto",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "cursor_sin_contacto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "2",
+    "negra": "1",
+    "como": "Escala V= · entre 2 y 1",
+    "nota": "Con el variador alimentado.",
+    "titulo_tabla": "Consigna en el cursor",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "potenciometro_servicio",
+     "a": "P1.2",
+     "b": "P1.1",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Al mínimo",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "posicion": 0.0
+        }
+       }
+      },
+      "hacer": "Normal: 0 Hz",
+      "bien": true
+     },
+     {
+      "estado": "A la mitad",
+      "hacer": "Normal: 25 Hz",
+      "bien": true
+     },
+     {
+      "estado": "Al máximo",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "posicion": 1.0
+        }
+       }
+      },
+      "hacer": "Normal: 50 Hz",
+      "bien": true
+     },
+     {
+      "estado": "Cursor gastado",
+      "cambios": {
+       "estado": {
+        "P1": {
+         "cursor_sin_contacto": true
+        }
+       }
+      },
+      "hacer": "Cae a 0 Hz: cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Pista gastada",
+    "sintoma": "El motor da tirones o se para al pasar el mando por un punto.",
+    "mide": [
+     {
+      "donde": "V= 2-1 en ese punto",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "potenciometro_servicio",
+       "a": "P1.2",
+       "b": "P1.1",
+       "segundos": 0.3,
+       "estado": {
+        "P1": {
+         "cursor_sin_contacto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2 en ese punto",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_potenciometro",
+       "a": "P1.1",
+       "b": "P1.2",
+       "estado": {
+        "P1": {
+         "cursor_sin_contacto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Desgaste de la pista donde más se usa.",
+    "reparacion": "Cambiarlo por otro del mismo valor y curva."
+   },
+   {
+    "nombre": "Pista cortada",
+    "sintoma": "La consigna no sube: el variador se queda a 0 Hz.",
+    "mide": [
+     {
+      "donde": "Ω 1-3",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_potenciometro",
+       "a": "P1.1",
+       "b": "P1.3",
+       "estado": {
+        "P1": {
+         "pista_cortada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= 2-1 en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "potenciometro_servicio",
+       "a": "P1.2",
+       "b": "P1.1",
+       "segundos": 0.3,
+       "estado": {
+        "P1": {
+         "pista_cortada": true,
+         "posicion": 0.7
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Pista rota por un golpe o por calor.",
+    "reparacion": "Cambiarlo."
+   },
+   {
+    "nombre": "Extremos cambiados",
+    "sintoma": "Gira al revés: con el mando al mínimo, la velocidad es la máxima.",
+    "mide": [
+     {
+      "donde": "V= 2-1 con el mando al mínimo",
+      "bien": false,
+      "valor": "10 V"
+     }
+    ],
+    "causa": "Los cables de 1 y 3 se intercambiaron al cambiarlo.",
+    "reparacion": "Intercambiar los cables de 1 y 3, nunca el del cursor."
+   },
+   {
+    "nombre": "Cable del cursor flojo",
+    "sintoma": "La velocidad cambia sola o cae al mínimo con las vibraciones.",
+    "mide": [
+     {
+      "donde": "V= en AI1 del variador",
+      "bien": false,
+      "valor": "salta entre 0 y la consigna"
+     },
+     {
+      "donde": "Ω 1-2 en el potenciómetro",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_potenciometro",
+       "a": "P1.1",
+       "b": "P1.2"
+      }
+     }
+    ],
+    "causa": "Terminal suelto en el borne 2 o en AI1.",
+    "reparacion": "Reapretar y, si está roto, rehacer el terminal."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "consigna estable, sin tirones"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "giro completo midiendo de 0 a 10 V"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "reapriete de la tuerca y de los bornes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60393-1: potenciómetros para equipos electrónicos.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "nombre": "Puente rectificador suelto para medir",
+  "nota": "Puente rectificador de 25 A y 1000 V (tipo KBPC2510), desconectado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "P1",
+      "tipo": "puente_rectificador"
+    }
+  ],
+  "cables": []
+}

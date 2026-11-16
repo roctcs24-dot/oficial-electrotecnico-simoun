@@ -651,13 +651,15 @@ func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
 	for tam: Vector2i in TAMANOS:
 		root.size = tam
 		await _esperar()
-		raiz.ir_a("sistema", {"id": 7})
-		await _guardar(carpeta, "modulo_7", tam)
-		raiz.ir_a("aprender", {"id": 7})
-		await _guardar(carpeta, "modulo_7_aprender", tam)
+		# CAPTURA_MODULO elige el módulo de la Escuela (7 si no se dice).
+		var modulo := int(OS.get_environment("CAPTURA_MODULO")) if not OS.get_environment("CAPTURA_MODULO").is_empty() else 7
+		raiz.ir_a("sistema", {"id": modulo})
+		await _guardar(carpeta, "modulo_%d" % modulo, tam)
+		raiz.ir_a("aprender", {"id": modulo})
+		await _guardar(carpeta, "modulo_%d_aprender" % modulo, tam)
 		raiz.volver()
 		raiz.volver()
-		var ids: Array = raiz.contenido.sistema(7)["modos"]["aprender"]["atlas"]
+		var ids: Array = raiz.contenido.sistema(modulo)["modos"]["aprender"]["atlas"]
 		var solo := OS.get_environment("CAPTURA_ATLAS")
 		if not solo.is_empty():
 			ids = Array(solo.split(","))
@@ -728,6 +730,30 @@ func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
 							a.poner_60_hz(true)
 						"bornera":
 							a.poner("flojo")
+						"resistor":
+							a.poner_tension(24.0)
+							a.elegir(0)
+						"potenciometro":
+							a.gastar(true)
+							a.poner_posicion(0.5)
+						"termistor":
+							a.elegir_tipo("ptc")
+							a.poner_temperatura(140.0)
+						"varistor":
+							for _i in 5:
+								a.pico()
+						"condensador_electrico":
+							a.avanzar(30.0)
+							a.poner_tension(false)
+						"diodo":
+							a.girar()
+						"diodo_zener":
+							a.poner_entrada(10.0)
+						"led":
+							a.elegir(3)
+						"puente_rectificador":
+							a.poner_filtro(false)
+							a.abrir_diodo(true)
 					await _guardar(carpeta, "%s_funciona_2" % id, tam)
 				elif pestana == "conexion":
 					p.tocar_borne(p.atlas["conexion"]["bornes_esquema"].keys()[0])

@@ -1,0 +1,43 @@
+{
+  "nombre": "LED montado al revés",
+  "nota": "El LED con el cátodo hacia R1: no conduce y no se enciende. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 1100,
+        "w": 0.5
+      }
+    },
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "LD1.K"
+    ],
+    [
+      "LD1.A",
+      "F.-"
+    ]
+  ]
+}

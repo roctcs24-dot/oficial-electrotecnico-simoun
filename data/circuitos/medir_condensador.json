@@ -1,0 +1,15 @@
+{
+  "nombre": "Condensador suelto para medir",
+  "nota": "C1: condensador de marcha de 20 µF y 450 V del motor de un ventilador, con sus terminales libres y descargado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "C1",
+      "tipo": "condensador_electrico",
+      "params": {
+        "uf": 20,
+        "v_nominal": 450
+      }
+    }
+  ],
+  "cables": []
+}

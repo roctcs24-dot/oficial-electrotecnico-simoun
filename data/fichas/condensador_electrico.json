@@ -1,0 +1,120 @@
+{
+  "id": "condensador_electrico",
+  "titulo": "Condensador",
+  "resumen": "Guarda carga: arranca motores monofásicos y filtra las fuentes de continua.",
+  "dibujo": {
+    "svg": "res://art/equipos/condensador_electrico.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "A la izquierda, un condensador de marcha de polipropileno de 20 µF y 450 V~ con sus terminales faston; a la derecha, un electrolítico de 4700 µF y 35 V con la franja del negativo. Dibujos generales: valores de cada equipo, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 80,
+        "y": 12,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 120,
+        "y": 12,
+        "tam": 11
+      },
+      {
+        "texto": "20 µF ±5 %",
+        "x": 100,
+        "y": 100,
+        "tam": 11
+      },
+      {
+        "texto": "450 V~ 50/60 Hz",
+        "x": 100,
+        "y": 120,
+        "tam": 10
+      },
+      {
+        "texto": "Marcha",
+        "x": 100,
+        "y": 140,
+        "tam": 10
+      },
+      {
+        "texto": "4700 µF",
+        "x": 280,
+        "y": 110,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "35 V",
+        "x": 280,
+        "y": 130,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "+",
+        "x": 254,
+        "y": 206,
+        "tam": 13
+      },
+      {
+        "texto": "−",
+        "x": 328,
+        "y": 198,
+        "tam": 14
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Condensador según IEC 60617 y ANSI/IEEE 315, y el electrolítico con su polaridad. Verificar contra la norma.",
+    "lista": [
+      "capacitor",
+      "condensador_polarizado"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{condensador_electrico}} guarda carga entre dos placas separadas por un aislante. En alterna deja pasar una corriente proporcional a su {{capacidad}}; en continua, una vez cargado, no deja pasar nada. A bordo, el {{condensador_marcha}} desfasa la corriente del bobinado auxiliar de los motores monofásicos (ventiladores, bombas pequeñas) y el {{condensador_electrolitico}} filtra la salida de las fuentes de continua."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]De marcha:[/b] película de polipropileno metalizado en un cilindro de plástico o aluminio; sin polaridad; terminales faston dobles.\n• [b]Electrolítico:[/b] lámina de aluminio enrollada con electrolito, en un bote con válvula de seguridad en la tapa; con polaridad: la franja marca el negativo y la pata larga es el positivo.\n• [b]Marcas:[/b] la capacidad en µF, su tolerancia, la tensión máxima (V~ en los de alterna) y la temperatura."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]De marcha:[/b] en serie con el bobinado auxiliar del motor, entre la línea y ese bobinado.\n• [b]Electrolítico:[/b] entre + y 0 V de la fuente, respetando la polaridad: al revés se calienta y revienta.\n• La tensión del condensador, siempre por encima de la que verá; un electrolítico, nunca en alterna.\n• Antes de tocarlo, descárguelo con una resistencia y compruebe 0 V con el voltímetro: guarda la carga con el equipo apagado."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se cambia por uno de la misma capacidad y de igual o mayor tensión. A 230 V y 50 Hz, la corriente da la capacidad: C (µF) ≈ 13,8 × I (A) ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Descargado[/b] y con un terminal suelto: escala de capacidad del multímetro; debe quedar dentro de la tolerancia (±5 % los de marcha; −10/+50 % o más los electrolíticos).\n• [b]Ω:[/b] al principio marca poco y sube hasta OL mientras se carga; si se queda en pocos ohmios, está en corto.\n• [b]En servicio:[/b] la corriente con la pinza, o el rizado en V~ a la salida de la fuente."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Seco[/b] o con poca capacidad: el motor monofásico arranca mal, zumba o se calienta; la fuente da tensión con rizado.\n• [b]En corto:[/b] funde el fusible o dispara la protección.\n• [b]Hinchado[/b] o con la válvula abierta: el electrolítico está acabado, mida lo que mida.\n• [b]Electrolítico al revés:[/b] se calienta y queda en corto en segundos."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: buscar condensadores hinchados, con fugas o tostados en las fuentes y las tarjetas.\n• Anual: capacidad de los de marcha de los ventiladores y bombas monofásicas.\n\n[b]Correctivo:[/b] los electrolíticos envejecen con el calor: en una fuente de varios años se cambian todos a la vez, de la misma capacidad, tensión y temperatura (105 °C)."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60252-1: condensadores para motores de corriente alterna.",
+    "IEC 60384-4: condensadores electrolíticos de aluminio.",
+    "IEC 60062: códigos de marcado de resistencias y condensadores."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "nombre": "Resistencia suelta para medir",
+  "nota": "Resistencia de película de 4,7 kΩ y 1/4 W (amarillo, violeta, rojo, oro), desoldada de la tarjeta. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 4700,
+        "w": 0.25
+      }
+    }
+  ],
+  "cables": []
+}

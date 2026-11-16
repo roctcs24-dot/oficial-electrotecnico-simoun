@@ -1,0 +1,11 @@
+{
+  "nombre": "Diodo suelto para medir",
+  "nota": "Diodo rectificador 1N4007 (1 A, 1000 V), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "D1",
+      "tipo": "diodo"
+    }
+  ],
+  "cables": []
+}

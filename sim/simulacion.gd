@@ -72,6 +72,11 @@ static func tipos() -> Dictionary:
 		"rele_control_fases": SimReleControlFases,
 		"final_carrera": SimFinalCarrera,
 		"termostato": SimTermostato,
+		"potenciometro": SimPotenciometro,
+		"termistor": SimTermistor,
+		"varistor": SimVaristor,
+		"condensador_electrico": SimCondensadorElectrico,
+		"zener": SimZener,
 	}
 
 

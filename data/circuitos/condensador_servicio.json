@@ -1,0 +1,57 @@
+{
+  "nombre": "Prueba del condensador de marcha a 230 V",
+  "nota": "Banco de prueba: el condensador C1 de 20 µF conectado a 230 V a través del fusible F1. La corriente da la capacidad: C (µF) ≈ 13,8 × I (A) a 230 V y 50 Hz. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T2",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 4
+      }
+    },
+    {
+      "id": "C1",
+      "tipo": "condensador_electrico",
+      "params": {
+        "uf": 20,
+        "v_nominal": 450
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T2.H1"
+    ],
+    [
+      "B.L2",
+      "T2.H2"
+    ],
+    [
+      "T2.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "C1.+"
+    ],
+    [
+      "C1.-",
+      "T2.X2"
+    ]
+  ]
+}

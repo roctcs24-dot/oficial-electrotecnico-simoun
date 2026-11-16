@@ -1,0 +1,446 @@
+{
+ "id": "resistor",
+ "ficha": "resistor",
+ "titulo": "Resistencia",
+ "termino": "resistor",
+ "icono": "resistor",
+ "resumen": "Limita la corriente y reparte la tensión.",
+ "bornes_dibujo": {
+  "A": [
+   40,
+   110
+  ],
+  "B": [
+   360,
+   110
+  ]
+ },
+ "que_es": {
+  "texto": "La {{resistor}} limita la corriente y reparte la tensión. Se identifica por su {{codigo_colores}} y se elige por su valor, su {{tolerancia}} y su potencia.",
+  "partes": [
+   {
+    "texto": "Bandas de colores: valor y tolerancia.",
+    "marca": [
+     195,
+     110
+    ]
+   },
+   {
+    "texto": "Terminales A y B, sin polaridad.",
+    "marca": [
+     70,
+     110
+    ]
+   },
+   {
+    "texto": "SMD: tres cifras, «472» = 4,7 kΩ.",
+    "marca": [
+     80,
+     182
+    ]
+   },
+   {
+    "texto": "De potencia: valor y vatios impresos.",
+    "marca": [
+     329,
+     177
+    ]
+   }
+  ],
+  "placa": "4,7 kΩ ±5 % · 1/4 W (amarillo, violeta, rojo, oro)",
+  "a_bordo": "En las tarjetas de los cargadores, de los paneles de alarmas, de los variadores y de la máquina principal. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_resistor",
+  "params": {},
+  "pasos": [
+   "Las bandas dan el valor: amarillo 4, violeta 7 y rojo × 100 son 4,7 kΩ.",
+   "Con tensión pasa la corriente I = V / R, y la resistencia disipa P = V² / R.",
+   "Si disipa más de su potencia nominal se calienta, se oscurece y se corta."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_resistor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 60,
+     "y": 282,
+     "tam": 12
+    },
+    {
+     "texto": "R1 4,7 kΩ",
+     "x": 112,
+     "y": 95,
+     "tam": 12
+    },
+    {
+     "texto": "R2 4,7 kΩ",
+     "x": 112,
+     "y": 205,
+     "tam": 12
+    },
+    {
+     "texto": "A",
+     "x": 42,
+     "y": 65,
+     "tam": 10
+    },
+    {
+     "texto": "B",
+     "x": 42,
+     "y": 125,
+     "tam": 10
+    },
+    {
+     "texto": "12 V a la tarjeta",
+     "x": 290,
+     "y": 150,
+     "tam": 11
+    },
+    {
+     "texto": "Código de colores",
+     "x": 300,
+     "y": 172,
+     "tam": 11
+    },
+    {
+     "texto": "4 · 7 · ×100 · ±5 %",
+     "x": 300,
+     "y": 250,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    60,
+    65
+   ],
+   "B": [
+    60,
+    125
+   ]
+  },
+  "bornes": {
+   "A": "Llega el +24 V de la fuente.",
+   "B": "Sale al punto medio: 12 V hacia R2 y hacia la entrada de la tarjeta."
+  },
+  "grupos": [
+   {
+    "nombre": "R1 A-B",
+    "bornes": [
+     "A",
+     "B"
+    ],
+    "texto": "En serie con R2: entre las dos reparten los 24 V, 12 V cada una."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con resistencias de 4,7 kΩ y 1/4 W. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Valor",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "A",
+    "negra": "B",
+    "como": "Escala Ω · entre A y B",
+    "nota": "Sin tensión y con un extremo desoldado.",
+    "titulo_tabla": "Resistencia (4,7 kΩ ±5 %)",
+    "columna": "A-B",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_resistor",
+     "a": "R1.A",
+     "b": "R1.B"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Normal: de 4,47 a 4,94 kΩ",
+      "bien": true
+     },
+     {
+      "estado": "Cortada",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiarla",
+      "bien": false
+     },
+     {
+      "estado": "Subida de valor",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "factor": 1.6
+        }
+       }
+      },
+      "hacer": "Fuera de tolerancia: cambiarla",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En la tarjeta",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "A",
+    "negra": "B",
+    "como": "Escala Ω · entre A y B, sin desoldar",
+    "nota": "R2 de 10 kΩ queda en paralelo por las pistas.",
+    "titulo_tabla": "Medida sin desoldar",
+    "columna": "A-B",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "resistor_placa",
+     "a": "R1.A",
+     "b": "R1.B"
+    },
+    "filas": [
+     {
+      "estado": "Con R2 en paralelo",
+      "hacer": "Marca menos: desoldar un extremo",
+      "bien": false
+     },
+     {
+      "estado": "Con un extremo desoldado",
+      "cambios": {
+       "circuito": "medir_resistor"
+      },
+      "hacer": "El valor real",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "B",
+    "como": "Escala V= · entre A y B",
+    "nota": "Con tensión: 24 V DC.",
+    "titulo_tabla": "Tensión en R1",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "resistor_servicio",
+     "a": "R1.A",
+     "b": "R1.B",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Divisor sano",
+      "hacer": "Normal: I = 12 V / 4,7 kΩ = 2,6 mA",
+      "bien": true
+     },
+     {
+      "estado": "R1 cortada",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      },
+      "hacer": "Toda la tensión en R1: cortada",
+      "bien": false
+     },
+     {
+      "estado": "R1 subida de valor",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "factor": 1.6
+        }
+       }
+      },
+      "hacer": "Más tensión en R1: ha subido",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Cortada",
+    "sintoma": "La entrada de la tarjeta no ve su señal o el LED no luce.",
+    "mide": [
+     {
+      "donde": "V= en R1, en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "resistor_servicio",
+       "a": "R1.A",
+       "b": "R1.B",
+       "segundos": 0.3,
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω A-B, desoldada",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_resistor",
+       "a": "R1.A",
+       "b": "R1.B",
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Exceso de potencia o un pico de tensión.",
+    "reparacion": "Cambiarla por otra del mismo valor y de igual o mayor potencia, y buscar por qué se quemó."
+   },
+   {
+    "nombre": "Subida de valor",
+    "sintoma": "El punto medio del divisor da menos tensión: la tarjeta lee mal.",
+    "mide": [
+     {
+      "donde": "V= en R2, en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "resistor_servicio",
+       "a": "R2.A",
+       "b": "R2.B",
+       "segundos": 0.3,
+       "estado": {
+        "R1": {
+         "factor": 1.6
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω A-B, desoldada",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_resistor",
+       "a": "R1.A",
+       "b": "R1.B",
+       "estado": {
+        "R1": {
+         "factor": 1.6
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Calor y años: las de película de carbón suben de valor.",
+    "reparacion": "Cambiarla y revisar las demás iguales de la tarjeta."
+   },
+   {
+    "nombre": "Quemada por potencia",
+    "sintoma": "Resistencia oscurecida y la tarjeta tostada debajo.",
+    "mide": [
+     {
+      "donde": "P = V² / R con 24 V en 100 Ω",
+      "bien": false,
+      "valor": "5,8 W en una de 1/4 W"
+     },
+     {
+      "donde": "Ω A-B, desoldada",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_resistor",
+       "a": "R1.A",
+       "b": "R1.B",
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Elegida de poca potencia para lo que disipa.",
+    "reparacion": "Calcular P = V² / R y poner una de, al menos, el doble de potencia."
+   },
+   {
+    "nombre": "Soldadura fría",
+    "sintoma": "Falla intermitente con las vibraciones o con la temperatura.",
+    "mide": [
+     {
+      "donde": "Ω A-B, desoldada",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_resistor",
+       "a": "R1.A",
+       "b": "R1.B"
+      }
+     },
+     {
+      "donde": "V= en R1 al golpear la tarjeta",
+      "bien": false,
+      "valor": "salta de 12 a 24 V"
+     }
+    ],
+    "causa": "Soldadura mate o agrietada.",
+    "reparacion": "Rehacer la soldadura con estaño nuevo."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "tarjetas sin olor a quemado"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza de tarjetas en una parada"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "buscar resistencias oscurecidas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60062: códigos de marcado de resistencias y condensadores.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

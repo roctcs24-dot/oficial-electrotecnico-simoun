@@ -1,0 +1,80 @@
+{
+  "id": "led",
+  "titulo": "LED",
+  "resumen": "Diodo que da luz: pilotos, indicadores de tarjeta y alumbrado.",
+  "dibujo": {
+    "svg": "res://art/equipos/led.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "LED rojo de 5 mm con la pata larga del ánodo y el lado plano del cátodo, y un piloto LED de panel de 22 mm. Dibujos generales: tensión de cada piloto, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A · larga",
+        "x": 146,
+        "y": 200,
+        "tam": 11
+      },
+      {
+        "texto": "K · lado plano",
+        "x": 262,
+        "y": 180,
+        "tam": 11
+      },
+      {
+        "texto": "Piloto 24 V",
+        "x": 330,
+        "y": 206,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "LED según IEC 60617 y ANSI/IEEE 315: el diodo con dos flechas hacia fuera. Verificar contra la norma.",
+    "lista": [
+      "led"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{led}} es un diodo que da luz al conducir. Se enciende con unos miliamperios y tiene más {{caida_directa}} que un diodo de silicio: 1,8 a 2,2 V los rojos y unos 3 V los verdes, azules y blancos. Está en los pilotos de los tableros, en las tarjetas (alimentación, entradas y salidas de un PLC), en las balizas y en el alumbrado."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Pastilla semiconductora[/b] sobre el cátodo en forma de copa, dentro de una cápsula de epoxi que hace de lente.\n• [b]Ánodo (A):[/b] la pata larga. [b]Cátodo (K):[/b] la corta, del lado plano de la cápsula.\n• [b]Piloto de panel:[/b] el LED ya lleva dentro su resistencia o su fuente, y se marca con su tensión de servicio (24 V, 110 V, 230 V)."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Siempre con algo que limite la corriente: una resistencia en serie, R = (V − Vf) / I. Para 24 V y 20 mA: (24 − 2) / 0,02 = 1,1 kΩ.\n• La resistencia disipa (V − Vf) × I: a 24 V, casi medio vatio. Use una de 0,5 W o más.\n• Respete la polaridad: al revés no se enciende, y con más de unos 5 V inversos se daña."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. El brillo depende de la corriente: se cambia con la resistencia, sin pasar de la corriente máxima del LED ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] escala de diodo: un LED rojo marca 1,8 a 2 V y luce un poco; al revés, OL. Los blancos y azules pueden marcar OL en los dos sentidos con multímetros de poca tensión de prueba.\n• [b]En servicio:[/b] V= en el LED, unos 2 V; en la resistencia, el resto. Con el multímetro en mA en serie, unos 20 mA.\n• [b]Piloto de panel:[/b] tensión entre sus bornes; si llega y no luce, está fundido."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sin resistencia:[/b] se funde en un instante y queda abierto.\n• [b]Montado al revés:[/b] no se enciende; toda la tensión queda en el LED.\n• [b]Fundido:[/b] OL en los dos sentidos; en servicio, toda la tensión entre sus patas.\n• [b]Resistencia cortada:[/b] no se enciende y no hay tensión en el LED."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: prueba de lámparas de los paneles (botón «lamp test»).\n\n[b]Correctivo:[/b] un piloto se cambia completo por otro de la misma tensión y color; un LED de tarjeta, por otro de la misma corriente y color, con su resistencia."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60073: colores de los indicadores y de los pulsadores.",
+    "IEC 60747-5: dispositivos optoelectrónicos."
+  ]
+}

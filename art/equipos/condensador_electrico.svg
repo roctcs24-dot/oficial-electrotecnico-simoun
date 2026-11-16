@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="220" viewBox="0 0 400 220">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3e6e8"/><stop offset="1" stop-color="#a9aeb2"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a5056"/><stop offset="1" stop-color="#2a2e32"/></linearGradient>
+    <linearGradient id="hilo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0f1"/><stop offset="0.5" stop-color="#9aa1a6"/><stop offset="1" stop-color="#d9dcde"/></linearGradient>
+    <linearGradient id="hilo_v" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#eef0f1"/><stop offset="0.5" stop-color="#9aa1a6"/><stop offset="1" stop-color="#d9dcde"/></linearGradient>
+    <linearGradient id="beige" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3e2bf"/><stop offset="0.45" stop-color="#d9bf8c"/><stop offset="1" stop-color="#a88d5c"/></linearGradient>
+    <linearGradient id="lata" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9aa1a6"/><stop offset="0.45" stop-color="#eef0f1"/><stop offset="1" stop-color="#8a9095"/></linearGradient>
+    <linearGradient id="negro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a6066"/><stop offset="0.4" stop-color="#2a2e32"/><stop offset="1" stop-color="#15181a"/></linearGradient>
+    <linearGradient id="azul" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f8fd6"/><stop offset="1" stop-color="#1c4f8f"/></linearGradient>
+    <linearGradient id="azul_v" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c4f8f"/><stop offset="0.4" stop-color="#4f8fd6"/><stop offset="1" stop-color="#173f73"/></linearGradient>
+    <linearGradient id="blanco" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9ccce"/><stop offset="0.4" stop-color="#f6f6f4"/><stop offset="1" stop-color="#b9bdc0"/></linearGradient>
+    <linearGradient id="vidrio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6c99a"/><stop offset="0.45" stop-color="#e0904a"/><stop offset="1" stop-color="#a85e22"/></linearGradient>
+    <linearGradient id="rojo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a5221a"/><stop offset="0.4" stop-color="#ef5a48"/><stop offset="1" stop-color="#8e1c15"/></linearGradient>
+    <radialGradient id="acero" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#f4f5f5"/><stop offset="1" stop-color="#7b8084"/></radialGradient>
+    <radialGradient id="laton" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#f6e2a8"/><stop offset="1" stop-color="#a8812e"/></radialGradient>
+    <radialGradient id="disco" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#5d9de0"/><stop offset="1" stop-color="#153e72"/></radialGradient>
+    <radialGradient id="gota" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#5a5f63"/><stop offset="1" stop-color="#111315"/></radialGradient>
+    <g id="tornillo"><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-6,0 H6" stroke="#2a2d30" stroke-width="2.5" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="40" y="54" width="120" height="132" rx="10" fill="url(#blanco)" stroke="#7b8084" stroke-width="2"/>
+  <ellipse cx="100" cy="54" rx="60" ry="10" fill="#e9eaea" stroke="#7b8084" stroke-width="2"/>
+  <rect x="72" y="24" width="16" height="28" rx="2" fill="url(#laton)" stroke="#5b4a1e"/>
+  <rect x="112" y="24" width="16" height="28" rx="2" fill="url(#laton)" stroke="#5b4a1e"/>
+  <rect x="48" y="78" width="104" height="76" rx="4" fill="#ffffff" stroke="#b9bdc0"/>
+  <rect x="246" y="64" width="90" height="110" rx="10" fill="url(#azul_v)" stroke="#123056" stroke-width="2"/>
+  <ellipse cx="291" cy="64" rx="45" ry="8" fill="#9ab0c8" stroke="#123056" stroke-width="2"/>
+  <path d="M270,64 L312,64 M291,56 V72 M275,58 L307,70 M307,58 L275,70" stroke="#5f7894" stroke-width="2"/>
+  <rect x="314" y="68" width="16" height="104" fill="#cfd9e4"/>
+  <path d="M318,86 H326 M318,112 H326 M318,138 H326 M318,160 H326" stroke="#20242a" stroke-width="3"/>
+  <path d="M268,174 V202 M314,174 V196" stroke="url(#hilo_v)" stroke-width="4" stroke-linecap="round"/>
+</svg>

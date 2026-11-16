@@ -1,0 +1,105 @@
+{
+  "id": "puente_rectificador",
+  "titulo": "Puente rectificador",
+  "resumen": "Cuatro diodos que convierten la alterna en continua.",
+  "dibujo": {
+    "svg": "res://art/equipos/puente_rectificador.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Puente rectificador KBPC2510 de 25 A y 1000 V, con sus cuatro terminales faston y el agujero para el disipador. Dibujo general: tipo de cada equipo, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "+",
+        "x": 152,
+        "y": 64,
+        "tam": 16,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "~",
+        "x": 248,
+        "y": 64,
+        "tam": 16,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "−",
+        "x": 248,
+        "y": 160,
+        "tam": 18,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "~",
+        "x": 152,
+        "y": 160,
+        "tam": 16,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "KBPC2510",
+        "x": 200,
+        "y": 148,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "25 A · 1000 V",
+        "x": 200,
+        "y": 166,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Puente rectificador según IEC 60617 (rombo con un diodo) y ANSI/IEEE 315 (cuatro diodos). Verificar contra la norma.",
+    "lista": [
+      "puente_rectificador",
+      "diodo"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{puente_rectificador}} junta cuatro diodos en un solo bloque. Por las entradas ~ entra la alterna de un transformador y por + y − sale continua pulsante: en cada semiciclo conducen dos diodos y la corriente sale siempre por el +. Con un {{condensador_filtro}} detrás, la tensión se acerca al pico de la alterna y queda un pequeño {{rizado}}. Está en los cargadores de baterías, en las fuentes y en los frenos y embragues de continua."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cuatro diodos[/b] encapsulados en resina, en un bloque metálico que se atornilla a un disipador.\n• [b]Terminales:[/b] dos ~ (alterna), + y −; el + suele ir en la esquina achaflanada.\n• [b]Marca:[/b] el tipo, la corriente y la tensión inversa: KBPC2510 = 25 A y 1000 V."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Las dos ~ al secundario del transformador, a través de un fusible; + y − a la carga, con el condensador de filtro respetando su polaridad.\n• Sin filtro, la continua media es 0,9 × V~ menos dos caídas: 24 V~ dan unos 20 V. Con filtro, cerca de 1,41 × V~: unos 32 V con poca carga.\n• Atornillado a su disipador con pasta térmica si pasa de unos pocos amperios."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la corriente y la tensión inversa, con margen sobre las del circuito ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y desconectado: escala de diodo, diodo a diodo. Roja en ~ y negra en +: 0,5 a 0,7 V; al revés, OL. Roja en − y negra en ~: 0,5 a 0,7 V. Roja en − y negra en +: dos caídas, 1 a 1,4 V.\n• [b]0 V[/b] en algún par: diodo en corto. [b]OL en los dos sentidos:[/b] diodo abierto.\n• [b]En servicio:[/b] V~ entre las ~ y V= entre + y −."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Un diodo abierto:[/b] media onda; sin filtro, la continua cae a la mitad, y con filtro baja algo y sube el rizado: zumbido y relés que vibran.\n• [b]Un diodo en corto:[/b] cortocircuita el secundario en un semiciclo y funde el fusible.\n• [b]Condensador de filtro seco:[/b] la continua baja de unos 32 V a 20 V con mucho rizado.\n• [b]Calentamiento[/b] por un disipador flojo o sin pasta."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: temperatura del puente y del disipador en carga, con el termómetro infrarrojo.\n• Anual: limpieza del disipador y reapriete de los terminales.\n\n[b]Correctivo:[/b] se cambia el bloque completo por otro de igual o mayor corriente y tensión, con pasta térmica nueva."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60146-1-1: convertidores de semiconductores.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "nombre": "LED sin resistencia en 24 V",
+  "nota": "El LED conectado directo a 24 V, sin resistencia en serie: la corriente lo destruye en un instante. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "LD1.A"
+    ],
+    [
+      "LD1.K",
+      "F.-"
+    ]
+  ]
+}

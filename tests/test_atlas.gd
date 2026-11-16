@@ -27,6 +27,12 @@ func _ids(c: Contenido) -> Array[String]:
 	return lista
 
 
+func _ids_modulo(c: Contenido, modulo: int) -> Array[String]:
+	var lista: Array[String] = []
+	lista.assign(c.sistema(modulo).get("modos", {}).get("aprender", {}).get("atlas", []))
+	return lista
+
+
 func _terminos_fuera(texto: String, glosario: Dictionary) -> String:
 	for t in TextoTecnico.terminos(texto):
 		if not glosario.has(t):
@@ -43,7 +49,21 @@ func test_el_modulo_7_publica_las_etapas_33_a_36() -> String:
 		"amperimetro", "voltimetro", "analizador_red", "horometro", "bornera"]
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 7 debe estar activo"),
-		A.cierto(_ids(c) == esperados, "atlas del módulo 7: %s" % str(_ids(c))),
+		A.cierto(_ids_modulo(c, 7) == esperados, "atlas del módulo 7: %s" % str(_ids_modulo(c, 7))),
+	])
+
+
+func test_el_modulo_8_publica_la_electronica_i() -> String:
+	var c := Contenido.new()
+	var m := c.sistema(8)
+	var esperados := ["resistor", "potenciometro", "termistor", "varistor", "condensador_electrico", "diodo", "diodo_zener", "led", "puente_rectificador"]
+	var en_sistema_6: Array = c.sistema(6)["modos"]["aprender"]["fichas"]
+	var faltan := esperados.filter(func(id: String) -> bool: return not en_sistema_6.has(id))
+	return A.primero([
+		A.cierto(m.get("estado", "") == "activo", "el módulo 8 debe estar activo"),
+		A.cierto(_ids_modulo(c, 8) == esperados, "atlas del módulo 8: %s" % str(_ids_modulo(c, 8))),
+		A.cierto(faltan.is_empty(), "las fichas de electrónica deben publicarse en el sistema 6: faltan %s" % str(faltan)),
+		A.cierto(Avance.atlas(m, Partida.new("user://pruebas_atlas_8.json")) == [0, 9], "avance del módulo 8 al empezar"),
 	])
 
 
@@ -576,4 +596,125 @@ func test_cortes_de_potencia_y_medida() -> String:
 		A.cierto(fp_con > 0.95 and fp_sin < 0.8, "compensación: %.2f con batería y %.2f sin ella" % [fp_con, fp_sin]),
 		A.cierto(atrasa, "horómetro de 60 Hz atrasa"),
 		A.cierto(flojo, "borne flojo: 1,2 V y más de 70 °C"),
+	])
+
+
+func test_medir_de_electronica() -> String:
+	var c := Contenido.new()
+	return A.primero([
+		A.cierto(_lectura(c, "resistor", "Valor", "Sana") == "4,7 kΩ", "resistencia: %s" % _lectura(c, "resistor", "Valor", "Sana")),
+		A.cierto(_lectura(c, "resistor", "En la tarjeta", "Con R2 en paralelo") == "3,2 kΩ", "en la tarjeta marca menos"),
+		A.cierto(_lectura(c, "resistor", "En servicio", "R1 cortada") == "24 V", "R1 cortada: toda la tensión"),
+		A.cierto(_lectura(c, "potenciometro", "En servicio", "A la mitad") == "5,0 V", "cursor a la mitad: 5 V"),
+		A.cierto(_lectura(c, "potenciometro", "Cursor", "Girado un cuarto") == "2,5 kΩ", "un cuarto: 2,5 kΩ"),
+		A.cierto(_lectura(c, "termistor", "NTC", "A 25 °C") == "10,0 kΩ", "NTC a 25 °C: %s" % _lectura(c, "termistor", "NTC", "A 25 °C")),
+		A.cierto(_lectura(c, "termistor", "NTC", "A 60 °C") == "2,5 kΩ", "NTC a 60 °C"),
+		A.cierto(_lectura(c, "termistor", "PTC del motor", "Motor frío, 25 °C") == "298 Ω", "PTC en frío: %s" % _lectura(c, "termistor", "PTC del motor", "Motor frío, 25 °C")),
+		A.cierto(_lectura(c, "termistor", "PTC del motor", "A 135 °C") == "4,5 kΩ", "PTC pasada la TNF"),
+		A.cierto(_lectura(c, "termistor", "En servicio", "A 25 °C") == "2,5 V", "divisor de la NTC"),
+		A.cierto(_lectura(c, "varistor", "Fuga", "Sano") == "OL", "varistor sano: OL"),
+		A.cierto(_lectura(c, "varistor", "En servicio", "En corto") == "0,0 V", "varistor en corto: F1 fundido"),
+		A.cierto(_lectura(c, "varistor", "Corriente de fuga", "Degradado") == "4,6 mA", "fuga del degradado"),
+		A.cierto(_lectura(c, "condensador_electrico", "Capacidad", "Sano") == "20,0 µF", "capacidad: %s" % _lectura(c, "condensador_electrico", "Capacidad", "Sano")),
+		A.cierto(_lectura(c, "condensador_electrico", "Capacidad", "Seco") == "10,0 µF", "seco: la mitad"),
+		A.cierto(_lectura(c, "condensador_electrico", "Capacidad", "En corto") == "OL", "en corto: fuera de escala"),
+		A.cierto(_lectura(c, "condensador_electrico", "En servicio", "Sano") == "1,4 A", "20 µF a 230 V: 1,4 A"),
+		A.cierto(_lectura(c, "diodo", "Prueba de diodo", "Sano") == "0,7 V", "diodo en directa"),
+		A.cierto(_lectura(c, "diodo", "Al revés", "Sano") == "OL", "diodo al revés"),
+		A.cierto(_lectura(c, "diodo", "En servicio", "Al revés") == "-24,0 V", "diodo montado al revés: %s" % _lectura(c, "diodo", "En servicio", "Al revés")),
+		A.cierto(_lectura(c, "diodo_zener", "En servicio", "Sano") == "12,1 V", "Zener regula: %s" % _lectura(c, "diodo_zener", "En servicio", "Sano")),
+		A.cierto(_lectura(c, "diodo_zener", "En servicio", "Abierto") == "16,3 V", "Zener abierto: divisor"),
+		A.cierto(_lectura(c, "diodo_zener", "Al revés", "Sano") == "OL", "el multímetro no llega a 12 V"),
+		A.cierto(_lectura(c, "led", "Corriente", "Con R1 de 1,1 kΩ") == "19,7 mA", "LED: %s" % _lectura(c, "led", "Corriente", "Con R1 de 1,1 kΩ")),
+		A.cierto(_lectura(c, "led", "Prueba de diodo", "Sano") == "1,9 V", "LED en prueba de diodo"),
+		A.cierto(_lectura(c, "puente_rectificador", "Diodos", "− → +, dos diodos") == "1,4 V", "dos diodos en serie"),
+		A.cierto(_lectura(c, "puente_rectificador", "Diodos", "+ → ~") == "OL", "el puente bloquea al revés"),
+		A.cierto(_lectura(c, "puente_rectificador", "Salida", "Con filtro") == "32 V", "puente con filtro: %s" % _lectura(c, "puente_rectificador", "Salida", "Con filtro")),
+		A.cierto(_lectura(c, "puente_rectificador", "Salida", "Filtro seco") == "20 V", "sin filtro: 20 V"),
+		A.cierto(_lectura(c, "puente_rectificador", "Salida", "Un diodo abierto, sin filtro") == "10,0 V", "media onda: la mitad"),
+		A.cierto(_lectura(c, "puente_rectificador", "Entrada", "Un diodo en corto") == "0,0 V", "diodo en corto: F1 fundido"),
+	])
+
+
+func test_cortes_de_electronica() -> String:
+	var r = _animacion("corte_resistor", {})
+	r.elegir(2)
+	r.poner_tension(24.0)
+	var holgada: bool = not r.se_quema() and r.fase() == 2 and absf(r.corriente() - 24.0 / 4700.0) < 1e-6
+	r.elegir(0)
+	var quema: bool = r.se_quema() and r.fase() == 3
+	r.free()
+	var p = _animacion("corte_potenciometro", {})
+	p.poner_posicion(0.5)
+	var mitad: bool = is_equal_approx(p.tension_cursor(), 5.0) and is_equal_approx(p.frecuencia(), 25.0)
+	p.gastar(true)
+	var tiron: bool = p.tension_cursor() == 0.0 and p.fase() == 2
+	p.free()
+	var t = _animacion("corte_termistor", {})
+	var ntc_25: bool = absf(t.resistencia() - 10000.0) < 1.0 and absf(t.tension_sonda() - 2.5) < 0.01
+	t.elegir_tipo("ptc")
+	t.poner_temperatura(135.0)
+	var dispara: bool = t.disparado and t.fase() == 3
+	t.poner_temperatura(128.0)
+	var sigue: bool = t.disparado
+	t.poner_temperatura(100.0)
+	var rearma: bool = not t.disparado
+	t.free()
+	var v = _animacion("corte_varistor", {})
+	var recorta: bool = is_equal_approx(v.pico(), SimVaristor.new("x").params["v_recorte"])
+	for _i in 4:
+		v.pico()
+	var en_corto: bool = v.en_corto and v.fusible_fundido and v.tension_fuente() == 0.0 and v.fase() == 3
+	v.cambiar_todo()
+	v.poner_abierto(true)
+	var sin_proteccion: bool = v.pico() > 1500.0 and v.fuente_danada
+	v.free()
+	var cd = _animacion("corte_condensador", {})
+	cd.avanzar(5.0 * cd.tau())
+	var lleno: bool = cd.vc > 23.8
+	cd.poner_tension(false)
+	cd.avanzar(10.0)
+	var guarda: bool = cd.vc > 23.0 and cd.fase() == 2
+	cd.descargar()
+	cd.avanzar(5.0 * cd.tau())
+	var descargado: bool = cd.vc < 0.2 and cd.fase() == 3
+	cd.free()
+	var d = _animacion("corte_diodo", {})
+	var directa: bool = is_equal_approx(d.tension_diodo(), 0.7) and d.corriente() > 0.09
+	d.girar()
+	var inversa: bool = d.corriente() == 0.0 and is_equal_approx(d.tension_diodo(), 24.0)
+	d.free()
+	var z = _animacion("corte_zener", {})
+	z.poner_entrada(24.0)
+	var regula: bool = z.conduce() and absf(z.salida() - 12.07) < 0.05
+	z.poner_entrada(10.0)
+	var sigue_entrada: bool = not z.conduce() and absf(z.salida() - 10.0 * 1000.0 / 1470.0) < 0.01
+	z.free()
+	var led = _animacion("corte_led", {})
+	var luce: bool = led.luce() and absf(led.corriente() - 22.1 / 1120.0) < 1e-4
+	led.elegir(3)
+	var funde: bool = led.fundido and led.fase() == 3
+	led.elegir(1)
+	var sigue_fundido: bool = led.fundido
+	led.cambiar()
+	led.girar()
+	var al_reves: bool = not led.luce() and not led.fundido
+	led.free()
+	var pu = _animacion("corte_puente", {})
+	var con_filtro: bool = absf(pu.tension_media() - (24.0 * 1.414 - 1.4)) < 0.01
+	pu.poner_filtro(false)
+	var sin_filtro: bool = absf(pu.tension_media() - (24.0 * 0.9 - 1.4)) < 0.01
+	pu.abrir_diodo(true)
+	var media_onda: bool = absf(pu.tension_media() - (24.0 * 0.45 - 0.7)) < 0.01
+	pu.free()
+	return A.primero([
+		A.cierto(holgada and quema, "resistencia: 4,7 kΩ holgada a 24 V y 470 Ω se quema"),
+		A.cierto(mitad and tiron, "potenciómetro: 5 V a la mitad y tirón en la pista gastada"),
+		A.cierto(ntc_25 and dispara and sigue and rearma, "termistor: NTC de 10 kΩ y PTC con disparo, histéresis y rearme"),
+		A.cierto(recorta and en_corto and sin_proteccion, "varistor: recorta, se agota en corto y reventado no protege"),
+		A.cierto(lleno and guarda and descargado, "condensador: se carga en 5τ, guarda la carga y se descarga"),
+		A.cierto(directa and inversa, "diodo: 0,7 V en directa y bloquea al revés"),
+		A.cierto(regula and sigue_entrada, "Zener: regula a 12 V y por debajo sigue a la entrada"),
+		A.cierto(luce and funde and sigue_fundido and al_reves, "LED: luce con 1,1 kΩ, se funde sin resistencia y al revés no luce"),
+		A.cierto(con_filtro and sin_filtro and media_onda, "puente: 32 V con filtro, 20 V sin él y media onda"),
 	])

@@ -1,0 +1,566 @@
+{
+ "id": "termistor",
+ "ficha": "termistor",
+ "titulo": "Termistor NTC/PTC",
+ "termino": "termistor_ntc",
+ "icono": "termistor",
+ "resumen": "Sonda de temperatura o protección del motor.",
+ "bornes_dibujo": {
+  "1": [
+   75,
+   150
+  ],
+  "2": [
+   105,
+   150
+  ],
+  "T1": [
+   250,
+   167
+  ],
+  "T2": [
+   290,
+   167
+  ]
+ },
+ "que_es": {
+  "texto": "La {{termistor_ntc}} baja al calentarse y sirve de sonda; la {{termistor_ptc}} sube de golpe a su temperatura de respuesta y protege el bobinado de un motor.",
+  "partes": [
+   {
+    "texto": "NTC: pastilla en gota de epoxi, 10 kΩ a 25 °C.",
+    "marca": [
+     90,
+     80
+    ]
+   },
+   {
+    "texto": "PTC: tres pastillas en serie, una por fase.",
+    "marca": [
+     270,
+     82
+    ]
+   },
+   {
+    "texto": "Bornes T1-T2 en la caja de bornes del motor.",
+    "marca": [
+     270,
+     167
+    ]
+   }
+  ],
+  "placa": "NTC 10 kΩ · B 3950 · PTC TNF 130 °C (×3)",
+  "a_bordo": "NTC en el aire acondicionado, en las cámaras y en los cargadores de baterías; PTC en el bobinado de los compresores de frío y de los motores grandes, con su relé en el tablero. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_termistor",
+  "params": {},
+  "pasos": [
+   "La NTC baja al calentarse: 10 kΩ a 25 °C y 2,5 kΩ a 60 °C.",
+   "La PTC casi no cambia en frío y sube de golpe pasada su TNF de 130 °C.",
+   "Por encima de 3,6 kΩ, el {{rele_termistores}} abre su contacto y para el motor."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_termistor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+5 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 60,
+     "y": 280,
+     "tam": 12
+    },
+    {
+     "texto": "R1 10 kΩ",
+     "x": 112,
+     "y": 85,
+     "tam": 11
+    },
+    {
+     "texto": "RT1 NTC",
+     "x": 112,
+     "y": 195,
+     "tam": 11
+    },
+    {
+     "texto": "1",
+     "x": 42,
+     "y": 165,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 42,
+     "y": 225,
+     "tam": 10
+    },
+    {
+     "texto": "Al controlador",
+     "x": 215,
+     "y": 140,
+     "tam": 11
+    },
+    {
+     "texto": "Relé PTC",
+     "x": 340,
+     "y": 62,
+     "tam": 12
+    },
+    {
+     "texto": "T1",
+     "x": 310,
+     "y": 96,
+     "tam": 10
+    },
+    {
+     "texto": "T2",
+     "x": 370,
+     "y": 96,
+     "tam": 10
+    },
+    {
+     "texto": "3 PTC",
+     "x": 340,
+     "y": 150,
+     "tam": 11
+    },
+    {
+     "texto": "Motor M1",
+     "x": 340,
+     "y": 210,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    60,
+    165
+   ],
+   "2": [
+    60,
+    225
+   ],
+   "T1": [
+    310,
+    110
+   ],
+   "T2": [
+    370,
+    110
+   ]
+  },
+  "bornes": {
+   "1": "Llega la tensión del divisor: unos 2,5 V a 25 °C.",
+   "2": "Va al común (0 V) del controlador.",
+   "T1": "Sale de la primera PTC del motor hacia el relé de termistores.",
+   "T2": "Vuelve de la última PTC al relé."
+  },
+  "grupos": [
+   {
+    "nombre": "NTC 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con R1 entre 5 V y 0 V: el controlador lee la tensión de la sonda."
+   },
+   {
+    "nombre": "PTC T1-T2",
+    "bornes": [
+     "T1",
+     "T2"
+    ],
+    "texto": "Las tres PTC del bobinado en serie, hasta el {{rele_termistores}}."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con una NTC de 10 kΩ (B 3950) y tres PTC de 130 °C. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "NTC",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Sin tensión: desconectada del controlador.",
+    "titulo_tabla": "Resistencia de la NTC",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_termistor",
+     "a": "RT1.1",
+     "b": "RT1.2"
+    },
+    "filas": [
+     {
+      "estado": "A 0 °C",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 0
+        }
+       }
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "A 25 °C",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "A 60 °C",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 60
+        }
+       }
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Abierta",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "Cambiarla",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "PTC del motor",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "T1",
+    "negra": "T2",
+    "como": "Escala Ω · entre T1 y T2",
+    "nota": "Solo con el multímetro: nunca con el megóhmetro.",
+    "titulo_tabla": "Las tres PTC en serie",
+    "columna": "T1-T2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_termistor",
+     "a": "RT2.1",
+     "b": "RT2.2"
+    },
+    "filas": [
+     {
+      "estado": "Motor frío, 25 °C",
+      "hacer": "Normal: de 60 a 750 Ω",
+      "bien": true
+     },
+     {
+      "estado": "A 125 °C",
+      "cambios": {
+       "estado": {
+        "RT2": {
+         "temperatura_c": 125
+        }
+       }
+      },
+      "hacer": "Aún no dispara",
+      "bien": true
+     },
+     {
+      "estado": "A 135 °C",
+      "cambios": {
+       "estado": {
+        "RT2": {
+         "temperatura_c": 135
+        }
+       }
+      },
+      "hacer": "Más de 3,6 kΩ: el relé para el motor",
+      "bien": false
+     },
+     {
+      "estado": "Sonda abierta",
+      "cambios": {
+       "estado": {
+        "RT2": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "No deja arrancar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala V= · entre 1 y 2",
+    "nota": "Con el controlador alimentado a 5 V.",
+    "titulo_tabla": "Tensión de la sonda",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "termistor_servicio",
+     "a": "RT1.1",
+     "b": "RT1.2",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "A 25 °C",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "A 60 °C",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 60
+        }
+       }
+      },
+      "hacer": "Normal: menos tensión, más calor",
+      "bien": true
+     },
+     {
+      "estado": "Sonda abierta",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "Marca «sonda rota»",
+      "bien": false
+     },
+     {
+      "estado": "Sonda en corto",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "Marca la temperatura máxima",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Sonda NTC abierta",
+    "sintoma": "El controlador marca «sonda rota» o la temperatura mínima.",
+    "mide": [
+     {
+      "donde": "V= 1-2 en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "termistor_servicio",
+       "a": "RT1.1",
+       "b": "RT1.2",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "abierto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT1.1",
+       "b": "RT1.2",
+       "estado": {
+        "RT1": {
+         "abierto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cable cortado o sonda rota.",
+    "reparacion": "Cambiar la sonda por otra del mismo tipo (10 kΩ, B 3950)."
+   },
+   {
+    "nombre": "Sonda NTC en corto",
+    "sintoma": "El controlador marca una temperatura altísima y para el equipo.",
+    "mide": [
+     {
+      "donde": "V= 1-2 en servicio",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "termistor_servicio",
+       "a": "RT1.1",
+       "b": "RT1.2",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT1.1",
+       "b": "RT1.2",
+       "estado": {
+        "RT1": {
+         "corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cable aplastado o humedad dentro de la sonda.",
+    "reparacion": "Cambiar la sonda y proteger su cable."
+   },
+   {
+    "nombre": "PTC abierta",
+    "sintoma": "El motor no arranca: el relé de termistores marca disparo con el motor frío.",
+    "mide": [
+     {
+      "donde": "Ω T1-T2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT2.1",
+       "b": "RT2.2",
+       "estado": {
+        "RT2": {
+         "abierto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cable de T1-T2 cortado o una PTC rota dentro del bobinado.",
+    "reparacion": "Revisar el cable hasta la caja de bornes; si la PTC está rota, el motor va al taller."
+   },
+   {
+    "nombre": "Motor caliente",
+    "sintoma": "El relé dispara en marcha y deja arrancar al enfriarse.",
+    "mide": [
+     {
+      "donde": "Ω T1-T2 recién parado",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT2.1",
+       "b": "RT2.2",
+       "estado": {
+        "RT2": {
+         "temperatura_c": 135
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω T1-T2 en frío",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT2.1",
+       "b": "RT2.2"
+      }
+     }
+    ],
+    "causa": "Sobrecarga, ventilación sucia o falta de fase: la protección hace su trabajo.",
+    "reparacion": "Buscar la causa del calentamiento antes de volver a arrancar."
+   },
+   {
+    "nombre": "Disparos sin causa",
+    "sintoma": "El relé dispara con el motor frío, sobre todo al arrancar otros motores.",
+    "mide": [
+     {
+      "donde": "Ω T1-T2 en frío",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_termistor",
+       "a": "RT2.1",
+       "b": "RT2.2"
+      }
+     },
+     {
+      "donde": "recorrido del cable de las PTC",
+      "bien": false,
+      "valor": "junto a los de potencia"
+     }
+    ],
+    "causa": "Ruido inducido en el cable de las PTC.",
+    "reparacion": "Llevar el cable de las PTC separado, trenzado o apantallado."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura de las sondas NTC"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "comparar las NTC con un termómetro"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "Ω de las PTC en frío y test del relé"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60034-11: protección térmica de máquinas rotativas.",
+  "DIN 44081 y DIN 44082: termistores PTC para la protección de motores.",
+  "IEC 60947-8: relés de protección por termistores."
+ ]
+}

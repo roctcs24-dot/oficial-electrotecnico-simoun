@@ -1,0 +1,14 @@
+{
+  "nombre": "Potenciómetro suelto para medir",
+  "nota": "Potenciómetro lineal de 10 kΩ de un panel, desconectado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "P1",
+      "tipo": "potenciometro",
+      "params": {
+        "ohm": 10000
+      }
+    }
+  ],
+  "cables": []
+}

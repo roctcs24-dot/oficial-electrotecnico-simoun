@@ -14,26 +14,37 @@ const LIMITE_S := 300
 var _vigilante := Thread.new()
 var _terminado := false
 var _empezado := false
+var _registro: RegistroErrores
+var _archivos: Array[String] = []
+var _fallos := 0
+var _total := 0
 
 
 func _initialize() -> void:
 	_vigilante.start(_vigilar)
 
 
-## Las pruebas corren en el primer fotograma: en _initialize el árbol aún no existe
-## y las pruebas de pantallas no podrían añadir nodos.
+## Las pruebas empiezan en el primer fotograma: en _initialize el árbol aún no existe
+## y las pruebas de pantallas no podrían añadir nodos. Cada archivo corre en su propio
+## fotograma: entre uno y otro, Godot libera las pantallas que quedaron con queue_free. Con
+## todo en un solo fotograma, cientos de pantallas esperaban hasta el final y el proceso se
+## cerraba por falta de recursos.
 func _process(_delta: float) -> bool:
 	if not _empezado:
 		_empezado = true
-		_ejecutar()
+		_preparar()
+	if _terminado:
+		return false
+	if _archivos.is_empty():
+		_terminar()
+	else:
+		_ejecutar_archivo(_archivos.pop_front())
 	return false
 
 
-func _ejecutar() -> void:
-	var registro := RegistroErrores.new()
-	OS.add_logger(registro)
-	var fallos := 0
-	var total := 0
+func _preparar() -> void:
+	_registro = RegistroErrores.new()
+	OS.add_logger(_registro)
 	# PRUEBAS_SOLO=planta ejecuta solo los archivos cuyo nombre contiene «planta».
 	var solo := OS.get_environment("PRUEBAS_SOLO")
 	for archivo in DirAccess.get_files_at(CARPETA):
@@ -41,37 +52,44 @@ func _ejecutar() -> void:
 			continue
 		if not solo.is_empty() and not archivo.contains(solo):
 			continue
-		# Un error aquí no debe impedir llegar a quit(): Godot se quedaría esperando para siempre.
-		var guion: GDScript = load(CARPETA + archivo)
-		var errores_carga := registro.recoger()
-		if guion == null or not guion.can_instantiate() or not errores_carga.is_empty():
-			total += 1
-			fallos += 1
-			printerr("FALLO %s -> el archivo no compila: %s" % [archivo, "; ".join(errores_carga)])
+		_archivos.append(archivo)
+
+
+func _ejecutar_archivo(archivo: String) -> void:
+	# Un error aquí no debe impedir llegar a quit(): Godot se quedaría esperando para siempre.
+	var guion: GDScript = load(CARPETA + archivo)
+	var errores_carga := _registro.recoger()
+	if guion == null or not guion.can_instantiate() or not errores_carga.is_empty():
+		_total += 1
+		_fallos += 1
+		printerr("FALLO %s -> el archivo no compila: %s" % [archivo, "; ".join(errores_carga)])
+		return
+	var suite: RefCounted = guion.new()
+	for metodo in suite.get_method_list():
+		var nombre: String = metodo["name"]
+		if not nombre.begins_with("test_"):
 			continue
-		var suite: RefCounted = guion.new()
-		for metodo in suite.get_method_list():
-			var nombre: String = metodo["name"]
-			if not nombre.begins_with("test_"):
-				continue
-			total += 1
-			var inicio := Time.get_ticks_msec()
-			var resultado: Variant = suite.call(nombre)
-			var ms := Time.get_ticks_msec() - inicio
-			var errores := registro.recoger()
-			var motivo: String = resultado if resultado is String else "no devolvió un resultado"
-			if not errores.is_empty():
-				motivo = "error de script: %s" % errores[0]
-			if motivo.is_empty():
-				print("ok    %s::%s (%d ms)" % [archivo, nombre, ms])
-			else:
-				fallos += 1
-				printerr("FALLO %s::%s (%d ms) -> %s" % [archivo, nombre, ms, motivo])
-	print("%d pruebas, %d fallos" % [total, fallos])
-	OS.remove_logger(registro)
+		_total += 1
+		var inicio := Time.get_ticks_msec()
+		var resultado: Variant = suite.call(nombre)
+		var ms := Time.get_ticks_msec() - inicio
+		var errores := _registro.recoger()
+		var motivo: String = resultado if resultado is String else "no devolvió un resultado"
+		if not errores.is_empty():
+			motivo = "error de script: %s" % errores[0]
+		if motivo.is_empty():
+			print("ok    %s::%s (%d ms)" % [archivo, nombre, ms])
+		else:
+			_fallos += 1
+			printerr("FALLO %s::%s (%d ms) -> %s" % [archivo, nombre, ms, motivo])
+
+
+func _terminar() -> void:
+	print("%d pruebas, %d fallos" % [_total, _fallos])
+	OS.remove_logger(_registro)
 	_terminado = true
 	_vigilante.wait_to_finish()
-	quit(1 if fallos > 0 or total == 0 else 0)
+	quit(1 if _fallos > 0 or _total == 0 else 0)
 
 
 ## Corre en otro hilo: si una prueba entra en un bucle infinito, o si el ejecutor no llega

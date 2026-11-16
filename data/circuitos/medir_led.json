@@ -1,0 +1,14 @@
+{
+  "nombre": "LED suelto para medir",
+  "nota": "LED rojo de 5 mm (unos 2 V y 20 mA), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": []
+}

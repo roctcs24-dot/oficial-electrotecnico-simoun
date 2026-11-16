@@ -1,0 +1,89 @@
+{
+  "nombre": "Rectificador de 24 V con filtro",
+  "nota": "El transformador T3 de 380/24 V alimenta el puente P1 por el fusible F1; el condensador de filtro C1 de 4700 µF queda en la salida y RL (100 Ω) es la carga. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T3",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 24,
+        "r_secundario": 0.05
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 4
+      }
+    },
+    {
+      "id": "P1",
+      "tipo": "puente_rectificador",
+      "params": {
+        "filtro": true
+      }
+    },
+    {
+      "id": "C1",
+      "tipo": "condensador_electrico",
+      "params": {
+        "uf": 4700,
+        "v_nominal": 63,
+        "polarizado": true
+      }
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 100
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T3.H1"
+    ],
+    [
+      "B.L2",
+      "T3.H2"
+    ],
+    [
+      "T3.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "P1.~1"
+    ],
+    [
+      "P1.~2",
+      "T3.X2"
+    ],
+    [
+      "P1.+",
+      "C1.+"
+    ],
+    [
+      "C1.-",
+      "P1.-"
+    ],
+    [
+      "P1.+",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "P1.-"
+    ]
+  ]
+}

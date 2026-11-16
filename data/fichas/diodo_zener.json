@@ -1,0 +1,93 @@
+{
+  "id": "diodo_zener",
+  "titulo": "Diodo Zener",
+  "resumen": "Mantiene una tensión fija: referencias y protecciones en las tarjetas.",
+  "dibujo": {
+    "svg": "res://art/equipos/diodo_zener.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Diodo Zener de vidrio BZX85C12 de 12 V y 1,3 W con la franja del cátodo, y su símbolo debajo. Dibujo general: tipo de cada tarjeta, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A",
+        "x": 40,
+        "y": 82,
+        "tam": 11
+      },
+      {
+        "texto": "K",
+        "x": 360,
+        "y": 82,
+        "tam": 11
+      },
+      {
+        "texto": "BZX85 C12 · 12 V · 1,3 W",
+        "x": 200,
+        "y": 62,
+        "tam": 11
+      },
+      {
+        "texto": "A",
+        "x": 126,
+        "y": 164,
+        "tam": 11
+      },
+      {
+        "texto": "K",
+        "x": 268,
+        "y": 164,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Diodo Zener según IEC 60617 y ANSI/IEEE 315: la barra del cátodo con sus dos alas. Verificar contra la norma.",
+    "lista": [
+      "zener",
+      "diodo"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{diodo_zener}} conduce en directa como cualquier diodo, pero se monta al revés: en inversa no conduce hasta su tensión Zener y, a partir de ahí, la mantiene casi fija aunque cambie la corriente. Con una resistencia en serie da una tensión de referencia estable, limita la tensión de una entrada y protege circuitos sensibles."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Unión PN[/b] preparada para trabajar en ruptura, en cuerpo de vidrio o de plástico.\n• [b]Ánodo (A)[/b] y [b]cátodo (K)[/b], con la franja del cátodo.\n• [b]Marca:[/b] la tensión y la serie: «C12» = 12 V ±5 %; la serie BZX85 es de 1,3 W."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• En inversa: el cátodo hacia el +, a través de una resistencia en serie que limita la corriente; la carga va en paralelo con el Zener.\n• Sin la resistencia, la fuente lo quema en un instante.\n• La resistencia se calcula para que, con la carga máxima, al Zener le queden unos miliamperios: R = (24 − 12) / I total."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta: la tensión la fija el Zener elegido. Se comprueba que su potencia, Vz × Iz, queda por debajo de la nominal ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] escala de diodo: 0,7 V en directa y OL al revés, porque el multímetro no llega a su tensión Zener.\n• [b]En servicio:[/b] V= entre cátodo y ánodo: su tensión Zener, 12 V, con la fuente de 24 V.\n• Si marca más (16 V con la carga del ejemplo), está abierto; si marca 0 V, en corto."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]En corto:[/b] 0 V en la salida; la resistencia en serie se calienta.\n• [b]Abierto:[/b] la salida sube con la fuente y con la carga: deja de regular.\n• [b]Montado al revés:[/b] conduce en directa y la salida queda en 0,7 V.\n• [b]Resistencia en serie cortada:[/b] 0 V en la salida, con el Zener sano."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• No tiene mantenimiento propio: se revisa con la tarjeta, buscando componentes tostados.\n\n[b]Correctivo:[/b] se cambia por otro de la misma tensión y de igual o mayor potencia."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-3: diodos de señal y de regulación de tensión.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="290" viewBox="0 0 400 290">
+  <defs>
+    <g id="resistencia" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-9" y="-20" width="18" height="40"/><path d="M0,-30 V-20 M0,30 V20"/></g>
+    <g id="fusible" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-7" y="-16" width="14" height="32"/><path d="M0,-25 V25"/></g>
+    <g id="cond" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><path d="M-14,-5 H14 M-14,5 H14 M0,-5 V-18 M0,5 V18"/></g>
+    <g id="bobina" fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round"><rect x="-20" y="-15" width="40" height="30"/><path d="M0,-25 V-15 M0,25 V15"/></g>
+    <g id="diodo_abajo"><path d="M-14,-12 H14 L0,12 Z" fill="#20242a"/><path d="M-14,12 H14" stroke="#20242a" stroke-width="3.5" stroke-linecap="round"/></g>
+    <g id="diodo_arriba"><path d="M-14,12 H14 L0,-12 Z" fill="#20242a"/><path d="M-14,-12 H14" stroke="#20242a" stroke-width="3.5" stroke-linecap="round"/></g>
+    <g id="borne" fill="#ffffff" stroke="#20242a" stroke-width="2.5"><circle r="5"/></g>
+  </defs>
+  <g fill="none" stroke="#20242a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,20 V50 M60,110 V178 M60,202 V265 M60,140 H180 V160 M180,220 V265 M60,265 H180"/>
+  </g>
+  <use xlink:href="#resistencia" x="60" y="80"/>
+  <path d="M46,202 H74 L60,178 Z" fill="#20242a"/>
+  <path d="M40,172 L46,178 H74 L80,184" fill="none" stroke="#20242a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <use xlink:href="#resistencia" x="180" y="190"/>
+  <circle cx="60" cy="140" r="5" fill="#20242a"/><circle cx="60" cy="265" r="5" fill="#20242a"/>
+</svg>

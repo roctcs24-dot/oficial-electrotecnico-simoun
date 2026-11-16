@@ -1,6 +1,7 @@
 class_name SimMultimetro
 extends RefCounted
-## Multímetro: modos vac, vdc, ohm, continuidad, diodo, a (alterna) y ma (continua). Las medidas
+## Multímetro: modos vac, vdc, ohm, continuidad, diodo, capacidad (µF), a (alterna) y ma
+## (continua). Las medidas
 ## añaden su propia impedancia a la red, por eso un punto flotante no muestra una tensión falsa.
 ## En vdc la lectura tiene signo: negativa si la punta roja (a) está por debajo de la negra (b).
 ## Medir resistencia con tensión o corriente en paralelo lo daña, como en la realidad.
@@ -16,6 +17,8 @@ const I_FUSIBLE_MA := 0.4
 const OHM_MAX := 4e7
 const CONTINUIDAD_MAX := 30.0
 const V_MAX_DIODO := 2.0
+## Por encima de esta impedancia, el capacímetro ve un condensador abierto: 0 µF.
+const Z_ABIERTO := 1e8
 ## Resoluciones como máximo para que diodos y LEDs elijan su tramo con la corriente de prueba.
 const MAX_PRUEBA := 8
 
@@ -36,6 +39,8 @@ func medir(sim: SimSimulacion, modo: String, a: String, b: String) -> Dictionary
 			return _lectura(_voltios_dc(sim, a, b), "V", false, "")
 		"ohm", "continuidad", "diodo":
 			return _medir_ohm(sim, modo, a, b)
+		"capacidad":
+			return _medir_capacidad(sim, a, b)
 		"a":
 			return _medir_corriente(sim, a, b)
 		"ma":
@@ -80,6 +85,29 @@ func _medir_ohm(sim: SimSimulacion, modo: String, a: String, b: String) -> Dicti
 	if modo == "continuidad":
 		resultado["pita"] = r < CONTINUIDAD_MAX
 	return resultado
+
+
+## Capacidad entre a y b, como el capacímetro del multímetro: sin tensión, inyecta una corriente
+## alterna de prueba y mide la impedancia que encuentra. Un condensador en corto, que solo
+## presenta resistencia, sale de escala; uno abierto marca 0 µF.
+func _medir_capacidad(sim: SimSimulacion, a: String, b: String) -> Dictionary:
+	var v := maxf(_voltios(sim, a, b), absf(_voltios_dc(sim, a, b)))
+	if v > V_MAX_OHM:
+		var averia := "fusible_multimetro"
+		if v >= V_DESTRUYE_OHM:
+			destruido = true
+			averia = "multimetro_destruido"
+		fusible_ok = false
+		sim.registrar_evento(averia, "multimetro", {"modo": "capacidad", "tension_v": v})
+		return _lectura(0.0, "µF", false, averia)
+	var sin := sim.resolver(false)
+	var con := sim.resolver(false, func(e: SimEstampa) -> void: e.inyectar(a, b, I_PRUEBA))
+	var z := con.entre(a, b).menos(sin.entre(a, b)).escala(1.0 / I_PRUEBA)
+	if z.modulo() > Z_ABIERTO:
+		return _lectura(0.0, "µF", false, "")
+	if z.im >= 0.0 or absf(z.re) > absf(z.im):
+		return _lectura(0.0, "µF", true, "")
+	return _lectura(1e6 / (TAU * SimRed.F_HZ * -z.im), "µF", false, "")
 
 
 ## La corriente de prueba sale por a y vuelve por b. Los diodos de la red conducen o no según

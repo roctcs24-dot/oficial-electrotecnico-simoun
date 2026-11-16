@@ -1,0 +1,33 @@
+{
+  "nombre": "Electrolítico de filtro en 24 V",
+  "nota": "C2: electrolítico de 4700 µF y 35 V entre +24 V y 0 V de una fuente, bien polarizado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "C2",
+      "tipo": "condensador_electrico",
+      "params": {
+        "uf": 4700,
+        "v_nominal": 35,
+        "polarizado": true
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "C2.+"
+    ],
+    [
+      "C2.-",
+      "F.-"
+    ]
+  ]
+}

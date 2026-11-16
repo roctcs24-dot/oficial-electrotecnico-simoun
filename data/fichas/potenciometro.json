@@ -1,0 +1,101 @@
+{
+  "id": "potenciometro",
+  "titulo": "Potenciómetro",
+  "resumen": "Resistencia con un cursor que se mueve: da una tensión ajustable.",
+  "dibujo": {
+    "svg": "res://art/equipos/potenciometro.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Potenciómetro de panel de 10 kΩ visto por detrás, con sus tres terminales, y un trimmer de tarjeta; dibujados de forma general. Valores de cada equipo: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 165,
+        "y": 210,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 200,
+        "y": 210,
+        "tam": 11
+      },
+      {
+        "texto": "3",
+        "x": 235,
+        "y": 210,
+        "tam": 11
+      },
+      {
+        "texto": "B10K",
+        "x": 200,
+        "y": 76,
+        "tam": 13,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "pista",
+        "x": 200,
+        "y": 112,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "Trimmer «103»",
+        "x": 330,
+        "y": 150,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Potenciómetro según IEC 60617 y ANSI/IEEE 315: la resistencia con la flecha del cursor. Verificar contra la norma.",
+    "lista": [
+      "potenciometro",
+      "resistencia"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{potenciometro}} es una resistencia con un tercer terminal, el {{cursor}}, que se desliza sobre la pista. Entre los extremos da siempre la misma resistencia; entre el cursor y un extremo, una parte. A bordo da la consigna de velocidad de un variador, regula el brillo de un panel y, en forma de {{trimmer}}, ajusta tensiones y tiempos dentro de las tarjetas."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Pista resistiva[/b] de carbón, cermet o hilo, en forma de arco.\n• [b]Cursor[/b] con su escobilla, que gira con el eje.\n• [b]Tres terminales:[/b] los extremos 1 y 3 y el cursor 2, en el centro.\n• [b]Marca:[/b] el valor total (B10K = 10 kΩ lineal; A10K, logarítmico); en los trimmer, tres cifras («103» = 10 kΩ)."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Como divisor de tensión: el extremo 1 a 0 V, el 3 a la referencia (por ejemplo, +10 V del variador) y el cursor 2 a la entrada analógica. Al girar, la tensión del cursor va de 0 a 10 V.\n• Si gira al revés de lo esperado, se intercambian los extremos 1 y 3, nunca el cursor.\n• Como resistencia variable se usan solo el cursor y un extremo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se ajusta girándolo. Un trimmer de tarjeta se mueve con un destornillador pequeño aislado, y con el equipo en marcha solo si el manual lo pide: anote antes la posición o la tensión que daba ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] Ω entre 1 y 3, el valor total; entre 1 y 2, una parte que debe cambiar suave al girar, sin saltos ni OL.\n• [b]En servicio:[/b] V= entre el cursor 2 y el 1: de 0 a la tensión de referencia al girar."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Pista gastada o sucia:[/b] la lectura salta o cae a cero en un punto; el variador da tirones.\n• [b]Pista cortada:[/b] OL entre 1 y 3; la consigna queda fija en un extremo.\n• [b]Cursor suelto[/b] o cable del cursor flojo: la entrada queda al aire y la consigna se va a 0."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: girarlo de extremo a extremo midiendo la tensión del cursor; debe subir sin saltos.\n• Anual: reapretar la tuerca del panel y revisar los terminales.\n\n[b]Correctivo:[/b] el limpiacontactos alivia una pista sucia durante poco tiempo; se cambia por otro del mismo valor, curva (lineal o logarítmica) y potencia."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60393-1: potenciómetros para equipos electrónicos.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}
