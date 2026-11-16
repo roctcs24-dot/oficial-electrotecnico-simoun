@@ -1,0 +1,83 @@
+{
+  "id": "ec6_condensador_bobina",
+  "titulo": "Condensador y bobina en alterna",
+  "resumen": "Reactancia, desfase y factor de potencia.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La bobina retrasa la corriente",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En alterna, una bobina se opone a los cambios de corriente: tiene {{reactancia}}, que crece con la frecuencia. La corriente queda retrasada respecto a la tensión.\n\nLos motores y los transformadores son bobinas: su corriente va retrasada, y parte de ella solo sirve para magnetizar. Esa es la {{potencia_reactiva}} inductiva."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_bobina_frecuencia",
+          "pregunta": "Si la frecuencia sube, la reactancia de una bobina…",
+          "opciones": [
+            "sube",
+            "baja",
+            "no cambia"
+          ],
+          "correcta": 0,
+          "explicacion": "X = 2π × f × L: es proporcional a la frecuencia."
+        }
+      ]
+    },
+    {
+      "titulo": "El condensador adelanta la corriente",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{condensador_electrico}} son dos placas separadas por un aislante: en continua no deja pasar corriente, pero en alterna se carga y descarga cada medio ciclo, y su corriente va [b]adelantada[/b] a la tensión. Su reactancia baja con la frecuencia.\n\nPor eso un condensador puede compensar la reactiva de los motores: una adelanta lo que la otra retrasa."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_condensador_continua",
+          "pregunta": "¿Qué hace un condensador en un circuito de corriente continua, una vez cargado?",
+          "opciones": [
+            "Deja pasar toda la corriente",
+            "No deja pasar corriente",
+            "Se convierte en una bobina"
+          ],
+          "correcta": 1,
+          "explicacion": "Una vez cargado, el aislante entre placas no deja pasar la continua. Por eso en el óhmetro se ve como un circuito abierto."
+        }
+      ]
+    },
+    {
+      "titulo": "El factor de potencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{factor_potencia}} dice qué parte de la corriente hace trabajo útil: P = √3 × U × I × FP. Con FP 0,8, para dar 40 kW hacen falta un 25 % más de amperios que con FP 1.\n\nMire las ondas: cuanto más retrasada la corriente, menos potencia útil."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_compensacion",
+          "params": {
+            "tipo": "analizador"
+          },
+          "pie": "Una fase de una salida de 40 kW: tensión en rojo y corriente en azul."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_fp_corriente",
+          "pregunta": "Dos cargas de 40 kW a 380 V, una con FP 1 y otra con FP 0,8. ¿Cuál pide más corriente?",
+          "opciones": [
+            "La de FP 1",
+            "La de FP 0,8",
+            "Las dos igual"
+          ],
+          "correcta": 1,
+          "explicacion": "I = P ÷ (√3 × U × FP): con FP menor, más corriente para la misma potencia."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050-131: teoría de circuitos.",
+    "IEC 60831-1: condensadores de potencia."
+  ]
+}

@@ -2,7 +2,7 @@ extends RefCounted
 ## Lecciones y glosario: estructura del contenido, cálculos de las animaciones y recorrido.
 
 const A := preload("res://tests/ayuda_sim.gd")
-const TIPOS := ["texto", "animacion", "imagen", "quiz", "ordenar"]
+const TIPOS := ["texto", "animacion", "imagen", "quiz", "ordenar", "taller"]
 const RUTA_PARTIDA := "user://pruebas_lecciones.json"
 const Ohm := preload("res://ui/animaciones/circuito_ohm.gd")
 const Onda := preload("res://ui/animaciones/onda_alterna.gd")
@@ -32,6 +32,12 @@ func _validar_bloque(id: String, b: Dictionary, glosario: Dictionary, temas: Dic
 		"animacion":
 			if not FileAccess.file_exists("res://ui/animaciones/%s.gd" % b["id"]):
 				return "%s: no existe la animación %s" % [id, b["id"]]
+		"taller":
+			if not FileAccess.file_exists("res://data/circuitos/%s.json" % b["plantilla"]):
+				return "%s: no existe la plantilla %s" % [id, b["plantilla"]]
+			for t in TextoTecnico.terminos(b.get("texto", "")):
+				if not glosario.has(t):
+					return "%s usa un término fuera del glosario: %s" % [id, t]
 		"imagen":
 			if VistaSvg.rasterizar(b["svg"], 0.5) == null:
 				return "%s: no se puede dibujar %s" % [id, b["svg"]]
@@ -80,7 +86,7 @@ func test_lecciones_bien_formadas() -> String:
 func test_todas_las_lecciones_estan_publicadas() -> String:
 	var c := Contenido.new()
 	var publicadas: Array = []
-	for s: Dictionary in c.sistemas():
+	for s: Dictionary in c.todos():
 		publicadas.append_array(s["modos"].get("aprender", {}).get("lecciones", []))
 	for l in _lecciones():
 		if not publicadas.has(l["id"]):
@@ -555,4 +561,63 @@ func test_ordenar_cuenta_los_errores() -> String:
 		A.cierto(aviso and sin_avance, "un toque equivocado no debe avanzar"),
 		A.cierto(fin, "debe poder terminarse"),
 		A.cierto(anotado, "el error debe quedar para el repaso"),
+	])
+
+
+func _animacion(nombre: String, params := {}) -> Animacion:
+	var a: Animacion = load("res://ui/animaciones/%s.gd" % nombre).new()
+	a.iniciar(params, Contenido.new())
+	return a
+
+
+func test_serie_y_paralelo_reparten_bien() -> String:
+	var a = _animacion("serie_paralelo")
+	var serie: Array = a.tensiones()
+	a.fundir(true)
+	var serie_fundida: float = a.corriente_total()
+	a.fundir(false)
+	a.poner_modo("paralelo")
+	var total_paralelo: float = a.corriente_total()
+	a.poner_modo("mixto")
+	var mixto: Array = a.tensiones()
+	a.free()
+	return A.primero([
+		A.cerca(serie[0], 8.0, 0.01, "en serie, 8 V en cada luz"),
+		A.cerca(serie_fundida, 0.0, 0.01, "en serie, una fundida apaga todas"),
+		A.cerca(total_paralelo, 60.0, 0.1, "en paralelo, 3 × 20 mA"),
+		A.cierto(is_equal_approx(mixto[0], 12.0) and is_equal_approx(mixto[2], 24.0), "mixto: 12 V en H1 y 24 V en H3"),
+	])
+
+
+func test_caida_de_tension_del_cable() -> String:
+	var a = _animacion("caida_tension")
+	a.longitud = 60.0
+	a.corriente = 30.0
+	a.poner_seccion(2.5)
+	var fino: float = a.caida_pct()
+	a.poner_seccion(6.0)
+	var grueso: float = a.caida_pct()
+	a.free()
+	return A.primero([
+		A.cerca(fino, 7.4, 0.1, "60 m de 2,5 mm² con 30 A: unos 7,4 %"),
+		A.cierto(grueso < 6.0, "con 6 mm² cumple el 6 %%: %.1f %%" % grueso),
+	])
+
+
+func test_practica_abre_el_taller() -> String:
+	var raiz := _crear_raiz()
+	raiz.ir_a("leccion", {"id": "ec2_serie_paralelo", "sistema": 7})
+	raiz.pantalla_actual().ir_a_pagina(2)
+	var botones := _buscar(raiz.pantalla_actual(), Button)
+	var boton: Button = null
+	for b: Button in botones:
+		if b.text == "Practicar serie y paralelo":
+			boton = b
+	if boton != null:
+		boton.pressed.emit()
+	var en_taller := str(raiz.pantalla_actual().get_script().resource_path).ends_with("taller.gd")
+	raiz.free()
+	return A.primero([
+		A.cierto(boton != null, "la tercera página debe tener el botón de la práctica"),
+		A.cierto(en_taller, "el botón debe abrir el Taller"),
 	])

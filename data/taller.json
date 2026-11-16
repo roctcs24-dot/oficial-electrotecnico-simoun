@@ -144,7 +144,8 @@
     { "id": "estrella_triangulo", "nombre": "Estrella-triángulo" },
     { "id": "muestra_contactor", "nombre": "Banco de prueba del contactor" },
     { "id": "arranque_suave", "nombre": "Arranque con arrancador suave" },
-    { "id": "banco_sensores", "nombre": "Sensores PNP y NPN con PLC" }
+    { "id": "banco_sensores", "nombre": "Sensores PNP y NPN con PLC" },
+    { "id": "serie_paralelo", "nombre": "Luces de 24 V en serie y en paralelo" }
   ],
   "consecuencias": {
     "arrancador_sobrecarga": { "titulo": "Sobrecarga en el arrancador suave", "texto": "La protección de sobrecarga del arrancador suave SIRIUS 3RW40 disparó: se encendió su LED OVERLOAD, paró el motor y su contacto 95-96 abrió el mando mientras 95-98 enciende la luz de FALLA TERMICA. Busque la causa antes de rearmar: bomba agarrotada o con la descarga cerrada, rodamientos, una fase floja o un ajuste Ie distinto de la corriente de la placa. Espere a que se enfríe y rearme con la tecla RESET/TEST. No suba Ie ni ponga la clase en OFF para que no dispare." },

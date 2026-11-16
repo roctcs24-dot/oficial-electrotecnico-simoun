@@ -70,7 +70,17 @@ func _crear_bloque(bloque: Dictionary, clave: String) -> Control:
 			if not resuelto:
 				ordenar.respondido.connect(_al_responder_ordenar.bind(clave, bloque))
 			return ordenar
+		"taller":
+			return _crear_practica(bloque)
 	return _aviso("Bloque desconocido: %s" % bloque["tipo"])
+
+
+## Práctica en el Taller: un texto y el botón que abre la plantilla de data/circuitos.
+func _crear_practica(bloque: Dictionary) -> Control:
+	var columna := _columna(6)
+	columna.add_child(_texto_rico(TextoTecnico.expandir(bloque.get("texto", ""), raiz.contenido.glosario(), _vistos)))
+	columna.add_child(_boton(bloque.get("boton", "Practicarlo en el Taller"), raiz.ir_a.bind("taller", {"plantilla": bloque["plantilla"]})))
+	return columna
 
 
 func _crear_animacion(bloque: Dictionary) -> Control:

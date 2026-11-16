@@ -1,0 +1,81 @@
+{
+  "id": "ec5_induccion",
+  "titulo": "Inducción",
+  "resumen": "Un campo que cambia crea tensión: generadores, transformadores y motores.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Campo que cambia, tensión que aparece",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{induccion}} es lo contrario del electroimán: si el campo magnético que atraviesa una bobina [b]cambia[/b], en la bobina aparece una tensión. Un campo fijo no induce nada.\n\nCon esto funcionan:\n• El {{alternador}}: un campo que gira delante de los devanados.\n• El {{transformador}}: la alterna del primario hace cambiar el flujo del núcleo.\n• El motor de inducción: el campo giratorio induce corrientes en la jaula del rotor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_induccion_continua",
+          "pregunta": "¿Por qué un transformador no funciona con corriente continua?",
+          "opciones": [
+            "Porque el flujo no cambia",
+            "Porque se funde el núcleo",
+            "Porque la continua no tiene tensión"
+          ],
+          "correcta": 0,
+          "explicacion": "Con continua el flujo es fijo y no induce tensión en el secundario; además, el primario se comporta casi como un cortocircuito."
+        }
+      ]
+    },
+    {
+      "titulo": "El transformador",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En el transformador, la tensión de cada devanado es proporcional a su número de espiras: es la {{relacion_transformacion}}. La potencia es casi la misma a los dos lados: si la tensión baja, la corriente sube."
+        },
+        {
+          "tipo": "animacion",
+          "id": "transformador_relacion",
+          "params": {},
+          "pie": "Transformador monofásico con un rendimiento del 97 %. Valores típicos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_relacion_espiras",
+          "pregunta": "Un transformador de 380/110 V tiene 760 espiras en el primario. ¿Cuántas tiene el secundario?",
+          "opciones": [
+            "220",
+            "2 626",
+            "110"
+          ],
+          "correcta": 0,
+          "explicacion": "760 × 110 ÷ 380 = 220 espiras."
+        }
+      ]
+    },
+    {
+      "titulo": "Tensiones inducidas peligrosas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La inducción también aparece donde no se quiere:\n• Al abrir una bobina, el campo cae de golpe e induce un pico de tensión: por eso las bobinas de continua llevan un diodo.\n• El secundario abierto de un transformador de intensidad da cientos de voltios.\n• Un cable largo paralelo a otro con corriente puede tener tensión inducida aunque esté desconectado: compruebe siempre la ausencia de tensión."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_induccion_ausencia",
+          "pregunta": "Un cable desconectado en los dos extremos, tendido junto a otros con carga. ¿Puede tener tensión?",
+          "opciones": [
+            "No, nunca",
+            "Sí, inducida",
+            "Solo si llueve"
+          ],
+          "correcta": 1,
+          "explicacion": "La tensión inducida existe: por eso se verifica la ausencia de tensión y se pone a tierra antes de trabajar."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050-121: electromagnetismo.",
+    "IEC 60076-1: transformadores de potencia."
+  ]
+}

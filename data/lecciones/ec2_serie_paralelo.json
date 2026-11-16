@@ -1,0 +1,95 @@
+{
+  "id": "ec2_serie_paralelo",
+  "titulo": "Serie y paralelo",
+  "resumen": "Cómo se reparten la tensión y la corriente.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "En serie",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En un {{circuito_serie}} los receptores van uno detrás de otro: la [b]misma corriente[/b] pasa por todos y la [b]tensión se reparte[/b]. La resistencia total es la suma: R = R1 + R2 + R3.\n\nSi uno se abre, se para todo. Por eso los contactos de seguridad van en serie: la seta, los térmicos y los pulsadores de paro cortan el mando cualquiera de ellos."
+        },
+        {
+          "tipo": "animacion",
+          "id": "serie_paralelo",
+          "params": {},
+          "pie": "Tres luces de 24 V con una fuente de 24 V. Pruebe los tres montajes y funda H1."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_serie_tension",
+          "pregunta": "Tres luces iguales en serie con 24 V. ¿Qué tensión tiene cada una?",
+          "opciones": [
+            "24 V",
+            "8 V",
+            "72 V"
+          ],
+          "correcta": 1,
+          "explicacion": "En serie la tensión se reparte: 24 ÷ 3 = 8 V en cada una."
+        }
+      ]
+    },
+    {
+      "titulo": "En paralelo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En un {{circuito_paralelo}} todos los receptores están entre los mismos dos puntos: todos tienen la [b]misma tensión[/b] y las [b]corrientes se suman[/b].\n\nAsí están conectados los consumidores del buque: todas las cargas de un tablero de 220 V reciben 220 V, y la corriente del interruptor general es la suma de todas. Si uno se apaga, los demás siguen."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_paralelo_corriente",
+          "pregunta": "Tres cargas en paralelo toman 2 A, 3 A y 5 A. ¿Qué corriente pasa por el interruptor general?",
+          "opciones": [
+            "5 A",
+            "10 A",
+            "3,3 A"
+          ],
+          "correcta": 1,
+          "explicacion": "En paralelo las corrientes se suman: 2 + 3 + 5 = 10 A."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_serie_fundida",
+          "pregunta": "En serie, una de las tres luces se funde. ¿Qué pasa con las otras?",
+          "opciones": [
+            "Siguen igual",
+            "Se apagan",
+            "Brillan más"
+          ],
+          "correcta": 1,
+          "explicacion": "La fundida abre el circuito: no pasa corriente por ninguna. Entre los bornes de la fundida se mide toda la tensión."
+        }
+      ]
+    },
+    {
+      "titulo": "Práctica en el Taller",
+      "bloques": [
+        {
+          "tipo": "taller",
+          "plantilla": "serie_paralelo",
+          "texto": "Monte en el banco la fuente de 24 V con H1 y H2 en serie y H3 en paralelo. Mida con el multímetro la tensión de cada luz y con la pinza la corriente de cada rama. Después funda una luz y vuelva a medir.",
+          "boton": "Practicar serie y paralelo"
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_medir_serie",
+          "pregunta": "Para encontrar la luz fundida en una cadena en serie, ordene:",
+          "pasos": [
+            "Comprobar que hay tensión en la fuente",
+            "Medir la tensión en cada luz",
+            "La que tiene toda la tensión es la abierta",
+            "Bloquear y cambiarla"
+          ],
+          "explicacion": "En serie, la luz abierta se queda con toda la tensión: es la forma más rápida de encontrarla con tensión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050-131: teoría de circuitos.",
+    "Convenio STCW, sección A-III/6."
+  ]
+}

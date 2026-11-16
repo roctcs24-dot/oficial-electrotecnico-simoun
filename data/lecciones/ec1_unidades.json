@@ -1,0 +1,99 @@
+{
+  "id": "ec1_unidades",
+  "titulo": "Unidades y prefijos",
+  "resumen": "Voltios, amperios, ohmios y vatios, y los prefijos m, k y M.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Las unidades de la electricidad",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Cada magnitud tiene su unidad y su símbolo:\n\n• Tensión: voltio (V). Las barras del buque están a 380 V.\n• Corriente: amperio (A). Un motor de 15 kW toma unos 29,5 A.\n• Resistencia: ohmio (Ω). La bobina de un contactor tiene cientos de ohmios.\n• Potencia: vatio (W). La energía: kilovatio hora (kWh).\n• Frecuencia: hercio (Hz). La red del buque es de 50 Hz.\n\nEl símbolo va siempre después del número y separado por un espacio: 380 V, no 380V."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_unidad_corriente",
+          "pregunta": "¿En qué unidad se mide la corriente?",
+          "opciones": [
+            "Voltio (V)",
+            "Amperio (A)",
+            "Ohmio (Ω)",
+            "Vatio (W)"
+          ],
+          "correcta": 1,
+          "explicacion": "La corriente se mide en amperios; los voltios son de tensión, los ohmios de resistencia y los vatios de potencia."
+        }
+      ]
+    },
+    {
+      "titulo": "Los prefijos",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Para no escribir muchos ceros se usan {{prefijo}}:\n\n• [b]m[/b] (mili) = una milésima: 27,5 mA = 0,0275 A.\n• [b]k[/b] (kilo) = mil: 4,4 kΩ = 4 400 Ω; 15 kW = 15 000 W.\n• [b]M[/b] (mega) = un millón: el aislamiento de un motor sano, 300 MΩ = 300 000 000 Ω.\n• [b]µ[/b] (micro) = una millonésima: los condensadores se miden en µF.\n\nOjo con las mayúsculas: [b]m[/b] es mili y [b]M[/b] es mega. Confundirlas es un error de mil millones de veces."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_prefijo_mega",
+          "pregunta": "El megóhmetro marca 2 MΩ. ¿Cuántos ohmios son?",
+          "opciones": [
+            "2 000 Ω",
+            "2 000 000 Ω",
+            "0,002 Ω"
+          ],
+          "correcta": 1,
+          "explicacion": "M (mega) es un millón: 2 MΩ = 2 000 000 Ω."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_prefijo_mili",
+          "pregunta": "Una luz piloto toma 20 mA. ¿Cuántos amperios son?",
+          "opciones": [
+            "20 A",
+            "2 A",
+            "0,02 A"
+          ],
+          "correcta": 2,
+          "explicacion": "m (mili) es una milésima: 20 mA = 0,02 A."
+        }
+      ]
+    },
+    {
+      "titulo": "Convertir sin equivocarse",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un método seguro: pase todo a la unidad base, calcule y vuelva al prefijo al final.\n\n[b]Ejemplo:[/b] una bobina de 4,4 kΩ a 110 V.\n• 4,4 kΩ = 4 400 Ω.\n• I = V ÷ R = 110 ÷ 4 400 = 0,025 A.\n• 0,025 A = 25 mA.\n\nEn las placas en inglés aparecen las mismas unidades: «V», «A», «kW», «Hz». La potencia de los motores antiguos puede venir en caballos: 1 HP ≈ 0,746 kW."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_conversion_kw",
+          "pregunta": "Una placa dice 20 HP. ¿Cuántos kW son, aproximadamente?",
+          "opciones": [
+            "15 kW",
+            "27 kW",
+            "2 kW"
+          ],
+          "correcta": 0,
+          "explicacion": "1 HP ≈ 0,746 kW: 20 × 0,746 ≈ 15 kW."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_pasos_conversion",
+          "pregunta": "Ordene los pasos para calcular una corriente con prefijos:",
+          "pasos": [
+            "Pasar los datos a V, A y Ω",
+            "Aplicar la fórmula",
+            "Expresar el resultado con el prefijo cómodo"
+          ],
+          "explicacion": "Primero las unidades base; así la fórmula da el resultado directamente."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 80000-6: magnitudes y unidades del electromagnetismo.",
+    "Sistema Internacional de Unidades (SI), BIPM."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "ec8_cables_bornes",
+  "titulo": "Cables, terminales y bornes",
+  "resumen": "Cómo se prepara y se aprieta una conexión.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "El cable de buque",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Los cables de a bordo son de cobre, flexibles o semirrígidos, con aislamiento resistente al fuego y sin halógenos, y muchas veces armados con malla. Los colores ayudan a identificar los conductores, pero en un buque viejo no se fíe: lea las marcas de los extremos.\n\nCada extremo lleva su marcado (número del borne o del cable) que coincide con el esquema."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_marcado",
+          "pregunta": "¿Qué identifica con seguridad un conductor en un tablero?",
+          "opciones": [
+            "Su color",
+            "Su marcado, comparado con el esquema",
+            "Su grosor"
+          ],
+          "correcta": 1,
+          "explicacion": "Los colores cambian entre épocas y astilleros; el marcado del extremo, comparado con el esquema, es lo fiable."
+        }
+      ]
+    },
+    {
+      "titulo": "Terminales y punteras",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un cable flexible no se mete pelado en un borne de tornillo: sus hilos se abren y algunos quedan fuera. Se le pone una {{puntera}} prensada con la herramienta adecuada. Para bornes de espárrago se usan terminales de ojal.\n\n[b]Pasos:[/b] pelar a la medida, poner la puntera, prensar, comprobar tirando, meter hasta el fondo y apretar al par."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_hacer_conexion",
+          "pregunta": "Ordene la preparación de una conexión con cable flexible:",
+          "pasos": [
+            "Pelar a la medida de la puntera",
+            "Poner la puntera y prensarla",
+            "Comprobar tirando del cable",
+            "Apretar el borne al par"
+          ],
+          "explicacion": "Sin la prueba de tracción, una puntera mal prensada puede soltarse con la vibración."
+        }
+      ]
+    },
+    {
+      "titulo": "El borne flojo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un borne flojo tiene resistencia: con corriente cae tensión y se calienta (P = I² × R). El calor afloja más el borne y acaba quemándolo. En servicio se detecta midiendo la tensión entre los dos lados del borne, o con un termómetro infrarrojo."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_bornera",
+          "params": {},
+          "pie": "Salida de un motor de 15 kW con un borne de 0,05 Ω."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_borne_flojo",
+          "pregunta": "En un borne en servicio mide 1,2 V entre sus dos lados. ¿Qué indica?",
+          "opciones": [
+            "Que está bien apretado",
+            "Que está flojo",
+            "Que el motor está parado"
+          ],
+          "correcta": 1,
+          "explicacion": "Un borne apretado no deja caer más que milivoltios. 1,2 V con 24 A son casi 30 W de calor en un punto."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-352: cables en buques.",
+    "IEC 60947-7-1: bornes de paso."
+  ]
+}

@@ -279,6 +279,23 @@
     "voltimetro": { "es": "voltímetro", "en": "voltmeter", "def": "Aparato que mide la tensión entre dos puntos." },
     "analizador_red": { "es": "analizador de red", "en": "power meter", "def": "Aparato que mide tensiones, corrientes, potencias, factor de potencia, frecuencia y energía." },
     "horometro": { "es": "horómetro", "en": "hour meter", "def": "Contador de las horas de funcionamiento de un equipo." },
-    "motor_induccion": { "es": "motor de inducción", "en": "induction motor", "def": "Motor de alterna cuyo rotor gira algo más despacio que el campo del estator, que le induce las corrientes." }
+    "motor_induccion": { "es": "motor de inducción", "en": "induction motor", "def": "Motor de alterna cuyo rotor gira algo más despacio que el campo del estator, que le induce las corrientes." },
+    "prefijo": { "es": "prefijo", "en": "prefix", "def": "Letra delante de la unidad que multiplica o divide: m, k, M, µ." },
+    "circuito_serie": { "es": "circuito en serie", "en": "series circuit", "def": "Receptores uno detrás de otro: misma corriente, la tensión se reparte." },
+    "circuito_paralelo": { "es": "circuito en paralelo", "en": "parallel circuit", "def": "Receptores entre los mismos dos puntos: misma tensión, las corrientes se suman." },
+    "caida_tension": { "es": "caída de tensión", "en": "voltage drop", "def": "Tensión que se pierde en la resistencia de un cable con la corriente que lleva." },
+    "resistividad": { "es": "resistividad", "en": "resistivity", "def": "Resistencia propia de un material: la del cobre es de unos 0,0178 Ω·mm²/m a 20 °C." },
+    "seccion_cable": { "es": "sección del cable", "en": "cross-sectional area", "def": "Superficie del conductor en mm²: más sección, menos resistencia y más corriente admisible." },
+    "campo_magnetico": { "es": "campo magnético", "en": "magnetic field", "def": "Zona alrededor de un imán o de una corriente donde se notan fuerzas magnéticas." },
+    "electroiman": { "es": "electroimán", "en": "electromagnet", "def": "Bobina con núcleo de hierro que atrae solo mientras pasa corriente." },
+    "induccion": { "es": "inducción", "en": "induction", "def": "Aparición de una tensión en una bobina cuando cambia el campo magnético que la atraviesa." },
+    "reactancia": { "es": "reactancia", "en": "reactance", "def": "Oposición de una bobina o de un condensador a la corriente alterna, en ohmios; depende de la frecuencia." },
+    "condensador_electrico": { "es": "condensador", "en": "capacitor", "def": "Dos placas separadas por un aislante que almacenan carga; en alterna adelanta la corriente." },
+    "masa": { "es": "masa", "en": "hull / ground", "def": "El casco del buque y todo lo unido a él: la referencia de la tensión a bordo." },
+    "conductor_proteccion": { "es": "conductor de protección", "en": "protective earth (PE)", "def": "Conductor verde-amarillo que une las carcasas a la masa." },
+    "puntera": { "es": "puntera", "en": "ferrule", "def": "Casquillo que se prensa en el extremo de un cable flexible para meterlo en un borne." },
+    "esquema_unifilar": { "es": "esquema unifilar", "en": "single-line diagram", "def": "Esquema que dibuja cada circuito trifásico con una sola línea." },
+    "esquema_desarrollado": { "es": "esquema desarrollado", "en": "schematic / wiring diagram", "def": "Esquema con todos los conductores, separado en potencia y mando." },
+    "referencia_cruzada": { "es": "referencia cruzada", "en": "cross-reference", "def": "Indicación de la hoja y columna donde está el contacto o la bobina de un aparato." }
   }
 }

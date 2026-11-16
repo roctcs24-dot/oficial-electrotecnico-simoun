@@ -1,0 +1,98 @@
+{
+  "id": "ec4_magnetismo_rele",
+  "titulo": "Magnetismo y relé",
+  "resumen": "La corriente crea un imán: así funcionan relés y contactores.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La corriente crea un campo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Toda corriente crea un {{campo_magnetico}} alrededor del conductor. Si el conductor se enrolla en una {{bobina}}, los campos de cada espira se suman; con un núcleo de hierro dentro, el campo se concentra todavía más: es un {{electroiman}}.\n\nSin corriente, el electroimán deja de atraer. Esa es la diferencia con un imán permanente, y lo que permite mandar a distancia."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_electroiman",
+          "pregunta": "¿Qué pasa con un electroimán al quitarle la corriente?",
+          "opciones": [
+            "Sigue atrayendo igual",
+            "Deja de atraer",
+            "Atrae con más fuerza"
+          ],
+          "correcta": 1,
+          "explicacion": "Sin corriente no hay campo: el muelle devuelve la armadura a su sitio."
+        }
+      ]
+    },
+    {
+      "titulo": "El relé",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{rele_auxiliar}} es un electroimán que mueve contactos: una corriente pequeña en la bobina conmuta otro circuito, aislado del primero. El {{contactor}} es lo mismo, con contactos capaces de llevar la corriente de un motor.\n\nPruebe la animación: con tensión, la armadura cierra los NA y abre los NC."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_mando",
+          "params": {
+            "tipo": "rele",
+            "titulo": "CORTE DE UN RELÉ AUXILIAR",
+            "contactos": [
+              {
+                "bornes": "11-12-14",
+                "tipo": "conmutado"
+              }
+            ],
+            "rotulos": {
+              "accionado": "ACTIVADO",
+              "reposo": "EN REPOSO"
+            },
+            "notas": {
+              "reposo": "Sin tensión, el muelle mantiene la armadura arriba: 11-12 cerrado.",
+              "accionado": "Activado: 11-14 cerrado y 11-12 abierto."
+            }
+          },
+          "pie": "Relé de 110 V AC con un contacto conmutado."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_rele_aisla",
+          "pregunta": "¿Qué ventaja da un relé entre un sensor de 24 V y una bomba de 110 V?",
+          "opciones": [
+            "Sube la tensión",
+            "Separa los dos circuitos",
+            "Ahorra energía en la bomba"
+          ],
+          "correcta": 1,
+          "explicacion": "La bobina y los contactos están aislados: el circuito de 24 V manda sin tocar la tensión de 110 V."
+        }
+      ]
+    },
+    {
+      "titulo": "Comprobarlo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Para probar un relé o un contactor:\n• Bobina sin tensión: Ω entre A1 y A2, un valor finito. OL es una bobina cortada.\n• Contactos: continuidad en reposo y activado.\n• Con tensión: si en A1-A2 hay tensión y no activa, la bobina está mal."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_probar_rele",
+          "pregunta": "Ordene la prueba de un relé que no activa:",
+          "pasos": [
+            "Medir la tensión en A1-A2 con la orden",
+            "Si la hay, quitar la tensión",
+            "Medir la bobina en Ω",
+            "Cambiar el relé si está cortada"
+          ],
+          "explicacion": "Primero se comprueba que llega la orden; solo después se culpa al relé."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61810-1: relés electromecánicos.",
+    "IEC 60947-4-1: contactores."
+  ]
+}

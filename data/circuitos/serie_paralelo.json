@@ -1,0 +1,59 @@
+{
+  "nombre": "Luces de 24 V en serie y en paralelo",
+  "nota": "Fuente de 24 V DC con tres luces piloto de 24 V: H1 y H2 en serie, y H3 en paralelo con la fuente. Mida la tensión en cada luz y la corriente de cada rama, funda H1 y vuelva a medir. Rehaga el cableado para ponerlas todas en serie o todas en paralelo.",
+  "componentes": [
+    {
+      "id": "G1",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna"
+      }
+    },
+    {
+      "id": "H1",
+      "tipo": "lampara",
+      "params": {
+        "v_nominal": 24.0,
+        "r": 1200.0
+      }
+    },
+    {
+      "id": "H2",
+      "tipo": "lampara",
+      "params": {
+        "v_nominal": 24.0,
+        "r": 1200.0
+      }
+    },
+    {
+      "id": "H3",
+      "tipo": "lampara",
+      "params": {
+        "v_nominal": 24.0,
+        "r": 1200.0
+      }
+    }
+  ],
+  "cables": [
+    [
+      "G1.+",
+      "H1.X1"
+    ],
+    [
+      "H1.X2",
+      "H2.X1"
+    ],
+    [
+      "H2.X2",
+      "G1.-"
+    ],
+    [
+      "G1.+",
+      "H3.X1"
+    ],
+    [
+      "H3.X2",
+      "G1.-"
+    ]
+  ]
+}

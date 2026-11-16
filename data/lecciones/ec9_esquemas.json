@@ -1,0 +1,75 @@
+{
+  "id": "ec9_esquemas",
+  "titulo": "Cómo leer un esquema",
+  "resumen": "Unifilar, desarrollado, potencia y mando, y referencias cruzadas.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Tipos de esquema",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "• El {{esquema_unifilar}} dibuja cada circuito trifásico con una sola línea: sirve para ver de dónde sale cada cosa.\n• El {{esquema_desarrollado}} dibuja todos los conductores, con el circuito de potencia por un lado y el de mando por otro.\n• El de bornas lista qué cable va a cada borne.\n\nLos aparatos se dibujan en reposo: sin tensión y sin accionar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_estado_dibujo",
+          "pregunta": "¿En qué estado se dibujan los contactos en un esquema?",
+          "opciones": [
+            "Accionados",
+            "En reposo, sin tensión",
+            "Como estén en ese momento"
+          ],
+          "correcta": 1,
+          "explicacion": "Todos los aparatos se dibujan en reposo: un NC aparece cerrado aunque en servicio esté abierto."
+        }
+      ]
+    },
+    {
+      "titulo": "Potencia y mando",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{circuito_potencia}} lleva la energía al motor: guardamotor, contactor, relé térmico y motor. El {{circuito_mando}} decide cuándo: transformador de mando, fusible, pulsadores, contactos auxiliares y bobinas.\n\nCada aparato tiene un nombre (K1, F2, S1) que aparece en los dos: la bobina de K1 está en el mando y sus contactos principales en la potencia."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_misma_letra",
+          "pregunta": "En el mando aparece la bobina K1. ¿Dónde están sus contactos 1-2, 3-4 y 5-6?",
+          "opciones": [
+            "En el circuito de potencia",
+            "En otro buque",
+            "No tiene"
+          ],
+          "correcta": 0,
+          "explicacion": "Los contactos principales de K1 se dibujan en la potencia, con el mismo nombre que su bobina."
+        }
+      ]
+    },
+    {
+      "titulo": "Referencias cruzadas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En los esquemas de varias hojas, cada bobina lleva debajo una {{referencia_cruzada}}: la hoja y la columna donde están sus contactos (por ejemplo, 3.4 = hoja 3, columna 4). Y al revés: junto a cada contacto se indica dónde está su bobina.\n\nPara seguir una avería: empiece por lo que no funciona, busque su bobina, mire qué contactos la alimentan y siga hacia la fuente."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_seguir_averia",
+          "pregunta": "Ordene cómo seguir una bomba que no arranca en el esquema:",
+          "pasos": [
+            "Buscar la bobina del contactor de la bomba",
+            "Ver qué contactos y protecciones la alimentan",
+            "Medir la tensión en esos puntos, de la fuente hacia la bobina",
+            "Encontrar el punto donde se pierde la tensión"
+          ],
+          "explicacion": "El esquema dice el camino; las medidas, en orden, dicen dónde se corta."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60617: símbolos gráficos para esquemas.",
+    "IEC 81346-2: designación de los aparatos (K, F, S, Q…)."
+  ]
+}

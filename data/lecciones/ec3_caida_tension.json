@@ -1,0 +1,81 @@
+{
+  "id": "ec3_caida_tension",
+  "titulo": "Caída de tensión y sección",
+  "resumen": "Por qué un cable largo o fino deja al motor sin tensión.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El cable también es una resistencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un cable tiene resistencia: crece con la longitud y baja con la sección. Con la corriente del motor, esa resistencia provoca una {{caida_tension}}: el motor recibe menos de los 380 V del cuadro.\n\n[center][b]R = ρ × L ÷ S[/b][/center]\n\nCon la {{resistividad}} del cobre, ρ ≈ 0,0178 Ω·mm²/m a 20 °C y unos 0,0225 a 70 °C. Un cable de 100 m de 2,5 mm² tiene 0,0225 × 100 ÷ 2,5 = 0,9 Ω por conductor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_resistencia_cable",
+          "pregunta": "Si un cable se hace el doble de largo, su resistencia…",
+          "opciones": [
+            "se duplica",
+            "se reduce a la mitad",
+            "no cambia"
+          ],
+          "correcta": 0,
+          "explicacion": "R = ρ × L ÷ S: la resistencia es proporcional a la longitud."
+        }
+      ]
+    },
+    {
+      "titulo": "Cuánto cae",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En trifásica, la caída aproximada es:\n\n[center][b]ΔU = √3 × I × L × ρ ÷ S[/b][/center]\n\nIEC 60092-352 limita la caída desde el cuadro hasta el consumidor, en servicio normal, al 6 % de la tensión nominal ([i]verificar el criterio del buque[/i]). Pruebe con un motor de 30 A a 60 m: con 2,5 mm² cae demasiado; con 6 mm² ya cumple."
+        },
+        {
+          "tipo": "animacion",
+          "id": "caida_tension",
+          "params": {},
+          "pie": "Cobre a 70 °C, sin la reactancia del cable. Valores de enseñanza."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_caida_seccion",
+          "pregunta": "Para reducir a la mitad la caída de tensión de un cable, ¿qué se hace?",
+          "opciones": [
+            "Duplicar la sección",
+            "Duplicar la longitud",
+            "Duplicar la corriente"
+          ],
+          "correcta": 0,
+          "explicacion": "La caída es inversamente proporcional a la sección: el doble de sección, la mitad de caída."
+        }
+      ]
+    },
+    {
+      "titulo": "Sección y calentamiento",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{seccion_cable}} se elige por dos criterios:\n\n• [b]Corriente admisible:[/b] que el cable no pase de su temperatura máxima (90 °C en los aislamientos habituales de buque). Depende de cómo va tendido y agrupado.\n• [b]Caída de tensión:[/b] en los cables largos manda este criterio, aunque la corriente sea pequeña.\n\nUn cable demasiado fino se calienta, envejece su aislamiento y el motor arranca peor por la caída."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_criterio_largo",
+          "pregunta": "En un cable muy largo hasta un motor pequeño, ¿qué criterio suele decidir la sección?",
+          "opciones": [
+            "La corriente admisible",
+            "La caída de tensión",
+            "El color del cable"
+          ],
+          "correcta": 1,
+          "explicacion": "Con poca corriente el cable no se calienta, pero la longitud hace que la caída supere el límite: manda la caída."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-352: elección e instalación de cables en buques.",
+    "IEC 60228: conductores de los cables aislados."
+  ]
+}

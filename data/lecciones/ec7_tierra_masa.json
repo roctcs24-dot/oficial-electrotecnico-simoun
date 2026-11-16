@@ -1,0 +1,83 @@
+{
+  "id": "ec7_tierra_masa",
+  "titulo": "Tierra, masa y red aislada",
+  "resumen": "Qué es la masa del buque y por qué la red no va a tierra.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La masa del buque",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En tierra firme, la «tierra» es el terreno. En el buque es la {{masa}}: el casco de acero y todo lo que está unido a él. Las carcasas de motores, tableros y equipos se unen a la masa con el {{conductor_proteccion}} (verde-amarillo): si un conductor activo toca una carcasa, la carcasa queda al potencial del casco y no electrocuta a quien la toca."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_conductor_verde",
+          "pregunta": "¿Para qué sirve el conductor verde-amarillo de un motor?",
+          "opciones": [
+            "Para llevar la corriente de trabajo",
+            "Para unir la carcasa a la masa del buque",
+            "Para la resistencia de caldeo"
+          ],
+          "correcta": 1,
+          "explicacion": "Es el conductor de protección: mantiene la carcasa al potencial del casco."
+        }
+      ]
+    },
+    {
+      "titulo": "La red aislada",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La red de 380 V del buque es un {{sistema_aislado}}: ningún conductor activo está unido al casco. La primera {{falla_tierra}} no hace circular corriente apreciable y no dispara nada: el buque sigue navegando. Pero hay que encontrarla, porque una segunda falla en otra fase sería un cortocircuito.\n\nEl monitor de aislamiento vigila la resistencia entre la red y el casco."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_monitor",
+          "params": {
+            "aislamiento_mohm": 50
+          },
+          "pie": "Baje el aislamiento: por debajo del umbral, el monitor da la alarma."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ec_primera_falla",
+          "pregunta": "En la red aislada aparece la primera falla a masa. ¿Qué ocurre?",
+          "opciones": [
+            "Dispara el generador",
+            "Nada se para, pero salta la alarma de aislamiento",
+            "Se funde el fusible de la fase"
+          ],
+          "correcta": 1,
+          "explicacion": "Sin un camino de vuelta no hay corriente de defecto apreciable: el monitor avisa y hay que buscar la falla."
+        }
+      ]
+    },
+    {
+      "titulo": "Buscar la falla",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con el monitor en alarma se busca qué salida tiene la falla, abriendo los interruptores de una en una (si el servicio lo permite) y mirando cuándo sube el aislamiento. Después, con la salida bloqueada, se mide con el megóhmetro el consumidor sospechoso."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ec_buscar_falla",
+          "pregunta": "Ordene la búsqueda de una falla a masa:",
+          "pasos": [
+            "Ver en el monitor que el aislamiento ha bajado",
+            "Abrir las salidas de una en una y mirar el monitor",
+            "Bloquear la salida sospechosa",
+            "Medir el consumidor con el megóhmetro"
+          ],
+          "explicacion": "Primero se localiza la salida con el monitor y después se confirma el equipo con el megóhmetro, sin tensión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60092-201: diseño del sistema eléctrico en buques.",
+    "SOLAS, capítulo II-1, parte D."
+  ]
+}
