@@ -74,9 +74,10 @@ func _boton(texto: String, al_pulsar: Callable) -> Button:
 	return b
 
 
-func _fila(titulo: String, detalle: String, al_pulsar: Callable, icono := "", estado := "", activa := true) -> FilaMenu:
+## opciones: color del área, avance (0 a 1), hecho y siguiente; ver FilaMenu.
+func _fila(titulo: String, detalle: String, al_pulsar: Callable, icono := "", estado := "", activa := true, opciones := {}) -> FilaMenu:
 	var f := FilaMenu.new()
-	f.iniciar(titulo, detalle, icono, estado, activa)
+	f.iniciar(titulo, detalle, icono, estado, activa, opciones)
 	f.pulsada.connect(al_pulsar)
 	return f
 

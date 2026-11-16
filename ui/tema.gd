@@ -1,23 +1,29 @@
 class_name Tema
 extends RefCounted
-## Colores y estilos de la interfaz: sobrios, de manual técnico.
-## Los márgenes de los botones garantizan 48 de alto.
+## Colores y estilos de la interfaz: fondo oscuro, tarjetas redondeadas y un color por área
+## (elegido por el usuario entre maquetas el 2026-11-15). Los márgenes de los botones
+## garantizan 48 de alto.
 
-const FONDO := Color("0e1e2c")
-const PANEL := Color("142636")
-const BOTON := Color("1a3247")
-const BORDE := Color("3d5a72")
-const SELECCION := Color("2f6b8f")
-const ACENTO := Color("c2a25a")
-const TEXTO := Color("eef3f7")
-const TEXTO_SUAVE := Color("a9bccb")
-const APAGADO := Color("6f8496")
+const FONDO := Color("0f1419")
+const PANEL := Color("1b232c")
+const BOTON := Color("222c36")
+const BORDE := Color("2b3642")
+const SELECCION := Color("2c6e9e")
+const ACENTO := Color("ffd166")
+const ACENTO_FUERTE := Color("ffb020")
+const TEXTO := Color("eef2f5")
+const TEXTO_SUAVE := Color("a3b1bd")
+const APAGADO := Color("6b7a87")
 const PAPEL := Color("e9ebe8")
 const TINTA := Color("20242a")
 const AVISO := Color("6b3a1f")
 const ACIERTO := Color("2f6f4a")
+const HECHO := Color("4fae7a")
 const FALLO := Color("8c3b30")
-const RADIO := 3
+const RADIO := 10
+const RADIO_TARJETA := 16
+## Color de un área sin color propio en sistemas.json.
+const COLOR_AREA := Color("2c6e9e")
 const RUTA_FUENTE := "res://art/fuentes/IBMPlexSans.ttf"
 const RUTA_FUENTE_CURSIVA := "res://art/fuentes/IBMPlexSans-Italic.ttf"
 const PESO_NORMAL := 400
@@ -41,6 +47,24 @@ static func fuente(peso: int, ruta := RUTA_FUENTE) -> Font:
 		f.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): peso}
 		_fuentes[clave] = f
 	return _fuentes[clave]
+
+
+## Color de un sistema o módulo, del campo "color" de sistemas.json.
+static func color_area(datos: Dictionary) -> Color:
+	return Color(str(datos.get("color", COLOR_AREA.to_html(false))))
+
+
+## Relación de contraste WCAG entre dos colores: 4,5 o más para texto normal.
+static func contraste(a: Color, b: Color) -> float:
+	var la := _luminancia(a)
+	var lb := _luminancia(b)
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)
+
+
+## Luminancia relativa de WCAG, con los canales pasados a lineales.
+static func _luminancia(c: Color) -> float:
+	var l := c.srgb_to_linear()
+	return 0.2126 * l.r + 0.7152 * l.g + 0.0722 * l.b
 
 
 static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, borde := Color.TRANSPARENT) -> StyleBoxFlat:
@@ -74,7 +98,7 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_type_variation("Fuerte", "Label")
 	t.set_font("font", "Fuerte", fuente(PESO_MEDIO))
 	t.set_type_variation("Nota", "Label")
-	t.set_font_size("font_size", "Nota", 15)
+	t.set_font_size("font_size", "Nota", 16)
 	t.set_color("font_color", "Nota", TEXTO_SUAVE)
 	t.set_font("font", "Button", fuente(PESO_MEDIO))
 	t.set_font("normal_font", "RichTextLabel", fuente(PESO_NORMAL))
@@ -101,14 +125,14 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_font("font", "Rotulo", fuente(PESO_FUERTE))
 	t.set_color("font_color", "Rotulo", ACENTO)
 
-	var cabecera := caja(PANEL, RADIO, 12, 8)
-	cabecera.border_color = ACENTO
-	cabecera.border_width_bottom = 2
+	var cabecera := caja(PANEL, RADIO_TARJETA, 12, 8)
+	cabecera.border_color = BORDE
+	cabecera.set_border_width_all(1)
 	t.set_type_variation("Cabecera", "PanelContainer")
 	t.set_stylebox("panel", "Cabecera", cabecera)
 
-	t.set_stylebox("background", "ProgressBar", caja(FONDO.lightened(0.08), 2, 0, 0))
-	t.set_stylebox("fill", "ProgressBar", caja(ACENTO, 2, 0, 0))
+	t.set_stylebox("background", "ProgressBar", caja(Color(TEXTO_SUAVE, 0.16), 3, 0, 0))
+	t.set_stylebox("fill", "ProgressBar", caja(ACENTO, 3, 0, 0))
 
 	var pista := caja(Color(TEXTO_SUAVE, 0.12), 2, 0, 0)
 	var asidero := caja(Color(TEXTO_SUAVE, 0.45), 2, 0, 0)
@@ -131,7 +155,7 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_color("font_color", "LineEdit", TEXTO)
 	t.set_color("font_placeholder_color", "LineEdit", APAGADO)
 
-	t.set_stylebox("panel", "PanelContainer", caja(PANEL, RADIO, 12, 12, PANEL.lightened(0.1)))
+	t.set_stylebox("panel", "PanelContainer", caja(PANEL, RADIO_TARJETA, 12, 12, BORDE))
 	t.set_type_variation("Papel", "PanelContainer")
 	t.set_stylebox("panel", "Papel", caja(PAPEL, RADIO, 10, 10))
 	t.set_type_variation("Aviso", "PanelContainer")

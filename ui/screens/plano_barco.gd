@@ -107,18 +107,21 @@ func _fila_repaso() -> FilaMenu:
 func _fila_sistema(s: Dictionary) -> FilaMenu:
 	var id := int(s["id"])
 	var activo: bool = s["estado"] == "activo"
-	return _fila("%d · %s" % [id, s["nombre"]], "Próximamente" if not activo else _avance_sistema(s), _abrir_sistema.bind(id), "sistema_%d" % id, "", activo)
+	var parte := Avance.sistema(s, raiz.partida)
+	var opciones := {"color": Tema.color_area(s), "avance": Avance.fraccion(parte), "hecho": parte[1] > 0 and parte[0] == parte[1]}
+	var detalle := "Próximamente" if not activo else _avance_sistema(s)
+	return _fila("%d · %s" % [id, s["nombre"]], detalle, _abrir_sistema.bind(id), "sistema_%d" % id, "", activo, opciones)
 
 
 func _avance_sistema(s: Dictionary) -> String:
-	var lecciones: Array = s["modos"].get("aprender", {}).get("lecciones", [])
-	if lecciones.is_empty():
+	var lecciones := Avance.lecciones(s, raiz.partida)
+	if lecciones[1] == 0:
 		return s.get("resumen", "")
-	var hechas := 0
-	for id: String in lecciones:
-		if raiz.partida.leccion_completada(id):
-			hechas += 1
-	return "%d de %d lecciones completadas" % [hechas, lecciones.size()]
+	var texto := "%d de %d lecciones" % lecciones
+	var misiones := Avance.misiones(s, raiz.partida)
+	if misiones[1] > 0:
+		texto += " · %d de %d misiones" % misiones
+	return texto
 
 
 func _resumen_barco(barco: Dictionary) -> String:

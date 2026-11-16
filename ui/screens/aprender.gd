@@ -1,41 +1,52 @@
 extends Pantalla
-## Contenido disponible para aprender en un sistema.
+## Contenido disponible para aprender en un sistema: las lecciones en orden, con la siguiente
+## recomendada resaltada y las hechas marcadas, y las fichas de equipos.
 
 
 func construir() -> void:
 	var c := raiz.contenido
 	var s := c.sistema(args["id"])
+	var color := Tema.color_area(s)
 	_cabecera("Aprender", s.get("nombre", ""))
 	var desplazable := _desplazable()
 	add_child(desplazable)
-	var lista := _columna(6)
+	var lista := _columna(8)
 	desplazable.add_child(_ancho_lectura(lista))
 	var contenido_modo: Dictionary = s["modos"]["aprender"]
 	var lecciones: Array = contenido_modo.get("lecciones", [])
 	if not lecciones.is_empty():
-		lista.add_child(_rotulo("Lecciones"))
+		var parte := Avance.lecciones(s, raiz.partida)
+		lista.add_child(_rotulo("Lecciones · %d de %d hechas" % parte))
+		var barra := _barra_avance(Avance.fraccion(parte))
+		barra.add_theme_stylebox_override("fill", Tema.caja(color, 3, 0, 0))
+		lista.add_child(barra)
+		var siguiente := Avance.siguiente_leccion(s, raiz.partida)
 		for i in lecciones.size():
-			lista.add_child(_fila_leccion(lecciones[i], i + 1))
+			lista.add_child(_fila_leccion(lecciones[i], i + 1, color, lecciones[i] == siguiente))
 	var fichas: Array = contenido_modo.get("fichas", [])
 	if not fichas.is_empty():
 		lista.add_child(_rotulo("Fichas de equipos"))
 		for id: String in fichas:
-			lista.add_child(_fila_ficha(id))
+			lista.add_child(_fila_ficha(id, color))
 	lista.add_child(_rotulo("Consulta"))
-	lista.add_child(_fila("Glosario español-inglés", "", raiz.ir_a.bind("glosario"), "glosario"))
+	lista.add_child(_fila("Glosario español-inglés", "", raiz.ir_a.bind("glosario"), "glosario", "", true, {"color": color}))
 
 
-func _fila_leccion(id: String, numero: int) -> FilaMenu:
+func _fila_leccion(id: String, numero: int, color: Color, es_siguiente: bool) -> FilaMenu:
 	var l := raiz.contenido.leccion(id)
 	var estado := "%d min" % l.get("minutos", 0)
-	if raiz.partida.leccion_completada(id):
+	var hecha := raiz.partida.leccion_completada(id)
+	if hecha:
 		var r: Dictionary = raiz.partida.datos["lecciones"][id]
 		estado = "%d / %d" % [r["aciertos"], r["total"]]
+	elif es_siguiente:
+		estado = "Siguiente"
 	var titulo := "%d. %s" % [numero, l.get("titulo", id)]
-	return _fila(titulo, l.get("resumen", ""), raiz.ir_a.bind("leccion", {"id": id, "sistema": args["id"]}), "leccion", estado)
+	var opciones := {"color": color, "hecho": hecha, "siguiente": es_siguiente}
+	return _fila(titulo, l.get("resumen", ""), raiz.ir_a.bind("leccion", {"id": id, "sistema": args["id"]}), "leccion", estado, true, opciones)
 
 
-func _fila_ficha(id: String) -> FilaMenu:
+func _fila_ficha(id: String, color: Color) -> FilaMenu:
 	var ficha := raiz.contenido.ficha(id)
-	var visto := "Vista" if raiz.partida.ficha_vista(id) else ""
-	return _fila(ficha.get("titulo", id), ficha.get("resumen", ""), raiz.ir_a.bind("ficha", {"id": id}), "ficha", visto)
+	var vista := raiz.partida.ficha_vista(id)
+	return _fila(ficha.get("titulo", id), ficha.get("resumen", ""), raiz.ir_a.bind("ficha", {"id": id}), "ficha", "", true, {"color": color, "hecho": vista})

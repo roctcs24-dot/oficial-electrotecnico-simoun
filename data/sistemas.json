@@ -12,7 +12,7 @@
   },
   "sistemas": [
     {
-      "id": 0,
+      "id": 0, "color": "#c44536",
       "nombre": "Fundamentos y seguridad",
       "resumen": "Desde qué es un voltio hasta bloqueo y etiquetado, y seguridad con amoníaco.",
       "estado": "activo",
@@ -23,7 +23,7 @@
       }
     },
     {
-      "id": 1,
+      "id": 1, "color": "#e09a10",
       "nombre": "Generación y cuadro principal",
       "resumen": "Diésel-generadores, paneles y controladores, sincronización, gestión de potencia y blackout.",
       "estado": "activo",
@@ -37,7 +37,7 @@
       }
     },
     {
-      "id": 2,
+      "id": 2, "color": "#d0721c",
       "nombre": "Distribución y alumbrado",
       "resumen": "Transformadores, breakers, alumbrado de emergencia y baterías de 24 V.",
       "estado": "activo",
@@ -51,7 +51,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 3, "color": "#2563a8",
       "nombre": "Motores y arrancadores",
       "resumen": "Motor trifásico, placa de datos, estrella o delta, arranque directo y estrella-triángulo.",
       "estado": "activo",
@@ -67,7 +67,7 @@
       }
     },
     {
-      "id": 4,
+      "id": 4, "color": "#1f97b8",
       "nombre": "Refrigeración por amoníaco",
       "resumen": "Ciclo de compresión, presostatos, salmuera y seguridad con NH3.",
       "estado": "activo",
@@ -81,7 +81,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 5, "color": "#3c8d2f",
       "nombre": "Cubierta y pesca",
       "resumen": "Winches, power block, grúas y alumbrado de cubierta.",
       "estado": "activo",
@@ -95,7 +95,7 @@
       }
     },
     {
-      "id": 6,
+      "id": 6, "color": "#0f8f7e",
       "nombre": "Electrónica, PLC y alarmas",
       "resumen": "Componentes, sensores, PLC, HMI, SCADA, alarmas de sala de máquinas e incendio.",
       "estado": "activo",

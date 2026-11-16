@@ -166,6 +166,14 @@ func leccion_completada(id: String) -> bool:
 	return datos["lecciones"].has(id)
 
 
+func mision_completada(id: String) -> bool:
+	return datos["misiones"].get(id, {}).get("completada", false)
+
+
+func examen_aprobado(id: String) -> bool:
+	return datos["examenes"].get(id, {}).get("aprobado", false)
+
+
 ## Conserva el mejor resultado. Los puntos solo se suman la primera vez; devuelve los ganados.
 func completar_leccion(id: String, aciertos: int, total: int) -> int:
 	var lecciones: Dictionary = datos["lecciones"]
