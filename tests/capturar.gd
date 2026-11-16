@@ -754,6 +754,34 @@ func _capturar_atlas(raiz: Raiz, carpeta: String) -> void:
 						"puente_rectificador":
 							a.poner_filtro(false)
 							a.abrir_diodo(true)
+						"transistor":
+							a.elegir_rb(1)
+							a.poner_orden(true)
+						"mosfet":
+							a.poner_vgs(5.0)
+						"tiristor":
+							a.pulsar_puerta()
+							a.avanzar(1.0)
+						"triac":
+							a.poner_puerta(true)
+							a.avanzar(1.5)
+						"optoacoplador":
+							a.unir(true)
+							a.pico()
+						"rele_estado_solido":
+							a.quitar_carga(true)
+						"regulador":
+							a.poner_disipador(false)
+							for _i in 120:
+								a.avanzar(0.1)
+						"fuente_conmutada":
+							a.elegir_carga(2)
+							a.avanzar(0.2)
+						"operacional":
+							a.poner_temperatura(70.0)
+						"puerta_logica":
+							a.poner(1, 1)
+							a.elegir_tipo("xor")
 					await _guardar(carpeta, "%s_funciona_2" % id, tam)
 				elif pestana == "conexion":
 					p.tocar_borne(p.atlas["conexion"]["bornes_esquema"].keys()[0])

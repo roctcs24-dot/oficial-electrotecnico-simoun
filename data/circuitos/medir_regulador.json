@@ -1,0 +1,11 @@
+{
+  "nombre": "Regulador suelto para medir",
+  "nota": "Regulador 7812 (12 V, 1,5 A) en cápsula TO-220, desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "U2",
+      "tipo": "regulador"
+    }
+  ],
+  "cables": []
+}

@@ -1,0 +1,11 @@
+{
+  "nombre": "Triac suelto para medir",
+  "nota": "Triac de 16 A y 600 V (tipo BTA16), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "V1",
+      "tipo": "triac"
+    }
+  ],
+  "cables": []
+}

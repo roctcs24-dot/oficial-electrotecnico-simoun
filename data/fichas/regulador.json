@@ -1,0 +1,93 @@
+{
+  "id": "regulador",
+  "titulo": "Regulador de tensión",
+  "resumen": "Da una tensión fija y estable a partir de otra mayor.",
+  "dibujo": {
+    "svg": "res://art/equipos/regulador.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Regulador 7812 en cápsula TO-220 atornillado a su disipador, con sus patas IN, GND y OUT. Dibujo general: tipo de cada tarjeta, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "7812",
+        "x": 200,
+        "y": 108,
+        "tam": 13,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "IN",
+        "x": 170,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "GND",
+        "x": 200,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "OUT",
+        "x": 230,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "disipador",
+        "x": 80,
+        "y": 160,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Regulador de tensión: se dibuja como un recuadro con su entrada, su salida y su común. Verificar contra la norma.",
+    "lista": [
+      "regulador_tension"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{regulador_tension}} lineal da una tensión fija, como 12 V o 5 V, a partir de otra mayor y algo variable. Lo que sobra lo convierte en calor: (Vin − Vout) × I. Está en las tarjetas que necesitan una tensión más baja que los 24 V del buque."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Tres patas:[/b] entrada (IN), común (GND) y salida (OUT); en el 7812, por ese orden.\n• [b]Caída mínima:[/b] la entrada debe superar a la salida en unos 2 V.\n• [b]Protección térmica:[/b] a unos 150 °C corta la salida, y vuelve al enfriarse."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Entrada desde la fuente, con un condensador cerca; salida a la carga, con otro.\n• Con más de unas décimas de amperio, atornillado a un {{disipador}} con pasta térmica.\n• Para mucha corriente o mucha diferencia de tensión se usa una fuente conmutada, que no se calienta así."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta (salvo los ajustables, con sus resistencias). Se elige por la tensión y la corriente, y el disipador por la potencia: 6 W para bajar de 24 a 12 V con 0,5 A ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]En servicio:[/b] V= entrada-común y salida-común: la salida, su tensión nominal ±4 %.\n• Temperatura con el termómetro infrarrojo: caliente es normal, pero no tanto que corte.\n• [b]Sin tensión:[/b] Ω entre IN y OUT: si marca casi 0 Ω, está en corto."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Abierto:[/b] salida a 0 V.\n• [b]En corto entre IN y OUT:[/b] la salida recibe toda la entrada y quema lo que alimenta.\n• [b]Sin disipador[/b] o con la pasta seca: corta por temperatura y la tarjeta se reinicia cada poco.\n• [b]Entrada baja:[/b] por debajo de Vout + 2 V la salida baja."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: tensión de salida y temperatura en carga.\n• Anual: reapriete al disipador.\n\n[b]Correctivo:[/b] se cambia por el mismo tipo, con pasta térmica nueva y su aislante si lo llevaba."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-1: dispositivos semiconductores, generalidades.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

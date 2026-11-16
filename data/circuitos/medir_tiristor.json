@@ -1,0 +1,11 @@
+{
+  "nombre": "Tiristor suelto para medir",
+  "nota": "Tiristor de 25 A y 800 V (tipo TYN825), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "V1",
+      "tipo": "tiristor"
+    }
+  ],
+  "cables": []
+}

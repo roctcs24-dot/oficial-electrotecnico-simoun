@@ -1,0 +1,74 @@
+{
+  "nombre": "Transistor que manda un relé de 24 V",
+  "nota": "Una salida de 24 V de la tarjeta (S1) da corriente a la base de Q1 por RB de 10 kΩ; Q1 conecta a 0 V la bobina del relé K1 (24 V, 640 Ω), que lleva su diodo supresor D1. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "RB",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "Q1",
+      "tipo": "transistor"
+    },
+    {
+      "id": "K1",
+      "tipo": "rele_dc"
+    },
+    {
+      "id": "D1",
+      "tipo": "diodo"
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "RB.A"
+    ],
+    [
+      "RB.B",
+      "Q1.B"
+    ],
+    [
+      "Q1.E",
+      "F.-"
+    ],
+    [
+      "F.+",
+      "K1.A1"
+    ],
+    [
+      "K1.A2",
+      "Q1.C"
+    ],
+    [
+      "D1.K",
+      "K1.A1"
+    ],
+    [
+      "D1.A",
+      "K1.A2"
+    ]
+  ]
+}

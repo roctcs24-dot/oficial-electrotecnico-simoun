@@ -318,6 +318,27 @@
     "caida_directa": { "es": "caída directa", "en": "forward voltage", "def": "Tensión que pierde un diodo al conducir: unos 0,7 V los de silicio." },
     "diodo_zener": { "es": "diodo Zener", "en": "Zener diode", "def": "Diodo que, al revés, mantiene una tensión casi fija." },
     "led": { "es": "LED", "en": "light-emitting diode", "def": "Diodo que emite luz al conducir." },
-    "puente_rectificador": { "es": "puente rectificador", "en": "bridge rectifier", "def": "Cuatro diodos que convierten la alterna en continua." }
+    "puente_rectificador": { "es": "puente rectificador", "en": "bridge rectifier", "def": "Cuatro diodos que convierten la alterna en continua." },
+    "transistor": { "es": "transistor", "en": "bipolar junction transistor, BJT", "def": "Semiconductor de tres patas en el que la corriente de base manda la de colector." },
+    "base": { "es": "base", "en": "base", "def": "Pata del transistor bipolar por la que entra la corriente de mando." },
+    "colector": { "es": "colector", "en": "collector", "def": "Pata del transistor bipolar por la que entra la corriente de la carga." },
+    "emisor": { "es": "emisor", "en": "emitter", "def": "Pata del transistor bipolar por la que salen juntas la corriente de base y la de colector." },
+    "saturacion_transistor": { "es": "saturación", "en": "saturation", "def": "Estado de un transistor que conduce del todo: entre colector y emisor quedan unos 0,2 V." },
+    "mosfet": { "es": "MOSFET", "en": "MOSFET", "def": "Transistor mandado por la tensión de su puerta, con muy poca resistencia al conducir." },
+    "puerta": { "es": "puerta", "en": "gate", "def": "Terminal de mando de un MOSFET, un tiristor o un triac." },
+    "drenador": { "es": "drenador", "en": "drain", "def": "Terminal de un MOSFET por el que entra la corriente de la carga." },
+    "surtidor": { "es": "surtidor", "en": "source", "def": "Terminal de un MOSFET respecto del que se manda la puerta." },
+    "tiristor": { "es": "tiristor", "en": "thyristor, SCR", "def": "Diodo que conduce cuando se le dispara la puerta y se queda conduciendo." },
+    "corriente_mantenimiento": { "es": "corriente de mantenimiento", "en": "holding current", "def": "Corriente mínima con la que un tiristor sigue conduciendo." },
+    "triac": { "es": "triac", "en": "triac", "def": "Semiconductor que conduce la alterna en los dos sentidos mientras recibe puerta." },
+    "optoacoplador": { "es": "optoacoplador", "en": "optocoupler", "def": "LED y fototransistor en una cápsula: pasa una señal con luz, con aislamiento." },
+    "aislamiento_galvanico": { "es": "aislamiento galvánico", "en": "galvanic isolation", "def": "Separación eléctrica entre dos circuitos que intercambian una señal." },
+    "rele_estado_solido": { "es": "relé de estado sólido", "en": "solid-state relay, SSR", "def": "Relé sin contactos: un optoacoplador manda un triac o dos tiristores." },
+    "regulador_tension": { "es": "regulador de tensión", "en": "voltage regulator", "def": "Circuito que da una tensión fija a partir de otra mayor." },
+    "disipador": { "es": "disipador", "en": "heat sink", "def": "Pieza metálica con aletas que saca el calor de un semiconductor." },
+    "amplificador_operacional": { "es": "amplificador operacional", "en": "operational amplifier, op-amp", "def": "Circuito integrado que amplifica la diferencia entre sus dos entradas." },
+    "comparador": { "es": "comparador", "en": "comparator", "def": "Circuito cuya salida dice cuál de dos tensiones es mayor." },
+    "puerta_logica": { "es": "puerta lógica", "en": "logic gate", "def": "Circuito que combina señales de 0 y 1: AND, OR, NOT y las demás." },
+    "tabla_verdad": { "es": "tabla de verdad", "en": "truth table", "def": "Tabla con la salida de una puerta para cada combinación de entradas." }
   }
 }

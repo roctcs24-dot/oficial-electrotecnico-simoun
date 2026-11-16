@@ -1,0 +1,77 @@
+{
+  "nombre": "Entrada de 24 V aislada con optoacoplador",
+  "nota": "Lado de campo: el final de carrera S1 da 24 V al LED de OK1 por R1 de 2,2 kΩ. Lado lógico, aislado: la tarjeta pone 5 V por R2 de 10 kΩ en el colector, y lee 0 V cuando la entrada está activa. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "FL",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 5
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 2200
+      }
+    },
+    {
+      "id": "OK1",
+      "tipo": "optoacoplador"
+    },
+    {
+      "id": "R2",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "OK1.1"
+    ],
+    [
+      "OK1.2",
+      "F.-"
+    ],
+    [
+      "FL.+",
+      "R2.A"
+    ],
+    [
+      "R2.B",
+      "OK1.4"
+    ],
+    [
+      "OK1.3",
+      "FL.-"
+    ]
+  ]
+}

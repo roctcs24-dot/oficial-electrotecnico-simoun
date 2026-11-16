@@ -1,0 +1,469 @@
+{
+ "id": "regulador",
+ "ficha": "regulador",
+ "titulo": "Regulador de tensión",
+ "termino": "regulador_tension",
+ "icono": "regulador",
+ "resumen": "Da 12 V fijos desde 24 V; lo que sobra es calor.",
+ "bornes_dibujo": {
+  "IN": [
+   170,
+   205
+  ],
+  "GND": [
+   200,
+   205
+  ],
+  "OUT": [
+   230,
+   205
+  ]
+ },
+ "que_es": {
+  "texto": "El {{regulador_tension}} da una tensión fija a partir de otra mayor; la diferencia por la corriente se va en calor por su {{disipador}}.",
+  "partes": [
+   {
+    "texto": "Cápsula TO-220 atornillada al disipador.",
+    "marca": [
+     200,
+     108
+    ]
+   },
+   {
+    "texto": "Disipador de aletas.",
+    "marca": [
+     80,
+     80
+    ]
+   },
+   {
+    "texto": "Patas IN, GND y OUT.",
+    "marca": [
+     200,
+     190
+    ]
+   }
+  ],
+  "placa": "7812 · 12 V · 1,5 A",
+  "a_bordo": "En las tarjetas que necesitan 12 o 5 V a partir de los 24 V del buque: paneles, sensores y controladores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_regulador",
+  "params": {},
+  "pasos": [
+   "Con la entrada por encima de 14 V, la salida queda en 12 V fijos.",
+   "La diferencia, (24 − 12) × 0,5 A = 6 W, se va en calor por el disipador.",
+   "Sin disipador se calienta hasta 150 °C, corta la salida y vuelve al enfriarse."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_regulador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 190,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "U2 7812",
+     "x": 200,
+     "y": 104,
+     "tam": 12
+    },
+    {
+     "texto": "IN",
+     "x": 152,
+     "y": 96,
+     "tam": 10
+    },
+    {
+     "texto": "OUT",
+     "x": 248,
+     "y": 96,
+     "tam": 10
+    },
+    {
+     "texto": "GND",
+     "x": 220,
+     "y": 152,
+     "tam": 10
+    },
+    {
+     "texto": "RL 24 Ω",
+     "x": 368,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "12 V",
+     "x": 296,
+     "y": 96,
+     "tam": 11
+    },
+    {
+     "texto": "C1",
+     "x": 28,
+     "y": 145,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "IN": [
+    140,
+    110
+   ],
+   "OUT": [
+    260,
+    110
+   ],
+   "GND": [
+    200,
+    140
+   ]
+  },
+  "bornes": {
+   "IN": "Llegan los 24 V de la fuente.",
+   "OUT": "Sale a la carga: 12 V.",
+   "GND": "Común de entrada y salida: 0 V."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada",
+    "bornes": [
+     "IN",
+     "GND"
+    ],
+    "texto": "24 V de la fuente."
+   },
+   {
+    "nombre": "Salida",
+    "bornes": [
+     "OUT",
+     "GND"
+    ],
+    "texto": "12 V fijos para la carga, 0,5 A."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un 7812, 24 V de entrada y una carga de 0,5 A. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Salida",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "OUT",
+    "negra": "GND",
+    "como": "Escala V= · entre OUT y GND",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Tensión de salida",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "regulador_servicio",
+     "a": "U2.OUT",
+     "b": "U2.GND",
+     "segundos": 1.0
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal: 12 V ±4 %",
+      "bien": true
+     },
+     {
+      "estado": "Entrada de 13 V",
+      "cambios": {
+       "params": {
+        "F": {
+         "v_salida": 13
+        }
+       }
+      },
+      "hacer": "Cae: le falta tensión",
+      "bien": false
+     },
+     {
+      "estado": "Abierto",
+      "cambios": {
+       "estado": {
+        "U2": {
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "En corto IN-OUT",
+      "cambios": {
+       "estado": {
+        "U2": {
+         "corto": true
+        }
+       }
+      },
+      "hacer": "¡24 V en la tarjeta! Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Calor",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "OUT",
+    "negra": "GND",
+    "como": "Escala V= · entre OUT y GND, con el tiempo",
+    "nota": "Con carga de 0,5 A.",
+    "titulo_tabla": "Salida con el tiempo",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "regulador_servicio",
+     "a": "U2.OUT",
+     "b": "U2.GND",
+     "segundos": 5.0
+    },
+    "filas": [
+     {
+      "estado": "Con disipador, a los 30 s",
+      "cambios": {
+       "segundos": 30.0
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Sin disipador, a los 5 s",
+      "cambios": {
+       "params": {
+        "U2": {
+         "disipador": false
+        }
+       }
+      },
+      "hacer": "Aún da tensión, pero quema",
+      "bien": true
+     },
+     {
+      "estado": "Sin disipador, a los 12 s",
+      "cambios": {
+       "params": {
+        "U2": {
+         "disipador": false
+        }
+       },
+       "segundos": 12.0
+      },
+      "hacer": "Corte térmico",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Entrada",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "IN",
+    "negra": "GND",
+    "como": "Escala V= · entre IN y GND",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Tensión de entrada",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "regulador_servicio",
+     "a": "U2.IN",
+     "b": "U2.GND",
+     "segundos": 1.0
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal: más de 14 V",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Sin disipador",
+    "sintoma": "La tarjeta se reinicia cada pocos segundos.",
+    "mide": [
+     {
+      "donde": "V= de salida a los 12 s",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "regulador_servicio",
+       "a": "U2.OUT",
+       "b": "U2.GND",
+       "segundos": 12.0,
+       "params": {
+        "U2": {
+         "disipador": false
+        }
+       }
+      }
+     },
+     {
+      "donde": "temperatura del regulador",
+      "bien": false,
+      "valor": "150 °C"
+     }
+    ],
+    "causa": "Disipador quitado, flojo o sin pasta térmica.",
+    "reparacion": "Atornillarlo al disipador con pasta térmica."
+   },
+   {
+    "nombre": "En corto entre IN y OUT",
+    "sintoma": "Los circuitos de 12 V se calientan o se queman.",
+    "mide": [
+     {
+      "donde": "V= de salida",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "regulador_servicio",
+       "a": "U2.OUT",
+       "b": "U2.GND",
+       "segundos": 1.0,
+       "estado": {
+        "U2": {
+         "corto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω IN-OUT, desoldado",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_regulador",
+       "a": "U2.IN",
+       "b": "U2.OUT",
+       "estado": {
+        "U2": {
+         "corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecarga o un pico de entrada.",
+    "reparacion": "Cambiarlo y comprobar lo que alimenta."
+   },
+   {
+    "nombre": "Abierto",
+    "sintoma": "La tarjeta está apagada y la entrada llega bien.",
+    "mide": [
+     {
+      "donde": "V= de salida",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "regulador_servicio",
+       "a": "U2.OUT",
+       "b": "U2.GND",
+       "segundos": 1.0,
+       "estado": {
+        "U2": {
+         "abierto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= de entrada",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "regulador_servicio",
+       "a": "U2.IN",
+       "b": "U2.GND",
+       "segundos": 1.0,
+       "estado": {
+        "U2": {
+         "abierto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Regulador quemado.",
+    "reparacion": "Cambiarlo por el mismo tipo."
+   },
+   {
+    "nombre": "Entrada baja",
+    "sintoma": "Con la fuente baja, la salida no llega a 12 V.",
+    "mide": [
+     {
+      "donde": "V= de salida con 13 V de entrada",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "regulador_servicio",
+       "a": "U2.OUT",
+       "b": "U2.GND",
+       "segundos": 1.0,
+       "params": {
+        "F": {
+         "v_salida": 13
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Le falta la caída mínima de unos 2 V.",
+    "reparacion": "Revisar la fuente que lo alimenta."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "tarjetas encendidas sin reinicios"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tensión de salida y temperatura en carga"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "reapriete al disipador y pasta"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-1: dispositivos semiconductores, generalidades.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

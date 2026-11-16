@@ -1,0 +1,68 @@
+{
+  "nombre": "Fuente conmutada de 24 V",
+  "nota": "La fuente U1 de 24 V y 5 A recibe 230 V de T2 por el fusible F1 y alimenta una carga de 12 Ω (2 A, 48 W). valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T2",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 2
+      }
+    },
+    {
+      "id": "U1",
+      "tipo": "fuente_dc"
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 12
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T2.H1"
+    ],
+    [
+      "B.L2",
+      "T2.H2"
+    ],
+    [
+      "T2.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "U1.L"
+    ],
+    [
+      "U1.N",
+      "T2.X2"
+    ],
+    [
+      "U1.+",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "U1.-"
+    ]
+  ]
+}

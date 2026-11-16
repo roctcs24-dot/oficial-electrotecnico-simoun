@@ -1,0 +1,117 @@
+{
+  "id": "operacional",
+  "titulo": "Amplificador operacional",
+  "resumen": "Compara dos tensiones o amplifica una señal pequeña.",
+  "dibujo": {
+    "svg": "res://art/equipos/operacional.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Amplificador operacional en cápsula DIP-8, con la muesca y el punto de la pata 1. Dibujo general: tipo de cada tarjeta, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "LM358",
+        "x": 200,
+        "y": 104,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "1",
+        "x": 140,
+        "y": 186,
+        "tam": 10
+      },
+      {
+        "texto": "2",
+        "x": 180,
+        "y": 186,
+        "tam": 10
+      },
+      {
+        "texto": "3",
+        "x": 220,
+        "y": 186,
+        "tam": 10
+      },
+      {
+        "texto": "4",
+        "x": 260,
+        "y": 186,
+        "tam": 10
+      },
+      {
+        "texto": "8",
+        "x": 140,
+        "y": 22,
+        "tam": 10
+      },
+      {
+        "texto": "7",
+        "x": 180,
+        "y": 22,
+        "tam": 10
+      },
+      {
+        "texto": "6",
+        "x": 220,
+        "y": 22,
+        "tam": 10
+      },
+      {
+        "texto": "5",
+        "x": 260,
+        "y": 22,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Amplificador operacional según IEC 60617 (recuadro) y ANSI/IEEE 315 (triángulo). Verificar contra la norma.",
+    "lista": [
+      "amplificador_operacional"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{amplificador_operacional}} amplifica muchísimo la diferencia entre sus dos entradas, + y −. Sin realimentación trabaja como {{comparador}}: la salida se va arriba si la entrada + es mayor que la −, y abajo si es menor. Así se hacen alarmas de temperatura, de nivel o de tensión baja en las tarjetas; con realimentación, amplifica las señales de los sensores."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Entradas + (no inversora) y − (inversora):[/b] casi no consumen corriente.\n• [b]Salida:[/b] llega cerca de la alimentación, pero no del todo (1 a 2 V por debajo en muchos).\n• [b]Alimentación:[/b] simple (+ y 0 V) o doble (+ y −)."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Comparador de alarma:[/b] la señal del sensor en una entrada y una referencia ajustable (un potenciómetro) en la otra; la salida manda un LED o un transistor con su relé.\n• Según qué entrada lleve la señal, la salida sube cuando la señal sube o cuando baja.\n• Un condensador pequeño entre la alimentación y 0 V, junto a la cápsula."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se ajusta con la referencia: el potenciómetro fija el punto de alarma, por ejemplo 2,4 V para 60 °C con la sonda NTC del ejemplo ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]En servicio:[/b] V= en las dos entradas y en la salida, respecto de 0 V (pata 4). Si la entrada + supera a la −, la salida debe estar alta.\n• Si las entradas están bien y la salida no responde, el operacional está dañado.\n• No se prueba con el óhmetro: se mide en servicio."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sonda abierta:[/b] la entrada queda en la alimentación y la alarma no salta nunca: un fallo peligroso, que no avisa.\n• [b]Referencia desajustada:[/b] alarma a destiempo o nunca.\n• [b]Sin alimentación:[/b] la salida queda a 0 V.\n• [b]Dañado:[/b] salida pegada arriba o abajo."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: prueba de la alarma calentando la sonda o simulándola con una resistencia.\n\n[b]Correctivo:[/b] se cambia el integrado (con zócalo) o la tarjeta, y se reajusta la referencia."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60748-3: circuitos integrados analógicos.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

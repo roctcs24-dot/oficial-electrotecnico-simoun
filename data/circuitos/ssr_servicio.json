@@ -1,0 +1,91 @@
+{
+  "nombre": "Relé de estado sólido con su resistencia de calefacción",
+  "nota": "Una salida de 24 V (S1) manda el relé K1 por 3 (+) y 4 (−); K1 conecta la resistencia RL de 230 Ω (230 W) a 230 V a través del fusible F1. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T2",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 4
+      }
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 230
+      }
+    },
+    {
+      "id": "K1",
+      "tipo": "rele_estado_solido"
+    },
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T2.H1"
+    ],
+    [
+      "B.L2",
+      "T2.H2"
+    ],
+    [
+      "T2.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "K1.1"
+    ],
+    [
+      "K1.2",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "T2.X2"
+    ],
+    [
+      "F.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "K1.3"
+    ],
+    [
+      "K1.4",
+      "F.-"
+    ]
+  ]
+}

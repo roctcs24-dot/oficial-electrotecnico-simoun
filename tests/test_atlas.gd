@@ -53,17 +53,18 @@ func test_el_modulo_7_publica_las_etapas_33_a_36() -> String:
 	])
 
 
-func test_el_modulo_8_publica_la_electronica_i() -> String:
+func test_el_modulo_8_publica_la_electronica_i_y_ii() -> String:
 	var c := Contenido.new()
 	var m := c.sistema(8)
-	var esperados := ["resistor", "potenciometro", "termistor", "varistor", "condensador_electrico", "diodo", "diodo_zener", "led", "puente_rectificador"]
+	var esperados := ["resistor", "potenciometro", "termistor", "varistor", "condensador_electrico", "diodo", "diodo_zener", "led", "puente_rectificador",
+		"transistor", "mosfet", "tiristor", "triac", "optoacoplador", "rele_estado_solido", "regulador", "fuente_conmutada", "operacional", "puerta_logica"]
 	var en_sistema_6: Array = c.sistema(6)["modos"]["aprender"]["fichas"]
 	var faltan := esperados.filter(func(id: String) -> bool: return not en_sistema_6.has(id))
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 8 debe estar activo"),
 		A.cierto(_ids_modulo(c, 8) == esperados, "atlas del módulo 8: %s" % str(_ids_modulo(c, 8))),
 		A.cierto(faltan.is_empty(), "las fichas de electrónica deben publicarse en el sistema 6: faltan %s" % str(faltan)),
-		A.cierto(Avance.atlas(m, Partida.new("user://pruebas_atlas_8.json")) == [0, 9], "avance del módulo 8 al empezar"),
+		A.cierto(Avance.atlas(m, Partida.new("user://pruebas_atlas_8.json")) == [0, 19], "avance del módulo 8 al empezar"),
 	])
 
 
@@ -717,4 +718,135 @@ func test_cortes_de_electronica() -> String:
 		A.cierto(regula and sigue_entrada, "Zener: regula a 12 V y por debajo sigue a la entrada"),
 		A.cierto(luce and funde and sigue_fundido and al_reves, "LED: luce con 1,1 kΩ, se funde sin resistencia y al revés no luce"),
 		A.cierto(con_filtro and sin_filtro and media_onda, "puente: 32 V con filtro, 20 V sin él y media onda"),
+	])
+
+
+func test_medir_de_electronica_ii() -> String:
+	var c := Contenido.new()
+	return A.primero([
+		A.cierto(_lectura(c, "transistor", "En servicio", "Con orden (S1)") == "0,2 V", "transistor saturado: %s" % _lectura(c, "transistor", "En servicio", "Con orden (S1)")),
+		A.cierto(_lectura(c, "transistor", "En servicio", "RB de 470 kΩ") == "21 V", "sin saturar: %s" % _lectura(c, "transistor", "En servicio", "RB de 470 kΩ")),
+		A.cierto(_lectura(c, "transistor", "Diodos", "C → E") == "OL", "C-E: OL"),
+		A.cierto(_lectura(c, "mosfet", "Prueba de diodo", "S → D, diodo interno") == "0,5 V", "diodo interno del MOSFET"),
+		A.cierto(_lectura(c, "mosfet", "Puerta", "Perforada") == "10 Ω", "puerta perforada"),
+		A.cierto(_lectura(c, "tiristor", "Sirena", "Soltado S1") == "23 V", "tiristor enclavado: %s" % _lectura(c, "tiristor", "Sirena", "Soltado S1")),
+		A.cierto(_lectura(c, "tiristor", "Sirena", "Pulsando S2") == "0,0 V", "S2 lo apaga"),
+		A.cierto(_lectura(c, "triac", "En servicio", "Con puerta (S1)") == "229 V", "triac conduce: %s" % _lectura(c, "triac", "En servicio", "Con puerta (S1)")),
+		A.cierto(_lectura(c, "triac", "En servicio", "RG de 1 kΩ") == "0,0 V", "poca puerta: no conduce"),
+		A.cierto(_lectura(c, "triac", "Óhmetro", "A1-A2") == "OL" and _lectura(c, "triac", "Óhmetro", "A1-A2 en corto") == "0,0 Ω", "triac: A1-A2 con el óhmetro"),
+		A.cierto(_lectura(c, "optoacoplador", "Aislamiento", "Sano") == "> 999 MΩ", "aislamiento del optoacoplador"),
+		A.cierto(_lectura(c, "optoacoplador", "En servicio", "Entrada activa (S1)") == "0,2 V", "salida activa"),
+		A.cierto(_lectura(c, "rele_estado_solido", "Sin carga", "Relé sano, apagado") == "229 V", "tensión fantasma: %s" % _lectura(c, "rele_estado_solido", "Sin carga", "Relé sano, apagado")),
+		A.cierto(_lectura(c, "rele_estado_solido", "En servicio", "Sin orden") == "1,3 V", "fuga con carga: %s" % _lectura(c, "rele_estado_solido", "En servicio", "Sin orden")),
+		A.cierto(_lectura(c, "regulador", "Salida", "Normal") == "12,0 V", "regulador: %s" % _lectura(c, "regulador", "Salida", "Normal")),
+		A.cierto(_lectura(c, "regulador", "Calor", "Sin disipador, a los 12 s") == "0,0 V", "corte térmico sin disipador"),
+		A.cierto(_lectura(c, "regulador", "Salida", "En corto IN-OUT") == "24 V", "regulador en corto"),
+		A.cierto(_lectura(c, "fuente_conmutada", "Salida", "Degradada") == "19,2 V", "fuente degradada"),
+		A.cierto(_lectura(c, "fuente_conmutada", "Salida", "Corto en la salida") == "0,0 V", "protección de la fuente"),
+		A.cierto(_lectura(c, "operacional", "Salida", "Sonda a 70 °C") == "10,1 V", "alarma: %s" % _lectura(c, "operacional", "Salida", "Sonda a 70 °C")),
+		A.cierto(_lectura(c, "operacional", "Salida", "70 °C, sonda abierta") == "0,0 V", "sonda abierta: sin alarma"),
+		A.cierto(_lectura(c, "puerta_logica", "Tabla de verdad", "A = 1, B = 1") == "4,6 V", "AND con las dos a 1: %s" % _lectura(c, "puerta_logica", "Tabla de verdad", "A = 1, B = 1")),
+		A.cierto(_lectura(c, "puerta_logica", "Tabla de verdad", "A = 1, B = 0") == "0,0 V", "AND con una a 0"),
+		A.cierto(_lectura(c, "puerta_logica", "Otras puertas", "XOR (4070)") == "4,6 V", "XOR distintas"),
+		A.cierto(_lectura(c, "puerta_logica", "Entrada al aire", "Salida Y con B = 1") == "2,4 V", "salida indefinida"),
+	])
+
+
+func test_cortes_de_electronica_ii() -> String:
+	var q = _animacion("corte_transistor", {})
+	q.poner_orden(true)
+	var satura: bool = q.saturado() and q.rele_entra() and is_equal_approx(q.vce(), 0.2)
+	q.elegir_rb(1)
+	var no_satura: bool = not q.saturado() and not q.rele_entra() and q.vce() > 5.0
+	q.elegir_rb(0)
+	q.poner_supresor(false)
+	q.poner_orden(false)
+	var perforado: bool = q.quemado and q.fase() == 3
+	q.free()
+	var m = _animacion("corte_mosfet", {})
+	m.poner_vgs(10.0)
+	var pleno: bool = m.nivel() == 2 and m.potencia() < 0.5 and not m.quemado
+	m.poner_vgs(5.0)
+	var medias: bool = m.quemado and m.fase() == 3
+	m.free()
+	var tr = _animacion("corte_tiristor", {})
+	tr.pulsar_puerta()
+	var dispara: bool = tr.disparado and tr.fase() == 2
+	tr.avanzar(1.0)
+	var enclava: bool = tr.disparado and tr.fase() == 3
+	tr.cortar()
+	var apaga: bool = not tr.disparado
+	tr.free()
+	var tc = _animacion("corte_triac", {})
+	tc.poner_puerta(true)
+	tc.avanzar(0.1)
+	var conduce: bool = tc.conduce
+	tc.poner_puerta(false)
+	var espera: bool = tc.conduce and tc.fase() == 3
+	tc.avanzar(1.0)
+	var apagado: bool = not tc.conduce
+	tc.free()
+	var ok = _animacion("corte_optoacoplador", {})
+	ok.poner_entrada(true)
+	var baja: bool = is_equal_approx(ok.salida(), 0.2)
+	ok.pico()
+	var aislado: bool = not ok.danada
+	ok.unir(true)
+	ok.pico()
+	var danada: bool = ok.danada
+	ok.free()
+	var s = _animacion("corte_ssr", {})
+	var fuga: bool = s.tension_salida() < 2.0
+	s.quitar_carga(true)
+	var fantasma: bool = s.tension_salida() > 220.0 and s.fase() == 3
+	s.free()
+	var r = _animacion("corte_regulador", {})
+	var regula: bool = is_equal_approx(r.salida(), 12.0) and absf(r.potencia() - 6.0) < 0.01
+	r.poner_disipador(false)
+	for _i in 120:
+		r.avanzar(0.1)
+	var corta: bool = r.corte and r.salida() == 0.0
+	r.poner_entrada(13.0)
+	r.poner_disipador(true)
+	for _i in 600:
+		r.avanzar(0.1)
+	var baja_entrada: bool = not r.corte and is_equal_approx(r.salida(), 11.0)
+	r.free()
+	var f = _animacion("corte_fuente", {})
+	var servicio: bool = f.salida() > 23.9 and f.fase() == 2
+	f.elegir_carga(2)
+	f.avanzar(0.2)
+	var protege: bool = f.protegida and f.salida() == 0.0
+	f.avanzar(2.0)
+	var reintenta: bool = not f.protegida
+	f.free()
+	var op = _animacion("corte_operacional", {})
+	var sin_alarma: bool = not op.alarma()
+	op.poner_temperatura(70.0)
+	var alarma: bool = op.alarma()
+	op.abrir_sonda(true)
+	var sonda: bool = not op.alarma()
+	op.free()
+	var p = _animacion("corte_puertas", {})
+	p.poner(1, 1)
+	var and_11: bool = p.salida() == 1
+	p.elegir_tipo("nand")
+	var nand_11: bool = p.salida() == 0
+	p.elegir_tipo("not")
+	p.poner(0, 0)
+	var not_0: bool = p.salida() == 1
+	p.al_aire(true)
+	var indefinida: bool = p.salida() == -1 and p.fase() == 3
+	p.free()
+	return A.primero([
+		A.cierto(satura and no_satura and perforado, "transistor: satura con 10 kΩ, no con 100 kΩ, y sin supresor se perfora"),
+		A.cierto(pleno and medias, "MOSFET: pleno con 10 V y se quema a medias"),
+		A.cierto(dispara and enclava and apaga, "tiristor: dispara, se enclava y S2 lo apaga"),
+		A.cierto(conduce and espera and apagado, "triac: conduce con puerta y se apaga en el paso por cero"),
+		A.cierto(baja and aislado and danada, "optoacoplador: aísla, salvo con los comunes unidos"),
+		A.cierto(fuga and fantasma, "relé de estado sólido: fuga y tensión fantasma"),
+		A.cierto(regula and corta and baja_entrada, "regulador: 12 V, corte térmico y entrada baja"),
+		A.cierto(servicio and protege and reintenta, "fuente: 24 V, protección y reintento"),
+		A.cierto(sin_alarma and alarma and sonda, "operacional: alarma con calor y sin ella con la sonda abierta"),
+		A.cierto(and_11 and nand_11 and not_0 and indefinida, "puertas: AND, NAND, NOT y entrada al aire"),
 	])

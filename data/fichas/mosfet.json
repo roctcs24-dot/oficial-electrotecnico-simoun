@@ -1,0 +1,93 @@
+{
+  "id": "mosfet",
+  "titulo": "Transistor MOSFET",
+  "resumen": "Una tensión en la puerta deja pasar corrientes grandes con muy poca pérdida.",
+  "dibujo": {
+    "svg": "res://art/equipos/mosfet.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "MOSFET de canal N IRFZ44N en cápsula TO-220, con sus patas G, D y S. Dibujo general: tipo de cada equipo, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "IRFZ44N",
+        "x": 200,
+        "y": 108,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "G",
+        "x": 170,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "D",
+        "x": 200,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "S",
+        "x": 230,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "lengüeta = D",
+        "x": 300,
+        "y": 46,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "MOSFET de canal N según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "mosfet_n"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{mosfet}} es un transistor que se manda por tensión: entre {{puerta}} y {{surtidor}} casi no pasa corriente, y la tensión que se le pone abre el canal entre {{drenador}} y surtidor. Conduce con una resistencia de miliohmios: mueve muchos amperios sin calentarse. Está en los variadores, las fuentes conmutadas, los cargadores y las salidas de potencia de las tarjetas."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Puerta (G)[/b] aislada del canal por una capa finísima de óxido: se perfora con la electricidad estática o con más de unos 20 V.\n• [b]Drenador (D)[/b] y [b]surtidor (S)[/b]: el canal; en la cápsula TO-220, la lengüeta metálica es el drenador.\n• [b]Diodo interno[/b] de S a D, que conduce al revés."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]Canal N en el lado de 0 V:[/b] surtidor a 0 V, la carga entre el + y el drenador.\n• Puerta mandada a través de una resistencia pequeña (unos 100 Ω), y otra de 10 kΩ de puerta a surtidor que la descarga: una puerta al aire se queda cargada y el MOSFET conduce cuando no debe.\n• Tensión de puerta plena: unos 10 V en los normales; con 4 o 5 V conduce a medias y se calienta."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la tensión, la corriente, la resistencia en conducción y la tensión de puerta que necesita ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y desoldado, tocando las patas lo menos posible: escala de diodo. Roja en S y negra en D: 0,4 a 0,6 V del diodo interno; al revés, OL.\n• Entre puerta y surtidor: OL. Si marca ohmios, la puerta está perforada.\n• [b]En servicio:[/b] V= D-S: toda la tensión apagado y décimas de voltio conduciendo; V= G-S, la tensión de mando."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]D-S en corto:[/b] la carga queda siempre encendida.\n• [b]Puerta perforada:[/b] G-S en ohmios; no se puede mandar.\n• [b]Mandado a medias[/b] con poca tensión de puerta: se calienta y acaba en corto.\n• [b]Puerta al aire:[/b] conduce sola por la carga que queda."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: temperatura de los disipadores de los equipos de potencia con el termómetro infrarrojo.\n\n[b]Correctivo:[/b] se cambia con pulsera antiestática, por otro de igual o mayor tensión y corriente, con pasta térmica nueva y su aislante si lo llevaba."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-8: transistores de efecto de campo.",
+    "IEC 61340-5-1: protección contra la electricidad estática."
+  ]
+}

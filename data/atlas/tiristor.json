@@ -1,0 +1,477 @@
+{
+ "id": "tiristor",
+ "ficha": "tiristor",
+ "titulo": "Tiristor",
+ "termino": "tiristor",
+ "icono": "tiristor",
+ "resumen": "Se dispara con la puerta y se queda conduciendo.",
+ "bornes_dibujo": {
+  "K": [
+   170,
+   205
+  ],
+  "A": [
+   200,
+   205
+  ],
+  "G": [
+   230,
+   205
+  ]
+ },
+ "que_es": {
+  "texto": "El {{tiristor}} bloquea hasta que su {{puerta}} lo dispara; después conduce mientras pase más que su {{corriente_mantenimiento}}.",
+  "partes": [
+   {
+    "texto": "Cuatro capas PNPN en una cápsula TO-220.",
+    "marca": [
+     200,
+     108
+    ]
+   },
+   {
+    "texto": "Lengüeta unida al ánodo.",
+    "marca": [
+     200,
+     40
+    ]
+   },
+   {
+    "texto": "Patas K, A y G.",
+    "marca": [
+     200,
+     190
+    ]
+   }
+  ],
+  "placa": "TYN825 · 25 A · 800 V",
+  "a_bordo": "En los rectificadores controlados de los cargadores de baterías, en los arrancadores suaves y en los reguladores de excitación. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_tiristor",
+  "params": {},
+  "pasos": [
+   "Sin impulso de puerta, el tiristor bloquea aunque tenga tensión.",
+   "Un impulso de puerta lo dispara: conduce con 1 V entre ánodo y cátodo.",
+   "Soltada la puerta sigue conduciendo; solo se apaga al cortar su corriente con S2."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_tiristor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 170,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "S2 (NC)",
+     "x": 180,
+     "y": 60,
+     "tam": 11
+    },
+    {
+     "texto": "RL sirena",
+     "x": 268,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 352,
+     "y": 60,
+     "tam": 12
+    },
+    {
+     "texto": "RG",
+     "x": 352,
+     "y": 140,
+     "tam": 11
+    },
+    {
+     "texto": "V1",
+     "x": 262,
+     "y": 176,
+     "tam": 12
+    },
+    {
+     "texto": "A",
+     "x": 236,
+     "y": 148,
+     "tam": 10
+    },
+    {
+     "texto": "K",
+     "x": 236,
+     "y": 214,
+     "tam": 10
+    },
+    {
+     "texto": "G",
+     "x": 254,
+     "y": 216,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    220,
+    150
+   ],
+   "K": [
+    220,
+    210
+   ],
+   "G": [
+    244,
+    206
+   ]
+  },
+  "bornes": {
+   "A": "Llega la sirena desde el +24 V, a través de S2.",
+   "K": "Va al 0 V.",
+   "G": "Llega el impulso por RG al pulsar S1."
+  },
+  "grupos": [
+   {
+    "nombre": "V1 A-K",
+    "bornes": [
+     "A",
+     "K"
+    ],
+    "texto": "En serie con la sirena: conduce una vez disparado."
+   },
+   {
+    "nombre": "Puerta",
+    "bornes": [
+     "G"
+    ],
+    "texto": "Un impulso de unos miliamperios lo dispara."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un tiristor de 25 A y una sirena de 1 A a 24 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Prueba de diodo",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "G",
+    "negra": "K",
+    "como": "Escala de diodo · roja en G, negra en K",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Puerta y ánodo",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_tiristor",
+     "a": "V1.G",
+     "b": "V1.K"
+    },
+    "filas": [
+     {
+      "estado": "G → K",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "K → G",
+      "cambios": {
+       "a": "V1.K",
+       "b": "V1.G"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "A → K",
+      "cambios": {
+       "a": "V1.A",
+       "b": "V1.K"
+      },
+      "hacer": "Normal: bloquea",
+      "bien": true
+     },
+     {
+      "estado": "A-K en corto",
+      "cambios": {
+       "a": "V1.A",
+       "b": "V1.K",
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala V= · entre A y K",
+    "nota": "Con 24 V.",
+    "titulo_tabla": "Tensión ánodo-cátodo",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "tiristor_servicio",
+     "a": "V1.A",
+     "b": "V1.K",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sin disparar",
+      "hacer": "Normal: bloquea",
+      "bien": true
+     },
+     {
+      "estado": "Disparado",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: conduce",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Sirena",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "K",
+    "como": "Escala V= · en la sirena",
+    "nota": "Con 24 V.",
+    "titulo_tabla": "Tensión en la sirena",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "tiristor_servicio",
+     "a": "RL.A",
+     "b": "RL.B",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "En reposo",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Al pulsar S1",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Suena",
+      "bien": true
+     },
+     {
+      "estado": "Soltado S1",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "disparado": true
+        }
+       }
+      },
+      "hacer": "Sigue sonando: enclavado",
+      "bien": true
+     },
+     {
+      "estado": "Pulsando S2",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "disparado": true
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Se apaga",
+      "bien": true
+     },
+     {
+      "estado": "A-K en corto",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Suena siempre: cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "La sirena suena sin alarma y S2 no la apaga.",
+    "mide": [
+     {
+      "donde": "V= en la sirena",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "tiristor_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo A → K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_tiristor",
+       "a": "V1.A",
+       "b": "V1.K",
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente o un pico de tensión.",
+    "reparacion": "Cambiarlo y revisar la red RC."
+   },
+   {
+    "nombre": "Puerta abierta",
+    "sintoma": "La alarma no se enclava nunca.",
+    "mide": [
+     {
+      "donde": "V= en la sirena al pulsar S1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "tiristor_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "V1": {
+         "puerta_abierta": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo G → K",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_tiristor",
+       "a": "V1.G",
+       "b": "V1.K",
+       "estado": {
+        "V1": {
+         "puerta_abierta": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Puerta dañada o su pista cortada.",
+    "reparacion": "Cambiarlo."
+   },
+   {
+    "nombre": "No se apaga",
+    "sintoma": "Al pulsar S2 la sirena sigue.",
+    "mide": [
+     {
+      "donde": "S2",
+      "bien": false,
+      "valor": "contacto NC pegado"
+     }
+    ],
+    "causa": "El contacto que corta la corriente no abre.",
+    "reparacion": "Cambiar el pulsador S2."
+   },
+   {
+    "nombre": "Se dispara solo",
+    "sintoma": "La alarma salta al arrancar otros equipos.",
+    "mide": [
+     {
+      "donde": "red RC entre A y K",
+      "bien": false,
+      "valor": "falta o está abierta"
+     }
+    ],
+    "causa": "Un pico rápido de tensión lo dispara sin puerta.",
+    "reparacion": "Reponer la red RC (snubber)."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de la alarma y su rearme"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "temperatura de los tiristores del cargador"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de disipadores"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-6: tiristores.",
+  "IEC 60146-1-1: convertidores de semiconductores."
+ ]
+}

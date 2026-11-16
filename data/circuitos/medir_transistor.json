@@ -1,0 +1,11 @@
+{
+  "nombre": "Transistor suelto para medir",
+  "nota": "Transistor NPN BC337 (0,8 A, 45 V), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "Q1",
+      "tipo": "transistor"
+    }
+  ],
+  "cables": []
+}

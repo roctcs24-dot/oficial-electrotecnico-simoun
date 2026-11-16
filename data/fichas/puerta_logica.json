@@ -1,0 +1,101 @@
+{
+  "id": "puerta_logica",
+  "titulo": "Puertas lógicas",
+  "resumen": "Combinan señales de 0 y 1: Y, O, NO.",
+  "dibujo": {
+    "svg": "res://art/equipos/puerta_logica.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Circuito integrado CMOS de cuatro puertas AND en cápsula DIP-14, con la muesca de la pata 1. Dibujo general: tipo de cada tarjeta, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "CD4081",
+        "x": 202,
+        "y": 104,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "1 A",
+        "x": 106,
+        "y": 186,
+        "tam": 9
+      },
+      {
+        "texto": "2 B",
+        "x": 138,
+        "y": 186,
+        "tam": 9
+      },
+      {
+        "texto": "3 Y",
+        "x": 170,
+        "y": 186,
+        "tam": 9
+      },
+      {
+        "texto": "7 GND",
+        "x": 298,
+        "y": 186,
+        "tam": 9
+      },
+      {
+        "texto": "14 VCC",
+        "x": 106,
+        "y": 22,
+        "tam": 9
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Puertas lógicas: IEC 60617 las dibuja como rectángulos con «&», «≥1» o «1»; ANSI/IEEE 315, con su forma característica. Verificar contra la norma.",
+    "lista": [
+      "puerta_and",
+      "puerta_or",
+      "puerta_not"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{puerta_logica}} combina señales que solo valen 0 (sin tensión) o 1 (con tensión). AND da 1 si todas sus entradas son 1; OR, si alguna lo es; NOT invierte. Cada puerta se describe con su {{tabla_verdad}}. Es la misma lógica que los contactos en serie (AND) y en paralelo (OR) de un esquema de mando y que el programa de un PLC."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Circuito integrado[/b] con varias puertas: el 4081 lleva cuatro AND de dos entradas.\n• [b]Alimentación:[/b] VCC (pata 14) y GND (pata 7).\n• [b]Niveles CMOS:[/b] 1 por encima del 70 % de VCC y 0 por debajo del 30 %; en medio, el nivel es indefinido."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Cada entrada siempre a un nivel definido: un pulsador con su resistencia a 0 V (pull-down) o a VCC (pull-up). Una entrada CMOS al aire da una salida errática.\n• La salida manda un LED con su resistencia, o la entrada de otra puerta.\n• Las entradas de las puertas que no se usan, a VCC o a 0 V."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajustan. Se eligen por la función, el número de entradas y la familia (CMOS 4000 o 74HC) y su tensión ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]En servicio:[/b] V= en cada entrada y en la salida respecto de GND, y comparar con la tabla de verdad.\n• Una entrada al aire puede marcar 0 V con el multímetro y, sin embargo, la puerta la ve indefinida: la salida queda a media tensión.\n• Compruebe primero VCC entre las patas 14 y 7."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Entrada al aire:[/b] resistencia de pull-down cortada o pista rota: salida a media tensión o errática.\n• [b]Sin alimentación:[/b] todo a 0.\n• [b]Salida quemada[/b] por un corto: pegada a 0.\n• [b]Puerta equivocada[/b] al cambiar el integrado (4011 NAND en lugar de 4081 AND)."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• No tienen mantenimiento propio: se revisan con la tarjeta.\n\n[b]Correctivo:[/b] se cambia el integrado por el mismo número, con pulsera antiestática, o la tarjeta completa."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60617-12: elementos lógicos binarios.",
+    "IEEE 91: símbolos lógicos."
+  ]
+}

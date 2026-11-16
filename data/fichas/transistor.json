@@ -1,0 +1,93 @@
+{
+  "id": "transistor",
+  "titulo": "Transistor bipolar",
+  "resumen": "Una corriente pequeña en la base manda una grande en el colector.",
+  "dibujo": {
+    "svg": "res://art/equipos/transistor.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Transistor NPN BC337 en cápsula TO-92, con sus patas C, B y E vistas de frente (lado plano). Dibujo general: tipo y orden de las patas de cada uno, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "BC337",
+        "x": 200,
+        "y": 70,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "C",
+        "x": 176,
+        "y": 186,
+        "tam": 11
+      },
+      {
+        "texto": "B",
+        "x": 200,
+        "y": 186,
+        "tam": 11
+      },
+      {
+        "texto": "E",
+        "x": 224,
+        "y": 186,
+        "tam": 11
+      },
+      {
+        "texto": "lado plano",
+        "x": 92,
+        "y": 40,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Transistor NPN según IEC 60617 y ANSI/IEEE 315: la flecha del emisor apunta hacia fuera. Verificar contra la norma.",
+    "lista": [
+      "transistor_npn"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{transistor}} bipolar NPN tiene tres patas: {{base}}, {{colector}} y {{emisor}}. Una corriente pequeña de base a emisor deja pasar una corriente unas cien veces mayor de colector a emisor. En las tarjetas del buque se usa sobre todo como interruptor: una salida de poca corriente manda la bobina de un relé, un LED o un zumbador."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Dos uniones PN[/b] en un trozo de silicio: base-emisor y base-colector.\n• [b]Ganancia (β o hFE):[/b] cuántas veces la corriente de base es la de colector; unos 100 a 400.\n• [b]Como interruptor[/b] trabaja en corte (sin corriente de base, no conduce) o en {{saturacion_transistor}} (base de sobra: entre colector y emisor quedan unos 0,2 V)."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• [b]NPN en el lado de 0 V:[/b] emisor a 0 V, la carga entre el + y el colector, y la base mandada a través de una resistencia (sin ella, la base se quema).\n• La resistencia de base se calcula para que sobre corriente: Ib ≥ 2 × Ic / β.\n• Con una bobina, un diodo supresor en paralelo con ella, con el cátodo en el +."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la corriente de colector, la tensión y la potencia; las patas se comprueban en la hoja de datos, porque cada cápsula las ordena a su manera ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y desoldado: escala de diodo. Roja en la base: 0,6 a 0,7 V hacia el emisor y hacia el colector. Negra en la base: OL. Entre colector y emisor: OL en los dos sentidos.\n• [b]En servicio:[/b] V= colector-emisor: toda la tensión apagado y unos 0,2 V conduciendo; V= base-emisor, 0,7 V."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Colector-emisor en corto:[/b] la carga queda siempre conectada.\n• [b]Unión base-emisor abierta:[/b] nunca conduce.\n• [b]Sin saturar[/b] por una resistencia de base grande: el relé no entra, y el transistor se calienta con la tensión entre sus patas.\n• [b]Sin diodo supresor:[/b] el pico de la bobina lo perfora."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• No tiene mantenimiento propio: se revisa con la tarjeta.\n\n[b]Correctivo:[/b] se cambia por el mismo o por uno equivalente de igual o mayor corriente, tensión y ganancia, con las patas en el mismo orden."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-7: transistores bipolares.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

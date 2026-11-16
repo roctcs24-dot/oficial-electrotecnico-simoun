@@ -1,0 +1,497 @@
+{
+ "id": "transistor",
+ "ficha": "transistor",
+ "titulo": "Transistor bipolar",
+ "termino": "transistor",
+ "icono": "transistor",
+ "resumen": "Una corriente pequeña manda una grande.",
+ "bornes_dibujo": {
+  "C": [
+   176,
+   166
+  ],
+  "B": [
+   200,
+   166
+  ],
+  "E": [
+   224,
+   166
+  ]
+ },
+ "que_es": {
+  "texto": "El {{transistor}} NPN deja pasar corriente de {{colector}} a {{emisor}} cuando recibe corriente en la {{base}}: en las tarjetas, sobre todo como interruptor.",
+  "partes": [
+   {
+    "texto": "Cápsula TO-92 con el lado plano al frente.",
+    "marca": [
+     200,
+     70
+    ]
+   },
+   {
+    "texto": "Patas C, B y E: el orden depende del tipo.",
+    "marca": [
+     200,
+     140
+    ]
+   },
+   {
+    "texto": "Marca: BC337, NPN de 0,8 A.",
+    "marca": [
+     200,
+     50
+    ]
+   }
+  ],
+  "placa": "BC337 · NPN · 0,8 A · 45 V",
+  "a_bordo": "En las tarjetas de alarmas, de los cargadores y de los paneles: mandan relés, zumbadores y LED desde salidas de poca corriente. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_transistor",
+  "params": {},
+  "pasos": [
+   "Sin corriente de base, el transistor no conduce: el relé está suelto.",
+   "Con corriente en la base, el colector conduce y el transistor se satura: quedan 0,2 V.",
+   "La bobina se suelta al quitar la base, y el diodo supresor se come el pico."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_transistor.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 170,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "RB 10 kΩ",
+     "x": 115,
+     "y": 180,
+     "tam": 11
+    },
+    {
+     "texto": "K1",
+     "x": 186,
+     "y": 100,
+     "tam": 12
+    },
+    {
+     "texto": "D1",
+     "x": 322,
+     "y": 100,
+     "tam": 12
+    },
+    {
+     "texto": "Q1",
+     "x": 260,
+     "y": 200,
+     "tam": 12
+    },
+    {
+     "texto": "C",
+     "x": 236,
+     "y": 156,
+     "tam": 10
+    },
+    {
+     "texto": "B",
+     "x": 168,
+     "y": 186,
+     "tam": 10
+    },
+    {
+     "texto": "E",
+     "x": 236,
+     "y": 244,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "C": [
+    220,
+    160
+   ],
+   "B": [
+    168,
+    200
+   ],
+   "E": [
+    220,
+    240
+   ]
+  },
+  "bornes": {
+   "C": "Llega la bobina del relé K1 desde el +24 V.",
+   "B": "Llega la orden por RB de 10 kΩ al pulsar S1.",
+   "E": "Va al 0 V."
+  },
+  "grupos": [
+   {
+    "nombre": "Q1 C-E",
+    "bornes": [
+     "C",
+     "E"
+    ],
+    "texto": "El interruptor: conecta la bobina de K1 a 0 V."
+   },
+   {
+    "nombre": "Base",
+    "bornes": [
+     "B"
+    ],
+    "texto": "Con 2,3 mA de base, Q1 se satura de sobra."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un BC337, RB de 10 kΩ y un relé de 24 V y 640 Ω. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Diodos",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "B",
+    "negra": "E",
+    "como": "Escala de diodo · roja en B, negra en E",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Uniones del transistor",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_transistor",
+     "a": "Q1.B",
+     "b": "Q1.E"
+    },
+    "filas": [
+     {
+      "estado": "B → E",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "B → C",
+      "cambios": {
+       "b": "Q1.C"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "E → B",
+      "cambios": {
+       "a": "Q1.E",
+       "b": "Q1.B"
+      },
+      "hacer": "Normal: bloquea",
+      "bien": true
+     },
+     {
+      "estado": "C → E",
+      "cambios": {
+       "a": "Q1.C",
+       "b": "Q1.E"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "C → E en corto",
+      "cambios": {
+       "a": "Q1.C",
+       "b": "Q1.E",
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "B → E abierta",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "be_abierta": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "C",
+    "negra": "E",
+    "como": "Escala V= · entre C y E",
+    "nota": "Con la tarjeta alimentada a 24 V.",
+    "titulo_tabla": "Tensión colector-emisor",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "transistor_servicio",
+     "a": "Q1.C",
+     "b": "Q1.E",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sin orden",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "Con orden (S1)",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: saturado",
+      "bien": true
+     },
+     {
+      "estado": "RB de 470 kΩ",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "RB": {
+         "ohm": 470000
+        }
+       }
+      },
+      "hacer": "No satura: el relé no entra",
+      "bien": false
+     },
+     {
+      "estado": "C-E en corto, sin orden",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "El relé no suelta: cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Base",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "B",
+    "negra": "E",
+    "como": "Escala V= · entre B y E",
+    "nota": "Con la orden dada.",
+    "titulo_tabla": "Tensión base-emisor",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "transistor_servicio",
+     "a": "Q1.B",
+     "b": "Q1.E",
+     "segundos": 0.3,
+     "estado": {
+      "S1": {
+       "presionado": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Con orden",
+      "hacer": "Normal: la unión conduce",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "El relé no suelta aunque la tarjeta quite la orden.",
+    "mide": [
+     {
+      "donde": "V= C-E sin orden",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "transistor_servicio",
+       "a": "Q1.C",
+       "b": "Q1.E",
+       "segundos": 0.3,
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo C → E",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_transistor",
+       "a": "Q1.C",
+       "b": "Q1.E",
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente o el pico de una bobina sin diodo supresor.",
+    "reparacion": "Cambiarlo y comprobar el diodo supresor."
+   },
+   {
+    "nombre": "Base abierta",
+    "sintoma": "El relé no entra nunca; la orden llega a la base.",
+    "mide": [
+     {
+      "donde": "V= C-E con orden",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "transistor_servicio",
+       "a": "Q1.C",
+       "b": "Q1.E",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "Q1": {
+         "be_abierta": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo B → E",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_transistor",
+       "a": "Q1.B",
+       "b": "Q1.E",
+       "estado": {
+        "Q1": {
+         "be_abierta": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Unión base-emisor rota.",
+    "reparacion": "Cambiar el transistor."
+   },
+   {
+    "nombre": "No satura",
+    "sintoma": "El relé zumba o no entra, y el transistor se calienta.",
+    "mide": [
+     {
+      "donde": "V= C-E con orden",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "transistor_servicio",
+       "a": "Q1.C",
+       "b": "Q1.E",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "RB": {
+         "ohm": 470000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Resistencia de base demasiado grande (cambiada o de otro valor).",
+    "reparacion": "Poner la resistencia de base de su valor: Ib ≥ 2 × Ic / β."
+   },
+   {
+    "nombre": "Sin diodo supresor",
+    "sintoma": "El transistor se quema cada cierto tiempo.",
+    "mide": [
+     {
+      "donde": "pico en el colector al soltar",
+      "bien": false,
+      "valor": "cientos de voltios"
+     }
+    ],
+    "causa": "Falta el diodo en paralelo con la bobina, o está abierto.",
+    "reparacion": "Poner el diodo con el cátodo en el +."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "relés que entran con su orden"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "revisión de tarjetas en una parada"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de las tarjetas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-7: transistores bipolares.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

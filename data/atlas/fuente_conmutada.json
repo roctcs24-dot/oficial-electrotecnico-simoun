@@ -1,0 +1,465 @@
+{
+ "id": "fuente_conmutada",
+ "ficha": "fuente_conmutada",
+ "titulo": "Fuente conmutada",
+ "termino": "fuente_conmutada",
+ "icono": "fuente",
+ "resumen": "Da los 24 V DC del mando y la electrónica.",
+ "bornes_dibujo": {
+  "L": [
+   130,
+   176
+  ],
+  "N": [
+   170,
+   176
+  ],
+  "+": [
+   130,
+   44
+  ],
+  "-": [
+   230,
+   44
+  ]
+ },
+ "que_es": {
+  "texto": "La {{fuente_conmutada}} rectifica la alterna, la troza a alta frecuencia y la convierte en 24 V DC estables; limita la corriente ante un corto.",
+  "partes": [
+   {
+    "texto": "Bornes de entrada L, N y PE.",
+    "marca": [
+     170,
+     176
+    ]
+   },
+   {
+    "texto": "Bornes de salida + y −.",
+    "marca": [
+     200,
+     44
+    ]
+   },
+   {
+    "texto": "LED DC OK y ajuste V ADJ.",
+    "marca": [
+     235,
+     130
+    ]
+   }
+  ],
+  "placa": "Entrada 100-240 V~ · salida 24 V 5 A · 120 W",
+  "a_bordo": "En todos los tableros de mando: PLC, relés de 24 V, alarmas, sensores y paneles. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_fuente",
+  "params": {},
+  "pasos": [
+   "La entrada de 230 V se rectifica y se filtra.",
+   "Un MOSFET la troza a alta frecuencia y un transformador pequeño la baja.",
+   "La salida se rectifica y se regula a 24 V; ante un corto, corta y vuelve a probar."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_fuente_conmutada.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "X1 230 V",
+     "x": 40,
+     "y": 76,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 40,
+     "y": 214,
+     "tam": 11
+    },
+    {
+     "texto": "F1",
+     "x": 100,
+     "y": 72,
+     "tam": 11
+    },
+    {
+     "texto": "U1",
+     "x": 200,
+     "y": 120,
+     "tam": 14
+    },
+    {
+     "texto": "24 V 5 A",
+     "x": 200,
+     "y": 145,
+     "tam": 11
+    },
+    {
+     "texto": "L",
+     "x": 162,
+     "y": 80,
+     "tam": 10
+    },
+    {
+     "texto": "N",
+     "x": 162,
+     "y": 212,
+     "tam": 10
+    },
+    {
+     "texto": "+",
+     "x": 240,
+     "y": 80,
+     "tam": 12
+    },
+    {
+     "texto": "−",
+     "x": 240,
+     "y": 212,
+     "tam": 14
+    },
+    {
+     "texto": "RL 12 Ω",
+     "x": 370,
+     "y": 145,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L": [
+    150,
+    90
+   ],
+   "N": [
+    150,
+    200
+   ],
+   "+": [
+    250,
+    90
+   ],
+   "-": [
+    250,
+    200
+   ]
+  },
+  "bornes": {
+   "L": "Llega la fase de 230 V por el fusible F1.",
+   "N": "Llega el otro conductor del secundario.",
+   "+": "Sale el +24 V a la carga.",
+   "-": "El 0 V de la carga."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada L-N",
+    "bornes": [
+     "L",
+     "N"
+    ],
+    "texto": "230 V de alterna desde su interruptor o fusible."
+   },
+   {
+    "nombre": "Salida + −",
+    "bornes": [
+     "+",
+     "-"
+    ],
+    "texto": "24 V DC a la carga: 2 A en el ejemplo."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con una fuente de 24 V y 5 A y una carga de 48 W. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Salida",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "+",
+    "negra": "-",
+    "como": "Escala V= · entre + y −",
+    "nota": "Con tensión.",
+    "titulo_tabla": "Tensión de salida",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "fuente_servicio",
+     "a": "U1.+",
+     "b": "U1.-",
+     "segundos": 0.5
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Degradada",
+      "cambios": {
+       "params": {
+        "U1": {
+         "tension_pu": 0.8
+        }
+       }
+      },
+      "hacer": "Baja: condensadores secos",
+      "bien": false
+     },
+     {
+      "estado": "Corto en la salida",
+      "cambios": {
+       "params": {
+        "RL": {
+         "ohm": 1
+        }
+       }
+      },
+      "hacer": "Protección: busque el corto",
+      "bien": false
+     },
+     {
+      "estado": "F1 fundido",
+      "cambios": {
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      },
+      "hacer": "Sin entrada",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Entrada",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "L",
+    "negra": "N",
+    "como": "Escala V~ · entre L y N",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión de entrada",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "fuente_servicio",
+     "a": "U1.L",
+     "b": "U1.N",
+     "segundos": 0.5
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "F1 fundido",
+      "cambios": {
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      },
+      "hacer": "Cambiar F1 y buscar la causa",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente de entrada",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "L",
+    "negra": "",
+    "como": "Pinza en el cable de L",
+    "nota": "Con tensión.",
+    "titulo_tabla": "Corriente de entrada",
+    "columna": "A",
+    "medida": {
+     "circuito": "fuente_servicio",
+     "segundos": 0.5,
+     "instrumento": "pinza",
+     "cable": [
+      "F1.2",
+      "U1.L"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Con 48 W de carga",
+      "hacer": "Normal",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Corto en la salida",
+    "sintoma": "La salida cae a 0 y vuelve cada dos segundos; los relés castañetean.",
+    "mide": [
+     {
+      "donde": "V= + −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "fuente_servicio",
+       "a": "U1.+",
+       "b": "U1.-",
+       "segundos": 0.5,
+       "params": {
+        "RL": {
+         "ohm": 1
+        }
+       }
+      }
+     },
+     {
+      "donde": "V~ L-N",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "fuente_servicio",
+       "a": "U1.L",
+       "b": "U1.N",
+       "segundos": 0.5,
+       "params": {
+        "RL": {
+         "ohm": 1
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un corto o una sobrecarga en los circuitos de 24 V.",
+    "reparacion": "Desconectar salidas una a una hasta encontrarlo."
+   },
+   {
+    "nombre": "Degradada",
+    "sintoma": "La salida da 19 V y los relés no entran bien.",
+    "mide": [
+     {
+      "donde": "V= + −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "fuente_servicio",
+       "a": "U1.+",
+       "b": "U1.-",
+       "segundos": 0.5,
+       "params": {
+        "U1": {
+         "tension_pu": 0.8
+        }
+       }
+      }
+     },
+     {
+      "donde": "V~ L-N",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "fuente_servicio",
+       "a": "U1.L",
+       "b": "U1.N",
+       "segundos": 0.5
+      }
+     }
+    ],
+    "causa": "Condensadores secos o la fuente al límite de su vida.",
+    "reparacion": "Cambiar la fuente."
+   },
+   {
+    "nombre": "Sin entrada",
+    "sintoma": "LED DC OK apagado y sin salida.",
+    "mide": [
+     {
+      "donde": "V~ L-N",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "fuente_servicio",
+       "a": "U1.L",
+       "b": "U1.N",
+       "segundos": 0.5,
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= + −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "fuente_servicio",
+       "a": "U1.+",
+       "b": "U1.-",
+       "segundos": 0.5,
+       "estado": {
+        "F1": {
+         "fundido": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fusible de entrada fundido o interruptor abierto.",
+    "reparacion": "Cambiar el fusible y buscar por qué se fundió."
+   },
+   {
+    "nombre": "Calentamiento",
+    "sintoma": "La fuente se apaga en los días de calor.",
+    "mide": [
+     {
+      "donde": "temperatura de la carcasa",
+      "bien": false,
+      "valor": "más de 60 °C"
+     }
+    ],
+    "causa": "Sin ventilación, polvo o cargada al máximo.",
+    "reparacion": "Limpiar, dejar espacio libre y no cargarla más del 80 %."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "LED DC OK y 24 V en el panel"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza y reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "tensión en carga y rizado"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61204: fuentes de alimentación de baja tensión en continua.",
+  "IEC 60092-504: automatización y control en buques."
+ ]
+}

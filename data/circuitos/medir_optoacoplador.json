@@ -1,0 +1,11 @@
+{
+  "nombre": "Optoacoplador suelto para medir",
+  "nota": "Optoacoplador PC817 de cuatro patas, desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "OK1",
+      "tipo": "optoacoplador"
+    }
+  ],
+  "cables": []
+}

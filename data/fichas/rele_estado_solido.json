@@ -1,0 +1,107 @@
+{
+  "id": "rele_estado_solido",
+  "titulo": "Relé de estado sólido",
+  "resumen": "Relé sin contactos: un triac mandado por un LED.",
+  "dibujo": {
+    "svg": "res://art/equipos/rele_estado_solido.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Relé de estado sólido de 25 A con mando de 3-32 V DC y carga de 24-280 V AC, con sus bornes 1-2 (carga) y 3-4 (mando) y su LED. Dibujo general: modelo de cada equipo, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 150,
+        "y": 88,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 250,
+        "y": 88,
+        "tam": 11
+      },
+      {
+        "texto": "3 +",
+        "x": 150,
+        "y": 136,
+        "tam": 11
+      },
+      {
+        "texto": "4 −",
+        "x": 250,
+        "y": 136,
+        "tam": 11
+      },
+      {
+        "texto": "SSR 25 A",
+        "x": 200,
+        "y": 104,
+        "tam": 13
+      },
+      {
+        "texto": "24-280 V AC",
+        "x": 200,
+        "y": 22,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "3-32 V DC",
+        "x": 200,
+        "y": 198,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Relé de estado sólido: no tiene símbolo propio en las normas; se dibuja como un recuadro con su optoacoplador y su triac. Verificar contra la norma.",
+    "lista": [
+      "rele_estado_solido",
+      "optoacoplador"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{rele_estado_solido}} (SSR) conecta una carga de alterna sin contactos: por dentro, un optoacoplador manda un triac. No hace ruido, no chispea y aguanta millones de maniobras: manda resistencias de calefacción, como las de los tanques y las calderas, que encienden y apagan cada pocos segundos."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Mando 3 (+) y 4 (−):[/b] el LED de un optoacoplador, para 3 a 32 V DC.\n• [b]Carga 1 y 2:[/b] un triac o dos tiristores, con su red RC.\n• [b]Fuga:[/b] apagado deja pasar unos miliamperios; con el multímetro sin carga se lee tensión en la salida aunque esté apagado."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Mando con su polaridad: + al 3 y − al 4.\n• Carga en serie con 1 y 2, detrás de su fusible (mejor ultrarrápido).\n• [b]Siempre sobre un disipador:[/b] pierde 1 o 2 W por amperio y, sin disipar, se quema."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige con margen: el doble de la corriente de la carga y su tensión, con disipador según la hoja de datos ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] Ω entre 3 y 4, unos kΩ; entre 1 y 2, decenas de kΩ o más.\n• [b]En servicio:[/b] V~ en la carga: 230 V con mando y casi nada sin él. Entre 1 y 2, al revés.\n• [b]Ojo:[/b] sin carga conectada, el multímetro mide casi 230 V en la salida aunque el relé esté apagado: es la fuga."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]En corto:[/b] la carga se queda siempre conectada; es su falla más común, por calor o por sobrecorriente.\n• [b]Abierto:[/b] el LED luce y la carga no recibe tensión.\n• [b]Tensión fantasma:[/b] confunde al medir sin carga; no es una avería."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: temperatura del relé y de su disipador con el termómetro infrarrojo; reapriete de bornes.\n• Anual: pasta térmica.\n\n[b]Correctivo:[/b] se cambia completo, con pasta térmica nueva, y se comprueba por qué se quemó."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 62314: relés de estado sólido.",
+    "IEC 60947-4-3: controladores de semiconductores para cargas no motor."
+  ]
+}

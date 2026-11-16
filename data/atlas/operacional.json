@@ -1,0 +1,524 @@
+{
+ "id": "operacional",
+ "ficha": "operacional",
+ "titulo": "Amplificador operacional",
+ "termino": "amplificador_operacional",
+ "icono": "operacional",
+ "resumen": "Compara dos tensiones: alarmas en las tarjetas.",
+ "bornes_dibujo": {
+  "2": [
+   180,
+   165
+  ],
+  "3": [
+   220,
+   165
+  ],
+  "4": [
+   260,
+   165
+  ],
+  "6": [
+   220,
+   45
+  ],
+  "7": [
+   180,
+   45
+  ]
+ },
+ "que_es": {
+  "texto": "El {{amplificador_operacional}} sin realimentación es un {{comparador}}: su salida dice cuál de sus dos entradas es mayor.",
+  "partes": [
+   {
+    "texto": "Muesca y punto de la pata 1.",
+    "marca": [
+     128,
+     104
+    ]
+   },
+   {
+    "texto": "Entradas: 2 (−) y 3 (+).",
+    "marca": [
+     200,
+     165
+    ]
+   },
+   {
+    "texto": "Alimentación 7 (+) y 4 (0 V); salida 6.",
+    "marca": [
+     220,
+     45
+    ]
+   }
+  ],
+  "placa": "LM358 · 3 a 32 V · DIP-8",
+  "a_bordo": "En las tarjetas de alarma de temperatura, de nivel y de tensión baja, y en las de acondicionamiento de sensores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_operacional",
+  "params": {},
+  "pasos": [
+   "En la entrada − llega la sonda NTC: menos tensión cuanto más calor.",
+   "En la entrada + está la referencia del potenciómetro: el punto de alarma.",
+   "Cuando la sonda baja de la referencia, la salida sube y enciende la alarma."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_operacional.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+12 V",
+     "x": 150,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 200,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "R1 10 kΩ",
+     "x": 104,
+     "y": 75,
+     "tam": 11
+    },
+    {
+     "texto": "RT1 NTC",
+     "x": 104,
+     "y": 175,
+     "tam": 11
+    },
+    {
+     "texto": "P1 ref.",
+     "x": 100,
+     "y": 210,
+     "tam": 11
+    },
+    {
+     "texto": "+12 V",
+     "x": 130,
+     "y": 140,
+     "tam": 10
+    },
+    {
+     "texto": "U1",
+     "x": 225,
+     "y": 160,
+     "tam": 12
+    },
+    {
+     "texto": "2 −",
+     "x": 186,
+     "y": 112,
+     "tam": 10
+    },
+    {
+     "texto": "3 +",
+     "x": 186,
+     "y": 210,
+     "tam": 10
+    },
+    {
+     "texto": "6",
+     "x": 280,
+     "y": 148,
+     "tam": 10
+    },
+    {
+     "texto": "7",
+     "x": 248,
+     "y": 112,
+     "tam": 10
+    },
+    {
+     "texto": "4",
+     "x": 248,
+     "y": 206,
+     "tam": 10
+    },
+    {
+     "texto": "R2",
+     "x": 315,
+     "y": 145,
+     "tam": 11
+    },
+    {
+     "texto": "LD1",
+     "x": 380,
+     "y": 210,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "2": [
+    200,
+    125
+   ],
+   "3": [
+    200,
+    195
+   ],
+   "6": [
+    270,
+    160
+   ],
+   "7": [
+    235,
+    128
+   ],
+   "4": [
+    235,
+    192
+   ]
+  },
+  "bornes": {
+   "2": "Llega la tensión de la sonda NTC: 6 V a 25 °C.",
+   "3": "Llega la referencia del potenciómetro P1: 2,4 V.",
+   "6": "Sale la alarma hacia el LED.",
+   "7": "Alimentación +12 V.",
+   "4": "0 V."
+  },
+  "grupos": [
+   {
+    "nombre": "Entradas",
+    "bornes": [
+     "2",
+     "3"
+    ],
+    "texto": "Sonda en la −, referencia en la +."
+   },
+   {
+    "nombre": "Salida",
+    "bornes": [
+     "6"
+    ],
+    "texto": "Alta, unos 10 V, con alarma."
+   },
+   {
+    "nombre": "Alimentación",
+    "bornes": [
+     "7",
+     "4"
+    ],
+    "texto": "12 V entre 7 y 4."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con una sonda NTC de 10 kΩ y la referencia en 2,4 V (unos 60 °C). Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Salida",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "6",
+    "negra": "4",
+    "como": "Escala V= · entre 6 y 4",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Salida de alarma",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "operacional_servicio",
+     "a": "U1.6",
+     "b": "U1.4",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sonda a 25 °C",
+      "hacer": "Normal: sin alarma",
+      "bien": true
+     },
+     {
+      "estado": "Sonda a 70 °C",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        }
+       }
+      },
+      "hacer": "Normal: alarma",
+      "bien": true
+     },
+     {
+      "estado": "70 °C, sonda abierta",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70,
+         "abierto": true
+        }
+       }
+      },
+      "hacer": "¡Sin alarma! Cambiar la sonda",
+      "bien": false
+     },
+     {
+      "estado": "70 °C, referencia a 0",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        },
+        "P1": {
+         "posicion": 0.0
+        }
+       }
+      },
+      "hacer": "Sin alarma: reajustar P1",
+      "bien": false
+     },
+     {
+      "estado": "70 °C, operacional dañado",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        },
+        "U1": {
+         "danado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Entradas",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "2",
+    "negra": "4",
+    "como": "Escala V= · entrada − contra 4",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Tensiones de entrada",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "operacional_servicio",
+     "a": "U1.2",
+     "b": "U1.4",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Entrada − a 25 °C",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Entrada − a 70 °C",
+      "cambios": {
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        }
+       }
+      },
+      "hacer": "Normal: baja con el calor",
+      "bien": true
+     },
+     {
+      "estado": "Entrada + (referencia)",
+      "cambios": {
+       "a": "U1.3"
+      },
+      "hacer": "Normal",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Alimentación",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "7",
+    "negra": "4",
+    "como": "Escala V= · entre 7 y 4",
+    "nota": "Con la tarjeta alimentada.",
+    "titulo_tabla": "Alimentación",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "operacional_servicio",
+     "a": "U1.7",
+     "b": "U1.4",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Normal",
+      "hacer": "Normal",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Sonda abierta",
+    "sintoma": "El equipo se calienta y la alarma no salta.",
+    "mide": [
+     {
+      "donde": "V= 6-4 a 70 °C",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "operacional_servicio",
+       "a": "U1.6",
+       "b": "U1.4",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70,
+         "abierto": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= en la entrada −",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "operacional_servicio",
+       "a": "U1.2",
+       "b": "U1.4",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70,
+         "abierto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cable de la sonda cortado: la entrada − se queda en 12 V.",
+    "reparacion": "Cambiar la sonda; probar la alarma calentándola."
+   },
+   {
+    "nombre": "Referencia desajustada",
+    "sintoma": "La alarma no salta, o salta en frío.",
+    "mide": [
+     {
+      "donde": "V= en la entrada +",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "operacional_servicio",
+       "a": "U1.3",
+       "b": "U1.4",
+       "segundos": 0.3,
+       "estado": {
+        "P1": {
+         "posicion": 0.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Potenciómetro movido o gastado.",
+    "reparacion": "Reajustar la referencia y fijar el potenciómetro."
+   },
+   {
+    "nombre": "Operacional dañado",
+    "sintoma": "Las entradas están bien y la salida no responde.",
+    "mide": [
+     {
+      "donde": "V= 6-4 a 70 °C",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "operacional_servicio",
+       "a": "U1.6",
+       "b": "U1.4",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        },
+        "U1": {
+         "danado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= en la entrada −",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "operacional_servicio",
+       "a": "U1.2",
+       "b": "U1.4",
+       "segundos": 0.3,
+       "estado": {
+        "RT1": {
+         "temperatura_c": 70
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Pico o sobretensión en la tarjeta.",
+    "reparacion": "Cambiar el integrado o la tarjeta."
+   },
+   {
+    "nombre": "Sin alimentación",
+    "sintoma": "Ni alarma ni respuesta.",
+    "mide": [
+     {
+      "donde": "V= 7-4",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Fusible o regulador de la tarjeta.",
+    "reparacion": "Revisar la alimentación de la tarjeta."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "prueba de la alarma simulando la sonda"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "referencia de alarma con el multímetro"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de la tarjeta"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60748-3: circuitos integrados analógicos.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

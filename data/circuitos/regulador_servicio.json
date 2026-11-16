@@ -1,0 +1,43 @@
+{
+  "nombre": "Regulador de 12 V desde 24 V",
+  "nota": "El 7812 U2, atornillado a su disipador, da 12 V a una carga de 24 Ω (0,5 A) desde los 24 V de la fuente: disipa (24 − 12) × 0,5 = 6 W. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "U2",
+      "tipo": "regulador"
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 24
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "U2.IN"
+    ],
+    [
+      "U2.GND",
+      "F.-"
+    ],
+    [
+      "U2.OUT",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "F.-"
+    ]
+  ]
+}

@@ -516,6 +516,61 @@
       "id": "condensador_polarizado", "nombre": "Condensador electrolítico", "sistema": 6, "similares": [],
       "iec": { "svg": "res://art/simbolos/iec/condensador_polarizado.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+", "x": 96, "y": 58, "tam": 18}, {"texto": "C2", "x": 124, "y": 40, "tam": 20}] },
       "ansi": { "svg": "res://art/simbolos/ansi/condensador_polarizado.svg", "tamano": [240, 200], "etiquetas": [{"texto": "+", "x": 96, "y": 58, "tam": 18}, {"texto": "C2", "x": 124, "y": 40, "tam": 20}] }
+    },
+    {
+      "id": "mosfet_n", "nombre": "MOSFET de canal N", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/mosfet_n.svg", "tamano": [240, 200], "etiquetas": [{"texto": "G", "x": 30, "y": 82, "tam": 18}, {"texto": "D", "x": 170, "y": 26, "tam": 18}, {"texto": "S", "x": 170, "y": 176, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/mosfet_n.svg", "tamano": [240, 200], "etiquetas": [{"texto": "G", "x": 30, "y": 82, "tam": 18}, {"texto": "D", "x": 170, "y": 26, "tam": 18}, {"texto": "S", "x": 170, "y": 176, "tam": 18}] }
+    },
+    {
+      "id": "tiristor", "nombre": "Tiristor", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/tiristor.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 140, "y": 26, "tam": 18}, {"texto": "K", "x": 140, "y": 176, "tam": 18}, {"texto": "G", "x": 214, "y": 146, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/tiristor.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 140, "y": 26, "tam": 18}, {"texto": "K", "x": 140, "y": 176, "tam": 18}, {"texto": "G", "x": 214, "y": 146, "tam": 18}] }
+    },
+    {
+      "id": "triac", "nombre": "Triac", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/triac.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A2", "x": 146, "y": 26, "tam": 18}, {"texto": "A1", "x": 146, "y": 176, "tam": 18}, {"texto": "G", "x": 214, "y": 146, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/triac.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A2", "x": 146, "y": 26, "tam": 18}, {"texto": "A1", "x": 146, "y": 176, "tam": 18}, {"texto": "G", "x": 214, "y": 146, "tam": 18}] }
+    },
+    {
+      "id": "optoacoplador", "nombre": "Optoacoplador", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/optoacoplador.svg", "tamano": [240, 200], "etiquetas": [{"texto": "1", "x": 54, "y": 34, "tam": 16}, {"texto": "2", "x": 54, "y": 170, "tam": 16}, {"texto": "4", "x": 204, "y": 34, "tam": 16}, {"texto": "3", "x": 204, "y": 170, "tam": 16}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/optoacoplador.svg", "tamano": [240, 200], "etiquetas": [{"texto": "1", "x": 54, "y": 34, "tam": 16}, {"texto": "2", "x": 54, "y": 170, "tam": 16}, {"texto": "4", "x": 204, "y": 34, "tam": 16}, {"texto": "3", "x": 204, "y": 170, "tam": 16}] }
+    },
+    {
+      "id": "rele_estado_solido", "nombre": "Relé de estado sólido", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/rele_estado_solido.svg", "tamano": [240, 200], "etiquetas": [{"texto": "3 +", "x": 34, "y": 48, "tam": 14}, {"texto": "4 −", "x": 34, "y": 128, "tam": 14}, {"texto": "1", "x": 206, "y": 48, "tam": 14}, {"texto": "2", "x": 206, "y": 128, "tam": 14}, {"texto": "SSR", "x": 120, "y": 186, "tam": 16}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/rele_estado_solido.svg", "tamano": [240, 200], "etiquetas": [{"texto": "3 +", "x": 34, "y": 48, "tam": 14}, {"texto": "4 −", "x": 34, "y": 128, "tam": 14}, {"texto": "1", "x": 206, "y": 48, "tam": 14}, {"texto": "2", "x": 206, "y": 128, "tam": 14}, {"texto": "SSR", "x": 120, "y": 186, "tam": 16}] }
+    },
+    {
+      "id": "regulador_tension", "nombre": "Regulador de tensión", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/regulador_tension.svg", "tamano": [240, 200], "etiquetas": [{"texto": "IN", "x": 36, "y": 76, "tam": 14}, {"texto": "OUT", "x": 202, "y": 76, "tam": 14}, {"texto": "GND", "x": 148, "y": 166, "tam": 14}, {"texto": "7812", "x": 120, "y": 90, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/regulador_tension.svg", "tamano": [240, 200], "etiquetas": [{"texto": "IN", "x": 36, "y": 76, "tam": 14}, {"texto": "OUT", "x": 202, "y": 76, "tam": 14}, {"texto": "GND", "x": 148, "y": 166, "tam": 14}, {"texto": "7812", "x": 120, "y": 90, "tam": 18}] }
+    },
+    {
+      "id": "fuente_conmutada", "nombre": "Fuente conmutada", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/fuente_conmutada.svg", "tamano": [240, 200], "etiquetas": [{"texto": "L", "x": 18, "y": 50, "tam": 14}, {"texto": "N", "x": 18, "y": 130, "tam": 14}, {"texto": "+", "x": 222, "y": 50, "tam": 16}, {"texto": "−", "x": 222, "y": 130, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/fuente_conmutada.svg", "tamano": [240, 200], "etiquetas": [{"texto": "L", "x": 18, "y": 50, "tam": 14}, {"texto": "N", "x": 18, "y": 130, "tam": 14}, {"texto": "+", "x": 222, "y": 50, "tam": 16}, {"texto": "−", "x": 222, "y": 130, "tam": 18}] }
+    },
+    {
+      "id": "amplificador_operacional", "nombre": "Amplificador operacional", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/amplificador_operacional.svg", "tamano": [240, 200], "etiquetas": [{"texto": "−", "x": 92, "y": 64, "tam": 20}, {"texto": "+", "x": 92, "y": 124, "tam": 20}, {"texto": "OP", "x": 120, "y": 100, "tam": 18}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/amplificador_operacional.svg", "tamano": [240, 200], "etiquetas": [{"texto": "−", "x": 30, "y": 58, "tam": 18}, {"texto": "+", "x": 30, "y": 118, "tam": 18}] }
+    },
+    {
+      "id": "puerta_and", "nombre": "Puerta AND", "sistema": 6, "similares": ["puerta_or"],
+      "iec": { "svg": "res://art/simbolos/iec/puerta_and.svg", "tamano": [240, 200], "etiquetas": [{"texto": "&", "x": 120, "y": 100, "tam": 34}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/puerta_and.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 30, "y": 58, "tam": 16}, {"texto": "B", "x": 30, "y": 118, "tam": 16}, {"texto": "Y", "x": 210, "y": 88, "tam": 16}] }
+    },
+    {
+      "id": "puerta_or", "nombre": "Puerta OR", "sistema": 6, "similares": ["puerta_and"],
+      "iec": { "svg": "res://art/simbolos/iec/puerta_or.svg", "tamano": [240, 200], "etiquetas": [{"texto": "≥1", "x": 120, "y": 100, "tam": 30}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/puerta_or.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 30, "y": 58, "tam": 16}, {"texto": "B", "x": 30, "y": 118, "tam": 16}, {"texto": "Y", "x": 210, "y": 88, "tam": 16}] }
+    },
+    {
+      "id": "puerta_not", "nombre": "Puerta NOT", "sistema": 6, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/puerta_not.svg", "tamano": [240, 200], "etiquetas": [{"texto": "1", "x": 120, "y": 100, "tam": 34}] },
+      "ansi": { "svg": "res://art/simbolos/ansi/puerta_not.svg", "tamano": [240, 200], "etiquetas": [{"texto": "A", "x": 30, "y": 88, "tam": 16}, {"texto": "Y", "x": 210, "y": 88, "tam": 16}] }
     }
   ]
 }

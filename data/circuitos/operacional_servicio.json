@@ -1,0 +1,108 @@
+{
+  "nombre": "Alarma de alta temperatura con un comparador",
+  "nota": "A 12 V: la sonda NTC RT1 con R1 de 10 kΩ da a la entrada − una tensión que baja con el calor; el potenciómetro P1 fija la referencia en la entrada + (2,4 V, unos 60 °C). Con más calor, la salida sube y enciende el LED de alarma LD1. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 12
+      }
+    },
+    {
+      "id": "P1",
+      "tipo": "potenciometro",
+      "params": {
+        "ohm": 10000
+      },
+      "estado": {
+        "posicion": 0.2
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "RT1",
+      "tipo": "termistor",
+      "params": {
+        "tipo": "ntc",
+        "r25": 10000,
+        "beta": 3950
+      }
+    },
+    {
+      "id": "U1",
+      "tipo": "operacional"
+    },
+    {
+      "id": "R2",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 1000
+      }
+    },
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "P1.3"
+    ],
+    [
+      "P1.1",
+      "F.-"
+    ],
+    [
+      "P1.2",
+      "U1.3"
+    ],
+    [
+      "F.+",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "RT1.1"
+    ],
+    [
+      "RT1.2",
+      "F.-"
+    ],
+    [
+      "R1.B",
+      "U1.2"
+    ],
+    [
+      "U1.7",
+      "F.+"
+    ],
+    [
+      "U1.4",
+      "F.-"
+    ],
+    [
+      "U1.6",
+      "R2.A"
+    ],
+    [
+      "R2.B",
+      "LD1.A"
+    ],
+    [
+      "LD1.K",
+      "F.-"
+    ]
+  ]
+}

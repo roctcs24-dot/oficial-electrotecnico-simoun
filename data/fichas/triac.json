@@ -1,0 +1,93 @@
+{
+  "id": "triac",
+  "titulo": "Triac",
+  "resumen": "Interruptor de alterna que conduce en los dos sentidos mientras recibe puerta.",
+  "dibujo": {
+    "svg": "res://art/equipos/triac.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Triac BTA16 de 16 A y 600 V en cápsula TO-220 de lengüeta aislada, con sus patas A1, A2 y G. Dibujo general: tipo de cada equipo, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "BTA16",
+        "x": 200,
+        "y": 108,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "A1",
+        "x": 170,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "A2",
+        "x": 200,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "G",
+        "x": 230,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "lengüeta aislada",
+        "x": 300,
+        "y": 46,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Triac según IEC 60617 y ANSI/IEEE 315: dos tiristores enfrentados con una sola puerta. Verificar contra la norma.",
+    "lista": [
+      "triac"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{triac}} es como dos tiristores enfrentados con una sola puerta: conduce la alterna en los dos semiciclos. Con corriente de puerta conduce; sin ella, se apaga en el siguiente paso por cero. Manda resistencias de calefacción, motores pequeños y luces, y es la parte de potencia de los relés de estado sólido."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Terminales principales A1 y A2[/b] y la [b]puerta G[/b], que se manda respecto a A1.\n• La puerta mide unas decenas de ohmios contra A1.\n• [b]BTA[/b] lleva la lengüeta aislada; en otros tipos la lengüeta es A2 y tiene tensión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• En serie con la carga, entre la fase y la carga.\n• Puerta respecto a A1, a través de una resistencia, a menudo desde un optotriac que aísla el mando.\n• Con cargas inductivas, una red RC (snubber) entre A1 y A2 evita que se dispare solo."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la corriente eficaz, la tensión y la corriente de puerta ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y desoldado: Ω entre G y A1, unas decenas de ohmios en los dos sentidos; entre A1 y A2, OL.\n• [b]En servicio:[/b] V~ en la carga: toda la tensión con puerta y casi nada sin ella. Con la pinza, la corriente de la carga."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]A1-A2 en corto:[/b] la carga no se apaga nunca; el termostato pierde el mando.\n• [b]Puerta abierta[/b] o corriente de puerta escasa: no conduce.\n• [b]Se dispara solo[/b] con cargas inductivas sin snubber."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: temperatura del triac y de su disipador.\n\n[b]Correctivo:[/b] se cambia por otro de igual o mayor corriente y tensión; si su lengüeta no es aislada, con su lámina aislante."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-6: tiristores.",
+    "IEC 60617: símbolos gráficos para esquemas."
+  ]
+}

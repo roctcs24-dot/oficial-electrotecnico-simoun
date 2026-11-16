@@ -1,0 +1,11 @@
+{
+  "nombre": "Operacional suelto para medir",
+  "nota": "Amplificador operacional de 8 patas, desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "U1",
+      "tipo": "operacional"
+    }
+  ],
+  "cables": []
+}

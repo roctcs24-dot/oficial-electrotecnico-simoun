@@ -1,0 +1,516 @@
+{
+ "id": "puerta_logica",
+ "ficha": "puerta_logica",
+ "titulo": "Puertas lógicas",
+ "termino": "puerta_logica",
+ "icono": "puertas",
+ "resumen": "Combinan señales de 0 y 1.",
+ "bornes_dibujo": {
+  "A": [
+   106,
+   165
+  ],
+  "B": [
+   138,
+   165
+  ],
+  "Y": [
+   170,
+   165
+  ],
+  "GND": [
+   298,
+   165
+  ],
+  "VCC": [
+   106,
+   45
+  ]
+ },
+ "que_es": {
+  "texto": "La {{puerta_logica}} AND da 1 si todas sus entradas son 1; su {{tabla_verdad}} lo resume, como los contactos en serie de un mando.",
+  "partes": [
+   {
+    "texto": "Muesca y punto de la pata 1.",
+    "marca": [
+     106,
+     104
+    ]
+   },
+   {
+    "texto": "Patas 1 y 2, entradas; 3, salida.",
+    "marca": [
+     138,
+     165
+    ]
+   },
+   {
+    "texto": "Alimentación: 14 VCC y 7 GND.",
+    "marca": [
+     298,
+     140
+    ]
+   }
+  ],
+  "placa": "CD4081 · cuatro AND de 2 entradas · 3 a 15 V",
+  "a_bordo": "En las tarjetas de enclavamientos y de alarmas, y dentro de los PLC, que hacen la misma lógica por programa. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_puertas",
+  "params": {},
+  "pasos": [
+   "Cada entrada vale 1 con tensión y 0 sin ella; las resistencias la llevan a 0 al soltar.",
+   "La puerta AND da 1 solo con las dos entradas a 1: los dos pulsadores.",
+   "Una entrada al aire queda indefinida y la salida a media tensión."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_puerta_logica.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+5 V",
+     "x": 200,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "0 V",
+     "x": 200,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 52,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "S2",
+     "x": 160,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "R1",
+     "x": 56,
+     "y": 180,
+     "tam": 11
+    },
+    {
+     "texto": "R2",
+     "x": 106,
+     "y": 230,
+     "tam": 11
+    },
+    {
+     "texto": "A",
+     "x": 170,
+     "y": 120,
+     "tam": 10
+    },
+    {
+     "texto": "B",
+     "x": 170,
+     "y": 180,
+     "tam": 10
+    },
+    {
+     "texto": "&",
+     "x": 222,
+     "y": 160,
+     "tam": 22
+    },
+    {
+     "texto": "Y",
+     "x": 290,
+     "y": 148,
+     "tam": 10
+    },
+    {
+     "texto": "R3",
+     "x": 315,
+     "y": 145,
+     "tam": 11
+    },
+    {
+     "texto": "LD1",
+     "x": 380,
+     "y": 210,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    180,
+    130
+   ],
+   "B": [
+    180,
+    190
+   ],
+   "Y": [
+    280,
+    160
+   ]
+  },
+  "bornes": {
+   "A": "Llega S1: 5 V al pulsar, 0 V por R1 al soltar.",
+   "B": "Llega S2: 5 V al pulsar, 0 V por R2 al soltar.",
+   "Y": "Sale al LED por R3: 1 solo con A y B a 1."
+  },
+  "grupos": [
+   {
+    "nombre": "Entradas",
+    "bornes": [
+     "A",
+     "B"
+    ],
+    "texto": "Con su resistencia a 0 V: nunca al aire."
+   },
+   {
+    "nombre": "Salida",
+    "bornes": [
+     "Y"
+    ],
+    "texto": "A AND B."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un CD4081 a 5 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Tabla de verdad",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "Y",
+    "negra": "GND",
+    "como": "Escala V= · entre Y y GND",
+    "nota": "Con la tarjeta alimentada a 5 V.",
+    "titulo_tabla": "Salida de la AND",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "puertas_servicio",
+     "a": "U1.Y",
+     "b": "U1.GND",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "A = 0, B = 0",
+      "hacer": "0",
+      "bien": true
+     },
+     {
+      "estado": "A = 1, B = 0",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "S2": {
+         "presionado": false
+        }
+       }
+      },
+      "hacer": "0",
+      "bien": true
+     },
+     {
+      "estado": "A = 0, B = 1",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": false
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "0",
+      "bien": true
+     },
+     {
+      "estado": "A = 1, B = 1",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "1: luce",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Otras puertas",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "Y",
+    "negra": "GND",
+    "como": "Escala V= · entre Y y GND, A = 1 y B = 0",
+    "nota": "La misma placa con otro integrado.",
+    "titulo_tabla": "Salida con A = 1 y B = 0",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "puertas_servicio",
+     "a": "U1.Y",
+     "b": "U1.GND",
+     "segundos": 0.3,
+     "estado": {
+      "S1": {
+       "presionado": true
+      },
+      "S2": {
+       "presionado": false
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "OR (4071)",
+      "cambios": {
+       "params": {
+        "U1": {
+         "tipo": "or"
+        }
+       }
+      },
+      "hacer": "1",
+      "bien": true
+     },
+     {
+      "estado": "NAND (4011)",
+      "cambios": {
+       "params": {
+        "U1": {
+         "tipo": "nand"
+        }
+       }
+      },
+      "hacer": "1",
+      "bien": true
+     },
+     {
+      "estado": "NOR (4001)",
+      "cambios": {
+       "params": {
+        "U1": {
+         "tipo": "nor"
+        }
+       }
+      },
+      "hacer": "0",
+      "bien": true
+     },
+     {
+      "estado": "XOR (4070)",
+      "cambios": {
+       "params": {
+        "U1": {
+         "tipo": "xor"
+        }
+       }
+      },
+      "hacer": "1",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Entrada al aire",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "A",
+    "negra": "GND",
+    "como": "Escala V= · entre A y GND",
+    "nota": "R1 cortada y S1 suelto.",
+    "titulo_tabla": "Entrada sin su resistencia",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "puertas_servicio",
+     "a": "U1.A",
+     "b": "U1.GND",
+     "segundos": 0.3,
+     "estado": {
+      "R1": {
+       "cortada": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Lo que marca el multímetro en A",
+      "hacer": "Parece 0",
+      "bien": false
+     },
+     {
+      "estado": "Salida Y con B = 1",
+      "cambios": {
+       "a": "U1.Y",
+       "estado": {
+        "R1": {
+         "cortada": true
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Media tensión: indefinida",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Entrada al aire",
+    "sintoma": "La salida parpadea o queda a media tensión.",
+    "mide": [
+     {
+      "donde": "V= en Y con B = 1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "puertas_servicio",
+       "a": "U1.Y",
+       "b": "U1.GND",
+       "segundos": 0.3,
+       "estado": {
+        "R1": {
+         "cortada": true
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω de R1",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Resistencia de pull-down cortada o pista rota.",
+    "reparacion": "Cambiar la resistencia: la entrada siempre a un nivel."
+   },
+   {
+    "nombre": "Salida quemada",
+    "sintoma": "La salida queda a 0 aunque las entradas den 1.",
+    "mide": [
+     {
+      "donde": "V= en Y con A = B = 1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "puertas_servicio",
+       "a": "U1.Y",
+       "b": "U1.GND",
+       "segundos": 0.3,
+       "estado": {
+        "U1": {
+         "salida_quemada": true
+        },
+        "S1": {
+         "presionado": true
+        },
+        "S2": {
+         "presionado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= en A y en B",
+      "bien": true,
+      "valor": "4,9 V"
+     }
+    ],
+    "causa": "Salida en corto con 0 V o con otra salida.",
+    "reparacion": "Cambiar el integrado y buscar el corto."
+   },
+   {
+    "nombre": "Integrado equivocado",
+    "sintoma": "La lógica funciona al revés tras una reparación.",
+    "mide": [
+     {
+      "donde": "V= en Y con A = B = 0",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "puertas_servicio",
+       "a": "U1.Y",
+       "b": "U1.GND",
+       "segundos": 0.3,
+       "params": {
+        "U1": {
+         "tipo": "nand"
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Se puso un 4011 (NAND) en lugar del 4081 (AND).",
+    "reparacion": "Poner el integrado del número que indica el esquema."
+   },
+   {
+    "nombre": "Sin alimentación",
+    "sintoma": "Todas las salidas a 0.",
+    "mide": [
+     {
+      "donde": "V= entre 14 y 7",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Fusible o regulador de la tarjeta.",
+    "reparacion": "Revisar la alimentación de 5 V."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "enclavamientos que responden"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "prueba de entradas y salidas de la tarjeta"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de tarjetas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60617-12: elementos lógicos binarios.",
+  "IEEE 91: símbolos lógicos."
+ ]
+}

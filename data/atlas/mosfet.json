@@ -1,0 +1,452 @@
+{
+ "id": "mosfet",
+ "ficha": "mosfet",
+ "titulo": "Transistor MOSFET",
+ "termino": "mosfet",
+ "icono": "mosfet",
+ "resumen": "Manda corrientes grandes con la tensión de su puerta.",
+ "bornes_dibujo": {
+  "G": [
+   170,
+   205
+  ],
+  "D": [
+   200,
+   205
+  ],
+  "S": [
+   230,
+   205
+  ]
+ },
+ "que_es": {
+  "texto": "El {{mosfet}} se manda con la tensión entre {{puerta}} y {{surtidor}}; su canal, entre {{drenador}} y surtidor, conduce con miliohmios.",
+  "partes": [
+   {
+    "texto": "Lengüeta metálica unida al drenador, para el disipador.",
+    "marca": [
+     200,
+     40
+    ]
+   },
+   {
+    "texto": "Cápsula TO-220 con la marca del tipo.",
+    "marca": [
+     200,
+     108
+    ]
+   },
+   {
+    "texto": "Patas G, D y S.",
+    "marca": [
+     200,
+     190
+    ]
+   }
+  ],
+  "placa": "IRFZ44N · canal N · 49 A · 55 V",
+  "a_bordo": "En los variadores, las fuentes conmutadas, los cargadores de baterías y las salidas de potencia de las tarjetas. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_mosfet",
+  "params": {},
+  "pasos": [
+   "Sin tensión de puerta, el canal está cerrado: el foco apagado.",
+   "Con 12 V entre puerta y surtidor, el canal conduce con miliohmios y casi no se calienta.",
+   "Con una puerta a medias, conduce con ohmios, se calienta y se quema."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_mosfet.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 240,
+     "y": 8,
+     "tam": 12
+    },
+    {
+     "texto": "12 V",
+     "x": 60,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "0 V",
+     "x": 170,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "RG 100 Ω",
+     "x": 115,
+     "y": 180,
+     "tam": 11
+    },
+    {
+     "texto": "RGS",
+     "x": 184,
+     "y": 240,
+     "tam": 11
+    },
+    {
+     "texto": "RL 24 V 48 W",
+     "x": 300,
+     "y": 100,
+     "tam": 11
+    },
+    {
+     "texto": "Q1",
+     "x": 280,
+     "y": 200,
+     "tam": 12
+    },
+    {
+     "texto": "G",
+     "x": 184,
+     "y": 186,
+     "tam": 10
+    },
+    {
+     "texto": "D",
+     "x": 256,
+     "y": 156,
+     "tam": 10
+    },
+    {
+     "texto": "S",
+     "x": 256,
+     "y": 244,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "G": [
+    188,
+    200
+   ],
+   "D": [
+    240,
+    160
+   ],
+   "S": [
+    240,
+    240
+   ]
+  },
+  "bornes": {
+   "G": "Llegan 12 V por RG al pulsar S1; RGS la descarga al soltar.",
+   "D": "Llega el foco desde el +24 V.",
+   "S": "Va al 0 V."
+  },
+  "grupos": [
+   {
+    "nombre": "Q1 D-S",
+    "bornes": [
+     "D",
+     "S"
+    ],
+    "texto": "El interruptor del foco, en el lado de 0 V."
+   },
+   {
+    "nombre": "Puerta",
+    "bornes": [
+     "G"
+    ],
+    "texto": "Se manda por tensión respecto de S."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un IRFZ44N y un foco de 24 V y 48 W. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Prueba de diodo",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "S",
+    "negra": "D",
+    "como": "Escala de diodo · roja en S, negra en D",
+    "nota": "Sin tensión, desoldado y tocando las patas lo menos posible.",
+    "titulo_tabla": "Diodo interno y puerta",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_mosfet",
+     "a": "Q1.S",
+     "b": "Q1.D"
+    },
+    "filas": [
+     {
+      "estado": "S → D, diodo interno",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "D → S",
+      "cambios": {
+       "a": "Q1.D",
+       "b": "Q1.S"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "G → S",
+      "cambios": {
+       "a": "Q1.G",
+       "b": "Q1.S"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "D-S en corto",
+      "cambios": {
+       "a": "Q1.D",
+       "b": "Q1.S",
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Puerta",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "G",
+    "negra": "S",
+    "como": "Escala Ω · entre G y S",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Aislamiento de la puerta",
+    "columna": "G-S",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_mosfet",
+     "a": "Q1.G",
+     "b": "Q1.S"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Perforada",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "puerta_perforada": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "D",
+    "negra": "S",
+    "como": "Escala V= · entre D y S",
+    "nota": "Con el foco conectado.",
+    "titulo_tabla": "Tensión drenador-surtidor",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "mosfet_servicio",
+     "a": "Q1.D",
+     "b": "Q1.S",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sin orden",
+      "hacer": "Normal: abierto",
+      "bien": true
+     },
+     {
+      "estado": "Con 12 V de puerta",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: conduce",
+      "bien": true
+     },
+     {
+      "estado": "D-S en corto, sin orden",
+      "cambios": {
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "El foco no se apaga: cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "El foco no se apaga.",
+    "mide": [
+     {
+      "donde": "V= D-S sin orden",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "mosfet_servicio",
+       "a": "Q1.D",
+       "b": "Q1.S",
+       "segundos": 0.3,
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "prueba de diodo D → S",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "diodo",
+       "circuito": "medir_mosfet",
+       "a": "Q1.D",
+       "b": "Q1.S",
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente, calor o mandado a medias.",
+    "reparacion": "Cambiarlo con pulsera antiestática y buscar la causa."
+   },
+   {
+    "nombre": "Mandado a medias",
+    "sintoma": "Con solo 5 V de puerta, el MOSFET se calienta y acaba en corto.",
+    "mide": [
+     {
+      "donde": "potencia en Q1 con 5 V de puerta",
+      "bien": false,
+      "valor": "10 W en lugar de 0,1 W"
+     },
+     {
+      "donde": "V= D-S tras el calentón",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "mosfet_servicio",
+       "a": "Q1.D",
+       "b": "Q1.S",
+       "segundos": 0.3,
+       "estado": {
+        "Q1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Tensión de puerta insuficiente para este MOSFET.",
+    "reparacion": "Mandarlo con 10-12 V o poner uno de puerta lógica."
+   },
+   {
+    "nombre": "Puerta perforada",
+    "sintoma": "No responde a la orden y la salida que lo manda se carga.",
+    "mide": [
+     {
+      "donde": "Ω G-S",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_mosfet",
+       "a": "Q1.G",
+       "b": "Q1.S",
+       "estado": {
+        "Q1": {
+         "puerta_perforada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Electricidad estática o más de 20 V en la puerta.",
+    "reparacion": "Cambiarlo con pulsera antiestática."
+   },
+   {
+    "nombre": "Puerta al aire",
+    "sintoma": "El foco se enciende solo o queda a medio brillo.",
+    "mide": [
+     {
+      "donde": "RGS",
+      "bien": false,
+      "valor": "cortada o falta"
+     }
+    ],
+    "causa": "Sin la resistencia de puerta a surtidor, la puerta queda cargada.",
+    "reparacion": "Poner la resistencia de 10 kΩ entre G y S."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "salidas de potencia que responden"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "temperatura de los disipadores"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "pasta térmica de los equipos de potencia"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-8: transistores de efecto de campo.",
+  "IEC 61340-5-1: protección contra la electricidad estática."
+ ]
+}

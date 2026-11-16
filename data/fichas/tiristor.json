@@ -1,0 +1,87 @@
+{
+  "id": "tiristor",
+  "titulo": "Tiristor",
+  "resumen": "Interruptor de potencia que se dispara con la puerta y se queda conduciendo.",
+  "dibujo": {
+    "svg": "res://art/equipos/tiristor.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Tiristor de 25 A y 800 V en cápsula TO-220, con sus patas K, A y G. Dibujo general: tipo y orden de las patas, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "TYN825",
+        "x": 200,
+        "y": 108,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "K",
+        "x": 170,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "A",
+        "x": 200,
+        "y": 212,
+        "tam": 11
+      },
+      {
+        "texto": "G",
+        "x": 230,
+        "y": 212,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Tiristor según IEC 60617 y ANSI/IEEE 315: un diodo con la puerta en el cátodo. Verificar contra la norma.",
+    "lista": [
+      "tiristor"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{tiristor}} es un diodo que no conduce hasta que se le da un impulso de corriente en la {{puerta}}. Una vez disparado, sigue conduciendo aunque se quite la puerta, mientras pase más que su {{corriente_mantenimiento}}. En alterna se apaga solo en cada paso por cero: disparándolo antes o después en cada semiciclo se regula la potencia, como en los rectificadores controlados de los cargadores de baterías y en los arrancadores suaves."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Cuatro capas[/b] de silicio PNPN entre ánodo (A) y cátodo (K).\n• [b]Puerta (G):[/b] una unión con el cátodo; con unos miliamperios lo dispara.\n• [b]Corriente de mantenimiento:[/b] por debajo de ella se apaga."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Ánodo hacia el +, cátodo hacia el −, como un diodo.\n• Puerta mandada desde el cátodo a través de una resistencia que limite su corriente.\n• En continua solo se apaga cortando su corriente (un pulsador NC en serie, o un circuito de apagado)."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por la corriente media, la tensión de pico repetitiva y la corriente de puerta ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b] y desoldado: escala de diodo. Roja en G y negra en K: 0,6 a 0,8 V; al revés, OL o algo más. Entre A y K: OL en los dos sentidos.\n• [b]En servicio:[/b] V= A-K: toda la tensión bloqueando y 1 V conduciendo."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]A-K en corto:[/b] la carga se queda conectada siempre.\n• [b]Puerta abierta:[/b] no se dispara nunca.\n• [b]Se dispara solo[/b] por un pico rápido de tensión: falta o está mal la red RC (snubber) en paralelo."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: limpieza y temperatura del disipador del cargador.\n\n[b]Correctivo:[/b] se cambia por otro de igual o mayor corriente y tensión, con pasta térmica nueva."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-6: tiristores.",
+    "IEC 60146-1-1: convertidores de semiconductores."
+  ]
+}

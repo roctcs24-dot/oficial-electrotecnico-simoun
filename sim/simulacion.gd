@@ -77,6 +77,14 @@ static func tipos() -> Dictionary:
 		"varistor": SimVaristor,
 		"condensador_electrico": SimCondensadorElectrico,
 		"zener": SimZener,
+		"transistor": SimTransistor,
+		"mosfet": SimMosfet,
+		"tiristor": SimTiristor,
+		"triac": SimTriac,
+		"optoacoplador": SimOptoacoplador,
+		"regulador": SimRegulador,
+		"operacional": SimOperacional,
+		"puerta_logica": SimPuertaLogica,
 	}
 
 

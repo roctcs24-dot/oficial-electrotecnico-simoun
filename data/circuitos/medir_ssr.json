@@ -1,0 +1,11 @@
+{
+  "nombre": "Relé de estado sólido suelto para medir",
+  "nota": "Relé de estado sólido de 25 A, mando de 3-32 V DC y carga de 24-280 V AC, desconectado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "K1",
+      "tipo": "rele_estado_solido"
+    }
+  ],
+  "cables": []
+}

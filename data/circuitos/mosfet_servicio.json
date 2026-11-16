@@ -1,0 +1,92 @@
+{
+  "nombre": "MOSFET que enciende un foco de 24 V",
+  "nota": "La puerta de Q1 recibe 12 V por RG (100 Ω) al pulsar S1 y RGS (10 kΩ) la descarga al soltar; Q1 conecta a 0 V un foco de 24 V y 48 W (RL, 12 Ω). valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "FG",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 12
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "RG",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 100
+      }
+    },
+    {
+      "id": "RGS",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "Q1",
+      "tipo": "mosfet"
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 12
+      }
+    }
+  ],
+  "cables": [
+    [
+      "FG.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "RG.A"
+    ],
+    [
+      "RG.B",
+      "Q1.G"
+    ],
+    [
+      "Q1.G",
+      "RGS.A"
+    ],
+    [
+      "RGS.B",
+      "Q1.S"
+    ],
+    [
+      "FG.-",
+      "Q1.S"
+    ],
+    [
+      "F.+",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "Q1.D"
+    ],
+    [
+      "Q1.S",
+      "F.-"
+    ]
+  ]
+}

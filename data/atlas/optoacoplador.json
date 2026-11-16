@@ -1,0 +1,483 @@
+{
+ "id": "optoacoplador",
+ "ficha": "optoacoplador",
+ "titulo": "Optoacoplador",
+ "termino": "optoacoplador",
+ "icono": "optoacoplador",
+ "resumen": "Pasa la señal con luz, aislando los dos lados.",
+ "bornes_dibujo": {
+  "1": [
+   175,
+   165
+  ],
+  "2": [
+   225,
+   165
+  ],
+  "3": [
+   225,
+   45
+  ],
+  "4": [
+   175,
+   45
+  ]
+ },
+ "que_es": {
+  "texto": "El {{optoacoplador}} pasa la señal del LED al fototransistor con luz, con {{aislamiento_galvanico}} entre los dos lados.",
+  "partes": [
+   {
+    "texto": "Punto y muesca de la pata 1.",
+    "marca": [
+     166,
+     130
+    ]
+   },
+   {
+    "texto": "LED de entrada: patas 1 y 2.",
+    "marca": [
+     200,
+     150
+    ]
+   },
+   {
+    "texto": "Fototransistor de salida: patas 4 y 3.",
+    "marca": [
+     200,
+     60
+    ]
+   }
+  ],
+  "placa": "PC817 · aislamiento 5000 V",
+  "a_bordo": "En las tarjetas de entradas de 24 V de los PLC, de las alarmas y de los controladores de los generadores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_optoacoplador",
+  "params": {},
+  "pasos": [
+   "Sin señal del campo, el LED está apagado y la salida queda con los 5 V de la tarjeta.",
+   "Con 24 V del campo, el LED luce y el fototransistor conduce: la salida baja a 0,2 V.",
+   "Entre los dos lados solo pasa la luz: miles de voltios de aislamiento."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_optoacoplador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V campo",
+     "x": 60,
+     "y": 8,
+     "tam": 11
+    },
+    {
+     "texto": "0 V campo",
+     "x": 100,
+     "y": 282,
+     "tam": 10
+    },
+    {
+     "texto": "S1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "R1 2,2 kΩ",
+     "x": 110,
+     "y": 130,
+     "tam": 11
+    },
+    {
+     "texto": "OK1",
+     "x": 185,
+     "y": 240,
+     "tam": 11
+    },
+    {
+     "texto": "1",
+     "x": 126,
+     "y": 176,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 126,
+     "y": 204,
+     "tam": 10
+    },
+    {
+     "texto": "4",
+     "x": 248,
+     "y": 152,
+     "tam": 10
+    },
+    {
+     "texto": "3",
+     "x": 248,
+     "y": 236,
+     "tam": 10
+    },
+    {
+     "texto": "+5 V",
+     "x": 330,
+     "y": 8,
+     "tam": 11
+    },
+    {
+     "texto": "R2 10 kΩ",
+     "x": 370,
+     "y": 100,
+     "tam": 11
+    },
+    {
+     "texto": "a la tarjeta",
+     "x": 360,
+     "y": 140,
+     "tam": 10
+    },
+    {
+     "texto": "0 V lógico",
+     "x": 330,
+     "y": 282,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    140,
+    176
+   ],
+   "2": [
+    140,
+    200
+   ],
+   "4": [
+    232,
+    152
+   ],
+   "3": [
+    232,
+    232
+   ]
+  },
+  "bornes": {
+   "1": "Llegan los 24 V del final de carrera S1 por R1.",
+   "2": "Va al 0 V del campo.",
+   "4": "Va a los 5 V de la tarjeta por R2, y a su entrada.",
+   "3": "Va al 0 V lógico, separado del de campo."
+  },
+  "grupos": [
+   {
+    "nombre": "LED 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "Lado de campo: 24 V con su resistencia, unos 10 mA."
+   },
+   {
+    "nombre": "Salida 4-3",
+    "bornes": [
+     "4",
+     "3"
+    ],
+    "texto": "Lado lógico: baja a 0,2 V con la entrada activa."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un PC817, R1 de 2,2 kΩ a 24 V y R2 de 10 kΩ a 5 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "LED",
+    "instrumento": "multimetro",
+    "escala": "→|",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala de diodo · roja en 1, negra en 2",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Entrada y salida",
+    "columna": "→|",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "diodo",
+     "circuito": "medir_optoacoplador",
+     "a": "OK1.1",
+     "b": "OK1.2"
+    },
+    "filas": [
+     {
+      "estado": "1 → 2, LED",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "2 → 1",
+      "cambios": {
+       "a": "OK1.2",
+       "b": "OK1.1"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "4 → 3, salida",
+      "cambios": {
+       "a": "OK1.4",
+       "b": "OK1.3"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "LED abierto",
+      "cambios": {
+       "estado": {
+        "OK1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Aislamiento",
+    "instrumento": "megohmetro",
+    "escala": "500 V",
+    "roja": "1",
+    "negra": "3",
+    "como": "Megóhmetro a 500 V · entre 1 y 3",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Aislamiento entre lados",
+    "columna": "MΩ",
+    "medida": {
+     "circuito": "medir_optoacoplador",
+     "instrumento": "megohmetro",
+     "v_prueba": 500,
+     "a": "OK1.1",
+     "b": "OK1.3"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: aislado",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V=",
+    "roja": "4",
+    "negra": "3",
+    "como": "Escala V= · entre 4 y 3",
+    "nota": "Con la tarjeta y el campo alimentados.",
+    "titulo_tabla": "Salida hacia la tarjeta",
+    "columna": "V=",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "circuito": "optoacoplador_servicio",
+     "a": "OK1.4",
+     "b": "OK1.3",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Entrada inactiva",
+      "hacer": "Normal: 5 V",
+      "bien": true
+     },
+     {
+      "estado": "Entrada activa (S1)",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: baja",
+      "bien": true
+     },
+     {
+      "estado": "LED abierto, S1 activa",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "OK1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "La tarjeta no la ve: cambiarlo",
+      "bien": false
+     },
+     {
+      "estado": "Salida en corto",
+      "cambios": {
+       "estado": {
+        "OK1": {
+         "salida_corto": true
+        }
+       }
+      },
+      "hacer": "La tarjeta la ve siempre activa",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "LED abierto",
+    "sintoma": "La tarjeta no ve una entrada aunque llegan los 24 V.",
+    "mide": [
+     {
+      "donde": "V= 1-2 con la entrada activa",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "optoacoplador_servicio",
+       "a": "OK1.1",
+       "b": "OK1.2",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "OK1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "V= 4-3",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "optoacoplador_servicio",
+       "a": "OK1.4",
+       "b": "OK1.3",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "OK1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Un pico en el cableado de campo o una resistencia en corto.",
+    "reparacion": "Cambiar el optoacoplador o la tarjeta."
+   },
+   {
+    "nombre": "Sin resistencia",
+    "sintoma": "Una entrada deja de funcionar al poco de repararla.",
+    "mide": [
+     {
+      "donde": "V= 4-3 con R1 de 10 Ω",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "optoacoplador_servicio",
+       "a": "OK1.4",
+       "b": "OK1.3",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "R1": {
+         "ohm": 10
+        }
+       }
+      }
+     }
+    ],
+    "causa": "La corriente de 24 V sin limitar quema el LED.",
+    "reparacion": "Poner la resistencia de entrada: (24 − 1,2) / 0,01 ≈ 2,2 kΩ."
+   },
+   {
+    "nombre": "Salida en corto",
+    "sintoma": "La tarjeta ve la entrada siempre activa.",
+    "mide": [
+     {
+      "donde": "V= 4-3 sin entrada",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "optoacoplador_servicio",
+       "a": "OK1.4",
+       "b": "OK1.3",
+       "segundos": 0.3,
+       "estado": {
+        "OK1": {
+         "salida_corto": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fototransistor dañado.",
+    "reparacion": "Cambiar el optoacoplador o la tarjeta."
+   },
+   {
+    "nombre": "Lados unidos",
+    "sintoma": "Un fallo en el campo daña la electrónica.",
+    "mide": [
+     {
+      "donde": "0 V campo y 0 V lógico",
+      "bien": false,
+      "valor": "puenteados"
+     }
+    ],
+    "causa": "Se unieron los comunes de los dos lados y se perdió el aislamiento.",
+    "reparacion": "Quitar el puente: cada lado con su común."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "LED de entradas del PLC con su señal"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "revisión de tarjetas de entradas"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza de tarjetas y bornes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-5-5: optoacopladores.",
+  "IEC 61131-2: entradas y salidas de los PLC."
+ ]
+}

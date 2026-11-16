@@ -1,0 +1,11 @@
+{
+  "nombre": "MOSFET suelto para medir",
+  "nota": "MOSFET de canal N IRFZ44N (49 A, 55 V), desoldado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "Q1",
+      "tipo": "mosfet"
+    }
+  ],
+  "cables": []
+}

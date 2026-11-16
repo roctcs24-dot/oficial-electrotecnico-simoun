@@ -1,0 +1,117 @@
+{
+  "nombre": "Puerta AND con dos pulsadores",
+  "nota": "A 5 V: los pulsadores S1 y S2 dan 1 a las entradas A y B; R1 y R2 de 10 kΩ las llevan a 0 al soltar. La salida Y enciende LD1 por R3 de 330 Ω. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 5
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "S2",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "R2",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 10000
+      }
+    },
+    {
+      "id": "U1",
+      "tipo": "puerta_logica",
+      "params": {
+        "tipo": "and"
+      }
+    },
+    {
+      "id": "R3",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 330
+      }
+    },
+    {
+      "id": "LD1",
+      "tipo": "led",
+      "params": {
+        "vf": 1.9
+      }
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "U1.A"
+    ],
+    [
+      "U1.A",
+      "R1.A"
+    ],
+    [
+      "R1.B",
+      "F.-"
+    ],
+    [
+      "F.+",
+      "S2.13"
+    ],
+    [
+      "S2.14",
+      "U1.B"
+    ],
+    [
+      "U1.B",
+      "R2.A"
+    ],
+    [
+      "R2.B",
+      "F.-"
+    ],
+    [
+      "U1.VCC",
+      "F.+"
+    ],
+    [
+      "U1.GND",
+      "F.-"
+    ],
+    [
+      "U1.Y",
+      "R3.A"
+    ],
+    [
+      "R3.B",
+      "LD1.A"
+    ],
+    [
+      "LD1.K",
+      "F.-"
+    ]
+  ]
+}

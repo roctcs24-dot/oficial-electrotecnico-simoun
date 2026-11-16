@@ -1,0 +1,76 @@
+{
+  "nombre": "Tiristor que enclava una alarma de 24 V",
+  "nota": "S1 (marcha) da un impulso a la puerta de V1 por RG de 2,2 kΩ; V1 enciende la sirena RL (24 Ω) y sigue encendido al soltar. S2 (NC) corta la corriente y lo apaga. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "F",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 24
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "S2",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NC"
+      }
+    },
+    {
+      "id": "RG",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 2200
+      }
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 24
+      }
+    },
+    {
+      "id": "V1",
+      "tipo": "tiristor"
+    }
+  ],
+  "cables": [
+    [
+      "F.+",
+      "S2.21"
+    ],
+    [
+      "S2.22",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "V1.A"
+    ],
+    [
+      "V1.K",
+      "F.-"
+    ],
+    [
+      "F.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "RG.A"
+    ],
+    [
+      "RG.B",
+      "V1.G"
+    ]
+  ]
+}

@@ -1,0 +1,482 @@
+{
+ "id": "triac",
+ "ficha": "triac",
+ "titulo": "Triac",
+ "termino": "triac",
+ "icono": "triac",
+ "resumen": "Interruptor de alterna mandado por su puerta.",
+ "bornes_dibujo": {
+  "A1": [
+   170,
+   205
+  ],
+  "A2": [
+   200,
+   205
+  ],
+  "G": [
+   230,
+   205
+  ]
+ },
+ "que_es": {
+  "texto": "El {{triac}} conduce la alterna en los dos sentidos mientras recibe corriente en su {{puerta}}.",
+  "partes": [
+   {
+    "texto": "Lengüeta aislada (BTA).",
+    "marca": [
+     200,
+     40
+    ]
+   },
+   {
+    "texto": "Dos tiristores enfrentados en una cápsula TO-220.",
+    "marca": [
+     200,
+     108
+    ]
+   },
+   {
+    "texto": "Patas A1, A2 y G.",
+    "marca": [
+     200,
+     190
+    ]
+   }
+  ],
+  "placa": "BTA16-600 · 16 A · 600 V",
+  "a_bordo": "En los termostatos electrónicos de las resistencias de calefacción, en los reguladores de ventiladores y dentro de los relés de estado sólido. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_triac",
+  "params": {},
+  "pasos": [
+   "Sin corriente de puerta, el triac bloquea: la resistencia está fría.",
+   "Con unos miliamperios de puerta conduce en los dos semiciclos: 230 V en la carga.",
+   "Quitada la puerta, se apaga en el siguiente paso por cero de la alterna."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_triac.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "X1 230 V",
+     "x": 40,
+     "y": 8,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 40,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "F1",
+     "x": 190,
+     "y": 45,
+     "tam": 11
+    },
+    {
+     "texto": "RL 230 W",
+     "x": 268,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "V1",
+     "x": 186,
+     "y": 180,
+     "tam": 12
+    },
+    {
+     "texto": "A2",
+     "x": 238,
+     "y": 142,
+     "tam": 10
+    },
+    {
+     "texto": "A1",
+     "x": 238,
+     "y": 220,
+     "tam": 10
+    },
+    {
+     "texto": "G",
+     "x": 252,
+     "y": 190,
+     "tam": 10
+    },
+    {
+     "texto": "5 V",
+     "x": 330,
+     "y": 90,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 362,
+     "y": 150,
+     "tam": 12
+    },
+    {
+     "texto": "RG 330 Ω",
+     "x": 275,
+     "y": 222,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A2": [
+    220,
+    150
+   ],
+   "A1": [
+    220,
+    210
+   ],
+   "G": [
+    246,
+    202
+   ]
+  },
+  "bornes": {
+   "A2": "Llega la resistencia RL desde X1 por F1.",
+   "A1": "Va a X2, el otro lado del secundario.",
+   "G": "Llegan 5 V por RG al pulsar S1, respecto de A1."
+  },
+  "grupos": [
+   {
+    "nombre": "V1 A1-A2",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "En serie con la resistencia de 230 V."
+   },
+   {
+    "nombre": "Puerta",
+    "bornes": [
+     "G"
+    ],
+    "texto": "Manda respecto de A1: 13 mA dispara este triac."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un BTA16 y una resistencia de 230 W. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Óhmetro",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "G",
+    "negra": "A1",
+    "como": "Escala Ω · entre G y A1",
+    "nota": "Sin tensión y desoldado.",
+    "titulo_tabla": "Puerta y terminales",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_triac",
+     "a": "V1.G",
+     "b": "V1.A1"
+    },
+    "filas": [
+     {
+      "estado": "G-A1",
+      "hacer": "Normal: decenas de ohmios",
+      "bien": true
+     },
+     {
+      "estado": "A1-A2",
+      "cambios": {
+       "a": "V1.A1",
+       "b": "V1.A2"
+      },
+      "hacer": "Normal: OL",
+      "bien": true
+     },
+     {
+      "estado": "A1-A2 en corto",
+      "cambios": {
+       "a": "V1.A1",
+       "b": "V1.A2",
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "A2",
+    "negra": "A1",
+    "como": "Escala V~ · en la resistencia",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en la carga",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "triac_servicio",
+     "a": "RL.A",
+     "b": "RL.B",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sin puerta",
+      "hacer": "Normal: apagada",
+      "bien": true
+     },
+     {
+      "estado": "Con puerta (S1)",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: calienta",
+      "bien": true
+     },
+     {
+      "estado": "RG de 1 kΩ",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "RG": {
+         "ohm": 1000
+        }
+       }
+      },
+      "hacer": "Poca puerta: no conduce",
+      "bien": false
+     },
+     {
+      "estado": "A1-A2 en corto",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "No se apaga: cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "A2",
+    "negra": "",
+    "como": "Pinza en el cable de A2",
+    "nota": "Con tensión.",
+    "titulo_tabla": "Corriente de la carga",
+    "columna": "A",
+    "medida": {
+     "circuito": "triac_servicio",
+     "segundos": 0.3,
+     "instrumento": "pinza",
+     "cable": [
+      "RL.B",
+      "V1.A2"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Sin puerta",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Con puerta",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: 230 W / 230 V",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "La resistencia calienta sin parar y el termostato no la apaga.",
+    "mide": [
+     {
+      "donde": "V~ en la carga sin puerta",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "triac_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω A1-A2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_triac",
+       "a": "V1.A1",
+       "b": "V1.A2",
+       "estado": {
+        "V1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Sobrecorriente o calor por un disipador sucio.",
+    "reparacion": "Cambiarlo y limpiar el disipador."
+   },
+   {
+    "nombre": "Puerta abierta",
+    "sintoma": "La resistencia no calienta aunque el termostato pida.",
+    "mide": [
+     {
+      "donde": "V~ en la carga con puerta",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "triac_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "V1": {
+         "puerta_abierta": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω G-A1",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_triac",
+       "a": "V1.G",
+       "b": "V1.A1",
+       "estado": {
+        "V1": {
+         "puerta_abierta": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Puerta dañada.",
+    "reparacion": "Cambiarlo."
+   },
+   {
+    "nombre": "Poca corriente de puerta",
+    "sintoma": "No conduce, o solo a ratos.",
+    "mide": [
+     {
+      "donde": "V~ en la carga con RG de 1 kΩ",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "triac_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       },
+       "params": {
+        "RG": {
+         "ohm": 1000
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Resistencia de puerta de más valor que la del esquema.",
+    "reparacion": "Poner la resistencia de puerta de su valor."
+   },
+   {
+    "nombre": "Se dispara solo",
+    "sintoma": "Con un motor, conduce sin puerta.",
+    "mide": [
+     {
+      "donde": "red RC entre A1 y A2",
+      "bien": false,
+      "valor": "falta"
+     }
+    ],
+    "causa": "Carga inductiva sin red RC (snubber).",
+    "reparacion": "Poner la red RC que indica el fabricante."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "termostato que enciende y apaga"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "temperatura del triac y del disipador"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza del disipador"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60747-6: tiristores.",
+  "IEC 60617: símbolos gráficos para esquemas."
+ ]
+}

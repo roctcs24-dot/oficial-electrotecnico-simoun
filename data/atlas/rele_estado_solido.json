@@ -1,0 +1,444 @@
+{
+ "id": "rele_estado_solido",
+ "ficha": "rele_estado_solido",
+ "titulo": "Relé de estado sólido",
+ "termino": "rele_estado_solido",
+ "icono": "ssr",
+ "resumen": "Relé sin contactos para cargas de alterna.",
+ "bornes_dibujo": {
+  "1": [
+   150,
+   55
+  ],
+  "2": [
+   250,
+   55
+  ],
+  "3": [
+   150,
+   165
+  ],
+  "4": [
+   250,
+   165
+  ]
+ },
+ "que_es": {
+  "texto": "El {{rele_estado_solido}} conecta una carga de alterna con un triac mandado por un optoacoplador: sin contactos ni chispas.",
+  "partes": [
+   {
+    "texto": "Bornes 1-2 de la carga de alterna.",
+    "marca": [
+     200,
+     55
+    ]
+   },
+   {
+    "texto": "Bornes 3 (+) y 4 (−) del mando.",
+    "marca": [
+     200,
+     165
+    ]
+   },
+   {
+    "texto": "LED que indica la orden.",
+    "marca": [
+     270,
+     110
+    ]
+   }
+  ],
+  "placa": "SSR 25 A · mando 3-32 V DC · carga 24-280 V AC",
+  "a_bordo": "En las resistencias de calefacción de tanques y calderas, mandadas por un controlador de temperatura. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_ssr",
+  "params": {},
+  "pasos": [
+   "Con orden en 3-4 se enciende el LED del optoacoplador interno.",
+   "El triac conduce y la carga recibe 230 V.",
+   "Sin orden, el triac bloquea al paso por cero; queda una pequeña fuga."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_rele_estado_solido.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+24 V",
+     "x": 60,
+     "y": 8,
+     "tam": 11
+    },
+    {
+     "texto": "0 V",
+     "x": 60,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "X1 230 V",
+     "x": 340,
+     "y": 8,
+     "tam": 11
+    },
+    {
+     "texto": "F1",
+     "x": 370,
+     "y": 65,
+     "tam": 11
+    },
+    {
+     "texto": "RL 230 W",
+     "x": 352,
+     "y": 210,
+     "tam": 11
+    },
+    {
+     "texto": "X2",
+     "x": 360,
+     "y": 270,
+     "tam": 11
+    },
+    {
+     "texto": "K1 SSR",
+     "x": 200,
+     "y": 130,
+     "tam": 12
+    },
+    {
+     "texto": "3",
+     "x": 156,
+     "y": 92,
+     "tam": 10
+    },
+    {
+     "texto": "4",
+     "x": 156,
+     "y": 172,
+     "tam": 10
+    },
+    {
+     "texto": "1",
+     "x": 246,
+     "y": 92,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 246,
+     "y": 172,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "3": [
+    140,
+    100
+   ],
+   "4": [
+    140,
+    160
+   ],
+   "1": [
+    260,
+    100
+   ],
+   "2": [
+    260,
+    160
+   ]
+  },
+  "bornes": {
+   "3": "Llega la orden de 24 V del controlador.",
+   "4": "Va al 0 V del mando.",
+   "1": "Llega la fase de 230 V por F1.",
+   "2": "Sale a la resistencia de calefacción."
+  },
+  "grupos": [
+   {
+    "nombre": "Mando 3-4",
+    "bornes": [
+     "3",
+     "4"
+    ],
+    "texto": "De 3 a 32 V DC, con su polaridad."
+   },
+   {
+    "nombre": "Carga 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con la resistencia de 230 V."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un relé de 25 A y una resistencia de 230 W. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Óhmetro",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "3",
+    "negra": "4",
+    "como": "Escala Ω · entre 3 y 4",
+    "nota": "Sin tensión y desconectado.",
+    "titulo_tabla": "Mando y salida",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_ssr",
+     "a": "K1.3",
+     "b": "K1.4"
+    },
+    "filas": [
+     {
+      "estado": "Mando 3-4",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Salida 1-2",
+      "cambios": {
+       "a": "K1.1",
+       "b": "K1.2"
+      },
+      "hacer": "Normal: alta",
+      "bien": true
+     },
+     {
+      "estado": "Salida 1-2 en corto",
+      "cambios": {
+       "a": "K1.1",
+       "b": "K1.2",
+       "estado": {
+        "K1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "1",
+    "como": "Escala V~ · en la resistencia",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en la carga",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "ssr_servicio",
+     "a": "RL.A",
+     "b": "RL.B",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Sin orden",
+      "hacer": "Normal: casi nada, por la fuga",
+      "bien": true
+     },
+     {
+      "estado": "Con orden",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: calienta",
+      "bien": true
+     },
+     {
+      "estado": "En corto, sin orden",
+      "cambios": {
+       "estado": {
+        "K1": {
+         "quemado": true
+        }
+       }
+      },
+      "hacer": "No se apaga: cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Sin carga",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "",
+    "como": "Escala V~ · entre 2 y X2, carga quitada",
+    "nota": "Sin orden y con la resistencia desconectada.",
+    "titulo_tabla": "La tensión fantasma",
+    "columna": "V~",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "circuito": "ssr_sin_carga",
+     "a": "K1.2",
+     "b": "T2.X2",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Relé sano, apagado",
+      "hacer": "Normal: es la fuga, no una avería",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "En corto",
+    "sintoma": "La resistencia calienta sin parar.",
+    "mide": [
+     {
+      "donde": "V~ en la carga sin orden",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "ssr_servicio",
+       "a": "RL.A",
+       "b": "RL.B",
+       "segundos": 0.3,
+       "estado": {
+        "K1": {
+         "quemado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_ssr",
+       "a": "K1.1",
+       "b": "K1.2",
+       "estado": {
+        "K1": {
+         "quemado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Calor por falta de disipador o una sobrecorriente.",
+    "reparacion": "Cambiarlo, con su disipador y pasta térmica."
+   },
+   {
+    "nombre": "Sin mando",
+    "sintoma": "El LED no luce y la carga no recibe tensión.",
+    "mide": [
+     {
+      "donde": "V= 3-4 con orden",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vdc",
+       "circuito": "ssr_servicio",
+       "a": "K1.3",
+       "b": "K1.4",
+       "segundos": 0.3,
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "polaridad del mando",
+      "bien": false,
+      "valor": "3 y 4 cambiados"
+     }
+    ],
+    "causa": "Mando conectado al revés o sin tensión.",
+    "reparacion": "Conectar el + al 3 y el − al 4."
+   },
+   {
+    "nombre": "Tensión fantasma",
+    "sintoma": "Se mide casi 230 V en la salida con el relé apagado y la carga quitada.",
+    "mide": [
+     {
+      "donde": "V~ entre 2 y X2 sin carga",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "circuito": "ssr_sin_carga",
+       "a": "K1.2",
+       "b": "T2.X2",
+       "segundos": 0.3
+      }
+     }
+    ],
+    "causa": "La fuga del relé y la alta impedancia del multímetro: no es una avería.",
+    "reparacion": "Medir con la carga conectada antes de cambiarlo."
+   },
+   {
+    "nombre": "Sobrecalentado",
+    "sintoma": "Se apaga y enciende solo o acaba en corto.",
+    "mide": [
+     {
+      "donde": "temperatura del disipador",
+      "bien": false,
+      "valor": "más de 80 °C"
+     }
+    ],
+    "causa": "Sin disipador, disipador sucio o pasta seca.",
+    "reparacion": "Montarlo en su disipador con pasta térmica."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "calefacción que sigue al termostato"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "temperatura y reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "pasta térmica"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 62314: relés de estado sólido.",
+  "IEC 60947-4-3: controladores de semiconductores para cargas no motor."
+ ]
+}

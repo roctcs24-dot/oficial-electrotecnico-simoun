@@ -1,0 +1,93 @@
+{
+  "id": "optoacoplador",
+  "titulo": "Optoacoplador",
+  "resumen": "Pasa una señal con luz, sin unir eléctricamente los dos lados.",
+  "dibujo": {
+    "svg": "res://art/equipos/optoacoplador.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Optoacoplador PC817 en cápsula DIP-4, con la marca de la pata 1. Dibujo general: tipo de cada tarjeta, verificar en su hoja de datos.",
+    "etiquetas": [
+      {
+        "texto": "PC817",
+        "x": 200,
+        "y": 104,
+        "tam": 12,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "1",
+        "x": 175,
+        "y": 186,
+        "tam": 11
+      },
+      {
+        "texto": "2",
+        "x": 225,
+        "y": 186,
+        "tam": 11
+      },
+      {
+        "texto": "3",
+        "x": 225,
+        "y": 22,
+        "tam": 11
+      },
+      {
+        "texto": "4",
+        "x": 175,
+        "y": 22,
+        "tam": 11
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Optoacoplador según IEC 60617 y ANSI/IEEE 315: un LED y un fototransistor dentro del mismo recuadro. Verificar contra la norma.",
+    "lista": [
+      "optoacoplador"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{optoacoplador}} lleva dentro un LED y un fototransistor enfrentados. La corriente del LED se convierte en luz y la luz hace conducir el transistor: la señal pasa sin cable entre los dos lados, con {{aislamiento_galvanico}} de miles de voltios. Así entran las señales de 24 V del campo en las tarjetas y en los PLC, sin llevar a la electrónica los picos y las derivaciones del cableado del buque."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Patas 1 y 2:[/b] ánodo y cátodo del LED de entrada.\n• [b]Patas 4 y 3:[/b] colector y emisor del fototransistor de salida.\n• [b]Relación de transferencia (CTR):[/b] cuánta corriente de salida da por cada miliamperio de LED; baja con los años."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Entrada: el LED con su resistencia en serie, R = (V − 1,2) / I; de 5 a 10 mA.\n• Salida: el colector con una resistencia hasta la alimentación de la tarjeta; activa, la salida baja a unos 0,2 V.\n• Los dos lados con sus comunes separados: unirlos anula el aislamiento."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "No se ajusta. Se elige por el aislamiento, la CTR y la velocidad ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] escala de diodo entre 1 y 2: 1 a 1,2 V; al revés, OL. Entre 4 y 3: OL.\n• [b]Aislamiento[/b] entre la entrada y la salida, con el megóhmetro a 500 V: más de 999 MΩ.\n• [b]En servicio:[/b] V= 4-3: la alimentación de la tarjeta en reposo y unos 0,2 V con la entrada activa."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]LED abierto[/b] (sin resistencia o por un pico): la entrada no llega a la tarjeta.\n• [b]Salida en corto:[/b] la tarjeta ve la entrada siempre activa.\n• [b]Envejecido:[/b] con la CTR baja, la salida no baja lo suficiente y la entrada parpadea."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• No tiene mantenimiento propio: se revisa con la tarjeta de entradas.\n\n[b]Correctivo:[/b] en las tarjetas de PLC no se cambia el optoacoplador: se cambia la tarjeta o el módulo."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-5-5: optoacopladores.",
+    "IEC 61131-2: entradas y salidas de los PLC."
+  ]
+}

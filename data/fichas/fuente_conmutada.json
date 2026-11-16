@@ -1,0 +1,123 @@
+{
+  "id": "fuente_conmutada",
+  "titulo": "Fuente conmutada",
+  "resumen": "Convierte la alterna del buque en 24 V DC para mando y electrónica.",
+  "dibujo": {
+    "svg": "res://art/equipos/fuente_conmutada.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Fuente conmutada de carril DIN de 24 V y 5 A, con sus bornes L, N y PE de entrada, + y − de salida, el ajuste V ADJ y el LED DC OK. Dibujo general: modelo de cada tablero, verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "L",
+        "x": 130,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "N",
+        "x": 170,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "PE",
+        "x": 210,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "+",
+        "x": 170,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "+",
+        "x": 130,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "−",
+        "x": 230,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "−",
+        "x": 270,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "DC OK",
+        "x": 200,
+        "y": 150,
+        "tam": 10
+      },
+      {
+        "texto": "V ADJ",
+        "x": 270,
+        "y": 150,
+        "tam": 10
+      },
+      {
+        "texto": "24 V 5 A",
+        "x": 200,
+        "y": 112,
+        "tam": 13
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Fuente conmutada: un recuadro con la alterna y la continua, según IEC 60617. Verificar contra la norma.",
+    "lista": [
+      "fuente_conmutada",
+      "rectificador"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{fuente_conmutada}} convierte la alterna en continua estable, como los 24 V de los PLC, los relés y las alarmas. Rectifica la alterna, la troza a decenas de kilohercios con un MOSFET y la pasa por un transformador pequeño; por eso pesa poco y apenas se calienta. Limita la corriente: ante un corto corta y vuelve a probar."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Entrada:[/b] fusible, filtro, varistor y puente rectificador.\n• [b]Conmutación:[/b] MOSFET, transformador de ferrita y optoacoplador que lleva la medida de la salida al control.\n• [b]Salida:[/b] diodos rápidos, condensadores electrolíticos y el ajuste V ADJ; el LED DC OK indica tensión."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Entrada L-N (o dos fases) desde un interruptor automático; PE a la masa del tablero.\n• Salida + y − a la carga; el − suele unirse a masa en un solo punto si el sistema lo pide.\n• Ventilación libre arriba y abajo; en carril DIN, separada de otras fuentes."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se ajusta con V ADJ: 24 V en vacío, o un poco más para compensar la caída del cable. Se elige por la corriente, con un 25 % de margen ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]En servicio:[/b] V~ en L-N y V= en + y −. Con la pinza, la corriente de entrada.\n• Si da poca tensión, quite la carga: si se recupera, sobra carga o hay un corto aguas abajo.\n• La continua en V~ debe marcar casi 0: mucho rizado indica condensadores secos."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sin salida:[/b] fusible de entrada fundido o fuente averiada.\n• [b]Salida baja[/b] o que oscila: condensadores secos o sobrecarga.\n• [b]Se apaga y vuelve[/b] cada segundo: corto o sobrecarga en la salida (protección de corriente).\n• [b]Calentamiento[/b] por falta de ventilación."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: LED DC OK y tensión de salida en el panel.\n• Semestral: limpieza del polvo y reapriete de bornes.\n• Anual: tensión de salida en carga y rizado.\n\n[b]Correctivo:[/b] se cambia completa por otra de igual tensión y corriente igual o mayor."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61204: fuentes de alimentación de baja tensión en continua.",
+    "IEC 60092-504: automatización y control en buques."
+  ]
+}

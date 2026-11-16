@@ -1,0 +1,11 @@
+{
+  "nombre": "Puerta lógica suelta para medir",
+  "nota": "Puerta lógica CMOS sin alimentar. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "U1",
+      "tipo": "puerta_logica"
+    }
+  ],
+  "cables": []
+}

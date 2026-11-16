@@ -1,0 +1,102 @@
+{
+  "nombre": "Triac que enciende una resistencia de 230 V",
+  "nota": "Desde T2 (230 V), el fusible F1 alimenta la resistencia RL de 230 Ω (230 W) a través del triac V1. La puerta recibe 5 V de una fuente de mando por S1 y RG de 330 Ω, respecto de A1. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T2",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 4
+      }
+    },
+    {
+      "id": "RL",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 230
+      }
+    },
+    {
+      "id": "V1",
+      "tipo": "triac"
+    },
+    {
+      "id": "FG",
+      "tipo": "fuente_dc",
+      "params": {
+        "entrada": "ninguna",
+        "v_salida": 5
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "RG",
+      "tipo": "resistencia",
+      "params": {
+        "ohm": 330
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T2.H1"
+    ],
+    [
+      "B.L2",
+      "T2.H2"
+    ],
+    [
+      "T2.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "RL.A"
+    ],
+    [
+      "RL.B",
+      "V1.A2"
+    ],
+    [
+      "V1.A1",
+      "T2.X2"
+    ],
+    [
+      "FG.+",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "RG.A"
+    ],
+    [
+      "RG.B",
+      "V1.G"
+    ],
+    [
+      "FG.-",
+      "V1.A1"
+    ]
+  ]
+}
