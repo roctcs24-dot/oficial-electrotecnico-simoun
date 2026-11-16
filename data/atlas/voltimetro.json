@@ -1,0 +1,348 @@
+{
+ "id": "voltimetro",
+ "ficha": "voltimetro",
+ "titulo": "Voltímetro de cuadro",
+ "termino": "voltimetro",
+ "icono": "voltimetro",
+ "resumen": "Indica la tensión entre fases de las barras.",
+ "bornes_dibujo": {
+  "1": [
+   110,
+   295
+  ],
+  "2": [
+   190,
+   295
+  ]
+ },
+ "que_es": {
+  "texto": "El {{voltimetro}} del cuadro mide la tensión entre dos fases, conectado directamente con sus fusibles.",
+  "partes": [
+   {
+    "texto": "Escala de 0 a 500 V.",
+    "marca": [
+     150,
+     74
+    ]
+   },
+   {
+    "texto": "Aguja de hierro móvil.",
+    "marca": [
+     175,
+     150
+    ]
+   },
+   {
+    "texto": "Bornes 1-2 detrás.",
+    "marca": [
+     150,
+     295
+    ]
+   }
+  ],
+  "placa": "0-500 V · clase 1,5 · 72 × 72 mm",
+  "a_bordo": "En el cuadro principal, con su conmutador voltimétrico, y en cada generador. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_aparato",
+  "params": {
+   "tipo": "voltimetro"
+  },
+  "pasos": [
+   "Entre las dos fases, una corriente pequeña pasa por la resistencia y la bobina.",
+   "Esa corriente es proporcional a la tensión.",
+   "La aguja gira más cuanta más tensión: la escala está en voltios."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_voltimetro.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 30,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "L2",
+     "x": 30,
+     "y": 50,
+     "tam": 11
+    },
+    {
+     "texto": "L3",
+     "x": 30,
+     "y": 70,
+     "tam": 11
+    },
+    {
+     "texto": "F1 2 A",
+     "x": 52,
+     "y": 125,
+     "tam": 10
+    },
+    {
+     "texto": "F2 2 A",
+     "x": 188,
+     "y": 125,
+     "tam": 10
+    },
+    {
+     "texto": "V",
+     "x": 120,
+     "y": 230,
+     "tam": 15
+    },
+    {
+     "texto": "1",
+     "x": 92,
+     "y": 256,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 148,
+     "y": 256,
+     "tam": 10
+    },
+    {
+     "texto": "V1",
+     "x": 170,
+     "y": 230,
+     "tam": 11
+    },
+    {
+     "texto": "Con conmutador: L1-L2, L2-L3, L3-L1",
+     "x": 270,
+     "y": 170,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    102,
+    230
+   ],
+   "2": [
+    138,
+    230
+   ]
+  },
+  "bornes": {
+   "1": "Desde L1 por su fusible.",
+   "2": "Desde L2 por su fusible."
+  },
+  "grupos": [
+   {
+    "nombre": "1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "Entre dos fases, cada una con su fusible de 2 A, o desde el conmutador voltimétrico."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación sobre las barras de 380 V con carga. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Aguja",
+    "instrumento": "monitor",
+    "escala": "V",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura de la aguja y comparación con el multímetro",
+    "nota": "En servicio.",
+    "titulo_tabla": "Aguja y multímetro",
+    "columna": "V",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "aparato",
+     "id": "V1"
+    },
+    "filas": [
+     {
+      "estado": "Aguja L1-L2",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Multímetro en 1-2",
+      "cambios": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "V1.1",
+       "b": "V1.2"
+      },
+      "hacer": "Normal: coincide",
+      "bien": true
+     },
+     {
+      "estado": "Aguja con la bobina cortada",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "bobina_cortada": true
+        }
+       }
+      },
+      "hacer": "Marca cero: cambiarlo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Bobina",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Fuera del cuadro o con sus fusibles quitados.",
+    "titulo_tabla": "Resistencia del aparato",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_aparatos",
+     "a": "V1.1",
+     "b": "V1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Cortado",
+      "cambios": {
+       "estado": {
+        "V1": {
+         "bobina_cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Marca cero",
+    "sintoma": "Las barras tienen tensión y el voltímetro marca cero.",
+    "mide": [
+     {
+      "donde": "multímetro en 1-2",
+      "bien": true,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "V1.1",
+       "b": "V1.2",
+       "estado": {
+        "V1": {
+         "bobina_cortada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "aguja",
+      "bien": false,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "aparato",
+       "id": "V1",
+       "estado": {
+        "V1": {
+         "bobina_cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Bobina cortada (si en 1-2 no hay tensión: fusible fundido).",
+    "reparacion": "Con los fusibles quitados, cambiar el aparato o el fusible."
+   },
+   {
+    "nombre": "Lecturas distintas",
+    "sintoma": "Con el conmutador, una posición da menos que las otras.",
+    "mide": [
+     {
+      "donde": "L2-L3 con el multímetro",
+      "bien": true,
+      "valor": "380 V"
+     },
+     {
+      "donde": "aguja en L2-L3",
+      "bien": false,
+      "valor": "220 V"
+     }
+    ],
+    "causa": "Un contacto del conmutador sucio.",
+    "reparacion": "Limpiar o cambiar el conmutador."
+   },
+   {
+    "nombre": "Fusible fundido",
+    "sintoma": "El voltímetro marca cero en una posición del conmutador.",
+    "mide": [
+     {
+      "donde": "fusible F1",
+      "bien": false,
+      "valor": "OL"
+     }
+    ],
+    "causa": "Fusible de protección fundido por un corto en el aparato o el cableado.",
+    "reparacion": "Cambiar el fusible y comprobar el aparato."
+   },
+   {
+    "nombre": "No vuelve a cero",
+    "sintoma": "Sin tensión, la aguja queda en 20 V.",
+    "mide": [
+     {
+      "donde": "sin tensión",
+      "bien": false,
+      "valor": "20 V"
+     }
+    ],
+    "causa": "Muelle o mecanismo dañado.",
+    "reparacion": "Ajustar el cero con el tornillo del frente o cambiar el aparato."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura coherente en las tres posiciones"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "contraste con el multímetro"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60051-2: amperímetros y voltímetros analógicos.",
+  "IEC 60092-202: instalaciones eléctricas en buques."
+ ]
+}

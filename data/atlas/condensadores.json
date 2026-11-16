@@ -1,0 +1,450 @@
+{
+ "id": "condensadores",
+ "ficha": "condensadores",
+ "titulo": "Condensadores de compensación",
+ "termino": "condensador_compensacion",
+ "icono": "condensadores",
+ "resumen": "Dan la reactiva de los motores y suben el factor de potencia.",
+ "bornes_dibujo": {
+  "L1": [
+   106,
+   36
+  ],
+  "L2": [
+   150,
+   30
+  ],
+  "L3": [
+   194,
+   36
+  ]
+ },
+ "que_es": {
+  "texto": "Los {{condensador_compensacion}} dan la {{potencia_reactiva}} que piden los motores. El {{factor_potencia}} sube y la corriente de la red baja para la misma potencia útil.",
+  "partes": [
+   {
+    "texto": "Bornes L1-L2-L3 en la tapa.",
+    "marca": [
+     150,
+     30
+    ]
+   },
+   {
+    "texto": "Resistencias de descarga entre bornes.",
+    "marca": [
+     150,
+     76
+    ]
+   },
+   {
+    "texto": "Lata con los elementos en delta.",
+    "marca": [
+     150,
+     290
+    ]
+   },
+   {
+    "texto": "Placa: kvar, tensión y frecuencia.",
+    "marca": [
+     150,
+     202
+    ]
+   }
+  ],
+  "placa": "25 kvar · 400 V · 50 Hz · Δ",
+  "a_bordo": "Poco frecuentes a bordo: verificar si el buque tiene compensación. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_compensacion",
+  "params": {
+   "tipo": "compensacion"
+  },
+  "pasos": [
+   "Los motores piden potencia activa (kW) y reactiva (kvar) para magnetizarse.",
+   "Los condensadores dan reactiva capacitiva, que se resta de la inductiva.",
+   "La aparente baja: menos corriente para la misma potencia y factor de potencia cercano a 1."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_condensadores.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 100,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 140,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "F",
+     "x": 170,
+     "y": 85,
+     "tam": 12
+    },
+    {
+     "texto": "Δ: una rama entre cada par de fases",
+     "x": 260,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "L1",
+     "x": 96,
+     "y": 168,
+     "tam": 10
+    },
+    {
+     "texto": "L2",
+     "x": 236,
+     "y": 168,
+     "tam": 10
+    },
+    {
+     "texto": "L3",
+     "x": 316,
+     "y": 168,
+     "tam": 10
+    },
+    {
+     "texto": "L1-L2",
+     "x": 165,
+     "y": 182,
+     "tam": 10
+    },
+    {
+     "texto": "L2-L3",
+     "x": 260,
+     "y": 212,
+     "tam": 10
+    },
+    {
+     "texto": "L3-L1",
+     "x": 205,
+     "y": 278,
+     "tam": 10
+    },
+    {
+     "texto": "CB1 25 kvar",
+     "x": 360,
+     "y": 230,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L1": [
+    110,
+    150
+   ],
+   "L2": [
+    220,
+    140
+   ],
+   "L3": [
+    300,
+    130
+   ]
+  },
+  "bornes": {
+   "L1": "Fase L1 por su fusible o el contactor de condensadores.",
+   "L2": "Fase L2.",
+   "L3": "Fase L3."
+  },
+  "grupos": [
+   {
+    "nombre": "L1-L2-L3",
+    "bornes": [
+     "L1",
+     "L2",
+     "L3"
+    ],
+    "texto": "A las tres fases, con fusibles o interruptor propios; nunca entre un variador y su motor."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: 40 kW con 35 kvar inductivos y una batería de 25 kvar. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Analizador",
+    "instrumento": "monitor",
+    "escala": "FP",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura del analizador en la entrada",
+    "nota": "En servicio.",
+    "titulo_tabla": "Con y sin la batería",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "compensacion_servicio",
+     "segundos": 0.3,
+     "instrumento": "aparato",
+     "id": "AN1",
+     "magnitud": "fp"
+    },
+    "filas": [
+     {
+      "estado": "FP con batería",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "FP sin batería",
+      "cambios": {
+       "params": {
+        "CB1": {
+         "q_kvar": 0
+        }
+       }
+      },
+      "hacer": "Bajo: corriente de más",
+      "bien": false
+     },
+     {
+      "estado": "Corriente con batería",
+      "cambios": {
+       "magnitud": "i1"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Corriente sin batería",
+      "cambios": {
+       "magnitud": "i1",
+       "params": {
+        "CB1": {
+         "q_kvar": 0
+        }
+       }
+      },
+      "hacer": "Más corriente por lo mismo",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "L1",
+    "negra": "",
+    "como": "Pinza en cada fase de la batería",
+    "nota": "En servicio.",
+    "titulo_tabla": "Corriente de la batería",
+    "columna": "A",
+    "medida": {
+     "circuito": "compensacion_servicio",
+     "segundos": 0.3,
+     "instrumento": "pinza",
+     "cable": [
+      "AN1.T1",
+      "CB1.L1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "L1, sana",
+      "hacer": "Normal: Q/(√3·V)",
+      "bien": true
+     },
+     {
+      "estado": "L1, media capacidad",
+      "cambios": {
+       "estado": {
+        "CB1": {
+         "perdida": 0.5
+        }
+       }
+      },
+      "hacer": "Mala: elementos secos",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Descarga",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "L1",
+    "negra": "L2",
+    "como": "Escala Ω · entre bornes, desconectada",
+    "nota": "Desconecte y espere un minuto antes de tocar.",
+    "titulo_tabla": "Resistencias de descarga",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_condensadores",
+     "a": "CB1.L1",
+     "b": "CB1.L2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Normal: descarga bien",
+      "bien": true
+     },
+     {
+      "estado": "Descarga cortada",
+      "cambios": {
+       "estado": {
+        "CB1": {
+         "descarga_cortada": true
+        }
+       }
+      },
+      "hacer": "Peligro: queda cargada",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Pérdida de capacidad",
+    "sintoma": "El factor de potencia ya no sube como antes; lata hinchada.",
+    "mide": [
+     {
+      "donde": "corriente L1",
+      "bien": false,
+      "medida": {
+       "circuito": "compensacion_servicio",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "AN1.T1",
+        "CB1.L1"
+       ],
+       "estado": {
+        "CB1": {
+         "perdida": 0.5
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Elementos envejecidos por temperatura o armónicos.",
+    "reparacion": "Cambiar la lata completa."
+   },
+   {
+    "nombre": "Una rama abierta",
+    "sintoma": "Corrientes desiguales entre fases.",
+    "mide": [
+     {
+      "donde": "L1",
+      "bien": false,
+      "medida": {
+       "circuito": "compensacion_servicio",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "AN1.T1",
+        "CB1.L1"
+       ],
+       "estado": {
+        "CB1": {
+         "rama_abierta": "L1-L2"
+        }
+       }
+      }
+     },
+     {
+      "donde": "L3",
+      "bien": true,
+      "medida": {
+       "circuito": "compensacion_servicio",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "AN1.T3",
+        "CB1.L3"
+       ],
+       "estado": {
+        "CB1": {
+         "rama_abierta": "L1-L2"
+        }
+       }
+      }
+     }
+    ],
+    "causa": "El dispositivo de sobrepresión abrió una rama.",
+    "reparacion": "Cambiar la lata."
+   },
+   {
+    "nombre": "Sin descarga",
+    "sintoma": "Tensión entre bornes minutos después de desconectar.",
+    "mide": [
+     {
+      "donde": "Ω L1-L2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_condensadores",
+       "a": "CB1.L1",
+       "b": "CB1.L2",
+       "estado": {
+        "CB1": {
+         "descarga_cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Resistencia de descarga cortada.",
+    "reparacion": "Descargar con la pértiga y la resistencia de descarga del taller, y cambiar las resistencias."
+   },
+   {
+    "nombre": "Sobrecompensación",
+    "sintoma": "Con poca carga, el factor de potencia pasa a capacitivo.",
+    "mide": [
+     {
+      "donde": "FP con 10 kW de carga",
+      "bien": false,
+      "valor": "0,40 cap"
+     }
+    ],
+    "causa": "Batería fija demasiado grande para la carga mínima.",
+    "reparacion": "Quitar escalones o pasar a una batería automática con regulador."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lata sin hinchar y ventilación"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "corriente de las tres fases"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "reapriete y prueba de la descarga"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60831-1: condensadores de potencia.",
+  "IEC 60092-101: instalaciones eléctricas en buques."
+ ]
+}

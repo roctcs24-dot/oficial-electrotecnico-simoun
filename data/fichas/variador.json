@@ -1,0 +1,161 @@
+{
+  "id": "variador",
+  "titulo": "Variador de frecuencia",
+  "resumen": "Cambia la frecuencia y la tensión del motor para regular su velocidad.",
+  "dibujo": {
+    "svg": "res://art/equipos/variador.svg",
+    "tamano": [
+      320,
+      420
+    ],
+    "nota": "Variador de frecuencia de pared de unos 15 kW con su panel de mando, dibujado de forma general. Marca, modelo, parámetros y bornes de cada equipo: verificar a bordo con su manual.",
+    "etiquetas": [
+      {
+        "texto": "RUN 50,0 Hz",
+        "x": 160,
+        "y": 98,
+        "tam": 15,
+        "color": "#9be0b0"
+      },
+      {
+        "texto": "24 A · 380 V",
+        "x": 160,
+        "y": 126,
+        "tam": 11,
+        "color": "#9be0b0"
+      },
+      {
+        "texto": "L1",
+        "x": 72,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "L2",
+        "x": 110,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "L3",
+        "x": 148,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "PE",
+        "x": 186,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "DC+",
+        "x": 224,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "DC-",
+        "x": 256,
+        "y": 246,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "U",
+        "x": 72,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "V",
+        "x": 110,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "W",
+        "x": 148,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "PE",
+        "x": 186,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "DI1",
+        "x": 224,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "+24",
+        "x": 256,
+        "y": 334,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Convertidor de frecuencia según IEC 60617 (bloque con la diagonal y las dos ondas) y ANSI/IEEE 315 (bloque con las letras VFD). Verificar contra la norma.",
+    "lista": [
+      "variador",
+      "motor"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{variador}} regula la velocidad de un motor de inducción cambiando la frecuencia que le da: a 25 Hz, un motor de 1460 rpm gira a unas 730. Arranca sin pico de corriente, ahorra energía en bombas y ventiladores, que necesitan mucha menos potencia a menos velocidad, y protege al motor."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Rectificador[/b] de diodos: convierte la red L1-L2-L3 en continua.\n• [b]{{Bus_continua}}[/b] con sus condensadores: unos 1,35 veces la tensión de la red, 513 V en la red de 380 V. Queda cargado minutos después de cortar.\n• [b]Ondulador de {{igbt}}:[/b] reconstruye una alterna de la frecuencia pedida, con la tensión en proporción (V/f constante).\n• [b]Control[/b] con su panel, entradas como DI1 y protecciones de sobrecorriente, sobrecarga y temperatura."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Red a L1-L2-L3 desde su interruptor; el motor a U-V-W, en la conexión de su placa para la tensión de la red. Nunca ponga contactores ni condensadores entre el variador y el motor sin indicarlo el manual.\n• Cable de motor apantallado, con la pantalla a tierra en los dos extremos.\n• La orden de marcha llega a DI1 desde +24 V o desde el panel; la consigna, del panel o de una señal de 4-20 mA."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Los parámetros básicos se copian de la placa del motor: tensión, corriente, frecuencia, velocidad y potencia. Después, frecuencia mínima y máxima, rampas de aceleración y de deceleración, y el origen de las órdenes. Anote siempre los parámetros antes de cambiarlos ([i]códigos y menús: verificar en el manual del equipo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Pantalla:[/b] frecuencia, corriente y tensión del bus.\n• [b]Bus de continua[/b] con el multímetro en V=: 1,35 × la red. Antes de trabajar dentro, espere el tiempo de la etiqueta y compruebe que ha bajado de 50 V.\n• [b]Pinza[/b] en U y en L1: a baja velocidad la corriente de la red es mucho menor que la del motor.\n• No mida el aislamiento del motor con el variador conectado: desconecte U-V-W antes."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Sobrecorriente (F001):[/b] cortocircuito o derivación en el cable o en el motor, o rampa demasiado corta.\n• [b]Subtensión del bus (F003):[/b] falta una fase o la red cae.\n• [b]Sobrecarga (F004):[/b] la bomba pide más de lo que da el motor.\n• [b]Sobretemperatura (F005):[/b] ventilador parado o filtros sucios.\n([i]Códigos de ejemplo: cada marca tiene los suyos[/i])"
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: ventilador y filtros limpios, sin polvo en el radiador.\n• Anual: reapriete de bornes y revisión de los condensadores del bus (hinchados o con fugas).\n\n[b]Correctivo:[/b] con el fallo en pantalla, busque la causa antes de rearmar. Un variador averiado se cambia y se le cargan los parámetros anotados."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61800-5-1: accionamientos de velocidad variable, seguridad.",
+    "IEC 60092-303: equipos eléctricos en buques, transformadores y convertidores."
+  ]
+}

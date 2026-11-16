@@ -1,0 +1,97 @@
+{
+  "nombre": "Bomba con variador de frecuencia",
+  "nota": "Variador de 15 kW alimentado desde Q1 y motor de 15 kW 380Δ/660Y en delta, con carga de bomba (el par baja con el cuadrado de la velocidad). Rampa de 5 s. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "Q1",
+      "tipo": "interruptor_automatico",
+      "params": {
+        "in_a": 40
+      },
+      "estado": {
+        "encendido": true
+      }
+    },
+    {
+      "id": "VF1",
+      "tipo": "variador",
+      "params": {
+        "i_nominal": 32,
+        "consigna_hz": 50,
+        "motor": "M1"
+      }
+    },
+    {
+      "id": "M1",
+      "tipo": "motor_trifasico",
+      "params": {
+        "p_kw": 15,
+        "v_delta": 380,
+        "v_estrella": 660,
+        "i_delta": 29.5,
+        "i_estrella": 17
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "Q1.1"
+    ],
+    [
+      "B.L2",
+      "Q1.3"
+    ],
+    [
+      "B.L3",
+      "Q1.5"
+    ],
+    [
+      "Q1.2",
+      "VF1.L1"
+    ],
+    [
+      "Q1.4",
+      "VF1.L2"
+    ],
+    [
+      "Q1.6",
+      "VF1.L3"
+    ],
+    [
+      "VF1.U",
+      "M1.U1"
+    ],
+    [
+      "VF1.V",
+      "M1.V1"
+    ],
+    [
+      "VF1.W",
+      "M1.W1"
+    ],
+    [
+      "M1.U1",
+      "M1.W2"
+    ],
+    [
+      "M1.V1",
+      "M1.U2"
+    ],
+    [
+      "M1.W1",
+      "M1.V2"
+    ]
+  ]
+}

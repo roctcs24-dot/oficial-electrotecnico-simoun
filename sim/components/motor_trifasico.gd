@@ -131,32 +131,45 @@ func estampar(e: SimEstampa) -> void:
 		e.impedancia(n("W1"), n("U1"), entre)
 
 
+## Frecuencia de alimentación frente a la de placa. Vale 1 en la red; con un variador, la
+## frecuencia que este da (f_alim): las reactancias y la velocidad síncrona cambian en proporción.
+func _k() -> float:
+	return clampf(float(estado.get("f_alim", params["f_hz"])) / float(params["f_hz"]), 0.01, 2.0)
+
+
+func _ns_actual() -> float:
+	return _ns * _k()
+
+
 func _z_devanado() -> Cx:
+	var k := _k()
 	if estado["quemado"]:
-		return Cx.new(_rs * 0.3, _x1 * 0.3)
-	var s_pos: float = 1.0 - estado["rpm"] / _ns
-	var s_neg: float = 1.0 + estado["rpm"] / _ns
+		return Cx.new(_rs * 0.3, _x1 * 0.3 * k)
+	var s_pos: float = 1.0 - estado["rpm"] / _ns_actual()
+	var s_neg: float = 1.0 + estado["rpm"] / _ns_actual()
 	var z := _z_secuencia(s_pos).escala(_peso_pos).mas(_z_secuencia(s_neg).escala(_peso_neg))
 	return z
 
 
 func _z_secuencia(s: float) -> Cx:
+	var k := _k()
 	var s_seguro := s
 	if absf(s_seguro) < 1e-4:
 		s_seguro = 1e-4
-	var rotor := Cx.new(_rr / s_seguro, _x2)
-	var m := Cx.new(0.0, _xm / _saturacion)
-	return Cx.new(_rs, _x1).mas(m.por(rotor).entre(m.mas(rotor)))
+	var rotor := Cx.new(_rr / s_seguro, _x2 * k)
+	var m := Cx.new(0.0, _xm * k / _saturacion)
+	return Cx.new(_rs, _x1 * k).mas(m.por(rotor).entre(m.mas(rotor)))
 
 
 func _par_secuencia(v2: float, s: float) -> float:
+	var k := _k()
 	var s_seguro := s
 	if absf(s_seguro) < 1e-4:
 		s_seguro = 1e-4
 	var reparto := _xm / (_xm + _x1)
 	var rs_e := _rr / s_seguro
-	var d := pow(_rs + rs_e, 2.0) + pow(_x1 + _x2, 2.0)
-	return 3.0 * v2 * reparto * reparto * rs_e / (d * _w_sinc)
+	var d := pow(_rs + rs_e, 2.0) + pow((_x1 + _x2) * k, 2.0)
+	return 3.0 * v2 * reparto * reparto * rs_e / (d * _w_sinc * k)
 
 
 ## Las reactancias dependen del deslizamiento y de las secuencias, que vienen de las
@@ -168,7 +181,7 @@ func asentar(sol: SimSolver.Solucion) -> bool:
 	var max_v := 0.0
 	for par in DEVANADOS:
 		max_v = maxf(max_v, tension(sol, par[0], par[1]))
-	var exceso := maxf(max_v / _v_dev - 1.05, 0.0)
+	var exceso := maxf(max_v / (_v_dev * _k()) - 1.05, 0.0)
 	var saturacion_nueva := 1.0 + 12.0 * exceso * exceso
 	var cambio := absf(peso_nuevo - _peso_pos) > 0.02 or absf(saturacion_nueva - _saturacion) > 0.1
 	_peso_pos = peso_nuevo
@@ -214,7 +227,7 @@ func _avanzar_giro(dt: float, secuencias: Array) -> void:
 	var paso := dt / subpasos
 	for _i in subpasos:
 		var giro: float = estado["rpm"]
-		var par_e := _par_secuencia(v2_pos, 1.0 - giro / _ns) - _par_secuencia(v2_neg, 1.0 + giro / _ns)
+		var par_e := _par_secuencia(v2_pos, 1.0 - giro / _ns_actual()) - _par_secuencia(v2_neg, 1.0 + giro / _ns_actual())
 		var friccion := 0.03 * _par_nominal
 		if absf(giro) < 1.0 and absf(par_e) <= friccion:
 			estado["rpm"] = 0.0

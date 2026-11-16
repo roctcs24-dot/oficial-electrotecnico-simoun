@@ -1,0 +1,19 @@
+{
+  "nombre": "Batería de condensadores suelta para medir",
+  "nota": "Batería de 25 kvar a 400 V en delta, con resistencias de descarga de 220 kΩ, desconectada y descargada. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "CB1",
+      "tipo": "condensadores",
+      "params": {
+        "q_kvar": 25,
+        "aislamiento_mohm": 800
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": []
+}

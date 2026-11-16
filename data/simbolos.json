@@ -446,6 +446,46 @@
         { "texto": "H3", "x": 120, "y": 150, "tam": 20 } ] },
       "ansi": { "svg": "res://art/simbolos/ansi/baliza.svg", "tamano": [240, 200], "etiquetas": [
         { "texto": "H3", "x": 120, "y": 150, "tam": 20 } ] }
+    },
+    {
+      "id": "amperimetro", "nombre": "Amperímetro", "sistema": 1, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/amperimetro.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "A", "x": 120, "y": 100, "tam": 32 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/amperimetro.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "A", "x": 120, "y": 100, "tam": 32 }] }
+    },
+    {
+      "id": "horometro", "nombre": "Horómetro", "sistema": 3, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/horometro.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "h", "x": 120, "y": 100, "tam": 32 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/horometro.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "HM", "x": 120, "y": 100, "tam": 26 }] }
+    },
+    {
+      "id": "analizador_red", "nombre": "Analizador de red", "sistema": 1, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/analizador_red.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "kW", "x": 120, "y": 86, "tam": 20 }, { "texto": "cos φ", "x": 120, "y": 118, "tam": 16 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/analizador_red.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "PM", "x": 120, "y": 100, "tam": 26 }] }
+    },
+    {
+      "id": "variador", "nombre": "Variador de frecuencia", "sistema": 3, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/variador.svg", "tamano": [240, 200], "etiquetas": [] },
+      "ansi": { "svg": "res://art/simbolos/ansi/variador.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "VFD", "x": 120, "y": 100, "tam": 26 }] }
+    },
+    {
+      "id": "bornera", "nombre": "Bornera", "sistema": 2, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/bornera.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "X1", "x": 210, "y": 60, "tam": 18 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/bornera.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "TB", "x": 210, "y": 52, "tam": 18 }] }
+    },
+    {
+      "id": "resistencia_caldeo", "nombre": "Resistencia de caldeo", "sistema": 3, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/resistencia_caldeo.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "R1", "x": 120, "y": 64, "tam": 18 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/resistencia_caldeo.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "HTR", "x": 120, "y": 60, "tam": 18 }] }
+    },
+    {
+      "id": "condensadores_trifasicos", "nombre": "Condensadores de compensación", "sistema": 2, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/condensadores_trifasicos.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "L1", "x": 40, "y": 18, "tam": 14 }, { "texto": "L2", "x": 120, "y": 18, "tam": 14 }, { "texto": "L3", "x": 200, "y": 18, "tam": 14 }] },
+      "ansi": { "svg": "res://art/simbolos/ansi/condensadores_trifasicos.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "L1", "x": 40, "y": 18, "tam": 14 }, { "texto": "L2", "x": 120, "y": 18, "tam": 14 }, { "texto": "L3", "x": 200, "y": 18, "tam": 14 }] }
+    },
+    {
+      "id": "arrancador_yd", "nombre": "Arrancador estrella-triángulo", "sistema": 3, "similares": [],
+      "iec": { "svg": "res://art/simbolos/iec/arrancador_yd.svg", "tamano": [240, 200], "etiquetas": [] },
+      "ansi": { "svg": "res://art/simbolos/ansi/arrancador_yd.svg", "tamano": [240, 200], "etiquetas": [{ "texto": "Y-Δ", "x": 120, "y": 100, "tam": 26 }] }
     }
   ]
 }

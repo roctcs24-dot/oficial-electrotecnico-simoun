@@ -1,0 +1,75 @@
+{
+  "nombre": "Transformador trifásico suelto para medir",
+  "nota": "Transformador seco de 30 kVA, 380/220 V, Dd0, representado como tres columnas en delta (TU, TV y TW): 1U es TU.H1, 1V es TV.H1 y 1W es TW.H1; 2U, 2V y 2W son las X1. Sin tensión y desconectado. Potencia, grupo y resistencias: valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "TU",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15,
+        "aislamiento_mohm": 500
+      }
+    },
+    {
+      "id": "TV",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15,
+        "aislamiento_mohm": 500
+      }
+    },
+    {
+      "id": "TW",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15,
+        "aislamiento_mohm": 500
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "TU.H2",
+      "TV.H1"
+    ],
+    [
+      "TV.H2",
+      "TW.H1"
+    ],
+    [
+      "TW.H2",
+      "TU.H1"
+    ],
+    [
+      "TU.X2",
+      "TV.X1"
+    ],
+    [
+      "TV.X2",
+      "TW.X1"
+    ],
+    [
+      "TW.X2",
+      "TU.X1"
+    ]
+  ]
+}

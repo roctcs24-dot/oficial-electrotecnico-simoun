@@ -268,6 +268,17 @@
     "prelubricacion": { "es": "prelubricación", "en": "prelubrication, pre-lube", "def": "Aceite a presión enviado a los cojinetes con el motor parado, antes de arrancarlo." },
     "rele_velocidad": { "es": "relé de velocidad", "en": "speed switch, speed relay", "def": "Contacto que cambia a una velocidad del motor; indica que encendió y corta el aire de arranque." },
     "parada_seguridad": { "es": "parada de seguridad", "en": "safety shutdown", "def": "Parada automática del motor por una condición peligrosa; queda retenida hasta reponerla." },
-    "niebla_aceite": { "es": "detector de niebla de aceite", "en": "oil mist detector", "def": "Mide la niebla de aceite del cárter, que anuncia un punto caliente y el riesgo de explosión." }
+    "niebla_aceite": { "es": "detector de niebla de aceite", "en": "oil mist detector", "def": "Mide la niebla de aceite del cárter, que anuncia un punto caliente y el riesgo de explosión." },
+    "variador": { "es": "variador de frecuencia", "en": "variable frequency drive (VFD)", "def": "Equipo que rectifica la red y la vuelve a ondular con otra frecuencia y otra tensión para regular la velocidad de un motor." },
+    "bus_continua": { "es": "bus de continua", "en": "DC bus / DC link", "def": "Tensión continua interior de un variador, entre el rectificador y el ondulador; unos 1,35 veces la tensión de la red." },
+    "igbt": { "es": "IGBT", "en": "insulated gate bipolar transistor", "def": "Transistor de potencia que conmuta miles de veces por segundo en el ondulador de un variador." },
+    "resistencia_caldeo": { "es": "resistencia de caldeo", "en": "anti-condensation heater", "def": "Resistencia que calienta un motor parado para que no condense humedad en el bobinado." },
+    "condensador_compensacion": { "es": "condensadores de compensación", "en": "power factor correction capacitors", "def": "Condensadores que dan la energía reactiva de los motores y suben el factor de potencia." },
+    "resistencia_descarga": { "es": "resistencia de descarga", "en": "discharge resistor", "def": "Resistencia en paralelo con un condensador que lo descarga tras desconectarlo." },
+    "amperimetro": { "es": "amperímetro", "en": "ammeter", "def": "Aparato que mide la corriente; en el cuadro, a través de un transformador de intensidad." },
+    "voltimetro": { "es": "voltímetro", "en": "voltmeter", "def": "Aparato que mide la tensión entre dos puntos." },
+    "analizador_red": { "es": "analizador de red", "en": "power meter", "def": "Aparato que mide tensiones, corrientes, potencias, factor de potencia, frecuencia y energía." },
+    "horometro": { "es": "horómetro", "en": "hour meter", "def": "Contador de las horas de funcionamiento de un equipo." },
+    "motor_induccion": { "es": "motor de inducción", "en": "induction motor", "def": "Motor de alterna cuyo rotor gira algo más despacio que el campo del estator, que le induce las corrientes." }
   }
 }

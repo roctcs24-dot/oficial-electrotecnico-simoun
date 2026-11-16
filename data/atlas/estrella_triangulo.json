@@ -1,0 +1,410 @@
+{
+ "id": "estrella_triangulo",
+ "ficha": "arrancador_yd",
+ "titulo": "Arrancador estrella-triángulo",
+ "termino": "arranque_yd",
+ "icono": "estrella_triangulo",
+ "resumen": "Arranca en estrella y pasa a triángulo: un tercio de la corriente de arranque.",
+ "bornes_dibujo": {
+  "U1": [
+   80,
+   300
+  ],
+  "V1": [
+   128,
+   300
+  ],
+  "W1": [
+   176,
+   300
+  ],
+  "W2": [
+   264,
+   300
+  ],
+  "U2": [
+   312,
+   300
+  ],
+  "V2": [
+   360,
+   300
+  ]
+ },
+ "que_es": {
+  "texto": "El {{arranque_yd}} usa tres contactores para arrancar un motor grande en estrella, a 1/√3 de su tensión, y pasarlo a triángulo cuando ha cogido velocidad. La corriente de arranque baja a un tercio.",
+  "partes": [
+   {
+    "texto": "Q1, guardamotor de la salida.",
+    "marca": [
+     130,
+     75
+    ]
+   },
+   {
+    "texto": "K1 de línea, K3 de estrella y K2 de triángulo.",
+    "marca": [
+     230,
+     170
+    ]
+   },
+   {
+    "texto": "KT, temporizador del paso a triángulo.",
+    "marca": [
+     330,
+     75
+    ]
+   },
+   {
+    "texto": "Bornes de salida: U1-V1-W1 y W2-U2-V2.",
+    "marca": [
+     220,
+     300
+    ]
+   }
+  ],
+  "placa": "Motor 15 kW 380Δ/660Y · F2 a 17 A · KT 6 s",
+  "a_bordo": "Bombas y ventiladores grandes de la sala de máquinas. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "banco_arranque",
+  "params": {
+   "circuito": "estrella_triangulo",
+   "contactores": [
+    "K1",
+    "K2",
+    "K3"
+   ]
+  },
+  "pasos": [
+   "Con S1 cierran K3 y K1: el motor arranca en estrella, con 220 V por devanado.",
+   "KT cuenta el tiempo; el motor coge velocidad y la corriente baja.",
+   "KT abre K3 y cierra K2: el motor queda en triángulo, con 380 V por devanado."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_estrella_triangulo.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1 L2 L3",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 104,
+     "y": 120,
+     "tam": 12
+    },
+    {
+     "texto": "K3",
+     "x": 170,
+     "y": 186,
+     "tam": 12
+    },
+    {
+     "texto": "K2",
+     "x": 366,
+     "y": 120,
+     "tam": 12
+    },
+    {
+     "texto": "U1",
+     "x": 40,
+     "y": 250,
+     "tam": 10
+    },
+    {
+     "texto": "V1",
+     "x": 60,
+     "y": 266,
+     "tam": 10
+    },
+    {
+     "texto": "W1",
+     "x": 80,
+     "y": 250,
+     "tam": 10
+    },
+    {
+     "texto": "W2",
+     "x": 200,
+     "y": 266,
+     "tam": 10
+    },
+    {
+     "texto": "U2",
+     "x": 220,
+     "y": 250,
+     "tam": 10
+    },
+    {
+     "texto": "V2",
+     "x": 240,
+     "y": 266,
+     "tam": 10
+    },
+    {
+     "texto": "Motor 380Δ/660Y",
+     "x": 140,
+     "y": 282,
+     "tam": 11
+    },
+    {
+     "texto": "estrella",
+     "x": 170,
+     "y": 172,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "U1": [
+    40,
+    230
+   ],
+   "V1": [
+    60,
+    230
+   ],
+   "W1": [
+    80,
+    230
+   ],
+   "W2": [
+    200,
+    230
+   ],
+   "U2": [
+    220,
+    230
+   ],
+   "V2": [
+    240,
+    230
+   ]
+  },
+  "bornes": {
+   "U1": "Desde K1 (por F2): principio del devanado U.",
+   "V1": "Desde K1: principio del devanado V.",
+   "W1": "Desde K1: principio del devanado W.",
+   "W2": "Hacia K3 (estrella) y K2 (a L1: triángulo).",
+   "U2": "Hacia K3 y K2 (a L2).",
+   "V2": "Hacia K3 y K2 (a L3)."
+  },
+  "grupos": [
+   {
+    "nombre": "Lado K1",
+    "bornes": [
+     "U1",
+     "V1",
+     "W1"
+    ],
+    "texto": "Los principios de los devanados, siempre a la red mientras el motor está en marcha."
+   },
+   {
+    "nombre": "Lado K2-K3",
+    "bornes": [
+     "W2",
+     "U2",
+     "V2"
+    ],
+    "texto": "Los finales: K3 los une en estrella; K2 los lleva a L1, L2 y L3 en triángulo. Nunca los dos a la vez."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un motor de 15 kW 380Δ/660Y y KT a 6 s. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "U1",
+    "negra": "",
+    "como": "Pinza en el cable de U1, durante el arranque",
+    "nota": "Con el tablero cerrado si el modelo lo permite.",
+    "titulo_tabla": "Corriente de línea en cada fase del arranque",
+    "columna": "A",
+    "medida": {
+     "circuito": "estrella_triangulo",
+     "instrumento": "pinza",
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "cable": [
+      "F2.2",
+      "M1.U1"
+     ],
+     "segundos": 0.2
+    },
+    "filas": [
+     {
+      "estado": "Al arrancar en estrella",
+      "hacer": "Normal: un tercio del directo",
+      "bien": true
+     },
+     {
+      "estado": "Estrella, 4 s",
+      "cambios": {
+       "segundos": 4
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Triángulo, 10 s",
+      "cambios": {
+       "segundos": 10
+      },
+      "hacer": "Normal: carga de la bomba",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión por devanado",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "U1",
+    "negra": "U2",
+    "como": "Escala V~ · entre U1 y U2 en la caja de bornes",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión del devanado U",
+    "columna": "V",
+    "medida": {
+     "circuito": "estrella_triangulo",
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "a": "M1.U1",
+     "b": "M1.U2",
+     "segundos": 4
+    },
+    "filas": [
+     {
+      "estado": "En estrella",
+      "hacer": "Normal: 1/√3 de la red",
+      "bien": true
+     },
+     {
+      "estado": "En triángulo",
+      "cambios": {
+       "segundos": 10
+      },
+      "hacer": "Normal: la de la red",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Se queda en estrella",
+    "sintoma": "El motor gira lento y con ruido, y dispara el térmico al rato.",
+    "mide": [
+     {
+      "donde": "U1-U2 a los 10 s",
+      "bien": false,
+      "medida": {
+       "circuito": "estrella_triangulo",
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "estado": {
+        "Q1": {
+         "encendido": true
+        },
+        "S1": {
+         "presionado": true
+        }
+       },
+       "a": "M1.U1",
+       "b": "M1.U2",
+       "segundos": 4
+      }
+     }
+    ],
+    "causa": "KT no conmuta o la bobina de K2 está cortada.",
+    "reparacion": "Comprobar el temporizador y la bobina de K2; cambiar lo averiado."
+   },
+   {
+    "nombre": "Cortocircuito al cambiar",
+    "sintoma": "Al pasar a triángulo dispara Q1 con un estampido.",
+    "mide": [
+     {
+      "donde": "contactos de K3 sin tensión",
+      "bien": false,
+      "valor": "0,0 Ω (soldados)"
+     }
+    ],
+    "causa": "K3 soldado o enclavamiento K2-K3 puenteado.",
+    "reparacion": "Cambiar K3 y restablecer el enclavamiento mecánico y eléctrico."
+   },
+   {
+    "nombre": "Pico al cambiar",
+    "sintoma": "El generador nota un tirón al pasar a triángulo.",
+    "mide": [
+     {
+      "donde": "pinza al cambiar",
+      "bien": false,
+      "valor": "150 A"
+     }
+    ],
+    "causa": "Tiempo de KT demasiado corto: el motor no ha llegado a su velocidad.",
+    "reparacion": "Cronometrar el arranque y alargar KT hasta casi la velocidad nominal."
+   },
+   {
+    "nombre": "Gira al revés en triángulo",
+    "sintoma": "Arranca bien en estrella y al cambiar frena y gira al revés.",
+    "mide": [
+     {
+      "donde": "secuencia de W2-U2-V2 hacia K2",
+      "bien": false,
+      "valor": "W2 a L2"
+     }
+    ],
+    "causa": "Los cables de los finales están cruzados: en triángulo la secuencia se invierte.",
+    "reparacion": "Bloquear y conectar W2-U2-V2 a L1-L2-L3 según el esquema."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "tiempo de arranque"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "contactos de K1, K2 y K3 y enclavamientos"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "cronometrar KT, aislamiento del motor y reapriete"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-4-1: contactores y arrancadores.",
+  "IEC 60034-1: máquinas eléctricas rotativas."
+ ]
+}

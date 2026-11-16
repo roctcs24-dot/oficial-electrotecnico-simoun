@@ -1,0 +1,11 @@
+{
+  "nombre": "Bornera suelta para medir",
+  "nota": "Bornera de tres bornes de paso, sin tensión. El lado A es el del tablero y el B el del campo. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "X1",
+      "tipo": "bornera"
+    }
+  ],
+  "cables": []
+}

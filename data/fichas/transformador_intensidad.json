@@ -1,0 +1,94 @@
+{
+  "id": "transformador_intensidad",
+  "titulo": "Transformador de intensidad",
+  "resumen": "Reduce la corriente de un conductor a 5 A para los aparatos de medida y las protecciones.",
+  "dibujo": {
+    "svg": "res://art/equipos/transformador_intensidad.svg",
+    "tamano": [
+      300,
+      320
+    ],
+    "nota": "TI toroidal de 100/5 A con la barra del primario pasando por la ventana, dibujado de forma general. Relaciones, clases y potencias de los TI del cuadro: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "P1",
+        "x": 16,
+        "y": 98,
+        "tam": 12
+      },
+      {
+        "texto": "P2",
+        "x": 284,
+        "y": 98,
+        "tam": 12
+      },
+      {
+        "texto": "100/5 A · cl. 1 · 5 VA",
+        "x": 150,
+        "y": 71,
+        "tam": 10
+      },
+      {
+        "texto": "S1",
+        "x": 124,
+        "y": 242,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "S2",
+        "x": 176,
+        "y": 242,
+        "tam": 11,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Transformador de corriente según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "transformador_corriente"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{transformador_corriente}} da en su secundario una corriente pequeña y proporcional a la del conductor que lo atraviesa: con un TI de 100/5 A, 100 A en la barra son 5 A en el secundario. Así el amperímetro, el analizador de red y los relés de protección del cuadro miden cientos o miles de amperios con aparatos de 5 A, y además quedan separados de la tensión de la red."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Primario[/b] P1-P2: la propia barra o el cable que pasa por la ventana, una sola espira.\n• [b]Núcleo[/b] toroidal de chapa magnética.\n• [b]Secundario[/b] S1-S2: muchas espiras de hilo fino, tantas como la relación (20 para 100/5).\n• El secundario trabaja casi en cortocircuito: la carga de los aparatos es de décimas de ohmio."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• La corriente entra por P1 y sale por P2; la del secundario sale por S1. Respete la polaridad: los analizadores y los relés de potencia la necesitan.\n• S1-S2 al amperímetro o al analizador, pasando por una bornera seccionable con puente.\n• Un borne del secundario, normalmente S2, a masa ([i]verificar en el esquema del cuadro[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la relación (corriente nominal del circuito y 1 o 5 A de secundario), la clase de precisión (0,5 o 1 para medida, 5P para protección) y la potencia en VA, que debe cubrir los aparatos y los cables del secundario."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión[/b]: S1-S2 en Ω, unas décimas de ohmio; OL es un secundario cortado.\n• [b]Aislamiento[/b] con megóhmetro entre primario, secundario y masa.\n• [b]En servicio[/b]: la pinza en el cable de S1 debe dar la corriente de la barra dividida por la relación.\n• Antes de desconectar el amperímetro, cierre el puente de la bornera."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Secundario abierto en servicio:[/b] la tensión sube a cientos o miles de voltios, el núcleo se calienta y el aislamiento se rompe. Es un peligro para las personas.\n• [b]Amperímetro que marca cero[/b] con carga: puente de la bornera olvidado cerrado.\n• [b]Polaridad invertida:[/b] el analizador da potencias negativas."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada año: apriete de los bornes del secundario y del puente de la bornera; comparar el amperímetro con la pinza.\n\n[b]Correctivo:[/b] se cambia por otro de la misma relación, clase y potencia, con el circuito sin tensión."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61869-2: transformadores de intensidad.",
+    "IEC 60092-202: instalaciones eléctricas en buques."
+  ]
+}

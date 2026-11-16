@@ -1,0 +1,541 @@
+{
+ "id": "variador",
+ "ficha": "variador",
+ "titulo": "Variador de frecuencia",
+ "termino": "variador",
+ "icono": "variador",
+ "resumen": "Regula la velocidad del motor cambiando su frecuencia y su tensión.",
+ "bornes_dibujo": {
+  "L1": [
+   72,
+   264
+  ],
+  "L2": [
+   110,
+   264
+  ],
+  "L3": [
+   148,
+   264
+  ],
+  "DC+": [
+   224,
+   264
+  ],
+  "DC-": [
+   256,
+   264
+  ],
+  "U": [
+   72,
+   352
+  ],
+  "V": [
+   110,
+   352
+  ],
+  "W": [
+   148,
+   352
+  ],
+  "DI1": [
+   224,
+   352
+  ],
+  "+24": [
+   256,
+   352
+  ]
+ },
+ "que_es": {
+  "texto": "El {{variador}} rectifica la red a un {{bus_continua}} y lo vuelve a ondular con {{igbt}} a la frecuencia pedida. El motor gira en proporción a esa frecuencia, arranca sin pico y gasta menos a media velocidad.",
+  "partes": [
+   {
+    "texto": "Panel con la pantalla y las teclas de marcha y paro.",
+    "marca": [
+     160,
+     110
+    ]
+   },
+   {
+    "texto": "Entrada L1-L2-L3 y bus DC+/DC-.",
+    "marca": [
+     110,
+     264
+    ]
+   },
+   {
+    "texto": "Salida U-V-W al motor.",
+    "marca": [
+     110,
+     352
+    ]
+   },
+   {
+    "texto": "Entradas de mando: DI1 desde +24 V.",
+    "marca": [
+     240,
+     352
+    ]
+   }
+  ],
+  "placa": "15 kW · 380 V 3~ · 32 A · salida 0-50 Hz",
+  "a_bordo": "Bombas y ventiladores de velocidad variable, si los hay. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_variador",
+  "params": {},
+  "pasos": [
+   "El rectificador convierte la alterna en continua: el bus queda a 1,35 × la red.",
+   "Los IGBT conmutan el bus para formar una alterna de la frecuencia pedida.",
+   "La tensión baja con la frecuencia (V/f constante): el motor da su par a cualquier velocidad."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_variador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1 L2 L3",
+     "x": 130,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "Q1",
+     "x": 184,
+     "y": 85,
+     "tam": 12
+    },
+    {
+     "texto": "VF1",
+     "x": 206,
+     "y": 160,
+     "tam": 12
+    },
+    {
+     "texto": "~",
+     "x": 98,
+     "y": 146,
+     "tam": 14
+    },
+    {
+     "texto": "~",
+     "x": 162,
+     "y": 178,
+     "tam": 14
+    },
+    {
+     "texto": "L1 L2 L3",
+     "x": 130,
+     "y": 122,
+     "tam": 10
+    },
+    {
+     "texto": "U  V  W",
+     "x": 130,
+     "y": 202,
+     "tam": 10
+    },
+    {
+     "texto": "M 3~",
+     "x": 130,
+     "y": 245,
+     "tam": 13
+    },
+    {
+     "texto": "+24",
+     "x": 300,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "DI1",
+     "x": 300,
+     "y": 202,
+     "tam": 11
+    },
+    {
+     "texto": "Marcha",
+     "x": 336,
+     "y": 125,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L1": [
+    100,
+    130
+   ],
+   "L2": [
+    130,
+    130
+   ],
+   "L3": [
+    160,
+    130
+   ],
+   "U": [
+    100,
+    190
+   ],
+   "V": [
+    130,
+    190
+   ],
+   "W": [
+    160,
+    190
+   ],
+   "+24": [
+    300,
+    40
+   ],
+   "DI1": [
+    300,
+    190
+   ]
+  },
+  "bornes": {
+   "L1": "Red desde Q1.",
+   "L2": "Red desde Q1.",
+   "L3": "Red desde Q1.",
+   "U": "Al U1 del motor, por cable apantallado.",
+   "V": "Al V1 del motor.",
+   "W": "Al W1 del motor.",
+   "+24": "Salida de 24 V DC del propio variador para las órdenes.",
+   "DI1": "Entrada de marcha: con +24 V, el variador arranca en rampa."
+  },
+  "grupos": [
+   {
+    "nombre": "Potencia",
+    "bornes": [
+     "L1",
+     "L2",
+     "L3",
+     "U",
+     "V",
+     "W"
+    ],
+    "texto": "Red a L1-L2-L3 y motor a U-V-W. Nunca al revés: la red en U-V-W destruye el variador."
+   },
+   {
+    "nombre": "Mando",
+    "bornes": [
+     "+24",
+     "DI1"
+    ],
+    "texto": "La orden de marcha es un contacto entre +24 y DI1; la consigna puede venir del panel o de una señal de 4-20 mA."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un variador de 15 kW y un motor de bomba de 15 kW. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Pantalla",
+    "instrumento": "monitor",
+    "escala": "Hz",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura en el panel del variador",
+    "nota": "En marcha, sin abrir el equipo.",
+    "titulo_tabla": "Pantalla a 50 Hz y a 25 Hz",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "variador_servicio",
+     "segundos": 10,
+     "estado": {
+      "VF1": {
+       "marcha": true
+      }
+     },
+     "instrumento": "aparato",
+     "id": "VF1",
+     "magnitud": "f"
+    },
+    "filas": [
+     {
+      "estado": "Frecuencia, consigna 50 Hz",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Corriente a 50 Hz",
+      "cambios": {
+       "magnitud": "i"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Frecuencia, consigna 25 Hz",
+      "cambios": {
+       "params": {
+        "VF1": {
+         "consigna_hz": 25
+        }
+       }
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Corriente a 25 Hz",
+      "cambios": {
+       "magnitud": "i",
+       "params": {
+        "VF1": {
+         "consigna_hz": 25
+        }
+       }
+      },
+      "hacer": "Normal: la bomba pide menos",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Bus y salida",
+    "instrumento": "multimetro",
+    "escala": "V",
+    "roja": "DC+",
+    "negra": "DC-",
+    "como": "Multímetro en V= en el bus y en V~ en la salida",
+    "nota": "Con tensión: el bus sigue cargado minutos después de cortar.",
+    "titulo_tabla": "Tensiones del variador",
+    "columna": "V",
+    "medida": {
+     "circuito": "variador_servicio",
+     "segundos": 10,
+     "estado": {
+      "VF1": {
+       "marcha": true
+      }
+     },
+     "instrumento": "multimetro",
+     "modo": "vdc",
+     "a": "VF1.DC+",
+     "b": "VF1.DC-"
+    },
+    "filas": [
+     {
+      "estado": "Bus DC+/DC-",
+      "hacer": "Normal: 1,35 × la red",
+      "bien": true
+     },
+     {
+      "estado": "U-V a 50 Hz",
+      "cambios": {
+       "modo": "vac",
+       "a": "VF1.U",
+       "b": "VF1.V"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "U-V a 25 Hz",
+      "cambios": {
+       "modo": "vac",
+       "a": "VF1.U",
+       "b": "VF1.V",
+       "params": {
+        "VF1": {
+         "consigna_hz": 25
+        }
+       }
+      },
+      "hacer": "Normal: V/f constante",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Corrientes",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "U",
+    "negra": "",
+    "como": "Pinza en U (motor) y en L1 (red)",
+    "nota": "En marcha, con el tablero cerrado si el modelo lo permite.",
+    "titulo_tabla": "Corriente de salida y de entrada",
+    "columna": "A",
+    "medida": {
+     "circuito": "variador_servicio",
+     "segundos": 10,
+     "estado": {
+      "VF1": {
+       "marcha": true
+      }
+     },
+     "instrumento": "pinza",
+     "cable": [
+      "VF1.U",
+      "M1.U1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "U, a 50 Hz",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "L1, a 50 Hz",
+      "cambios": {
+       "cable": [
+        "Q1.2",
+        "VF1.L1"
+       ]
+      },
+      "hacer": "Normal: algo menos",
+      "bien": true
+     },
+     {
+      "estado": "U, a 25 Hz",
+      "cambios": {
+       "params": {
+        "VF1": {
+         "consigna_hz": 25
+        }
+       }
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "L1, a 25 Hz",
+      "cambios": {
+       "cable": [
+        "Q1.2",
+        "VF1.L1"
+       ],
+       "params": {
+        "VF1": {
+         "consigna_hz": 25
+        }
+       }
+      },
+      "hacer": "Normal: mucho menos que en U",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Sobrecorriente",
+    "sintoma": "Para al arrancar con un fallo de sobrecorriente.",
+    "mide": [
+     {
+      "donde": "pantalla",
+      "bien": false,
+      "medida": {
+       "circuito": "variador_servicio",
+       "segundos": 10,
+       "estado": {
+        "VF1": {
+         "marcha": true,
+         "corto_salida": true
+        }
+       },
+       "instrumento": "aparato",
+       "id": "VF1",
+       "magnitud": "pantalla"
+      }
+     },
+     {
+      "donde": "aislamiento U-V del cable y el motor",
+      "bien": false,
+      "valor": "0,0 MΩ"
+     }
+    ],
+    "causa": "Cortocircuito o derivación en el cable del motor o en el motor.",
+    "reparacion": "Desconectar U-V-W, medir el aislamiento del cable y del motor por separado y reparar."
+   },
+   {
+    "nombre": "Sobretemperatura",
+    "sintoma": "Para tras un rato en marcha con fallo de temperatura.",
+    "mide": [
+     {
+      "donde": "pantalla",
+      "bien": false,
+      "medida": {
+       "circuito": "variador_servicio",
+       "segundos": 30,
+       "estado": {
+        "VF1": {
+         "marcha": true,
+         "ventilador_parado": true
+        }
+       },
+       "instrumento": "aparato",
+       "id": "VF1",
+       "magnitud": "pantalla"
+      }
+     }
+    ],
+    "causa": "Ventilador parado o radiador tapado de polvo.",
+    "reparacion": "Limpiar el radiador y cambiar el ventilador; dejar enfriar antes de rearmar."
+   },
+   {
+    "nombre": "Subtensión del bus",
+    "sintoma": "Fallo de subtensión con la red aparentemente bien.",
+    "mide": [
+     {
+      "donde": "bus DC+/DC-",
+      "bien": false,
+      "valor": "320 V"
+     },
+     {
+      "donde": "L2-L3",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Falta una fase de entrada o fusible fundido.",
+    "reparacion": "Bloquear, reponer la fase o el fusible y rearmar."
+   },
+   {
+    "nombre": "Gira al revés",
+    "sintoma": "La bomba no da presión: el motor gira al revés.",
+    "mide": [
+     {
+      "donde": "sentido en el parámetro",
+      "bien": false,
+      "valor": "inverso"
+     }
+    ],
+    "causa": "Sentido de giro invertido en los parámetros, o dos fases de U-V-W cruzadas.",
+    "reparacion": "Corregir el parámetro de sentido o cruzar dos cables de salida, con el variador sin tensión."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "ventilador y filtros limpios"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes y radiador limpio"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "condensadores del bus sin hinchar y copia de los parámetros"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61800-5-1: accionamientos de velocidad variable, seguridad.",
+  "IEC 61800-3: compatibilidad electromagnética de los variadores."
+ ]
+}

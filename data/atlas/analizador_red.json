@@ -1,0 +1,397 @@
+{
+ "id": "analizador_red",
+ "ficha": "analizador_red",
+ "titulo": "Analizador de red",
+ "termino": "analizador_red",
+ "icono": "analizador",
+ "resumen": "Mide tensión, corriente, potencias y factor de potencia.",
+ "bornes_dibujo": {
+  "L1": [
+   50,
+   284
+  ],
+  "L2": [
+   100,
+   284
+  ],
+  "L3": [
+   150,
+   284
+  ],
+  "T1": [
+   50,
+   326
+  ],
+  "T2": [
+   100,
+   326
+  ],
+  "T3": [
+   150,
+   326
+  ]
+ },
+ "que_es": {
+  "texto": "El {{analizador_red}} muestra en una pantalla tensiones, corrientes, {{potencia_activa}}, {{potencia_reactiva}}, {{factor_potencia}}, frecuencia y energía de una salida o un generador.",
+  "partes": [
+   {
+    "texto": "Pantalla con varias magnitudes a la vez.",
+    "marca": [
+     160,
+     104
+    ]
+   },
+   {
+    "texto": "Teclas para pasar de una pantalla a otra.",
+    "marca": [
+     160,
+     214
+    ]
+   },
+   {
+    "texto": "Entradas de tensión y de corriente.",
+    "marca": [
+     100,
+     305
+    ]
+   }
+  ],
+  "placa": "3 × 400 V · entradas 5 A · TI 100/5 · Modbus RS485",
+  "a_bordo": "Si el cuadro lleva analizadores en los generadores o en las salidas grandes. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_compensacion",
+  "params": {
+   "tipo": "analizador"
+  },
+  "pasos": [
+   "Mide las ondas de tensión y de corriente de cada fase.",
+   "Multiplica tensión por corriente en cada instante: la media es la potencia activa.",
+   "Con la aparente (U × I) calcula la reactiva y el factor de potencia."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_analizador_red.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 30,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "L2",
+     "x": 30,
+     "y": 60,
+     "tam": 11
+    },
+    {
+     "texto": "L3",
+     "x": 30,
+     "y": 90,
+     "tam": 11
+    },
+    {
+     "texto": "AN1",
+     "x": 150,
+     "y": 60,
+     "tam": 14
+    },
+    {
+     "texto": "kW · kvar · FP",
+     "x": 150,
+     "y": 84,
+     "tam": 10
+    },
+    {
+     "texto": "T1",
+     "x": 374,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "T2",
+     "x": 374,
+     "y": 60,
+     "tam": 11
+    },
+    {
+     "texto": "T3",
+     "x": 374,
+     "y": 90,
+     "tam": 11
+    },
+    {
+     "texto": "Hacia la carga",
+     "x": 300,
+     "y": 120,
+     "tam": 11
+    },
+    {
+     "texto": "Aquí, con sus TI internos: en el cuadro,",
+     "x": 200,
+     "y": 190,
+     "tam": 11
+    },
+    {
+     "texto": "las corrientes llegan de TI de 100/5 A",
+     "x": 200,
+     "y": 210,
+     "tam": 11
+    },
+    {
+     "texto": "y las tensiones por fusibles.",
+     "x": 200,
+     "y": 230,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "L1": [
+    90,
+    40
+   ],
+   "L2": [
+    90,
+    70
+   ],
+   "L3": [
+    90,
+    100
+   ],
+   "T1": [
+    210,
+    40
+   ],
+   "T2": [
+    210,
+    70
+   ],
+   "T3": [
+    210,
+    100
+   ]
+  },
+  "bornes": {
+   "L1": "Entrada de L1.",
+   "L2": "Entrada de L2.",
+   "L3": "Entrada de L3.",
+   "T1": "Salida de L1 hacia la carga.",
+   "T2": "Salida de L2.",
+   "T3": "Salida de L3."
+  },
+  "grupos": [
+   {
+    "nombre": "Fases",
+    "bornes": [
+     "L1",
+     "L2",
+     "L3",
+     "T1",
+     "T2",
+     "T3"
+    ],
+    "texto": "Cada corriente con la tensión de su misma fase. Cruzar dos fases da potencias absurdas."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: salida de 380 V con 40 kW y 30 kvar. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Pantalla",
+    "instrumento": "monitor",
+    "escala": "kW",
+    "roja": "",
+    "negra": "",
+    "como": "Pantallas del analizador",
+    "nota": "En servicio.",
+    "titulo_tabla": "Lo que muestra",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "aparato",
+     "id": "AN1",
+     "magnitud": "u12"
+    },
+    "filas": [
+     {
+      "estado": "U12",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "I1",
+      "cambios": {
+       "magnitud": "i1"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "P",
+      "cambios": {
+       "magnitud": "p"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Q",
+      "cambios": {
+       "magnitud": "q"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "S",
+      "cambios": {
+       "magnitud": "s"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "FP",
+      "cambios": {
+       "magnitud": "fp"
+      },
+      "hacer": "Aceptable",
+      "bien": true
+     },
+     {
+      "estado": "f",
+      "cambios": {
+       "magnitud": "f"
+      },
+      "hacer": "Normal",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Contraste",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "T1",
+    "negra": "",
+    "como": "Pinza en la salida T1",
+    "nota": "En servicio.",
+    "titulo_tabla": "La pinza debe coincidir con I1",
+    "columna": "A",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "pinza",
+     "cable": [
+      "AN1.T1",
+      "C1.L1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Pinza en T1",
+      "hacer": "Normal: igual que I1",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Potencia negativa",
+    "sintoma": "kW negativos con la carga consumiendo.",
+    "mide": [
+     {
+      "donde": "P en pantalla",
+      "bien": false,
+      "valor": "−13 kW"
+     }
+    ],
+    "causa": "TI invertido o fases cruzadas entre tensión y corriente.",
+    "reparacion": "Con los TI puenteados, corregir las conexiones."
+   },
+   {
+    "nombre": "Una corriente a cero",
+    "sintoma": "I2 marca 0 con carga.",
+    "mide": [
+     {
+      "donde": "pinza en L2",
+      "bien": true,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "B.L2",
+        "AN1.L2"
+       ]
+      }
+     },
+     {
+      "donde": "I2 en pantalla",
+      "bien": false,
+      "valor": "0 A"
+     }
+    ],
+    "causa": "Puente del TI cerrado o cable del secundario suelto.",
+    "reparacion": "Revisar la bornera de los TI."
+   },
+   {
+    "nombre": "Sin pantalla",
+    "sintoma": "Pantalla apagada.",
+    "mide": [
+     {
+      "donde": "alimentación auxiliar",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Fusible de la alimentación auxiliar fundido.",
+    "reparacion": "Cambiar el fusible y comprobar la configuración."
+   },
+   {
+    "nombre": "Sin comunicación",
+    "sintoma": "El sistema de alarmas no recibe sus datos.",
+    "mide": [
+     {
+      "donde": "dirección Modbus",
+      "bien": false,
+      "valor": "1 (debe ser 7)"
+     }
+    ],
+    "causa": "Dirección o velocidad mal configuradas tras cambiarlo.",
+    "reparacion": "Configurarlo como el anterior y comprobar la resistencia de terminación."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura y anotación de la energía"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "contraste con la pinza"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "reapriete y configuración"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61557-12: aparatos de medida de potencia.",
+  "IEC 60092-202: instalaciones eléctricas en buques."
+ ]
+}

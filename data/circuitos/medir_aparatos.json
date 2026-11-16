@@ -1,0 +1,21 @@
+{
+  "nombre": "Aparatos de cuadro sueltos para medir",
+  "nota": "Amperímetro de 5 A y voltímetro de 500 V fuera del cuadro, sin cables. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "A1",
+      "tipo": "amperimetro",
+      "params": {
+        "escala_a": 100
+      }
+    },
+    {
+      "id": "V1",
+      "tipo": "voltimetro",
+      "params": {
+        "escala_v": 500
+      }
+    }
+  ],
+  "cables": []
+}

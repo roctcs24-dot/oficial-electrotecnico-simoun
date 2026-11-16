@@ -1,0 +1,132 @@
+{
+  "id": "analizador_red",
+  "titulo": "Analizador de red",
+  "resumen": "Mide tensión, corriente, potencias y factor de potencia de una salida.",
+  "dibujo": {
+    "svg": "res://art/equipos/analizador_red.svg",
+    "tamano": [
+      320,
+      360
+    ],
+    "nota": "Analizador de red de 96 × 96 mm con pantalla, dibujado de forma general. Si el cuadro lleva analizadores, su modelo y sus TI: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "U12  378 V",
+        "x": 160,
+        "y": 56,
+        "tam": 14,
+        "color": "#20242a"
+      },
+      {
+        "texto": "P  39,5 kW",
+        "x": 160,
+        "y": 104,
+        "tam": 14,
+        "color": "#20242a"
+      },
+      {
+        "texto": "FP  0,80",
+        "x": 160,
+        "y": 152,
+        "tam": 14,
+        "color": "#20242a"
+      },
+      {
+        "texto": "L1",
+        "x": 50,
+        "y": 270,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "L2",
+        "x": 100,
+        "y": 270,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "L3",
+        "x": 150,
+        "y": 270,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "T1",
+        "x": 50,
+        "y": 312,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "T2",
+        "x": 100,
+        "y": 312,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "T3",
+        "x": 150,
+        "y": 312,
+        "tam": 9,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "Aux",
+        "x": 235,
+        "y": 278,
+        "tam": 9,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "No hay un símbolo único: se dibuja como bloque de medida con sus entradas de tensión y de corriente. Verificar contra el esquema del cuadro.",
+    "lista": [
+      "analizador_red"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{analizador_red}} reúne en una pantalla todo lo que mide el cuadro: tensiones, corrientes, {{potencia_activa}}, {{potencia_reactiva}}, {{potencia_aparente}}, {{factor_potencia}}, frecuencia y energía. Muchos además guardan máximos y se comunican por Modbus con el sistema de alarmas."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Entradas de tensión[/b] por fase, con su fusible.\n• [b]Entradas de corriente[/b] de 5 A desde tres TI (o dos, en red de tres hilos).\n• [b]Procesador[/b] que calcula las potencias con las ondas de tensión y de corriente.\n• Alimentación auxiliar y, a veces, salida RS485."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Tensiones a L1-L2-L3 por fusibles; corrientes desde los TI de las mismas fases, respetando la polaridad P1/S1.\n• Si una fase sale con potencia negativa, su TI está al revés o cruzado con otra fase.\n• Configure en el aparato la relación de los TI y el tipo de red (tres hilos, aislada)."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se configuran la relación de los TI (100/5), el tipo de red y, si se comunica, su dirección Modbus y la velocidad ([i]menús: verificar en su manual[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Contraste[/b] tensión y corriente con el multímetro y la pinza.\n• [b]Potencias:[/b] P = √3 × U × I × FP. Una potencia negativa con el motor consumiendo es un error de conexión.\n• En la red aislada, use el método de dos vatímetros (Aron): es exacto sin neutro."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Potencia negativa o muy baja:[/b] un TI invertido o fases cruzadas.\n• [b]Corriente cero en una fase:[/b] puente del TI cerrado o cable suelto.\n• [b]Sin pantalla:[/b] sin alimentación auxiliar."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Anual: contraste con la pinza y el multímetro; lectura y anotación de la energía consumida.\n\n[b]Correctivo:[/b] con los TI puenteados, se cambia y se copia su configuración."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61557-12: aparatos de medida de potencia (PMD).",
+    "IEC 60092-202: instalaciones eléctricas en buques."
+  ]
+}

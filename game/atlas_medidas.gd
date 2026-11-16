@@ -9,7 +9,8 @@ extends RefCounted
 ## Con la pinza, "cable": ["F2.2", "M1.U1"] dice qué conductor abraza, o "cables" varios a la
 ## vez; la pinza de fugas mide en mA lo que no vuelve por los conductores que abraza. Con el
 ## megóhmetro, "v_prueba" elige 250, 500 o 1000 V. "monitor" lee el monitor de aislamiento
-## "id" de la propia red. Una medida puede llevar "valor" escrito en su lugar:
+## "id" de la propia red. "aparato" lee la pantalla o la aguja del componente "id" (un
+## amperímetro, un analizador de red o un variador), con su "magnitud". Una medida puede llevar "valor" escrito en su lugar:
 ## solo se admite en las fallas, para lo que la simulación no modela.
 
 
@@ -83,9 +84,15 @@ static func _medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
 		"monitor":
 			var mohm: float = (sim.componente(str(medida.get("id", ""))) as SimMonitorAislamiento).medir()
 			r = {"valor": mohm, "unidad": "MΩ", "fuera_de_rango": mohm >= SimMonitorAislamiento.MOHM_MAX, "averia": ""}
+		"aparato":
+			var aparato := sim.componente(str(medida.get("id", "")))
+			if aparato == null or not aparato.has_method("leer"):
+				return {"texto": "?", "averia": "aparato_desconocido"}
+			r = aparato.call("leer", sim.resolver(), str(medida.get("magnitud", "")))
 		_:
 			return {"texto": "?", "averia": "instrumento_desconocido"}
-	r["texto"] = texto(r)
+	if not r.has("texto"):
+		r["texto"] = texto(r)
 	return r
 
 
@@ -133,11 +140,11 @@ static func texto(r: Dictionary) -> String:
 	match unidad:
 		"Ω":
 			if v < 1.0:
-				return "0,0 Ω"
+				return "%s Ω" % _numero(v, 1)
 			if v >= 1000.0:
 				return "%s kΩ" % _numero(v / 1000.0, 1)
 			return "%d Ω" % roundi(v)
-		"V", "A", "mA":
+		"V", "A", "mA", "Hz":
 			return "%s %s" % [_numero(v, 0 if v >= 20.0 else 1), unidad]
 		"MΩ":
 			return "%s MΩ" % _numero(v, 0 if v >= 20.0 else 1)

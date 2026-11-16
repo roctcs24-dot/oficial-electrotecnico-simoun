@@ -206,3 +206,15 @@ func _fallar(texto: String, evento := "arrancador_fallo") -> void:
 	estado["fallo"] = texto
 	_r = R_BLOQUEO
 	avisar(evento, {"fallo": texto})
+
+
+## Magnitudes de la pantalla: i (corriente de línea), u (tensión aplicada, en %) y pantalla.
+func leer(_sol: SimSolver.Solucion, magnitud := "i") -> Dictionary:
+	match magnitud if not magnitud.is_empty() else "i":
+		"i":
+			return {"valor": estado["i"], "unidad": "A", "fuera_de_rango": false, "averia": ""}
+		"u":
+			return {"valor": estado["u"] * 100.0, "unidad": "%", "fuera_de_rango": false, "averia": "", "texto": "%d %%" % roundi(estado["u"] * 100.0)}
+		"pantalla":
+			return {"valor": 0.0, "unidad": "", "fuera_de_rango": false, "averia": "", "texto": pantalla()[0]}
+	return {"valor": 0.0, "unidad": "", "fuera_de_rango": false, "averia": "magnitud_desconocida"}

@@ -1,0 +1,15 @@
+{
+  "nombre": "Resistencia de caldeo suelta para medir",
+  "nota": "Resistencia de caldeo de 100 W a 230 V de un motor de la sala de máquinas, desconectada. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "R1",
+      "tipo": "resistencia_caldeo"
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": []
+}

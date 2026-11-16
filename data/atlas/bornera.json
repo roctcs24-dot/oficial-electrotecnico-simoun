@@ -1,0 +1,517 @@
+{
+ "id": "bornera",
+ "ficha": "bornera",
+ "titulo": "Bornera",
+ "termino": "bornera",
+ "icono": "bornera",
+ "resumen": "Une los cables del tablero con los del campo, borne por borne.",
+ "bornes_dibujo": {
+  "1A": [
+   120,
+   60
+  ],
+  "2A": [
+   200,
+   60
+  ],
+  "3A": [
+   280,
+   60
+  ],
+  "1B": [
+   120,
+   210
+  ],
+  "2B": [
+   200,
+   210
+  ],
+  "3B": [
+   280,
+   210
+  ]
+ },
+ "que_es": {
+  "texto": "La {{bornera}} reúne los bornes numerados donde los cables del tablero se unen con los que salen al campo. Cada borne tiene un lado A, el del tablero, y un lado B, el del campo.",
+  "partes": [
+   {
+    "texto": "Tornillos del lado A, el del tablero.",
+    "marca": [
+     200,
+     60
+    ]
+   },
+   {
+    "texto": "Marcador con el número del borne.",
+    "marca": [
+     200,
+     135
+    ]
+   },
+   {
+    "texto": "Tornillos del lado B, hacia el motor.",
+    "marca": [
+     200,
+     210
+    ]
+   },
+   {
+    "texto": "Carril DIN y topes.",
+    "marca": [
+     68,
+     135
+    ]
+   }
+  ],
+  "placa": "Borne de paso 6 mm² · 41 A · 800 V",
+  "a_bordo": "En todos los tableros, a la salida de los cables de motores, sensores y válvulas. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_bornera",
+  "params": {},
+  "pasos": [
+   "El tornillo aprieta el cable contra la pieza conductora: casi 0 Ω entre A y B.",
+   "Un borne flojo tiene resistencia: con corriente cae tensión y se calienta (P = I² × R).",
+   "El calor afloja más el borne: si no se corrige, acaba quemado."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_bornera.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "Desde F2: L1 L2 L3",
+     "x": 200,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "X1",
+     "x": 50,
+     "y": 140,
+     "tam": 14
+    },
+    {
+     "texto": "1",
+     "x": 100,
+     "y": 140,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 200,
+     "y": 140,
+     "tam": 13
+    },
+    {
+     "texto": "3",
+     "x": 300,
+     "y": 140,
+     "tam": 13
+    },
+    {
+     "texto": "1A",
+     "x": 132,
+     "y": 92,
+     "tam": 10
+    },
+    {
+     "texto": "2A",
+     "x": 232,
+     "y": 92,
+     "tam": 10
+    },
+    {
+     "texto": "3A",
+     "x": 332,
+     "y": 92,
+     "tam": 10
+    },
+    {
+     "texto": "1B",
+     "x": 132,
+     "y": 190,
+     "tam": 10
+    },
+    {
+     "texto": "2B",
+     "x": 232,
+     "y": 190,
+     "tam": 10
+    },
+    {
+     "texto": "3B",
+     "x": 332,
+     "y": 190,
+     "tam": 10
+    },
+    {
+     "texto": "M 3~",
+     "x": 200,
+     "y": 258,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1A": [
+    100,
+    100
+   ],
+   "2A": [
+    200,
+    100
+   ],
+   "3A": [
+    300,
+    100
+   ],
+   "1B": [
+    100,
+    180
+   ],
+   "2B": [
+    200,
+    180
+   ],
+   "3B": [
+    300,
+    180
+   ]
+  },
+  "bornes": {
+   "1A": "Llega L1 desde el relé térmico.",
+   "2A": "Llega L2.",
+   "3A": "Llega L3.",
+   "1B": "Sale al U1 del motor.",
+   "2B": "Sale al V1 del motor.",
+   "3B": "Sale al W1 del motor."
+  },
+  "grupos": [
+   {
+    "nombre": "Borne 1",
+    "bornes": [
+     "1A",
+     "1B"
+    ],
+    "texto": "Un borne de paso une su lado A con su lado B. El número coincide con el del cable en el esquema."
+   },
+   {
+    "nombre": "Bornera X1",
+    "bornes": [
+     "1A",
+     "2A",
+     "3A",
+     "1B",
+     "2B",
+     "3B"
+    ],
+    "texto": "Tres bornes de la salida del motor, en el orden de las fases."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con el arranque directo de un motor de 15 kW. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Continuidad",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1A",
+    "negra": "1B",
+    "como": "Escala Ω · entre A y B del mismo borne",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Resistencia de cada borne",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_bornera",
+     "a": "X1.1A",
+     "b": "X1.1B"
+    },
+    "filas": [
+     {
+      "estado": "1A-1B",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "1A-2A, bornes distintos",
+      "cambios": {
+       "b": "X1.2A"
+      },
+      "hacer": "Normal: aislados",
+      "bien": true
+     },
+     {
+      "estado": "1A-1B, cable suelto",
+      "cambios": {
+       "estado": {
+        "X1": {
+         "sueltos": [
+          "1"
+         ]
+        }
+       }
+      },
+      "hacer": "Malo: apretar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Caída en servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2A",
+    "negra": "2B",
+    "como": "Escala V~ · entre A y B del mismo borne",
+    "nota": "Con el motor en marcha: use el EPP.",
+    "titulo_tabla": "Tensión entre los lados de un borne",
+    "columna": "V",
+    "medida": {
+     "circuito": "bornera_servicio",
+     "segundos": 5,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "X1.2A",
+     "b": "X1.2B",
+     "estado": {
+      "S1": {
+       "presionado": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Borne 2 apretado",
+      "hacer": "Normal: casi cero",
+      "bien": true
+     },
+     {
+      "estado": "Borne 2 flojo",
+      "cambios": {
+       "estado": {
+        "X1": {
+         "flojos": [
+          "2"
+         ]
+        }
+       }
+      },
+      "hacer": "Malo: reapretar",
+      "bien": false
+     },
+     {
+      "estado": "Borne 2 suelto",
+      "cambios": {
+       "estado": {
+        "X1": {
+         "sueltos": [
+          "2"
+         ]
+        }
+       }
+      },
+      "hacer": "Malo: el motor queda en dos fases",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "1B",
+    "negra": "",
+    "como": "Pinza en el cable del borne 1",
+    "nota": "Con el motor en marcha.",
+    "titulo_tabla": "Corriente de la fase 1",
+    "columna": "A",
+    "medida": {
+     "circuito": "bornera_servicio",
+     "segundos": 5,
+     "instrumento": "pinza",
+     "modo": "vac",
+     "a": "X1.2A",
+     "b": "X1.2B",
+     "estado": {
+      "S1": {
+       "presionado": true
+      }
+     },
+     "cable": [
+      "X1.1B",
+      "M1.U1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Bornes bien",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Borne 2 suelto",
+      "cambios": {
+       "estado": {
+        "X1": {
+         "sueltos": [
+          "2"
+         ]
+        }
+       }
+      },
+      "hacer": "Malo: dispara el térmico",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Borne flojo",
+    "sintoma": "Plástico del borne oscurecido; el motor funciona.",
+    "mide": [
+     {
+      "donde": "2A-2B en marcha",
+      "bien": false,
+      "medida": {
+       "circuito": "bornera_servicio",
+       "segundos": 5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "X1.2A",
+       "b": "X1.2B",
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "X1": {
+         "flojos": [
+          "2"
+         ]
+        }
+       }
+      }
+     },
+     {
+      "donde": "infrarrojo",
+      "bien": false,
+      "valor": "78 °C"
+     }
+    ],
+    "causa": "Tornillo sin el par de apriete, o aflojado por vibración.",
+    "reparacion": "Bloquear, cortar el cable hasta cobre sano, poner puntera nueva y apretar al par."
+   },
+   {
+    "nombre": "Cable suelto",
+    "sintoma": "El motor zumba, va en dos fases y dispara el térmico.",
+    "mide": [
+     {
+      "donde": "2A-2B en marcha",
+      "bien": false,
+      "medida": {
+       "circuito": "bornera_servicio",
+       "segundos": 5,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "X1.2A",
+       "b": "X1.2B",
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "X1": {
+         "sueltos": [
+          "2"
+         ]
+        }
+       }
+      }
+     },
+     {
+      "donde": "corriente de la fase 1",
+      "bien": false,
+      "medida": {
+       "circuito": "bornera_servicio",
+       "segundos": 5,
+       "instrumento": "pinza",
+       "modo": "vac",
+       "a": "X1.2A",
+       "b": "X1.2B",
+       "estado": {
+        "S1": {
+         "presionado": true
+        },
+        "X1": {
+         "sueltos": [
+          "2"
+         ]
+        }
+       },
+       "cable": [
+        "X1.1B",
+        "M1.U1"
+       ]
+      }
+     }
+    ],
+    "causa": "El cable salió del borne.",
+    "reparacion": "Bloquear, reconectar y apretar; revisar el motor, que trabajó en dos fases."
+   },
+   {
+    "nombre": "Corrosión",
+    "sintoma": "Verdín en los tornillos en un tablero de cubierta.",
+    "mide": [
+     {
+      "donde": "1A-1B",
+      "bien": false,
+      "valor": "0,4 Ω"
+     }
+    ],
+    "causa": "Humedad salina por un prensaestopas mal cerrado.",
+    "reparacion": "Cambiar los bornes y cerrar el tablero."
+   },
+   {
+    "nombre": "Puente olvidado",
+    "sintoma": "Un circuito queda alimentado aunque su interruptor esté abierto.",
+    "mide": [
+     {
+      "donde": "entre bornes 5 y 6",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Un puente de prueba quedó puesto entre dos bornes.",
+    "reparacion": "Retirar el puente y comprobar el circuito con el esquema."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "aspecto de las borneras de potencia"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete con el circuito bloqueado y revisión térmica"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza y marcadores"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-7-1: bornes de paso.",
+  "IEC 60092-352: cables en buques."
+ ]
+}

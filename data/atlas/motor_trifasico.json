@@ -1,0 +1,477 @@
+{
+ "id": "motor_trifasico",
+ "ficha": "motor_trifasico",
+ "titulo": "Motor trifásico",
+ "termino": "motor_induccion",
+ "icono": "motor",
+ "resumen": "El motor de inducción de jaula: bombas, ventiladores y compresores.",
+ "bornes_dibujo": {
+  "U1": [
+   270,
+   40
+  ],
+  "V1": [
+   305,
+   40
+  ],
+  "W1": [
+   340,
+   40
+  ],
+  "W2": [
+   270,
+   56
+  ],
+  "U2": [
+   305,
+   56
+  ],
+  "V2": [
+   340,
+   56
+  ]
+ },
+ "que_es": {
+  "texto": "El {{motor_induccion}} trifásico mueve casi todo a bordo. Su {{estator}} crea un campo que gira; el {{rotor_jaula}} lo sigue con un pequeño {{deslizamiento}}. Sus seis bornes se puentean en estrella o en delta según la {{placa_datos}}.",
+  "partes": [
+   {
+    "texto": "Caja de bornes con U1-V1-W1 y W2-U2-V2.",
+    "marca": [
+     305,
+     30
+    ]
+   },
+   {
+    "texto": "Carcasa con aletas y, dentro, el estator bobinado.",
+    "marca": [
+     460,
+     100
+    ]
+   },
+   {
+    "texto": "Ventilador en el lado opuesto al eje.",
+    "marca": [
+     84,
+     110
+    ]
+   },
+   {
+    "texto": "Placa de datos: tensiones Δ/Y, corriente, potencia, rpm.",
+    "marca": [
+     323,
+     210
+    ]
+   }
+  ],
+  "placa": "15 kW · 380Δ/660Y V · 29,5/17 A · 1460 rpm · cos φ 0,86 · 50 Hz",
+  "a_bordo": "Bombas de agua salada, agua dulce, combustible y aceite, ventiladores y compresores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "conexion_motor",
+  "params": {
+   "duracion_s": 60,
+   "mensajes": {
+    "correcto": "Conexión correcta: cada devanado recibe la tensión que admite. El motor trabaja a su corriente nominal.",
+    "exceso": "Conexión incorrecta: cada devanado recibe √3 veces su tensión. El núcleo se satura, la corriente se dispara y, sin protección, el motor se quema.",
+    "defecto": "Conexión incorrecta: cada devanado recibe 1 ÷ √3 de su tensión, y el par cae a un tercio. A plena carga el motor no da el par, la corriente sube y el relé dispara."
+   }
+  },
+  "pasos": [
+   "Tres devanados desfasados 120° crean un campo que gira a la velocidad síncrona: 1500 rpm con 4 polos a 50 Hz.",
+   "El campo induce corrientes en la jaula del rotor, que gira un poco más despacio: 1460 rpm.",
+   "Cada devanado debe recibir la tensión de su placa: por eso se elige estrella o delta."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_motor_trifasico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 120,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 200,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 280,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "U1",
+     "x": 146,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "V1",
+     "x": 226,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "W1",
+     "x": 306,
+     "y": 110,
+     "tam": 11
+    },
+    {
+     "texto": "W2",
+     "x": 146,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "U2",
+     "x": 226,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "V2",
+     "x": 306,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "Puentes en delta",
+     "x": 340,
+     "y": 140,
+     "tam": 10
+    },
+    {
+     "texto": "M",
+     "x": 200,
+     "y": 238,
+     "tam": 16
+    },
+    {
+     "texto": "3~",
+     "x": 200,
+     "y": 256,
+     "tam": 12
+    },
+    {
+     "texto": "Caja de bornes",
+     "x": 200,
+     "y": 76,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "U1": [
+    120,
+    110
+   ],
+   "V1": [
+    200,
+    110
+   ],
+   "W1": [
+    280,
+    110
+   ],
+   "W2": [
+    120,
+    170
+   ],
+   "U2": [
+    200,
+    170
+   ],
+   "V2": [
+    280,
+    170
+   ]
+  },
+  "bornes": {
+   "U1": "Principio del devanado U; llega L1.",
+   "V1": "Principio del devanado V; llega L2.",
+   "W1": "Principio del devanado W; llega L3.",
+   "W2": "Final del devanado W, debajo de U1: en delta se puentea con U1.",
+   "U2": "Final del devanado U, debajo de V1: en delta con V1.",
+   "V2": "Final del devanado V, debajo de W1: en delta con W1."
+  },
+  "grupos": [
+   {
+    "nombre": "Delta",
+    "bornes": [
+     "U1",
+     "W2",
+     "V1",
+     "U2",
+     "W1",
+     "V2"
+    ],
+    "texto": "Tres puentes verticales: U1-W2, V1-U2 y W1-V2. Para un motor 380Δ/660Y en la red de 380 V."
+   },
+   {
+    "nombre": "Estrella",
+    "bornes": [
+     "W2",
+     "U2",
+     "V2"
+    ],
+    "texto": "Un puente horizontal que une W2, U2 y V2. Para un motor 220Δ/380Y en la red de 380 V."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un motor de 15 kW 380Δ/660Y. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Devanados",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "U1",
+    "negra": "U2",
+    "como": "Escala Ω · cada devanado con los puentes quitados",
+    "nota": "Sin tensión y con los puentes quitados.",
+    "titulo_tabla": "Resistencia de cada devanado",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_motor",
+     "a": "M1.U1",
+     "b": "M1.U2"
+    },
+    "filas": [
+     {
+      "estado": "U1-U2",
+      "hacer": "Normal: los tres iguales",
+      "bien": true
+     },
+     {
+      "estado": "V1-V2",
+      "cambios": {
+       "a": "M1.V1",
+       "b": "M1.V2"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "W1-W2",
+      "cambios": {
+       "a": "M1.W1",
+       "b": "M1.W2"
+      },
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "U1-V1, sin puentes",
+      "cambios": {
+       "b": "M1.V1"
+      },
+      "hacer": "Normal: devanados separados",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Aislamiento",
+    "instrumento": "megohmetro",
+    "escala": "500 V",
+    "roja": "U1",
+    "negra": "",
+    "como": "Megóhmetro a 500 V · cada devanado contra la carcasa",
+    "nota": "Desconectado del arrancador; descargue al terminar.",
+    "titulo_tabla": "Aislamiento (mínimo 5 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "instrumento": "megohmetro",
+     "v_prueba": 500,
+     "circuito": "medir_motor",
+     "a": "M1.U1",
+     "b": "M0.PE"
+    },
+    "filas": [
+     {
+      "estado": "U1 a masa",
+      "hacer": "Bueno",
+      "bien": true
+     },
+     {
+      "estado": "U1 a masa, motor húmedo",
+      "cambios": {
+       "params": {
+        "M1": {
+         "aislamiento_mohm": [
+          0.8,
+          300,
+          300
+         ]
+        }
+       }
+      },
+      "hacer": "Malo: secar antes de arrancar",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "U1",
+    "negra": "",
+    "como": "Pinza en un cable de fase",
+    "nota": "En marcha, con el tablero cerrado si el modelo lo permite.",
+    "titulo_tabla": "Corriente de línea en arranque directo",
+    "columna": "A",
+    "medida": {
+     "circuito": "arranque_directo",
+     "instrumento": "pinza",
+     "segundos": 0.2,
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "cable": [
+      "F2.2",
+      "M1.U1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Al arrancar",
+      "hacer": "Normal: pico de arranque",
+      "bien": true
+     },
+     {
+      "estado": "En marcha, al 80 % de carga",
+      "cambios": {
+       "segundos": 5
+      },
+      "hacer": "Normal: por debajo de 29,5 A",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Bajo aislamiento",
+    "sintoma": "El monitor de aislamiento da alarma al arrancar la bomba, o el motor no arranca tras días parado.",
+    "mide": [
+     {
+      "donde": "U1 a masa",
+      "bien": false,
+      "medida": {
+       "instrumento": "megohmetro",
+       "v_prueba": 500,
+       "circuito": "medir_motor",
+       "a": "M1.U1",
+       "b": "M0.PE",
+       "params": {
+        "M1": {
+         "aislamiento_mohm": [
+          0.8,
+          300,
+          300
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Humedad en el bobinado: la resistencia de caldeo no funciona o entró agua.",
+    "reparacion": "Secar con calor suave o con la resistencia de caldeo y volver a medir; si no sube de 5 MΩ, rebobinar."
+   },
+   {
+    "nombre": "Falta de fase",
+    "sintoma": "Zumba, no arranca o se calienta, y dispara el térmico.",
+    "mide": [
+     {
+      "donde": "corriente en una fase",
+      "bien": false,
+      "valor": "0 A"
+     },
+     {
+      "donde": "en las otras dos",
+      "bien": false,
+      "valor": "48 A"
+     }
+    ],
+    "causa": "Fusible fundido, contacto quemado o borne suelto.",
+    "reparacion": "Bloquear, buscar el punto abierto midiendo por tramos y repararlo."
+   },
+   {
+    "nombre": "Devanado en corto",
+    "sintoma": "Dispara al arrancar y huele a quemado.",
+    "mide": [
+     {
+      "donde": "U1-U2",
+      "bien": false,
+      "valor": "0,2 Ω"
+     },
+     {
+      "donde": "V1-V2 y W1-W2",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_motor",
+       "a": "M1.V1",
+       "b": "M1.V2"
+      }
+     }
+    ],
+    "causa": "Espiras en cortocircuito por sobrecalentamiento.",
+    "reparacion": "Rebobinar o cambiar el motor, y buscar la causa del calentamiento."
+   },
+   {
+    "nombre": "Rodamiento",
+    "sintoma": "Ruido y vibración que aumentan.",
+    "mide": [
+     {
+      "donde": "temperatura del rodamiento",
+      "bien": false,
+      "valor": "85 °C"
+     }
+    ],
+    "causa": "Falta de grasa o rodamiento gastado.",
+    "reparacion": "Cambiar los rodamientos y revisar la alineación."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "ruido, vibración y temperatura"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza, engrase y reapriete de la caja de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "aislamiento con megóhmetro y Ω de los devanados"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60034-1: máquinas eléctricas rotativas.",
+  "IEEE 43: medida de la resistencia de aislamiento."
+ ]
+}

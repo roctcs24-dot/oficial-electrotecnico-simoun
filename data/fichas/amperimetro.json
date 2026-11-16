@@ -1,0 +1,107 @@
+{
+  "id": "amperimetro",
+  "titulo": "Amperímetro de cuadro",
+  "resumen": "Indica la corriente de una salida o de un generador.",
+  "dibujo": {
+    "svg": "res://art/equipos/amperimetro.svg",
+    "tamano": [
+      300,
+      330
+    ],
+    "nota": "Aparato de cuadro de hierro móvil de 72 × 72 mm, dibujado de forma general. Escalas y modelos del cuadro: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "A",
+        "x": 150,
+        "y": 160,
+        "tam": 22
+      },
+      {
+        "texto": "0",
+        "x": 84,
+        "y": 112,
+        "tam": 11
+      },
+      {
+        "texto": "50",
+        "x": 150,
+        "y": 74,
+        "tam": 11
+      },
+      {
+        "texto": "100",
+        "x": 216,
+        "y": 112,
+        "tam": 11
+      },
+      {
+        "texto": "100/5 A",
+        "x": 150,
+        "y": 236,
+        "tam": 11
+      },
+      {
+        "texto": "1",
+        "x": 110,
+        "y": 312,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "2",
+        "x": 190,
+        "y": 312,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Amperímetro según IEC 60617 y ANSI/IEEE 315: círculo con la letra A. Verificar contra la norma.",
+    "lista": [
+      "amperimetro",
+      "transformador_corriente"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{amperimetro}} del cuadro indica la corriente de un generador o de una salida. En baja tensión, por encima de unos 40 A, no lleva la corriente de la red: mide los 5 A del secundario de un {{transformador_corriente}} y su escala está graduada en amperios del primario."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Hierro móvil:[/b] la corriente pasa por una bobina fija que atrae una pieza de hierro unida a la aguja. Mide valor eficaz en alterna.\n• [b]Escala[/b] de 0 al valor del primario del TI, con su relación impresa: 100/5 A.\n• [b]Bornes[/b] en la parte de atrás.\n• La carga del aparato es muy pequeña: unas décimas de ohmio."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Bornes 1-2 al secundario S1-S2 del TI, por la bornera seccionable con puente.\n• Para leer las tres fases con un solo aparato se usa un conmutador amperimétrico, que cortocircuita los TI que no se miden.\n• La escala debe ser la del TI: un amperímetro de 200/5 en un TI de 100/5 marca la mitad."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la entrada (5 A o 1 A), la escala (la del TI), el tamaño (72 o 96 mm) y la clase (1,5 es lo habitual en cuadro). Algunos llevan una zona de sobrecarga o una aguja de arrastre de máxima."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Compárelo con la pinza[/b] en el cable de la fase: deben coincidir dentro de la clase.\n• [b]Sin tensión:[/b] Ω entre sus bornes, décimas de ohmio.\n• [b]Antes de quitarlo:[/b] cierre el puente del TI en la bornera."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Marca cero con carga:[/b] puente de la bornera cerrado, bobina cortada (¡TI abierto!) o aguja agarrotada.\n• [b]Marca la mitad o el doble:[/b] escala que no es la del TI.\n• [b]Aguja que vibra:[/b] borne flojo en el secundario."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Anual: comparación con la pinza y reapriete de los bornes del secundario.\n\n[b]Correctivo:[/b] con el puente del TI cerrado, se cambia por otro de la misma escala."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60051-2: aparatos de medida analógicos, amperímetros y voltímetros.",
+    "IEC 60092-202: instalaciones eléctricas en buques."
+  ]
+}

@@ -30,7 +30,7 @@
       "zona": [478, 264, 116, 76],
       "modos": {
         "aprender": { "lecciones": ["gen1_alternador", "gen2_avr", "gen3_gobernador", "gen4_cuadro", "gen5_sincronizacion", "gen6_reparto", "gen7_blackout", "gen8_aislamiento"],
-          "fichas": ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento", "generador_emergencia"] },
+          "fichas": ["alternador", "avr", "acb", "rele_potencia_inversa", "sincronoscopio", "controlador_generador", "monitor_aislamiento", "generador_emergencia", "transformador_intensidad", "amperimetro", "voltimetro", "analizador_red"] },
         "taller": { "pantalla": "cuadro", "detalle": "Cuadro principal: arranque, sincronización y reparto de carga" },
         "guardia": { "misiones": ["gen1_paralelo", "gen2_blackout", "gen3_falla_tierra", "gen4_potencia_inversa"] },
         "examen": { "examenes": ["v2"], "minijuegos": ["simbolos_generacion"] }
@@ -44,7 +44,7 @@
       "zona": [472, 210, 124, 44],
       "modos": {
         "aprender": { "lecciones": ["d1_transformadores", "d2_protecciones", "d3_alumbrado", "d4_baterias_24v"],
-          "fichas": ["transformador", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "baterias_24v"] },
+          "fichas": ["transformador", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "baterias_24v", "condensadores", "bornera"] },
         "taller": { "pantalla": "tableros", "detalle": "Tableros de 220 V y 110 V del buque y banco libre", "tableros": ["distribucion_220", "habitabilidad_110"] },
         "guardia": { "misiones": ["h1_corto_alumbrado", "h2_tierra_tomas", "h3_sobrecarga_cocina"] },
         "examen": { "examenes": ["v5"], "minijuegos": ["simbolos_distribucion"] }
@@ -59,7 +59,7 @@
       "modos": {
         "aprender": {
           "lecciones": ["m1_motor", "m2_placa", "m3_estrella_delta", "m4_bornera", "m5_mando", "m6_protecciones", "m7_directo", "m8_estrella_triangulo", "m11_arrancador_suave", "m9_pruebas", "m10_tableros", "i1_multimetro", "i2_megohmetro", "i3_pinza"],
-          "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador", "selector", "seta", "luz_piloto", "rele_auxiliar", "temporizador", "arrancador_suave"]
+          "fichas": ["motor_trifasico", "contactor", "rele_termico", "guardamotor", "pulsador", "selector", "seta", "luz_piloto", "rele_auxiliar", "temporizador", "arrancador_suave", "arrancador_yd", "variador", "resistencia_caldeo", "horometro"]
         },
         "taller": {"pantalla": "tableros", "detalle": "Banco libre y tableros del buque", "tableros": ["bombas_mp", "hidroforo_salada", "purificadora_1", "servotimon_1", "habitabilidad_110", "distribucion_220", "compresores_nh3"]},
         "guardia": { "misiones": ["g1_no_arranca", "g2_termico_dispara", "g3_bajo_aislamiento", "t1_tierra_bombas_mp", "t2_hidroforo_sin_fase"] },
@@ -114,7 +114,7 @@
     }
   ],
   "escuela": [
-    { "id": 7, "color": "#f2b705", "icono": "electricidad", "nombre": "Electricidad industrial", "resumen": "Componentes de protección, mando, potencia y medida: cómo funcionan, se conectan, se miden y fallan; y la electricidad desde cero.", "estado": "activo", "etapa": 33, "modos": { "aprender": { "detalle": "Atlas de componentes: qué es, cómo funciona, cómo se conecta, cómo se mide y sus fallas", "atlas": ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento", "rele_auxiliar", "temporizador", "pulsador", "selector", "luz_piloto", "seta", "final_carrera", "presostato", "termostato", "interruptor_nivel"] } } },
+    { "id": 7, "color": "#f2b705", "icono": "electricidad", "nombre": "Electricidad industrial", "resumen": "Componentes de protección, mando, potencia y medida: cómo funcionan, se conectan, se miden y fallan; y la electricidad desde cero.", "estado": "activo", "etapa": 33, "modos": { "aprender": { "detalle": "Atlas de componentes: qué es, cómo funciona, cómo se conecta, cómo se mide y sus fallas", "atlas": ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento", "rele_auxiliar", "temporizador", "pulsador", "selector", "luz_piloto", "seta", "final_carrera", "presostato", "termostato", "interruptor_nivel", "transformador", "transformador_intensidad", "motor_trifasico", "estrella_triangulo", "arrancador_suave", "variador", "resistencia_caldeo", "condensadores", "amperimetro", "voltimetro", "analizador_red", "horometro", "bornera"] } } },
     { "id": 8, "color": "#8e5bd6", "icono": "electronica", "nombre": "Electrónica", "resumen": "Resistencia, condensador, diodo, transistor, fuentes, señales de proceso y lógica, desde cero.", "estado": "en_preparacion", "etapa": 38, "modos": {} },
     { "id": 9, "color": "#1f7fd1", "icono": "hidraulica", "nombre": "Hidráulica y neumática", "resumen": "Presión, bombas, cilindros, válvulas, aire comprimido y electroneumática.", "estado": "en_preparacion", "etapa": 45, "modos": {} },
     { "id": 10, "color": "#2e9e6a", "icono": "valvulas", "nombre": "Válvulas y líneas", "resumen": "¿Abierta o cerrada?, colores de tubería y cómo seguir una línea a bordo.", "estado": "en_preparacion", "etapa": 41, "modos": {} },

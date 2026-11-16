@@ -1,0 +1,470 @@
+{
+ "id": "transformador",
+ "ficha": "transformador",
+ "titulo": "Transformador",
+ "termino": "transformador",
+ "icono": "transformador",
+ "resumen": "Baja los 380 V de la red a 220 V para alumbrado y habitabilidad.",
+ "bornes_dibujo": {
+  "1U": [
+   80,
+   46
+  ],
+  "2U": [
+   120,
+   46
+  ],
+  "1V": [
+   190,
+   46
+  ],
+  "2V": [
+   230,
+   46
+  ],
+  "1W": [
+   300,
+   46
+  ],
+  "2W": [
+   340,
+   46
+  ]
+ },
+ "que_es": {
+  "texto": "El {{transformador}} cambia la tensión alterna sin partes móviles: el de alumbrado baja los 380 V del cuadro principal a 220 V. Además separa las dos redes: una falla a masa en la de 220 V no toca el aislamiento de la de 380 V.",
+  "partes": [
+   {
+    "texto": "Bornes del primario 1U-1V-1W, a 380 V.",
+    "marca": [
+     80,
+     46
+    ]
+   },
+   {
+    "texto": "Bornes del secundario 2U-2V-2W, a 220 V.",
+    "marca": [
+     120,
+     46
+    ]
+   },
+   {
+    "texto": "{{Nucleo}} de chapa con sus tres columnas y sus {{devanado}}.",
+    "marca": [
+     210,
+     90
+    ]
+   },
+   {
+    "texto": "Placa: potencia, tensiones, {{grupo_conexion}} y tensión de cortocircuito.",
+    "marca": [
+     210,
+     349
+    ]
+   }
+  ],
+  "placa": "30 kVA · 380/220 V · Dd0 · 50 Hz · ucc 4 %",
+  "a_bordo": "Transformadores de alumbrado y habitabilidad junto al cuadro principal. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "transformador_relacion",
+  "params": {},
+  "pasos": [
+   "La alterna del primario crea un flujo alterno en el núcleo.",
+   "Ese flujo induce en el secundario una tensión en la {{relacion_transformacion}} de espiras.",
+   "La potencia es casi la misma a los dos lados: si la tensión baja, la corriente sube."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_transformador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L2",
+     "x": 100,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "L3",
+     "x": 140,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "T1",
+     "x": 176,
+     "y": 110,
+     "tam": 12
+    },
+    {
+     "texto": "1U",
+     "x": 44,
+     "y": 58,
+     "tam": 10
+    },
+    {
+     "texto": "1V",
+     "x": 86,
+     "y": 58,
+     "tam": 10
+    },
+    {
+     "texto": "1W",
+     "x": 126,
+     "y": 58,
+     "tam": 10
+    },
+    {
+     "texto": "2U",
+     "x": 44,
+     "y": 164,
+     "tam": 10
+    },
+    {
+     "texto": "2V",
+     "x": 86,
+     "y": 164,
+     "tam": 10
+    },
+    {
+     "texto": "2W",
+     "x": 126,
+     "y": 164,
+     "tam": 10
+    },
+    {
+     "texto": "Tablero de 220 V",
+     "x": 100,
+     "y": 266,
+     "tam": 11
+    },
+    {
+     "texto": "Primario Δ 380 V",
+     "x": 260,
+     "y": 44,
+     "tam": 11
+    },
+    {
+     "texto": "Secundario Δ 220 V",
+     "x": 260,
+     "y": 164,
+     "tam": 11
+    },
+    {
+     "texto": "Dd0",
+     "x": 260,
+     "y": 262,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1U": [
+    60,
+    70
+   ],
+   "1V": [
+    100,
+    70
+   ],
+   "1W": [
+    140,
+    70
+   ],
+   "2U": [
+    60,
+    150
+   ],
+   "2V": [
+    100,
+    150
+   ],
+   "2W": [
+    140,
+    150
+   ]
+  },
+  "bornes": {
+   "1U": "Primario, desde L1 del cuadro principal por su interruptor.",
+   "1V": "Primario, desde L2.",
+   "1W": "Primario, desde L3.",
+   "2U": "Secundario hacia el tablero de 220 V.",
+   "2V": "Secundario hacia el tablero de 220 V.",
+   "2W": "Secundario hacia el tablero de 220 V."
+  },
+  "grupos": [
+   {
+    "nombre": "Primario 1U-1V-1W",
+    "bornes": [
+     "1U",
+     "1V",
+     "1W"
+    ],
+    "texto": "A 380 V desde un interruptor del cuadro principal con su protección. En delta: cada columna entre dos fases."
+   },
+   {
+    "nombre": "Secundario 2U-2V-2W",
+    "bornes": [
+     "2U",
+     "2V",
+     "2W"
+    ],
+    "texto": "A 220 V hacia el interruptor general del tablero. En la red aislada no se pone a masa: tiene sus propias lámparas de tierra o su monitor."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un banco de 30 kVA 380/220 V Dd0. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Devanados",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1U",
+    "negra": "1V",
+    "como": "Escala Ω · entre dos bornes del mismo lado",
+    "nota": "Sin tensión, desconectado por los dos lados.",
+    "titulo_tabla": "Resistencia entre bornes",
+    "columna": "Ω",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_transformador",
+     "a": "TU.H1",
+     "b": "TV.H1"
+    },
+    "filas": [
+     {
+      "estado": "1U-1V, primario",
+      "hacer": "Normal: las tres iguales",
+      "bien": true
+     },
+     {
+      "estado": "2U-2V, secundario",
+      "cambios": {
+       "a": "TU.X1",
+       "b": "TV.X1"
+      },
+      "hacer": "Normal: menor que el primario",
+      "bien": true
+     },
+     {
+      "estado": "1U-1V, columna U cortada",
+      "cambios": {
+       "estado": {
+        "TU": {
+         "primario_cortado": true
+        }
+       }
+      },
+      "hacer": "Triple que las otras: devanado cortado",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Aislamiento",
+    "instrumento": "megohmetro",
+    "escala": "1000 V",
+    "roja": "1U",
+    "negra": "",
+    "como": "Megóhmetro a 1000 V · primario contra masa y contra el secundario",
+    "nota": "Desconectado por los dos lados; descargue al terminar.",
+    "titulo_tabla": "Aislamiento (mínimo 5 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "circuito": "medir_transformador",
+     "instrumento": "megohmetro",
+     "v_prueba": 1000,
+     "a": "TU.H1",
+     "b": "M0.PE"
+    },
+    "filas": [
+     {
+      "estado": "Primario a masa",
+      "hacer": "Bueno",
+      "bien": true
+     },
+     {
+      "estado": "Primario a secundario",
+      "cambios": {
+       "b": "TU.X1"
+      },
+      "hacer": "Bueno",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2U",
+    "negra": "2V",
+    "como": "Escala V~ · entre fases de cada lado",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensiones con 18 kW de carga",
+    "columna": "V",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "segundos": 0.3,
+     "circuito": "transformador_servicio",
+     "a": "TU.H1",
+     "b": "TV.H1"
+    },
+    "filas": [
+     {
+      "estado": "1U-1V, primario",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "2U-2V, secundario",
+      "cambios": {
+       "a": "TU.X1",
+       "b": "TV.X1"
+      },
+      "hacer": "Normal: 220 V menos la caída con carga",
+      "bien": true
+     },
+     {
+      "estado": "2V-2W, secundario",
+      "cambios": {
+       "a": "TV.X1",
+       "b": "TW.X1"
+      },
+      "hacer": "Normal: iguales",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Devanado cortado",
+    "sintoma": "El tablero de 220 V tiene tensión pero algo desigual, y el transformador se calienta con carga.",
+    "mide": [
+     {
+      "donde": "2U-2V con carga",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "segundos": 0.3,
+       "circuito": "transformador_servicio",
+       "a": "TU.X1",
+       "b": "TV.X1",
+       "estado": {
+        "TU": {
+         "primario_cortado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "1U-1V sin tensión",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_transformador",
+       "a": "TU.H1",
+       "b": "TV.H1",
+       "estado": {
+        "TU": {
+         "primario_cortado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Una columna con el devanado cortado: las otras dos siguen dando tensión (triángulo abierto), pero con un 58 % de la potencia.",
+    "reparacion": "Bajar la carga, sacarlo de servicio y llevarlo a rebobinar o cambiarlo."
+   },
+   {
+    "nombre": "Aislamiento bajo",
+    "sintoma": "El monitor de aislamiento de 220 V o el de 380 V da alarma.",
+    "mide": [
+     {
+      "donde": "primario a masa",
+      "bien": false,
+      "valor": "1,2 MΩ"
+     }
+    ],
+    "causa": "Humedad, polvo salino o aislamiento envejecido.",
+    "reparacion": "Limpiar y secar con calor suave; si no sube, rebobinar o cambiar."
+   },
+   {
+    "nombre": "Sobrecalentamiento",
+    "sintoma": "Olor a barniz y el termómetro del transformador alto.",
+    "mide": [
+     {
+      "donde": "corriente del secundario",
+      "bien": false,
+      "valor": "95 A"
+     },
+     {
+      "donde": "nominal a 220 V",
+      "bien": true,
+      "valor": "79 A"
+     }
+    ],
+    "causa": "Más carga de la nominal o ventilación tapada.",
+    "reparacion": "Repartir cargas, despejar la ventilación y revisar las conexiones."
+   },
+   {
+    "nombre": "Zumbido fuerte",
+    "sintoma": "Vibra y zumba más que de costumbre.",
+    "mide": [
+     {
+      "donde": "tensión del primario",
+      "bien": true,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "segundos": 0.3,
+       "circuito": "transformador_servicio",
+       "a": "TU.H1",
+       "b": "TV.H1"
+      }
+     }
+    ],
+    "causa": "Chapas o tornillos del núcleo flojos.",
+    "reparacion": "Sin tensión, reapretar el núcleo y los soportes antivibratorios."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "temperatura y ruido en servicio"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza del polvo y reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "aislamiento con megóhmetro y Ω de los devanados"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60076-11: transformadores secos.",
+  "IEC 60092-303: transformadores en buques."
+ ]
+}

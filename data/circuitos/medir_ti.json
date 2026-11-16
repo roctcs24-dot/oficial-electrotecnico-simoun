@@ -1,0 +1,18 @@
+{
+  "nombre": "Transformador de intensidad suelto para medir",
+  "nota": "TI de 100/5 A, clase 1, 5 VA, sin cables. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "TI1",
+      "tipo": "transformador_intensidad",
+      "params": {
+        "aislamiento_mohm": 800
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": []
+}

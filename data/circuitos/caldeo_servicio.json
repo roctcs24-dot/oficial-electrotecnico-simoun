@@ -1,0 +1,88 @@
+{
+  "nombre": "Caldeo del motor por el NC del contactor",
+  "nota": "El transformador T2 de 380/230 V alimenta la resistencia R1 por el contacto 21-22 (NC) del contactor K1 del motor: con el motor parado calienta; en marcha se desconecta. Aquí la bobina de K1 (230 V) se activa con S1, en lugar de con el mando completo del motor. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T2",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_secundario": 230,
+        "r_secundario": 1.0
+      }
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible",
+      "params": {
+        "i_nominal": 2
+      }
+    },
+    {
+      "id": "K1",
+      "tipo": "contactor",
+      "params": {
+        "v_bobina": 230
+      }
+    },
+    {
+      "id": "R1",
+      "tipo": "resistencia_caldeo"
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T2.H1"
+    ],
+    [
+      "B.L2",
+      "T2.H2"
+    ],
+    [
+      "T2.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "K1.21"
+    ],
+    [
+      "K1.22",
+      "R1.1"
+    ],
+    [
+      "R1.2",
+      "T2.X2"
+    ],
+    [
+      "F1.2",
+      "S1.13"
+    ],
+    [
+      "S1.14",
+      "K1.A1"
+    ],
+    [
+      "K1.A2",
+      "T2.X2"
+    ]
+  ]
+}

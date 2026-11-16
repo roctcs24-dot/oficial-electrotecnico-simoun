@@ -1,0 +1,108 @@
+{
+  "nombre": "Transformador de alumbrado en servicio",
+  "nota": "El banco de 30 kVA 380/220 V alimenta el tablero de 220 V con unos 18 kW de carga. El modelo no refleja la carga del secundario en el primario. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "TU",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15
+      }
+    },
+    {
+      "id": "TV",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15
+      }
+    },
+    {
+      "id": "TW",
+      "tipo": "transformador_mando",
+      "params": {
+        "v_primario": 380,
+        "v_secundario": 220,
+        "r_primario": 0.3,
+        "x_primario": 3000,
+        "r_secundario": 0.1,
+        "x_secundario": 0.15
+      }
+    },
+    {
+      "id": "C2",
+      "tipo": "carga_trifasica",
+      "params": {
+        "p_kw": 18,
+        "q_kvar": 6,
+        "v_linea": 220
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "TU.H1"
+    ],
+    [
+      "B.L2",
+      "TV.H1"
+    ],
+    [
+      "B.L3",
+      "TW.H1"
+    ],
+    [
+      "TU.H2",
+      "TV.H1"
+    ],
+    [
+      "TV.H2",
+      "TW.H1"
+    ],
+    [
+      "TW.H2",
+      "TU.H1"
+    ],
+    [
+      "TU.X2",
+      "TV.X1"
+    ],
+    [
+      "TV.X2",
+      "TW.X1"
+    ],
+    [
+      "TW.X2",
+      "TU.X1"
+    ],
+    [
+      "TU.X1",
+      "C2.L1"
+    ],
+    [
+      "TV.X1",
+      "C2.L2"
+    ],
+    [
+      "TW.X1",
+      "C2.L3"
+    ]
+  ]
+}

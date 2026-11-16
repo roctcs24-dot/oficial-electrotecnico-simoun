@@ -25,3 +25,9 @@ func avanzar(dt: float, sol: SimSolver.Solucion) -> void:
 	estado["contando"] = tension(sol, "A1", "A2") >= 0.8 * float(params["v_nominal"])
 	if estado["contando"]:
 		estado["horas"] += dt / 3600.0 * SimRed.F_HZ / float(params["hz_nominal"])
+
+
+## Lectura del contador, en horas con una décima.
+func leer(_sol: SimSolver.Solucion, _magnitud := "") -> Dictionary:
+	var h := float(estado["horas"])
+	return {"valor": h, "unidad": "h", "fuera_de_rango": false, "averia": "", "texto": ("%.1f h" % h).replace(".", ",")}

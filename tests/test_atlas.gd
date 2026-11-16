@@ -34,11 +34,13 @@ func _terminos_fuera(texto: String, glosario: Dictionary) -> String:
 	return ""
 
 
-func test_el_modulo_7_publica_las_etapas_33_a_35() -> String:
+func test_el_modulo_7_publica_las_etapas_33_a_36() -> String:
 	var c := Contenido.new()
 	var m := c.sistema(7)
 	var esperados := ["contactor", "rele_termico", "guardamotor", "interruptor_automatico", "diferencial", "fusible", "seccionador", "rele_control_fases", "monitor_aislamiento",
-		"rele_auxiliar", "temporizador", "pulsador", "selector", "luz_piloto", "seta", "final_carrera", "presostato", "termostato", "interruptor_nivel"]
+		"rele_auxiliar", "temporizador", "pulsador", "selector", "luz_piloto", "seta", "final_carrera", "presostato", "termostato", "interruptor_nivel",
+		"transformador", "transformador_intensidad", "motor_trifasico", "estrella_triangulo", "arrancador_suave", "variador", "resistencia_caldeo", "condensadores",
+		"amperimetro", "voltimetro", "analizador_red", "horometro", "bornera"]
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 7 debe estar activo"),
 		A.cierto(_ids(c) == esperados, "atlas del módulo 7: %s" % str(_ids(c))),
@@ -295,17 +297,25 @@ func test_pestanas_recorribles_en_ambas_orientaciones() -> String:
 			var pasos: Array = []
 			for p: String in PESTANAS:
 				pasos.append({"id": id, "pestana": p})
-			for i in a["medir"]["grupos"].size():
-				pasos.append({"id": id, "pestana": "medir", "grupo_medir": i})
-			for i in a["fallas"]["lista"].size():
-				pasos.append({"id": id, "pestana": "fallas", "falla": i})
+			# Los grupos y las fallas, solo en vertical: en horizontal basta con las cinco pestañas,
+			# y así la batería, que corre en un solo fotograma, no agota los recursos.
+			if vertical:
+				for i in a["medir"]["grupos"].size():
+					pasos.append({"id": id, "pestana": "medir", "grupo_medir": i})
+				for i in a["fallas"]["lista"].size():
+					pasos.append({"id": id, "pestana": "fallas", "falla": i})
 			for args: Dictionary in pasos:
 				raiz.ir_a("atlas", args)
 				var pequenos: Array[String] = []
 				_botones_pequenos(raiz.pantalla_actual(), pequenos)
 				if not pequenos.is_empty():
 					fallos.append("%s %s: botones bajo 48: %s" % [id, args["pestana"], ", ".join(pequenos)])
+				# Las pruebas corren en un solo fotograma: sin liberarlas aquí, las cientos de
+				# pantallas recorridas esperarían todas al final y agotarían la memoria.
+				var vista := raiz.pantalla_actual()
 				raiz.volver()
+				if is_instance_valid(vista):
+					vista.free()
 	var completo := raiz.partida.atlas_completo("contactor")
 	raiz.free()
 	return A.primero([
@@ -346,8 +356,8 @@ func test_avance_del_modulo_y_mantenimiento_guardado() -> String:
 	var guardada := Partida.new(RUTA_PARTIDA)
 	guardada.cargar()
 	return A.primero([
-		A.cierto(antes == [0, 19], "al empezar: %s" % str(antes)),
-		A.cierto(despues == [1, 19], "tras ver las cinco pestañas: %s" % str(despues)),
+		A.cierto(antes == [0, 32], "al empezar: %s" % str(antes)),
+		A.cierto(despues == [1, 32], "tras ver las cinco pestañas: %s" % str(despues)),
 		A.cierto(guardada.tarea_atlas_hecha("contactor", 1), "la tarea marcada debe quedar guardada"),
 		A.cierto(guardada.atlas_completo("rele_termico"), "la ficha vista debe quedar guardada"),
 	])
@@ -500,4 +510,70 @@ func test_cortes_del_mando() -> String:
 		A.cierto(cerrado_pulsado and vuelve, "pulsador: cierra al pulsar y vuelve por resorte"),
 		A.cierto(antes and despues, "temporizador: conmuta pasados 5 s"),
 		A.cierto(fundida, "luz fundida con tensión: no enciende"),
+	])
+
+
+func test_medir_de_potencia_y_medida() -> String:
+	var c := Contenido.new()
+	return A.primero([
+		A.cierto(_lectura(c, "transformador", "Devanados", "1U-1V, columna U cortada") == "0,6 Ω", "columna cortada: triple resistencia"),
+		A.cierto(_lectura(c, "transformador_intensidad", "Corriente", "Cable de S1") == "3,8 A", "TI: 76 A en la barra son 3,8 A"),
+		A.cierto(_lectura(c, "transformador_intensidad", "Tensión S1-S2", "Amperímetro abierto").trim_suffix(" V").to_int() > 500, "TI abierto: cientos de voltios"),
+		A.cierto(_lectura(c, "estrella_triangulo", "Tensión por devanado", "En estrella") == "219 V", "estrella: 220 V por devanado"),
+		A.cierto(_lectura(c, "arrancador_suave", "Pantalla", "Estado a los 15 s") == "BYPASS", "arrancador suave en bypass a los 15 s"),
+		A.cierto(absi(_lectura(c, "variador", "Bus y salida", "U-V a 25 Hz").trim_suffix(" V").to_int() - 190) <= 2, "variador: V/f a 25 Hz, %s" % _lectura(c, "variador", "Bus y salida", "U-V a 25 Hz")),
+		A.cierto(_lectura(c, "variador", "Pantalla", "Frecuencia, consigna 25 Hz") == "25 Hz", "variador: 25 Hz en pantalla"),
+		A.cierto(_lectura(c, "resistencia_caldeo", "Resistencia", "Sana") == "529 Ω", "caldeo: V²/P"),
+		A.cierto(_lectura(c, "resistencia_caldeo", "En servicio", "Motor en marcha") == "0,0 V", "caldeo apagado en marcha"),
+		A.cierto(_lectura(c, "condensadores", "Analizador", "FP con batería") == "0,97 ind", "compensado a 0,97"),
+		A.cierto(_lectura(c, "amperimetro", "Aguja", "Aguja") == _lectura(c, "amperimetro", "Aguja", "Pinza en la barra"), "amperímetro y pinza coinciden"),
+		A.cierto(_lectura(c, "analizador_red", "Pantalla", "FP") == "0,80 ind", "analizador: FP 0,80"),
+		A.cierto(_lectura(c, "horometro", "Tensión", "Bomba en marcha") == "110 V", "horómetro con tensión en marcha"),
+		A.cierto(_lectura(c, "bornera", "Caída en servicio", "Borne 2 flojo") == "1,2 V", "borne flojo: 1,2 V"),
+	])
+
+
+func test_cortes_de_potencia_y_medida() -> String:
+	var ti = _animacion("corte_ti", {})
+	ti.poner_amperimetro(false)
+	var peligro: bool = ti.fase() == 3 and ti.tension_secundario() > 500.0
+	ti.poner_puente(true)
+	var seguro: bool = ti.fase() == 2 and ti.lectura() == 0.0
+	ti.free()
+	var vf = _animacion("corte_variador", {})
+	vf.consigna = 25.0
+	vf.poner_marcha(true)
+	for _i in 40:
+		vf.avanzar(0.1)
+	var a_25: bool = is_equal_approx(vf.f, 25.0) and vf.fase() == 3 and is_equal_approx(vf.tension_salida(), 190.0)
+	var red_menor: bool = vf.corriente_red() < vf.corriente_motor()
+	vf.free()
+	var ca = _animacion("corte_caldeo", {})
+	var calienta: bool = ca.calentando() and not ca.condensa()
+	ca.cortar(true)
+	var condensa: bool = ca.condensa()
+	ca.poner_marcha(true)
+	var apagada: bool = not ca.calentando() and ca.fase() == 3
+	ca.free()
+	var co = _animacion("corte_compensacion", {"tipo": "compensacion"})
+	var fp_con: float = co.fp()
+	co.conectar(false)
+	var fp_sin: float = co.fp()
+	co.free()
+	var ap = _animacion("corte_aparato", {"tipo": "horometro"})
+	ap.poner_marcha(true)
+	ap.poner_60_hz(true)
+	var atrasa: bool = ap.ritmo() < 1.0 and ap.fase() == 3
+	ap.free()
+	var bo = _animacion("corte_bornera", {})
+	bo.poner("flojo")
+	var flojo: bool = absf(bo.caida() - 1.2) < 0.01 and bo.temperatura() > 70.0
+	bo.free()
+	return A.primero([
+		A.cierto(peligro and seguro, "TI: abierto es peligroso; con el puente, seguro"),
+		A.cierto(a_25 and red_menor, "variador: rampa hasta 25 Hz con 190 V y menos corriente de red"),
+		A.cierto(calienta and condensa and apagada, "caldeo: calienta parado, condensa si se corta, se apaga en marcha"),
+		A.cierto(fp_con > 0.95 and fp_sin < 0.8, "compensación: %.2f con batería y %.2f sin ella" % [fp_con, fp_sin]),
+		A.cierto(atrasa, "horómetro de 60 Hz atrasa"),
+		A.cierto(flojo, "borne flojo: 1,2 V y más de 70 °C"),
 	])

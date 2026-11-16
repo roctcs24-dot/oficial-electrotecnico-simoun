@@ -1,0 +1,95 @@
+{
+  "nombre": "Horómetro de una bomba",
+  "nota": "El horómetro P1 va en paralelo con la bobina del contactor K1: cuenta mientras la bomba está en marcha. Mando de 110 V. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "T1",
+      "tipo": "transformador_mando"
+    },
+    {
+      "id": "F1",
+      "tipo": "fusible"
+    },
+    {
+      "id": "S0",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NC"
+      }
+    },
+    {
+      "id": "S1",
+      "tipo": "pulsador",
+      "params": {
+        "contacto": "NA"
+      }
+    },
+    {
+      "id": "K1",
+      "tipo": "contactor"
+    },
+    {
+      "id": "P1",
+      "tipo": "horometro",
+      "params": {
+        "v_nominal": 110
+      },
+      "estado": {
+        "horas": 12408.6
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "T1.H1"
+    ],
+    [
+      "B.L2",
+      "T1.H2"
+    ],
+    [
+      "T1.X1",
+      "F1.1"
+    ],
+    [
+      "F1.2",
+      "S0.21"
+    ],
+    [
+      "S0.22",
+      "S1.13"
+    ],
+    [
+      "S0.22",
+      "K1.13"
+    ],
+    [
+      "S1.14",
+      "K1.A1"
+    ],
+    [
+      "K1.14",
+      "K1.A1"
+    ],
+    [
+      "K1.A2",
+      "T1.X2"
+    ],
+    [
+      "K1.A1",
+      "P1.A1"
+    ],
+    [
+      "P1.A2",
+      "T1.X2"
+    ]
+  ]
+}

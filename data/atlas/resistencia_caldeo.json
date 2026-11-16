@@ -1,0 +1,398 @@
+{
+ "id": "resistencia_caldeo",
+ "ficha": "resistencia_caldeo",
+ "titulo": "Resistencia de caldeo",
+ "termino": "resistencia_caldeo",
+ "icono": "caldeo",
+ "resumen": "Calienta el motor parado para que no coja humedad.",
+ "bornes_dibujo": {
+  "1": [
+   56,
+   115
+  ],
+  "2": [
+   94,
+   115
+  ]
+ },
+ "que_es": {
+  "texto": "La {{resistencia_caldeo}} mantiene el bobinado de un motor parado unos grados por encima del aire de la sala, para que no condense la humedad salina y el aislamiento no baje.",
+  "partes": [
+   {
+    "texto": "Bornes 1-2 en la caja auxiliar del motor.",
+    "marca": [
+     75,
+     115
+    ]
+   },
+   {
+    "texto": "Elemento calefactor dentro de su vaina.",
+    "marca": [
+     270,
+     115
+    ]
+   },
+   {
+    "texto": "Placa: potencia y tensión.",
+    "marca": [
+     270,
+     150
+    ]
+   }
+  ],
+  "placa": "100 W · 230 V",
+  "a_bordo": "En los motores de bombas de reserva y compresores de la sala de máquinas. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_caldeo",
+  "params": {},
+  "pasos": [
+   "Con el motor parado, el contacto NC del contactor alimenta la resistencia.",
+   "La resistencia mantiene el bobinado unos 5 °C por encima del ambiente: la humedad no condensa.",
+   "Al arrancar el motor, el contactor abre su NC y la resistencia se apaga."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_resistencia_caldeo.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "X1 230 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "X2",
+     "x": 180,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "F1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 30,
+     "y": 140,
+     "tam": 12
+    },
+    {
+     "texto": "21",
+     "x": 80,
+     "y": 116,
+     "tam": 10
+    },
+    {
+     "texto": "22",
+     "x": 80,
+     "y": 164,
+     "tam": 10
+    },
+    {
+     "texto": "R1",
+     "x": 30,
+     "y": 225,
+     "tam": 12
+    },
+    {
+     "texto": "1",
+     "x": 76,
+     "y": 196,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 76,
+     "y": 254,
+     "tam": 10
+    },
+    {
+     "texto": "Bobina de K1",
+     "x": 120,
+     "y": 160,
+     "tam": 10
+    },
+    {
+     "texto": "Motor parado: R1 calienta",
+     "x": 290,
+     "y": 60,
+     "tam": 11
+    },
+    {
+     "texto": "Motor en marcha: R1 apagada",
+     "x": 290,
+     "y": 84,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    60,
+    195
+   ],
+   "2": [
+    60,
+    255
+   ]
+  },
+  "bornes": {
+   "1": "Llega la fase de 230 V por el fusible F1 y el contacto NC 21-22 del contactor K1.",
+   "2": "Vuelve al otro conductor del secundario de 230 V."
+  },
+  "grupos": [
+   {
+    "nombre": "R1 1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con el NC del contactor del motor: calienta solo con el motor parado."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con una resistencia de 100 W a 230 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Resistencia",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Sin tensión: abra F1.",
+    "titulo_tabla": "Resistencia del elemento",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_caldeo",
+     "a": "R1.1",
+     "b": "R1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Normal: V²/P",
+      "bien": true
+     },
+     {
+      "estado": "Cortada",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiarla",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Aislamiento",
+    "instrumento": "megohmetro",
+    "escala": "500 V",
+    "roja": "1",
+    "negra": "",
+    "como": "Megóhmetro a 500 V · borne 1 contra la carcasa",
+    "nota": "Sin tensión y con los cables quitados.",
+    "titulo_tabla": "Aislamiento (mínimo 5 MΩ)",
+    "columna": "MΩ",
+    "medida": {
+     "instrumento": "megohmetro",
+     "v_prueba": 500,
+     "circuito": "medir_caldeo",
+     "a": "R1.1",
+     "b": "M0.PE"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Bueno",
+      "bien": true
+     },
+     {
+      "estado": "Con humedad",
+      "cambios": {
+       "estado": {
+        "R1": {
+         "aislamiento_mohm": 0.3
+        }
+       }
+      },
+      "hacer": "Malo: cambiarla",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "En servicio",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala V~ · entre 1 y 2",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión en la resistencia",
+    "columna": "V",
+    "medida": {
+     "circuito": "caldeo_servicio",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "R1.1",
+     "b": "R1.2"
+    },
+    "filas": [
+     {
+      "estado": "Motor parado",
+      "hacer": "Normal: calienta",
+      "bien": true
+     },
+     {
+      "estado": "Motor en marcha",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: apagada",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Cortada",
+    "sintoma": "El motor de reserva está frío y su aislamiento baja semana a semana.",
+    "mide": [
+     {
+      "donde": "tensión 1-2, motor parado",
+      "bien": true,
+      "medida": {
+       "circuito": "caldeo_servicio",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "R1.1",
+       "b": "R1.2",
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "Ω 1-2",
+      "bien": false,
+      "medida": {
+       "instrumento": "multimetro",
+       "modo": "ohm",
+       "circuito": "medir_caldeo",
+       "a": "R1.1",
+       "b": "R1.2",
+       "estado": {
+        "R1": {
+         "cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Elemento cortado.",
+    "reparacion": "Cambiarla por otra de la misma potencia y tensión."
+   },
+   {
+    "nombre": "Derivación a masa",
+    "sintoma": "Alarma del monitor de aislamiento de 230 V con el motor parado.",
+    "mide": [
+     {
+      "donde": "aislamiento 1 a masa",
+      "bien": false,
+      "medida": {
+       "instrumento": "megohmetro",
+       "v_prueba": 500,
+       "circuito": "medir_caldeo",
+       "a": "R1.1",
+       "b": "M0.PE",
+       "estado": {
+        "R1": {
+         "aislamiento_mohm": 0.3
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Vaina dañada o humedad dentro.",
+    "reparacion": "Cambiar la resistencia."
+   },
+   {
+    "nombre": "Siempre conectada",
+    "sintoma": "El motor en marcha está más caliente de lo normal.",
+    "mide": [
+     {
+      "donde": "1-2 con el motor en marcha",
+      "bien": false,
+      "valor": "230 V"
+     }
+    ],
+    "causa": "Alimentada sin pasar por el NC del contactor.",
+    "reparacion": "Corregir el cableado según el esquema."
+   },
+   {
+    "nombre": "Fusible fundido",
+    "sintoma": "El motor parado está frío y la resistencia mide bien.",
+    "mide": [
+     {
+      "donde": "F1",
+      "bien": false,
+      "valor": "OL"
+     },
+     {
+      "donde": "resistencia 1-2",
+      "bien": true,
+      "valor": "529 Ω"
+     }
+    ],
+    "causa": "Un cortocircuito pasado o una derivación fundió F1.",
+    "reparacion": "Buscar la causa, cambiar el fusible y comprobar que calienta."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "motores de reserva templados"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "Ω y aislamiento"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60034-1: máquinas eléctricas rotativas.",
+  "IEC 60092-301: equipos eléctricos en buques."
+ ]
+}

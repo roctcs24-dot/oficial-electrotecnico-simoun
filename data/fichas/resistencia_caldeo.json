@@ -1,0 +1,89 @@
+{
+  "id": "resistencia_caldeo",
+  "titulo": "Resistencia de caldeo",
+  "resumen": "Mantiene seco un motor parado calentándolo unos grados.",
+  "dibujo": {
+    "svg": "res://art/equipos/resistencia_caldeo.svg",
+    "tamano": [
+      400,
+      220
+    ],
+    "nota": "Resistencia de caldeo de varilla con su caja de bornes, como la de un motor de la sala de máquinas, dibujada de forma general. Potencia y tensión de cada motor: verificar a bordo en su placa.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 56,
+        "y": 96,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "2",
+        "x": 94,
+        "y": 96,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "100 W · 230 V",
+        "x": 270,
+        "y": 150,
+        "tam": 11
+      },
+      {
+        "texto": "Caja de bornes auxiliar",
+        "x": 75,
+        "y": 178,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Resistencia según IEC 60617 y ANSI/IEEE 315, aquí con la indicación de calefacción. Verificar contra la norma.",
+    "lista": [
+      "resistencia_caldeo",
+      "resistencia"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{resistencia_caldeo}} se enciende cuando el motor para y lo mantiene unos grados por encima del aire de la sala. Así no condensa la humedad en el bobinado, que en el ambiente salino del buque baja el aislamiento hasta que el motor no puede arrancar."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Elemento resistivo[/b] dentro de una vaina metálica, pegado al bobinado o al fondo de la carcasa.\n• [b]Bornes propios[/b] en la caja de bornes del motor, separados de U-V-W, con su rótulo de tensión.\n• Su potencia es pequeña: de 25 a 200 W según el motor."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Desde el tablero del motor, a 220 V (o 110 V), por el contacto NC 21-22 del contactor: calienta con el motor parado y se apaga al arrancar.\n• Con su propio fusible o interruptor, y una luz piloto en algunos tableros.\n• Al trabajar en el motor, quítele también esta tensión: el motor parado tiene tensión en sus bornes auxiliares."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige con el motor, por su placa. La resistencia en ohmios es V²/P: 529 Ω para 100 W a 230 V ([i]valor típico — verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] Ω entre sus bornes; cerca de V²/P. OL es una resistencia cortada.\n• [b]Aislamiento[/b] contra la carcasa con el megóhmetro a 500 V.\n• [b]En servicio:[/b] 230 V con el motor parado y 0 V en marcha; con la pinza, unos 0,4 A para 100 W."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Cortada:[/b] el motor parado coge humedad y su aislamiento baja semana a semana.\n• [b]Siempre conectada:[/b] alimentada sin el NC del contactor; calienta el motor en marcha.\n• [b]Derivación a masa:[/b] dispara el diferencial o lo marca el monitor de aislamiento de 220 V."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: comprobar que calienta (el motor parado está templado) en los motores de reserva.\n• Anual: Ω y aislamiento.\n\n[b]Correctivo:[/b] se cambia por otra de la misma potencia y tensión."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60034-1: máquinas eléctricas rotativas.",
+    "IEC 60092-301: equipos eléctricos en buques."
+  ]
+}

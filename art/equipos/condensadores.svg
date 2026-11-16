@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="380" viewBox="0 0 300 380">
+  <defs>
+    <linearGradient id="gris" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3e6e8"/><stop offset="1" stop-color="#a9aeb2"/></linearGradient>
+    <linearGradient id="oscuro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a5056"/><stop offset="1" stop-color="#2a2e32"/></linearGradient>
+    <linearGradient id="cobre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d4f25"/><stop offset="0.5" stop-color="#e8a77a"/><stop offset="1" stop-color="#8d4f25"/></linearGradient>
+    <linearGradient id="cobre_v" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d4f25"/><stop offset="0.5" stop-color="#e8a77a"/><stop offset="1" stop-color="#8d4f25"/></linearGradient>
+    <linearGradient id="carril" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9dcde"/><stop offset="0.5" stop-color="#8f969b"/><stop offset="1" stop-color="#c4c9cc"/></linearGradient>
+    <linearGradient id="lata" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9aa1a6"/><stop offset="0.45" stop-color="#eef0f1"/><stop offset="1" stop-color="#8a9095"/></linearGradient>
+    <radialGradient id="acero" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#f4f5f5"/><stop offset="1" stop-color="#7b8084"/></radialGradient>
+    <radialGradient id="laton" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#f6e2a8"/><stop offset="1" stop-color="#a8812e"/></radialGradient>
+    <g id="tornillo"><circle r="9" fill="url(#acero)" stroke="#3b4043" stroke-width="1.2"/><path d="M-6,0 H6" stroke="#2a2d30" stroke-width="2.5" stroke-linecap="round"/></g>
+    <g id="tornillo_l"><circle r="8" fill="url(#laton)" stroke="#5b4a1e" stroke-width="1.2"/><path d="M-5,-5 L5,5" stroke="#4a3a10" stroke-width="2.2" stroke-linecap="round"/></g>
+  </defs>
+  <rect x="60" y="80" width="180" height="270" rx="14" fill="url(#lata)" stroke="#5b6267" stroke-width="2"/>
+  <ellipse cx="150" cy="80" rx="90" ry="18" fill="#d9dcde" stroke="#5b6267" stroke-width="2"/>
+  <path d="M60,330 Q150,368 240,330" fill="none" stroke="#5b6267" stroke-width="2"/>
+  <rect x="80" y="160" width="140" height="100" rx="4" fill="#f4f5f2" stroke="#8a9095" stroke-width="1.2"/>
+  <rect x="96" y="36" width="20" height="40" rx="3" fill="#2a2d30"/><rect x="140" y="30" width="20" height="46" rx="3" fill="#2a2d30"/><rect x="184" y="36" width="20" height="40" rx="3" fill="#2a2d30"/>
+  <use xlink:href="#tornillo" x="106" y="36"/>
+  <use xlink:href="#tornillo" x="150" y="30"/>
+  <use xlink:href="#tornillo" x="194" y="36"/>
+  <path d="M106,52 Q128,66 150,52 M150,52 Q172,66 194,52" fill="none" stroke="#8d4f25" stroke-width="2.5"/>
+  <rect x="120" y="54" width="14" height="8" rx="2" fill="#d9b380"/><rect x="166" y="54" width="14" height="8" rx="2" fill="#d9b380"/>
+</svg>

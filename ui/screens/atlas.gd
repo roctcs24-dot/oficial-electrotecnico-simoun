@@ -383,6 +383,7 @@ func _construir_funciona() -> void:
 	# En horizontal el corte ocupa la izquierda y sus mandos pasan a la derecha.
 	if not raiz.vertical:
 		animacion.lienzo.custom_minimum_size.y = _alto(0.0)
+		animacion.lienzo.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		for control: Control in animacion.get_children():
 			if control != animacion.lienzo:
 				animacion.remove_child(control)

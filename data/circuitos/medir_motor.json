@@ -1,0 +1,22 @@
+{
+  "nombre": "Motor suelto para medir",
+  "nota": "Motor de 15 kW 380Δ/660Y con los puentes quitados: cada devanado U1-U2, V1-V2 y W1-W2 por separado. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "M1",
+      "tipo": "motor_trifasico",
+      "params": {
+        "p_kw": 15,
+        "v_delta": 380,
+        "v_estrella": 660,
+        "i_delta": 29.5,
+        "i_estrella": 17
+      }
+    },
+    {
+      "id": "M0",
+      "tipo": "masa"
+    }
+  ],
+  "cables": []
+}

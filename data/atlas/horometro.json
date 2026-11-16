@@ -1,0 +1,345 @@
+{
+ "id": "horometro",
+ "ficha": "horometro",
+ "titulo": "Horómetro",
+ "termino": "horometro",
+ "icono": "horometro",
+ "resumen": "Cuenta las horas de marcha de un equipo.",
+ "bornes_dibujo": {
+  "A1": [
+   110,
+   212
+  ],
+  "A2": [
+   170,
+   212
+  ]
+ },
+ "que_es": {
+  "texto": "El {{horometro}} cuenta las horas que funciona una bomba o un compresor, para programar su mantenimiento por horas.",
+  "partes": [
+   {
+    "texto": "Contador de rodillos; el rojo son décimas.",
+    "marca": [
+     140,
+     88
+    ]
+   },
+   {
+    "texto": "Indicador de marcha.",
+    "marca": [
+     140,
+     137
+    ]
+   },
+   {
+    "texto": "Bornes A1-A2.",
+    "marca": [
+     140,
+     212
+    ]
+   }
+  ],
+  "placa": "110 V · 50 Hz · 99999,9 h",
+  "a_bordo": "En los tableros de bombas y compresores. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_aparato",
+  "params": {
+   "tipo": "horometro"
+  },
+  "pasos": [
+   "Con tensión en A1-A2, un pequeño motor síncrono gira al ritmo de la red.",
+   "Unos engranajes reducen el giro: el rodillo de décimas da una vuelta cada hora.",
+   "Uno de 60 Hz en la red de 50 Hz gira una sexta parte más despacio: atrasa."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_horometro.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "X1 110 V",
+     "x": 60,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "X2",
+     "x": 316,
+     "y": 275,
+     "tam": 12
+    },
+    {
+     "texto": "F1",
+     "x": 34,
+     "y": 65,
+     "tam": 12
+    },
+    {
+     "texto": "S0",
+     "x": 34,
+     "y": 130,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 30,
+     "y": 185,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 30,
+     "y": 240,
+     "tam": 12
+    },
+    {
+     "texto": "h",
+     "x": 200,
+     "y": 240,
+     "tam": 15
+    },
+    {
+     "texto": "P1",
+     "x": 238,
+     "y": 240,
+     "tam": 12
+    },
+    {
+     "texto": "A1",
+     "x": 222,
+     "y": 214,
+     "tam": 10
+    },
+    {
+     "texto": "A2",
+     "x": 222,
+     "y": 266,
+     "tam": 10
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A1": [
+    200,
+    222
+   ],
+   "A2": [
+    200,
+    258
+   ]
+  },
+  "bornes": {
+   "A1": "En paralelo con A1 de la bobina del contactor.",
+   "A2": "Al otro conductor del mando, con A2 de la bobina."
+  },
+  "grupos": [
+   {
+    "nombre": "A1-A2",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "En paralelo con la bobina del contactor: cuenta mientras el contactor está activado."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un mando de 110 V. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Contador",
+    "instrumento": "monitor",
+    "escala": "h",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura del contador",
+    "nota": "Anótela en el libro de máquinas.",
+    "titulo_tabla": "Horas acumuladas",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "medir_horometro",
+     "instrumento": "aparato",
+     "id": "P1"
+    },
+    "filas": [
+     {
+      "estado": "Contador",
+      "hacer": "Anotar",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala V~ · entre A1 y A2",
+    "nota": "Con tensión de mando.",
+    "titulo_tabla": "Tensión en el horómetro",
+    "columna": "V",
+    "medida": {
+     "circuito": "horometro_servicio",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "P1.A1",
+     "b": "P1.A2"
+    },
+    "filas": [
+     {
+      "estado": "Bomba parada",
+      "hacer": "Normal: no cuenta",
+      "bien": true
+     },
+     {
+      "estado": "Bomba en marcha",
+      "cambios": {
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      },
+      "hacer": "Normal: cuenta",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Bobina",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala Ω · entre A1 y A2",
+    "nota": "Sin tensión.",
+    "titulo_tabla": "Resistencia del motor del contador",
+    "columna": "A1-A2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_horometro",
+     "a": "P1.A1",
+     "b": "P1.A2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No cuenta",
+    "sintoma": "La bomba funciona y el contador no avanza.",
+    "mide": [
+     {
+      "donde": "A1-A2 en marcha",
+      "bien": true,
+      "medida": {
+       "circuito": "horometro_servicio",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "P1.A1",
+       "b": "P1.A2",
+       "estado": {
+        "S1": {
+         "presionado": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "décimas en 6 minutos",
+      "bien": false,
+      "valor": "0"
+     }
+    ],
+    "causa": "Motor del contador agarrotado.",
+    "reparacion": "Cambiar el horómetro y anotar las horas del viejo y del nuevo."
+   },
+   {
+    "nombre": "Atrasa",
+    "sintoma": "Tras un mes da menos horas que el libro de máquinas.",
+    "mide": [
+     {
+      "donde": "frecuencia de la placa",
+      "bien": false,
+      "valor": "60 Hz"
+     },
+     {
+      "donde": "frecuencia de la red",
+      "bien": true,
+      "valor": "50 Hz"
+     }
+    ],
+    "causa": "Horómetro de 60 Hz en la red de 50 Hz: cuenta 5 horas de cada 6.",
+    "reparacion": "Cambiarlo por uno de 50 Hz o corregir las horas en el libro."
+   },
+   {
+    "nombre": "Cuenta parado",
+    "sintoma": "Suma horas con la bomba parada.",
+    "mide": [
+     {
+      "donde": "A1-A2 con la bomba parada",
+      "bien": false,
+      "valor": "110 V"
+     }
+    ],
+    "causa": "Conectado antes del contactor, a la tensión de mando fija.",
+    "reparacion": "Llevar A1 al lado de la bobina del contactor, según el esquema."
+   },
+   {
+    "nombre": "Contador quemado",
+    "sintoma": "Huele a quemado y no cuenta.",
+    "mide": [
+     {
+      "donde": "Ω A1-A2",
+      "bien": false,
+      "valor": "OL"
+     },
+     {
+      "donde": "tensión de la etiqueta",
+      "bien": false,
+      "valor": "24 V"
+     }
+    ],
+    "causa": "Se puso uno de otra tensión.",
+    "reparacion": "Cambiarlo por uno de 110 V 50 Hz y anotar las horas."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "anotar las horas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "comprobar que avanza"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "comparar con el libro de máquinas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60617: símbolos gráficos.",
+  "Plan de mantenimiento del buque."
+ ]
+}

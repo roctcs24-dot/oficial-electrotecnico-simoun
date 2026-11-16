@@ -1,0 +1,495 @@
+{
+ "id": "arrancador_suave",
+ "ficha": "arrancador_suave",
+ "titulo": "Arrancador suave",
+ "termino": "arrancador_suave",
+ "icono": "arrancador_suave",
+ "resumen": "Sube la tensión del motor en rampa con tiristores y limita la corriente.",
+ "bornes_dibujo": {
+  "1": [
+   110,
+   50
+  ],
+  "3": [
+   180,
+   50
+  ],
+  "5": [
+   250,
+   50
+  ],
+  "A1": [
+   70,
+   131
+  ],
+  "A2": [
+   130,
+   131
+  ],
+  "13": [
+   230,
+   131
+  ],
+  "14": [
+   290,
+   131
+  ],
+  "23": [
+   60,
+   411
+  ],
+  "24": [
+   120,
+   411
+  ],
+  "95": [
+   200,
+   411
+  ],
+  "96": [
+   260,
+   411
+  ],
+  "98": [
+   320,
+   411
+  ],
+  "2": [
+   110,
+   490
+  ],
+  "4": [
+   180,
+   490
+  ],
+  "6": [
+   250,
+   490
+  ]
+ },
+ "que_es": {
+  "texto": "El {{arrancador_suave}} arranca el motor subiendo la tensión en rampa con {{tiristores}}, sin pasar de un límite de corriente. Al terminar cierra su {{bypass}} y el motor queda conectado directo a la red.",
+  "partes": [
+   {
+    "texto": "Entradas 1/L1, 3/L2 y 5/L3.",
+    "marca": [
+     180,
+     50
+    ]
+   },
+   {
+    "texto": "Orden de marcha A1-A2 y salidas 13-14 y 23-24.",
+    "marca": [
+     100,
+     131
+    ]
+   },
+   {
+    "texto": "Contacto de fallo 95-96-98.",
+    "marca": [
+     260,
+     411
+    ]
+   },
+   {
+    "texto": "Salidas 2/T1, 4/T2 y 6/T3 al motor.",
+    "marca": [
+     180,
+     490
+    ]
+   }
+  ],
+  "placa": "380 V · Ie 173 A · mando 110 V AC · rampa 10 s · U inicial 40 %",
+  "a_bordo": "Compresores de amoníaco nº 3 y nº 4 y bombas grandes. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "banco_arranque",
+  "params": {
+   "circuito": "arranque_suave",
+   "contactores": [
+    "K1"
+   ]
+  },
+  "pasos": [
+   "Con la orden en A1-A2, los tiristores dejan pasar solo parte de cada semionda: el motor arranca con el 40 % de la tensión.",
+   "La tensión sube en rampa sin pasar del límite de corriente (3,5 × Ie).",
+   "Al final de la rampa cierra el bypass y los tiristores descansan."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_arrancador_suave.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1 L2 L3",
+     "x": 110,
+     "y": 10,
+     "tam": 12
+    },
+    {
+     "texto": "K1",
+     "x": 168,
+     "y": 85,
+     "tam": 12
+    },
+    {
+     "texto": "AS1",
+     "x": 192,
+     "y": 165,
+     "tam": 12
+    },
+    {
+     "texto": "1  3  5",
+     "x": 110,
+     "y": 122,
+     "tam": 10
+    },
+    {
+     "texto": "2  4  6",
+     "x": 110,
+     "y": 212,
+     "tam": 10
+    },
+    {
+     "texto": "M 3~",
+     "x": 110,
+     "y": 258,
+     "tam": 13
+    },
+    {
+     "texto": "Mando 110 V",
+     "x": 290,
+     "y": 22,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 318,
+     "y": 95,
+     "tam": 12
+    },
+    {
+     "texto": "A1",
+     "x": 318,
+     "y": 150,
+     "tam": 11
+    },
+    {
+     "texto": "A2",
+     "x": 318,
+     "y": 200,
+     "tam": 11
+    },
+    {
+     "texto": "AS1",
+     "x": 336,
+     "y": 175,
+     "tam": 12
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    80,
+    130
+   ],
+   "3": [
+    110,
+    130
+   ],
+   "5": [
+    140,
+    130
+   ],
+   "2": [
+    80,
+    200
+   ],
+   "4": [
+    110,
+    200
+   ],
+   "6": [
+    140,
+    200
+   ],
+   "A1": [
+    290,
+    150
+   ],
+   "A2": [
+    290,
+    200
+   ]
+  },
+  "bornes": {
+   "1": "L1 desde K1.",
+   "3": "L2 desde K1.",
+   "5": "L3 desde K1.",
+   "2": "T1 al relé térmico y al motor.",
+   "4": "T2 al motor.",
+   "6": "T3 al motor.",
+   "A1": "Orden de marcha a 110 V, a la vez que la bobina de K1.",
+   "A2": "Neutro del mando."
+  },
+  "grupos": [
+   {
+    "nombre": "Potencia",
+    "bornes": [
+     "1",
+     "3",
+     "5",
+     "2",
+     "4",
+     "6"
+    ],
+    "texto": "En serie entre el contactor de línea y el motor. El motor va en la conexión de su placa para 380 V."
+   },
+   {
+    "nombre": "Mando A1-A2",
+    "bornes": [
+     "A1",
+     "A2"
+    ],
+    "texto": "La orden de marcha; su contacto de fallo 95-96 va en serie con el mando para abrir K1 si falla."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación con un motor de 90 kW y el arrancador a Ie 173 A, rampa de 10 s. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Pantalla",
+    "instrumento": "monitor",
+    "escala": "A",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura en la pantalla del arrancador durante el arranque",
+    "nota": "Sin abrir el tablero.",
+    "titulo_tabla": "Corriente y estado en el arranque",
+    "columna": "Lectura",
+    "medida": {
+     "circuito": "arranque_suave",
+     "instrumento": "aparato",
+     "id": "AS1",
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Corriente al arrancar",
+      "hacer": "Normal: limitada",
+      "bien": true
+     },
+     {
+      "estado": "Corriente a los 3 s",
+      "cambios": {
+       "segundos": 3
+      },
+      "hacer": "Normal: en el límite",
+      "bien": true
+     },
+     {
+      "estado": "Corriente en bypass",
+      "cambios": {
+       "segundos": 15
+      },
+      "hacer": "Normal: la de la carga",
+      "bien": true
+     },
+     {
+      "estado": "Estado a los 15 s",
+      "cambios": {
+       "segundos": 15,
+       "magnitud": "pantalla"
+      },
+      "hacer": "Normal: BYPASS",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión al motor",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "2",
+    "negra": "4",
+    "como": "Escala V~ · entre 2/T1 y 4/T2",
+    "nota": "Con tensión: use el EPP.",
+    "titulo_tabla": "Tensión de salida durante la rampa",
+    "columna": "V",
+    "medida": {
+     "circuito": "arranque_suave",
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "a": "AS1.2",
+     "b": "AS1.4",
+     "segundos": 3
+    },
+    "filas": [
+     {
+      "estado": "A los 3 s, en rampa",
+      "hacer": "Normal: reducida",
+      "bien": true
+     },
+     {
+      "estado": "En bypass",
+      "cambios": {
+       "segundos": 15
+      },
+      "hacer": "Normal: la de la red",
+      "bien": true
+     },
+     {
+      "estado": "Caída 1-2 en bypass",
+      "cambios": {
+       "segundos": 15,
+       "a": "AS1.1",
+       "b": "AS1.2"
+      },
+      "hacer": "Normal: casi nada",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Orden",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "A1",
+    "negra": "A2",
+    "como": "Escala V~ · entre A1 y A2",
+    "nota": "Con tensión de mando.",
+    "titulo_tabla": "Orden de marcha",
+    "columna": "V",
+    "medida": {
+     "circuito": "arranque_suave",
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "estado": {
+      "Q1": {
+       "encendido": true
+      },
+      "S1": {
+       "presionado": true
+      }
+     },
+     "a": "AS1.A1",
+     "b": "AS1.A2",
+     "segundos": 0.3
+    },
+    "filas": [
+     {
+      "estado": "Con S1 pulsado",
+      "hacer": "Normal: orden presente",
+      "bien": true
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Falta de fase",
+    "sintoma": "FALLO en pantalla al arrancar y el contactor abre.",
+    "mide": [
+     {
+      "donde": "1/L1-3/L2",
+      "bien": true,
+      "valor": "380 V"
+     },
+     {
+      "donde": "3/L2-5/L3",
+      "bien": false,
+      "valor": "0 V"
+     }
+    ],
+    "causa": "Fusible o contacto abierto aguas arriba.",
+    "reparacion": "Bloquear, encontrar la fase que falta y repararla; rearmar el arrancador."
+   },
+   {
+    "nombre": "Tiempo excedido",
+    "sintoma": "FALLO «tiempo de arranque» y el motor no llega a velocidad.",
+    "mide": [
+     {
+      "donde": "corriente en la rampa",
+      "bien": false,
+      "valor": "605 A"
+     }
+    ],
+    "causa": "Carga demasiado pesada o límite de corriente demasiado bajo.",
+    "reparacion": "Revisar la carga (válvulas, compresor descargado) y los ajustes."
+   },
+   {
+    "nombre": "Tiristor en corto",
+    "sintoma": "El motor arranca de golpe, o zumba parado con tensión en una fase.",
+    "mide": [
+     {
+      "donde": "1-2 sin tensión",
+      "bien": false,
+      "valor": "0,0 Ω"
+     }
+    ],
+    "causa": "Tiristor perforado por sobrecarga o sobretensión.",
+    "reparacion": "Cambiar el arrancador o su módulo de potencia."
+   },
+   {
+    "nombre": "Sobrecarga",
+    "sintoma": "OVERLOAD rojo tras un rato en marcha.",
+    "mide": [
+     {
+      "donde": "corriente en bypass",
+      "bien": false,
+      "valor": "195 A"
+     },
+     {
+      "donde": "Ie ajustada",
+      "bien": true,
+      "valor": "173 A"
+     }
+    ],
+    "causa": "La carga pide más que la nominal: bomba con la válvula muy abierta o rodamientos frenados.",
+    "reparacion": "Revisar la carga y el motor; no subir la Ie por encima de la placa."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "estado en pantalla y tiempo de arranque"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpieza del radiador y ventiladores"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "reapriete de bornes de potencia y prueba de las alarmas"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60947-4-2: arrancadores suaves.",
+  "Manual del fabricante del arrancador."
+ ]
+}

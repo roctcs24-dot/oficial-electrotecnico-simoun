@@ -7,7 +7,12 @@
     "tamano": [420, 400],
     "nota": "Transformador seco trifásico abierto, dibujado de forma general: núcleo de chapa con tres columnas, devanados de baja tensión por dentro y de alta por fuera, y bornes del primario arriba. En el buque, su potencia, su grupo de conexión, si son trifásicos o bancos de tres monofásicos, y su envolvente: verificar a bordo.",
     "etiquetas": [
-      { "texto": "Bornes del primario 380 V", "x": 210, "y": 14, "tam": 13 },
+      { "texto": "1U", "x": 80, "y": 22, "tam": 11 },
+      { "texto": "2U", "x": 120, "y": 22, "tam": 11 },
+      { "texto": "1V", "x": 190, "y": 22, "tam": 11 },
+      { "texto": "2V", "x": 230, "y": 22, "tam": 11 },
+      { "texto": "1W", "x": 300, "y": 22, "tam": 11 },
+      { "texto": "2W", "x": 340, "y": 22, "tam": 11 },
       { "texto": "Yugo de chapa", "x": 210, "y": 90, "tam": 12, "color": "#f4f4f0" },
       { "texto": "Devanado", "x": 100, "y": 214, "tam": 12, "color": "#f4f4f0" },
       { "texto": "Placa", "x": 210, "y": 349, "tam": 12 }

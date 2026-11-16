@@ -1,0 +1,93 @@
+{
+  "nombre": "Salida del cuadro con sus aparatos de medida",
+  "nota": "Salida de 380 V con unos 50 kVA de carga (40 kW, 30 kvar). El TI de 100/5 A de L1 alimenta el amperímetro A1; el voltímetro V1 mide entre L1 y L2; el analizador AN1 va en serie con las tres fases. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "TI1",
+      "tipo": "transformador_intensidad",
+      "params": {
+        "i_primaria": 100,
+        "i_secundaria": 5
+      }
+    },
+    {
+      "id": "A1",
+      "tipo": "amperimetro",
+      "params": {
+        "escala_a": 100
+      }
+    },
+    {
+      "id": "V1",
+      "tipo": "voltimetro",
+      "params": {
+        "escala_v": 500
+      }
+    },
+    {
+      "id": "AN1",
+      "tipo": "analizador_red"
+    },
+    {
+      "id": "C1",
+      "tipo": "carga_trifasica",
+      "params": {
+        "p_kw": 40,
+        "q_kvar": 30
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "TI1.P1"
+    ],
+    [
+      "TI1.P2",
+      "AN1.L1"
+    ],
+    [
+      "B.L2",
+      "AN1.L2"
+    ],
+    [
+      "B.L3",
+      "AN1.L3"
+    ],
+    [
+      "AN1.T1",
+      "C1.L1"
+    ],
+    [
+      "AN1.T2",
+      "C1.L2"
+    ],
+    [
+      "AN1.T3",
+      "C1.L3"
+    ],
+    [
+      "TI1.S1",
+      "A1.1"
+    ],
+    [
+      "A1.2",
+      "TI1.S2"
+    ],
+    [
+      "B.L1",
+      "V1.1"
+    ],
+    [
+      "B.L2",
+      "V1.2"
+    ]
+  ]
+}

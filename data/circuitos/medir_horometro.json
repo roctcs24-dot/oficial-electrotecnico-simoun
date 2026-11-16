@@ -1,0 +1,17 @@
+{
+  "nombre": "Horómetro suelto para medir",
+  "nota": "Horómetro de 110 V 50 Hz, sin cables. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "P1",
+      "tipo": "horometro",
+      "params": {
+        "v_nominal": 110
+      },
+      "estado": {
+        "horas": 12408.6
+      }
+    }
+  ],
+  "cables": []
+}

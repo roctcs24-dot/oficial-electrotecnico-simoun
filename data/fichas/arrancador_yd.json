@@ -1,0 +1,142 @@
+{
+  "id": "arrancador_yd",
+  "titulo": "Arrancador estrella-triángulo",
+  "resumen": "Arranca el motor en estrella y pasa a triángulo: un tercio de la corriente de arranque.",
+  "dibujo": {
+    "svg": "res://art/equipos/arrancador_yd.svg",
+    "tamano": [
+      440,
+      400
+    ],
+    "nota": "Placa de montaje típica de un arrancador estrella-triángulo con guardamotor, tres contactores, relé térmico y temporizador, dibujada de forma general. Disposición y aparatos de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "Q1",
+        "x": 130,
+        "y": 102,
+        "tam": 12
+      },
+      {
+        "texto": "KT",
+        "x": 330,
+        "y": 102,
+        "tam": 12
+      },
+      {
+        "texto": "K1 línea",
+        "x": 130,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "K3 estrella",
+        "x": 230,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "K2 triángulo",
+        "x": 330,
+        "y": 206,
+        "tam": 11
+      },
+      {
+        "texto": "F2",
+        "x": 130,
+        "y": 270,
+        "tam": 12
+      },
+      {
+        "texto": "U1",
+        "x": 80,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "V1",
+        "x": 128,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "W1",
+        "x": 176,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "W2",
+        "x": 264,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "U2",
+        "x": 312,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "V2",
+        "x": 360,
+        "y": 340,
+        "tam": 11,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "No tiene un símbolo propio: en el esquema se dibujan sus contactores, el relé térmico y el temporizador. Aquí, como bloque Y-Δ. Verificar contra la norma.",
+    "lista": [
+      "arrancador_yd",
+      "contacto_principal",
+      "temporizador"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{arranque_yd}} reduce la corriente de arranque de un motor grande: arranca con los devanados en estrella, a 1/√3 de su tensión, y cuando ha cogido velocidad los pasa a triángulo. La corriente y el par de arranque bajan a un tercio, así que sirve para bombas y ventiladores que arrancan en vacío o con poca carga."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]K1, de línea:[/b] alimenta U1-V1-W1.\n• [b]K3, de estrella:[/b] une W2-U2-V2 en un punto.\n• [b]K2, de triángulo:[/b] une W2-U2-V2 con L1-L2-L3.\n• [b]KT:[/b] temporizador a la conexión que da el tiempo en estrella.\n• [b]F2:[/b] relé térmico, en la línea de K1, ajustado a In/√3.\n• K2 y K3 llevan [b]enclavamiento[/b] mecánico y eléctrico: nunca pueden cerrar juntos."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• El motor necesita sus seis bornes libres, sin puentes, y una placa cuyo triángulo sea la tensión de la red: 380Δ/660Y en la red de 380 V del buque.\n• Seis cables al motor: U1-V1-W1 desde K1 y W2-U2-V2 hacia K2 y K3.\n• El mando arranca K3 y K1, y al terminar el tiempo de KT abre K3 y cierra K2."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "• [b]KT:[/b] lo que tarda el motor en llegar cerca de su velocidad en estrella; típico de 5 a 10 s ([i]valor típico — verificar a bordo[/i]).\n• [b]F2:[/b] a la corriente de devanado, In/√3 (17 A para un motor de 29,5 A).\n• No sirve para cargas que piden mucho par al arrancar."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Pinza en un cable de U1:[/b] pico de arranque de un tercio del directo, bajada en estrella y un segundo pico corto al pasar a triángulo.\n• [b]Tensión en un devanado:[/b] 220 V en estrella y 380 V en triángulo.\n• [b]Sin tensión:[/b] continuidad de cada devanado y aislamiento con megóhmetro."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Se queda en estrella:[/b] KT no conmuta o K2 no cierra; el motor gira con poco par y dispara F2.\n• [b]Cortocircuito al pasar a triángulo:[/b] K3 soldado o sin enclavamiento.\n• [b]Pico enorme al cambiar:[/b] tiempo de KT demasiado corto.\n• [b]Gira al revés al pasar a triángulo:[/b] cables de W2-U2-V2 cruzados."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Cada 6 meses: cronometrar KT y revisar los contactos de K1, K2 y K3.\n• Cada año: aislamiento del motor y reapriete de bornes.\n\n[b]Correctivo:[/b] contactores y temporizador se cambian por otros iguales; el ajuste de F2 se copia del esquema."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-4-1: contactores y arrancadores.",
+    "IEC 60034-1: máquinas eléctricas rotativas."
+  ]
+}

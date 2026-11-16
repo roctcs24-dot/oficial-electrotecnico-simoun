@@ -1,0 +1,92 @@
+{
+  "id": "bornera",
+  "titulo": "Bornera",
+  "resumen": "Une los cables del tablero con los del campo, borne por borne.",
+  "dibujo": {
+    "svg": "res://art/equipos/bornera.svg",
+    "tamano": [
+      400,
+      280
+    ],
+    "nota": "Bornes de paso de tornillo sobre carril DIN, con sus marcadores, dibujados de forma general. Tipos y numeración de cada tablero: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1",
+        "x": 120,
+        "y": 135,
+        "tam": 14
+      },
+      {
+        "texto": "2",
+        "x": 200,
+        "y": 135,
+        "tam": 14
+      },
+      {
+        "texto": "3",
+        "x": 280,
+        "y": 135,
+        "tam": 14
+      },
+      {
+        "texto": "A: tablero",
+        "x": 340,
+        "y": 60,
+        "tam": 10
+      },
+      {
+        "texto": "B: campo",
+        "x": 340,
+        "y": 210,
+        "tam": 10
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Borne y regleta de bornes según IEC 60617 (círculos) y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "bornera"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "La {{bornera}} es el punto donde los cables del tablero se unen con los que van al campo: motores, sensores, válvulas. Cada borne tiene un número que aparece en el esquema; así se localiza un cable, se mide y se desconecta sin tocar los aparatos."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Borne de paso[/b]: un cuerpo aislante con una pieza conductora y dos tornillos, uno por lado.\n• [b]Marcador[/b] con el número del borne.\n• Otros tipos: borne de tierra (verde-amarillo, une con el carril), seccionable (para medir o aislar un circuito), con fusible y de dos pisos.\n• [b]Puentes[/b] enchufables entre bornes contiguos."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Cable pelado a la medida, con puntera en los cables flexibles, metido hasta el fondo y apretado al par del fabricante.\n• Un solo cable por lado salvo que el borne lo admita.\n• El número del borne y el del cable deben coincidir con el esquema."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la sección del cable y la corriente, la tensión y el tipo: de paso, de tierra, seccionable o con fusible. El par de apriete viene en el catálogo ([i]verificar el par de cada borne[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Sin tensión:[/b] continuidad entre A y B de cada borne, 0 Ω.\n• [b]En servicio:[/b] tensión entre A y B del mismo borne: casi cero. Si cae más de 1 V, el borne está flojo.\n• [b]Cámara térmica o termómetro infrarrojo:[/b] un borne flojo con carga está más caliente que los demás."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Borne flojo:[/b] se calienta, oscurece el plástico y acaba quemando el borne y el cable.\n• [b]Cable suelto:[/b] el motor se queda en dos fases, zumba y dispara el térmico.\n• [b]Corrosión:[/b] en ambiente salino, verdín en los tornillos y resistencia alta.\n• [b]Puente olvidado[/b] tras una prueba."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Semestral: reapriete de las borneras de potencia (con el circuito bloqueado) y revisión térmica con carga.\n• Anual: limpieza y comprobación de los marcadores.\n\n[b]Correctivo:[/b] un borne quemado se cambia y se corta el cable hasta encontrar cobre sano."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60947-7-1: bornes de paso para conductores de cobre.",
+    "IEC 60092-352: elección e instalación de cables en buques."
+  ]
+}

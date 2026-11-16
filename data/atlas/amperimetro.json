@@ -1,0 +1,356 @@
+{
+ "id": "amperimetro",
+ "ficha": "amperimetro",
+ "titulo": "Amperímetro de cuadro",
+ "termino": "amperimetro",
+ "icono": "amperimetro",
+ "resumen": "Indica la corriente de una salida a través de su TI.",
+ "bornes_dibujo": {
+  "1": [
+   110,
+   295
+  ],
+  "2": [
+   190,
+   295
+  ]
+ },
+ "que_es": {
+  "texto": "El {{amperimetro}} del cuadro mide los 5 A del secundario de un {{transformador_corriente}}, con la escala graduada en amperios del primario.",
+  "partes": [
+   {
+    "texto": "Escala de 0 a 100 A con la relación 100/5 A.",
+    "marca": [
+     150,
+     74
+    ]
+   },
+   {
+    "texto": "Aguja de hierro móvil.",
+    "marca": [
+     175,
+     150
+    ]
+   },
+   {
+    "texto": "Bornes 1-2 detrás.",
+    "marca": [
+     150,
+     295
+    ]
+   }
+  ],
+  "placa": "0-100 A · entrada 5 A · TI 100/5 A · clase 1,5 · 72 × 72 mm",
+  "a_bordo": "En el cuadro principal, en los generadores y en las salidas grandes. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_aparato",
+  "params": {
+   "tipo": "amperimetro"
+  },
+  "pasos": [
+   "La corriente del secundario del TI pasa por la bobina fija.",
+   "La bobina imanta dos piezas de hierro, una fija y otra unida a la aguja, que se repelen.",
+   "La aguja gira más cuanta más corriente: la escala está graduada en amperios del primario."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_amperimetro.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 30,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "L2",
+     "x": 30,
+     "y": 50,
+     "tam": 11
+    },
+    {
+     "texto": "L3",
+     "x": 30,
+     "y": 70,
+     "tam": 11
+    },
+    {
+     "texto": "TI1",
+     "x": 120,
+     "y": 30,
+     "tam": 11
+    },
+    {
+     "texto": "S1",
+     "x": 70,
+     "y": 104,
+     "tam": 10
+    },
+    {
+     "texto": "S2",
+     "x": 112,
+     "y": 104,
+     "tam": 10
+    },
+    {
+     "texto": "Bornera con puente",
+     "x": 250,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "A",
+     "x": 112,
+     "y": 260,
+     "tam": 15
+    },
+    {
+     "texto": "1",
+     "x": 70,
+     "y": 238,
+     "tam": 10
+    },
+    {
+     "texto": "2",
+     "x": 156,
+     "y": 238,
+     "tam": 10
+    },
+    {
+     "texto": "A1",
+     "x": 160,
+     "y": 270,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    84,
+    238
+   ],
+   "2": [
+    140,
+    238
+   ]
+  },
+  "bornes": {
+   "1": "Desde S1 del TI, por la bornera seccionable.",
+   "2": "Hacia S2 del TI, puesto a masa."
+  },
+  "grupos": [
+   {
+    "nombre": "1-2",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "En serie con el secundario del TI. Antes de quitarlo, se cierra el puente de la bornera."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: salida de 380 V con unos 76 A y TI de 100/5 A. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Aguja",
+    "instrumento": "monitor",
+    "escala": "A",
+    "roja": "",
+    "negra": "",
+    "como": "Lectura de la aguja y comparación con la pinza",
+    "nota": "En servicio.",
+    "titulo_tabla": "Aguja y pinza",
+    "columna": "A",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "aparato",
+     "id": "A1"
+    },
+    "filas": [
+     {
+      "estado": "Aguja",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Pinza en la barra",
+      "cambios": {
+       "instrumento": "pinza",
+       "cable": [
+        "B.L1",
+        "TI1.P1"
+       ]
+      },
+      "hacer": "Normal: coincide",
+      "bien": true
+     },
+     {
+      "estado": "Aguja con el puente cerrado",
+      "cambios": {
+       "estado": {
+        "TI1": {
+         "puente": true
+        }
+       }
+      },
+      "hacer": "Marca cero: abrir el puente",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Bobina",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "1",
+    "negra": "2",
+    "como": "Escala Ω · entre 1 y 2",
+    "nota": "Fuera del cuadro, con el puente del TI cerrado.",
+    "titulo_tabla": "Resistencia de la bobina",
+    "columna": "1-2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_aparatos",
+     "a": "A1.1",
+     "b": "A1.2"
+    },
+    "filas": [
+     {
+      "estado": "Sana",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Cortada",
+      "cambios": {
+       "estado": {
+        "A1": {
+         "bobina_cortada": true
+        }
+       }
+      },
+      "hacer": "Cambiarlo",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Marca cero",
+    "sintoma": "Hay carga y la aguja no se mueve.",
+    "mide": [
+     {
+      "donde": "pinza en la barra",
+      "bien": true,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "B.L1",
+        "TI1.P1"
+       ]
+      }
+     },
+     {
+      "donde": "aguja",
+      "bien": false,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "aparato",
+       "id": "A1",
+       "estado": {
+        "TI1": {
+         "puente": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Puente de la bornera cerrado, o bobina cortada (y entonces el TI está abierto: peligro).",
+    "reparacion": "Cerrar el puente con herramienta aislada, revisar el aparato y abrir el puente al terminar."
+   },
+   {
+    "nombre": "Marca la mitad",
+    "sintoma": "La aguja da la mitad que la pinza.",
+    "mide": [
+     {
+      "donde": "escala del aparato",
+      "bien": false,
+      "valor": "200/5 A"
+     },
+     {
+      "donde": "TI",
+      "bien": true,
+      "valor": "100/5 A"
+     }
+    ],
+    "causa": "Aparato de otra escala.",
+    "reparacion": "Poner uno de la escala del TI."
+   },
+   {
+    "nombre": "Aguja que vibra",
+    "sintoma": "La aguja tiembla y a veces cae a cero.",
+    "mide": [
+     {
+      "donde": "bornes del secundario",
+      "bien": false,
+      "valor": "flojos"
+     }
+    ],
+    "causa": "Borne flojo en el circuito del TI.",
+    "reparacion": "Cerrar el puente, reapretar los bornes y abrir el puente."
+   },
+   {
+    "nombre": "Aguja pegada",
+    "sintoma": "La aguja no se mueve aunque cambie la carga.",
+    "mide": [
+     {
+      "donde": "pinza en la barra",
+      "bien": true,
+      "valor": "76 A"
+     },
+     {
+      "donde": "aguja",
+      "bien": false,
+      "valor": "40 A fija"
+     }
+    ],
+    "causa": "Mecanismo dañado por un golpe o vibración.",
+    "reparacion": "Con el puente del TI cerrado, cambiar el aparato."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "lectura coherente con la carga"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de bornes"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "contraste con la pinza"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 60051-2: amperímetros y voltímetros analógicos.",
+  "IEC 60092-202: instalaciones eléctricas en buques."
+ ]
+}

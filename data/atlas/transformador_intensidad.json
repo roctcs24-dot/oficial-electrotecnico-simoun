@@ -1,0 +1,443 @@
+{
+ "id": "transformador_intensidad",
+ "ficha": "transformador_intensidad",
+ "titulo": "Transformador de intensidad",
+ "termino": "transformador_corriente",
+ "icono": "ti",
+ "resumen": "Da 5 A en su secundario por cada 100 A de la barra, para los aparatos de medida.",
+ "bornes_dibujo": {
+  "P1": [
+   14,
+   130
+  ],
+  "P2": [
+   286,
+   130
+  ],
+  "S1": [
+   124,
+   268
+  ],
+  "S2": [
+   176,
+   268
+  ]
+ },
+ "que_es": {
+  "texto": "El {{transformador_corriente}} reduce la corriente de un conductor en una relación fija, como 100/5 A, para que el amperímetro, el analizador de red y las protecciones midan con 5 A. Su secundario nunca puede quedar abierto con corriente en el primario.",
+  "partes": [
+   {
+    "texto": "Primario P1-P2: la barra que atraviesa la ventana.",
+    "marca": [
+     14,
+     130
+    ]
+   },
+   {
+    "texto": "Núcleo toroidal con el secundario bobinado.",
+    "marca": [
+     150,
+     40
+    ]
+   },
+   {
+    "texto": "Bornes del secundario S1-S2.",
+    "marca": [
+     150,
+     268
+    ]
+   },
+   {
+    "texto": "Placa: relación, clase y potencia.",
+    "marca": [
+     150,
+     71
+    ]
+   }
+  ],
+  "placa": "100/5 A · clase 1 · 5 VA · 0,72 kV",
+  "a_bordo": "En cada salida y en cada generador del cuadro principal, alimentando amperímetros, analizadores y relés. Valores típicos — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_ti",
+  "params": {},
+  "pasos": [
+   "La corriente de la barra crea un flujo en el núcleo.",
+   "El secundario, de 20 espiras para 100/5, da una corriente 20 veces menor.",
+   "Con el secundario abierto no hay corriente que compense el flujo: la tensión sube a cientos de voltios."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_transformador_intensidad.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "L1",
+     "x": 30,
+     "y": 46,
+     "tam": 12
+    },
+    {
+     "texto": "P1",
+     "x": 84,
+     "y": 46,
+     "tam": 11
+    },
+    {
+     "texto": "P2",
+     "x": 158,
+     "y": 46,
+     "tam": 11
+    },
+    {
+     "texto": "TI1 100/5 A",
+     "x": 120,
+     "y": 22,
+     "tam": 12
+    },
+    {
+     "texto": "S1",
+     "x": 96,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "S2",
+     "x": 144,
+     "y": 104,
+     "tam": 11
+    },
+    {
+     "texto": "Bornera seccionable",
+     "x": 300,
+     "y": 170,
+     "tam": 11
+    },
+    {
+     "texto": "puente",
+     "x": 156,
+     "y": 162,
+     "tam": 10
+    },
+    {
+     "texto": "A",
+     "x": 170,
+     "y": 240,
+     "tam": 16
+    },
+    {
+     "texto": "A1",
+     "x": 140,
+     "y": 240,
+     "tam": 12
+    },
+    {
+     "texto": "Hacia la carga",
+     "x": 330,
+     "y": 46,
+     "tam": 11
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "P1": [
+    98,
+    60
+   ],
+   "P2": [
+    142,
+    60
+   ],
+   "S1": [
+    110,
+    95
+   ],
+   "S2": [
+    130,
+    95
+   ]
+  },
+  "bornes": {
+   "P1": "Entrada de la corriente de la barra; marca la polaridad.",
+   "P2": "Salida de la barra hacia la carga.",
+   "S1": "Salida del secundario hacia el amperímetro, por la bornera.",
+   "S2": "Retorno del secundario; normalmente a masa en un punto."
+  },
+  "grupos": [
+   {
+    "nombre": "Primario P1-P2",
+    "bornes": [
+     "P1",
+     "P2"
+    ],
+    "texto": "La barra o el cable pasa por la ventana, con P1 hacia la red."
+   },
+   {
+    "nombre": "Secundario S1-S2",
+    "bornes": [
+     "S1",
+     "S2"
+    ],
+    "texto": "Al amperímetro por una bornera seccionable con puente. Antes de quitar el aparato se cierra el puente."
+   }
+  ]
+ },
+ "medir": {
+  "nota": "Valores medidos en la simulación: salida de 380 V con unos 76 A y TI de 100/5 A. Valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Secundario",
+    "instrumento": "multimetro",
+    "escala": "Ω",
+    "roja": "S1",
+    "negra": "S2",
+    "como": "Escala Ω · entre S1 y S2",
+    "nota": "Sin tensión, con el secundario desconectado.",
+    "titulo_tabla": "Resistencia del secundario",
+    "columna": "S1-S2",
+    "medida": {
+     "instrumento": "multimetro",
+     "modo": "ohm",
+     "circuito": "medir_ti",
+     "a": "TI1.S1",
+     "b": "TI1.S2"
+    },
+    "filas": [
+     {
+      "estado": "Sano",
+      "hacer": "Normal: décimas de ohmio",
+      "bien": true
+     },
+     {
+      "estado": "Cortado",
+      "cambios": {
+       "estado": {
+        "TI1": {
+         "secundario_cortado": true
+        }
+       }
+      },
+      "hacer": "Cambiar el TI",
+      "bien": false
+     }
+    ]
+   },
+   {
+    "nombre": "Corriente",
+    "instrumento": "pinza",
+    "escala": "A~",
+    "roja": "S1",
+    "negra": "",
+    "como": "Pinza amperimétrica en la barra y en el cable de S1",
+    "nota": "En servicio, con el cuadro cerrado si el modelo lo permite.",
+    "titulo_tabla": "Corriente con 76 A en la barra",
+    "columna": "A",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "pinza",
+     "cable": [
+      "B.L1",
+      "TI1.P1"
+     ]
+    },
+    "filas": [
+     {
+      "estado": "Barra L1",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Cable de S1",
+      "cambios": {
+       "cable": [
+        "TI1.S1",
+        "A1.1"
+       ]
+      },
+      "hacer": "Normal: 20 veces menos",
+      "bien": true
+     },
+     {
+      "estado": "Cable de S1, puente cerrado",
+      "cambios": {
+       "cable": [
+        "TI1.S1",
+        "A1.1"
+       ],
+       "estado": {
+        "TI1": {
+         "puente": true
+        }
+       }
+      },
+      "hacer": "Normal: el puente se la lleva",
+      "bien": true
+     }
+    ]
+   },
+   {
+    "nombre": "Tensión S1-S2",
+    "instrumento": "multimetro",
+    "escala": "V~",
+    "roja": "S1",
+    "negra": "S2",
+    "como": "Escala V~ · entre S1 y S2",
+    "nota": "Solo como demostración: no abra un secundario en servicio.",
+    "titulo_tabla": "Tensión en el secundario",
+    "columna": "V",
+    "medida": {
+     "circuito": "cuadro_medida",
+     "segundos": 0.3,
+     "instrumento": "multimetro",
+     "modo": "vac",
+     "a": "TI1.S1",
+     "b": "TI1.S2"
+    },
+    "filas": [
+     {
+      "estado": "Con el amperímetro",
+      "hacer": "Normal: casi nada",
+      "bien": true
+     },
+     {
+      "estado": "Amperímetro abierto",
+      "cambios": {
+       "estado": {
+        "A1": {
+         "bobina_cortada": true
+        }
+       }
+      },
+      "hacer": "¡Peligro! Cierre el puente",
+      "bien": false
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Secundario abierto",
+    "sintoma": "Zumbido en el TI, olor a quemado y el amperímetro a cero.",
+    "mide": [
+     {
+      "donde": "S1-S2 en servicio",
+      "bien": false,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "multimetro",
+       "modo": "vac",
+       "a": "TI1.S1",
+       "b": "TI1.S2",
+       "estado": {
+        "A1": {
+         "bobina_cortada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Se quitó el amperímetro sin cerrar el puente, o se soltó un cable del secundario.",
+    "reparacion": "Sin acercarse, cortar la carga o cerrar el puente con herramienta aislada; revisar el aislamiento del TI y cambiarlo si se dañó."
+   },
+   {
+    "nombre": "Amperímetro a cero",
+    "sintoma": "Hay carga pero el amperímetro no se mueve.",
+    "mide": [
+     {
+      "donde": "pinza en la barra",
+      "bien": true,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "pinza",
+       "cable": [
+        "B.L1",
+        "TI1.P1"
+       ],
+       "estado": {
+        "TI1": {
+         "puente": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "lectura del amperímetro",
+      "bien": false,
+      "medida": {
+       "circuito": "cuadro_medida",
+       "segundos": 0.3,
+       "instrumento": "aparato",
+       "id": "A1",
+       "estado": {
+        "TI1": {
+         "puente": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "El puente de la bornera quedó cerrado tras una prueba.",
+    "reparacion": "Abrir el puente y comprobar que el amperímetro coincide con la pinza."
+   },
+   {
+    "nombre": "Potencia negativa",
+    "sintoma": "El analizador da kW negativos en una fase con el motor consumiendo.",
+    "mide": [
+     {
+      "donde": "potencia de esa fase",
+      "bien": false,
+      "valor": "−13 kW"
+     }
+    ],
+    "causa": "TI montado al revés (P2 hacia la red) o S1-S2 cruzados.",
+    "reparacion": "Con el puente cerrado, corregir la polaridad: P1 hacia la red y S1 al borne de entrada del aparato."
+   },
+   {
+    "nombre": "Saturado",
+    "sintoma": "El amperímetro marca menos de lo que da la pinza cuando la carga es grande.",
+    "mide": [
+     {
+      "donde": "pinza en la barra",
+      "bien": true,
+      "valor": "130 A"
+     },
+     {
+      "donde": "amperímetro",
+      "bien": false,
+      "valor": "104 A"
+     }
+    ],
+    "causa": "Demasiada carga en el secundario (cables largos o aparatos añadidos) para los 5 VA del TI.",
+    "reparacion": "Repartir los aparatos, acortar o engrosar los cables, o poner un TI de más VA."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "amperímetros coherentes con la carga"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "reapriete de los bornes del secundario"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "contraste con la pinza y aislamiento"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "IEC 61869-2: transformadores de intensidad.",
+  "IEC 60092-202: instalaciones eléctricas en buques."
+ ]
+}

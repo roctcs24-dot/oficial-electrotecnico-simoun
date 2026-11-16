@@ -1,0 +1,97 @@
+{
+  "id": "horometro",
+  "titulo": "Horómetro",
+  "resumen": "Cuenta las horas de marcha de una bomba o un compresor.",
+  "dibujo": {
+    "svg": "res://art/equipos/horometro.svg",
+    "tamano": [
+      280,
+      260
+    ],
+    "nota": "Horómetro de 48 × 48 mm de 110 V 50 Hz con contador mecánico, dibujado de forma general. Tensión y frecuencia de cada uno: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "1 2 4 0 8 , 6",
+        "x": 140,
+        "y": 88,
+        "tam": 16,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "h",
+        "x": 140,
+        "y": 44,
+        "tam": 13,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "110 V  50 Hz",
+        "x": 140,
+        "y": 160,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "A1",
+        "x": 110,
+        "y": 196,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "A2",
+        "x": 170,
+        "y": 196,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Contador de horas según IEC 60617: círculo con el signo de tiempo. Verificar contra la norma.",
+    "lista": [
+      "horometro"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{horometro}} cuenta las horas que funciona un equipo. Con él se programa el mantenimiento por horas (cambio de rodamientos, revisión de un compresor) y se reparten las horas entre bombas de servicio y de reserva."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Motor síncrono[/b] que gira al ritmo de la frecuencia de la red y mueve un contador mecánico de rodillos; o un contador electrónico.\n• Bornes A1-A2.\n• El rodillo rojo son las décimas de hora."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• A1-A2 en paralelo con la bobina del contactor del equipo: cuenta mientras el contactor está activado.\n• A la tensión de mando de su etiqueta."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la tensión y la frecuencia: uno de 60 Hz en la red de 50 Hz del buque atrasa una sexta parte, como se ve en algunos de a bordo ([i]verificar a bordo[/i])."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Con la bomba en marcha:[/b] tensión de mando en A1-A2 y el rodillo de décimas avanzando (una vuelta cada 6 minutos).\n• [b]Sin tensión:[/b] Ω entre A1 y A2, algunos kΩ.\n• Compare las horas con el libro de máquinas."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]No cuenta:[/b] sin tensión en A1-A2 o motor del contador agarrotado.\n• [b]Atrasa:[/b] horómetro de 60 Hz en la red de 50 Hz.\n• [b]Cuenta con la bomba parada:[/b] conectado antes del contactor."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: anotar las horas en el libro de máquinas.\n\n[b]Correctivo:[/b] se cambia por otro de la misma tensión y frecuencia, y se anotan en el libro las horas del viejo y del nuevo."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60617: símbolos gráficos.",
+    "Plan de mantenimiento del buque: horas de cada equipo."
+  ]
+}

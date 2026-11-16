@@ -1,0 +1,70 @@
+{
+  "nombre": "Compensación del factor de potencia",
+  "nota": "Una carga de motores de 40 kW con 35 kvar inductivos y una batería de 25 kvar en paralelo; el analizador AN1 mide en la entrada. valores típicos — verificar a bordo.",
+  "componentes": [
+    {
+      "id": "B",
+      "tipo": "fuente_trifasica",
+      "params": {
+        "v_linea": 380
+      }
+    },
+    {
+      "id": "AN1",
+      "tipo": "analizador_red"
+    },
+    {
+      "id": "C1",
+      "tipo": "carga_trifasica",
+      "params": {
+        "p_kw": 40,
+        "q_kvar": 35
+      }
+    },
+    {
+      "id": "CB1",
+      "tipo": "condensadores",
+      "params": {
+        "q_kvar": 25
+      }
+    }
+  ],
+  "cables": [
+    [
+      "B.L1",
+      "AN1.L1"
+    ],
+    [
+      "B.L2",
+      "AN1.L2"
+    ],
+    [
+      "B.L3",
+      "AN1.L3"
+    ],
+    [
+      "AN1.T1",
+      "C1.L1"
+    ],
+    [
+      "AN1.T2",
+      "C1.L2"
+    ],
+    [
+      "AN1.T3",
+      "C1.L3"
+    ],
+    [
+      "AN1.T1",
+      "CB1.L1"
+    ],
+    [
+      "AN1.T2",
+      "CB1.L2"
+    ],
+    [
+      "AN1.T3",
+      "CB1.L3"
+    ]
+  ]
+}

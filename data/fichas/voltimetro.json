@@ -1,0 +1,100 @@
+{
+  "id": "voltimetro",
+  "titulo": "Voltímetro de cuadro",
+  "resumen": "Indica la tensión entre fases de las barras o de un generador.",
+  "dibujo": {
+    "svg": "res://art/equipos/voltimetro.svg",
+    "tamano": [
+      300,
+      330
+    ],
+    "nota": "Aparato de cuadro de hierro móvil de 72 × 72 mm, dibujado de forma general. Escalas y modelos del cuadro: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "V",
+        "x": 150,
+        "y": 160,
+        "tam": 22
+      },
+      {
+        "texto": "0",
+        "x": 84,
+        "y": 112,
+        "tam": 11
+      },
+      {
+        "texto": "250",
+        "x": 150,
+        "y": 74,
+        "tam": 11
+      },
+      {
+        "texto": "500",
+        "x": 216,
+        "y": 112,
+        "tam": 11
+      },
+      {
+        "texto": "1",
+        "x": 110,
+        "y": 312,
+        "tam": 10,
+        "color": "#f4f4f0"
+      },
+      {
+        "texto": "2",
+        "x": 190,
+        "y": 312,
+        "tam": 10,
+        "color": "#f4f4f0"
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Voltímetro según IEC 60617 y ANSI/IEEE 315: círculo con la letra V. Verificar contra la norma.",
+    "lista": [
+      "voltimetro"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "El {{voltimetro}} del cuadro indica la tensión entre dos fases de las barras o de un generador. En la red de 380 V se conecta directamente, protegido por sus fusibles, y suele llevar un conmutador voltimétrico para leer L1-L2, L2-L3 y L3-L1."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Hierro móvil[/b], como el amperímetro, pero con una bobina de muchas espiras y una resistencia en serie: consume muy poco.\n• [b]Escala[/b] de 0 a 500 V con la tensión nominal marcada en rojo.\n• Bornes 1-2 detrás."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• Bornes 1-2 a dos fases, cada una con su fusible de 2 A.\n• Con el conmutador voltimétrico, el aparato se pasa de un par de fases a otro.\n• En los generadores, junto al frecuencímetro, antes del interruptor del generador."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se elige por la escala (un tercio por encima de la nominal: 500 V para 380 V), el tamaño y la clase (1,5)."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Compárelo con el multímetro[/b] en los mismos puntos: deben coincidir dentro de la clase.\n• [b]Sin tensión:[/b] Ω entre sus bornes, decenas o cientos de kΩ."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Marca cero con tensión:[/b] fusible fundido o bobina cortada.\n• [b]Lecturas distintas entre fases:[/b] puede ser real (asimetría) o un fusible del conmutador: compruébelo con el multímetro.\n• [b]Aguja que no vuelve a cero:[/b] aparato dañado."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Anual: comparación con el multímetro y comprobación del conmutador en sus tres posiciones.\n\n[b]Correctivo:[/b] con los fusibles quitados, se cambia por otro de la misma escala."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60051-2: aparatos de medida analógicos.",
+    "IEC 60092-202: instalaciones eléctricas en buques."
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "id": "condensadores",
+  "titulo": "Condensadores de compensación",
+  "resumen": "Dan la energía reactiva que piden los motores y suben el factor de potencia.",
+  "dibujo": {
+    "svg": "res://art/equipos/condensadores.svg",
+    "tamano": [
+      300,
+      380
+    ],
+    "nota": "Condensador trifásico de compensación en lata, con resistencias de descarga entre bornes, dibujado de forma general. Si el buque tiene compensación, su potencia y su escalonamiento: verificar a bordo.",
+    "etiquetas": [
+      {
+        "texto": "L1",
+        "x": 106,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "L2",
+        "x": 150,
+        "y": 10,
+        "tam": 11
+      },
+      {
+        "texto": "L3",
+        "x": 194,
+        "y": 14,
+        "tam": 11
+      },
+      {
+        "texto": "25 kvar · 400 V",
+        "x": 150,
+        "y": 190,
+        "tam": 12
+      },
+      {
+        "texto": "Δ · 50 Hz",
+        "x": 150,
+        "y": 214,
+        "tam": 11
+      },
+      {
+        "texto": "R descarga",
+        "x": 150,
+        "y": 76,
+        "tam": 9
+      }
+    ]
+  },
+  "simbolos": {
+    "nota": "Condensadores en delta según IEC 60617 y ANSI/IEEE 315. Verificar contra la norma.",
+    "lista": [
+      "condensadores_trifasicos",
+      "capacitor"
+    ]
+  },
+  "secciones": [
+    {
+      "id": "funcion",
+      "titulo": "Para qué sirve",
+      "texto": "Los {{condensador_compensacion}} dan la {{potencia_reactiva}} que los motores necesitan para magnetizarse, en lugar de pedírsela a los generadores. El {{factor_potencia}} sube, por ejemplo de 0,75 a 0,97, y la corriente de la red baja: los generadores y los cables quedan más descargados para la misma potencia útil."
+    },
+    {
+      "id": "partes",
+      "titulo": "Cómo funciona por dentro",
+      "texto": "• [b]Elementos[/b] de película metalizada dentro de una lata, conectados en delta.\n• [b]{{Resistencia_descarga}}[/b] entre bornes: descargan el condensador en menos de un minuto al desconectarlo.\n• [b]Dispositivo de sobrepresión[/b] que lo desconecta si se hincha.\n• En las baterías automáticas, un regulador conecta escalones con contactores especiales."
+    },
+    {
+      "id": "conexion",
+      "titulo": "Cómo se conecta",
+      "texto": "• A L1-L2-L3 por su interruptor o sus fusibles y, en las baterías automáticas, por contactores para condensadores.\n• Nunca entre un variador y su motor.\n• En el buque, con generadores que ya regulan su reactiva, la compensación es poco frecuente ([i]verificar a bordo si existe[/i])."
+    },
+    {
+      "id": "ajuste",
+      "titulo": "Cómo se ajusta y se elige",
+      "texto": "Se calcula la reactiva que falta: Q = P × (tan φ1 − tan φ2). Con 40 kW de 0,75 a 0,97 hacen falta unos 25 kvar. Una batería mayor deja el factor de potencia capacitivo, que es tan malo como el inductivo."
+    },
+    {
+      "id": "pruebas",
+      "titulo": "Cómo se prueba",
+      "texto": "• [b]Antes de tocar:[/b] desconecte y espere un minuto; mida que no queda tensión entre bornes.\n• [b]Sin tensión:[/b] Ω entre bornes, el valor de las resistencias de descarga.\n• [b]En servicio:[/b] pinza en cada fase: las tres iguales, Q/(√3 × V). Una menor: un elemento perdido.\n• [b]Analizador de red:[/b] factor de potencia con y sin la batería."
+    },
+    {
+      "id": "fallas",
+      "titulo": "Fallas típicas",
+      "texto": "• [b]Pérdida de capacidad:[/b] la corriente baja y el factor de potencia ya no sube; lata hinchada.\n• [b]Una fase menos:[/b] corrientes desiguales.\n• [b]Resistencia de descarga cortada:[/b] queda cargado y da una descarga al tocarlo.\n• [b]Sobrecompensación:[/b] factor de potencia capacitivo con poca carga."
+    },
+    {
+      "id": "mantenimiento",
+      "titulo": "Mantenimiento",
+      "texto": "[b]Preventivo[/b] ([i]periodos típicos — verificar en el plan de mantenimiento[/i]):\n• Mensual: lata sin hinchar y sin fugas, ventilación libre.\n• Anual: corriente de cada fase, reapriete de bornes y comprobación de la descarga.\n\n[b]Correctivo:[/b] se cambia la lata entera, de la misma potencia y tensión."
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60831-1: condensadores de potencia autorregenerables.",
+    "IEC 60092-101: instalaciones eléctricas en buques."
+  ]
+}
