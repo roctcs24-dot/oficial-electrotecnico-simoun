@@ -51,11 +51,10 @@ func construir() -> void:
 		cuerpo.add_child(lado)
 		var columna := _columna(10)
 		lado.add_child(columna)
-		columna.add_child(avisos)
+		if avisos.get_child_count() > 0:
+			columna.add_child(avisos)
 		columna.add_child(_crear_rango())
 		_anadir_acciones(columna)
-		var nota := _etiqueta("Toque una zona del buque para abrir su sistema. La lámpara de cada zona indica su avance.", "Nota")
-		columna.add_child(nota)
 
 
 func _crear_planta() -> PlantaBuque:
@@ -153,7 +152,7 @@ func _crear_rango() -> Control:
 	var proximo := raiz.partida.siguiente_rango(rangos)
 	var texto := "pts"
 	if not proximo.is_empty():
-		texto += " · %d para %s" % [proximo["faltan"], proximo["nombre"]]
+		texto += " · %d para %s" % [proximo["faltan"], _rango_corto(proximo["nombre"])]
 	var e := _etiqueta(texto, "Nota")
 	e.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	puntos.add_child(e)
@@ -196,6 +195,12 @@ func _crear_continuar(siguiente: Dictionary) -> Control:
 func _abrir_leccion(siguiente: Dictionary) -> void:
 	raiz.ir_a("sistema", {"id": siguiente["sistema"]})
 	raiz.ir_a("leccion", {"id": siguiente["leccion"], "sistema": siguiente["sistema"]})
+
+
+## En apaisado la columna es estrecha: «Oficial Electrotécnico» se abrevia como ETO
+## (*Electro-Technical Officer*), como en el Convenio STCW, para que quepa en una línea.
+func _rango_corto(nombre: String) -> String:
+	return nombre if raiz.vertical else nombre.replace("Oficial Electrotécnico", "Oficial ETO")
 
 
 func _resumen_barco(barco: Dictionary) -> String:
