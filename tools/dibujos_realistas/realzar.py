@@ -4,6 +4,8 @@ aquí Chrome añade texturas, relieve con luz y sombras difuminadas.
 
 Uso, desde la raíz del repositorio:
     python tools/dibujos_realistas/realzar.py electricidad          # la tanda del módulo 7
+    python tools/dibujos_realistas/realzar.py todas                 # los dibujos de todas las fichas
+    python tools/dibujos_realistas/realzar.py faltan                # solo los que aún no tienen imagen
     python tools/dibujos_realistas/realzar.py art/equipos/rele_termico.svg ...
 
 Un dibujo con guion propio en a_mano/<nombre>.py (ANCHO, ALTO y CUERPO) se toma de allí; los demás
@@ -122,10 +124,31 @@ def tanda_electricidad():
     return rutas
 
 
+def todas():
+    """Los dibujos de todas las fichas, con sus dibujos extra."""
+    rutas = []
+    carpeta = os.path.join(REPO, "data", "fichas")
+    for f in sorted(os.listdir(carpeta)):
+        if f.endswith(".json"):
+            ficha = json.load(open(os.path.join(carpeta, f), encoding="utf-8"))
+            for d in [ficha["dibujo"]] + ficha.get("dibujos_extra", []):
+                r = d["svg"].replace("res://", "")
+                if r not in rutas:
+                    rutas.append(r)
+    return rutas
+
+
 def main(argumentos):
     rutas = []
     for x in argumentos:
-        rutas += tanda_electricidad() if x == "electricidad" else [x.replace("\\", "/")]
+        if x == "electricidad":
+            rutas += tanda_electricidad()
+        elif x == "todas":
+            rutas += todas()
+        elif x == "faltan":
+            rutas += [r for r in todas() if not os.path.exists(os.path.join(REPO, "art", "realista", os.path.splitext(r[len("art/"):])[0] + ".webp"))]
+        else:
+            rutas.append(x.replace("\\", "/"))
     pares = [preparar(r) for r in rutas]
     # Godot pasa los PNG a WebP con pérdida: unos 100 KB por dibujo.
     lista = []

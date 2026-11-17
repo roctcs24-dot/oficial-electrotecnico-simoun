@@ -51,7 +51,7 @@ func test_cada_imagen_tiene_su_svg_y_su_encuadre() -> String:
 			var esperado: Vector2 = tamanos[svg] * ESCALA
 			if absf(t.get_width() - esperado.x) > 2.0 or absf(t.get_height() - esperado.y) > 2.0:
 				fallos.append("%s mide %s y debe medir %s" % [imagenes[svg].get_file(), str(t.get_size()), str(esperado)])
-	return A.primero([A.cierto(imagenes.size() >= 35, "faltan imágenes: %d" % imagenes.size()), "; ".join(fallos)])
+	return A.primero([A.cierto(imagenes.size() >= 74, "faltan imágenes: %d" % imagenes.size()), "; ".join(fallos)])
 
 
 func test_tanda_de_electricidad_industrial_completa() -> String:
@@ -63,6 +63,15 @@ func test_tanda_de_electricidad_industrial_completa() -> String:
 			if not ResourceLoader.exists(VistaSvg.ruta_realista(d["svg"])):
 				faltan.append(d["svg"].get_file())
 	return A.cierto(faltan.is_empty(), "dibujos sin versión realista: %s" % ", ".join(faltan))
+
+
+func test_todas_las_fichas_tienen_dibujo_realista() -> String:
+	var c := Contenido.new()
+	var faltan: Array[String] = []
+	for svg: String in _tamanos(c):
+		if not ResourceLoader.exists(VistaSvg.ruta_realista(svg)):
+			faltan.append(svg.get_file())
+	return A.cierto(faltan.is_empty(), "dibujos de fichas sin versión realista: %s" % ", ".join(faltan))
 
 
 func test_vista_usa_la_imagen_realista_o_el_svg() -> String:
