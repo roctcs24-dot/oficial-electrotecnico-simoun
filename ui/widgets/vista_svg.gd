@@ -4,6 +4,9 @@ extends Control
 ## Godot no dibuja el texto de los SVG, por eso las etiquetas van aparte, en coordenadas del dibujo.
 
 const LADO_MAX_PX := 2048.0
+## Versión realista ya preparada de un dibujo (tools/dibujos_realistas): mismo encuadre que el SVG,
+## con textura, relieve con luz y sombra. Si existe, se muestra en lugar del SVG.
+const CARPETA_REALISTA := "res://art/realista/"
 
 static var _fuentes := {}
 
@@ -14,7 +17,16 @@ var color_etiquetas := Color("eceee8")
 ## Sombra suave del equipo sobre el fondo, para los dibujos que van en el visor de las fichas.
 var sombra_dibujo := false
 var _textura: Texture2D
+## Imagen realista del dibujo, o null si solo hay SVG.
+var realista: Texture2D
 var _escala_textura := 0.0
+
+
+## Ruta de la imagen realista de un SVG de art/: art/equipos/x.svg -> art/realista/equipos/x.webp.
+static func ruta_realista(ruta_svg: String) -> String:
+	if not ruta_svg.begins_with("res://art/"):
+		return ""
+	return CARPETA_REALISTA + ruta_svg.trim_prefix("res://art/").get_basename() + ".webp"
 
 
 ## Devuelve null si el archivo no existe o no se puede interpretar.
@@ -40,6 +52,12 @@ func cargar(definicion: Dictionary) -> void:
 	etiquetas = definicion.get("etiquetas", [])
 	_textura = null
 	_escala_textura = 0.0
+	realista = null
+	var r := ruta_realista(ruta)
+	if not r.is_empty() and ResourceLoader.exists(r):
+		realista = load(r)
+		# Se reduce mucho en el celular: con mipmaps no parpadea ni se ve granulada.
+		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	queue_redraw()
 
 
@@ -72,6 +90,11 @@ func _actualizar_textura() -> void:
 
 
 func _draw() -> void:
+	if realista != null:
+		# La imagen realista ya lleva su sombra.
+		draw_texture_rect(realista, rect_imagen(), false)
+		_dibujar_etiquetas()
+		return
 	_actualizar_textura()
 	if _textura != null:
 		if sombra_dibujo:
