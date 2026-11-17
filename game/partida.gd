@@ -188,6 +188,12 @@ func pestanas_atlas(id: String) -> int:
 	return datos["atlas"].get(id, {}).get("pestanas", {}).size()
 
 
+## Claves de las pestañas del atlas ya vistas, para marcarlas con su lámpara verde.
+func pestanas_atlas_vistas(id: String) -> Array:
+	var vistas = datos["atlas"].get(id, {}).get("pestanas", {})
+	return vistas.keys() if vistas is Dictionary else []
+
+
 ## Una ficha del atlas cuenta como hecha cuando se han visto sus cinco pestañas.
 func atlas_completo(id: String) -> bool:
 	return pestanas_atlas(id) >= 5

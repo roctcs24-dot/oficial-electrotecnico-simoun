@@ -102,7 +102,7 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 
 | Carpeta | Contenido |
 |---|---|
-| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/`, `circuitos/`, `lecciones/`, `misiones/` y `examenes/` |
+| `data/` | Contenido editable en JSON: datos del barco, sistemas, rangos, glosario, `fichas/` (y sus marcas en `marcas_fichas.json`), `atlas/`, `circuitos/`, `lecciones/`, `misiones/` y `examenes/` |
 | `art/` | Dibujos SVG de `barco/`, `equipos/`, `esquemas/`, `iconos/`, `seguridad/`, `simbolos/` y `taller/`, y la fuente en `fuentes/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
 | `game/` | Carga de contenido, partida guardada, términos técnicos, mesa del Taller, misiones, examen y banco de repaso |
@@ -155,6 +155,8 @@ Las animaciones están en `ui/animaciones/`: `circuito_ohm`, `onda_alterna`, `fa
 **Fichas:** cada `data/fichas/<id>.json` tiene el dibujo, los símbolos IEC y ANSI, el banco de prueba y las secciones `funcion`, `partes`, `conexion`, `ajuste`, `pruebas`, `fallas` y `mantenimiento`, además de `para_saber_mas`. Para publicar una, añade su id a `modos.aprender.fichas` del sistema. Las pruebas comprueban que esté completa y que sus referencias existan.
 
 Una ficha puede añadir vistas con `dibujos_extra`, como la placa y la bornera del motor. Sus `simbolos` pueden ser `iec` y `ansi` propios, o una `lista` de ids de `data/simbolos.json`.
+
+**Marcas numeradas de las fichas:** salen de las `partes` con `marca` del atlas que usa el dibujo de la ficha. Las fichas sin atlas las toman de `data/marcas_fichas.json`: `{"fichas": {"<id>": [{"nombre", "texto", "marca": [x, y]}]}}`, en coordenadas del dibujo (`tamano` de la ficha), de tres a cinco por ficha. Son posiciones y textos típicos: verificar a bordo. `tests/test_rediseno_d.gd` comprueba que todas las fichas tengan marcas y que caigan dentro del dibujo.
 
 **Atlas de la Escuela:** cada componente del atlas es `data/atlas/<id>.json`, y se publica añadiendo su id a `modos.aprender.atlas` de un módulo de la Escuela en `data/sistemas.json`. No hace falta código nuevo salvo la animación del corte, si el componente necesita una propia. El dibujo y los símbolos se toman de `data/fichas/<ficha>.json`. Las pruebas de `tests/test_atlas.gd` comprueban que esté bien formado.
 
@@ -304,6 +306,20 @@ El inicio y la Escuela siguen con el tema oscuro y el color por área, pero dibu
 - **Toques:** los dibujos que se tocan heredan de `ControlToque`, que distingue un toque de un arrastre como `FilaMenu`, así las listas se desplazan aunque el dedo empiece encima.
 - **Barra de navegación:** con relieve y una barra ámbar encendida sobre la sección activa.
 - **Pruebas** en `tests/test_rediseno_c.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_c inicio`.
+
+## Fichas y atlas (versión 4.16.0)
+
+La ficha de equipo (`ui/screens/ficha.gd`) y el atlas (`ui/screens/atlas.gd`) siguen con el tema oscuro y el color por área, con el relieve de la Escuela.
+
+- **Cabecera** (`CabeceraFicha`): placa con el botón de volver, la medalla del área y el título. En el atlas, el anillo de la medalla y las cinco lámparas de VISTAS dicen cuántas vistas se han visto.
+- **Visor** (`VisorFicha`): hueco oscuro con luz de foco y tornillos. Lleva el dibujo grande del equipo; en el atlas, también el corte animado, el esquema y la medida, sobre una hoja de papel (`Relieve.estilo_papel`).
+- **Marcas numeradas** (`DibujoMarcas`, que hereda de `VistaBornes`): monedas ámbar con relieve (`Relieve.marca`). Tocar una la enciende y abre un bocadillo con la parte, unido a la marca con una línea guía. El bocadillo va a la derecha en apaisado y debajo en vertical, y su sitio se reserva para que el dibujo no salte. La lista de partes (`FilaParte`) se enlaza con las marcas en los dos sentidos.
+- **Pestañas con iconos** (`PestanaIcono.tira`): la elegida se enciende en ámbar con una barra de luz; las ya vistas llevan una lámpara verde.
+  - En la ficha: Partes, Funciona, Conexión, Prueba y Fallas. Las secciones de la ficha se reparten por su título (`pestana_de_seccion`) y cambiar de pestaña no reconstruye la pantalla, así el banco de prueba sigue en marcha.
+  - En el atlas: Qué es, Funciona, Conexión, Medir y Fallas.
+- **Vistas del equipo en la ficha:** Equipo, Símbolos y los dibujos extra, con teclas en el visor. La nota del dibujo va al final de la hoja Partes.
+- **Atlas:** placa de datos como una chapa remachada; pasos de la animación como monedas que se encienden; lecturas de Medir y de Fallas en visores negros, verdes si son normales y rojas si indican falla; fallas con su lámpara roja (`BotonAri.lampara`) y mantenimiento con casillas de relieve.
+- **Pruebas** en `tests/test_rediseno_d.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_d fichas_d`.
 
 ## Referencias
 

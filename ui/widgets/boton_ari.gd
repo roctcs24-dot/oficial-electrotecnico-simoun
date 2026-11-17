@@ -33,6 +33,20 @@ var insignia := "":
 		insignia = valor
 		if _fondo != null:
 			_fondo.queue_redraw()
+## Lámpara piloto a la izquierda del texto («rojo», «verde» o «ambar»); vacío, sin lámpara.
+var lampara := "":
+	set(valor):
+		lampara = valor
+		var vacia := get_theme_stylebox("normal") as StyleBoxEmpty
+		if vacia != null:
+			vacia.content_margin_left = 30.0 if not valor.is_empty() else 10.0
+		if _fondo != null:
+			_fondo.queue_redraw()
+var lampara_encendida := false:
+	set(valor):
+		lampara_encendida = valor
+		if _fondo != null:
+			_fondo.queue_redraw()
 var redondo := false
 var radio := 6.0
 var _fondo: Fondo
@@ -74,6 +88,8 @@ class Fondo:
 				var t := roundi(tam * 0.5)
 				var w := f.get_string_size("?", HORIZONTAL_ALIGNMENT_LEFT, -1, t).x
 				draw_string(f, c + Vector2(-w / 2.0, f.get_ascent(t) * 0.36), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, t, tinta)
+		if not b.lampara.is_empty():
+			PiezasAri.lampara(self, Vector2(r.position.x + 15.0, c.y), 5.0, b.lampara, 1.0 if b.lampara_encendida else 0.0)
 		if not b.insignia.is_empty():
 			Relieve.insignia(self, Vector2(r.end.x - 4.0, r.position.y + 4.0), b.insignia, Tema.tam(11))
 
@@ -108,6 +124,14 @@ func _init(texto := "", al_pulsar := Callable(), estilo_inicial := "azul", icono
 	toggled.connect(func(_p: bool) -> void: _fondo.queue_redraw())
 	if al_pulsar.is_valid():
 		pressed.connect(al_pulsar)
+
+
+## Ancho mínimo para que el texto quepa entero, sin puntos suspensivos.
+func ajustar_ancho() -> void:
+	var tam := get_theme_font_size("font_size")
+	var ancho := Tema.fuente(Tema.PESO_NEGRITA).get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x
+	ancho += 24.0 + (20.0 if not lampara.is_empty() else 0.0) + (LADO_ICONO + 6.0 if icon != null else 0.0)
+	custom_minimum_size.x = maxf(custom_minimum_size.x, ceilf(ancho))
 
 
 func _colores_texto() -> void:

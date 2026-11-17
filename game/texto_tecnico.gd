@@ -48,6 +48,23 @@ static func expandir(texto: String, glosario: Dictionary, vistos: Dictionary) ->
 	return unir_unidades(resultado + texto.substr(cursor))
 
 
+## El texto sin marcas: cada {{id}} pasa a su nombre en español, sin el inglés ni BBCode. Para
+## los textos que se dibujan a mano, como el bocadillo de las marcas de las fichas.
+static func plano(texto: String, glosario: Dictionary) -> String:
+	var resultado := ""
+	var cursor := 0
+	for m in _regex().search_all(texto):
+		resultado += texto.substr(cursor, m.get_start() - cursor)
+		cursor = m.get_end()
+		var escrito := m.get_string(1)
+		var id := escrito.to_lower()
+		var nombre: String = glosario[id]["es"] if glosario.has(id) else escrito
+		if escrito != id:
+			nombre = nombre.substr(0, 1).to_upper() + nombre.substr(1)
+		resultado += nombre
+	return unir_unidades(resultado + texto.substr(cursor))
+
+
 ## Número con coma decimal, como se escribe en español.
 static func numero(valor: float, decimales := 0) -> String:
 	return String.num(valor, decimales).pad_decimals(decimales).replace(".", ",")

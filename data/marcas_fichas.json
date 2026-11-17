@@ -1,0 +1,125 @@
+{
+	"nota": "Marcas numeradas sobre el dibujo de las fichas que no tienen atlas. Coordenadas en el espacio del dibujo (tamano de la ficha).",
+	"fichas": {
+		"acb": [
+			{"nombre": "Unidad de disparo", "texto": "Ajustes Ir, Isd e Ii según el estudio de coordinación; anote los valores antes de tocar nada.", "marca": [218, 152]},
+			{"nombre": "Placa de datos", "texto": "Calibre, tensión y poder de corte (Icu): un repuesto debe coincidir en todos ellos.", "marca": [292, 130]},
+			{"nombre": "Pulsadores I y O", "texto": "Cierre (ON) y apertura (OFF) manuales del interruptor.", "marca": [50, 208]},
+			{"nombre": "Indicador del muelle", "texto": "CHARGED indica que el muelle de cierre está cargado y el interruptor, listo para cerrar.", "marca": [180, 366]},
+			{"nombre": "Posición del chasis", "texto": "CONNECTED y manivela de extracción: para trabajar, llévelo a desconectado y aplique LOTO.", "marca": [308, 370]}
+		],
+		"alternador": [
+			{"nombre": "Caja de bornes", "texto": "U, V y W hacia el interruptor del generador; respete la secuencia de fases.", "marca": [282, 66]},
+			{"nombre": "Placa de datos", "texto": "Stamford HCI534F: 565 kVA, 452 kW, 50 Hz y 1500 rpm; un repuesto debe coincidir en todo.", "marca": [416, 200]},
+			{"nombre": "Excitatriz", "texto": "Excitatriz y diodos giratorios, en el extremo opuesto al acoplamiento.", "marca": [444, 134]},
+			{"nombre": "Acoplamiento", "texto": "Unión con el volante del diésel; en los de un rodamiento, ese lado descansa en el volante.", "marca": [246, 244]}
+		],
+		"avr": [
+			{"nombre": "Potenciómetro VOLT", "texto": "Lleva la tensión a 380 V con el grupo en vacío y a velocidad nominal.", "marca": [82, 178]},
+			{"nombre": "Potenciómetro DROOP", "texto": "Estatismo reactivo: reparte los kVAr entre grupos en paralelo.", "marca": [180, 178]},
+			{"nombre": "Bornes de medida", "texto": "U, V y W: medida y alimentación desde los bornes del alternador.", "marca": [85, 292]},
+			{"nombre": "Bornes F+ y F−", "texto": "Campo de la excitatriz: respete la polaridad; a plena carga, 44 V y 2,6 A según la placa.", "marca": [162, 292]},
+			{"nombre": "Bornes S1 y S2", "texto": "Transformador de corriente del estatismo: puentéelos antes de desconectar el AVR en carga.", "marca": [224, 292]}
+		],
+		"baterias_24v": [
+			{"nombre": "Batería de 12 V", "texto": "Seis celdas de 2 V; en reposo, 12,7 V cargada y 12,0 V o menos casi descargada.", "marca": [100, 226]},
+			{"nombre": "Puente serie", "texto": "Negativo de una con positivo de la otra: quedan libres un + y un − con 24 V.", "marca": [185, 104]},
+			{"nombre": "Negativo del banco", "texto": "Al desconectar se quita el primero, y al conectar, el último.", "marca": [326, 110]},
+			{"nombre": "Pantalla del cargador", "texto": "Tensión de flotación: el cargador Exxel del buque está a 27,5 V.", "marca": [384, 178]}
+		],
+		"botella_baja": [
+			{"nombre": "Interruptores de nivel", "texto": "Flotadores Parker LLSS: bajo y medio mandan la solenoide; el alto da alarma y para el compresor.", "marca": [62, 192]},
+			{"nombre": "Válvula de seguridad", "texto": "Protege el recipiente de baja presión contra una sobrepresión.", "marca": [296, 72]},
+			{"nombre": "Solenoide de líquido", "texto": "Rellena la botella desde el recibidor; al abrir se oye el clic y la tubería de salida se enfría.", "marca": [460, 210]},
+			{"nombre": "Bomba de amoníaco", "texto": "Envía el líquido a los evaporadores; una corriente baja y oscilante indica cavitación.", "marca": [342, 262]}
+		],
+		"compresor_piston": [
+			{"nombre": "Motor eléctrico", "texto": "Vilter: WEG de 75 kW, 380 V en delta y 138 A; relé térmico ajustado a 138 A.", "marca": [40, 140]},
+			{"nombre": "Cabezas de seguridad", "texto": "Tapas con resorte («Caution spring loaded») que ceden si entra líquido en el cilindro.", "marca": [362, 100]},
+			{"nombre": "Solenoides de capacidad", "texto": "Mandan los descargadores: cada etapa debe cambiar la corriente del motor.", "marca": [362, 172]},
+			{"nombre": "Visor de aceite", "texto": "Muestra el nivel de aceite en el cárter.", "marca": [221, 191]},
+			{"nombre": "Bomba de aceite", "texto": "Bomba movida por el cigüeñal, con su filtro; vigile la presión de aceite en marcha.", "marca": [440, 218]}
+		],
+		"compresor_tornillo": [
+			{"nombre": "Motor eléctrico", "texto": "Con guardamotor, contactor y relé térmico; arranque según la placa y el esquema de cada equipo.", "marca": [40, 140]},
+			{"nombre": "Acoplamiento", "texto": "Motor acoplado directamente; junto al eje va el cierre mecánico.", "marca": [167, 245]},
+			{"nombre": "Succión", "texto": "Entrada de vapor desde el lado de baja presión, con su manómetro o transmisor.", "marca": [186, 145]},
+			{"nombre": "Indicador de corredera", "texto": "Posición de la corredera de capacidad; el compresor arranca siempre con ella al mínimo.", "marca": [300, 206]},
+			{"nombre": "Separador de aceite", "texto": "Recoge el aceite de la descarga, con su filtro y su enfriador de aceite.", "marca": [440, 160]}
+		],
+		"condensador": [
+			{"nombre": "Entrada de vapor", "texto": "Vapor de la descarga, desde el separador de aceite, por arriba.", "marca": [160, 70]},
+			{"nombre": "Purga de incondensables", "texto": "Conexión para purgar los gases que no condensan.", "marca": [284, 88]},
+			{"nombre": "Válvula de seguridad", "texto": "Protege la carcasa contra una sobrepresión.", "marca": [362, 84]},
+			{"nombre": "Caja de agua", "texto": "Se abre para limpiar los tubos; el agua de mar entra por abajo y sale por arriba.", "marca": [20, 155]},
+			{"nombre": "Salida de líquido", "texto": "Líquido condensado desde el fondo de la carcasa hacia el recibidor.", "marca": [316, 240]}
+		],
+		"controlador_generador": [
+			{"nombre": "Pantalla", "texto": "Medidas, modo y estado del grupo; compárelas con los instrumentos del cuadro.", "marca": [150, 190]},
+			{"nombre": "Luces de estado", "texto": "ALARM, WARN y READY; tras un disparo, revise el historial de eventos.", "marca": [292, 30]},
+			{"nombre": "Tecla ACK", "texto": "Reconoce las alarmas de la lista; después busque la causa.", "marca": [309, 180]},
+			{"nombre": "START y STOP", "texto": "Arranque y parada del grupo desde el panel.", "marca": [99, 213]},
+			{"nombre": "Teclas del interruptor", "texto": "GB ON y GB OFF: cierre y apertura del interruptor del generador (generator breaker).", "marca": [239, 213]}
+		],
+		"detector_amoniaco": [
+			{"nombre": "Pantalla", "texto": "Lectura en ppm; alarma 1 a 25 ppm y alarma 2 a 150 ppm (ajustes del simulador — verificar a bordo).", "marca": [250, 95]},
+			{"nombre": "Luces de alarma", "texto": "A1, A2 y avería; sus relés van al sistema de alarmas, a la ventilación de emergencia y a la parada de la planta.", "marca": [60, 168]},
+			{"nombre": "Teclas MENÚ y OK", "texto": "Menús y función de prueba: compruebe que la alarma llega al sistema y arranca la ventilación.", "marca": [150, 226]},
+			{"nombre": "Sensor", "texto": "Solo la prueba con gas de concentración conocida comprueba el sensor.", "marca": [88, 320]}
+		],
+		"electrovalvula_hidraulica": [
+			{"nombre": "Bobina Y1", "texto": "A menudo de 24 V DC; Y1 e Y2 nunca deben recibir tensión a la vez.", "marca": [40, 110]},
+			{"nombre": "Conector DIN", "texto": "Dos bornes de la bobina y uno de tierra; prensaestopas y junta bien apretados.", "marca": [130, 70]},
+			{"nombre": "Cuerpo", "texto": "Pasos P (bomba), T (tanque), A y B (hacia la máquina).", "marca": [250, 182]},
+			{"nombre": "Mando manual", "texto": "Mueve la corredera sin tensión; si así funciona y con la bobina no, la falla es eléctrica.", "marca": [30, 242]}
+		],
+		"generador_emergencia": [
+			{"nombre": "Panel local", "texto": "Selector AUTO, MAN y OFF (en AUTO en servicio normal), luces RUN y ALARM y lectura de tensión.", "marca": [292, 30]},
+			{"nombre": "Parada de emergencia", "texto": "Seta que para el grupo desde el panel local.", "marca": [455, 146]},
+			{"nombre": "Radiador", "texto": "Refrigerado por aire, sin depender de las bombas de agua salada del buque.", "marca": [20, 140]},
+			{"nombre": "Alternador", "texto": "Síncrono con su AVR; alimenta las barras de emergencia a través del interruptor QE.", "marca": [312, 158]}
+		],
+		"reflector": [
+			{"nombre": "Placa de datos", "texto": "Grado de protección y potencia; la lámpara nueva debe ser del mismo tipo y potencia que el balasto.", "marca": [252, 40]},
+			{"nombre": "Cristal templado", "texto": "Con su junta mantiene estanca la carcasa; revíselos cada mes.", "marca": [110, 104]},
+			{"nombre": "Prensaestopas", "texto": "Bien apretado y con un lazo de goteo en el cable, para que el agua no entre.", "marca": [330, 170]},
+			{"nombre": "Lira", "texto": "Fijación orientable: alumbre la zona de trabajo sin deslumbrar al puente ni a la tripulación.", "marca": [120, 300]}
+		],
+		"rele_potencia_inversa": [
+			{"nombre": "Bornes de tensión", "texto": "L1, L2 y L3, tomadas del lado del generador del interruptor.", "marca": [24, 48]},
+			{"nombre": "Bornes S1 y S2", "texto": "Transformador de corriente: respete P1-P2; cruzados, el relé dispara al tomar carga el grupo.", "marca": [276, 48]},
+			{"nombre": "Ajustes de disparo", "texto": "P % y t (s); en el simulador, 8 % de 452 kW y 5 s (verificar con el estudio de protecciones).", "marca": [150, 170]},
+			{"nombre": "Luces de estado", "texto": "ON: alimentación; START: temporización en curso; TRIP: disparo.", "marca": [228, 262]},
+			{"nombre": "Contacto 11-14", "texto": "Salida hacia la bobina de disparo del interruptor del generador.", "marca": [276, 350]}
+		],
+		"sensor_proximidad": [
+			{"nombre": "Cara activa", "texto": "Detecta la pieza; colóquela a menos del 80 % de la distancia de conmutación Sn.", "marca": [22, 40]},
+			{"nombre": "Rosca y tuercas", "texto": "Cuerpo M18 × 1: fije las tuercas con el sensor ya en su posición.", "marca": [105, 142]},
+			{"nombre": "Bornes del cable", "texto": "BN a +24 V, BU a 0 V y BK salida; en un PNP, BK da +24 V al detectar.", "marca": [310, 28]}
+		],
+		"sincronoscopio": [
+			{"nombre": "Ventana de cierre", "texto": "Sector verde arriba de la escala: zona en la que se cierra el interruptor.", "marca": [214, 64]},
+			{"nombre": "Aguja", "texto": "Gira sin topes; con un solo grupo contra sus propias barras queda quieta a las doce.", "marca": [150, 150]},
+			{"nombre": "FAST y SLOW", "texto": "La aguja gira hacia FAST si el entrante va más rápido que las barras, y hacia SLOW si va más lento.", "marca": [180, 214]},
+			{"nombre": "Lámparas de sincronismo", "texto": "Una por fase: con las fases bien conectadas se apagan a la vez; cambie las fundidas.", "marca": [140, 370]}
+		],
+		"transmisor_presion": [
+			{"nombre": "Conector", "texto": "Dos hilos en serie con la fuente de 24 V DC y la entrada del PLC; respete la polaridad.", "marca": [100, 30]},
+			{"nombre": "Placa de datos", "texto": "Escala de −1 a 9 bar, salida de 4–20 mA y 24 V DC; con esta escala, 12 mA son 4 bar.", "marca": [200, 165]},
+			{"nombre": "Conexión de proceso", "texto": "Rosca de proceso, con válvula de aislamiento para cambiarlo sin vaciar el circuito.", "marca": [176, 330]}
+		],
+		"valvula_expansion": [
+			{"nombre": "Cabeza termostática", "texto": "Diafragma: arriba empuja el bulbo; abajo, la presión de evaporación y el resorte.", "marca": [88, 112]},
+			{"nombre": "Tornillo de ajuste", "texto": "Fija el recalentamiento; cada vuelta lo cambia unos grados.", "marca": [229, 166]},
+			{"nombre": "Bulbo", "texto": "Bien apretado y aislado sobre la succión, a la salida del evaporador.", "marca": [245, 252]},
+			{"nombre": "Igualador externo", "texto": "Lleva al diafragma la presión real de la salida del evaporador; se conecta después del bulbo.", "marca": [40, 250]}
+		],
+		"valvula_solenoide": [
+			{"nombre": "Bobina", "texto": "Por fuera del tubo; una bobina de repuesto debe tener la misma tensión y tipo de corriente.", "marca": [90, 130]},
+			{"nombre": "Conector", "texto": "Alimentación desde el mando del compresor; mida aquí si llega tensión cuando debe abrir.", "marca": [240, 150]},
+			{"nombre": "Tubo del núcleo", "texto": "Tubo estanco con el núcleo móvil: el amoníaco no sale al exterior.", "marca": [195, 200]},
+			{"nombre": "Flecha de paso", "texto": "Respete el sentido de la flecha: montada al revés, la válvula no cierra.", "marca": [225, 262]},
+			{"nombre": "Apertura manual", "texto": "Abre la válvula a mano en una emergencia.", "marca": [130, 290]}
+		]
+	}
+}

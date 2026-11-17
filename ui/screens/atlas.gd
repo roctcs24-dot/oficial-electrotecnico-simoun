@@ -1,7 +1,8 @@
 extends Pantalla
-## Ficha visual de un componente del atlas de la Escuela, en cinco pestañas: qué es, cómo
-## funciona (corte animado), cómo se conecta (esquema con bornes tocables), cómo se mide (con
-## valores calculados por la simulación) y fallas con su mantenimiento. Todo sale de
+## Ficha visual de un componente del atlas de la Escuela, en cinco pestañas con iconos: qué es
+## (el dibujo grande con marcas numeradas), cómo funciona (corte animado), cómo se conecta
+## (esquema con bornes tocables), cómo se mide (con valores calculados por la simulación) y
+## fallas con su mantenimiento. Lo visual va en un visor hundido con luz de foco. Todo sale de
 ## data/atlas/<id>.json; el dibujo y los símbolos, de la ficha del equipo.
 
 const PESTANAS := [
@@ -24,13 +25,19 @@ var atlas := {}
 var ficha := {}
 var color := COLOR_POR_DEFECTO
 var pestana := "que_es"
+## Parte elegida en el dibujo de «Qué es», o 0.
+var parte := 0
+var dibujo_partes: DibujoMarcas
+var filas: Array[FilaParte] = []
+var tira: Control
+var _fase_pasos := -1
 var animacion: Animacion
 var esquema: VistaBornes
 var dibujo_conexion: VistaBornes
 var _glosario := {}
 var _vistos := {}
 var _pasos: Array[RichTextLabel] = []
-var _chips_pasos: Array[PanelContainer] = []
+var _chips_pasos: Array[FilaParte] = []
 var _lista_pasos := ""
 var _titulo_borne: Label
 var _texto_borne: RichTextLabel
@@ -52,7 +59,8 @@ func construir() -> void:
 	pestana = str(args.get("pestana", "que_es"))
 	raiz.partida.marcar_pestana_atlas(id, pestana)
 	_cabecera_atlas()
-	add_child(_crear_pestanas())
+	tira = _crear_pestanas()
+	add_child(tira)
 	match pestana:
 		"funciona":
 			_construir_funciona()
@@ -89,48 +97,12 @@ func elegir_pestana(id: String) -> void:
 # --- Cabecera y pestañas ---
 
 func _cabecera_atlas() -> void:
-	var barra := _tarjeta_base("Cabecera")
-	add_child(barra)
-	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 12)
-	barra.add_child(fila)
-	if raiz.nivel() > 1:
-		var volver := _boton("‹ Volver", raiz.volver)
-		volver.autowrap_mode = TextServer.AUTOWRAP_OFF
-		volver.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		fila.add_child(volver)
-	var caja_icono := PanelContainer.new()
-	caja_icono.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	caja_icono.add_theme_stylebox_override("panel", Tema.caja(Color(color, 0.2), 12, 9, 9))
-	caja_icono.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var icono := TextureRect.new()
-	icono.texture = VistaSvg.rasterizar("res://art/iconos/%s.svg" % atlas.get("icono", "ficha"), 0.45)
-	icono.custom_minimum_size = Vector2(28, 28)
-	icono.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icono.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	icono.modulate = color
-	caja_icono.add_child(icono)
-	fila.add_child(caja_icono)
-	var textos := VBoxContainer.new()
-	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	textos.alignment = BoxContainer.ALIGNMENT_CENTER
-	textos.add_theme_constant_override("separation", 0)
-	fila.add_child(textos)
-	textos.add_child(_etiqueta(atlas.get("titulo", ""), "Titulo"))
-	var sub := _texto_rico(_subtitulo())
-	sub.add_theme_color_override("default_color", Tema.TEXTO_SUAVE)
-	for clave in ["normal_font_size", "italics_font_size"]:
-		sub.add_theme_font_size_override(clave, Tema.tam(16))
-	textos.add_child(sub)
-	if raiz.nivel() >= 3:
-		var inicio := _boton("", raiz.ir_a_seccion.bind("inicio"))
-		inicio.icon = VistaSvg.rasterizar("res://art/iconos/inicio.svg", 0.75)
-		inicio.expand_icon = true
-		inicio.tooltip_text = "Inicio"
-		inicio.custom_minimum_size = Vector2(48, 48)
-		inicio.add_theme_constant_override("icon_max_width", 24)
-		inicio.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		fila.add_child(inicio)
+	var id: String = args["id"]
+	var vistas := raiz.partida.pestanas_atlas_vistas(id).size()
+	var cabecera := CabeceraFicha.new()
+	cabecera.iniciar(raiz, atlas.get("titulo", ""), _subtitulo(), color, str(atlas.get("icono", "ficha")),
+		float(vistas) / PESTANAS.size(), CabeceraFicha.LamparasVistas.new(vistas, PESTANAS.size()))
+	add_child(cabecera)
 
 
 func _subtitulo() -> String:
@@ -147,38 +119,7 @@ func _subtitulo() -> String:
 
 
 func _crear_pestanas() -> Control:
-	var rejilla := GridContainer.new()
-	rejilla.columns = PESTANAS.size()
-	rejilla.add_theme_constant_override("h_separation", 4)
-	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	for p: Array in PESTANAS:
-		var b := _boton(p[1], elegir_pestana.bind(p[0]))
-		b.autowrap_mode = TextServer.AUTOWRAP_OFF
-		b.clip_text = true
-		b.toggle_mode = true
-		b.set_pressed_no_signal(p[0] == pestana)
-		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.custom_minimum_size = Vector2(0, 54)
-		b.icon = VistaSvg.rasterizar("res://art/iconos/%s.svg" % p[2], 0.4)
-		b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
-		b.add_theme_constant_override("icon_max_width", 20)
-		b.add_theme_constant_override("h_separation", 2)
-		b.add_theme_font_size_override("font_size", Tema.tam(13))
-		b.add_theme_stylebox_override("normal", Tema.caja(Tema.PANEL, Tema.RADIO, 2, 5, Tema.BORDE))
-		b.add_theme_stylebox_override("hover", Tema.caja(Tema.PANEL, Tema.RADIO, 2, 5, Tema.BORDE))
-		b.add_theme_stylebox_override("pressed", Tema.caja(color, Tema.RADIO, 2, 5))
-		b.add_theme_stylebox_override("hover_pressed", Tema.caja(color, Tema.RADIO, 2, 5))
-		for clave in ["font_color", "font_hover_color", "font_focus_color"]:
-			b.add_theme_color_override(clave, Tema.TEXTO_SUAVE)
-		for clave in ["font_pressed_color", "font_hover_pressed_color"]:
-			b.add_theme_color_override(clave, Tema.FONDO)
-		for clave in ["icon_normal_color", "icon_hover_color", "icon_focus_color"]:
-			b.add_theme_color_override(clave, Tema.TEXTO_SUAVE)
-		for clave in ["icon_pressed_color", "icon_hover_pressed_color"]:
-			b.add_theme_color_override(clave, Tema.FONDO)
-		rejilla.add_child(b)
-	return rejilla
+	return PestanaIcono.tira(PESTANAS, pestana, raiz.partida.pestanas_atlas_vistas(str(args["id"])), elegir_pestana)
 
 
 # --- Disposición común ---
@@ -215,14 +156,31 @@ func _alto(vertical: float) -> float:
 	return vertical if raiz.vertical else 120.0
 
 
+## Hoja de papel dentro del visor, para los esquemas, los cortes y las medidas en tinta.
 func _papel() -> PanelContainer:
 	var p := _tarjeta_base()
-	p.add_theme_stylebox_override("panel", Tema.caja(Tema.PAPEL, Tema.RADIO_TARJETA, 10, 10))
+	p.add_theme_stylebox_override("panel", Relieve.estilo_papel(8.0))
+	p.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	return p
+
+
+## Visor hundido con luz de foco; con «contenido», ya puesto dentro.
+func _visor(contenido: Control = null) -> VisorFicha:
+	var v := VisorFicha.new(12.0)
+	v.name = "Visor"
+	if contenido != null:
+		v.add_child(contenido)
+	return v
+
+
+func _placa() -> PanelContainer:
+	var p := _tarjeta_base()
+	p.add_theme_stylebox_override("panel", Relieve.estilo_placa(12.0, 10.0))
 	return p
 
 
 func _tarjeta(titulo := "") -> VBoxContainer:
-	var t := _tarjeta_base()
+	var t := _placa()
 	var columna := _columna(6)
 	t.add_child(columna)
 	if not titulo.is_empty():
@@ -239,35 +197,21 @@ func _rico(texto: String, tam := 17, tinta := false) -> RichTextLabel:
 	return r
 
 
-func _boton_primario(texto: String, al_pulsar: Callable) -> Button:
-	var b := _boton(texto, al_pulsar)
+func _boton_primario(texto: String, al_pulsar: Callable, icono := "taller") -> Button:
+	var b := BotonAri.new(texto, al_pulsar, "ambar", icono)
 	b.custom_minimum_size.y = 52.0
-	for estado in ["normal", "hover", "pressed", "hover_pressed"]:
-		b.add_theme_stylebox_override(estado, Tema.caja(Tema.ACENTO_FUERTE.darkened(0.15 if estado.contains("pressed") else 0.0), 12, 14, 13))
-	for clave in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
-		b.add_theme_color_override(clave, Tema.FONDO)
-	b.add_theme_font_override("font", Tema.fuente(Tema.PESO_FUERTE))
+	b.add_theme_font_size_override("font_size", Tema.tam(15))
 	return b
 
 
-## Chip para elegir un grupo: píldora gris, o del color del acento si está elegido.
+## Tecla para elegir un grupo: gris oscura con relieve, o ámbar encendida si está elegida.
 func _chip(texto: String, elegido: bool, al_pulsar: Callable) -> Button:
-	var b := _boton(texto, al_pulsar)
-	b.autowrap_mode = TextServer.AUTOWRAP_OFF
+	var b := BotonAri.new(texto, al_pulsar, "ambar" if elegido else "oscuro")
 	b.toggle_mode = true
 	b.set_pressed_no_signal(elegido)
 	b.custom_minimum_size.y = 48.0
-	b.add_theme_font_size_override("font_size", Tema.tam(15))
-	var normal := Tema.caja(Color(Tema.TEXTO_SUAVE, 0.12), 24, 14, 12)
-	var activo := Tema.caja(Color(color, 0.22), 24, 14, 12)
-	b.add_theme_stylebox_override("normal", normal)
-	b.add_theme_stylebox_override("hover", normal)
-	b.add_theme_stylebox_override("pressed", activo)
-	b.add_theme_stylebox_override("hover_pressed", activo)
-	for clave in ["font_color", "font_hover_color", "font_focus_color"]:
-		b.add_theme_color_override(clave, Tema.TEXTO_SUAVE)
-	for clave in ["font_pressed_color", "font_hover_pressed_color"]:
-		b.add_theme_color_override(clave, Tema.ACENTO)
+	b.add_theme_font_size_override("font_size", Tema.tam(14))
+	b.ajustar_ancho()
 	return b
 
 
@@ -290,52 +234,89 @@ func _vista_dibujo() -> VistaBornes:
 
 func _construir_que_es() -> void:
 	var datos: Dictionary = atlas.get("que_es", {})
-	var papel := _papel()
-	papel.custom_minimum_size.y = _alto(ALTO_DIBUJO + 20.0)
-	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 8)
-	papel.add_child(fila)
-	var dibujo := _vista_dibujo()
-	dibujo.custom_minimum_size = Vector2(170, _alto(ALTO_DIBUJO))
-	dibujo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var partes: Array = datos.get("partes", [])
-	var marcas: Array = []
-	var notas := _columna(9)
-	notas.alignment = BoxContainer.ALIGNMENT_CENTER
-	notas.size_flags_stretch_ratio = 1.1
-	for i in partes.size():
-		var parte: Dictionary = partes[i]
-		if parte.has("marca"):
-			marcas.append([i + 1, parte["marca"][0], parte["marca"][1]])
-		notas.add_child(_rico("[b]%d[/b] · %s" % [i + 1, parte["texto"]], 14, true))
-	dibujo.marcas = marcas
-	fila.add_child(dibujo)
+	var partes := Contenido.partes_atlas(atlas)
+	parte = clampi(int(args.get("parte", 1 if not partes.is_empty() else 0)), 0, partes.size())
+	dibujo_partes = DibujoMarcas.new()
+	dibujo_partes.cargar(ficha.get("dibujo", {"svg": "", "tamano": [100, 100]}))
+	dibujo_partes.poner_bornes(atlas.get("bornes_dibujo", {}))
+	dibujo_partes.poner_partes(partes, _glosario, parte)
+	dibujo_partes.lado_bocadillo = "abajo" if raiz.vertical else "derecha"
+	dibujo_partes.custom_minimum_size = Vector2(170, _alto(ALTO_DIBUJO + 60.0))
+	dibujo_partes.marca_tocada.connect(elegir_parte)
+	var visor := _visor(dibujo_partes)
 	var resto: Array[Control] = []
-	# En horizontal las notas no caben junto al dibujo: van en la primera tarjeta.
-	if raiz.vertical:
-		fila.add_child(notas)
-	else:
-		var tarjeta_notas := _tarjeta("Partes")
-		for nota: RichTextLabel in notas.get_children():
-			notas.remove_child(nota)
-			nota.add_theme_color_override("default_color", Tema.TEXTO)
-			for clave in ["normal_font_size", "bold_font_size", "italics_font_size"]:
-				nota.add_theme_font_size_override(clave, Tema.tam(16))
-			tarjeta_notas.add_child(nota)
-		notas.free()
-		resto.append(tarjeta_notas.get_parent())
+	var lista: Array = datos.get("partes", [])
+	if not lista.is_empty():
+		var tarjeta := _tarjeta("Partes")
+		tarjeta.add_theme_constant_override("separation", 2)
+		# Los números siguen a las marcas: una parte sin marca no lleva número en el dibujo.
+		var numero := 0
+		for p: Dictionary in lista:
+			if not p.has("marca"):
+				tarjeta.add_child(_rico("• " + str(p["texto"]), 15))
+				continue
+			numero += 1
+			var f := FilaParte.new(numero, TextoTecnico.expandir(p["texto"], _glosario, _vistos), 15)
+			f.poner(numero == parte)
+			f.tocada.connect(elegir_parte)
+			tarjeta.add_child(f)
+			filas.append(f)
+		resto.append(tarjeta.get_parent())
 	resto.append(_tarjeta_simbolos())
 	var placa := _tarjeta("Placa y dónde está")
-	var linea := _etiqueta(datos.get("placa", ""))
-	placa.add_child(linea)
+	placa.add_child(_placa_datos(str(datos.get("placa", ""))))
 	placa.add_child(_etiqueta("A bordo: %s" % datos.get("a_bordo", ""), "Nota"))
 	resto.append(placa.get_parent())
 	if datos.has("texto"):
 		var para := _tarjeta("Para qué sirve")
 		para.add_child(_rico(datos["texto"]))
 		resto.append(para.get_parent())
-	resto.append(_boton("Leer la ficha completa", raiz.ir_a.bind("ficha", {"id": str(atlas.get("ficha", ""))})))
-	_disponer(papel, resto)
+	var leer := BotonAri.new("Leer la ficha completa", raiz.ir_a.bind("ficha", {"id": str(atlas.get("ficha", ""))}), "oscuro", "ficha")
+	leer.custom_minimum_size.y = 50.0
+	resto.append(leer)
+	_disponer(visor, resto)
+
+
+## Elige una parte: se enciende su marca en el dibujo y su fila en la lista.
+func elegir_parte(numero: int) -> void:
+	parte = numero
+	args["parte"] = numero
+	if dibujo_partes != null:
+		dibujo_partes.elegir(numero)
+	for f in filas:
+		f.poner(f.numero == numero)
+
+
+## Placa de datos como una chapa de aluminio remachada, con el texto grabado.
+func _placa_datos(texto: String) -> Control:
+	var chapa := PanelContainer.new()
+	chapa.name = "PlacaDatos"
+	chapa.mouse_filter = Control.MOUSE_FILTER_PASS
+	var e := EstiloAri.crear([Color("e8ecef"), Color("c9d0d6"), Color("dfe4e8"), Color("aab3bb")], 18.0, 8.0, 6.0)
+	e.borde = Color("4b545c")
+	e.luz = Color(1, 1, 1, 0.85)
+	e.sombra = 0.55
+	e.hueco = Vector2(1, 1)
+	chapa.add_theme_stylebox_override("panel", e)
+	chapa.draw.connect(func() -> void:
+		for p: Vector2 in [Vector2(9, 9), Vector2(chapa.size.x - 9.0, 9), Vector2(9, chapa.size.y - 9.0), chapa.size - Vector2(9, 9)]:
+			chapa.draw_circle(p + Vector2(0, 0.8), 3.2, Color(0, 0, 0, 0.45))
+			PiezasAri._disco(chapa, p, 2.8, Color("ffffff"), Color("6d7780")))
+	var columna := _columna(0)
+	chapa.add_child(columna)
+	var rotulo := _etiqueta("PLACA DE DATOS")
+	rotulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rotulo.add_theme_font_size_override("font_size", Tema.tam(10))
+	rotulo.add_theme_color_override("font_color", Color("4b545c"))
+	rotulo.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
+	columna.add_child(rotulo)
+	var linea := _etiqueta(texto)
+	linea.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	linea.add_theme_font_size_override("font_size", Tema.tam(16))
+	linea.add_theme_color_override("font_color", Color("20262c"))
+	linea.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
+	columna.add_child(linea)
+	return chapa
 
 
 func _tarjeta_simbolos() -> Control:
@@ -352,6 +333,7 @@ func _tarjeta_simbolos() -> Control:
 		definiciones = {"iec": simbolos.get("iec", {}), "ansi": simbolos.get("ansi", {})}
 	for par: Array in [["iec", "IEC 60617"], ["ansi", "ANSI/IEEE 315"]]:
 		var tarjeta := _papel()
+		tarjeta.size_flags_vertical = Control.SIZE_FILL
 		tarjeta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var interior := _columna(2)
 		tarjeta.add_child(interior)
@@ -388,26 +370,16 @@ func _construir_funciona() -> void:
 			if control != animacion.lienzo:
 				animacion.remove_child(control)
 				resto.append(control)
-	var tarjeta := _tarjeta()
+	var tarjeta := _tarjeta("Paso a paso")
+	tarjeta.add_theme_constant_override("separation", 2)
 	for i in 3:
-		var fila := HBoxContainer.new()
-		fila.add_theme_constant_override("separation", 10)
+		var fila := FilaParte.new(i + 1, "", 16)
 		tarjeta.add_child(fila)
-		var chip := PanelContainer.new()
-		chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		chip.custom_minimum_size = Vector2(30, 30)
-		chip.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-		var cifra := _etiqueta(str(i + 1))
-		cifra.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		cifra.add_theme_font_size_override("font_size", Tema.tam(15))
-		chip.add_child(cifra)
-		fila.add_child(chip)
-		var texto := _rico("", 17)
-		fila.add_child(texto)
-		_chips_pasos.append(chip)
-		_pasos.append(texto)
+		_chips_pasos.append(fila)
+		_pasos.append(fila.texto)
 	resto.append(tarjeta.get_parent())
-	_disponer(animacion, resto)
+	animacion.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_disponer(_visor(animacion), resto)
 	_actualizar_pasos()
 
 
@@ -420,16 +392,18 @@ func _actualizar_pasos() -> void:
 		lista = "pasos_sin"
 	if lista != _lista_pasos:
 		_lista_pasos = lista
+		_fase_pasos = -1
 		var textos: Array = datos.get(lista, [])
 		var vistos := {}
 		for i in _pasos.size():
 			_pasos[i].text = TextoTecnico.expandir(textos[i], _glosario, vistos) if i < textos.size() else ""
 	var fase := int(animacion.fase()) if animacion.has_method("fase") else 3
+	if fase == _fase_pasos:
+		return
+	_fase_pasos = fase
+	# Los pasos ya dados se encienden; el último, resaltado; los que faltan, apagados.
 	for i in _chips_pasos.size():
-		var activo := i < fase
-		_chips_pasos[i].add_theme_stylebox_override("panel", Tema.caja(Color(color, 0.25) if activo else Color(Tema.TEXTO_SUAVE, 0.1), 15, 0, 2))
-		(_chips_pasos[i].get_child(0) as Label).add_theme_color_override("font_color", Tema.ACENTO if activo else Tema.APAGADO)
-		_pasos[i].modulate.a = 1.0 if activo else 0.55
+		_chips_pasos[i].poner(i == fase - 1, i >= fase)
 
 
 func _process(_delta: float) -> void:
@@ -442,6 +416,7 @@ func _process(_delta: float) -> void:
 func _construir_conexion() -> void:
 	var datos: Dictionary = atlas.get("conexion", {})
 	var papel := _papel()
+	var visor := _visor(papel)
 	esquema = VistaBornes.new()
 	esquema.color_etiquetas = Tema.TINTA
 	esquema.cargar(datos.get("esquema", {"svg": "", "tamano": [400, 290]}))
@@ -450,12 +425,11 @@ func _construir_conexion() -> void:
 	esquema.borne_tocado.connect(tocar_borne)
 	papel.add_child(esquema)
 	var resto: Array[Control] = []
-	var tarjeta := _tarjeta_base()
+	var tarjeta := _placa()
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 10)
 	tarjeta.add_child(fila)
-	var marco := _papel()
-	marco.add_theme_stylebox_override("panel", Tema.caja(Tema.PAPEL, Tema.RADIO, 4, 4))
+	var marco := VisorFicha.new(6.0)
 	dibujo_conexion = _vista_dibujo()
 	dibujo_conexion.custom_minimum_size = Vector2(110, 160)
 	dibujo_conexion.borne_tocado.connect(tocar_borne)
@@ -478,7 +452,7 @@ func _construir_conexion() -> void:
 	resto.append(chips)
 	if datos.has("taller"):
 		resto.append(_boton_primario("Montarlo en el Taller", raiz.ir_a.bind("taller", {"plantilla": datos["taller"]})))
-	_disponer(papel, resto)
+	_disponer(visor, resto)
 	if args.has("borne"):
 		tocar_borne(str(args["borne"]))
 	else:
@@ -520,6 +494,7 @@ func tocar_borne(id: String) -> void:
 func _marcar_chip(indice: int) -> void:
 	for i: int in _chips:
 		_chips[i].set_pressed_no_signal(i == indice)
+		(_chips[i] as BotonAri).estilo = "ambar" if i == indice else "oscuro"
 
 
 # --- Medir ---
@@ -537,6 +512,7 @@ func _construir_medir() -> void:
 	var g: Dictionary = grupos[indice]
 	var filas := filas_medir(indice)
 	var papel := _papel()
+	var visor := _visor(papel)
 	var columna := _columna(4)
 	papel.add_child(columna)
 	var vista := VistaMedida.new()
@@ -562,7 +538,7 @@ func _construir_medir() -> void:
 	var resto: Array[Control] = [tabla.get_parent()]
 	if datos.has("taller"):
 		resto.append(_boton_primario("Medirlo yo en el Taller", raiz.ir_a.bind("taller", {"plantilla": datos["taller"], "pestana_inicial": "medir"})))
-	_disponer(papel, resto)
+	_disponer(visor, resto)
 
 
 func elegir_grupo_medir(indice: int) -> void:
@@ -587,16 +563,62 @@ func _fila_tabla(celdas: Array, cabecera: bool, bien: bool) -> Control:
 	fila.add_theme_constant_override("separation", 8)
 	var proporciones := [1.25, 0.8, 1.25]
 	for i in 3:
+		if i == 1 and not cabecera:
+			var visor := _visor_lectura(str(celdas[i]), bien, 16)
+			visor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			visor.size_flags_stretch_ratio = proporciones[i]
+			visor.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			fila.add_child(visor)
+			continue
 		var e := _etiqueta(str(celdas[i]), "Rotulo" if cabecera else "")
 		e.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		e.size_flags_stretch_ratio = proporciones[i]
 		if not cabecera:
 			e.add_theme_font_size_override("font_size", Tema.tam(15))
-			if i == 1:
-				e.add_theme_color_override("font_color", VERDE if bien else ROJO)
-				e.add_theme_font_override("font", Tema.fuente(Tema.PESO_FUERTE))
 		fila.add_child(e)
 	return fila
+
+
+## Lectura en un visor negro hundido, verde si es normal y roja si indica falla, con brillo.
+func _visor_lectura(texto: String, bien: bool, tam := 21, donde := "") -> Control:
+	var caja := PanelContainer.new()
+	caja.name = "VisorLectura"
+	caja.set_meta("visor_lectura", true)
+	caja.mouse_filter = Control.MOUSE_FILTER_PASS
+	var e := EstiloAri.crear([Color("05080a"), Color("1a2731"), Color("2a3b48")], 6.0, 5.0, 7.0)
+	e.borde = Color("0b1015")
+	e.luz = Color(1, 1, 1, 0.08)
+	e.sombra = 0.5
+	caja.add_theme_stylebox_override("panel", e)
+	var interior := _columna(2)
+	caja.add_child(interior)
+	var lcd := PanelContainer.new()
+	lcd.mouse_filter = Control.MOUSE_FILTER_PASS
+	var fondo := EstiloAri.crear([Tema.ARI_LCD_FONDO, Color("0b1510")], 6.0, 2.0, 4.0)
+	fondo.borde = Color("000000")
+	fondo.luz = Color(0, 0, 0, 0.0)
+	fondo.sombra = 0.0
+	fondo.hueco = Vector2.ZERO
+	lcd.add_theme_stylebox_override("panel", fondo)
+	interior.add_child(lcd)
+	var tinta := Tema.ARI_LCD_VERDE if bien else Tema.ARI_ALARMA
+	var valor := _etiqueta(texto)
+	valor.autowrap_mode = TextServer.AUTOWRAP_OFF
+	valor.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	valor.add_theme_font_size_override("font_size", Tema.tam(tam))
+	valor.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
+	valor.add_theme_color_override("font_color", tinta)
+	valor.add_theme_color_override("font_shadow_color", Color(tinta, 0.45))
+	valor.add_theme_constant_override("shadow_offset_x", 0)
+	valor.add_theme_constant_override("shadow_offset_y", 0)
+	valor.add_theme_constant_override("shadow_outline_size", 6)
+	lcd.add_child(valor)
+	if not donde.is_empty():
+		var nota := _etiqueta(donde, "Nota")
+		nota.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		nota.add_theme_font_size_override("font_size", Tema.tam(12))
+		interior.add_child(nota)
+	return caja
 
 
 func _separador() -> Control:
@@ -619,17 +641,15 @@ func _construir_fallas() -> void:
 	rejilla.add_theme_constant_override("v_separation", 6)
 	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	for i in lista.size():
-		var b := _boton(lista[i]["nombre"], elegir_falla.bind(i))
+		var b := BotonAri.new(lista[i]["nombre"], elegir_falla.bind(i), "ambar" if i == indice else "oscuro")
+		b.name = "Falla_%d" % i
 		b.toggle_mode = true
 		b.set_pressed_no_signal(i == indice)
+		b.lampara = "rojo"
+		b.lampara_encendida = i == indice
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.add_theme_font_size_override("font_size", Tema.tam(15))
-		b.add_theme_stylebox_override("pressed", Tema.caja(color, 12, 10, 13))
-		b.add_theme_stylebox_override("hover_pressed", Tema.caja(color, 12, 10, 13))
-		b.add_theme_stylebox_override("normal", Tema.caja(Tema.BOTON, 12, 10, 13, Tema.BORDE))
-		b.add_theme_stylebox_override("hover", Tema.caja(Tema.BOTON, 12, 10, 13, Tema.BORDE))
-		for clave in ["font_pressed_color", "font_hover_pressed_color"]:
-			b.add_theme_color_override(clave, Tema.FONDO)
+		b.custom_minimum_size.y = 50.0
+		b.add_theme_font_size_override("font_size", Tema.tam(14))
 		rejilla.add_child(b)
 	add_child(rejilla)
 	var desplazable := _desplazable()
@@ -670,22 +690,8 @@ func _tarjeta_falla(f: Dictionary) -> Control:
 	fila.add_theme_constant_override("separation", 6)
 	columna.add_child(fila)
 	for lectura: Dictionary in lecturas_falla(f):
-		var caja := PanelContainer.new()
-		caja.mouse_filter = Control.MOUSE_FILTER_PASS
+		var caja := _visor_lectura(lectura["texto"], lectura["bien"], 21, lectura["donde"])
 		caja.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		caja.add_theme_stylebox_override("panel", Tema.caja(OSCURO, Tema.RADIO, 8, 8))
-		var interior := _columna(0)
-		caja.add_child(interior)
-		var valor := _etiqueta(lectura["texto"])
-		valor.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		valor.add_theme_font_size_override("font_size", Tema.tam(21))
-		valor.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
-		valor.add_theme_color_override("font_color", VERDE if lectura["bien"] else ROJO)
-		interior.add_child(valor)
-		var donde := _etiqueta(lectura["donde"], "Nota")
-		donde.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		donde.add_theme_font_size_override("font_size", Tema.tam(13))
-		interior.add_child(donde)
 		fila.add_child(caja)
 	columna.add_child(_rotulo("Causa"))
 	columna.add_child(_rico(f.get("causa", "")))
@@ -743,11 +749,14 @@ class Casilla extends Button:
 	func _draw() -> void:
 		var r := Rect2(Vector2(2.0, (size.y - LADO) / 2.0), Vector2(LADO, LADO))
 		if button_pressed:
-			draw_style_box(Tema.caja(Tema.HECHO, 5, 0, 0), r)
+			# Gema verde encendida, con su halo, y la marca blanca.
+			Relieve.halo(self, r.get_center(), LADO * 0.95, Relieve.VERDE_MARCA, 1.0)
+			DibujoAri.pieza(self, r, 6.0, [Color("b6ffd0"), Color("22c55e"), Color("0d6b30")], [], Color("0b1015"), Color(1, 1, 1, 0.5), 0.4)
 			var c := r.get_center()
 			var p := PackedVector2Array([c + Vector2(-6, 0), c + Vector2(-2, 5), c + Vector2(7, -6)])
-			draw_polyline(p, Tema.FONDO, 3.0, true)
+			draw_polyline(p, Color.WHITE, 3.0, true)
 		else:
-			var borde := Tema.caja(Color.TRANSPARENT, 5, 0, 0, Tema.APAGADO)
-			borde.set_border_width_all(2)
-			draw_style_box(borde, r)
+			# Hueco vacío, hundido en la placa.
+			DibujoAri.degradado(self, r, 6.0, [Color("0b1015"), Color("1a222a")])
+			DibujoAri.borde(self, r, 6.0, Color("3b4855"), 1.0)
+			draw_line(r.position + Vector2(5, 2), Vector2(r.end.x - 5, r.position.y + 2), Color(0, 0, 0, 0.6), 2.0)

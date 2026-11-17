@@ -186,3 +186,56 @@ static func poligono_degradado(ci: CanvasItem, puntos: PackedVector2Array, color
 				var t := (q - desde).dot(d) / largo
 				cols.append(c0.lerp(c1, clampf((t - p0) / (p1 - p0), 0.0, 1.0)))
 			ci.draw_polygon(trozo, cols)
+
+
+## Marca numerada sobre un dibujo: moneda ámbar con aro cromado, brillo y la cifra oscura.
+## «elegida» la agranda con un halo y una corona de trazos; «apagada» la deja gris y hundida,
+## como un paso que todavía no ha llegado.
+static func marca(ci: CanvasItem, c: Vector2, r: float, numero: int, elegida := false, apagada := false, con_halo := true) -> void:
+	if elegida:
+		halo(ci, c, r * 2.4, AMBAR_HALO, 1.6)
+		var pasos := 24
+		for i in pasos:
+			if i % 2 == 0:
+				var a0 := TAU * i / pasos
+				ci.draw_arc(c, r * 1.55, a0, a0 + TAU / pasos * 0.75, 3, Color(Tema.ACENTO, 0.85), maxf(r * 0.12, 1.2), true)
+	elif con_halo and not apagada:
+		halo(ci, c, r * 1.6, AMBAR_HALO, 0.8)
+	ci.draw_circle(c + Vector2(0, r * 0.18), r * 1.2, Color(0, 0, 0, 0.55))
+	PiezasAri._disco(ci, c, r * 1.16, Color("ffffff"), Color("2b3238"))
+	if apagada:
+		PiezasAri._disco(ci, c, r, GRIS_OFF[0], GRIS_OFF[2], Vector2(-0.2, -0.3), 8)
+		ci.draw_arc(c, r - 1.0, PI * 1.1, PI * 1.9, 16, Color(0, 0, 0, 0.5), 2.0, true)
+		PiezasAri.texto(ci, str(numero), c.x, c.y + r * 0.38, r * 1.05, Color("8a97a2"), Tema.PESO_NEGRITA)
+		return
+	PiezasAri._disco(ci, c, r, Color("fff4cf"), Color("a86500"), Vector2(-0.24, -0.4), 10)
+	PiezasAri._elipse(ci, c + Vector2(-r * 0.15, -r * 0.5), Vector2(r * 0.6, r * 0.26), 0.0, Color(1, 1, 1, 0.45))
+	PiezasAri.texto(ci, str(numero), c.x, c.y + r * 0.38, r * 1.08, Color("2a1a00"), Tema.PESO_NEGRITA)
+
+
+## Hoja de papel sobre el visor, para los esquemas y los cortes, que se dibujan en tinta.
+static func estilo_papel(margen := 8.0, radio := 9.0) -> EstiloAri:
+	var e := EstiloAri.crear([Color("f4f1e6"), Color("e9e6da"), Color("dedac9")], margen, margen, radio)
+	e.borde = Color("6f6a58")
+	e.luz = Color(1, 1, 1, 0.9)
+	e.sombra = 0.55
+	e.hueco = Vector2(1, 1)
+	return e
+
+
+static var _foco: GradientTexture2D
+
+## Luz de foco del visor: un degradado radial que aclara el centro del hueco.
+static func foco() -> Texture2D:
+	if _foco == null:
+		var g := Gradient.new()
+		g.offsets = PackedFloat32Array([0.0, 0.45, 0.8, 1.0])
+		g.colors = PackedColorArray([Color("3b4855"), Color("26313c"), Color("141b22"), Color("0d1318")])
+		_foco = GradientTexture2D.new()
+		_foco.gradient = g
+		_foco.fill = GradientTexture2D.FILL_RADIAL
+		_foco.fill_from = Vector2(0.5, 0.42)
+		_foco.fill_to = Vector2(1.08, 0.95)
+		_foco.width = 256
+		_foco.height = 256
+	return _foco

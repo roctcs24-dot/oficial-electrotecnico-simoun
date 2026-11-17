@@ -84,6 +84,39 @@ func atlas(id: String) -> Dictionary:
 	return leer("atlas/%s.json" % id)
 
 
+## Id de la pieza del atlas que usa el dibujo de una ficha, o "" si no tiene.
+func atlas_de_ficha(id_ficha: String) -> String:
+	for s: Dictionary in todos():
+		for id: String in s.get("modos", {}).get("aprender", {}).get("atlas", []):
+			if str(atlas(id).get("ficha", id)) == id_ficha:
+				return id
+	return ""
+
+
+## Partes numeradas de un atlas, las que llevan marca: [{nombre, texto, x, y}].
+static func partes_atlas(datos_atlas: Dictionary) -> Array:
+	var lista: Array = []
+	for p: Dictionary in datos_atlas.get("que_es", {}).get("partes", []):
+		if p.has("marca"):
+			lista.append({"nombre": "", "texto": p.get("texto", ""), "x": float(p["marca"][0]), "y": float(p["marca"][1])})
+	return lista
+
+
+## Marcas numeradas sobre el dibujo de una ficha: las del atlas que usa ese dibujo o, si no
+## tiene atlas, las de data/marcas_fichas.json. Lista de {nombre, texto, x, y}.
+func partes_ficha(id_ficha: String) -> Array:
+	var id_atlas := atlas_de_ficha(id_ficha)
+	if not id_atlas.is_empty():
+		var del_atlas := partes_atlas(atlas(id_atlas))
+		if not del_atlas.is_empty():
+			return del_atlas
+	var lista: Array = []
+	for p: Dictionary in leer("marcas_fichas.json").get("fichas", {}).get(id_ficha, []):
+		var m: Array = p.get("marca", [0, 0])
+		lista.append({"nombre": p.get("nombre", ""), "texto": p.get("texto", ""), "x": float(m[0]), "y": float(m[1])})
+	return lista
+
+
 ## Con sistema >= 0, solo los símbolos de ese sistema del buque.
 func simbolos(sistema := -1) -> Array:
 	var todos: Array = leer("simbolos.json").get("simbolos", [])

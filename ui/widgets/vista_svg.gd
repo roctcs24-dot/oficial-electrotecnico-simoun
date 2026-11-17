@@ -11,6 +11,8 @@ var ruta := ""
 var tamano_svg := Vector2(100.0, 100.0)
 var etiquetas: Array = []
 var color_etiquetas := Color("eceee8")
+## Sombra suave del equipo sobre el fondo, para los dibujos que van en el visor de las fichas.
+var sombra_dibujo := false
 var _textura: Texture2D
 var _escala_textura := 0.0
 
@@ -72,6 +74,11 @@ func _actualizar_textura() -> void:
 func _draw() -> void:
 	_actualizar_textura()
 	if _textura != null:
+		if sombra_dibujo:
+			for i in 3:
+				var sombra := rect_imagen().grow(float(i))
+				sombra.position.y += 4.0 + i * 2.0
+				draw_texture_rect(_textura, sombra, false, Color(0, 0, 0, 0.16))
 		draw_texture_rect(_textura, rect_imagen(), false)
 	_dibujar_etiquetas()
 

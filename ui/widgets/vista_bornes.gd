@@ -5,6 +5,7 @@ extends VistaEquipo
 ## Las posiciones van en coordenadas del dibujo, como las etiquetas.
 
 signal borne_tocado(id: String)
+signal marca_tocada(numero: int)
 
 ## Un toque que se mueve más que esto es un arrastre de la lista, no un toque.
 const TOLERANCIA_TOQUE := 14.0
@@ -17,6 +18,10 @@ var bornes := {}
 var resaltados := {}
 ## [[número, x, y], ...]
 var marcas: Array = []
+## Número de la marca resaltada, o 0.
+var marca_elegida := 0
+## DibujoMarcas la dibuja él mismo, encima de la línea guía.
+var dibujar_elegida := true
 var _inicio_toque := Vector2.INF
 
 
@@ -48,6 +53,23 @@ func borne_en(punto: Vector2) -> String:
 	return mejor
 
 
+## Número de la marca bajo un punto local, o 0. Las marcas tienen prioridad sobre los bornes.
+func marca_en(punto: Vector2) -> int:
+	var mejor := 0
+	var distancia := maxf(radio_marca() * 1.6, 24.0)
+	for m: Array in marcas:
+		var d := a_local(float(m[1]), float(m[2])).distance_to(punto)
+		if d < distancia:
+			distancia = d
+			mejor = int(m[0])
+	return mejor
+
+
+func radio_marca() -> float:
+	var factor := rect_imagen().size.x / tamano_svg.x
+	return clampf(13.0 * factor, 10.0, 15.0)
+
+
 func _gui_input(evento: InputEvent) -> void:
 	if not evento is InputEventMouseButton or evento.button_index != MOUSE_BUTTON_LEFT:
 		return
@@ -55,8 +77,11 @@ func _gui_input(evento: InputEvent) -> void:
 		_inicio_toque = evento.position
 		return
 	if _inicio_toque != Vector2.INF and evento.position.distance_to(_inicio_toque) < TOLERANCIA_TOQUE:
-		var id := borne_en(evento.position)
-		if not id.is_empty():
+		var numero := marca_en(evento.position)
+		var id := borne_en(evento.position) if numero == 0 else ""
+		if numero > 0:
+			marca_tocada.emit(numero)
+		elif not id.is_empty():
 			borne_tocado.emit(id)
 	_inicio_toque = Vector2.INF
 
@@ -70,13 +95,10 @@ func _draw() -> void:
 		var color: Color = resaltados[id]
 		draw_circle(c, radio * 1.6, Color(color, 0.28))
 		draw_arc(c, radio * 1.15, 0.0, TAU, 32, color, maxf(3.0 * factor, 2.0), true)
-	var fuente := get_theme_default_font()
+	var r := radio_marca()
 	for m: Array in marcas:
-		var c := a_local(float(m[1]), float(m[2]))
-		var r := maxf(13.0 * factor, 10.0)
-		draw_circle(c, r, AMARILLO)
-		draw_arc(c, r, 0.0, TAU, 32, Tema.TINTA, 1.5, true)
-		var cifra := str(m[0])
-		var tam := int(r * 1.2)
-		var ancho := fuente.get_string_size(cifra, HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x
-		draw_string(fuente, c + Vector2(-ancho / 2.0, tam * 0.36), cifra, HORIZONTAL_ALIGNMENT_LEFT, -1, tam, Tema.TINTA)
+		if int(m[0]) != marca_elegida:
+			Relieve.marca(self, a_local(float(m[1]), float(m[2])), r, int(m[0]))
+	for m: Array in marcas:
+		if int(m[0]) == marca_elegida and dibujar_elegida:
+			Relieve.marca(self, a_local(float(m[1]), float(m[2])), r * 1.15, int(m[0]), true)

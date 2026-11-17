@@ -65,6 +65,8 @@ func _capturar() -> void:
 		await _capturar_ari(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "inicio":
 		await _capturar_inicio(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "fichas_d":
+		await _capturar_fichas_d(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -524,6 +526,43 @@ func _scroll_de(nodo: Node) -> ScrollContainer:
 
 ## Marco de simulador de Guardia y Taller: paneles, panel derecho plegado, hoja en vertical,
 ## ayuda, índice y leyenda. Por defecto, en el celular apaisado y en vertical.
+## Etapa D del rediseño: la ficha con el dibujo grande, las marcas y las pestañas con iconos,
+## con atlas y sin él, y el atlas en sus cinco vistas, con algunas ya vistas.
+func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
+	var p := raiz.partida
+	p.datos = Partida.datos_nuevos()
+	for pestana: String in ["que_es", "funciona", "conexion"]:
+		p.marcar_pestana_atlas("contactor", pestana)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		await _esperar()
+		raiz.ir_a("ficha", {"id": "contactor", "parte": 2})
+		await _guardar(carpeta, "d_ficha_contactor", tam)
+		raiz.pantalla_actual().elegir_pestana("prueba")
+		raiz.pantalla_actual().pulsar_banco(true)
+		await _guardar(carpeta, "d_ficha_contactor_prueba", tam)
+		raiz.pantalla_actual().pulsar_banco(false)
+		raiz.volver()
+		raiz.ir_a("ficha", {"id": "contactor", "vista": "simbolos", "pestana": "conexion"})
+		await _guardar(carpeta, "d_ficha_contactor_simbolos", tam)
+		raiz.volver()
+		for id: String in ["alternador", "acb", "compresor_tornillo", "motor_trifasico"]:
+			raiz.ir_a("ficha", {"id": id})
+			await _guardar(carpeta, "d_ficha_%s" % id, tam)
+			raiz.volver()
+		raiz.ir_a("ficha", {"id": "alternador", "vista": "extra_0", "pestana": "fallas"})
+		await _guardar(carpeta, "d_ficha_alternador_extra", tam)
+		raiz.volver()
+		for pestana: String in ["que_es", "funciona", "conexion", "medir", "fallas"]:
+			raiz.ir_a("atlas", {"id": "contactor", "pestana": pestana, "parte": 2})
+			await _guardar(carpeta, "d_atlas_contactor_%s" % pestana, tam)
+			raiz.volver()
+		raiz.ir_a("atlas", {"id": "motor_trifasico", "pestana": "que_es"})
+		await _guardar(carpeta, "d_atlas_motor_que_es", tam)
+		raiz.volver()
+
+
 ## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
 ## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
 func _capturar_inicio(raiz: Raiz, carpeta: String) -> void:
