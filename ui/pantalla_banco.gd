@@ -499,7 +499,7 @@ func _crear_lateral() -> Control:
 		pestanas.add_child(b)
 		_botones_pestana[p[0]] = b
 	_desplazable_panel = _desplazable()
-	lateral.add_child(_desplazable_panel)
+	lateral.add_child(_chapa_zona(_desplazable_panel))
 	_panel = _columna(8)
 	_desplazable_panel.add_child(_panel)
 	return lateral

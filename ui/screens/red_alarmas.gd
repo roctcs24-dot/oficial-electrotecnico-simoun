@@ -41,7 +41,7 @@ func construir() -> void:
 	_construir_extra()
 	add_child(_fila_pestanas())
 	_desplazable_zona = _desplazable()
-	add_child(_desplazable_zona)
+	add_child(_chapa_zona(_desplazable_zona))
 	_zona = _columna(8)
 	_desplazable_zona.add_child(_zona)
 	_llenar()

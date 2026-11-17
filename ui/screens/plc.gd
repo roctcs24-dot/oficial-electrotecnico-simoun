@@ -38,7 +38,8 @@ func construir() -> void:
 		add_child(cuerpo)
 		_zonas.append([_agregar_zona(cuerpo), "equipo"])
 		_zonas.append([_agregar_zona(cuerpo), "programa"])
-		_desplazables[-1].size_flags_stretch_ratio = 1.6
+		var exterior: Control = _desplazables[-1].get_parent() if en_marco() else _desplazables[-1]
+		exterior.size_flags_stretch_ratio = 1.6
 	_llenar()
 	_actualizar()
 
@@ -58,7 +59,7 @@ func _preparar() -> void:
 
 func _agregar_zona(padre: Control) -> VBoxContainer:
 	var desplazable := _desplazable()
-	padre.add_child(desplazable)
+	padre.add_child(_chapa_zona(desplazable))
 	_desplazables.append(desplazable)
 	var columna := _columna(8)
 	desplazable.add_child(columna)

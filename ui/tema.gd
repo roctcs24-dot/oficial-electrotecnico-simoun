@@ -235,7 +235,16 @@ static func crear_ari() -> Theme:
 
 	t.set_color("font_color", "Label", ARI_TEXTO)
 	t.set_color("font_color", "Nota", ARI_TEXTO_SUAVE)
-	t.set_color("font_color", "Rotulo", ARI_EVENTO)
+	# Rótulos de sección: barra con brillo y letras espaciadas, como las cabeceras del marco.
+	var barra := EstiloAri.crear(ARI_CABECERA, 10.0, 3.0, 4.0)
+	barra.hueco = Vector2.ZERO
+	barra.sombra = 0.25
+	barra.luz = Color(1, 1, 1, 0.35)
+	t.set_stylebox("normal", "Rotulo", barra)
+	t.set_color("font_color", "Rotulo", Color.WHITE)
+	t.set_color("font_shadow_color", "Rotulo", Color(0, 0, 0, 0.5))
+	t.set_constant("shadow_offset_y", "Rotulo", 1)
+	t.set_font("font", "Rotulo", PanelAri.fuente_rotulo(PESO_NEGRITA, 2))
 	t.set_color("default_color", "RichTextLabel", ARI_TEXTO)
 
 	var tarjeta := EstiloAri.crear(ARI_PANEL, 12.0, 12.0)

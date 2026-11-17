@@ -286,3 +286,23 @@ func test_estilo_ari_se_duplica_con_sus_colores() -> String:
 		A.cierto(normal.colores == Tema.ARI_BOTON, "el botón normal es azul"),
 		A.cierto(is_equal_approx(copia.content_margin_top, elegido.content_margin_top), "la copia conserva los márgenes"),
 	])
+
+
+func test_acabado_de_rotulos_zonas_e_instrumentos() -> String:
+	var raiz := _raiz()
+	raiz.ir_a_panel("P-31")
+	var lateral_en_chapa: bool = raiz.pantalla_actual()._desplazable_panel.get_parent().name == "ChapaZona"
+	raiz.ir_a_panel("F-41")
+	var planta_en_chapa: bool = raiz.pantalla_actual()._desplazables[0].get_parent().name == "ChapaZona"
+	raiz.ir_a_panel("X-81")
+	var red_en_chapa: bool = raiz.pantalla_actual()._desplazable_zona.get_parent().name == "ChapaZona"
+	raiz.free()
+	var rotulo := Tema.crear_ari().get_stylebox("normal", "Rotulo")
+	var instrumento := InstrumentoAguja.new().configurar("Motor", "A", 0.0, 60.0, 45.0)
+	var alto := instrumento.custom_minimum_size.y
+	instrumento.free()
+	return A.primero([
+		A.cierto(lateral_en_chapa and planta_en_chapa and red_en_chapa, "las zonas del marco van sobre chapa: %s %s %s" % [lateral_en_chapa, planta_en_chapa, red_en_chapa]),
+		A.cierto(rotulo is EstiloAri and (rotulo as EstiloAri).colores == Tema.ARI_CABECERA, "los rótulos de sección son barras con brillo"),
+		A.cierto(alto >= 188.0, "el instrumento deja sitio a la chapa, el rótulo y el visor: %.0f" % alto),
+	])

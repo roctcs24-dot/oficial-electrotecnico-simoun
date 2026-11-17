@@ -7,6 +7,8 @@ extends Control
 ##   toma inferior; en bar lleva además la escala interior en psi, como los de la planta de frío.
 ## Encima va el rótulo grabado y debajo la lectura en cifras, para leer sin errores de paralaje.
 ## Desde zona_roja la escala se pinta en rojo, como en los instrumentos reales.
+## Va montado en una chapa azul con tornillos, como en los mímicos del simulador, y la lectura
+## sale en un visor de siete segmentos: verde, o ámbar si pasa de la zona roja.
 
 const APERTURA_CUADRO := 240.0
 const APERTURA_MANOMETRO := 270.0
@@ -14,7 +16,9 @@ const PSI_POR_BAR := 14.5038
 const PLACA := Color("202427")
 const TEXTO_PLACA := Color("e9ebe8")
 const ALTO_ROTULO := 18.0
-const ALTO_LECTURA := 22.0
+const ALTO_LECTURA := 20.0
+## Margen de la chapa alrededor del rótulo, la esfera y el visor.
+const MARGEN := 8.0
 
 var titulo := ""
 var unidad := ""
@@ -32,7 +36,7 @@ var valor := 0.0:
 
 
 func _init() -> void:
-	custom_minimum_size = Vector2(132.0, 172.0)
+	custom_minimum_size = Vector2(136.0, 188.0)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
@@ -49,14 +53,16 @@ func configurar(p_titulo: String, p_unidad: String, p_minimo: float, p_maximo: f
 
 func _draw() -> void:
 	var fuente := get_theme_default_font()
-	_placa(fuente, Rect2(Vector2.ZERO, Vector2(size.x, ALTO_ROTULO)), titulo, 12)
-	var zona := Rect2(Vector2(0.0, ALTO_ROTULO + 4.0), Vector2(size.x, size.y - ALTO_ROTULO - ALTO_LECTURA - 8.0))
+	PiezasAri.chapa(self, Rect2(Vector2.ZERO, size), 1.0, PiezasAri.CHAPA)
+	PiezasAri.rotulo(self, Rect2(Vector2(16.0, 6.0), Vector2(size.x - 32.0, ALTO_ROTULO)), titulo.to_upper(), 1.0, Color.TRANSPARENT, 10.5)
+	var zona := Rect2(Vector2(MARGEN, ALTO_ROTULO + 12.0), Vector2(size.x - MARGEN * 2.0, size.y - ALTO_ROTULO - ALTO_LECTURA - 28.0))
 	if estilo == "manometro":
 		_manometro(fuente, zona)
 	else:
 		_cuadro(fuente, zona)
-	var lectura := "%s %s" % [TextoTecnico.numero(valor, decimales), unidad]
-	_placa(fuente, Rect2(Vector2(size.x * 0.1, size.y - ALTO_LECTURA), Vector2(size.x * 0.8, ALTO_LECTURA)), lectura, 15)
+	var visor := Rect2(Vector2(size.x * 0.14, size.y - ALTO_LECTURA - 9.0), Vector2(size.x * 0.72, ALTO_LECTURA))
+	var fuera := valor > zona_roja
+	PiezasAri.visor(self, visor, 1.0, LecturaLcd.numero(valor, decimales), unidad, Tema.ARI_LCD_AMBAR if fuera else Tema.ARI_LCD_VERDE, 12.0)
 
 
 func _placa(fuente: Font, r: Rect2, texto: String, tam: int) -> void:

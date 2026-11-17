@@ -10,12 +10,15 @@ const ALTO_EQUIPO := 78.0
 const X_A := 22.0
 const X_B := 40.0
 const X_CAJA := 86.0
-const A_COLOR := Color("c8a12a")
-const B_COLOR := Color("2a7a3c")
-const VERDE := Color("2fbf5a")
+## Colores del mímico del simulador: hilo A amarillo, hilo B verde y LED con halo.
+const A_COLOR := Color("ffd23d")
+const B_COLOR := Color("4fe08a")
+const VERDE := Color("3dff74")
 const AMBAR := Color("ffb020")
-const ROJO := Color("e0463a")
+const ROJO := Color("ff4a3a")
 const GRIS := Color("5a646b")
+const TERMINADOR := Color("ff9a3d")
+const CONTORNO := Color("06121d")
 
 var red: SimRedModbus
 var seleccion := ""
@@ -55,7 +58,13 @@ func _y(i: int) -> float:
 func _draw() -> void:
 	if red == null:
 		return
-	draw_style_box(Tema.caja(Tema.PAPEL, Tema.RADIO, 0, 0), Rect2(Vector2.ZERO, size))
+	var fondo := Rect2(Vector2.ZERO, size)
+	DibujoAri.degradado(self, fondo, 6.0, PiezasAri.CHAPA_OSCURA)
+	DibujoAri.relleno(self, fondo.grow(-4.0), 4.0, Color("0b1c2c", 0.6))
+	var x_rejilla := 24.0
+	while x_rejilla < size.x:
+		draw_line(Vector2(x_rejilla, 4.0), Vector2(x_rejilla, size.y - 4.0), Color(1, 1, 1, 0.03), 1.0)
+		x_rejilla += 24.0
 	var n := red.esclavos.size()
 	# Hilos A y B desde el maestro hasta el último equipo, con el corte si lo hay.
 	for i in n:
@@ -65,13 +74,13 @@ func _draw() -> void:
 			var medio := (y0 + y1) * 0.5
 			for x: float in [X_A, X_B]:
 				var c := A_COLOR if x == X_A else B_COLOR
-				draw_line(Vector2(x, y0), Vector2(x, medio - 7.0), c, 3.0)
-				draw_line(Vector2(x, medio + 7.0), Vector2(x, y1), c, 3.0)
+				_hilo(Vector2(x, y0), Vector2(x, medio - 7.0), c)
+				_hilo(Vector2(x, medio + 7.0), Vector2(x, y1), c)
 			draw_line(Vector2(X_A - 10.0, medio - 8.0), Vector2(X_B + 10.0, medio + 8.0), ROJO, 2.5)
 			draw_line(Vector2(X_A - 10.0, medio + 8.0), Vector2(X_B + 10.0, medio - 8.0), ROJO, 2.5)
 		else:
-			draw_line(Vector2(X_A, y0), Vector2(X_A, y1), A_COLOR, 3.0)
-			draw_line(Vector2(X_B, y0), Vector2(X_B, y1), B_COLOR, 3.0)
+			_hilo(Vector2(X_A, y0), Vector2(X_A, y1), A_COLOR)
+			_hilo(Vector2(X_B, y0), Vector2(X_B, y1), B_COLOR)
 	_texto(Vector2(X_A, _y(n) + 26.0), "A", 12, A_COLOR)
 	_texto(Vector2(X_B, _y(n) + 26.0), "B", 12, B_COLOR)
 	_equipo(0, red.maestro, true)
@@ -96,18 +105,19 @@ func _equipo(i: int, e: Dictionary, es_maestro: bool) -> void:
 	draw_circle(Vector2(X_B, yb), 3.0, B_COLOR)
 	if e["terminacion"]:
 		_terminador(Vector2(X_A, y - 30.0), Vector2(X_B, y - 30.0))
-	var fondo := Color("f6f7f5") if e["id"] != seleccion else Color("d6e6f0")
-	draw_rect(caja, fondo)
-	draw_rect(caja, Tema.SELECCION if e["id"] == seleccion else Color("8a9298"), false, 2.0 if e["id"] == seleccion else 1.0)
+	var elegido: bool = e["id"] == seleccion
+	PiezasAri.chapa(self, caja, 0.85, PiezasAri.CHAPA if not es_maestro else PiezasAri.CHAPA_DISPARO)
+	if elegido:
+		DibujoAri.borde(self, caja.grow(2.0), 7.0, Color("38e0e8"), 2.0)
 	var x := caja.position.x + 34.0
-	_texto(Vector2(x, caja.position.y + 14.0), e["nombre"], 14, Tema.TINTA, false)
-	_texto(Vector2(x, caja.position.y + 32.0), e.get("equipo", ""), 12, Color("4c555b"), false)
+	_texto(Vector2(x, caja.position.y + 14.0), e["nombre"], 14, Color.WHITE, false)
+	_texto(Vector2(x, caja.position.y + 32.0), e.get("equipo", ""), 12, PiezasAri.TEXTO_SUAVE, false)
 	var linea := "%s baudios · %s" % [e["baudios"], e["formato"]]
 	if not es_maestro:
 		linea = "Dirección %d · %s" % [int(e["direccion"]), linea]
 	else:
 		linea = "Maestro · %s · espera %d ms" % [linea, int(e["timeout_ms"])]
-	_texto(Vector2(x, caja.position.y + 50.0), linea, 12, Color("4c555b"), false)
+	_texto(Vector2(x, caja.position.y + 50.0), linea, 12, PiezasAri.TEXTO_CHAPA, false)
 	# LED de comunicación: parpadea con cada respuesta correcta.
 	var centro := Vector2(caja.position.x + 17.0, y)
 	var color := GRIS
@@ -119,8 +129,15 @@ func _equipo(i: int, e: Dictionary, es_maestro: bool) -> void:
 		color = {"ok": VERDE, "intermitente": AMBAR, "falla": ROJO}.get(estado, GRIS)
 		if estado != "falla" and fmod(_t + i * 0.13, 0.5) < 0.18:
 			color = color.lightened(0.35)
-	draw_circle(centro, 8.0, color.darkened(0.5))
-	draw_circle(centro, 6.0, color)
+	# LED con aro y halo, como las lámparas del mímico.
+	var encendido := color != GRIS and color.v > 0.5
+	if encendido:
+		for k in 4:
+			draw_circle(centro, 13.0 - k * 2.0, Color(color, 0.06 + k * 0.05))
+	draw_circle(centro, 8.5, Color("2b3238"))
+	draw_circle(centro, 7.5, Color("c9d0d6"))
+	draw_circle(centro, 6.0, color if encendido else color.darkened(0.55))
+	draw_circle(centro + Vector2(-2.0, -2.0), 2.0, Color(1, 1, 1, 0.6 if encendido else 0.15))
 
 
 func _terminador(a: Vector2, b: Vector2) -> void:
@@ -131,10 +148,17 @@ func _terminador(a: Vector2, b: Vector2) -> void:
 		var x := a.x + (b.x - a.x) * (k + 0.5) / pasos
 		puntos.append(Vector2(x, a.y + (-5.0 if k % 2 == 0 else 5.0)))
 	puntos.append(b)
-	draw_polyline(puntos, Color("8c3b30"), 2.0)
-	draw_line(a, a + Vector2(0, 10.0), Color("8c3b30"), 1.5)
-	draw_line(b, b + Vector2(0, 10.0), Color("8c3b30"), 1.5)
-	_texto(Vector2(b.x + 8.0, a.y), "120 Ω", 11, Color("8c3b30"), false)
+	draw_polyline(puntos, TERMINADOR, 2.0, true)
+	draw_line(a, a + Vector2(0, 10.0), TERMINADOR, 1.5)
+	draw_line(b, b + Vector2(0, 10.0), TERMINADOR, 1.5)
+	_texto(Vector2(b.x + 8.0, a.y), "120 Ω", 11, TERMINADOR, false)
+
+
+## Hilo del bus con relieve: contorno oscuro, color y brillo.
+func _hilo(a: Vector2, b: Vector2, color: Color) -> void:
+	draw_line(a, b, CONTORNO, 5.0)
+	draw_line(a, b, color, 3.0)
+	draw_line(a + Vector2(-0.6, 0), b + Vector2(-0.6, 0), Color(1, 1, 1, 0.35), 1.0)
 
 
 func _texto(p: Vector2, cadena: String, tam: int, color: Color, centrado := true) -> void:

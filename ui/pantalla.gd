@@ -200,6 +200,26 @@ static func cancelar_pulsaciones(nodo: Node) -> void:
 		cancelar_pulsaciones(hijo)
 
 
+## Dentro del marco, una zona desplazable va sobre una chapa de panel, como el contenido de un
+## simulador; fuera del marco se devuelve tal cual.
+func _chapa_zona(zona: Control) -> Control:
+	if not en_marco():
+		return zona
+	var chapa := PanelContainer.new()
+	chapa.name = "ChapaZona"
+	chapa.mouse_filter = Control.MOUSE_FILTER_PASS
+	chapa.size_flags_horizontal = zona.size_flags_horizontal
+	chapa.size_flags_vertical = zona.size_flags_vertical
+	chapa.size_flags_stretch_ratio = zona.size_flags_stretch_ratio
+	var estilo := EstiloAri.crear(Tema.ARI_PANEL, 8.0, 8.0)
+	estilo.hueco = Vector2.ZERO
+	estilo.luz = Color(1, 1, 1, 0.18)
+	estilo.sombra = 0.3
+	chapa.add_theme_stylebox_override("panel", estilo)
+	chapa.add_child(zona)
+	return chapa
+
+
 func _columna(separacion := 10) -> VBoxContainer:
 	var c := VBoxContainer.new()
 	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL

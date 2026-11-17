@@ -71,7 +71,9 @@ func _construir_cuerpo() -> void:
 	cuerpo.add_theme_constant_override("separation", 10)
 	add_child(cuerpo)
 	var izquierda := _agregar_zona(cuerpo)
-	_desplazables[-1].size_flags_stretch_ratio = PROPORCION_ESQUEMA
+	# Dentro del marco, la zona va sobre una chapa: la proporción es de la chapa.
+	var exterior: Control = _desplazables[-1].get_parent() if en_marco() else _desplazables[-1]
+	exterior.size_flags_stretch_ratio = PROPORCION_ESQUEMA
 	_zonas.append([izquierda, "esquema"])
 	var derecha := _columna(6)
 	derecha.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -82,7 +84,7 @@ func _construir_cuerpo() -> void:
 
 func _agregar_zona(padre: Control) -> VBoxContainer:
 	var desplazable := _desplazable()
-	padre.add_child(desplazable)
+	padre.add_child(_chapa_zona(desplazable))
 	_desplazables.append(desplazable)
 	var columna := _columna(8)
 	desplazable.add_child(columna)

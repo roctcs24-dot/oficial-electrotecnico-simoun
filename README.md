@@ -281,6 +281,11 @@ Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro d
 - **Avisos:** dentro del marco, `_mostrar_aviso` pone una tarjeta `AvisoAri` centrada sobre toda la pantalla. La cabecera es roja si es una alarma y ámbar si es un evento, y la tarjeta tiene botón ACK. Los avisos siguen saliendo de uno en uno.
 - **Alarmas que se tocan:** una alarma registrada en otro panel lleva a ese panel. La Guardia muestra las averías sin terminar como una tabla y como alarmas; al tocarlas se abre la misión (`alarmas_marco_detalle()` con `abrir`).
 - **Panel derecho en un celular apaisado:** con menos de 560 puntos de alto empieza plegado, y al abrirlo flota sobre el contenido sin estrecharlo (`MarcoAri.panel_superpuesto()`). En PC y tableta sigue fijo y plegable.
+- **Acabado (4.14.1):**
+  - los rótulos de sección son barras con brillo (variación «Rotulo» del tema);
+  - las zonas desplazables de los tableros, la planta, el PLC y la red van sobre una chapa (`Pantalla._chapa_zona`);
+  - los instrumentos de aguja van en chapa azul con rótulo grabado y la lectura en un visor de siete segmentos, verde o ámbar si pasa de la zona roja;
+  - la red RS-485 se dibuja como un mímico. La pantalla MYCOM sigue clara, como la pantalla táctil real del compresor.
 - **Pruebas** en `tests/test_rediseno_b.gd`.
 
 ## Referencias
