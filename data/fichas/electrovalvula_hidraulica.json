@@ -11,8 +11,11 @@
       { "texto": "Y2", "x": 405, "y": 150, "tam": 18, "color": "#f4f4f0" },
       { "texto": "Conector DIN", "x": 95, "y": 40, "tam": 13 },
       { "texto": "24 V DC", "x": 250, "y": 212, "tam": 13, "color": "#20242a" },
-      { "texto": "P  A  B", "x": 250, "y": 262, "tam": 12 },
-      { "texto": "Mando manual", "x": 470, "y": 250, "tam": 11 }
+      { "texto": "P", "x": 205, "y": 268, "tam": 12 },
+      { "texto": "A", "x": 235, "y": 268, "tam": 12 },
+      { "texto": "B", "x": 265, "y": 268, "tam": 12 },
+      { "texto": "T", "x": 295, "y": 268, "tam": 12 },
+      { "texto": "Mando manual", "x": 440, "y": 250, "tam": 11 }
     ]
   },
   "simbolos": {

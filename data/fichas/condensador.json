@@ -14,7 +14,7 @@
       { "texto": "Entrada de agua", "x": 60, "y": 270, "tam": 11 },
       { "texto": "Líquido al recibidor", "x": 400, "y": 270, "tam": 11 },
       { "texto": "Válvula de seguridad", "x": 400, "y": 30, "tam": 11 },
-      { "texto": "Purga", "x": 251, "y": 74, "tam": 10, "color": "#20242a" }
+      { "texto": "Purga", "x": 251, "y": 74, "tam": 10 }
     ]
   },
   "simbolos": {

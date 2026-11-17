@@ -12,6 +12,12 @@
   <rect x="150" y="320" width="60" height="30" rx="4" fill="#4a4f53"/>
   <rect x="60" y="60" width="240" height="190" rx="22" fill="url(#oscuro)"/>
   <rect x="80" y="80" width="200" height="150" rx="14" fill="url(#cristal)" stroke="#8a9094" stroke-width="3"/>
+  <!-- Lámpara tubular de halogenuros metálicos con sus portalámparas, vista a través del cristal -->
+  <rect x="96" y="148" width="20" height="24" rx="3" fill="#7d8488" opacity="0.8"/>
+  <rect x="244" y="148" width="20" height="24" rx="3" fill="#7d8488" opacity="0.8"/>
+  <rect x="116" y="153" width="128" height="14" rx="7" fill="#fff6d8" stroke="#c9b98a" stroke-width="1.5" opacity="0.9"/>
+  <path d="M124,160 H236" stroke="#d8b860" stroke-width="2" opacity="0.8"/>
+  <rect x="80" y="80" width="200" height="150" rx="14" fill="#ffffff" opacity="0.18"/>
   <path d="M80,120 H280 M80,160 H280 M80,200 H280" stroke="#c9d4da" stroke-width="2"/>
   <circle cx="70" cy="70" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
   <circle cx="290" cy="70" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
@@ -19,5 +25,10 @@
   <circle cx="290" cy="240" r="5" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
   <circle cx="60" cy="250" r="10" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
   <circle cx="300" cy="250" r="10" fill="url(#acero)" stroke="#3b4043" stroke-width="1"/>
-  <rect x="300" y="150" width="24" height="30" rx="3" fill="#2b2f32"/>
+  <!-- Prensaestopas de latón con el cable de alimentación -->
+  <path d="M324,165 C340,165 344,190 344,214" stroke="#15171a" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M324,163 C338,163 341,186 341,212" stroke="#5a6064" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <rect x="300" y="152" width="12" height="26" rx="2" fill="url(#amarillo)" stroke="#6e5a1a" stroke-width="1"/>
+  <rect x="312" y="156" width="14" height="18" rx="3" fill="url(#amarillo)" stroke="#6e5a1a" stroke-width="1"/>
+  <path d="M305,152 V178 M319,156 V174" stroke="#8a7020" stroke-width="1"/>
 </svg>

@@ -75,14 +75,14 @@
 		],
 		"generador_emergencia": [
 			{"nombre": "Panel local", "texto": "Selector AUTO, MAN y OFF (en AUTO en servicio normal), luces RUN y ALARM y lectura de tensión.", "marca": [292, 30]},
-			{"nombre": "Parada de emergencia", "texto": "Seta que para el grupo desde el panel local.", "marca": [455, 146]},
+			{"nombre": "Parada de emergencia", "texto": "Seta que para el grupo desde el panel local.", "marca": [400, 113]},
 			{"nombre": "Radiador", "texto": "Refrigerado por aire, sin depender de las bombas de agua salada del buque.", "marca": [20, 140]},
 			{"nombre": "Alternador", "texto": "Síncrono con su AVR; alimenta las barras de emergencia a través del interruptor QE.", "marca": [312, 158]}
 		],
 		"reflector": [
 			{"nombre": "Placa de datos", "texto": "Grado de protección y potencia; la lámpara nueva debe ser del mismo tipo y potencia que el balasto.", "marca": [252, 40]},
 			{"nombre": "Cristal templado", "texto": "Con su junta mantiene estanca la carcasa; revíselos cada mes.", "marca": [110, 104]},
-			{"nombre": "Prensaestopas", "texto": "Bien apretado y con un lazo de goteo en el cable, para que el agua no entre.", "marca": [330, 170]},
+			{"nombre": "Prensaestopas", "texto": "Bien apretado y con un lazo de goteo en el cable, para que el agua no entre.", "marca": [342, 240]},
 			{"nombre": "Lira", "texto": "Fijación orientable: alumbre la zona de trabajo sin deslumbrar al puente ni a la tripulación.", "marca": [120, 300]}
 		],
 		"rele_potencia_inversa": [
@@ -95,7 +95,8 @@
 		"sensor_proximidad": [
 			{"nombre": "Cara activa", "texto": "Detecta la pieza; colóquela a menos del 80 % de la distancia de conmutación Sn.", "marca": [22, 40]},
 			{"nombre": "Rosca y tuercas", "texto": "Cuerpo M18 × 1: fije las tuercas con el sensor ya en su posición.", "marca": [105, 142]},
-			{"nombre": "Bornes del cable", "texto": "BN a +24 V, BU a 0 V y BK salida; en un PNP, BK da +24 V al detectar.", "marca": [310, 28]}
+			{"nombre": "Bornes del cable", "texto": "BN a +24 V, BU a 0 V y BK salida; en un PNP, BK da +24 V al detectar.", "marca": [310, 28]},
+			{"nombre": "LED de estado", "texto": "Amarillo: se enciende con la salida activa; pruebe el sensor acercando una pieza metálica.", "marca": [234, 46]}
 		],
 		"sincronoscopio": [
 			{"nombre": "Ventana de cierre", "texto": "Sector verde arriba de la escala: zona en la que se cierra el interruptor.", "marca": [214, 64]},
@@ -104,7 +105,7 @@
 			{"nombre": "Lámparas de sincronismo", "texto": "Una por fase: con las fases bien conectadas se apagan a la vez; cambie las fundidas.", "marca": [140, 370]}
 		],
 		"transmisor_presion": [
-			{"nombre": "Conector", "texto": "Dos hilos en serie con la fuente de 24 V DC y la entrada del PLC; respete la polaridad.", "marca": [100, 30]},
+			{"nombre": "Conector", "texto": "Dos hilos en serie con la fuente de 24 V DC y la entrada del PLC; respete la polaridad.", "marca": [80, 34]},
 			{"nombre": "Placa de datos", "texto": "Escala de −1 a 9 bar, salida de 4–20 mA y 24 V DC; con esta escala, 12 mA son 4 bar.", "marca": [200, 165]},
 			{"nombre": "Conexión de proceso", "texto": "Rosca de proceso, con válvula de aislamiento para cambiarlo sin vaciar el circuito.", "marca": [176, 330]}
 		],
@@ -116,7 +117,7 @@
 		],
 		"valvula_solenoide": [
 			{"nombre": "Bobina", "texto": "Por fuera del tubo; una bobina de repuesto debe tener la misma tensión y tipo de corriente.", "marca": [90, 130]},
-			{"nombre": "Conector", "texto": "Alimentación desde el mando del compresor; mida aquí si llega tensión cuando debe abrir.", "marca": [240, 150]},
+			{"nombre": "Conector", "texto": "Alimentación desde el mando del compresor; mida aquí si llega tensión cuando debe abrir.", "marca": [276, 154]},
 			{"nombre": "Tubo del núcleo", "texto": "Tubo estanco con el núcleo móvil: el amoníaco no sale al exterior.", "marca": [195, 200]},
 			{"nombre": "Flecha de paso", "texto": "Respete el sentido de la flecha: montada al revés, la válvula no cierra.", "marca": [225, 262]},
 			{"nombre": "Apertura manual", "texto": "Abre la válvula a mano en una emergencia.", "marca": [130, 290]}
