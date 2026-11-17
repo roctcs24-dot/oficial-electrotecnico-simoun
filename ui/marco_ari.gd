@@ -18,6 +18,9 @@ const ALTO_PIE_RETRATO := 34.0
 const ALTO_ESTADO := 52.0
 ## Por debajo de este ancho, aunque la pantalla esté apaisada, se usa la disposición vertical.
 const ANCHO_MIN_APAISADO := 640.0
+## Por debajo de este alto (un celular apaisado), el panel derecho empieza plegado y, al abrirlo,
+## flota sobre el contenido en lugar de estrecharlo (elegido por el usuario el 2026-11-17).
+const ALTO_MIN_PANEL_FIJO := 560.0
 const PERIODO_LECTURA := 0.5
 const CIAN_RELOJ := Tema.ARI_LCD_CIAN
 
@@ -50,6 +53,8 @@ var _boton_alarmas: BotonAri
 var _insignia: Label
 var _hoja: Control
 var _ayuda: Control
+## Panel derecho flotante del celular apaisado, oculto hasta que se abre.
+var _capa_derecha: Control
 var _t := 0.0
 var _encendido := true
 var _reconocidas_pantalla := false
@@ -68,6 +73,11 @@ static func ancho_util(ancho_total: float, en_retrato: bool, plegado: bool) -> f
 
 static func es_retrato(tamano: Vector2) -> bool:
 	return tamano.x < tamano.y or tamano.x < ANCHO_MIN_APAISADO
+
+
+## En un celular apaisado el panel derecho no ocupa ancho: flota sobre el contenido.
+static func panel_superpuesto(tamano: Vector2) -> bool:
+	return not es_retrato(tamano) and tamano.y < ALTO_MIN_PANEL_FIJO
 
 
 func preparar(raiz_juego: Raiz) -> void:
@@ -139,15 +149,20 @@ func _construir_apaisado() -> void:
 	margen.add_child(medio)
 	medio.add_child(_columna_accesos())
 	medio.add_child(_crear_cuerpo())
-	var pliegue := BotonAri.new("", _alternar_pliegue)
+	var flotante := panel_superpuesto(raiz.size)
+	var plegado := raiz.marco_plegado or flotante
+	var pliegue := BotonAri.new("", _abrir_capa_derecha if flotante else _alternar_pliegue)
 	pliegue.name = "Pliegue"
-	pliegue.signo = "anterior" if raiz.marco_plegado else "siguiente"
-	pliegue.tooltip_text = "Mostrar el panel de generación y alarmas" if raiz.marco_plegado else "Plegar el panel derecho"
+	pliegue.signo = "anterior" if plegado else "siguiente"
+	pliegue.tooltip_text = "Mostrar el panel de generación y alarmas" if plegado else "Plegar el panel derecho"
 	pliegue.custom_minimum_size = Vector2(ANCHO_PLIEGUE, 72)
 	pliegue.hueco = Vector2(10, 0)
 	pliegue.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	medio.add_child(pliegue)
-	if not raiz.marco_plegado:
+	if flotante:
+		_capa_derecha = _crear_capa_derecha()
+		margen.add_child(_capa_derecha)
+	elif not raiz.marco_plegado:
 		var derecha := _desplazable_vertical()
 		derecha.name = "PanelDerecho"
 		derecha.custom_minimum_size.x = ANCHO_DER
@@ -209,6 +224,7 @@ func _crear_cuerpo() -> Control:
 	recorte.mouse_filter = Control.MOUSE_FILTER_PASS
 	marco_cuerpo.add_child(recorte)
 	cuerpo = MarginContainer.new()
+	cuerpo.theme = Tema.crear_ari()
 	cuerpo.set_anchors_preset(Control.PRESET_FULL_RECT)
 	cuerpo.mouse_filter = Control.MOUSE_FILTER_PASS
 	for lado in ["left", "right", "top", "bottom"]:
@@ -633,6 +649,52 @@ func _ir_vecino(paso: int) -> void:
 		raiz.ir_a_panel(siguiente)
 
 
+## Panel derecho flotante: velo a la izquierda (tocarlo lo cierra), botón de plegar y el panel.
+func _crear_capa_derecha() -> Control:
+	var capa := HBoxContainer.new()
+	capa.name = "CapaDerecha"
+	capa.add_theme_constant_override("separation", int(SEP))
+	capa.visible = false
+	var velo := Velo.new()
+	velo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	velo.color = Color(0.01, 0.04, 0.07, 0.45)
+	velo.tocado.connect(_cerrar_capa_derecha)
+	capa.add_child(velo)
+	var cerrar := BotonAri.new("", _cerrar_capa_derecha)
+	cerrar.name = "PlegarCapa"
+	cerrar.signo = "siguiente"
+	cerrar.tooltip_text = "Plegar el panel derecho"
+	cerrar.custom_minimum_size = Vector2(ANCHO_PLIEGUE, 72)
+	cerrar.hueco = Vector2(10, 0)
+	cerrar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	capa.add_child(cerrar)
+	var derecha := _desplazable_vertical()
+	derecha.name = "PanelDerecho"
+	derecha.custom_minimum_size.x = ANCHO_DER
+	capa.add_child(derecha)
+	var caja := VBoxContainer.new()
+	caja.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caja.add_theme_constant_override("separation", int(SEP))
+	derecha.add_child(caja)
+	for p in _paneles_estado():
+		caja.add_child(p)
+	return capa
+
+
+func _abrir_capa_derecha() -> void:
+	if _capa_derecha != null:
+		_capa_derecha.visible = true
+
+
+func _cerrar_capa_derecha() -> void:
+	if _capa_derecha != null:
+		_capa_derecha.visible = false
+
+
+func capa_derecha_abierta() -> bool:
+	return _capa_derecha != null and _capa_derecha.visible
+
+
 func _alternar_pliegue() -> void:
 	raiz.marco_plegado = not raiz.marco_plegado
 	raiz.reconstruir.call_deferred()
@@ -873,10 +935,30 @@ func _al_cambiar_eventos() -> void:
 func alarmas_visibles() -> Array[Dictionary]:
 	var r: Array[Dictionary] = []
 	if pantalla != null:
-		for t: String in pantalla.alarmas_marco():
-			r.append({"hora": "", "texto": t, "tipo": "alarma", "reconocida": _reconocidas_pantalla})
-	r.append_array(raiz.eventos.alarmas())
+		for a in pantalla.alarmas_marco_detalle():
+			var copia := a.duplicate()
+			copia["reconocida"] = a.get("reconocida", false) or _reconocidas_pantalla
+			r.append(copia)
+	for a in raiz.eventos.alarmas():
+		var copia := a.duplicate()
+		# Una alarma de otro panel lleva a ese panel al tocarla.
+		var origen: String = a.get("panel", "")
+		if not origen.is_empty() and origen != codigo and Paneles.disponible(raiz.paneles.panel(origen)):
+			copia["abrir"] = raiz.ir_a_panel.bind(origen)
+		r.append(copia)
 	return r
+
+
+## Toca la fila «indice» de la lista de alarmas, como hace el jugador con el dedo.
+func tocar_alarma(indice: int) -> bool:
+	var lista := alarmas_visibles()
+	if indice < 0 or indice >= lista.size() or not lista[indice].has("abrir"):
+		return false
+	_cerrar_hoja()
+	_cerrar_capa_derecha()
+	# La raíz libera el marco con queue_free: se puede rehacer desde aquí sin esperar.
+	(lista[indice]["abrir"] as Callable).call()
+	return true
 
 
 func pendientes() -> int:
@@ -914,10 +996,12 @@ func _actualizar_alarmas() -> void:
 			_boton_alarmas.modulate = Color.WHITE
 
 
-func _fila_alarma(a: Dictionary) -> Control:
+func _fila_alarma(a: Dictionary) -> FilaAlarma:
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 6)
-	var m := MarginContainer.new()
+	fila.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var m := FilaAlarma.new(a.has("abrir"), retrato)
+	m.name = "FilaAlarma"
 	m.add_theme_constant_override("margin_left", 8)
 	m.add_theme_constant_override("margin_right", 6)
 	m.add_child(fila)
@@ -930,7 +1014,13 @@ func _fila_alarma(a: Dictionary) -> Control:
 	var t := PanelAri.texto(str(a["texto"]).to_upper(), 11 if not retrato else 12, color, Tema.PESO_NEGRITA)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	fila.add_child(t)
+	if a.has("abrir"):
+		# Galón: tocar la fila lleva a la avería o al panel donde ocurrió.
+		var ir := PanelAri.texto("›", 16, color, Tema.PESO_NEGRITA)
+		ir.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(ir)
 	return m
 
 
@@ -1034,6 +1124,46 @@ class Numero:
 		var t := str(n)
 		var w := f.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
 		draw_string(f, c + Vector2(-w / 2.0, 4.0), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Tema.ARI_TEXTO_OSCURO)
+
+
+## Fila de la lista de alarmas. Si lleva a algún sitio, se toca como un botón, pero deja
+## arrastrar la lista: solo cuenta un toque que no se movió.
+class FilaAlarma:
+	extends MarginContainer
+	signal tocada
+	const ZONA_MUERTA := 12.0
+	var activa := false
+	var _inicio := Vector2.ZERO
+	var _presionada := false
+
+	func _init(p_activa: bool, en_retrato: bool) -> void:
+		activa = p_activa
+		mouse_filter = Control.MOUSE_FILTER_PASS
+		custom_minimum_size.y = (40.0 if en_retrato else 30.0) if activa else 0.0
+		if activa:
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	func _gui_input(evento: InputEvent) -> void:
+		if not activa or not evento is InputEventMouseButton or evento.button_index != MOUSE_BUTTON_LEFT:
+			if evento is InputEventMouseMotion and _presionada and evento.position.distance_to(_inicio) > ZONA_MUERTA:
+				_presionada = false
+				queue_redraw()
+			return
+		if evento.pressed:
+			_presionada = true
+			_inicio = evento.position
+		elif _presionada:
+			_presionada = false
+			if evento.position.distance_to(_inicio) <= ZONA_MUERTA:
+				tocada.emit()
+		queue_redraw()
+
+	func _draw() -> void:
+		if not activa:
+			return
+		var r := Rect2(Vector2(2, 1), size - Vector2(4, 2))
+		DibujoAri.relleno(self, r, 3.0, Color(1, 1, 1, 0.10 if _presionada else 0.04))
+		draw_line(Vector2(6, size.y - 0.5), Vector2(size.x - 6, size.y - 0.5), Color(1, 1, 1, 0.06), 1.0)
 
 
 class Punto:

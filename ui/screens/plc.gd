@@ -26,7 +26,7 @@ func construir() -> void:
 		args["pestana"] = "programa"
 	var circuito := raiz.contenido.leer("circuitos/%s.json" % args["circuito"])
 	_cabecera(circuito.get("nombre", "PLC"), "Práctica libre · valores típicos: verificar a bordo")
-	_avisos = _columna(6)
+	_avisos = _capa_avisos()
 	add_child(_avisos)
 	if raiz.vertical:
 		add_child(_fila_pestanas([["equipo", "Equipo"], ["programa", "Programa"]]))
@@ -110,6 +110,10 @@ func _llenar() -> void:
 
 func _panel_equipo(columna: VBoxContainer) -> void:
 	columna.add_child(_rotulo("Autómata"))
+	# El frente del autómata con sus LED, como se ve en el armario.
+	var modulo := ModuloPlc.new(plc)
+	modulo.name = "ModuloPlc"
+	columna.add_child(modulo)
 	columna.add_child(_luz("alimentado", "Alimentación de 24 V DC", LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
 	columna.add_child(_luz("run", "RUN: ejecutando el programa", LuzPiloto.VERDE_APAGADO, LuzPiloto.VERDE_ENCENDIDO))
 	columna.add_child(_boton("Pasar a STOP" if plc.estado["modo"] == "RUN" else "Pasar a RUN", _alternar_modo))

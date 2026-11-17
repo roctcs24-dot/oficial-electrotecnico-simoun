@@ -556,6 +556,43 @@ func _capturar_ari(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "ari_guardia", tam)
 		raiz.ir_a("leyenda")
 		await _guardar(carpeta, "ari_leyenda", tam)
+		# Etapa B: otras vistas del tablero, el megóhmetro, la planta con recirculación, el PLC,
+		# la red de alarmas y una misión.
+		raiz.ir_a_panel("P-31")
+		var t = raiz.pantalla_actual()
+		var sim: SimSimulacion = t.mesa.sim
+		(sim.componente("M1") as SimMotorTrifasico).params["aislamiento_mohm"] = [0.9, 300.0, 300.0]
+		sim.componente("SM2").estado["presionado"] = true
+		sim.avanzar_tiempo(0.3)
+		sim.componente("SM2").estado["presionado"] = false
+		sim.avanzar_tiempo(12.0)
+		(sim.componente("Q3") as SimGuardamotor).estado["disparado"] = true
+		var q0: SimSeccionador = sim.componente("Q0")
+		t.medir_con_megger()
+		await _guardar(carpeta, "ari_p31_megger_con_tension", tam)
+		t.args["megohmetro"] = SimMegohmetro.new()
+		q0.accionar(false)
+		q0.poner_candado(true)
+		sim.avanzar_tiempo(0.5)
+		t.medir_con_megger()
+		await _guardar(carpeta, "ari_p31_megger", tam)
+		for hijo in t._avisos.get_children():
+			t._cerrar_aviso(hijo)
+		t.elegir_vista("frente")
+		await _guardar(carpeta, "ari_p31_frente", tam)
+		raiz.ir_a_panel("P-32")
+		await _guardar(carpeta, "ari_p32", tam)
+		raiz.ir_a_panel("F-42")
+		await _guardar(carpeta, "ari_f42", tam)
+		raiz.ir_a_panel("X-81")
+		await _guardar(carpeta, "ari_x81", tam)
+		raiz.ir_a_panel("X-82")
+		await _guardar(carpeta, "ari_x82", tam)
+		raiz.ir_a("mision", {"id": "t1_tierra_bombas_mp"})
+		await _guardar(carpeta, "ari_mision_t1", tam)
+		if not raiz.marco.retrato:
+			raiz.marco._abrir_capa_derecha()
+			await _guardar(carpeta, "ari_capa_derecha", tam)
 		raiz.eventos.vaciar()
 
 

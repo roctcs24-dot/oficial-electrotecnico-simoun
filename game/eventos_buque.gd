@@ -11,7 +11,8 @@ const MAXIMO := 40
 var entradas: Array[Dictionary] = []
 
 
-func registrar(texto: String, tipo := "evento") -> void:
+## «panel» es el código del panel donde ocurrió, para volver a él al tocar la alarma.
+func registrar(texto: String, tipo := "evento", panel := "") -> void:
 	if texto.is_empty():
 		return
 	# Una alarma repetida no se duplica: se trae al principio.
@@ -19,7 +20,7 @@ func registrar(texto: String, tipo := "evento") -> void:
 		if entradas[i]["texto"] == texto and entradas[i]["tipo"] == tipo:
 			entradas.remove_at(i)
 			break
-	entradas.push_front({"hora": hora(), "texto": texto, "tipo": tipo, "reconocida": false})
+	entradas.push_front({"hora": hora(), "texto": texto, "tipo": tipo, "reconocida": false, "panel": panel})
 	if entradas.size() > MAXIMO:
 		entradas.resize(MAXIMO)
 	cambiado.emit()

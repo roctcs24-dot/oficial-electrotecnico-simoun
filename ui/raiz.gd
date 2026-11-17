@@ -137,7 +137,7 @@ static func usa_marco(nombre: String) -> bool:
 func ancho_contenido() -> float:
 	var ancho := size.x - _margen.x - _margen.z
 	if usa_marco(nombre_actual()):
-		return MarcoAri.ancho_util(ancho, retrato, marco_plegado)
+		return MarcoAri.ancho_util(ancho, retrato, marco_plegado or MarcoAri.panel_superpuesto(size))
 	return ancho
 
 

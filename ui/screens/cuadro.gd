@@ -36,7 +36,7 @@ func construir() -> void:
 	if not raiz.vertical and args["pestana"] == "barras":
 		args["pestana"] = datos["generadores"][0]["id"]
 	_poner_cabecera()
-	_avisos = _columna(6)
+	_avisos = _capa_avisos()
 	add_child(_avisos)
 	_construir_cuerpo()
 	_llenar()
@@ -152,9 +152,48 @@ func _llenar() -> void:
 
 func _llenar_zona(columna: VBoxContainer, id: String) -> void:
 	if id == "barras":
-		_panel_barras(columna)
+		columna.add_child(_rejilla_grupos())
+		_panel_barras(_panel_marco(columna, "Barras principales", "interruptor"))
 	else:
-		_panel_generador(columna, id)
+		_panel_generador(_panel_marco(columna, _datos_generador(id)["nombre"], "sistema_1"), id)
+
+
+## Dentro del marco, cada zona va en un panel de simulador con su cabecera.
+func _panel_marco(columna: VBoxContainer, titulo: String, icono: String) -> VBoxContainer:
+	if not en_marco():
+		return columna
+	var panel := PanelAri.new(titulo, icono, false, 8)
+	panel.contenido.add_theme_constant_override("separation", 8)
+	columna.add_child(panel)
+	return panel.contenido
+
+
+## Casillas de los cuatro grupos: tocar START/STOP arranca o para el diésel, I/O maniobra el
+## interruptor y el resto abre el detalle del grupo.
+func _rejilla_grupos() -> Control:
+	var rejilla := CasillaGenerador.Rejilla.new()
+	rejilla.name = "Grupos"
+	for g: Dictionary in datos["generadores"]:
+		var c := CasillaGenerador.new(g["id"], g["id"], sim, g["interruptor"])
+		c.name = "Grupo" + g["id"]
+		c.elegida = args["pestana"] == g["id"]
+		c.accion.connect(_accion_grupo)
+		rejilla.add_child(c)
+	return rejilla
+
+
+func _accion_grupo(id: String, que: String) -> void:
+	match que:
+		"diesel":
+			_alternar_diesel(id)
+		"cerrar", "abrir":
+			var q := _interruptor_de(id)
+			if q.estado["disparado"]:
+				_rearmar(id)
+			elif q.cerrado() != (que == "cerrar"):
+				_alternar_acb(id)
+		_:
+			_elegir_pestana(id)
 
 
 # --- Barras, sincronización, aislamiento, PMS y salidas ---

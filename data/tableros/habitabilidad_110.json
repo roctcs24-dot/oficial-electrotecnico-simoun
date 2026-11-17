@@ -178,5 +178,38 @@
       1650,
       1150
     ]
+  },
+  "mimico": {
+    "nota": "Casillas del mímico: un interruptor por circuito de 110 V.",
+    "alimentacion": {
+      "componente": "Q0",
+      "medida": [
+        "Q0.2",
+        "Q0.4"
+      ],
+      "tierra": [
+        "HT1",
+        "HT2",
+        "HT3"
+      ],
+      "test": "ST"
+    },
+    "casillas": [
+      {
+        "titulo": "F1 ALUMBRADO",
+        "franja": "amarillo",
+        "proteccion": "F1"
+      },
+      {
+        "titulo": "F2 TOMAS",
+        "franja": "amarillo",
+        "proteccion": "F2"
+      },
+      {
+        "titulo": "F3 COCINA",
+        "franja": "naranja",
+        "proteccion": "F3"
+      }
+    ]
   }
 }

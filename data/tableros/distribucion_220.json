@@ -131,5 +131,22 @@
       440,
       700
     ]
+  },
+  "mimico": {
+    "nota": "Casilla del mímico: alimentación y lámparas de tierra del tablero.",
+    "alimentacion": {
+      "componente": "Q0",
+      "medida": [
+        "Q0.2",
+        "Q0.4"
+      ],
+      "tierra": [
+        "HT1",
+        "HT2",
+        "HT3"
+      ],
+      "test": "ST"
+    },
+    "casillas": []
   }
 }

@@ -188,12 +188,16 @@ func test_pantalla_de_mision_muestra_el_frente() -> String:
 	(Engine.get_main_loop() as SceneTree).root.add_child(raiz)
 	raiz.ir_a("mision", {"id": "t2_hidroforo_sin_fase"})
 	var p = raiz.pantalla_actual()
-	var con_frente: bool = p.frente != null and p.frente.visible
+	# Empieza en el mímico del tablero; el frente dibujado como en el buque está a un toque.
+	var con_mimico: bool = p.mimico != null and p.mimico.visible and not p._caja_mesa.visible
+	p.elegir_vista("frente")
+	var con_frente: bool = p.frente.visible and not p.mimico.visible
 	p._alternar_puerta()
-	var abierta: bool = p._caja_mesa.visible
+	var abierta: bool = p._caja_mesa.visible and not p.frente.visible
 	raiz.free()
 	return A.primero([
-		A.cierto(con_frente, "la misión empieza frente al tablero"),
+		A.cierto(con_mimico, "la misión empieza ante el mímico del tablero"),
+		A.cierto(con_frente, "el frente del tablero está a un toque"),
 		A.cierto(abierta, "al abrir la puerta se ve la mesa para medir"),
 	])
 

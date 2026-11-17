@@ -8,6 +8,8 @@ const MINUTO_S := 60.0
 const INSTRUMENTOS := [["multimetro", "Multímetro"], ["megohmetro", "Megóhmetro"], ["pinza", "Pinza"]]
 ## En vertical, el procedimiento necesita más alto que la mesa.
 const PROPORCION_VISTA_VERTICAL := 0.8
+## En horizontal, las cinco pestañas del procedimiento necesitan algo más de ancho.
+const PROPORCION_VISTA_HORIZONTAL := 1.35
 
 var mision: MisionGuardia
 var _vistos := {}
@@ -72,7 +74,7 @@ func _colocar_punta(nodo: String) -> void:
 
 
 func _proporcion_vista() -> float:
-	return PROPORCION_VISTA_VERTICAL if raiz.vertical else super()
+	return PROPORCION_VISTA_VERTICAL if raiz.vertical else PROPORCION_VISTA_HORIZONTAL
 
 
 func _mostrar_panel(id: String) -> void:

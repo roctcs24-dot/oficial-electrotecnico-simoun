@@ -31,7 +31,7 @@ func construir() -> void:
 	if not raiz.vertical and args["pestana"] == "esquema":
 		args["pestana"] = "mando"
 	_poner_cabecera()
-	_avisos = _columna(6)
+	_avisos = _capa_avisos()
 	add_child(_avisos)
 	_construir_cuerpo()
 	_llenar()
@@ -154,8 +154,8 @@ func _panel_esquema(columna: VBoxContainer) -> void:
 	_esquema.punto_marcado = args["termometro"]
 	_esquema.punto_tocado.connect(_medir_tuberia)
 	columna.add_child(_esquema)
-	var baja := "desde la botella de baja, por la bomba de amoníaco y el evaporador, hasta la succión" if operador.planta().bombeo() else "desde la válvula de expansión hasta la succión"
-	columna.add_child(_etiqueta("Rojo: vapor caliente de la descarga. Naranja: líquido a alta presión. Azul: baja presión, %s." % baja, "Nota"))
+	var baja := "Azul: amoníaco líquido que la bomba envía a los serpentines. Cian: aspiración, del evaporador y la botella de baja a la succión." if operador.planta().bombeo() else "Cian: baja presión, desde la válvula de expansión hasta la succión."
+	columna.add_child(_etiqueta("Rojo: vapor caliente de la descarga. Amarillo en trazos: líquido a alta presión. %s Verde: agua de mar. Lila: salmuera. Los colores son los de la leyenda." % baja, "Nota"))
 	columna.add_child(_rotulo("Manómetros"))
 	var fila := HFlowContainer.new()
 	fila.add_theme_constant_override("h_separation", 8)

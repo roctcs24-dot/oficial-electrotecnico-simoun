@@ -28,6 +28,9 @@ var frente: VistaTablero
 var _caja_mesa: Control
 var _barra_frente: HBoxContainer
 var _boton_puerta: Button
+## Mímico del tablero con sus casillas, si el tablero tiene bloque «mimico».
+var mimico: VistaMimico
+var _botones_vista := {}
 
 
 ## Lista de [id, nombre] de las pestañas.
@@ -76,7 +79,7 @@ func _iniciar_banco(nueva_mesa: MesaTaller, pestana: String, medicion := "") -> 
 
 func _montar_banco() -> void:
 	mesa = args["mesa"]
-	_avisos = _columna(6)
+	_avisos = _capa_avisos()
 	add_child(_avisos)
 	var cuerpo: BoxContainer = VBoxContainer.new() if raiz.vertical else HBoxContainer.new()
 	cuerpo.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -141,15 +144,40 @@ func _crear_vista_mesa() -> Control:
 	return contenedor
 
 
-## Con un tablero, la vista es su frente y, con la puerta abierta, la mesa con su interior.
+## Con un tablero, la vista es su mímico (casillas de simulador), su frente dibujado como en el
+## buque o, con la puerta abierta, la mesa con su interior. Se elige con la barra de arriba.
 func _crear_vista_tablero() -> Control:
 	var caja := VBoxContainer.new()
 	caja.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caja.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	caja.size_flags_stretch_ratio = _proporcion_vista()
 	caja.add_theme_constant_override("separation", 6)
-	_boton_puerta = _boton("", _alternar_puerta)
-	caja.add_child(_boton_puerta)
+	var barra := HBoxContainer.new()
+	barra.name = "BarraVistas"
+	barra.add_theme_constant_override("separation", 4)
+	caja.add_child(barra)
+	var vistas: Array = [["frente", "Frente"], ["interior", "Interior"]]
+	if tablero.has("mimico"):
+		vistas.push_front(["mimico", "Mímico"])
+	var grupo := ButtonGroup.new()
+	for v: Array in vistas:
+		var b := _boton(v[1], elegir_vista.bind(v[0]))
+		b.name = "Vista_" + v[0]
+		b.autowrap_mode = TextServer.AUTOWRAP_OFF
+		b.toggle_mode = true
+		b.button_group = grupo
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		barra.add_child(b)
+		_botones_vista[v[0]] = b
+	# El botón de la puerta es ahora el de la vista Interior.
+	_boton_puerta = _botones_vista["interior"]
+	if tablero.has("mimico"):
+		mimico = VistaMimico.new()
+		mimico.name = "Mimico"
+		mimico.custom_minimum_size.y = 200.0
+		mimico.preparar(tablero["mimico"], mesa.sim)
+		mimico.accion.connect(_al_accionar_casilla)
+		caja.add_child(mimico)
 	frente = VistaTablero.new()
 	frente.datos = tablero["frente"]
 	frente.sim = mesa.sim
@@ -176,7 +204,28 @@ func _crear_vista_tablero() -> Control:
 	_caja_mesa = _crear_vista_mesa()
 	caja.add_child(_caja_mesa)
 	_aplicar_puerta()
+	_actualizar_megger()
 	return caja
+
+
+## Vista del tablero: «mimico», «frente» o «interior» (la puerta abierta).
+func vista_tablero() -> String:
+	if args.get("puerta", false):
+		return "interior"
+	var v: String = args.get("vista", "")
+	if v == "mimico" and mimico == null:
+		v = "frente"
+	if v.is_empty() or v == "interior":
+		v = "mimico" if mimico != null else "frente"
+	return v
+
+
+func elegir_vista(id: String) -> void:
+	args["puerta"] = id == "interior"
+	if id != "interior":
+		args["vista"] = id
+	_aplicar_puerta()
+	_reconstruir_panel()
 
 
 func _alternar_puerta() -> void:
@@ -186,13 +235,182 @@ func _alternar_puerta() -> void:
 
 
 func _aplicar_puerta() -> void:
-	var abierta: bool = args.get("puerta", false)
-	_boton_puerta.text = "Cerrar la puerta y ver el frente" if abierta else "Abrir la puerta y ver el interior"
-	frente.visible = not abierta
-	_barra_frente.visible = not abierta
+	var v := vista_tablero()
+	var abierta := v == "interior"
+	for clave: String in _botones_vista:
+		_botones_vista[clave].set_pressed_no_signal(clave == v)
+	if mimico != null:
+		mimico.visible = v == "mimico"
+	frente.visible = v == "frente"
+	_barra_frente.visible = v == "frente"
 	_caja_mesa.visible = abierta
 	if abierta:
 		_cuadros_encuadre = CUADROS_ENCUADRE
+
+
+# --- Mímico: casillas de arrancador ---
+
+## Componente que maneja una zona de una casilla.
+func _componente_zona(casilla: CasillaAri, zona: String) -> String:
+	if zona.begins_with("mando_"):
+		var elementos: Array = casilla.datos.get("elementos", [])
+		return str(elementos[int(zona.trim_prefix("mando_"))].get("componente", ""))
+	return str(casilla.datos.get(zona, ""))
+
+
+func _al_accionar_casilla(casilla: CasillaAri, que: String, valor: Variant) -> void:
+	match que:
+		"pulsar", "soltar":
+			var id := _componente_zona(casilla, str(valor[0]))
+			if not mesa.sim.componentes.has(id):
+				return
+			var c := mesa.sim.componente(id)
+			if c is SimSelector:
+				if que == "pulsar":
+					(c as SimSelector).girar(int(valor[1]))
+				else:
+					(c as SimSelector).soltar()
+			else:
+				c.estado["presionado"] = que == "pulsar"
+			_tras_accionar_frente()
+		"proteccion":
+			_maniobrar_proteccion(casilla)
+		"seccionador":
+			var q := mesa.sim.componente(str(casilla.datos["componente"])) as SimSeccionador
+			if not q.accionar(not q.cerrado()):
+				_mostrar_aviso("Interruptor bloqueado", "Tiene puesto el candado de bloqueo y su tarjeta. Solo lo retira quien lo puso, cuando termina el trabajo.")
+			_tras_accionar_frente()
+		"candado":
+			var q := mesa.sim.componente(str(casilla.datos["componente"])) as SimSeccionador
+			if q.cerrado():
+				_mostrar_aviso("Primero abra el interruptor", "El candado y la tarjeta se ponen con el interruptor abierto, en la posición 0.")
+			else:
+				q.poner_candado(not q.estado["candado"])
+			_tras_accionar_frente()
+		"elegir":
+			if casilla.datos.has("motor"):
+				args["meg_casilla"] = casilla.indice
+				args.erase("meg_resultado")
+				_actualizar_megger()
+		"anterior", "siguiente":
+			_cambiar_motor_megger(-1 if que == "anterior" else 1)
+		"tension":
+			var tensiones: Array = SimMegohmetro.TENSIONES
+			args["v_prueba"] = tensiones[(tensiones.find(int(args["v_prueba"])) + 1) % tensiones.size()]
+			args.erase("meg_resultado")
+			_actualizar_megger()
+		"test":
+			medir_con_megger()
+		_:
+			if que.begins_with("fase_"):
+				args["meg_fase"] = que.trim_prefix("fase_")
+				args.erase("meg_resultado")
+				_actualizar_megger()
+			elif que.begins_with("mando_"):
+				var c := mesa.sim.componente(_componente_zona(casilla, que))
+				if c is SimSeta:
+					if c.estado["enclavada"]:
+						(c as SimSeta).liberar()
+					else:
+						(c as SimSeta).pulsar()
+				_tras_accionar_frente()
+
+
+## ON/TRIP de una casilla: tras un disparo, rearma (el relé térmico, el arrancador suave o el
+## guardamotor); si no, abre o cierra la protección.
+func _maniobrar_proteccion(casilla: CasillaAri) -> void:
+	var d := casilla.datos
+	var t: SimComponente = mesa.sim.componente(str(d["termico"])) if d.has("termico") else null
+	var a: SimComponente = mesa.sim.componente(str(d["arrancador"])) if d.has("arrancador") else null
+	var q := mesa.sim.componente(str(d["proteccion"])) as SimGuardamotor
+	if t != null and t.estado.get("disparado", false):
+		_rearmar_rele(t.id)
+	elif a != null and a.estado.get("fase", "") == "fallo":
+		_rearmar_arrancador(a.id)
+	elif q.estado["disparado"]:
+		q.accionar(false)
+		q.accionar(true)
+	else:
+		q.accionar(not q.estado["encendido"])
+	_tras_accionar_frente()
+	_reconstruir_panel()
+
+
+func _casillas_motor() -> Array[CasillaAri]:
+	var r: Array[CasillaAri] = []
+	if mimico != null:
+		for c in mimico.casillas:
+			if c.datos.has("motor"):
+				r.append(c)
+	return r
+
+
+func _casilla_megger() -> CasillaAri:
+	var motores := _casillas_motor()
+	if motores.is_empty():
+		return null
+	var i: int = args.get("meg_casilla", motores[0].indice)
+	for c in motores:
+		if c.indice == i:
+			return c
+	return motores[0]
+
+
+func _cambiar_motor_megger(paso: int) -> void:
+	var motores := _casillas_motor()
+	if motores.is_empty():
+		return
+	var actual := motores.find(_casilla_megger())
+	args["meg_casilla"] = motores[posmod(actual + paso, motores.size())].indice
+	args.erase("meg_resultado")
+	_actualizar_megger()
+
+
+## Prueba de aislamiento desde el mímico: la punta roja al borne de la fase elegida del motor y
+## la negra a masa, como al medir en la bornera. Las misiones la registran igual.
+func medir_con_megger() -> Dictionary:
+	var c := _casilla_megger()
+	if c == null or mimico == null:
+		return {}
+	if args["megohmetro"].destruido:
+		_megohmetro_nuevo()
+		args["meg_resultado"] = {"lectura": "----", "veredicto": "INSTRUMENTO NUEVO", "color": Tema.ARI_LCD_AMBAR}
+		_actualizar_megger()
+		return {}
+	var masa: String = tablero["mimico"].get("megohmetro", {}).get("masa", "PE.PE")
+	args["roja"] = "%s.%s" % [c.datos["motor"], args.get("meg_fase", "U1")]
+	args["negra"] = masa
+	_actualizar_marcas()
+	var r := medir_aislamiento()
+	if r.is_empty():
+		return r
+	var resultado := {}
+	if not str(r["averia"]).is_empty():
+		resultado = {"lectura": "Err", "veredicto": "AVERIADO: HABÍA TENSIÓN", "color": Tema.ARI_ALARMA}
+	elif r["fuera_de_rango"]:
+		resultado = {"lectura": "999", "veredicto": "> 999 MΩ · AISLAM. BUENO", "color": Tema.ARI_LCD_VERDE}
+	else:
+		var mohm: float = r["mohm"]
+		var texto := LecturaLcd.numero(mohm, 2 if mohm < 10.0 else (1 if mohm < 100.0 else 0))
+		resultado = {"lectura": texto, "veredicto": "AISLAM. BUENO" if r["aceptable"] else "AISLAM. BAJO", "color": Tema.ARI_LCD_VERDE if r["aceptable"] else Tema.ARI_ALARMA}
+	args["meg_resultado"] = resultado
+	_actualizar_megger()
+	return r
+
+
+func _actualizar_megger() -> void:
+	if mimico == null:
+		return
+	var m := mimico.casilla_megohmetro()
+	var elegida := _casilla_megger()
+	for c in mimico.casillas:
+		c.marcada = m != null and c == elegida
+	if m == null:
+		return
+	var estado := {"motor": str(elegida.datos.get("titulo", "")) if elegida != null else "", "fase": args.get("meg_fase", "U1"), "tension": args.get("v_prueba", 500)}
+	estado.merge(args.get("meg_resultado", {"lectura": "----", "veredicto": "PULSE TEST", "color": Tema.ARI_LCD_AMBAR}))
+	m.megger = estado
+	m.queue_redraw()
 
 
 # --- Mandos del frente ---
@@ -291,14 +509,18 @@ func _crear_lateral() -> Control:
 func _apretar_pestana(b: Button) -> void:
 	b.clip_text = true
 	b.custom_minimum_size.y = 48.0
+	# Dentro del marco, el estilo es el de los botones del simulador.
+	var tema: Theme = Tema.crear_ari() if en_marco() else raiz.theme
 	for estado: String in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
-		if raiz.theme.has_stylebox(estado, "Button"):
-			var caja: StyleBox = raiz.theme.get_stylebox(estado, "Button").duplicate()
+		if tema.has_stylebox(estado, "Button"):
+			var caja: StyleBox = tema.get_stylebox(estado, "Button").duplicate()
 			caja.content_margin_left = MARGEN_PESTANA_APRETADA
 			caja.content_margin_right = MARGEN_PESTANA_APRETADA
 			b.add_theme_stylebox_override(estado, caja)
 	# En horizontal, el panel lateral de un celular también es estrecho para cinco pestañas.
-	if raiz.vertical or get_viewport_rect().size.x < ANCHO_PESTANAS_HOLGADAS:
+	if en_marco():
+		b.add_theme_font_size_override("font_size", Tema.tam(13))
+	elif raiz.vertical or get_viewport_rect().size.x < ANCHO_PESTANAS_HOLGADAS:
 		b.add_theme_font_size_override("font_size", TAMANO_PESTANA_APRETADA)
 
 
@@ -483,7 +705,8 @@ func _pantalla_instrumento() -> Label:
 	var tarjeta := _tarjeta_base("Papel")
 	_panel.add_child(tarjeta)
 	_lectura = _etiqueta("---", "Titulo")
-	_lectura.add_theme_color_override("font_color", Tema.TINTA)
+	# Dentro del marco, la pantalla del instrumento es un visor negro con lectura verde.
+	_lectura.add_theme_color_override("font_color", Tema.ARI_LCD_VERDE if en_marco() else Tema.TINTA)
 	_lectura.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tarjeta.add_child(_lectura)
 	return _lectura
@@ -596,15 +819,15 @@ func _megohmetro_nuevo() -> void:
 
 
 ## El megóhmetro solo mide a petición: aplica tensión y no debe hacerlo continuamente.
-func medir_aislamiento() -> void:
+func medir_aislamiento() -> Dictionary:
 	if args["roja"].is_empty() or args["negra"].is_empty():
 		_mostrar_aviso("Faltan las puntas", "Toque dos bornes o puntos de la mesa para colocar las puntas.")
-		return
+		return {}
 	var r: Dictionary = args["megohmetro"].medir(mesa.sim, args["roja"], args["negra"], args["v_prueba"])
 	_tras_medir("megohmetro", str(args["v_prueba"]), args["roja"], args["negra"], r)
 	_revisar_eventos()
-	if _lectura == null:
-		return
+	if _lectura == null or args["medicion"] != "megohmetro":
+		return r
 	if not r["averia"].is_empty():
 		_lectura.text = "AVERIADO"
 	else:
@@ -612,6 +835,7 @@ func medir_aislamiento() -> void:
 		_lectura.text = "%s MΩ  %s" % [valor, "aceptable" if r["aceptable"] else "bajo"]
 	if args["megohmetro"].destruido:
 		_reconstruir_panel()
+	return r
 
 
 func _actualizar_lectura() -> void:

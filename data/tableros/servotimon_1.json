@@ -229,5 +229,62 @@
       1700,
       700
     ]
+  },
+  "mimico": {
+    "nota": "Casillas del mímico: bomba del servotimón y mando de emergencia con el ángulo del timón.",
+    "alimentacion": {
+      "componente": "Q0",
+      "medida": [
+        "Q0.2",
+        "Q0.4"
+      ]
+    },
+    "casillas": [
+      {
+        "titulo": "BOMBA TIMÓN",
+        "franja": "rojo",
+        "motor": "M1",
+        "proteccion": "Q1",
+        "termico": "F1",
+        "selector": "S1",
+        "luz_marcha": "HR"
+      },
+      {
+        "tipo": "mando",
+        "titulo": "EMERGENCIA",
+        "franja": "rojo",
+        "elementos": [
+          {
+            "tipo": "luz",
+            "componente": "HH",
+            "color": "azul",
+            "texto": "CALEFACCIÓN"
+          },
+          {
+            "tipo": "pulsador",
+            "componente": "SB",
+            "color": "#d1271b",
+            "texto": "BABOR"
+          },
+          {
+            "tipo": "pulsador",
+            "componente": "SR",
+            "color": "#2fbf4f",
+            "texto": "ESTRIBOR"
+          },
+          {
+            "tipo": "lectura",
+            "componente": "YV",
+            "clave": "angulo",
+            "unidad": "°",
+            "decimales": 0,
+            "texto": "ÁNGULO DEL TIMÓN"
+          }
+        ]
+      }
+    ],
+    "megohmetro": {
+      "masa": "PE"
+    }
   }
 }

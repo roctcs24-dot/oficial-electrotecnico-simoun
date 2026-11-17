@@ -242,5 +242,65 @@
       2300,
       980
     ]
+  },
+  "mimico": {
+    "nota": "Casillas del mímico: separadora, bomba y mando de la purificadora.",
+    "alimentacion": {
+      "componente": "Q0",
+      "medida": [
+        "Q0.2",
+        "Q0.4"
+      ]
+    },
+    "casillas": [
+      {
+        "titulo": "SEPARADORA",
+        "franja": "naranja",
+        "motor": "M1",
+        "proteccion": "Q1",
+        "termico": "F1",
+        "selector": "S1",
+        "luz_marcha": "H1",
+        "tension": 220
+      },
+      {
+        "titulo": "BOMBA",
+        "franja": "naranja",
+        "motor": "M2",
+        "proteccion": "Q2",
+        "termico": "F2",
+        "selector": "S2",
+        "luz_marcha": "H2"
+      },
+      {
+        "tipo": "mando",
+        "titulo": "MANDO",
+        "franja": "amarillo",
+        "elementos": [
+          {
+            "tipo": "luz",
+            "componente": "H3",
+            "color": "rojo",
+            "texto": "ALARMA"
+          },
+          {
+            "tipo": "seta",
+            "componente": "SE",
+            "texto": "EMERGENCIA"
+          },
+          {
+            "tipo": "lectura",
+            "componente": "P1",
+            "clave": "horas",
+            "unidad": "h",
+            "decimales": 1,
+            "texto": "HORAS DE SEPARADORA"
+          }
+        ]
+      }
+    ],
+    "megohmetro": {
+      "masa": "PE"
+    }
   }
 }

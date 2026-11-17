@@ -58,6 +58,7 @@ const ARI_EVENTO := Color("ffd166")
 const ARI_LISTA := Color("0b0f12")
 
 static var _fuentes := {}
+static var _tema_ari: Theme
 ## Tamaño del texto elegido en Mi progreso: 1 normal, 1,15 grande, 1,3 muy grande.
 static var escala_texto := 1.0
 const TAMANOS_TEXTO := [["Normal", 1.0], ["Grande", 1.15], ["Muy grande", 1.3]]
@@ -118,6 +119,8 @@ static func caja(color: Color, radio := RADIO, margen_x := 14, margen_y := 13, b
 ## En pantallas táctiles no hay cursor: el dedo cuenta como ratón y el resaltado de "cursor
 ## encima" se quedaría sobre el botón mientras la lista se desplaza.
 static func crear(tactil := OS.has_feature("mobile")) -> Theme:
+	# El tema del marco se rehace con el tamaño de texto nuevo.
+	_tema_ari = null
 	var t := Theme.new()
 	t.default_font = fuente(PESO_NORMAL)
 	t.default_font_size = tam(18)
@@ -198,4 +201,66 @@ static func crear(tactil := OS.has_feature("mobile")) -> Theme:
 	t.set_color("default_color", "RichTextLabel", TEXTO)
 	for clave in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]:
 		t.set_font_size(clave, "RichTextLabel", tam(18))
+	return t
+
+
+## Tema del contenido dentro del marco de simulador (etapa B del rediseño, 2026-11-17): botones
+## azules con brillo, pestañas elegidas en ámbar, tarjetas de chapa azul y lecturas en visor
+## negro. Solo lleva lo que cambia; lo demás lo hereda del tema general.
+static func crear_ari() -> Theme:
+	if _tema_ari != null:
+		return _tema_ari
+	var t := Theme.new()
+	_tema_ari = t
+	var normal := EstiloAri.crear(ARI_BOTON, 14.0, 14.0)
+	var elegido := EstiloAri.crear(ARI_AMBAR, 14.0, 14.0)
+	elegido.borde = Color("7a5000")
+	var apagado := EstiloAri.crear([Color("4d6680"), Color("3b5670"), Color("344d66"), Color("2c4258")], 14.0, 14.0)
+	apagado.luz = Color(1, 1, 1, 0.12)
+	apagado.sombra = 0.2
+	t.set_stylebox("normal", "Button", normal)
+	t.set_stylebox("hover", "Button", normal)
+	t.set_stylebox("pressed", "Button", elegido)
+	t.set_stylebox("hover_pressed", "Button", elegido)
+	t.set_stylebox("disabled", "Button", apagado)
+	t.set_stylebox("focus", "Button", StyleBoxEmpty.new())
+	t.set_font("font", "Button", fuente(PESO_FUERTE))
+	t.set_font_size("font_size", "Button", tam(15))
+	for clave in ["font_color", "font_hover_color", "font_focus_color"]:
+		t.set_color(clave, "Button", Color.WHITE)
+	t.set_color("font_pressed_color", "Button", ARI_TEXTO_OSCURO)
+	t.set_color("font_hover_pressed_color", "Button", ARI_TEXTO_OSCURO)
+	t.set_color("font_disabled_color", "Button", Color(ARI_TEXTO_SUAVE, 0.7))
+	t.set_color("font_outline_color", "Button", Color(0, 0, 0, 0.0))
+
+	t.set_color("font_color", "Label", ARI_TEXTO)
+	t.set_color("font_color", "Nota", ARI_TEXTO_SUAVE)
+	t.set_color("font_color", "Rotulo", ARI_EVENTO)
+	t.set_color("default_color", "RichTextLabel", ARI_TEXTO)
+
+	var tarjeta := EstiloAri.crear(ARI_PANEL, 12.0, 12.0)
+	tarjeta.luz = Color(1, 1, 1, 0.18)
+	tarjeta.sombra = 0.3
+	tarjeta.hueco = Vector2.ZERO
+	t.set_stylebox("panel", "PanelContainer", tarjeta)
+	var aviso := EstiloAri.crear([Color("6b4a12"), Color("4a320b")], 12.0, 8.0)
+	aviso.borde = Color("2a1a00")
+	aviso.luz = Color(1, 0.85, 0.5, 0.35)
+	aviso.hueco = Vector2.ZERO
+	t.set_stylebox("panel", "Aviso", aviso)
+	var visor := EstiloAri.crear([Color("05080a"), Color("0b1510")], 10.0, 10.0, 3.0)
+	visor.borde = Color("3b5466")
+	visor.luz = Color(1, 1, 1, 0.12)
+	visor.sombra = 0.0
+	visor.hueco = Vector2.ZERO
+	t.set_stylebox("panel", "Papel", visor)
+
+	t.set_stylebox("background", "ProgressBar", caja(Color("0b2238"), 3, 0, 0))
+	t.set_stylebox("fill", "ProgressBar", caja(Color("2fd96a"), 3, 0, 0))
+	t.set_stylebox("slider", "HSlider", caja(Color("0b2238"), 3, 0, 3, ARI_BORDE))
+	var recorrido := caja(ARI_BOTON[1], 3, 0, 3)
+	t.set_stylebox("grabber_area", "HSlider", recorrido)
+	t.set_stylebox("grabber_area_highlight", "HSlider", recorrido)
+	t.set_stylebox("normal", "LineEdit", caja(Color("0b1a28"), 6, 12, 11, ARI_LINEA))
+	t.set_stylebox("focus", "LineEdit", caja(Color("0b1a28"), 6, 12, 11, ARI_EVENTO))
 	return t

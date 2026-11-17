@@ -268,6 +268,21 @@ Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro d
   - `BotonAri`, `PanelAri`, `LecturaLcd`, `FondoAri`, `PerfilBuque` y `MuestraLeyenda`.
 - **Pruebas** en `tests/test_marco_ari.gd`. Con `ari` detrás de la carpeta, el comando de capturas guarda el marco en 960×432 y 432×960.
 
+### Contenido del marco (versión 4.14.0)
+
+- **Tema:** dentro del marco, los botones, las tarjetas y las pestañas toman el tema de `Tema.crear_ari()`. Los botones son azules con brillo y la pestaña elegida es ámbar. El fondo es `EstiloAri`, un `StyleBox` dibujado con polígonos.
+- **Mímico de los tableros:** un tablero con bloque `mimico` en su JSON se abre en la vista **Mímico**. La barra de arriba cambia entre Mímico, Frente (el dibujo fiel a las fotos) e Interior (la mesa para medir).
+  - `alimentacion`: interruptor general (`componente`), lámparas de tierra (`tierra`), pulsador de prueba (`test`) y los dos nodos cuya tensión se lee (`medida`).
+  - `casillas`: una por arrancador, con `titulo`, `franja` (verde, azul, cian, rojo, amarillo, gris, lila o naranja), `motor`, `proteccion`, `termico`, `arrancador`, `marcha`, `paro`, `luz_marcha`, `luz_paro`, `luz_falla` y `selector`. Todo es opcional menos el título. Una casilla con `"tipo": "mando"` lleva `elementos` (selector, pulsador, seta, luz o lectura).
+  - `megohmetro`: añade el megóhmetro con el selector de fase R-S-T. Prueba de la fase elegida del motor (`U1`, `V1` o `W1`) a `masa`, como al medir en la bornera, y las misiones lo registran igual.
+  - El dibujo está en `CasillaAri` y `PiezasAri`, y la rejilla en `VistaMimico`. Los pulsadores se aprietan al mantener el dedo 0,12 s, para que arrastrar la lista no arranque un motor.
+- **Cuadro principal:** los grupos G1 a G4 van como casillas (`CasillaGenerador`). Tocar STOP/START arranca o para el diésel, los botones I y O maniobran el interruptor y el resto de la casilla abre el detalle del grupo.
+- **Planta, PLC y puesto de alarmas:** el esquema de frío usa los colores de la leyenda, con tuberías con relieve, flechas de sentido y presiones en visores. El PLC muestra su frente con los LED (`ModuloPlc`).
+- **Avisos:** dentro del marco, `_mostrar_aviso` pone una tarjeta `AvisoAri` centrada sobre toda la pantalla. La cabecera es roja si es una alarma y ámbar si es un evento, y la tarjeta tiene botón ACK. Los avisos siguen saliendo de uno en uno.
+- **Alarmas que se tocan:** una alarma registrada en otro panel lleva a ese panel. La Guardia muestra las averías sin terminar como una tabla y como alarmas; al tocarlas se abre la misión (`alarmas_marco_detalle()` con `abrir`).
+- **Panel derecho en un celular apaisado:** con menos de 560 puntos de alto empieza plegado, y al abrirlo flota sobre el contenido sin estrecharlo (`MarcoAri.panel_superpuesto()`). En PC y tableta sigue fijo y plegable.
+- **Pruebas** en `tests/test_rediseno_b.gd`.
+
 ## Referencias
 
 - **Datos del barco:** los campos de `registro` en `data/barco_via_simoun.json` provienen del [registro público de WCPFC](https://vessels.wcpfc.int/vessel/9770), actualizado en 2016, y van marcados para verificar.

@@ -526,5 +526,76 @@
       5260,
       1720
     ]
+  },
+  "mimico": {
+    "nota": "Casillas del mímico: los dos compresores y las tres bombas de amoníaco del tablero.",
+    "alimentacion": {
+      "componente": "Q0",
+      "medida": [
+        "Q0.2",
+        "Q0.4"
+      ]
+    },
+    "casillas": [
+      {
+        "titulo": "COMPRESOR 3",
+        "franja": "cian",
+        "motor": "MC3",
+        "proteccion": "QC3",
+        "termico": "FC3",
+        "arrancador": "AS3",
+        "selector": "SBC3",
+        "tension": 220
+      },
+      {
+        "titulo": "COMPRESOR 4",
+        "franja": "cian",
+        "motor": "MC4",
+        "proteccion": "QC4",
+        "termico": "FC4",
+        "arrancador": "AS4",
+        "selector": "SBC4",
+        "tension": 220
+      },
+      {
+        "titulo": "B. NH₃ 1",
+        "franja": "azul",
+        "motor": "M1",
+        "proteccion": "Q1",
+        "termico": "F1",
+        "marcha": "SM1",
+        "luz_marcha": "HE1",
+        "paro": "SP1",
+        "luz_paro": "HA1",
+        "luz_falla": "HF1"
+      },
+      {
+        "titulo": "B. NH₃ 2",
+        "franja": "azul",
+        "motor": "M2",
+        "proteccion": "Q2",
+        "termico": "F2",
+        "marcha": "SM2",
+        "luz_marcha": "HE2",
+        "paro": "SP2",
+        "luz_paro": "HA2",
+        "luz_falla": "HF2"
+      },
+      {
+        "titulo": "B. NH₃ 3",
+        "franja": "azul",
+        "motor": "M3",
+        "proteccion": "Q3",
+        "termico": "F3",
+        "marcha": "SM3",
+        "luz_marcha": "HE3",
+        "paro": "SP3",
+        "luz_paro": "HA3",
+        "luz_falla": "HF3"
+      }
+    ],
+    "megohmetro": {
+      "masa": "PE.PE"
+    }
   }
 }

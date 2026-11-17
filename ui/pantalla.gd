@@ -56,6 +56,15 @@ func alarmas_marco() -> Array[String]:
 	return r
 
 
+## Las mismas alarmas con sus datos para la lista del marco: {hora, texto, tipo, reconocida} y,
+## si tocar la fila lleva a algún sitio, «abrir» con lo que hay que llamar.
+func alarmas_marco_detalle() -> Array[Dictionary]:
+	var r: Array[Dictionary] = []
+	for t: String in alarmas_marco():
+		r.append({"hora": "", "texto": t, "tipo": "alarma"})
+	return r
+
+
 ## Consejos propios de la pantalla; vacío: los del panel en data/paneles.json.
 func consejos_marco() -> Array:
 	return []
@@ -185,6 +194,8 @@ static func cancelar_pulsaciones(nodo: Node) -> void:
 		nodo.disabled = false
 	elif nodo is FilaMenu:
 		nodo.cancelar()
+	elif nodo.has_method("cancelar_toque"):
+		nodo.cancelar_toque()
 	for hijo in nodo.get_children():
 		cancelar_pulsaciones(hijo)
 
@@ -207,11 +218,19 @@ func _aviso(texto: String) -> Control:
 ## como un disparo, y «evento» para los avisos de manejo.
 func _mostrar_aviso(titulo: String, texto: String, tipo := "evento") -> void:
 	if raiz != null:
-		raiz.eventos.registrar(titulo, tipo)
-	_poner_aviso(titulo, texto)
+		raiz.eventos.registrar(titulo, tipo, codigo_marco() if en_marco() else "")
+	_poner_aviso(titulo, texto, tipo)
 
 
-func _poner_aviso(titulo: String, texto: String) -> void:
+## Contenedor de los avisos: dentro del marco, una capa centrada sobre toda la pantalla; fuera,
+## una columna al principio de la pantalla.
+func _capa_avisos() -> VBoxContainer:
+	if en_marco():
+		return AvisoAri.CapaAvisos.new()
+	return _columna(6)
+
+
+func _poner_aviso(titulo: String, texto: String, tipo := "evento") -> void:
 	for hijo in _avisos.get_children():
 		if hijo.get_meta("titulo", "") == titulo:
 			return
@@ -219,7 +238,15 @@ func _poner_aviso(titulo: String, texto: String) -> void:
 		if pendiente[0] == titulo:
 			return
 	if _avisos.get_child_count() > 0:
-		_cola_avisos.append([titulo, texto])
+		_cola_avisos.append([titulo, texto, tipo])
+		return
+	if _avisos is AvisoAri.CapaAvisos:
+		var hora := Time.get_time_string_from_system()
+		var codigo := codigo_marco()
+		var aviso := AvisoAri.new(titulo, texto, tipo, ("%s  ·  %s" % [codigo, hora]) if not codigo.is_empty() else hora)
+		aviso.set_meta("titulo", titulo)
+		aviso.boton.pressed.connect(_cerrar_aviso.bind(aviso))
+		_avisos.add_child(aviso)
 		return
 	var caja := _tarjeta_base("Aviso")
 	caja.set_meta("titulo", titulo)
@@ -236,7 +263,7 @@ func _cerrar_aviso(caja: Control) -> void:
 	caja.queue_free()
 	if not _cola_avisos.is_empty():
 		var siguiente: Array = _cola_avisos.pop_front()
-		_poner_aviso(siguiente[0], siguiente[1])
+		_poner_aviso(siguiente[0], siguiente[1], siguiente[2] if siguiente.size() > 2 else "evento")
 
 
 # --- Final de las misiones de Guardia ---

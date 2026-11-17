@@ -36,7 +36,7 @@ var _hasta_lectura := 0.0
 func construir() -> void:
 	_preparar()
 	_cabecera(_titulo(), "Práctica libre · arquitectura y valores típicos: verificar a bordo")
-	_avisos = _columna(6)
+	_avisos = _capa_avisos()
 	add_child(_avisos)
 	_construir_extra()
 	add_child(_fila_pestanas())
@@ -222,17 +222,30 @@ func _etiqueta_color(texto: String, color: Color, tam := 0) -> Label:
 
 func _panel_puesto(columna: VBoxContainer) -> void:
 	columna.add_child(_etiqueta("Pantalla del puesto de alarmas. Una alarma nueva parpadea y hace sonar la bocina. Silenciar solo apaga la bocina; reconocer confirma que usted ha visto la alarma.", "Nota"))
-	var pantalla := _caja_pantalla(PANTALLA_FONDO, Color("3a4248"), 12)
+	var pantalla := _caja_pantalla(Tema.ARI_LISTA if en_marco() else PANTALLA_FONDO, Tema.ARI_BORDE if en_marco() else Color("3a4248"), 2 if en_marco() else 12)
 	columna.add_child(pantalla)
 	var interior := _columna(6)
 	pantalla.add_child(interior)
 	var cabeza := HBoxContainer.new()
-	interior.add_child(cabeza)
+	cabeza.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if en_marco():
+		# Cabecera roja como la lista de alarmas del marco.
+		var barra := PanelAri.Cabecera.new(Tema.ARI_CABECERA_ROJA)
+		barra.add_child(cabeza)
+		interior.add_child(barra)
+	else:
+		interior.add_child(cabeza)
 	var titulo := _etiqueta_color("ALARMAS GENERALES", PANTALLA_TEXTO, 18)
 	titulo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	if en_marco():
+		titulo.add_theme_font_override("font", PanelAri.fuente_rotulo(Tema.PESO_NEGRITA, 2))
+		titulo.add_theme_font_size_override("font_size", Tema.tam(13))
+		titulo.add_theme_color_override("font_color", Color.WHITE)
 	cabeza.add_child(titulo)
-	var hora := _etiqueta_color("", PANTALLA_TEXTO)
+	var hora := _etiqueta_color("", Tema.ARI_LCD_CIAN if en_marco() else PANTALLA_TEXTO)
 	hora.autowrap_mode = TextServer.AUTOWRAP_OFF
+	if en_marco():
+		hora.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
 	_textos["hora"] = hora
 	cabeza.add_child(hora)
 	var lista := puesto.visibles()
@@ -252,7 +265,10 @@ func _panel_puesto(columna: VBoxContainer) -> void:
 		var textos := _columna(0)
 		fila.add_child(textos)
 		var color := ROJO_TEXTO if p["estado"] == "activa" else (AMBAR_TEXTO if p["estado"] == "retorno" else PANTALLA_TEXTO)
-		textos.add_child(_etiqueta_color("%s  %s" % [puesto.hora(p["desde"]), p["texto"]], color))
+		var linea := _etiqueta_color("%s  %s" % [puesto.hora(p["desde"]), str(p["texto"]).to_upper() if en_marco() else p["texto"]], color)
+		if en_marco():
+			linea.add_theme_font_override("font", Tema.fuente(Tema.PESO_NEGRITA))
+		textos.add_child(linea)
 		textos.add_child(_etiqueta_color(TEXTOS_ESTADO[p["estado"]], Color("9fb0bb"), 13))
 	var botones := _rejilla(3 if not raiz.vertical else 2)
 	columna.add_child(botones)

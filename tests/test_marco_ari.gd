@@ -156,24 +156,44 @@ func test_pestana_del_cuadro_cambia_el_codigo() -> String:
 
 
 func test_panel_derecho_se_pliega_y_da_ancho() -> String:
-	var raiz := _raiz()
+	# En una pantalla apaisada alta (PC o tableta) el panel derecho ocupa su ancho y se pliega.
+	var raiz := _raiz(Vector2i(1280, 720))
 	raiz.ir_a_panel("P-31")
 	var abierto := _buscar(raiz.marco, "PanelDerecho") != null
 	var ancho_abierto := raiz.ancho_contenido()
-	var vertical_abierto := raiz.vertical
 	var boton := _buscar(raiz.marco, "Pliegue") as BotonAri
 	# Lo mismo que hace el botón, sin esperar al fotograma siguiente.
 	raiz.marco_plegado = boton != null
 	raiz.reconstruir()
 	var plegado := _buscar(raiz.marco, "PanelDerecho") == null
 	var ancho_plegado := raiz.ancho_contenido()
-	var vertical_plegado := raiz.vertical
 	raiz.marco_plegado = false
 	raiz.free()
 	return A.primero([
 		A.cierto(abierto and plegado, "el panel derecho se muestra y se pliega"),
 		A.cierto(ancho_plegado > ancho_abierto + MarcoAri.ANCHO_DER, "plegado, el tablero gana el ancho del panel: %.0f y %.0f" % [ancho_abierto, ancho_plegado]),
-		A.cierto(vertical_abierto and not vertical_plegado, "en un celular apaisado, plegar el panel deja el tablero en dos columnas"),
+	])
+
+
+func test_en_celular_apaisado_el_panel_derecho_flota() -> String:
+	var raiz := _raiz()
+	raiz.ir_a_panel("P-31")
+	var capa := _buscar(raiz.marco, "CapaDerecha") as Control
+	var empieza_plegado := capa != null and not capa.visible
+	var ancho := raiz.ancho_contenido()
+	var dos_columnas := not raiz.vertical
+	(_buscar(raiz.marco, "Pliegue") as BotonAri).pressed.emit()
+	var abierta := raiz.marco.capa_derecha_abierta()
+	var mismo_ancho := is_equal_approx(raiz.ancho_contenido(), ancho)
+	var con_paneles := _buscar(capa, "Generacion") != null and _buscar(capa, "Alarmas") != null
+	(_buscar(raiz.marco, "PlegarCapa") as BotonAri).pressed.emit()
+	var cerrada := not raiz.marco.capa_derecha_abierta()
+	raiz.free()
+	return A.primero([
+		A.cierto(empieza_plegado, "en un celular apaisado el panel derecho empieza plegado"),
+		A.cierto(dos_columnas and ancho > 700.0, "el tablero tiene todo el ancho y dos columnas: %.0f" % ancho),
+		A.cierto(abierta and mismo_ancho and con_paneles, "al abrirlo flota sobre el contenido, con la generación y las alarmas"),
+		A.cierto(cerrada, "el botón lo vuelve a plegar"),
 	])
 
 
