@@ -8,6 +8,8 @@ const ESTILOS := {
 	"ambar": Tema.ARI_AMBAR,
 	"rojo": Tema.ARI_ROJO,
 	"claro": [Color("eef2f5"), Color("d8e0e7"), Color("ccd5dd"), Color("b4c0cb")],
+	# Gris oscuro con relieve, para el inicio y la Escuela, que siguen con el tema oscuro.
+	"oscuro": [Color("3a4754"), Color("2d3843"), Color("26303a"), Color("1e2730")],
 }
 const LADO_ICONO := 18.0
 
@@ -25,6 +27,12 @@ var signo := "":
 			_fondo.queue_redraw()
 ## Distancia entre el borde de la zona táctil y el dibujo del botón.
 var hueco := Vector2(3.0, 3.0)
+## Número en una insignia roja en la esquina, como los temas del repaso; vacío, sin insignia.
+var insignia := "":
+	set(valor):
+		insignia = valor
+		if _fondo != null:
+			_fondo.queue_redraw()
 var redondo := false
 var radio := 6.0
 var _fondo: Fondo
@@ -66,6 +74,8 @@ class Fondo:
 				var t := roundi(tam * 0.5)
 				var w := f.get_string_size("?", HORIZONTAL_ALIGNMENT_LEFT, -1, t).x
 				draw_string(f, c + Vector2(-w / 2.0, f.get_ascent(t) * 0.36), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, t, tinta)
+		if not b.insignia.is_empty():
+			Relieve.insignia(self, Vector2(r.end.x - 4.0, r.position.y + 4.0), b.insignia, Tema.tam(11))
 
 
 func _init(texto := "", al_pulsar := Callable(), estilo_inicial := "azul", icono := "") -> void:

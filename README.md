@@ -247,7 +247,7 @@ importer="keep"
 
 ## Marco de simulador (Guardia y Taller)
 
-Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro de un marco al estilo de los simuladores de sala de máquinas. Las pantallas que lo usan son las de `Raiz.PANTALLAS_ARI`. La Escuela, las fichas y el inicio siguen con el tema oscuro.
+Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro de un marco al estilo de los simuladores de sala de máquinas. Las pantallas que lo usan son las de `Raiz.PANTALLAS_ARI`. La Escuela, las fichas y el inicio siguen con el tema oscuro, con el relieve de la sección «Inicio y Escuela».
 
 - **Partes** (`ui/marco_ari.gd`, `MarcoAri`):
   - barra superior con la placa del panel (código en ámbar, título y lugar o nota) y los botones Volver, ?, ‹, › e Inicio;
@@ -287,6 +287,23 @@ Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro d
   - los instrumentos de aguja van en chapa azul con rótulo grabado y la lectura en un visor de siete segmentos, verde o ámbar si pasa de la zona roja;
   - la red RS-485 se dibuja como un mímico. La pantalla MYCOM sigue clara, como la pantalla táctil real del compresor.
 - **Pruebas** en `tests/test_rediseno_b.gd`.
+
+## Inicio y Escuela (versión 4.15.0)
+
+El inicio y la Escuela siguen con el tema oscuro y el color por área, pero dibujados con relieve: placas con bisel, medallas, monedas y lámparas con halo (`ui/widgets/relieve.gd`, `Relieve`).
+
+- **Inicio:** el buque visto desde arriba (`PlantaBuque`). En apaisado la proa queda a la derecha; en vertical, arriba.
+  - Cada sistema del buque es una zona que se toca y abre el sistema. La seguridad (sistema 0) va aparte, como una medalla en el agua.
+  - Las zonas están en `data/sistemas.json`, en el bloque `planta`: `sistema`, `nombre`, `u` (de popa, 0, a proa, 1000) y `v` (de babor, 0, a estribor, 300). La disposición es esquemática: verificar a bordo. El casco, las cubas, la parrilla de máquinas y la superestructura se dibujan en el código.
+  - La lámpara de cada zona sale de `Avance.estado()`: verde si todo está hecho, ámbar si hay algo hecho, roja si una misión dejó un equipo dañado y apagada si no se ha empezado.
+  - Al lado (o debajo, en vertical) van la placa del rango con los puntos en un visor de siete segmentos, «Continuar» con un botón redondo (`BotonPlay`), el botón rojo de avería, que lleva a la Guardia de ese sistema, y el repaso con su insignia.
+- **Escuela:** cada módulo es una medalla con un anillo de avance (`MedallaModulo`). Van en una tira arriba en vertical y en una columna en apaisado. Los módulos en preparación salen con candado.
+  - El módulo elegido muestra su placa con la siguiente lección y «Empezar», el **camino de lecciones** (`CaminoLecciones`) y el **cajón de piezas** con las fichas de su atlas (`PiezaAtlas`).
+  - El camino va en serpentina; si las monedas caben en una fila, va en una sola. Las hechas llevan una marca, la siguiente es ámbar y brilla, y las pendientes van numeradas. El examen del módulo, si lo tiene, va al final. Ninguna lección queda cerrada.
+  - Sin `modulo` en los argumentos, la Escuela abre el primer módulo con algo por hacer.
+- **Toques:** los dibujos que se tocan heredan de `ControlToque`, que distingue un toque de un arrastre como `FilaMenu`, así las listas se desplazan aunque el dedo empiece encima.
+- **Barra de navegación:** con relieve y una barra ámbar encendida sobre la sección activa.
+- **Pruebas** en `tests/test_rediseno_c.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_c inicio`.
 
 ## Referencias
 

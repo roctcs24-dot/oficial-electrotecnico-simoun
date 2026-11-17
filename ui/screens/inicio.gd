@@ -1,9 +1,21 @@
 extends Pantalla
-## Pantalla de inicio: saludo con el rango, la lección recomendada para continuar, el repaso
-## pendiente y una tarjeta de color por cada sistema del buque.
+## Pantalla de inicio: el buque visto desde arriba, con una zona tocable por sistema y su
+## lámpara de estado; al lado (o debajo, en vertical), el rango, la lección para continuar, la
+## avería pendiente de la Guardia y el repaso del día.
 
-const LADO_AVATAR := 52.0
-const LADO_PLAY := 54.0
+const ANCHO_LADO_MIN := 280.0
+const ANCHO_LADO_MAX := 380.0
+const ALTO_BUQUE_MIN := 340.0
+const ALTO_BUQUE_MAX := 620.0
+## Alto aproximado de lo que acompaña al buque en vertical: rango, continuar y botones.
+const ALTO_RESTO_VERTICAL := 360.0
+const LADO_MEDALLA_RANGO := 58.0
+const ALTO_ACCIONES := 58.0
+const ANCHO_REPASO := 112.0
+## Márgenes de la raíz y separaciones de la pantalla, que no quedan para el buque.
+const MARGEN_TOTAL := 48.0
+
+var planta: PlantaBuque
 
 
 func construir() -> void:
@@ -13,119 +25,170 @@ func construir() -> void:
 		avisos.add_child(_aviso(raiz.partida.aviso))
 	for error in c.errores:
 		avisos.add_child(_aviso(error))
-	# En vertical, todo en una columna desplazable; en horizontal, el saludo y lo recomendado a
-	# la izquierda y las tarjetas de los sistemas a la derecha.
-	var izquierda := _columna(12)
-	var derecha := _columna(12)
+	planta = _crear_planta()
 	if raiz.vertical:
-		add_child(_crear_saludo())
 		add_child(avisos)
 		var desplazable := _desplazable()
 		add_child(desplazable)
-		var columna := _columna(12)
+		var columna := _columna(10)
 		desplazable.add_child(_ancho_lectura(columna))
-		izquierda = columna
-		derecha = columna
+		columna.add_child(_crear_rango())
+		var alto := raiz.size.y - BarraNavegacion.ALTO - MARGEN_TOTAL - ALTO_RESTO_VERTICAL
+		planta.custom_minimum_size.y = clampf(alto, ALTO_BUQUE_MIN, ALTO_BUQUE_MAX)
+		columna.add_child(planta)
+		_anadir_acciones(columna)
 	else:
 		var cuerpo := HBoxContainer.new()
 		cuerpo.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		cuerpo.add_theme_constant_override("separation", 14)
+		cuerpo.add_theme_constant_override("separation", 12)
 		add_child(cuerpo)
+		planta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		planta.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		cuerpo.add_child(planta)
 		var lado := _desplazable()
-		lado.size_flags_stretch_ratio = 0.8
+		lado.size_flags_horizontal = Control.SIZE_FILL
+		lado.custom_minimum_size.x = clampf(raiz.ancho_contenido() * 0.36, ANCHO_LADO_MIN, ANCHO_LADO_MAX)
 		cuerpo.add_child(lado)
-		lado.add_child(izquierda)
-		izquierda.add_child(_crear_saludo())
-		izquierda.add_child(avisos)
-		var principal := _desplazable()
-		cuerpo.add_child(principal)
-		principal.add_child(derecha)
-	var siguiente := Ruta.siguiente(c, raiz.partida)
-	if not siguiente.is_empty():
-		izquierda.add_child(_crear_continuar(siguiente))
-	var pendientes := raiz.partida.temas_pendientes().size()
-	if pendientes > 0:
-		izquierda.add_child(_fila("Repaso de hoy", "%d temas que conviene repasar" % pendientes, raiz.ir_a.bind("repaso"), "repaso", str(pendientes), true, {"color": Tema.ACENTO_FUERTE}))
-	derecha.add_child(_rotulo("Escuela técnica"))
-	var escuela := _rejilla()
-	derecha.add_child(escuela)
-	for m: Dictionary in c.modulos_escuela():
-		escuela.add_child(_tarjeta_modulo(m))
-	derecha.add_child(_rotulo("Sistemas del buque"))
-	var rejilla := _rejilla()
-	derecha.add_child(rejilla)
+		var columna := _columna(10)
+		lado.add_child(columna)
+		columna.add_child(avisos)
+		columna.add_child(_crear_rango())
+		_anadir_acciones(columna)
+		var nota := _etiqueta("Toque una zona del buque para abrir su sistema. La lámpara de cada zona indica su avance.", "Nota")
+		columna.add_child(nota)
+
+
+func _crear_planta() -> PlantaBuque:
+	var c := raiz.contenido
+	var p := PlantaBuque.new()
+	p.name = "Planta"
+	p.cargar(c.planta(), c.sistemas())
 	for s: Dictionary in c.sistemas():
-		if s.get("estado", "") == "activo":
-			rejilla.add_child(_tarjeta_sistema(s))
-	var mas := derecha if raiz.vertical else izquierda
-	mas.add_child(_rotulo("Más"))
-	mas.add_child(_fila("Plano del buque, tableros y exámenes", "El barco por zonas, sus tableros reales y los exámenes", raiz.ir_a_seccion.bind("plano_barco"), "buque", "", true, {"color": Tema.SELECCION}))
+		var id := int(s["id"])
+		p.estados[id] = Avance.estado(s, raiz.partida) if s.get("estado", "") == "activo" else "sin_empezar"
+		p.avances[id] = Avance.fraccion(Avance.sistema(s, raiz.partida))
+	p.sistema_tocado.connect(_abrir_sistema)
+	return p
 
 
-func _crear_saludo() -> Control:
-	var rangos := raiz.contenido.rangos()
+func _abrir_sistema(id: int) -> void:
+	if raiz.contenido.sistema(id).get("estado", "") == "activo":
+		raiz.ir_a("sistema", {"id": id})
+
+
+func _anadir_acciones(columna: VBoxContainer) -> void:
+	var siguiente := Ruta.siguiente(raiz.contenido, raiz.partida)
+	if not siguiente.is_empty():
+		columna.add_child(_crear_continuar(siguiente))
 	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 14)
+	fila.name = "Acciones"
+	fila.add_theme_constant_override("separation", 10)
+	fila.custom_minimum_size.y = ALTO_ACCIONES
+	columna.add_child(fila)
+	var averia := _averia()
+	if not averia.is_empty():
+		var s := raiz.contenido.sistema(averia["sistema"])
+		var m := raiz.contenido.mision(averia["mision"])
+		var b := BotonAri.new("%s\nEquipo dañado · Guardia" % m.get("equipo", m.get("titulo", "Avería")), raiz.ir_a.bind("guardia", {"id": int(s["id"])}), "rojo", "guardia")
+		b.name = "Averia"
+		b.text_overrun_behavior = TextServer.OVERRUN_NO_TRIMMING
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.add_theme_font_size_override("font_size", Tema.tam(12))
+		b.radio = 10.0
+		b.tooltip_text = "Atender la avería en la Guardia de %s" % s.get("nombre", "")
+		fila.add_child(b)
+	var pendientes := raiz.partida.temas_pendientes().size()
+	var repaso := BotonAri.new("Repaso", raiz.ir_a.bind("repaso"), "oscuro", "repaso")
+	repaso.name = "Repaso"
+	repaso.custom_minimum_size.x = ANCHO_REPASO
+	repaso.size_flags_horizontal = Control.SIZE_EXPAND_FILL if averia.is_empty() else Control.SIZE_FILL
+	repaso.radio = 10.0
+	repaso.insignia = str(pendientes) if pendientes > 0 else ""
+	repaso.tooltip_text = "%d temas que conviene repasar" % pendientes if pendientes > 0 else "Sin temas pendientes"
+	fila.add_child(repaso)
+
+
+## Primera misión con un equipo dañado, recorriendo los sistemas: {sistema, mision} o {}.
+func _averia() -> Dictionary:
+	for s: Dictionary in raiz.contenido.sistemas():
+		var danadas := Avance.misiones_danadas(s, raiz.partida)
+		if not danadas.is_empty():
+			return {"sistema": int(s["id"]), "mision": danadas[0]}
+	return {}
+
+
+## Placa del rango: medalla con la inicial y el anillo de avance, el buque, el rango y los puntos
+## en un visor ámbar de siete segmentos.
+func _crear_rango() -> Control:
+	var rangos := raiz.contenido.rangos()
+	var placa := PanelContainer.new()
+	placa.name = "Rango"
+	placa.mouse_filter = Control.MOUSE_FILTER_PASS
+	placa.add_theme_stylebox_override("panel", Relieve.estilo_placa(12.0, 10.0))
+	var fila := HBoxContainer.new()
+	fila.add_theme_constant_override("separation", 12)
+	placa.add_child(fila)
 	var rango := raiz.partida.rango(rangos)
-	var avatar := Avatar.new()
-	avatar.inicial = rango.substr(0, 1)
-	avatar.avance = raiz.partida.progreso_rango(rangos)
-	avatar.custom_minimum_size = Vector2(LADO_AVATAR, LADO_AVATAR)
-	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	fila.add_child(avatar)
+	var medalla := MedallaModulo.new()
+	medalla.custom_minimum_size = Vector2(LADO_MEDALLA_RANGO, LADO_MEDALLA_RANGO)
+	medalla.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	medalla.iniciar("sola", rango, "", Relieve.AMBAR, raiz.partida.progreso_rango(rangos), {"letra": rango.substr(0, 1)})
+	fila.add_child(medalla)
 	var textos := VBoxContainer.new()
 	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	textos.add_theme_constant_override("separation", 0)
+	textos.add_theme_constant_override("separation", 1)
 	fila.add_child(textos)
-	textos.add_child(_etiqueta(_resumen_barco(raiz.contenido.barco()), "Nota"))
+	textos.add_child(_etiqueta(_resumen_barco(raiz.contenido.barco()).to_upper(), "Nota"))
 	textos.add_child(_etiqueta(rango, "Titulo"))
+	var puntos := HBoxContainer.new()
+	puntos.add_theme_constant_override("separation", 8)
+	textos.add_child(puntos)
+	var visor := LecturaLcd.new(str(int(raiz.partida.datos["puntos"])), "", 12.0, 4)
+	visor.name = "Puntos"
+	visor.color = Tema.ARI_LCD_AMBAR
+	visor.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	puntos.add_child(visor)
 	var proximo := raiz.partida.siguiente_rango(rangos)
-	var puntos := "%d pts" % int(raiz.partida.datos["puntos"])
+	var texto := "pts"
 	if not proximo.is_empty():
-		puntos += " · %d para %s" % [proximo["faltan"], proximo["nombre"]]
-	var e := _etiqueta(puntos, "Nota")
-	e.add_theme_color_override("font_color", Tema.ACENTO)
-	textos.add_child(e)
-	return fila
+		texto += " · %d para %s" % [proximo["faltan"], proximo["nombre"]]
+	var e := _etiqueta(texto, "Nota")
+	e.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	puntos.add_child(e)
+	return placa
 
 
-## Tarjeta con la lección recomendada y un botón redondo para abrirla.
+## Tarjeta con la lección recomendada y el botón redondo para abrirla.
 func _crear_continuar(siguiente: Dictionary) -> Control:
 	var s := raiz.contenido.sistema(siguiente["sistema"])
 	var l := raiz.contenido.leccion(siguiente["leccion"])
 	var color := Tema.color_area(s)
-	var tarjeta := _tarjeta_base()
-	tarjeta.add_theme_stylebox_override("panel", Tema.caja(Tema.PANEL, Tema.RADIO_TARJETA, 14, 12, Color(color, 0.7)))
+	var tarjeta := PanelContainer.new()
+	tarjeta.name = "Continuar"
+	tarjeta.mouse_filter = Control.MOUSE_FILTER_PASS
+	tarjeta.add_theme_stylebox_override("panel", Relieve.estilo_placa(14.0, 8.0, 12.0, color.darkened(0.35)))
 	var fila := HBoxContainer.new()
-	fila.add_theme_constant_override("separation", 12)
+	fila.add_theme_constant_override("separation", 8)
 	tarjeta.add_child(fila)
-	var caja := PanelContainer.new()
-	caja.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	caja.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	caja.add_theme_stylebox_override("panel", Tema.caja(Color(color, 0.22), 14, 12, 12))
-	var icono := VistaSvg.new()
-	icono.cargar({"svg": "res://art/iconos/sistema_%d.svg" % int(s["id"]), "tamano": [64, 64]})
-	icono.custom_minimum_size = Vector2(30, 30)
-	icono.modulate = color.lightened(0.35)
-	icono.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	caja.add_child(icono)
-	fila.add_child(caja)
+	var franja := ColorRect.new()
+	franja.color = color
+	franja.custom_minimum_size = Vector2(4, 0)
+	franja.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fila.add_child(franja)
 	var textos := VBoxContainer.new()
 	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textos.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	textos.add_theme_constant_override("separation", 0)
 	fila.add_child(textos)
 	var rotulo := _etiqueta("CONTINUAR", "Rotulo")
-	rotulo.add_theme_color_override("font_color", Tema.ACENTO_FUERTE)
+	rotulo.add_theme_color_override("font_color", Tema.ACENTO)
 	textos.add_child(rotulo)
 	textos.add_child(_etiqueta(l.get("titulo", siguiente["leccion"]), "Subtitulo"))
 	textos.add_child(_etiqueta("%s · lección %d de %d · %d min" % [s.get("nombre", ""), siguiente["numero"], siguiente["total"], int(l.get("minutos", 0))], "Nota"))
-	var play := _boton("", _abrir_leccion.bind(siguiente))
-	play.icon = _icono_play()
-	play.custom_minimum_size = Vector2(LADO_PLAY, LADO_PLAY)
-	play.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	play.tooltip_text = "Continuar la lección"
-	for estado in ["normal", "hover", "pressed", "hover_pressed"]:
-		play.add_theme_stylebox_override(estado, Tema.caja(Tema.ACENTO_FUERTE.darkened(0.15 if estado.begins_with("pressed") else 0.0), int(LADO_PLAY / 2.0), 0, 0))
+	var play := BotonPlay.new(_abrir_leccion.bind(siguiente), "Continuar la lección")
+	play.name = "Play"
 	fila.add_child(play)
 	return tarjeta
 
@@ -133,58 +196,6 @@ func _crear_continuar(siguiente: Dictionary) -> Control:
 func _abrir_leccion(siguiente: Dictionary) -> void:
 	raiz.ir_a("sistema", {"id": siguiente["sistema"]})
 	raiz.ir_a("leccion", {"id": siguiente["leccion"], "sistema": siguiente["sistema"]})
-
-
-func _rejilla() -> GridContainer:
-	var rejilla := GridContainer.new()
-	rejilla.columns = 2
-	rejilla.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rejilla.add_theme_constant_override("h_separation", 10)
-	rejilla.add_theme_constant_override("v_separation", 10)
-	return rejilla
-
-
-## Un módulo sin contenido todavía se ve apagado y lleva a la Escuela, que explica lo que viene.
-func _tarjeta_modulo(m: Dictionary) -> TarjetaArea:
-	var t := TarjetaArea.new()
-	var activo: bool = m.get("estado", "") == "activo"
-	var avance := Avance.fraccion(Avance.sistema(m, raiz.partida)) if activo else -1.0
-	t.iniciar_area(m.get("nombre", ""), m.get("resumen", "") if activo else "En preparación", str(m.get("icono", "aprender")), Tema.color_area(m), avance)
-	t.apagada = not activo
-	t._actualizar_estilo()
-	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	if activo:
-		t.pulsada.connect(raiz.ir_a.bind("sistema", {"id": int(m["id"])}))
-	else:
-		t.pulsada.connect(raiz.ir_a_seccion.bind("escuela"))
-	return t
-
-
-func _tarjeta_sistema(s: Dictionary) -> TarjetaArea:
-	var t := TarjetaArea.new()
-	var id := int(s["id"])
-	var lecciones := Avance.lecciones(s, raiz.partida)
-	var misiones := Avance.misiones(s, raiz.partida)
-	var detalle := "%d de %d lecciones" % lecciones
-	if misiones[1] > 0:
-		detalle += " · %d de %d misiones" % misiones
-	t.iniciar_area(s.get("nombre", ""), detalle, "sistema_%d" % id, Tema.color_area(s), Avance.fraccion(Avance.sistema(s, raiz.partida)))
-	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	t.pulsada.connect(raiz.ir_a.bind("sistema", {"id": id}))
-	return t
-
-
-## Triángulo de reproducción dibujado como imagen, oscuro sobre el botón amarillo.
-func _icono_play() -> Texture2D:
-	var img := Image.create(48, 48, false, Image.FORMAT_RGBA8)
-	img.fill(Color(0, 0, 0, 0))
-	for y in 48:
-		for x in 48:
-			var dx := float(x) - 17.0
-			var dy := absf(float(y) - 24.0)
-			if dx >= 0.0 and dx <= 18.0 and dy <= 12.0 * (1.0 - dx / 18.0):
-				img.set_pixel(x, y, Tema.FONDO)
-	return ImageTexture.create_from_image(img)
 
 
 func _resumen_barco(barco: Dictionary) -> String:

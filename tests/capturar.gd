@@ -63,6 +63,8 @@ func _capturar() -> void:
 		await _capturar_atlas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "ari":
 		await _capturar_ari(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "inicio":
+		await _capturar_inicio(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -522,6 +524,47 @@ func _scroll_de(nodo: Node) -> ScrollContainer:
 
 ## Marco de simulador de Guardia y Taller: paneles, panel derecho plegado, hoja en vertical,
 ## ayuda, índice y leyenda. Por defecto, en el celular apaisado y en vertical.
+## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
+## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
+func _capturar_inicio(raiz: Raiz, carpeta: String) -> void:
+	var p := raiz.partida
+	p.datos = Partida.datos_nuevos()
+	p.datos["puntos"] = 120
+	for id: String in ["l0_electricidad", "ec1_unidades", "ec2_serie_paralelo", "ec3_caida_tension"]:
+		p.datos["lecciones"][id] = {"aciertos": 3, "total": 3}
+	for id: String in ["contactor", "rele_termico", "guardamotor", "interruptor_automatico"]:
+		for pestana: String in ["que_es", "funciona", "conexion", "medir", "fallas"]:
+			p.marcar_pestana_atlas(id, pestana)
+	for pestana: String in ["que_es", "funciona", "conexion"]:
+		p.marcar_pestana_atlas("diferencial", pestana)
+	var mision: String = raiz.contenido.sistema(3)["modos"]["guardia"]["misiones"][0]
+	p.datos["misiones"][raiz.contenido.sistema(4)["modos"]["guardia"]["misiones"][0]] = {"completada": true, "estrellas": 2, "intentos": 1, "accidentes": 0}
+	p.datos["lecciones"]["d1_transformadores"] = {"aciertos": 2, "total": 2}
+	p.datos["equipos_danados"][mision] = {"motor": "quemado"}
+	for tema: String in ["loto", "ohm", "estrella_triangulo"]:
+		p.registrar_error(tema)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("inicio")
+		await _esperar()
+		await _guardar(carpeta, "c_inicio", tam)
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(7)
+		await _guardar(carpeta, "c_escuela_7", tam)
+		raiz.pantalla_actual().elegir_modulo(0)
+		await _guardar(carpeta, "c_escuela_0", tam)
+		raiz.pantalla_actual().elegir_modulo(8)
+		await _guardar(carpeta, "c_escuela_8", tam)
+		raiz.pantalla_actual().elegir_modulo(9)
+		await _guardar(carpeta, "c_escuela_9", tam)
+	p.datos = Partida.datos_nuevos()
+	raiz.ir_a_seccion("inicio")
+	root.size = Vector2i(960, 432)
+	await _esperar()
+	await _guardar(carpeta, "c_inicio_nuevo", Vector2i(960, 432))
+
+
 func _capturar_ari(raiz: Raiz, carpeta: String) -> void:
 	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
 	raiz.eventos.vaciar()

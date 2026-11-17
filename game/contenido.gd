@@ -36,6 +36,11 @@ func plano() -> Dictionary:
 	return leer("sistemas.json").get("plano", {})
 
 
+## Zonas del buque visto desde arriba, en el inicio: {zonas: [{sistema, nombre, u, v}], aparte}.
+func planta() -> Dictionary:
+	return leer("sistemas.json").get("planta", {})
+
+
 ## Los sistemas del buque, del 0 al 6, con su zona en el plano.
 func sistemas() -> Array:
 	return leer("sistemas.json").get("sistemas", [])

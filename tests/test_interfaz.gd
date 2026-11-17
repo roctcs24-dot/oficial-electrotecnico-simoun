@@ -189,8 +189,7 @@ func test_escuela_y_panol_en_la_barra() -> String:
 	for s: Array in BarraNavegacion.SECCIONES:
 		nombres.append(s[0])
 	raiz.ir_a_seccion("escuela")
-	var filas_escuela: Array[FilaMenu] = []
-	_filas(raiz.pantalla_actual(), filas_escuela)
+	var medallas_escuela: int = raiz.pantalla_actual().medallas.size()
 	raiz.ir_a_seccion("panol")
 	var filas_panol: Array[FilaMenu] = []
 	_filas(raiz.pantalla_actual(), filas_panol)
@@ -202,7 +201,7 @@ func test_escuela_y_panol_en_la_barra() -> String:
 	raiz.free()
 	return A.primero([
 		A.cierto(nombres == ["inicio", "escuela", "plano_barco", "panol", "progreso"], "secciones: %s" % str(nombres)),
-		A.cierto(filas_escuela.size() == modulos + 1, "la Escuela lista los fundamentos y %d módulos: %d filas" % [modulos, filas_escuela.size()]),
+		A.cierto(medallas_escuela == modulos + 1, "la Escuela muestra los fundamentos y %d módulos: %d medallas" % [modulos, medallas_escuela]),
 		A.cierto(fichas and filas_fichas.size() >= 30, "el Pañol abre las fichas de equipos: %d" % filas_fichas.size()),
 	])
 

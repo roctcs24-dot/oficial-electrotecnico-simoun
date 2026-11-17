@@ -10,6 +10,18 @@
       { "texto": "L.F.", "x": 978, "y": 292, "tam": 15, "color": "#6f9db8" }
     ]
   },
+  "planta": {
+    "nota": "Buque visto desde arriba del inicio. Disposición esquemática de un atunero cerquero, no el plano real: verificar a bordo. «u» va de popa (0) a proa (1000) y «v» de babor (0) a estribor (300).",
+    "zonas": [
+      { "sistema": 5, "nombre": "Cubierta y pesca", "u": [48, 318], "v": [38, 262] },
+      { "sistema": 4, "nombre": "Frío NH₃", "u": [328, 520], "v": [38, 262] },
+      { "sistema": 1, "nombre": "Generación", "u": [530, 690], "v": [38, 147] },
+      { "sistema": 3, "nombre": "Motores", "u": [530, 690], "v": [153, 262] },
+      { "sistema": 6, "nombre": "Puente · PLC", "u": [702, 884], "v": [56, 147] },
+      { "sistema": 2, "nombre": "Distribución", "u": [702, 884], "v": [153, 244] }
+    ],
+    "aparte": { "sistema": 0, "nombre": "Seguridad" }
+  },
   "sistemas": [
     {
       "id": 0, "color": "#c44536",

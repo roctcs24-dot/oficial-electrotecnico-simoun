@@ -42,6 +42,26 @@ static func sistema(s: Dictionary, partida: Partida) -> Array[int]:
 	return [hechos, total]
 
 
+## Lámpara de la zona del sistema en el buque del inicio: «averia» si quedó un equipo dañado en
+## una de sus misiones, «completo» con todo hecho, «en_curso» si hay algo hecho y «sin_empezar».
+static func estado(s: Dictionary, partida: Partida) -> String:
+	if not misiones_danadas(s, partida).is_empty():
+		return "averia"
+	var parte := sistema(s, partida)
+	if parte[1] > 0 and parte[0] == parte[1]:
+		return "completo"
+	return "en_curso" if parte[0] > 0 else "sin_empezar"
+
+
+## Misiones del sistema que dejaron un equipo dañado, sin repararlo todavía.
+static func misiones_danadas(s: Dictionary, partida: Partida) -> Array[String]:
+	var r: Array[String] = []
+	for id: String in s.get("modos", {}).get("guardia", {}).get("misiones", []):
+		if not partida.danos_mision(id).is_empty():
+			r.append(id)
+	return r
+
+
 static func fraccion(parte: Array[int]) -> float:
 	return float(parte[0]) / float(parte[1]) if parte[1] > 0 else 0.0
 
