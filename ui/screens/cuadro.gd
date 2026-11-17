@@ -82,7 +82,7 @@ func _construir_cuerpo() -> void:
 	cuerpo.add_child(derecha)
 	var pestanas := _pestanas_extra()
 	# En una tableta o un celular apaisados, «Generador nº 1» no cabe junto a las demás pestañas.
-	var largos: bool = raiz.size.x >= ANCHO_NOMBRES_LARGOS
+	var largos: bool = raiz.ancho_contenido() + Raiz.MARGEN_BASE * 2.0 >= ANCHO_NOMBRES_LARGOS
 	for g: Dictionary in datos["generadores"]:
 		pestanas.append([g["id"], g["nombre"] if largos else g["id"]])
 	derecha.add_child(_fila_pestanas(pestanas))
@@ -120,6 +120,13 @@ func _fila_pestanas(pestanas: Array) -> Control:
 
 func _elegir_pestana(id: String) -> void:
 	args["pestana"] = id
+	# El código del marco sigue a la pestaña: G-12 al elegir el generador 2.
+	for p: Dictionary in raiz.paneles.lista():
+		if p.get("pantalla", "") == raiz.nombre_actual() and p.get("args", {}).get("pestana", "") == id:
+			args["panel"] = p["codigo"]
+			if raiz.marco != null:
+				raiz.marco.montar(self)
+			break
 	for clave: String in _botones_pestana:
 		_botones_pestana[clave].set_pressed_no_signal(clave == id)
 	_zonas[-1][1] = id
@@ -390,6 +397,22 @@ func _reiniciar() -> void:
 
 
 # --- Panel de un generador ---
+
+## Potencia real de la simulación para el panel derecho del marco.
+func generacion_marco() -> Dictionary:
+	if sim == null:
+		return {}
+	var filas: Array = []
+	var nominal := 0.0
+	for g: Dictionary in datos["generadores"]:
+		var gen: SimGenerador = sim.componente(g["id"])
+		nominal = maxf(nominal, float(gen.params["p_kw"]))
+		filas.append({"nombre": g["nombre"], "kw": float(gen.estado["p_kw"]), "en_linea": _interruptor_de(g["id"]).cerrado()})
+	var e: Dictionary = operador.emergencia()
+	var ge: SimGenerador = sim.componente(e["generador"])
+	filas.append({"nombre": "Emergencia", "kw": float(ge.estado["p_kw"]), "en_linea": (sim.componente(e["interruptor"]) as SimInterruptorGenerador).cerrado()})
+	return {"filas": filas, "nominal": nominal, "escenario": "Cuadro principal · simulación", "tension": "%s Hz" % TextoTecnico.numero(_frecuencia_barras(), 1)}
+
 
 func _datos_generador(id: String) -> Dictionary:
 	for g: Dictionary in datos["generadores"]:
@@ -674,5 +697,5 @@ func _revisar_eventos() -> void:
 		var e: Dictionary = eventos[i]
 		var c: Dictionary = textos.get(e["tipo"], {})
 		if not c.is_empty():
-			_mostrar_aviso("%s (%s)" % [c["titulo"], e["componente"]], c["texto"])
+			_mostrar_aviso("%s (%s)" % [c["titulo"], e["componente"]], c["texto"], "alarma")
 	args["eventos"] = eventos.size()

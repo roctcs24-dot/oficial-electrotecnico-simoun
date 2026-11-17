@@ -95,5 +95,20 @@
     "antiincrustante": { "valor": "Gefico IONPAC (unos 122 A en la foto)", "unidad": "", "verificar": false },
     "separador_sentinas": { "valor": "BOSS 2.2T-107, 0,5 m³/h, monitor BilgMon 488 de 15 ppm", "unidad": "", "verificar": false },
     "central_hidraulica": { "valor": "Motor diésel Caterpillar propio, 11 circuitos de 65 a 160 bar (winches y power block)", "unidad": "", "verificar": true }
+  },
+  "escenario_marco": {
+    "nota": "Situación que muestra el panel derecho del marco de simulador fuera del cuadro principal. Valor típico — verificar a bordo.",
+    "nombre": "Navegando · 2 generadores",
+    "tension": "380 V · 50 Hz",
+    "generacion_kw": [
+      { "nombre": "Generador 1", "kw": 310.4 },
+      { "nombre": "Generador 2", "kw": 305.1 },
+      { "nombre": "Generador 3", "kw": 0.0 },
+      { "nombre": "Generador 4", "kw": 0.0 },
+      { "nombre": "Emergencia", "kw": 0.0 },
+      { "nombre": "Toma de tierra", "kw": 0.0 }
+    ],
+    "potencia_nominal_kw": 452,
+    "verificar": true
   }
 }

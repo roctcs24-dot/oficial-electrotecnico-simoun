@@ -741,6 +741,6 @@ func _revisar_eventos() -> void:
 		var c: Dictionary = textos.get(e["tipo"], {})
 		if not c.is_empty():
 			var quien: String = e["componente"]
-			_mostrar_aviso("%s (%s)" % [c["titulo"], quien] if mesa.piezas.has(quien) else c["titulo"], c["texto"])
+			_mostrar_aviso("%s (%s)" % [c["titulo"], quien] if mesa.piezas.has(quien) else c["titulo"], c["texto"], "alarma")
 
 

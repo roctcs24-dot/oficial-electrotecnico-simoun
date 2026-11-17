@@ -31,6 +31,32 @@ const PESO_MEDIO := 500
 const PESO_FUERTE := 600
 const PESO_NEGRITA := 700
 
+## Marco de simulador (Guardia y Taller, rediseño del 2026-11-16): azul degradado, botones con
+## brillo y lecturas verdes sobre negro, como en los simuladores de sala de máquinas.
+const ARI_FONDO := [Color("2a6aa0"), Color("1a4b78"), Color("0e2c4a")]
+const ARI_BOTON := [Color("57b0ef"), Color("2b83cc"), Color("2173bb"), Color("1b609f")]
+const ARI_AMBAR := [Color("ffe7a0"), Color("ffc94a"), Color("f2b02b"), Color("d99614")]
+const ARI_ROJO := [Color("ff7a6e"), Color("e2392d"), Color("cc2a20"), Color("a51d15")]
+const ARI_BARRA := [Color("3a86c4"), Color("22639c"), Color("18527f"), Color("123f63")]
+const ARI_CABECERA := [Color("7fb0db"), Color("3f74a6"), Color("356897"), Color("2a5a87")]
+const ARI_CABECERA_ROJA := [Color("ff8b80"), Color("d8372c"), Color("c62d22"), Color("9f1e16")]
+const ARI_PANEL := [Color("20527f"), Color("183f63")]
+const ARI_PIE := [Color("123a5e"), Color("0a2440")]
+const ARI_BORDE := Color("0d3558")
+const ARI_LINEA := Color("4d86b8")
+const ARI_PANTALLA := Color("0c2238")
+const ARI_TEXTO := Color("eaf3fb")
+const ARI_TEXTO_SUAVE := Color("a9c3da")
+const ARI_TEXTO_OSCURO := Color("241700")
+const ARI_LCD_VERDE := Color("45ff82")
+const ARI_LCD_CIAN := Color("7fd8ff")
+const ARI_LCD_AMBAR := Color("ffb020")
+const ARI_LCD_FONDO := Color("030806")
+const ARI_ALARMA := Color("ff5a4f")
+const ARI_NORMAL := Color("57f08b")
+const ARI_EVENTO := Color("ffd166")
+const ARI_LISTA := Color("0b0f12")
+
 static var _fuentes := {}
 ## Tamaño del texto elegido en Mi progreso: 1 normal, 1,15 grande, 1,3 muy grande.
 static var escala_texto := 1.0

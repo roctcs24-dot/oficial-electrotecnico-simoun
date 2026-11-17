@@ -40,6 +40,10 @@ func construir() -> void:
 	cuerpo.add_child(lista)
 	var filas := _columna(6)
 	lista.add_child(filas)
+	# Entrada al marco de simulador: todos los tableros, cuadros y plantas por su código.
+	var indice := _fila("Índice de paneles", "Cuadros, tableros y plantas por su código, como en el simulador", raiz.ir_a.bind("indice_paneles"), "monitor", "", true, {"color": Color("2b83cc")})
+	indice.name = "IndicePaneles"
+	filas.add_child(indice)
 	filas.add_child(_rotulo("Sistemas del buque"))
 	for s: Dictionary in c.sistemas():
 		filas.add_child(_fila_sistema(s))

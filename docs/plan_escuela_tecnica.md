@@ -151,13 +151,17 @@ Reordenadas el 2026-11-15 tras la petición del usuario: primero la interfaz y e
 | 37 | 4.10.0 | Lecciones de electricidad desde cero (9). Hecha: lecciones `ec1` a `ec9` en el módulo 7, animaciones `serie_paralelo` y `caida_tension`, y práctica de serie y paralelo en el Taller con el bloque de lección `taller` |
 | 38 | 4.11.0 | Electrónica I: resistencia, potenciómetro, NTC/PTC, varistor, condensador, diodo, zener, LED, puente rectificador. Hecha: módulo 8 activo con nueve equipos en su atlas; simulación del potenciómetro, los termistores, el varistor, el condensador, el Zener y la potencia de la resistencia; puente con averías y prueba de diodos; capacímetro en el multímetro; nueve cortes animados, nueve fichas y seis símbolos nuevos |
 | 39 | 4.12.0 | Electrónica II: transistor BJT y MOSFET, tiristor, triac, optoacoplador, relé de estado sólido, regulador, fuente conmutada, amplificador operacional, puertas lógicas. Hecha: diez equipos más en el atlas del módulo 8 (19 en total); simulación del transistor, el MOSFET, el tiristor, el triac, el optoacoplador, el regulador, el operacional y las puertas lógicas; diez cortes animados, diez fichas y once símbolos nuevos |
-| 40 | 4.13.0 | Lecciones de electrónica desde cero (11) |
-| 41 | 4.14.0 | Válvulas: catálogo, lecciones y minijuego «¿Abierta o cerrada?» |
-| 42 | 4.15.0 | Pañol: herramientas y tabla de llaves mm↔pulgadas, minijuego |
-| 43 | 4.16.0 | Racores: catálogo, tablas de roscas, DN↔NPS y mangueras, minijuego |
-| 44 | 4.17.0 | Seguir líneas: esquema interactivo y colores de tubería |
-| 45 | 4.18.0 | Hidráulica: componentes en atlas y lecciones |
-| 46 | 4.19.0 | Neumática: componentes en atlas y lecciones |
+| R-A | 4.13.0 | Rediseño visual A, marco de simulador para Guardia y Taller (estilo ARI, elegido por el usuario el 2026-11-16). Hecha: barra superior con el código del panel, columna de accesos por grupo, panel derecho plegable con la generación en kW, los consejos y las alarmas, barra de eventos con reloj, lecturas LCD de siete segmentos, índice de paneles (`data/paneles.json`) y leyenda; en vertical, tira de accesos y hoja que sube desde el pie |
+| R-B | 4.14.0 | Rediseño visual B: tableros, cuadro principal, planta de frío, PLC, red de alarmas y misiones dibujados en el marco (casillas de motor, megóhmetro R-S-T, misiones que empiezan tocando la alarma) |
+| R-C | 4.15.0 | Rediseño visual C: inicio con el buque visto desde arriba y Escuela con camino de lecciones |
+| R-D | 4.16.0 | Rediseño visual D: fichas con el dibujo grande, marcas numeradas y pestañas con iconos |
+| 40 | 4.17.0 | Lecciones de electrónica desde cero (11) |
+| 41 | 4.18.0 | Válvulas: catálogo, lecciones y minijuego «¿Abierta o cerrada?» |
+| 42 | 4.19.0 | Pañol: herramientas y tabla de llaves mm↔pulgadas, minijuego |
+| 43 | 4.20.0 | Racores: catálogo, tablas de roscas, DN↔NPS y mangueras, minijuego |
+| 44 | 4.21.0 | Seguir líneas: esquema interactivo y colores de tubería |
+| 45 | 4.22.0 | Hidráulica: componentes en atlas y lecciones |
+| 46 | 4.23.0 | Neumática: componentes en atlas y lecciones |
 | 47 | 5.0.0 | Exámenes v6 y v7, rango «Aspirante», calibración final, README |
 
 ## G. Atlas de componentes (añadido a petición del usuario)

@@ -34,7 +34,41 @@ func construir() -> void:
 	pass
 
 
+# --- Marco de simulador (Guardia y Taller) ---
+
+## Dentro del marco, el título va en la placa de la barra superior.
+func en_marco() -> bool:
+	return raiz != null and raiz.marco != null and raiz.marco.is_ancestor_of(self)
+
+
+## Potencia de los generadores para el panel derecho del marco: {filas: [{nombre, kw,
+## en_linea}], nominal, escenario, tension}. Vacío: el marco usa el escenario del buque.
+func generacion_marco() -> Dictionary:
+	return {}
+
+
+## Alarmas activas de la pantalla, como la avería de una misión en curso.
+func alarmas_marco() -> Array[String]:
+	var r: Array[String] = []
+	var m = get("mision")
+	if m is MisionBase and m.fin.is_empty():
+		r.append(str(m.datos.get("titulo", "")))
+	return r
+
+
+## Consejos propios de la pantalla; vacío: los del panel en data/paneles.json.
+func consejos_marco() -> Array:
+	return []
+
+
+func codigo_marco() -> String:
+	return raiz.paneles.codigo_de(raiz.nombre_actual(), args)
+
+
 func _cabecera(titulo: String, nota := "") -> void:
+	if en_marco():
+		raiz.marco.poner_titulo(titulo, nota)
+		return
 	var barra := _tarjeta_base("Cabecera")
 	add_child(barra)
 	var fila := HBoxContainer.new()
@@ -126,7 +160,7 @@ func _barra_avance(fraccion: float) -> ProgressBar:
 func _ancho_lectura(contenido_columna: Control) -> Control:
 	var margen := MarginContainer.new()
 	margen.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var sobrante := maxf(raiz.size.x - ANCHO_LECTURA, 0.0) / 2.0
+	var sobrante := maxf(raiz.ancho_contenido() - ANCHO_LECTURA, 0.0) / 2.0
 	margen.add_theme_constant_override("margin_left", int(sobrante))
 	margen.add_theme_constant_override("margin_right", int(sobrante))
 	margen.add_child(contenido_columna)
@@ -169,7 +203,15 @@ func _aviso(texto: String) -> Control:
 
 
 ## De uno en uno: varios a la vez dejarían los botones fuera de una pantalla apaisada.
-func _mostrar_aviso(titulo: String, texto: String) -> void:
+## «tipo» va al registro de eventos del marco: «alarma» para las consecuencias de la simulación,
+## como un disparo, y «evento» para los avisos de manejo.
+func _mostrar_aviso(titulo: String, texto: String, tipo := "evento") -> void:
+	if raiz != null:
+		raiz.eventos.registrar(titulo, tipo)
+	_poner_aviso(titulo, texto)
+
+
+func _poner_aviso(titulo: String, texto: String) -> void:
 	for hijo in _avisos.get_children():
 		if hijo.get_meta("titulo", "") == titulo:
 			return
@@ -194,7 +236,7 @@ func _cerrar_aviso(caja: Control) -> void:
 	caja.queue_free()
 	if not _cola_avisos.is_empty():
 		var siguiente: Array = _cola_avisos.pop_front()
-		_mostrar_aviso(siguiente[0], siguiente[1])
+		_poner_aviso(siguiente[0], siguiente[1])
 
 
 # --- Final de las misiones de Guardia ---

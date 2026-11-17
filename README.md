@@ -106,7 +106,7 @@ La compilación necesita el secreto `ANDROID_DEBUG_KEYSTORE_BASE64` con el keyst
 | `art/` | Dibujos SVG de `barco/`, `equipos/`, `esquemas/`, `iconos/`, `seguridad/`, `simbolos/` y `taller/`, y la fuente en `fuentes/` |
 | `sim/` | Motor de simulación: `solver.gd`, `simulacion.gd`, `components/` e `instruments/` |
 | `game/` | Carga de contenido, partida guardada, términos técnicos, mesa del Taller, misiones, examen y banco de repaso |
-| `ui/` | `raiz.gd` (navegación y escala), `pantalla.gd` (base), `pantalla_banco.gd` (base del Taller y de las misiones), `pantalla_preguntas.gd` (base del examen y del repaso), `screens/` y `widgets/` |
+| `ui/` | `raiz.gd` (navegación y escala), `marco_ari.gd` (marco de simulador de Guardia y Taller), `pantalla.gd` (base), `pantalla_banco.gd` (base del Taller y de las misiones), `pantalla_preguntas.gd` (base del examen y del repaso), `screens/` y `widgets/` |
 | `tests/` | Pruebas sin pantalla y captura de pantallas |
 | `tools/` | Ejecutor de pruebas con límite de tiempo |
 
@@ -244,6 +244,29 @@ importer="keep"
 ```
 
 **Partida:** se guarda en `user://partida.json`, con una copia de la anterior en `.bak`. Si el archivo está dañado se recupera la copia y se avisa al jugador. En **Mi progreso** se exporta o importa como archivo, con el selector nativo del sistema, o como texto copiado y pegado. Importar pide confirmación antes de reemplazar el progreso.
+
+## Marco de simulador (Guardia y Taller)
+
+Desde la versión 4.13.0, las pantallas de Guardia y Taller se muestran dentro de un marco al estilo de los simuladores de sala de máquinas. Las pantallas que lo usan son las de `Raiz.PANTALLAS_ARI`. La Escuela, las fichas y el inicio siguen con el tema oscuro.
+
+- **Partes** (`ui/marco_ari.gd`, `MarcoAri`):
+  - barra superior con la placa del panel (código en ámbar, título y lugar o nota) y los botones Volver, ?, ‹, › e Inicio;
+  - columna de accesos por grupo, con el Índice y la Leyenda;
+  - panel derecho plegable con GENERACIÓN, ALARMAS (con ACK) y CONSEJOS;
+  - barra inferior con el reloj, el último evento y el escenario.
+- **En vertical:** los accesos van en una tira que se desliza. El panel derecho sube como hoja desde los botones de generación y alarmas. Los botones ‹ y › pasan a la fila de abajo.
+- **Disposición:** plegar el panel derecho da su ancho a la pantalla. Si la pantalla queda con menos de 696 puntos de ancho, usa su disposición en una columna (`Raiz.ancho_contenido()`).
+- **Índice de paneles** en `data/paneles.json`:
+  - `grupos`: id de una letra, nombre, nombre corto, color e icono;
+  - `paneles`: código `G-11`, grupo, título, lugar, pantalla, `args` y hasta tres consejos. Un panel sin `pantalla` sale en gris como «próximamente».
+  - `pantallas`: placa y consejos de las pantallas sin código propio, como la Guardia o una avería.
+  - Para añadir un panel, basta con una entrada nueva; las pruebas comprueban que el código sea único y que la pantalla exista.
+- **Generación:** una pantalla con simulación propia la entrega con `generacion_marco()`, como el cuadro principal. Si no, se usa `escenario_marco` de `data/barco_via_simoun.json` (valor típico — verificar a bordo).
+- **Eventos y alarmas:** `Raiz.eventos` (`EventosBuque`) guarda los de la sesión. `_mostrar_aviso(titulo, texto, "alarma")` pone una consecuencia de la simulación en la lista roja; los demás avisos van solo a la barra de eventos. Una misión en curso sale como alarma (`alarmas_marco()`).
+- **Piezas reutilizables:**
+  - `DibujoAri`: degradados con varias paradas, relieve, sombras y siete segmentos;
+  - `BotonAri`, `PanelAri`, `LecturaLcd`, `FondoAri`, `PerfilBuque` y `MuestraLeyenda`.
+- **Pruebas** en `tests/test_marco_ari.gd`. Con `ari` detrás de la carpeta, el comando de capturas guarda el marco en 960×432 y 432×960.
 
 ## Referencias
 

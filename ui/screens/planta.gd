@@ -532,5 +532,5 @@ func _revisar_eventos() -> void:
 			tipo += "_" + str(e["detalle"].get("punto", ""))
 		var c: Dictionary = textos.get(tipo, {})
 		if not c.is_empty():
-			_mostrar_aviso("%s (%s)" % [c["titulo"], e["componente"]], c["texto"])
+			_mostrar_aviso("%s (%s)" % [c["titulo"], e["componente"]], c["texto"], "alarma")
 	args["eventos"] = eventos.size()

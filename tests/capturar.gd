@@ -61,6 +61,8 @@ func _capturar() -> void:
 		await _capturar_maquina(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "atlas":
 		await _capturar_atlas(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "ari":
+		await _capturar_ari(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -516,6 +518,45 @@ func _scroll_de(nodo: Node) -> ScrollContainer:
 	while padre != null and not padre is ScrollContainer:
 		padre = padre.get_parent()
 	return padre
+
+
+## Marco de simulador de Guardia y Taller: paneles, panel derecho plegado, hoja en vertical,
+## ayuda, índice y leyenda. Por defecto, en el celular apaisado y en vertical.
+func _capturar_ari(raiz: Raiz, carpeta: String) -> void:
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	raiz.eventos.vaciar()
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.marco_plegado = false
+		raiz.ir_a_seccion("plano_barco")
+		await _esperar()
+		raiz.ir_a("indice_paneles")
+		await _guardar(carpeta, "ari_indice", tam)
+		raiz.ir_a_panel("P-31")
+		raiz.pantalla_actual()._mostrar_aviso("Disparo del térmico (bomba SW 2)", "Prueba de captura.", "alarma")
+		await _guardar(carpeta, "ari_p31", tam)
+		if raiz.marco.retrato:
+			raiz.marco._abrir_hoja()
+			await _guardar(carpeta, "ari_p31_hoja", tam)
+			raiz.marco._cerrar_hoja()
+		else:
+			raiz.marco_plegado = true
+			raiz.reconstruir()
+			await _guardar(carpeta, "ari_p31_plegado", tam)
+			raiz.marco_plegado = false
+			raiz.reconstruir()
+		raiz.marco._mostrar_ayuda()
+		await _guardar(carpeta, "ari_p31_ayuda", tam)
+		raiz.marco._cerrar_ayuda()
+		raiz.ir_a_panel("C-21")
+		await _guardar(carpeta, "ari_c21", tam)
+		raiz.ir_a_panel("F-41")
+		await _guardar(carpeta, "ari_f41", tam)
+		raiz.ir_a("guardia", {"id": 3})
+		await _guardar(carpeta, "ari_guardia", tam)
+		raiz.ir_a("leyenda")
+		await _guardar(carpeta, "ari_leyenda", tam)
+		raiz.eventos.vaciar()
 
 
 func _esperar() -> void:
