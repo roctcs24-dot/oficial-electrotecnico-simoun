@@ -225,9 +225,17 @@ func _input(evento: InputEvent) -> void:
 			_distancia_pellizco = distancia
 
 
+## Imagen de una pieza: la realista de art/realista si existe (tools/dibujos_realistas) y, si no,
+## el SVG rasterizado.
 func _textura(ruta: String) -> Texture2D:
 	if not _texturas.has(ruta):
-		_texturas[ruta] = VistaSvg.rasterizar(ruta, ESCALA_TEXTURA)
+		var realista := VistaSvg.ruta_realista(ruta)
+		if not realista.is_empty() and ResourceLoader.exists(realista):
+			_texturas[ruta] = load(realista)
+			# Con mipmaps, la pieza alejada no parpadea ni se ve granulada.
+			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		else:
+			_texturas[ruta] = VistaSvg.rasterizar(ruta, ESCALA_TEXTURA)
 	return _texturas[ruta]
 
 
@@ -341,7 +349,7 @@ func _led(r: Rect2, p: Vector2, color: Color, encendido: bool) -> void:
 func _dibujar_leds(c: SimComponente, r: Rect2) -> void:
 	match c.tipo():
 		"sensor_proximidad":
-			_led(r, Vector2(200.0, 74.0), Color("ffb020"), c.estado["activa"])
+			_led(r, Vector2(200.0, 65.5), Color("ffb020"), c.estado["activa"])
 		"fuente_dc":
 			_led(r, Vector2(60.0, 193.0), Color("5dff8f"), (c as SimFuenteDC).activa())
 		"rele_dc":

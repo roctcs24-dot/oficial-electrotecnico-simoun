@@ -321,21 +321,23 @@ La ficha de equipo (`ui/screens/ficha.gd`) y el atlas (`ui/screens/atlas.gd`) si
 - **Atlas:** placa de datos como una chapa remachada; pasos de la animación como monedas que se encienden; lecturas de Medir y de Fallas en visores negros, verdes si son normales y rojas si indican falla; fallas con su lámpara roja (`BotonAri.lampara`) y mantenimiento con casillas de relieve.
 - **Pruebas** en `tests/test_rediseno_d.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_d fichas_d`.
 
-## Dibujos realistas de los equipos (versiones 4.16.2 y 4.16.3)
+## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.4)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).
 
 - **En el juego:** `VistaSvg` muestra la imagen realista si existe; si no, el SVG. La imagen tiene el mismo encuadre que el SVG, el doble de grande, así que las etiquetas, los bornes, las marcas numeradas y el indicador siguen en su sitio. Los SVG se quedan como fuente y respaldo.
 - **Importación:** compresión con pérdida (calidad 0,9) y mipmaps, en el `.import` de cada imagen. Unos 90 KB por dibujo dentro del juego.
 - **Herramienta** (`tools/dibujos_realistas/`, necesita Chrome y Godot):
-  - `python tools/dibujos_realistas/realzar.py todas` rehace los dibujos de todas las fichas (74); `faltan`, solo los que no tienen imagen; `electricidad`, la tanda del módulo 7;
+  - `python tools/dibujos_realistas/realzar.py todas` rehace los dibujos de todas las fichas (74); `taller`, los de la mesa; `faltan`, solo los que no tienen imagen; `electricidad`, la tanda del módulo 7;
   - `python tools/dibujos_realistas/realzar.py art/equipos/<nombre>.svg` rehace uno;
   - el acabado automático da relieve a cada pieza del SVG, una textura fina y la sombra;
   - un dibujo con guion propio en `a_mano/<nombre>.py` (`ANCHO`, `ALTO` y `CUERPO`) se toma de allí: así están el motor trifásico y el contactor;
   - después de crear imágenes nuevas, importe el proyecto y ponga en su `.import` `compress/mode=1`, `compress/lossy_quality=0.9` y `mipmaps/generate=true`.
 - **Si cambia un SVG**, vuelva a ejecutar la herramienta para ese dibujo: si no, el juego seguirá mostrando la imagen anterior.
-- **Alcance:** todas las fichas y el atlas (74 dibujos, unos 5,5 MB importados). El Taller y los tableros siguen con sus SVG.
-- **Pruebas** en `tests/test_dibujos_realistas.gd`: cada imagen tiene su SVG y su mismo encuadre, y todas las fichas tienen su dibujo realista.
+- **Alcance:** todas las fichas y el atlas (74 dibujos) y las piezas de la mesa del Taller y del interior de los tableros (18 más; la mesa los toma en `VistaMesa._textura`).
+- **Frente de los tableros:** `python tools/dibujos_realistas/tableros.py [id]` prepara `art/realista/tableros/<id>.webp`, con el encuadre de `frente.tamano` a 1,25 veces: la chapa (inoxidable cepillado o pintada), los bordes doblados, los tornillos, los rótulos grabados, los recuadros y la sombra bajo cada luz, pulsador, selector y seta. `VistaTablero` (con `id_tablero`) lo dibuja debajo y pinta encima, en vivo, las luces (con `PiezasAri.lampara`), los pulsadores, los selectores, las setas, los seccionadores y los indicadores. Si cambia el frente de un tablero en su JSON, vuelva a ejecutar la herramienta para ese tablero.
+- **Mímico:** sigue como esquema del simulador, sin cambios.
+- **Pruebas** en `tests/test_dibujos_realistas.gd`: cada imagen tiene su SVG y su mismo encuadre, todas las fichas tienen su dibujo realista, cada tablero tiene su fondo y la mesa usa las piezas realistas.
 
 ## Referencias
 

@@ -180,6 +180,7 @@ func _crear_vista_tablero() -> Control:
 		caja.add_child(mimico)
 	frente = VistaTablero.new()
 	frente.datos = tablero["frente"]
+	frente.id_tablero = str(tablero.get("id", ""))
 	frente.sim = mesa.sim
 	frente.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	frente.size_flags_vertical = Control.SIZE_EXPAND_FILL

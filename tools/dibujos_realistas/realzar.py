@@ -6,6 +6,7 @@ Uso, desde la raíz del repositorio:
     python tools/dibujos_realistas/realzar.py electricidad          # la tanda del módulo 7
     python tools/dibujos_realistas/realzar.py todas                 # los dibujos de todas las fichas
     python tools/dibujos_realistas/realzar.py faltan                # solo los que aún no tienen imagen
+    python tools/dibujos_realistas/realzar.py taller                # los dibujos de la mesa del Taller
     python tools/dibujos_realistas/realzar.py art/equipos/rele_termico.svg ...
 
 Un dibujo con guion propio en a_mano/<nombre>.py (ANCHO, ALTO y CUERPO) se toma de allí; los demás
@@ -138,6 +139,18 @@ def todas():
     return rutas
 
 
+def taller():
+    """Los dibujos propios de la mesa del Taller y de las misiones (data/taller.json, tableros, misiones)."""
+    import glob, re
+    rutas = []
+    archivos = [os.path.join(REPO, "data", "taller.json")] + glob.glob(os.path.join(REPO, "data", "tableros", "*.json")) + glob.glob(os.path.join(REPO, "data", "misiones", "*.json"))
+    for f in archivos:
+        for r in re.findall(r'"svg":\s*"res://(art/[^"]+\.svg)"', open(f, encoding="utf-8").read()):
+            if r not in rutas:
+                rutas.append(r)
+    return rutas
+
+
 def main(argumentos):
     rutas = []
     for x in argumentos:
@@ -145,6 +158,8 @@ def main(argumentos):
             rutas += tanda_electricidad()
         elif x == "todas":
             rutas += todas()
+        elif x == "taller":
+            rutas += [r for r in taller() if r not in rutas]
         elif x == "faltan":
             rutas += [r for r in todas() if not os.path.exists(os.path.join(REPO, "art", "realista", os.path.splitext(r[len("art/"):])[0] + ".webp"))]
         else:

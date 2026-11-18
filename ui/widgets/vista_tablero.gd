@@ -30,6 +30,17 @@ const ZOOM_MAXIMO := 4.0
 const TAM_BASE := 16
 
 var datos := {}
+## Id del tablero: con él se busca su fondo realista, art/realista/tableros/<id>.webp.
+var id_tablero := "":
+	set(valor):
+		id_tablero = valor
+		var ruta := VistaSvg.CARPETA_REALISTA + "tableros/%s.webp" % valor
+		fondo_realista = load(ruta) if not valor.is_empty() and ResourceLoader.exists(ruta) else null
+		if fondo_realista != null:
+			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		queue_redraw()
+## Chapa, tornillos, rótulos y recuadros ya dibujados con textura y relieve (tools/dibujos_realistas).
+var fondo_realista: Texture2D
 var sim: SimSimulacion
 ## 1 encaja el tablero entero; más, lo amplía. desplazamiento mueve la vista en píxeles.
 var zoom := 1.0
@@ -191,6 +202,10 @@ func _draw() -> void:
 	var s := escala()
 	var o := _origen()
 	var colores: Array = ACABADOS.get(datos.get("acabado", "inox"), ACABADOS["inox"])
+	if fondo_realista != null:
+		_dibujar_fondo_realista(t, s, o)
+		_dibujar_elementos(s, true)
+		return
 	# Sombra, chapa y bordes doblados.
 	draw_rect(Rect2(o + Vector2(6, 8) * s, t * s), Color(0, 0, 0, 0.35))
 	draw_rect(Rect2(o, t * s), colores[2])
@@ -213,9 +228,26 @@ func _draw() -> void:
 		draw_rect(Rect2(o + Vector2(-8, t.y * y - 40) * s, Vector2(16, 80) * s), Color("6c7276"))
 	for p: Vector2 in [Vector2(34, 34), Vector2(t.x - 34, 34), Vector2(34, t.y - 34), Vector2(t.x - 34, t.y - 34)]:
 		_tornillo(o + p * s, 9.0 * s)
+	_dibujar_elementos(s, false)
+
+
+## La chapa realista con su sombra difuminada y las bisagras de acero.
+func _dibujar_fondo_realista(t: Vector2, s: float, o: Vector2) -> void:
+	for i in 4:
+		draw_rect(Rect2(o + Vector2(3 + i * 2, 5 + i * 2) * s, t * s), Color(0, 0, 0, 0.12))
+	for y in [0.18, 0.82]:
+		var bisagra := Rect2(o + Vector2(-9, t.y * y - 40) * s, Vector2(18, 80) * s)
+		DibujoAri.pieza(self, bisagra, 3.0 * s, [Color("c9cdd0"), Color("8d9396"), Color("5f6568")], [], Color("3a3e41"), Color(1, 1, 1, 0.5), 0.4)
+	draw_texture_rect(fondo_realista, Rect2(o, t * s), false)
+
+
+## Los elementos del frente. Con el fondo realista, los rótulos y los recuadros ya están en él.
+func _dibujar_elementos(s: float, con_fondo: bool) -> void:
 	for i in elementos().size():
 		var e: Dictionary = elementos()[i]
 		var c := a_pantalla(centro(i))
+		if con_fondo and e["tipo"] in ["recuadro", "rotulo"]:
+			continue
 		match e["tipo"]:
 			"recuadro":
 				var medida := Vector2(float(e["ancho"]), float(e["alto"])) * s
@@ -276,8 +308,9 @@ func _ancho_texto(texto: String, tam: float) -> float:
 
 
 func _tornillo(c: Vector2, r: float) -> void:
+	draw_circle(c + Vector2(r * 0.1, r * 0.18), r * 1.05, Color(0, 0, 0, 0.35))
 	draw_circle(c, r, Color("2c2f31"))
-	draw_circle(c, r * 0.85, Color("a7acaf"))
+	PiezasAri._disco(self, c, r * 0.85, Color("f4f6f6"), Color("5a6064"))
 	draw_line(c - Vector2(r * 0.55, 0), c + Vector2(r * 0.55, 0), Color("3a3e41"), maxf(1.0, r * 0.25))
 	draw_line(c - Vector2(0, r * 0.55), c + Vector2(0, r * 0.55), Color("3a3e41"), maxf(1.0, r * 0.25))
 
@@ -301,11 +334,11 @@ func _rotulo(c: Vector2, texto: String, tam: float, fondo := Color("f4f4f0"), ti
 		_texto(Vector2(r.position.x, y), lineas[j], tam, tinta, caja.x, HORIZONTAL_ALIGNMENT_CENTER)
 
 
+## Aro cromado del aparato, con su brillo arriba a la izquierda y su sombra.
 func _bisel(c: Vector2, r: float) -> void:
-	draw_circle(c + Vector2(r * 0.06, r * 0.1), r * 1.04, Color(0, 0, 0, 0.3))
-	draw_circle(c, r, Color("8d9396"))
-	draw_circle(c, r * 0.92, Color("dfe3e5"))
-	draw_circle(c + Vector2(r * 0.06, r * 0.06), r * 0.86, Color("9aa0a3"))
+	draw_circle(c + Vector2(r * 0.06, r * 0.12), r * 1.06, Color(0, 0, 0, 0.35))
+	PiezasAri._disco(self, c, r, Color("ffffff"), Color("4a5053"), Vector2(-0.3, -0.35), 10)
+	PiezasAri._disco(self, c, r * 0.86, Color("7d8487"), Color("e3e7e9"), Vector2(-0.3, -0.35), 8)
 
 
 func _colores_luz(nombre: String) -> Array:
@@ -314,6 +347,11 @@ func _colores_luz(nombre: String) -> Array:
 
 func _luz(c: Vector2, s: float, color: String, luz: float, estilo: String) -> void:
 	var r := 36.0 * s
+	if fondo_realista != null and PiezasAri.LAMPARAS.has(color):
+		# Lámpara con aro cromado, lente con brillo y halo, como las del mímico.
+		draw_circle(c + Vector2(r * 0.06, r * 0.12), r * 1.06, Color(0, 0, 0, 0.35))
+		PiezasAri.lampara(self, c, r * 0.72, color, luz)
+		return
 	var cs := _colores_luz(color)
 	if luz > 0.0:
 		var halo: Color = cs[1]
