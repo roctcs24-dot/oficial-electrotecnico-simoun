@@ -1,0 +1,75 @@
+{
+  "id": "el11_tarjetas",
+  "titulo": "Trabajo seguro en tarjetas",
+  "resumen": "Electricidad estática, puesto de trabajo y cambio de una tarjeta.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La electricidad estática",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Al caminar sobre un suelo aislante, el cuerpo se carga a miles de voltios sin notarlo. Una {{esd}} no se siente por debajo de unos 3 000 V, pero basta para dañar un MOSFET o un integrado. A veces lo deja tocado y falla semanas después.\n\nPor eso las tarjetas se guardan en bolsas antiestáticas y se tocan solo por los bordes."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el11_esd",
+          "pregunta": "Una descarga electrostática que no se nota...",
+          "opciones": [
+            "No hace daño",
+            "Puede dañar la tarjeta y que falle más tarde",
+            "Solo afecta a los relés"
+          ],
+          "correcta": 1,
+          "explicacion": "Por debajo de unos 3 000 V no se siente, pero un integrado se daña con mucho menos."
+        }
+      ]
+    },
+    {
+      "titulo": "El puesto de trabajo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de sacar una tarjeta: corte y bloquee la alimentación, espere a que se descarguen los condensadores y póngase la {{pulsera_antiestatica}} conectada a tierra. Trabaje sobre una alfombrilla disipativa y deje la tarjeta solo en su bolsa o sobre la alfombrilla.\n\nLa pulsera lleva una resistencia de 1 MΩ en el cable: descarga despacio y protege a la persona si toca algo con tensión. No la puentee."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el11_cambiar_tarjeta",
+          "pregunta": "Para cambiar una tarjeta de un equipo, ordene:",
+          "pasos": [
+            "Cortar y bloquear la alimentación",
+            "Ponerse la pulsera conectada a tierra",
+            "Anotar o fotografiar los conectores",
+            "Sacar la tarjeta por los bordes y meterla en su bolsa"
+          ],
+          "explicacion": "Sin tensión primero, luego la protección contra la estática y la foto de los conectores para volver a montarla igual."
+        }
+      ]
+    },
+    {
+      "titulo": "Volver a poner en marcha",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de montar la tarjeta nueva, compruebe que es el mismo modelo y versión, y que sus puentes y microinterruptores están igual que en la vieja. Muchas llevan una configuración o un programa que hay que cargar.\n\nAl energizar, mire los LED de estado y las alarmas y pruebe la función completa antes de dar el equipo por bueno. Anote el cambio en el libro de registro."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el11_configurar",
+          "pregunta": "Se cambia una tarjeta por otra igual y el equipo no arranca. ¿Qué se revisa primero?",
+          "opciones": [
+            "Los puentes, los microinterruptores y la configuración de la tarjeta",
+            "El fusible general del buque",
+            "La tensión de 380 V"
+          ],
+          "correcta": 0,
+          "explicacion": "Una tarjeta igual sin la misma configuración no hace lo mismo que la vieja."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61340-5-1: protección de los dispositivos electrónicos contra la electricidad estática.",
+    "Convenio STCW, sección A-III/6."
+  ]
+}

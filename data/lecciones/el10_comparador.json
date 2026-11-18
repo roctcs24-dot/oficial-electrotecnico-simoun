@@ -1,0 +1,75 @@
+{
+  "id": "el10_comparador",
+  "titulo": "Amplificador operacional como comparador",
+  "resumen": "Cómo decide una tarjeta si una señal pasa de un valor, y la histéresis.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Comparar dos tensiones",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{amplificador_operacional}} tiene dos entradas, + y −, y amplifica muchísimo su diferencia. Sin realimentación, la salida se va a un extremo: alta si la entrada + es mayor que la −, y baja si es menor. Así funciona como {{comparador}}.\n\nCon un potenciómetro se fija una referencia en una entrada y la señal entra por la otra: es el corazón de los termostatos electrónicos y de las alarmas de nivel."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el10_salida",
+          "pregunta": "En un comparador, la entrada + tiene 3 V y la − tiene 5 V. ¿Cómo está la salida?",
+          "opciones": [
+            "Alta",
+            "Baja",
+            "En 4 V"
+          ],
+          "correcta": 1,
+          "explicacion": "La + es menor que la −: la salida se va al extremo bajo."
+        }
+      ]
+    },
+    {
+      "titulo": "Histéresis",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Si la señal anda cerca de la referencia, el ruido hace saltar la salida muchas veces por segundo y el relé zumba. Se evita con {{histeresis}}: el comparador conecta en un valor y desconecta en otro algo menor.\n\nEs lo mismo que el diferencial de un presostato o de un termostato: arranca a 2 bar y para a 3 bar, no a 2,5 bar en los dos sentidos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el10_histeresis",
+          "pregunta": "El relé de una alarma de nivel vibra cuando el nivel está justo en el punto de ajuste. ¿Qué le falta?",
+          "opciones": [
+            "Histéresis",
+            "Más ganancia",
+            "Un fusible"
+          ],
+          "correcta": 0,
+          "explicacion": "Con histéresis, la salida no vuelve a cambiar hasta que el nivel se aleja del punto de ajuste."
+        }
+      ]
+    },
+    {
+      "titulo": "Probarlo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con tensión, mida las dos entradas respecto a 0 V y la salida. Si la + es mayor que la − y la salida está baja (o al revés), el integrado está mal. Si la referencia no es la que marca el ajuste, mire el potenciómetro y su alimentación.\n\nUn operacional se cambia por otro del mismo tipo y alimentación: un modelo parecido puede no llegar a los extremos con 24 V."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el10_probar",
+          "pregunta": "Para comprobar un comparador en una tarjeta, ordene:",
+          "pasos": [
+            "Medir la alimentación del integrado",
+            "Medir la referencia en una entrada",
+            "Medir la señal en la otra entrada",
+            "Comprobar que la salida corresponde"
+          ],
+          "explicacion": "Sin alimentación correcta no vale ninguna otra medida; después se comparan las dos entradas con la salida."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60748-3: circuitos integrados analógicos.",
+    "IEC 60050-351: técnica de control."
+  ]
+}

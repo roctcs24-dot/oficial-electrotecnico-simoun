@@ -1,0 +1,81 @@
+{
+  "id": "el3_condensador",
+  "titulo": "Condensador",
+  "resumen": "Guardar carga, filtrar y temporizar; y el peligro de la energía que queda.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Un depósito de carga",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{condensador_electrico}} son dos placas separadas por un aislante. Guarda carga: su {{capacidad}} se mide en microfaradios (µF). Una vez cargado bloquea la continua, deja pasar la alterna y suaviza la tensión de las fuentes.\n\nLos {{condensador_electrolitico}} tienen polaridad: la franja con el signo menos marca la pata negativa. Al revés se calientan, se hinchan y pueden reventar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el3_polaridad",
+          "pregunta": "Un condensador electrolítico se monta al revés. ¿Qué puede pasar?",
+          "opciones": [
+            "Nada: los condensadores no tienen polaridad",
+            "Se calienta, se hincha y puede reventar",
+            "Solo cambia su capacidad"
+          ],
+          "correcta": 1,
+          "explicacion": "El electrolítico solo aguanta la tensión en un sentido. Al revés se rompe su aislante, se calienta y puede reventar."
+        }
+      ]
+    },
+    {
+      "titulo": "Cargar lleva tiempo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "A través de una resistencia, el condensador no se carga de golpe. La {{constante_tiempo}} es τ = R × C: en un τ llega al 63 % y a las cinco τ se considera cargado.\n\n[center][b]τ = 10 kΩ × 470 µF = 4,7 s[/b][/center]\n\nEsto se usa en temporizadores sencillos y en filtros, y explica por qué una fuente apagada todavía tiene tensión unos segundos: sus condensadores tardan en descargarse."
+        },
+        {
+          "tipo": "animacion",
+          "id": "carga_condensador",
+          "params": {},
+          "pie": "Cambie R y C y observe cuánto tarda en llegar a 24 V. Después descárguelo sobre la resistencia."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el3_tau",
+          "pregunta": "R = 10 kΩ y C = 100 µF. ¿Cuánto tarda en cargarse casi del todo (5 τ)?",
+          "opciones": [
+            "1 s",
+            "5 s",
+            "50 s"
+          ],
+          "correcta": 1,
+          "explicacion": "τ = 10 000 × 0,000 1 = 1 s; cinco τ son 5 s."
+        }
+      ]
+    },
+    {
+      "titulo": "Energía guardada: peligro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un condensador grande cargado guarda energía aunque el equipo esté desconectado. Los de los variadores y las fuentes pueden mantener tensiones peligrosas varios minutos. Antes de tocar, espere el tiempo que indica la placa del equipo y [b]mida[/b] que no queda tensión en el bus de continua.\n\nNunca se descarga con un destornillador: el arco daña las pistas y salpica metal. Se usa una resistencia de descarga con puntas aisladas."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el3_descargar",
+          "pregunta": "Antes de trabajar en la etapa de continua de un variador, ordene:",
+          "pasos": [
+            "Desconectar y bloquear la alimentación",
+            "Esperar el tiempo de descarga de la placa",
+            "Medir la tensión del bus de continua",
+            "Descargarlo con una resistencia si queda tensión"
+          ],
+          "explicacion": "El tiempo de la placa es el mínimo: solo la medida dice que ya no hay tensión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60384-1: condensadores fijos para equipos electrónicos.",
+    "IEC 61800-5-1: variadores, seguridad eléctrica y descarga de los condensadores."
+  ]
+}

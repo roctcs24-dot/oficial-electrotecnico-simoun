@@ -1,0 +1,75 @@
+{
+  "id": "el9_logica_digital",
+  "titulo": "Lógica digital y binario",
+  "resumen": "Unos y ceros, puertas lógicas y entradas que se quedan a medias.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Solo dos valores",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las tarjetas y los PLC trabajan con dos valores: 0 y 1. En una entrada de 24 V DC, un 1 es una tensión alta (de unos 15 a 30 V) y un 0 una tensión baja (menos de unos 5 V), según IEC 61131-2, tipo 1 ([i]verificar en la tarjeta[/i]).\n\nCada 0 o 1 es un {{bit}}. Con varios bits se escriben números en {{binario}}:\n\n[center][b]0101 = 4 + 1 = 5[/b][/center]\n\nDe derecha a izquierda, cada posición vale 1, 2, 4, 8…"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el9_binario",
+          "pregunta": "¿Qué número es 1010 en binario?",
+          "opciones": [
+            "10",
+            "12",
+            "1 010"
+          ],
+          "correcta": 0,
+          "explicacion": "1010 = 8 + 2 = 10."
+        }
+      ]
+    },
+    {
+      "titulo": "Puertas lógicas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una {{puerta_logica}} combina bits. AND da 1 solo si todas sus entradas son 1, como contactos en serie. OR da 1 si alguna es 1, como contactos en paralelo. NOT invierte, como un contacto cerrado en reposo.\n\nSu {{tabla_verdad}} recoge la salida para cada combinación. La lógica de un arranque es la misma en contactos, en puertas o en el programa de un PLC."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el9_and",
+          "pregunta": "Una bomba arranca si hay orden Y presión de aceite Y no hay disparo. ¿Qué puerta es?",
+          "opciones": [
+            "OR",
+            "AND, con un NOT en el disparo",
+            "Solo NOT"
+          ],
+          "correcta": 1,
+          "explicacion": "Tienen que cumplirse las tres: AND. El disparo entra invertido con un NOT."
+        }
+      ]
+    },
+    {
+      "titulo": "Una entrada a medias",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una tensión de 10 V en una entrada de 24 V DC no es ni 0 ni 1: queda en la zona prohibida y la tarjeta puede leer cualquier cosa. Suele indicar un sensor de dos hilos con demasiada fuga, un borne flojo o una fuente baja.\n\nAl diagnosticar, mida la tensión real en el borne, compárela con los umbrales de la tarjeta y mire el LED de la entrada."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el9_entrada",
+          "pregunta": "Una entrada del PLC no cambia aunque el sensor actúa. Ordene:",
+          "pasos": [
+            "Mirar el LED del sensor",
+            "Mirar el LED de la entrada en el PLC",
+            "Medir la tensión en el borne de la entrada",
+            "Comprobar el cable entre el sensor y el borne"
+          ],
+          "explicacion": "Se sigue la señal desde el sensor hasta el borne: así se sabe si falla el sensor, el cable o la entrada."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61131-2: autómatas programables, niveles de las entradas digitales.",
+    "IEC 60617-12: símbolos de los elementos lógicos binarios."
+  ]
+}

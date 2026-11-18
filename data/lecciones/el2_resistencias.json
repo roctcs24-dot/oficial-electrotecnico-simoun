@@ -1,0 +1,81 @@
+{
+  "id": "el2_resistencias",
+  "titulo": "Resistencias y código de colores",
+  "resumen": "Para qué sirven, cómo se lee su valor y cómo se prueban.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Para qué sirve una resistencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una {{resistor}} limita la corriente o reparte la tensión. En las tarjetas se ven por decenas: limitan la corriente de un LED, fijan la corriente de base de un transistor o forman divisores de tensión para medir.\n\nTiene dos datos: el valor en ohmios y la {{potencia}} que aguanta (1/4 W, 1/2 W, 2 W…). Si disipa más, se calienta, se oscurece y acaba abierta.\n\n[center][b]P = I² × R[/b][/center]"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el2_potencia_resistencia",
+          "pregunta": "Una resistencia de 1 kΩ lleva 20 mA. ¿Qué potencia disipa?",
+          "opciones": [
+            "0,02 W",
+            "0,4 W",
+            "20 W"
+          ],
+          "correcta": 1,
+          "explicacion": "P = I² × R = 0,02² × 1 000 = 0,4 W: hace falta una de 1/2 W como mínimo."
+        }
+      ]
+    },
+    {
+      "titulo": "Leer las bandas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las resistencias pequeñas llevan el valor en un {{codigo_colores}}: las dos primeras bandas son cifras, la tercera es el multiplicador (los ceros que se añaden) y la cuarta, algo separada, la {{tolerancia}}.\n\n[center][b]47 × 100 = 4 700 Ω[/b][/center]\n\nCifras: negro 0, marrón 1, rojo 2, naranja 3, amarillo 4, verde 5, azul 6, violeta 7, gris 8 y blanco 9. Tolerancia: oro ±5 %, plata ±10 % y marrón ±1 %."
+        },
+        {
+          "tipo": "animacion",
+          "id": "codigo_colores",
+          "params": {},
+          "pie": "Elija cada banda y su color. Pruebe marrón, negro, rojo y oro: 1 kΩ ±5 %."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el2_leer_bandas",
+          "pregunta": "Bandas marrón, negro, naranja y oro. ¿Qué valor tiene?",
+          "opciones": [
+            "103 Ω ±5 %",
+            "10 kΩ ±5 %",
+            "1 kΩ ±10 %"
+          ],
+          "correcta": 1,
+          "explicacion": "Marrón 1, negro 0 y naranja, tres ceros: 10 000 Ω = 10 kΩ. El oro es ±5 %."
+        }
+      ]
+    },
+    {
+      "titulo": "Medir antes de fiarse",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El calor oscurece las bandas y el rojo se confunde con el naranja. Antes de cambiar una resistencia, mídala con el óhmetro y [b]sin tensión[/b]. Si puede, levante una pata: en la tarjeta, otros componentes en paralelo falsean la lectura.\n\nUna resistencia quemada suele estar abierta (OL). Antes de poner la nueva, busque por qué se quemó: casi siempre hay otro componente en corto que le hizo pasar demasiada corriente."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el2_cambiar_resistencia",
+          "pregunta": "Una resistencia de una tarjeta está quemada. Ordene:",
+          "pasos": [
+            "Quitar la tensión y descargar la tarjeta",
+            "Medir con el óhmetro con una pata levantada",
+            "Buscar el componente que la sobrecargó",
+            "Poner una del mismo valor y de igual o más potencia"
+          ],
+          "explicacion": "Cambiarla sin buscar la causa la vuelve a quemar. La potencia de la nueva no puede ser menor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60062: códigos de marcado de resistencias y condensadores.",
+    "IEC 60115-1: resistencias fijas para equipos electrónicos."
+  ]
+}

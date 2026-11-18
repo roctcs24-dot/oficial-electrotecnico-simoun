@@ -1,0 +1,81 @@
+{
+  "id": "el4_diodo_led",
+  "titulo": "Diodo y LED",
+  "resumen": "La válvula de un solo sentido, cómo se prueba y cómo se alimenta un LED.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Una válvula de un solo sentido",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{diodo}} deja pasar la corriente del {{anodo}} al {{catodo}} y la bloquea al revés. El cátodo va marcado con una franja. Al conducir pierde su {{caida_directa}}: unos 0,7 V los de silicio.\n\nSe usan para rectificar, para proteger contra la polaridad invertida y, en paralelo con las bobinas, como {{diodo_supresor}}."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el4_sentido",
+          "pregunta": "¿Por dónde entra la corriente en un diodo que conduce?",
+          "opciones": [
+            "Por el cátodo, el lado de la franja",
+            "Por el ánodo, el lado sin franja",
+            "Por cualquiera de los dos"
+          ],
+          "correcta": 1,
+          "explicacion": "Conduce del ánodo al cátodo. La franja marca el cátodo, por donde sale la corriente."
+        }
+      ]
+    },
+    {
+      "titulo": "Probarlo con el multímetro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En la posición de diodo, el multímetro hace pasar una pequeña corriente y muestra la caída. Con la roja en el ánodo debe leer unos 0,5 a 0,7 V; al revés, OL.\n\nSi lee casi 0 en los dos sentidos, está en corto. Si lee OL en los dos, está abierto. En los dos casos se cambia."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el4_prueba",
+          "pregunta": "Un diodo da 0,02 V en los dos sentidos. ¿Cómo está?",
+          "opciones": [
+            "Bien",
+            "En corto",
+            "Abierto"
+          ],
+          "correcta": 1,
+          "explicacion": "Casi 0 V en los dos sentidos: conduce siempre, está en corto."
+        }
+      ]
+    },
+    {
+      "titulo": "El LED y su resistencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{led}} es un diodo que da luz. Su caída es mayor (unos 2 V el rojo y unos 3 V el blanco o el azul) y solo aguanta unos 20 mA: siempre va con una resistencia en serie que limita la corriente.\n\n[center][b]R = (24 V − 2 V) ÷ 0,02 A = 1,1 kΩ[/b][/center]\n\nSin ella, el LED se funde al instante. Los pilotos de LED de 24 V de los tableros ya la llevan dentro."
+        },
+        {
+          "tipo": "taller",
+          "plantilla": "led_servicio",
+          "texto": "Mida en el banco la tensión del LED y la de su resistencia, y la corriente del circuito. Compruebe que queda en unos 20 mA.",
+          "boton": "Practicar el LED en el Taller"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el4_resistencia_led",
+          "pregunta": "Un LED rojo (2 V, 20 mA) va a 24 V. ¿Qué resistencia lleva?",
+          "opciones": [
+            "110 Ω",
+            "1,1 kΩ",
+            "11 kΩ"
+          ],
+          "correcta": 1,
+          "explicacion": "R = (24 − 2) ÷ 0,02 = 1 100 Ω. Con 110 Ω pasarían 200 mA y se fundiría."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-2: diodos rectificadores.",
+    "IEC 60747-5-5: dispositivos optoelectrónicos."
+  ]
+}

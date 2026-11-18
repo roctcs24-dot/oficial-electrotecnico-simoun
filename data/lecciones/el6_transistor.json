@@ -1,0 +1,87 @@
+{
+  "id": "el6_transistor",
+  "titulo": "Transistor como interruptor",
+  "resumen": "Cortado o saturado: cómo manda una tarjeta un relé.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Un interruptor sin piezas que se muevan",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{transistor}} bipolar NPN tiene {{base}}, {{colector}} y {{emisor}}. Una corriente pequeña entre la base y el emisor deja pasar una corriente mucho mayor entre el colector y el emisor: unas 100 veces más ([i]valor típico — verificar en la hoja de datos[/i]).\n\nEn las tarjetas se usa casi siempre como interruptor: cortado (no conduce) o en {{saturacion_transistor}} (conduce del todo, con unos 0,2 V entre colector y emisor)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el6_estados",
+          "pregunta": "Un transistor saturado conduce con...",
+          "opciones": [
+            "Toda la tensión entre colector y emisor",
+            "Unos 0,2 V entre colector y emisor",
+            "La mitad de la tensión de la fuente"
+          ],
+          "correcta": 1,
+          "explicacion": "Saturado conduce del todo: entre colector y emisor quedan unos 0,2 V y casi no se calienta."
+        }
+      ]
+    },
+    {
+      "titulo": "Mandar un relé",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una salida de la tarjeta da corriente a la base por una resistencia RB, y el transistor conecta la bobina del relé a 0 V. Para que sature, la corriente de base por la ganancia debe superar la corriente de la bobina; si no, queda a medias, se calienta y se quema.\n\nEn paralelo con la bobina va un {{diodo_supresor}}: al cortar, la bobina da un pico de cientos de voltios que perfora el transistor si no tiene por dónde descargarse."
+        },
+        {
+          "tipo": "animacion",
+          "id": "transistor_llave",
+          "params": {},
+          "pie": "Suba RB hasta que el transistor deje de saturar. Después quite el diodo y quite la orden."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el6_diodo",
+          "pregunta": "Se cambia un relé y el transistor que lo manda se rompe a los pocos días. ¿Qué falta probablemente?",
+          "opciones": [
+            "El diodo supresor en paralelo con la bobina",
+            "Una resistencia de base más alta",
+            "Un fusible en el colector"
+          ],
+          "correcta": 0,
+          "explicacion": "Sin diodo, cada vez que se corta la bobina el pico perfora el transistor."
+        }
+      ]
+    },
+    {
+      "titulo": "El MOSFET y las salidas de transistor",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{mosfet}} hace lo mismo, pero se manda con tensión en la puerta, casi sin corriente. Es el interruptor de las salidas de transistor de los PLC, de las fuentes conmutadas y de los variadores.\n\nPara probar una salida de transistor: con la orden y la carga conectada, entre la salida y 0 V debe haber casi 24 V; sin orden, 0 V. Una salida que da 24 V sin orden está perforada."
+        },
+        {
+          "tipo": "taller",
+          "plantilla": "transistor_servicio",
+          "texto": "En el banco, accione S1 y compruebe que K1 cierra. Mida la tensión en la bobina con la orden y sin ella.",
+          "boton": "Practicar el transistor"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el6_salida_perforada",
+          "pregunta": "Una salida de transistor de un PLC da 24 V aunque su LED está apagado. ¿Qué indica?",
+          "opciones": [
+            "Que funciona bien",
+            "Que el transistor de salida está perforado",
+            "Que falta la tensión de mando"
+          ],
+          "correcta": 1,
+          "explicacion": "Sin orden debe quedar en 0 V. Si da 24 V, el transistor conduce siempre: está perforado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60747-7: transistores bipolares.",
+    "IEC 60747-8: transistores de efecto de campo."
+  ]
+}

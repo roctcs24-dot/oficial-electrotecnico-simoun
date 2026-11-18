@@ -1,0 +1,83 @@
+{
+  "id": "el8_senales_proceso",
+  "titulo": "Señales de 4-20 mA, PT100 y termocupla",
+  "resumen": "Cómo llegan la presión y la temperatura a la tarjeta, y cómo se comprueban.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El lazo de corriente",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{transmisor_presion}} de dos hilos toma su alimentación del propio lazo y deja pasar entre 4 y 20 mA según la medida. Es un {{lazo_4_20}}: 4 mA es el principio de la escala y 20 mA el final.\n\n[center][b]I = 4 + 16 × (P ÷ 10 bar)[/b][/center]\n\nLa corriente es la misma en todo el lazo, así que la resistencia del cable no falsea la medida. Y 0 mA no es «cero»: es un cable cortado."
+        },
+        {
+          "tipo": "animacion",
+          "id": "lazo_4_20",
+          "params": {},
+          "pie": "Mueva la presión y corte el cable. El umbral de alarma de 3,6 mA es un valor típico — verificar a bordo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el8_ma",
+          "pregunta": "Un transmisor de 0 a 10 bar da 12 mA. ¿Qué presión mide?",
+          "opciones": [
+            "1,2 bar",
+            "5 bar",
+            "6 bar"
+          ],
+          "correcta": 1,
+          "explicacion": "(12 − 4) ÷ 16 × 10 = 5 bar: 12 mA es la mitad de la escala."
+        }
+      ]
+    },
+    {
+      "titulo": "PT100",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{pt100}} es una sonda de platino que mide 100 Ω a 0 °C y unos 0,385 Ω más por cada grado: a 100 °C mide unos 138,5 Ω. Se comprueba con el óhmetro y su tabla.\n\nSe conecta a dos, tres o cuatro hilos. Con dos, la resistencia del cable se suma y la lectura sale alta; con tres, la tarjeta la compensa. Por eso las de sala de máquinas suelen ir a tres hilos ([i]verificar a bordo[/i])."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el8_pt100",
+          "pregunta": "Una PT100 desconectada mide 119,4 Ω. ¿Qué temperatura indica, más o menos?",
+          "opciones": [
+            "19 °C",
+            "50 °C",
+            "119 °C"
+          ],
+          "correcta": 1,
+          "explicacion": "(119,4 − 100) ÷ 0,385 ≈ 50 °C."
+        }
+      ]
+    },
+    {
+      "titulo": "Termocupla",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{termocupla}} son dos metales distintos unidos en la punta: dan unos milivoltios que crecen con la temperatura. La de tipo K da unos 41 µV por grado y llega a unos 1 200 °C: se usa en los gases de escape.\n\nMide la diferencia entre la punta y la {{union_fria}}, donde se conecta a la tarjeta, que compensa esa temperatura. Si se empalma con cable de cobre en vez de cable de compensación, la lectura falla."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el8_lazo_cero",
+          "pregunta": "Un transmisor da 0 mA en el PLC. Ordene la búsqueda:",
+          "pasos": [
+            "Medir los 24 V de la fuente del lazo",
+            "Medir la tensión en los bornes del transmisor",
+            "Medir la corriente del lazo en serie",
+            "Revisar el cable y los bornes intermedios"
+          ],
+          "explicacion": "0 mA es un lazo abierto o sin alimentación: se sigue la tensión desde la fuente hasta el transmisor."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60381-1: señales analógicas de corriente continua para el control de procesos.",
+    "IEC 60751: termómetros de resistencia de platino.",
+    "IEC 60584-1: termopares.",
+    "NAMUR NE 43: niveles de señal para detectar fallas en los transmisores."
+  ]
+}

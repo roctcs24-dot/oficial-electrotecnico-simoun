@@ -1,0 +1,75 @@
+{
+  "id": "el5_rectificador",
+  "titulo": "Rectificador y fuentes",
+  "resumen": "Cómo se convierte la alterna en continua y cómo se prueba una fuente.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "De alterna a continua",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las tarjetas necesitan continua. Una fuente sencilla tiene un transformador que baja la tensión, un {{puente_rectificador}} de cuatro diodos que da la vuelta a los semiciclos negativos y un {{condensador_filtro}} que alisa la tensión.\n\n[center][b]24 V × 1,41 − 1,4 V ≈ 32 V[/b][/center]\n\nLos 1,4 V son los dos diodos del puente que conducen en cada semiciclo."
+        },
+        {
+          "tipo": "animacion",
+          "id": "rectificador",
+          "params": {},
+          "pie": "Cargador de 24 V AC con 1 A de carga y 4 700 µF: valores típicos — verificar a bordo. Quite el filtro y vea volver el rizado."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el5_pico",
+          "pregunta": "Con 24 V AC y un puente, ¿hasta qué tensión se carga el condensador sin carga?",
+          "opciones": [
+            "24 V",
+            "Unos 32 V",
+            "48 V"
+          ],
+          "correcta": 1,
+          "explicacion": "Se carga al pico: 24 × 1,41 = 33,9 V, menos 1,4 V de los dos diodos: unos 32 V."
+        }
+      ]
+    },
+    {
+      "titulo": "El rizado dice cómo está el filtro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Entre pico y pico, el condensador alimenta la carga y su tensión baja un poco: ese {{rizado}} se ve en el osciloscopio o, aproximadamente, con el multímetro en V AC sobre la salida de continua.\n\nUn rizado que crece con los años indica un condensador seco, que ha perdido capacidad. La fuente sigue dando tensión, pero cae con los consumos altos y los equipos se reinician."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el5_rizado",
+          "pregunta": "El rizado de una fuente ha subido mucho y el equipo se reinicia. ¿Qué se sospecha primero?",
+          "opciones": [
+            "Un diodo del puente en corto",
+            "El condensador de filtro seco",
+            "La tensión de red demasiado alta"
+          ],
+          "correcta": 1,
+          "explicacion": "Un condensador seco deja de alisar. Un diodo en corto haría saltar el fusible de entrada."
+        }
+      ]
+    },
+    {
+      "titulo": "Fuentes conmutadas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las fuentes de 24 V DC de los tableros modernos son {{fuente_conmutada}}: rectifican la red directamente, trocean la tensión a alta frecuencia y la bajan con un transformador pequeño. Pesan poco y rinden mucho, pero llevan condensadores con tensión de red por dentro: no se abren con tensión.\n\nPara probarla, mida la entrada y la salida en vacío y con carga. Si la salida cae al conectar la carga, busque primero un corto en la carga antes de culpar a la fuente."
+        },
+        {
+          "tipo": "taller",
+          "plantilla": "puente_servicio",
+          "texto": "Mida en el banco la tensión AC del transformador y la DC del condensador. Compárelas con el cálculo y busque el rizado con el multímetro en V AC.",
+          "boton": "Practicar el rectificador"
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 61204: fuentes de alimentación de baja tensión en continua.",
+    "IEC 60146-1-1: convertidores de semiconductores."
+  ]
+}

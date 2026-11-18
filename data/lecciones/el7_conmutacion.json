@@ -1,0 +1,76 @@
+{
+  "id": "el7_conmutacion",
+  "titulo": "Relé, optoacoplador, SSR, tiristor y triac",
+  "resumen": "Cómo se separa la señal de la potencia y cómo se conmuta la alterna sin contactos.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Separar la señal de la potencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{optoacoplador}} lleva un LED y un fototransistor en la misma cápsula: la señal pasa como luz y los dos circuitos quedan con {{aislamiento_galvanico}}. Así una entrada de PLC no recibe los picos del cable de campo.\n\nEl {{rele_auxiliar}} también aísla, con una bobina y contactos, y puede llevar corrientes mayores; pero se desgasta y tarda unos milisegundos."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el7_opto",
+          "pregunta": "¿Para qué sirve un optoacoplador en una entrada de PLC?",
+          "opciones": [
+            "Para amplificar la tensión",
+            "Para aislar la tarjeta del cable de campo",
+            "Para guardar la última señal"
+          ],
+          "correcta": 1,
+          "explicacion": "La señal pasa como luz: si el cable de campo recibe un pico, no llega a la electrónica del PLC."
+        }
+      ]
+    },
+    {
+      "titulo": "Relé de estado sólido",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{rele_estado_solido}} (SSR) se manda con unos voltios de continua y conmuta la carga de alterna con un {{triac}} o con dos {{tiristor}}. No hace ruido ni chispa y aguanta millones de maniobras, pero se calienta (necesita disipador) y, al fallar, suele quedar en corto: la carga sigue encendida sin orden.\n\nMuchos conectan en el {{cruce_cero}}, cuando la tensión pasa por cero, y así perturban menos la red."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el7_ssr_falla",
+          "pregunta": "La resistencia de caldeo sigue caliente aunque el termostato no da orden al SSR. ¿Qué se sospecha?",
+          "opciones": [
+            "El SSR en corto",
+            "El termostato abierto",
+            "Falta de tensión de red"
+          ],
+          "correcta": 0,
+          "explicacion": "Un SSR en corto conduce sin orden: es su falla más común."
+        }
+      ]
+    },
+    {
+      "titulo": "Tiristor y triac",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{tiristor}} conduce en un solo sentido cuando recibe un impulso en la puerta, y sigue conduciendo hasta que la corriente pasa por cero. El {{triac}} es como dos tiristores en antiparalelo: conduce en los dos sentidos y sirve para alterna.\n\nCon ellos se regula la potencia recortando cada semiciclo: arrancadores suaves, reguladores de alumbrado y cargadores de baterías."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el7_probar_ssr",
+          "pregunta": "Un SSR no conecta su carga. Ordene la comprobación:",
+          "pasos": [
+            "Medir la tensión de mando en su entrada",
+            "Comprobar que su LED se enciende",
+            "Medir la tensión en la carga con la orden",
+            "Medir la tensión entre los terminales de salida del SSR"
+          ],
+          "explicacion": "Con orden y sin tensión en la carga, si entre los terminales de salida queda toda la tensión de red, el SSR está abierto."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 62314: relés de estado sólido.",
+    "IEC 60747-5-5: optoacopladores.",
+    "IEC 60747-6: tiristores."
+  ]
+}

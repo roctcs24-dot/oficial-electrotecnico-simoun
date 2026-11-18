@@ -339,6 +339,17 @@
     "amplificador_operacional": { "es": "amplificador operacional", "en": "operational amplifier, op-amp", "def": "Circuito integrado que amplifica la diferencia entre sus dos entradas." },
     "comparador": { "es": "comparador", "en": "comparator", "def": "Circuito cuya salida dice cuál de dos tensiones es mayor." },
     "puerta_logica": { "es": "puerta lógica", "en": "logic gate", "def": "Circuito que combina señales de 0 y 1: AND, OR, NOT y las demás." },
-    "tabla_verdad": { "es": "tabla de verdad", "en": "truth table", "def": "Tabla con la salida de una puerta para cada combinación de entradas." }
+    "tabla_verdad": { "es": "tabla de verdad", "en": "truth table", "def": "Tabla con la salida de una puerta para cada combinación de entradas." },
+    "senal": { "es": "señal", "en": "signal", "def": "Tensión o corriente pequeña que lleva información, como la de un sensor o un transmisor." },
+    "constante_tiempo": { "es": "constante de tiempo", "en": "time constant", "def": "τ = R × C: tiempo en que un condensador llega al 63 % de su carga. A las cinco τ está casi cargado." },
+    "cruce_cero": { "es": "cruce por cero", "en": "zero crossing", "def": "Instante en que la tensión alterna pasa por 0 V. Algunos relés de estado sólido conectan en él." },
+    "pt100": { "es": "sonda PT100", "en": "Pt100 resistance thermometer", "def": "Sonda de platino de 100 Ω a 0 °C, cuya resistencia sube unos 0,385 Ω por grado." },
+    "termocupla": { "es": "termocupla (termopar)", "en": "thermocouple", "def": "Dos metales distintos unidos en la punta que dan unos milivoltios según la temperatura." },
+    "union_fria": { "es": "unión fría", "en": "cold junction", "def": "Punto donde la termocupla se conecta al cobre de la tarjeta; su temperatura se compensa." },
+    "bit": { "es": "bit", "en": "bit", "def": "Unidad de información: un 0 o un 1." },
+    "binario": { "es": "binario", "en": "binary", "def": "Forma de escribir números solo con 0 y 1; cada posición vale el doble que la de su derecha." },
+    "histeresis": { "es": "histéresis", "en": "hysteresis", "def": "Diferencia entre el valor al que algo conecta y al que desconecta, para que no oscile." },
+    "esd": { "es": "descarga electrostática", "en": "electrostatic discharge (ESD)", "def": "Descarga de la carga estática del cuerpo o de un objeto; puede dañar componentes electrónicos sin notarse." },
+    "pulsera_antiestatica": { "es": "pulsera antiestática", "en": "ESD wrist strap", "def": "Pulsera conectada a tierra por una resistencia de 1 MΩ que descarga la estática del cuerpo." }
   }
 }

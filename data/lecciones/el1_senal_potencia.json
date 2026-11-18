@@ -1,0 +1,76 @@
+{
+  "id": "el1_senal_potencia",
+  "titulo": "Señal y potencia",
+  "resumen": "Los circuitos que informan y los que mueven energía.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Dos mundos en un tablero",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "A bordo conviven dos clases de circuitos. Los de {{potencia}} mueven energía: el motor de una bomba toma decenas de amperios a 380 V. Los de {{senal}} solo llevan información: un sensor dice «hay pieza» con unos miliamperios a 24 V DC, y un transmisor dice la presión con 4 a 20 mA.\n\nLa electrónica trabaja casi siempre en el lado de la señal: tarjetas, fuentes de 24 V, PLC y transmisores. Por eso sus averías se miden en voltios y miliamperios, no en cientos de amperios."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el1_senal_o_potencia",
+          "pregunta": "¿Cuál de estos es un circuito de señal?",
+          "opciones": [
+            "La alimentación de 380 V de una bomba",
+            "Un transmisor de presión de 4-20 mA",
+            "La resistencia de caldeo de un motor"
+          ],
+          "correcta": 1,
+          "explicacion": "El transmisor solo informa: lleva unos miliamperios. Los otros dos mueven energía."
+        }
+      ]
+    },
+    {
+      "titulo": "La señal manda, el contactor trabaja",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La señal no puede mover la carga directamente: una salida de PLC da unos 0,5 A a 24 V DC ([i]valor típico — verificar a bordo[/i]) y un motor necesita mucho más. Entre las dos hay siempre un intermediario que amplifica: un {{rele_auxiliar}}, un contactor, un {{transistor}} o un {{rele_estado_solido}}.\n\nLa regla práctica: la señal manda la bobina y los contactos llevan la potencia. Si se mezclan, se quema la salida de la tarjeta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "el1_salida_plc",
+          "pregunta": "Una salida de PLC de 24 V DC debe arrancar una bomba de 15 kW. ¿Qué se conecta a la salida?",
+          "opciones": [
+            "El motor directamente",
+            "La bobina de un relé o de un contactor",
+            "Un fusible más grande"
+          ],
+          "correcta": 1,
+          "explicacion": "La salida solo da unos cientos de miliamperios: manda la bobina, y los contactos del contactor llevan la potencia del motor."
+        }
+      ]
+    },
+    {
+      "titulo": "El 0 V y el ruido",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Los 24 V DC tienen dos polos: +24 V y 0 V. El 0 V es la referencia de las medidas electrónicas: se mide entre el punto y el 0 V de la fuente, no contra el casco.\n\nLas señales son débiles y se estropean con el ruido de los cables de potencia. Por eso van por cable apantallado, separadas de los cables de los motores, y con la pantalla a tierra en un solo extremo ([i]práctica habitual — verificar en el esquema del equipo[/i])."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "el1_medir_senal",
+          "pregunta": "Para medir la tensión de una entrada de 24 V DC de una tarjeta, ordene:",
+          "pasos": [
+            "Elegir V DC en el multímetro",
+            "Poner la punta negra en el 0 V de la tarjeta",
+            "Tocar con la roja el borne de la entrada",
+            "Comparar con 24 V (activa) o 0 V (inactiva)"
+          ],
+          "explicacion": "La referencia es el 0 V de la fuente de 24 V: así la lectura dice lo mismo que ve la tarjeta."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60050-702: oscilaciones, señales y dispositivos asociados.",
+    "IEC 61131-2: autómatas programables, entradas y salidas.",
+    "Convenio STCW, sección A-III/6."
+  ]
+}

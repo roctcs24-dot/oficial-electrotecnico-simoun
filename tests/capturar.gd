@@ -67,6 +67,8 @@ func _capturar() -> void:
 		await _capturar_inicio(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fichas_d":
 		await _capturar_fichas_d(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "electronica":
+		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
 		await _capturar_rediseno_e(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
@@ -567,6 +569,32 @@ func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
 
 ## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
 ## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
+## Etapa 40: lecciones de electrónica desde cero con sus animaciones, y la Escuela en el módulo 8.
+func _capturar_electronica(raiz: Raiz, carpeta: String) -> void:
+	raiz.partida.datos = Partida.datos_nuevos()
+	for id: String in ["el1_senal_potencia", "el2_resistencias"]:
+		raiz.partida.datos["lecciones"][id] = {"aciertos": 2, "total": 2}
+	var paginas := [["el2_resistencias", 1], ["el3_condensador", 1], ["el5_rectificador", 0], ["el6_transistor", 1], ["el8_senales_proceso", 0], ["el9_logica_digital", 0]]
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("escuela")
+		await _esperar()
+		raiz.pantalla_actual().elegir_modulo(8)
+		await _guardar(carpeta, "f_escuela_8", tam)
+		for par: Array in paginas:
+			raiz.ir_a("leccion", {"id": par[0], "sistema": 8, "pagina": par[1], "respuestas": {}})
+			await _esperar()
+			var anim := _buscar_animacion(raiz)
+			if anim != null and raiz.vertical:
+				var s := _scroll_de(anim)
+				if s != null:
+					s.ensure_control_visible(anim)
+			await _guardar(carpeta, "f_%s_%d" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
 ## Etapa E del rediseño: lección, resultado, examen, repaso y la pantalla «Buque».
 func _capturar_rediseno_e(raiz: Raiz, carpeta: String) -> void:
 	var p := raiz.partida
