@@ -1,0 +1,14 @@
+{
+  "nota": "Colores básicos de identificación de tuberías según ISO 14726 (buques). Cada servicio lleva su color de fondo y, a veces, bandas de otro color que dicen el medio exacto. Valor típico — verificar a bordo: en el B/P Vía Simoun muchas líneas están pintadas de blanco y el servicio se marca con bandas, rótulos o flechas.",
+  "colores": {
+    "agua_dulce": { "nombre": "Agua dulce", "color": "#2c6fc4", "claro": "#7fb4ee", "oscuro": "#123c70", "iso": "Azul" },
+    "agua_salada": { "nombre": "Agua salada", "color": "#2e9e4a", "claro": "#7fdc95", "oscuro": "#145c26", "iso": "Verde" },
+    "combustible": { "nombre": "Combustible", "color": "#8a5a2b", "claro": "#c48a52", "oscuro": "#4e3014", "iso": "Marrón" },
+    "aceite": { "nombre": "Aceite lubricante", "color": "#d9b21c", "claro": "#ffe27a", "oscuro": "#7a6008", "iso": "Amarillo" },
+    "aire": { "nombre": "Aire comprimido", "color": "#8fc7e8", "claro": "#d6eefb", "oscuro": "#4a86a8", "iso": "Azul claro" },
+    "contraincendios": { "nombre": "Contraincendios", "color": "#c8302a", "claro": "#ff8a7a", "oscuro": "#6e120d", "iso": "Rojo" },
+    "lodos": { "nombre": "Lodos y aguas sucias", "color": "#3a3a3a", "claro": "#7a7a7a", "oscuro": "#151515", "iso": "Negro" },
+    "vapor": { "nombre": "Vapor", "color": "#b8c0c6", "claro": "#eef2f4", "oscuro": "#6d7880", "iso": "Gris plata" },
+    "gases": { "nombre": "Gases", "color": "#c49a2c", "claro": "#ecc76a", "oscuro": "#6e5212", "iso": "Ocre" }
+  }
+}

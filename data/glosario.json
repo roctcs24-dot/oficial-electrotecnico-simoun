@@ -411,6 +411,11 @@
     "virola": { "es": "virola", "en": "ferrule / crimp shell", "def": "Casquillo metálico que se prensa a máquina sobre la manguera para fijarla al racor." },
     "brida": { "es": "brida", "en": "flange", "def": "Unión de tubería o de manguera con un disco o dos medias piezas apretadas con tornillos contra una junta." },
     "contrallave": { "es": "contrallave", "en": "backup wrench", "def": "Segunda llave que sujeta el cuerpo del racor mientras se gira la tuerca, para no retorcer el tubo ni la manguera." },
-    "enchufe_rapido": { "es": "enchufe rápido", "en": "quick coupling", "def": "Conexión de macho y hembra que se une y se separa sin herramientas; cada mitad cierra al separar." }
+    "enchufe_rapido": { "es": "enchufe rápido", "en": "quick coupling", "def": "Conexión de macho y hembra que se une y se separa sin herramientas; cada mitad cierra al separar." },
+    "pid": { "es": "P&ID", "en": "piping and instrumentation diagram", "def": "Plano de tuberías e instrumentos: dibuja con símbolos los equipos, las líneas, las válvulas y los instrumentos de un sistema, sin escala." },
+    "isometrico": { "es": "isométrico", "en": "isometric drawing", "def": "Plano de una línea dibujada en perspectiva, con sus medidas, codos y soportes, para fabricarla o montarla." },
+    "codigo_colores": { "es": "código de colores de tuberías", "en": "pipe colour code", "def": "Colores y bandas que dicen qué lleva cada tubería. En buques, ISO 14726." },
+    "separadora": { "es": "separadora centrífuga", "en": "centrifugal separator (purifier)", "def": "Máquina que limpia el combustible o el aceite girando a miles de rpm: el agua y los lodos, más pesados, salen hacia fuera." },
+    "doble_bloqueo": { "es": "doble bloqueo y purga", "en": "double block and bleed", "def": "Aislamiento con dos válvulas cerradas en serie y una purga abierta entre ellas: si la primera pasa, el fluido sale por la purga y no llega al trabajo." }
   }
 }

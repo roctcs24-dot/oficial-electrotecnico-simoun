@@ -1,0 +1,73 @@
+{
+  "id": "li4_aislar_equipo",
+  "titulo": "Aislar un equipo",
+  "resumen": "Todo lo que entra y todo lo que sale.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Qué es aislar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Aislar un equipo es dejarlo sin ninguna energía: se cierran todas las válvulas por las que le puede llegar fluido (también el agua, el aire y las recirculaciones), se descarga la presión que quede dentro y se bloquea y etiqueta (LOTO) el arrancador eléctrico."
+        },
+        {
+          "tipo": "linea",
+          "esquema": "purificadora",
+          "ejercicio": "aislar_separadora",
+          "tema": "li4_separadora"
+        }
+      ]
+    },
+    {
+      "titulo": "Doble bloqueo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Si una válvula puede pasar, una sola no basta. Con {{doble_bloqueo}} se cierran dos válvulas en serie y se abre una purga entre ellas: si la primera pasa, el fluido sale por la purga y no llega a quien trabaja."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "li4_purga",
+          "pregunta": "En un doble bloqueo y purga, ¿para qué está abierta la purga del medio?",
+          "opciones": [
+            "Para ventilar el equipo",
+            "Para que, si la primera válvula pasa, el fluido salga por ella y no llegue al trabajo",
+            "Para llenar la línea"
+          ],
+          "correcta": 1,
+          "explicacion": "La purga demuestra que la primera válvula cierra y evita que la fuga llegue al equipo abierto."
+        },
+        {
+          "tipo": "linea",
+          "esquema": "purificadora",
+          "ejercicio": "aislar_bomba",
+          "tema": "li4_bomba"
+        }
+      ]
+    },
+    {
+      "titulo": "El procedimiento",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "li4_procedimiento",
+          "pregunta": "Para aislar la separadora antes de abrirla, ordene:",
+          "pasos": [
+            "Parar la separadora y la bomba y aplicar LOTO en sus arrancadores",
+            "Cerrar la entrada de combustible, la salida y el agua de cierre",
+            "Esperar a que el rotor se pare del todo",
+            "Descargar la presión y comprobar que no entra fluido",
+            "Abrir y trabajar"
+          ],
+          "explicacion": "Energía eléctrica fuera primero, luego las válvulas, el rotor parado (gira mucho tiempo por inercia) y la comprobación antes de abrir."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Procedimientos de LOTO del SMS del buque.",
+    "Manual de la separadora Alfa Laval MMB 305S (verificar a bordo).",
+    "NFPA 70E: control de energías peligrosas."
+  ]
+}

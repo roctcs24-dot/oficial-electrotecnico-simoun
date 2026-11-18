@@ -105,8 +105,8 @@ func test_modulo_10_activo_con_sus_lecciones() -> String:
 	var minijuegos: Array = m.get("modos", {}).get("examen", {}).get("minijuegos", [])
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 10 está activo"),
-		A.cierto(Array(lecciones) == LECCIONES, "lecciones: %s" % str(lecciones)),
-		A.cierto(minijuegos == ["abierta_cerrada"], "evaluación: %s" % str(minijuegos)),
+		A.cierto(Array(lecciones).slice(0, LECCIONES.size()) == LECCIONES, "lecciones de válvulas al principio: %s" % str(lecciones)),
+		A.cierto(minijuegos.has("abierta_cerrada"), "evaluación: %s" % str(minijuegos)),
 	])
 
 

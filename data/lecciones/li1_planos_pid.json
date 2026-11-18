@@ -1,0 +1,61 @@
+{
+  "id": "li1_planos_pid",
+  "titulo": "Planos de tuberías",
+  "resumen": "P&ID, isométricos y símbolos.",
+  "minutos": 3,
+  "paginas": [
+    {
+      "titulo": "Tipos de plano",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "A bordo hay tres planos de tuberías que conviene distinguir:\n\n• el {{pid}}, que dibuja el sistema con símbolos y sin escala: qué está conectado con qué;\n• el {{isometrico}}, que dibuja una línea en perspectiva con sus medidas, para fabricarla;\n• el plano de disposición, que dice dónde está cada equipo en la sala.\n\nPara seguir una línea y aislar un equipo se usa el P&ID."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "li1_pid",
+          "pregunta": "¿Qué plano dice qué válvulas hay entre un tanque y una bomba?",
+          "opciones": [
+            "El isométrico",
+            "El P&ID",
+            "El plano de disposición"
+          ],
+          "correcta": 1,
+          "explicacion": "El P&ID dibuja las conexiones y las válvulas; el isométrico, la forma de un tubo; el de disposición, dónde está cada equipo."
+        }
+      ]
+    },
+    {
+      "titulo": "Símbolos básicos",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En un P&ID una válvula es un par de triángulos unidos por la punta (rellenos si está cerrada en el plano); una bomba, un círculo con un triángulo hacia la salida; y una flecha sobre la línea, el sentido del fluido. Cada válvula lleva su número, el mismo que su chapa a bordo."
+        },
+        {
+          "tipo": "linea",
+          "esquema": "purificadora",
+          "ejercicio": "servicio_lodos",
+          "tema": "li1_lodos"
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "li1_leer",
+          "pregunta": "Para leer un P&ID que no conoce, ordene:",
+          "pasos": [
+            "Buscar el equipo principal (la separadora)",
+            "Ver de dónde le llega el fluido y adónde sale",
+            "Seguir las flechas de sentido",
+            "Anotar los números de las válvulas del recorrido"
+          ],
+          "explicacion": "Del equipo hacia fuera, siguiendo el sentido del fluido y apuntando las válvulas."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 10628: diagramas de flujo y P&ID.",
+    "ISO 14617: símbolos gráficos.",
+    "Planos del buque (verificar a bordo)."
+  ]
+}

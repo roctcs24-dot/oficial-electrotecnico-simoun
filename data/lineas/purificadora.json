@@ -1,0 +1,43 @@
+{
+  "id": "purificadora",
+  "titulo": "Purificadora de combustible",
+  "nota": "Esquema simplificado de una de las dos separadoras Alfa Laval MMB 305S con su bomba de alimentación de husillo. Trazado y números de válvula de enseñanza — verificar a bordo con el plano del buque.",
+  "ancho": 440,
+  "alto": 260,
+  "equipos": [
+    { "id": "tanque_sed", "nombre": "T. SEDIMENT.", "sub": "FO / MDO", "rect": [30, 26, 80, 44] },
+    { "id": "agua", "nombre": "AGUA", "sub": "de cierre", "rect": [186, 24, 50, 30] },
+    { "id": "tanque_serv", "nombre": "T. SERVICIO", "sub": "DIARIO", "rect": [348, 20, 82, 40] },
+    { "id": "filtro", "nombre": "FILTRO", "sub": "", "rect": [150, 132, 48, 36] },
+    { "id": "separadora", "nombre": "SEPARADORA", "sub": "MMB 305S", "rect": [250, 62, 82, 58] },
+    { "id": "retorno", "nombre": "RETORNO", "sub": "a sediment.", "rect": [330, 198, 72, 34] },
+    { "id": "lodos", "nombre": "LODOS", "sub": "tanque", "rect": [348, 140, 64, 30] },
+    { "id": "bomba", "nombre": "BOMBA", "sub": "husillo", "forma": "bomba", "centro": [232, 150], "radio": 17 }
+  ],
+  "tramos": [
+    { "id": "t1", "servicio": "combustible", "nombre": "Tanque → V1 → V2", "puntos": [[70, 70], [70, 150], [106, 150]] },
+    { "id": "t2", "servicio": "combustible", "nombre": "V2 → filtro", "puntos": [[106, 150], [150, 150]] },
+    { "id": "t3", "servicio": "combustible", "nombre": "Filtro → bomba", "puntos": [[198, 150], [215, 150]] },
+    { "id": "t4", "servicio": "combustible", "nombre": "Bomba → V3 → separadora", "puntos": [[249, 150], [275, 150], [275, 120]] },
+    { "id": "t5", "servicio": "combustible", "nombre": "Recirculación → V6 → retorno", "puntos": [[258, 150], [258, 215], [330, 215]] },
+    { "id": "t6", "servicio": "combustible", "nombre": "Separadora → V4 → tanque de servicio", "puntos": [[332, 95], [390, 95], [390, 60]] },
+    { "id": "t7", "servicio": "agua_dulce", "nombre": "Agua de cierre → V5 → separadora", "puntos": [[236, 40], [300, 40], [300, 62]] },
+    { "id": "t8", "servicio": "lodos", "nombre": "Separadora → lodos", "puntos": [[312, 120], [312, 155], [348, 155]], "ancho": 7 }
+  ],
+  "valvulas": [
+    { "id": "v1", "n": 1, "x": 70, "y": 108, "vertical": true, "nombre": "V1 · salida del tanque de sedimentación (cierre rápido)" },
+    { "id": "v2", "n": 2, "x": 122, "y": 150, "vertical": false, "nombre": "V2 · aspiración de la bomba" },
+    { "id": "v3", "n": 3, "x": 275, "y": 134, "vertical": true, "nombre": "V3 · entrada a la separadora" },
+    { "id": "v4", "n": 4, "x": 362, "y": 95, "vertical": false, "nombre": "V4 · salida al tanque de servicio" },
+    { "id": "v5", "n": 5, "x": 266, "y": 40, "vertical": false, "nombre": "V5 · agua de cierre" },
+    { "id": "v6", "n": 6, "x": 296, "y": 215, "vertical": false, "nombre": "V6 · recirculación" }
+  ],
+  "flechas": [[90, 150, 0], [138, 150, 0], [258, 186, 90], [380, 95, 0], [312, 140, 90]],
+  "ejercicios": [
+    { "id": "seguir_alimentacion", "tipo": "seguir", "pregunta": "Siga el combustible desde el tanque de sedimentación hasta la separadora.", "ruta": ["t1", "t2", "t3", "t4"], "explicacion": "Tanque de sedimentación, V1, V2, filtro, bomba de husillo, V3 y separadora. La bomba aspira del tanque y empuja hacia la separadora." },
+    { "id": "servicio_lodos", "tipo": "servicio", "tramo": "t8", "pregunta": "¿Qué lleva el tramo marcado, pintado de negro?", "opciones": ["Lodos y agua que expulsa la separadora", "Combustible limpio", "Agua de mar"], "correcta": 0, "explicacion": "Negro: lodos y aguas sucias. La separadora descarga los lodos al tanque de lodos." },
+    { "id": "aislar_separadora", "tipo": "aislar", "pregunta": "Va a abrir la separadora. Toque las válvulas que cierra para que no entre combustible ni agua.", "valvulas": ["v3", "v4", "v5"], "explicacion": "Se cierra todo lo que entra y sale de la separadora: V3 (combustible), V4 (salida) y V5 (agua de cierre). V1 y V2 pueden quedar abiertas si la otra separadora sigue en servicio. Antes, LOTO en los arrancadores de la bomba y de la separadora." },
+    { "id": "servicio_agua", "tipo": "servicio", "tramo": "t7", "pregunta": "¿Qué lleva el tramo azul marcado?", "opciones": ["Agua dulce para el cierre y el desenlodado", "Aire comprimido", "Aceite lubricante"], "correcta": 0, "explicacion": "Azul: agua dulce. La separadora la usa para el cierre hidráulico del rotor y para descargar los lodos." },
+    { "id": "aislar_bomba", "tipo": "aislar", "pregunta": "Hay que cambiar el cierre mecánico de la bomba de husillo. Toque las válvulas que cierra.", "valvulas": ["v2", "v3", "v6"], "explicacion": "Se cierra la aspiración (V2), la impulsión hacia la separadora (V3) y la recirculación (V6), que también está conectada a la impulsión. Y LOTO en el arrancador de la bomba." }
+  ]
+}

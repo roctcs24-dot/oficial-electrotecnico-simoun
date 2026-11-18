@@ -1,0 +1,60 @@
+{
+  "id": "li2_colores_tuberia",
+  "titulo": "Colores de tubería",
+  "resumen": "Qué lleva cada línea.",
+  "minutos": 3,
+  "paginas": [
+    {
+      "titulo": "ISO 14726",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En buques, el {{codigo_colores}} lo fija la norma ISO 14726: agua dulce azul, agua salada verde, combustible marrón, aceite amarillo, aire azul claro, contraincendios rojo, lodos y aguas sucias negro y vapor gris plata. Las bandas de otro color dicen el medio exacto."
+        },
+        {
+          "tipo": "linea",
+          "esquema": "purificadora",
+          "ejercicio": "servicio_agua",
+          "tema": "li2_agua"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "li2_marron",
+          "pregunta": "Una tubería marrón, ¿qué lleva según ISO 14726?",
+          "opciones": [
+            "Agua de mar",
+            "Combustible",
+            "Vapor"
+          ],
+          "correcta": 1,
+          "explicacion": "Marrón: combustible. Verde: agua salada. Gris plata: vapor."
+        }
+      ]
+    },
+    {
+      "titulo": "No se fíe solo del color",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Muchas líneas del Vía Simoun están pintadas de blanco y el servicio va en bandas, rótulos o flechas. Además, la pintura se renueva y a veces se equivoca. El color ayuda a orientarse; para trabajar, se confirma con el plano y con la chapa de la válvula."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "li2_blanco",
+          "pregunta": "Una línea está pintada de blanco sin rótulo. ¿Cómo sabe qué lleva?",
+          "opciones": [
+            "Por el color: blanco es agua",
+            "Siguiéndola en el plano y por las chapas de sus válvulas",
+            "Abriendo una purga para ver"
+          ],
+          "correcta": 1,
+          "explicacion": "Blanco no es un servicio de la norma. Plano y chapas; abrir una purga sin saber qué hay es peligroso."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 14726: identificación de tuberías en buques.",
+    "Código de colores propio del buque (verificar a bordo)."
+  ]
+}

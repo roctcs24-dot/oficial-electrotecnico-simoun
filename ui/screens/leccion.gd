@@ -5,7 +5,7 @@ extends Pantalla
 ## se toca (animación, imagen, pregunta o práctica) a la derecha.
 ## Las respuestas viven en args para sobrevivir al giro del celular.
 
-const INTERACTIVOS := ["quiz", "ordenar"]
+const INTERACTIVOS := ["quiz", "ordenar", "linea"]
 const CARPETA_ANIMACIONES := "res://ui/animaciones/%s.gd"
 const ALTO_IMAGEN := 300.0
 ## Ancho a partir del cual la página se reparte en dos columnas.
@@ -168,6 +168,8 @@ func _crear_bloque(bloque: Dictionary, clave: String, rotulo := "") -> Control:
 			return ordenar
 		"taller":
 			return _crear_practica(bloque)
+		"linea":
+			return _crear_linea(bloque, clave)
 	return _aviso("Bloque desconocido: %s" % bloque["tipo"])
 
 
@@ -259,6 +261,32 @@ func _crear_imagen(bloque: Dictionary) -> Control:
 	if bloque.has("pie"):
 		columna.add_child(_pie(bloque["pie"]))
 	return columna
+
+
+## Ejercicio de líneas (data/lineas): seguir, aislar o servicio. Lo hecho a medias vive en args.
+func _crear_linea(bloque: Dictionary, clave: String) -> Control:
+	var esquema := JuegoLineas.leer(raiz.contenido, str(bloque["esquema"]))
+	var ejercicio := JuegoLineas.ejercicio(esquema, str(bloque["ejercicio"]))
+	if ejercicio.is_empty():
+		return _aviso("Falta el ejercicio %s" % bloque["ejercicio"])
+	if not args.has("parcial"):
+		args["parcial"] = {}
+	if not args["parcial"].has(clave):
+		args["parcial"][clave] = {}
+	var b := BloqueLinea.new()
+	b.name = "BloqueLinea"
+	var previa: Dictionary = args["respuestas"].get(clave, {})
+	b.iniciar(esquema, raiz.contenido.leer("tuberias.json").get("colores", {}), ejercicio, args["parcial"][clave], previa, true, 230.0)
+	if previa.is_empty():
+		b.respondido.connect(_al_responder_linea.bind(clave, bloque))
+	return b
+
+
+func _al_responder_linea(acierto: bool, clave: String, bloque: Dictionary) -> void:
+	args["respuestas"][clave] = {"acierto": acierto}
+	if not acierto:
+		raiz.partida.registrar_error(bloque["tema"])
+	_actualizar_siguiente()
 
 
 ## Foto tomada a bordo (data/fotos_piezas.json, por «id»), con su halo y sus partes numeradas.

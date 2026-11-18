@@ -1,0 +1,60 @@
+{
+  "id": "li3_seguir_linea",
+  "titulo": "Seguir una línea",
+  "resumen": "Desde un extremo conocido.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "El método",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Para seguir una línea a bordo se empieza por un extremo que se conoce (un tanque, una bomba) y se avanza en el sentido del fluido, tramo a tramo, apuntando cada válvula y cada derivación. En la purificadora: tanque de sedimentación, válvula de salida, filtro, bomba de husillo y {{separadora}}."
+        },
+        {
+          "tipo": "linea",
+          "esquema": "purificadora",
+          "ejercicio": "seguir_alimentacion",
+          "tema": "li3_seguir"
+        }
+      ]
+    },
+    {
+      "titulo": "Derivaciones",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Donde una línea se divide (una T) hay que decidir qué rama se sigue. En la purificadora, después de la bomba sale una recirculación que vuelve al tanque: también está conectada a la impulsión, aunque no vaya a la separadora."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "li3_t",
+          "pregunta": "Después de la bomba, la línea se divide en una T. ¿Qué hace la rama de recirculación?",
+          "opciones": [
+            "Lleva combustible limpio al tanque de servicio",
+            "Devuelve combustible al tanque de sedimentación",
+            "Lleva el agua de cierre"
+          ],
+          "correcta": 1,
+          "explicacion": "La recirculación devuelve al tanque de sedimentación lo que la separadora no toma."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "li3_metodo",
+          "pregunta": "Para seguir una línea a bordo, ordene:",
+          "pasos": [
+            "Elegir un extremo conocido (tanque o bomba)",
+            "Avanzar en el sentido del fluido",
+            "Apuntar cada válvula y cada derivación",
+            "Comprobar con el plano y las chapas"
+          ],
+          "explicacion": "Del extremo conocido, en el sentido del fluido, sin saltarse derivaciones, y confirmando con el plano."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Planos del buque (verificar a bordo).",
+    "Manual de la separadora Alfa Laval MMB 305S."
+  ]
+}

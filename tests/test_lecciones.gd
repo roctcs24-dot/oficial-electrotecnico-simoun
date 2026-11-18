@@ -2,7 +2,7 @@ extends RefCounted
 ## Lecciones y glosario: estructura del contenido, cálculos de las animaciones y recorrido.
 
 const A := preload("res://tests/ayuda_sim.gd")
-const TIPOS := ["texto", "animacion", "imagen", "foto", "quiz", "ordenar", "taller"]
+const TIPOS := ["texto", "animacion", "imagen", "foto", "quiz", "ordenar", "taller", "linea"]
 const RUTA_PARTIDA := "user://pruebas_lecciones.json"
 const Ohm := preload("res://ui/animaciones/circuito_ohm.gd")
 const Onda := preload("res://ui/animaciones/onda_alterna.gd")
@@ -38,6 +38,13 @@ func _validar_bloque(id: String, b: Dictionary, glosario: Dictionary, temas: Dic
 			for t in TextoTecnico.terminos(b.get("texto", "")):
 				if not glosario.has(t):
 					return "%s usa un término fuera del glosario: %s" % [id, t]
+		"linea":
+			var esquema := JuegoLineas.leer(Contenido.new(), str(b.get("esquema", "")))
+			if JuegoLineas.ejercicio(esquema, str(b.get("ejercicio", ""))).is_empty():
+				return "%s: no existe el ejercicio de líneas %s/%s" % [id, b.get("esquema", ""), b.get("ejercicio", "")]
+			if temas.has(b["tema"]):
+				return "tema repetido, el repaso los mezclaría: %s" % b["tema"]
+			temas[b["tema"]] = true
 		"foto":
 			var hay: bool = Contenido.new().leer(FotosPiezas.ARCHIVO).get("fotos", []).any(func(f: Dictionary) -> bool: return f["id"] == b.get("id", "") and FotosPiezas.existe(f))
 			if not hay:
@@ -80,7 +87,7 @@ func test_lecciones_bien_formadas() -> String:
 				var motivo := _validar_bloque(l["id"], b, glosario, temas)
 				if not motivo.is_empty():
 					return motivo
-				if b["tipo"] in ["quiz", "ordenar"]:
+				if b["tipo"] in ["quiz", "ordenar", "linea"]:
 					preguntas += 1
 		if preguntas == 0:
 			return "%s no comprueba nada: debe tener preguntas" % l["id"]
@@ -464,6 +471,8 @@ func _completar(raiz: Raiz, id: String, fallar: bool) -> void:
 		for quiz: BloqueQuiz in _buscar(p, BloqueQuiz):
 			var correcta := int(quiz._datos["correcta"])
 			quiz.elegir((correcta + 1) % quiz._botones.size() if fallar else correcta)
+		for linea: BloqueLinea in _buscar(p, BloqueLinea):
+			linea.resolver_bien()
 		for ordenar: BloqueOrdenar in _buscar(p, BloqueOrdenar):
 			for paso: String in ordenar._datos["pasos"]:
 				for b: Button in ordenar._pendientes.get_children():

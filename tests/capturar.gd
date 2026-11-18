@@ -75,6 +75,8 @@ func _capturar() -> void:
 		await _capturar_fotos(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "racores":
 		await _capturar_racores(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "lineas":
+		await _capturar_lineas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -662,6 +664,34 @@ func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
 					s.ensure_control_visible(anim)
 			await _guardar(carpeta, "g_%s_%d" % [par[0], par[1]], tam)
 			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
+## Etapa 44: seguir líneas. Minijuego con la línea a medias, aislar con válvulas elegidas y ya
+## comprobado, pregunta de servicio, colores de tubería y una lección.
+func _capturar_lineas(raiz: Raiz, carpeta: String) -> void:
+	var items := JuegoLineas.crear_items(JuegoLineas.leer(raiz.contenido, "purificadora"))
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a("seguir_lineas", {"items": items, "indice": 0, "respuestas": {}, "parcial": {0: {"hechos": ["t1", "t2"], "elegidas": [], "errores": 0}}})
+		await _guardar(carpeta, "l_seguir", tam)
+		raiz.volver()
+		raiz.ir_a("seguir_lineas", {"items": items, "indice": 2, "respuestas": {0: {"acierto": true, "elegida": -1}, 1: {"acierto": true, "elegida": 0}}, "parcial": {2: {"hechos": [], "elegidas": ["v3", "v4"], "errores": 0}}})
+		await _guardar(carpeta, "l_aislar", tam)
+		raiz.pantalla_actual().bloque.comprobar()
+		await _guardar(carpeta, "l_aislar_comprobado", tam)
+		raiz.volver()
+		raiz.ir_a("seguir_lineas", {"items": items, "indice": 1, "respuestas": {0: {"acierto": true, "elegida": -1}}})
+		await _guardar(carpeta, "l_servicio", tam)
+		raiz.volver()
+		raiz.ir_a("colores_tuberia", {})
+		await _guardar(carpeta, "l_colores", tam)
+		raiz.volver()
+		raiz.ir_a("leccion", {"id": "li4_aislar_equipo", "sistema": 10, "pagina": 0, "respuestas": {}})
+		await _esperar()
+		await _guardar(carpeta, "l_li4_0", tam)
+		raiz.volver()
 		raiz.ir_a_seccion("inicio")
 
 

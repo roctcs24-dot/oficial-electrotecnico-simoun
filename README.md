@@ -370,6 +370,22 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
 
+## Seguir líneas y colores de tubería (versión 4.22.0)
+
+El módulo 10, «Válvulas y líneas», suma cuatro lecciones (`li1` a `li4`): planos P&ID, colores de tubería, seguir una línea y aislar un equipo.
+
+- **Esquemas** (`data/lineas/<id>.json`, el primero `purificadora.json`): espacio `ancho` × `alto`; `equipos` (rectángulos o `forma: "bomba"`), `tramos` (id, `servicio`, `puntos`, nombre), `valvulas` (id, número, x, y, `vertical`, nombre), `flechas` de sentido y `ejercicios`:
+  - `seguir`: `ruta` (tramos en orden) que se recorre con el dedo; tocar una línea que no es cuenta un error;
+  - `aislar`: `valvulas` que hay que cerrar; se tocan y se pulsa COMPROBAR (las que faltan se marcan en ámbar y las que sobran, tachadas);
+  - `servicio`: `tramo` marcado, `opciones` y `correcta`.
+  El trazado de la purificadora es de enseñanza — verificar a bordo.
+- **Colores** (`data/tuberias.json`): ISO 14726, con el aviso de que en el buque muchas líneas son blancas con bandas o rótulos.
+- **Lógica** `JuegoLineas` (registro `seguir_lineas`), **widget** `VistaLineas` (dibujo y dedo) y **bloque** `BloqueLinea` (esquema más tarea; lo hecho a medias vive en args y sobrevive al giro).
+- **Pantallas:** `seguir_lineas` (minijuego, args `esquema`) y `colores_tuberia`. Las dos salen en el Pañol; el minijuego, también en la evaluación del módulo 10.
+- **Bloque de lección `linea`:** `{"tipo": "linea", "esquema": "purificadora", "ejercicio": "<id>", "tema": "<tema>"}`. Cuenta como pregunta.
+- **Para añadir un esquema:** copie `purificadora.json`, dibuje con coordenadas en su espacio y abra el minijuego con `raiz.ir_a("seguir_lineas", {"esquema": "<id>"})`.
+- **Pruebas** en `tests/test_lineas.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_l lineas`.
+
 ## Racores, roscas y mangueras (versión 4.21.0)
 
 El módulo 11 suma ocho lecciones de racores (`ra1` a `ra8`): familias de racores, roscas BSP y NPT, DN y NPS, JIC/ORFS/DIN 24°, mangueras hidráulicas, el latiguillo prensado, compresión/banjo/bridas SAE y fugas y seguridad. Varias enseñan fotos tomadas a bordo.
