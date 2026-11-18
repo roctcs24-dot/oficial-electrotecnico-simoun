@@ -75,7 +75,9 @@ def _lleva_relieve(e):
     return True
 
 
-def automatico(ruta_svg):
+def automatico(ruta_svg, encima="", defs_extra=""):
+    """Acabado automático. «encima»: detalles hechos a mano que se añaden sobre las piezas del SVG
+    (y reciben la misma textura y sombra); «defs_extra»: sus degradados y filtros."""
     raiz = ET.parse(ruta_svg).getroot()
     caja = [float(v) for v in raiz.get("viewBox", "0 0 %s %s" % (raiz.get("width"), raiz.get("height"))).replace(",", " ").split()]
     ancho, alto = caja[2], caja[3]
@@ -88,7 +90,7 @@ def automatico(ruta_svg):
         if _lleva_relieve(e):
             e.set("filter", "url(#rz_bisel)")
         piezas += ET.tostring(e, encoding="unicode")
-    cuerpo = (f'<defs>{FILTROS_AUTO}{defs}<g id="rz_todo">{piezas}</g></defs>'
+    cuerpo = (f'<defs>{FILTROS_AUTO}{C.FILTROS}{defs_extra}{defs}<g id="rz_todo">{piezas}{encima}</g></defs>'
               '<use xlink:href="#rz_todo" filter="url(#rz_sombra)"/>'
               '<g filter="url(#rz_textura)"><use xlink:href="#rz_todo"/></g>')
     # ElementTree escribe el espacio de nombres en cada elemento; el SVG en línea no lo necesita.

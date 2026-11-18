@@ -547,7 +547,7 @@ func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
 		raiz.ir_a("ficha", {"id": "contactor", "vista": "simbolos", "pestana": "conexion"})
 		await _guardar(carpeta, "d_ficha_contactor_simbolos", tam)
 		raiz.volver()
-		for id: String in ["alternador", "acb", "compresor_tornillo", "motor_trifasico"]:
+		for id: String in ["alternador", "acb", "compresor_tornillo", "compresor_piston", "motor_trifasico"]:
 			raiz.ir_a("ficha", {"id": id})
 			await _guardar(carpeta, "d_ficha_%s" % id, tam)
 			raiz.volver()
