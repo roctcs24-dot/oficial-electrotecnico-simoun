@@ -17,6 +17,11 @@ const CATALOGOS := {
 		"color": "d9534f", "icono": "herramientas",
 		"campos": [["Para qué sirve", "para_que"], ["Cómo se usa", "como_usar"], ["No haga esto", "no_hacer"], ["Cuidado y revisión", "cuidado"]],
 	},
+	"racores": {
+		"titulo": "Catálogo de racores", "sub": "Pañol · cómo se reconocen, dónde sellan y qué no mezclar", "rotulo": "Racores",
+		"color": "d9534f", "icono": "herramientas",
+		"campos": [["Cómo se reconoce", "como_reconocer"], ["Dónde sella", "sella"], ["Norma", "norma"], ["A bordo", "a_bordo"], ["No haga esto", "no_hacer"], ["Mantenimiento", "mantenimiento"]],
+	},
 }
 
 var datos := {}
@@ -95,7 +100,7 @@ func _lista() -> Control:
 	columna.add_child(PiezasLeccion.rotulo("%s · %d" % [config["rotulo"], elementos.size()]))
 	filas.clear()
 	for e: Dictionary in elementos:
-		var f := FilaPlaca.new(_corto(str(e["nombre"])), str(e.get("familia", "")))
+		var f := FilaPlaca.new(str(e.get("corto", _corto(str(e["nombre"])))), str(e.get("familia", "")))
 		f.name = "Tipo_%s" % e["id"]
 		f.tipo = "medalla"
 		f.icono = config["icono"]
@@ -130,7 +135,7 @@ func _visor() -> Control:
 	fila.add_theme_constant_override("separation", 6)
 	columna.add_child(fila)
 	botones_estado.clear()
-	fotos = FotosPiezas.de_pieza(raiz.contenido.leer(FotosPiezas.ARCHIVO), str(e["id"])) if es_valvula() else []
+	fotos = FotosPiezas.de_pieza(raiz.contenido.leer(FotosPiezas.ARCHIVO), str(e["id"]))
 	var foto := int(args.get("foto", 0 if not fotos.is_empty() else -1))
 	if foto >= fotos.size():
 		foto = -1
@@ -162,6 +167,11 @@ func _visor() -> Control:
 		nota.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		nota.custom_minimum_size.x = 120.0
 		columna.add_child(nota)
+		var partes: Array = fotos[foto].get("partes", [])
+		for i in partes.size():
+			var parte := PiezasLeccion.fila_lampara("ambar", "%d · %s: %s" % [i + 1, partes[i]["titulo"], partes[i]["texto"]], 12)
+			parte.name = "Parte_%d" % (i + 1)
+			columna.add_child(parte)
 		return visor
 	var con_estado: bool = es_valvula() and not str(e["dibujo"]) in ["retencion", "seguridad", "reductora"]
 	if con_estado:
@@ -180,6 +190,10 @@ func _visor() -> Control:
 		v.apertura = 1.0 if bool(args["abierta"]) else 0.0
 		v.via = "b" if bool(args["abierta"]) or v.tipo == "retencion" else "c"
 		dibujo = v
+	elif datos.has("racores"):
+		var r := DibujoRacor.new()
+		r.tipo = str(e["dibujo"])
+		dibujo = r
 	else:
 		var h := DibujoHerramienta.new()
 		h.tipo = str(e["dibujo"])
@@ -189,7 +203,7 @@ func _visor() -> Control:
 	dibujo.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	dibujo.custom_minimum_size.y = 220.0
 	columna.add_child(dibujo)
-	var pie := PiezasLeccion.rotulo(str(e.get("como_saber", e.get("para_que", ""))).get_slice(".", 0))
+	var pie := PiezasLeccion.rotulo(str(e.get("como_saber", e.get("para_que", e.get("sella", "")))).get_slice(".", 0))
 	pie.add_theme_font_size_override("font_size", Tema.tam(10.5))
 	columna.add_child(pie)
 	return visor

@@ -17,6 +17,11 @@ static func con_estado(datos: Dictionary) -> Array:
 	return datos.get("fotos", []).filter(func(f: Dictionary) -> bool: return str(f.get("estado", "")) in ["abierta", "cerrada"] and existe(f))
 
 
+## Fotos que traen su propia pregunta (las de racores): sirven de ronda en «Elija el racor».
+static func con_pregunta(datos: Dictionary) -> Array:
+	return datos.get("fotos", []).filter(func(f: Dictionary) -> bool: return f.has("pregunta") and existe(f))
+
+
 static func existe(foto: Dictionary) -> bool:
 	return ResourceLoader.exists("res://" + str(foto.get("archivo", "")))
 
@@ -35,3 +40,14 @@ static func halo_relativo(foto: Dictionary) -> Rect2:
 		return Rect2()
 	return Rect2((float(h[0]) - float(r[0])) / float(r[2]), (float(h[1]) - float(r[1])) / float(r[3]),
 		float(h[2]) / float(r[2]), float(h[3]) / float(r[3]))
+
+
+## Las partes numeradas («partes», con x e y en píxeles de la original) como fracción del recorte.
+static func partes_relativas(foto: Dictionary) -> Array[Vector2]:
+	var r: Array = foto.get("recorte", [])
+	var lista: Array[Vector2] = []
+	if r.size() != 4:
+		return lista
+	for p: Dictionary in foto.get("partes", []):
+		lista.append(Vector2((float(p["x"]) - float(r[0])) / float(r[2]), (float(p["y"]) - float(r[1])) / float(r[3])))
+	return lista

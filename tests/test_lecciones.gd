@@ -2,7 +2,7 @@ extends RefCounted
 ## Lecciones y glosario: estructura del contenido, cálculos de las animaciones y recorrido.
 
 const A := preload("res://tests/ayuda_sim.gd")
-const TIPOS := ["texto", "animacion", "imagen", "quiz", "ordenar", "taller"]
+const TIPOS := ["texto", "animacion", "imagen", "foto", "quiz", "ordenar", "taller"]
 const RUTA_PARTIDA := "user://pruebas_lecciones.json"
 const Ohm := preload("res://ui/animaciones/circuito_ohm.gd")
 const Onda := preload("res://ui/animaciones/onda_alterna.gd")
@@ -38,6 +38,10 @@ func _validar_bloque(id: String, b: Dictionary, glosario: Dictionary, temas: Dic
 			for t in TextoTecnico.terminos(b.get("texto", "")):
 				if not glosario.has(t):
 					return "%s usa un término fuera del glosario: %s" % [id, t]
+		"foto":
+			var hay: bool = Contenido.new().leer(FotosPiezas.ARCHIVO).get("fotos", []).any(func(f: Dictionary) -> bool: return f["id"] == b.get("id", "") and FotosPiezas.existe(f))
+			if not hay:
+				return "%s: no existe la foto %s" % [id, b.get("id", "")]
 		"imagen":
 			if VistaSvg.rasterizar(b["svg"], 0.5) == null:
 				return "%s: no se puede dibujar %s" % [id, b["svg"]]

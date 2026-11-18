@@ -1,0 +1,93 @@
+{
+  "id": "ra1_familias_racores",
+  "titulo": "Familias de racores",
+  "resumen": "La rosca sujeta; el asiento o la junta sellan.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Qué es un racor",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{racor}} une un tubo o una manguera a otro tubo o a un equipo y, además, tiene que sellar. Hay tres formas de sellar:\n\n• en la propia rosca, si es una {{rosca_conica}};\n• en una junta: arandela o {{junta_torica}};\n• en un asiento metal con metal, como el cono del {{jic}}."
+        },
+        {
+          "tipo": "animacion",
+          "id": "racor",
+          "params": {
+            "tipos": [
+              "bspt_npt",
+              "bspp",
+              "jic"
+            ]
+          },
+          "pie": "Tres racores, tres formas de sellar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra1_sella",
+          "pregunta": "¿Dónde sella un racor JIC 37°?",
+          "opciones": [
+            "En la rosca, con teflón",
+            "En el cono de 37°, metal con metal",
+            "En una arandela de cobre"
+          ],
+          "correcta": 1,
+          "explicacion": "El JIC sella en el cono; su rosca UNF solo sujeta."
+        }
+      ]
+    },
+    {
+      "titulo": "La rosca sujeta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En una {{rosca_paralela}} los hilos no sellan: solo aprietan la arandela, la junta o el asiento. Por eso no lleva cinta.\n\nSolo la rosca cónica sella en los hilos, y solo ahí tiene sentido la {{cinta_ptfe}}."
+        },
+        {
+          "tipo": "foto",
+          "id": "latiguillo_partes",
+          "pie": "Latiguillo del grupo generador: cada parte hace una cosa."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra1_paralela",
+          "pregunta": "Una rosca paralela BSPP gotea. ¿Qué se revisa primero?",
+          "opciones": [
+            "Poner más teflón en la rosca",
+            "La arandela o junta de debajo del hexágono",
+            "Apretar con una llave más larga"
+          ],
+          "correcta": 1,
+          "explicacion": "En una rosca paralela sella la arandela: si gotea, la arandela está vieja, pellizcada o falta."
+        }
+      ]
+    },
+    {
+      "titulo": "No se mezclan",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Muchos racores parecen iguales y la rosca hasta entra, pero no sellan entre sí: JIC 37° con SAE 45°, BSP con NPT, DIN serie L con serie S. Antes de pedir un repuesto, identifique el racor."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra1_identificar",
+          "pregunta": "Para identificar un racor desconocido, ordene:",
+          "pasos": [
+            "Mirar dónde sella: cono, cara plana o arandela",
+            "Contar los hilos y su ángulo con la galga de roscas",
+            "Medir el diámetro exterior de la rosca con el calibre",
+            "Buscar el tipo en la tabla del fabricante"
+          ],
+          "explicacion": "Primero el asiento, luego la rosca (hilos, ángulo y diámetro) y por último la tabla."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 8434: racores de tubo para hidráulica.",
+    "ISO 228-1 e ISO 7-1: roscas de tubería BSP.",
+    "ASME B1.20.1: roscas NPT."
+  ]
+}

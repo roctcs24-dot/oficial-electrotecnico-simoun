@@ -1,0 +1,87 @@
+{
+  "id": "ra2_roscas_bsp_npt",
+  "titulo": "Roscas BSP y NPT",
+  "resumen": "55° o 60°, paralela o cónica.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "BSP y NPT",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{bsp}} es la rosca de tubería británica: hilos de 55°, en versión paralela (G, o BSPP) o cónica (R, o BSPT). La {{npt}} es la americana: cónica y con hilos de 60°.\n\nEn el buque hay de las dos: los equipos europeos y asiáticos suelen traer BSP, y los americanos NPT."
+        },
+        {
+          "tipo": "animacion",
+          "id": "racor",
+          "params": {
+            "tipos": [
+              "bspp",
+              "bspt_npt"
+            ]
+          },
+          "pie": "Paralela con arandela y cónica con teflón."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra2_angulo",
+          "pregunta": "¿Qué ángulo tienen los hilos de una rosca NPT?",
+          "opciones": [
+            "55°",
+            "60°",
+            "37°"
+          ],
+          "correcta": 1,
+          "explicacion": "NPT: 60°. BSP: 55°. El 37° es el cono del JIC, no una rosca."
+        }
+      ]
+    },
+    {
+      "titulo": "1/2\" no mide media pulgada",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La medida de una rosca de tubería es un nombre heredado del interior de los tubos antiguos. Una rosca de 1/2\" mide unos 21 mm por fuera: 20,96 mm la BSP y 21,34 mm la NPT, las dos con 14 hilos por pulgada.\n\nPor eso 1/2\" BSP y NPT se confunden: hay que mirar el ángulo con la {{galga_roscas}}."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra2_medida",
+          "pregunta": "Una rosca macho mide 26,4 mm por fuera y tiene 14 hilos de 55°. ¿Qué es?",
+          "opciones": [
+            "3/4\" BSP",
+            "1\" NPT",
+            "1/2\" BSP"
+          ],
+          "correcta": 0,
+          "explicacion": "3/4\" BSP mide 26,44 mm y tiene 14 hilos de 55°. La NPT de 3/4\" tendría hilos de 60°."
+        }
+      ]
+    },
+    {
+      "titulo": "La cinta, solo en la cónica",
+      "bloques": [
+        {
+          "tipo": "foto",
+          "id": "rosca_teflon"
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra2_cinta",
+          "pregunta": "Para encintar una rosca cónica, ordene:",
+          "pasos": [
+            "Limpiar la rosca de restos de cinta vieja",
+            "Dejar libre el primer hilo",
+            "Dar 2 o 3 vueltas en el sentido de la rosca",
+            "Roscar a mano y apretar sin pasarse"
+          ],
+          "explicacion": "Rosca limpia, primer hilo libre para que la cinta no entre en la línea, en el sentido de la rosca y sin pasarse de apriete."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 228-1 y 7-1: roscas BSP.",
+    "ASME B1.20.1: roscas NPT.",
+    "Tabla de roscas del Pañol (data/tablas/roscas.json)."
+  ]
+}

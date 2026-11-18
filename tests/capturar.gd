@@ -73,6 +73,8 @@ func _capturar() -> void:
 		await _capturar_valvulas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fotos":
 		await _capturar_fotos(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "racores":
+		await _capturar_racores(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -659,6 +661,46 @@ func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
 				if s != null:
 					s.ensure_control_visible(anim)
 			await _guardar(carpeta, "g_%s_%d" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
+## Etapa 43: racores. Catálogo (foto con partes y dibujo), roscas y DN, mangueras, minijuego con
+## una ronda de racor, una de DN y una de foto, y dos lecciones.
+func _capturar_racores(raiz: Raiz, carpeta: String) -> void:
+	var catalogo := raiz.contenido.leer("catalogos/racores.json")
+	var tabla := raiz.contenido.leer("tablas/roscas.json")
+	var fotos := FotosPiezas.con_pregunta(raiz.contenido.leer(FotosPiezas.ARCHIVO))
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 7
+	var lista: Array = catalogo["racores"]
+	var rondas := [JuegoRacores.ronda_racor(lista[2], lista, azar), JuegoRacores.ronda_dn(tabla["dn"][5], tabla["dn"], false, azar)]
+	for f: Dictionary in fotos:
+		if f["id"] == "rosca_teflon":
+			rondas.append(JuegoRacores.ronda_foto(f))
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("panol")
+		await _guardar(carpeta, "r_panol", tam)
+		for par: Array in [["latiguillo", 0], ["jic", -1], ["din24", -1], ["brida_sae", -1]]:
+			raiz.ir_a("catalogo", {"catalogo": "racores", "elegido": par[0], "foto": par[1]})
+			await _guardar(carpeta, "r_catalogo_%s" % par[0], tam)
+			raiz.volver()
+		raiz.ir_a("roscas_tuberia", {"dn": 50, "medida": "2"})
+		await _guardar(carpeta, "r_roscas_dn", tam)
+		raiz.volver()
+		raiz.ir_a("mangueras", {})
+		await _guardar(carpeta, "r_mangueras", tam)
+		raiz.volver()
+		for i in rondas.size():
+			raiz.ir_a("elija_racor", {"items": rondas, "indice": i, "respuestas": {}})
+			await _guardar(carpeta, "r_elija_%d" % i, tam)
+			raiz.volver()
+		for par: Array in [["ra1_familias_racores", 1], ["ra6_latiguillo", 0], ["ra3_dn_nps", 0]]:
+			raiz.ir_a("leccion", {"id": par[0], "sistema": 11, "pagina": par[1], "respuestas": {}})
+			await _esperar()
+			await _guardar(carpeta, "r_%s_%d" % [par[0], par[1]], tam)
 			raiz.volver()
 		raiz.ir_a_seccion("inicio")
 

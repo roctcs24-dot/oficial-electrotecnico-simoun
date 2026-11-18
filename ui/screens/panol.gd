@@ -1,14 +1,12 @@
 extends Pantalla
 ## Pañol: consulta rápida para usar a bordo, sin puntos. Las fichas de todos los equipos, el
-## glosario, el catálogo de válvulas con su minijuego y, cuando estén listas, las tablas de
-## llaves, roscas y racores. Las filas van en placas con relieve (FilaPlaca).
+## glosario, el catálogo de válvulas, las herramientas con la tabla de llaves y los racores con
+## las roscas, el DN y las mangueras, cada uno con su minijuego. Las filas van en placas con
+## relieve (FilaPlaca).
 
 const COLOR := Color("d9534f")
 const COLOR_VALVULAS := Color("2e9e6a")
-const PROXIMAMENTE := [
-	["Roscas, bridas y racores", "BSP, NPT, JIC, ORFS, DIN, DN y NPS", "herramientas"],
-	["Mangueras hidráulicas", "Marcado SAE 100R y EN 853/856", "hidraulica"],
-]
+const PROXIMAMENTE := []
 
 var filas: Array[FilaPlaca] = []
 
@@ -41,6 +39,16 @@ func construir() -> void:
 	_fila_placa(pan[1], "Herramientas", "%d herramientas: cómo se llaman, para qué sirven y cómo se usan" % herramientas.size(), "herramientas", COLOR, 1.0, raiz.ir_a.bind("catalogo", {"catalogo": "herramientas"}))
 	_fila_placa(pan[1], "Llaves: milímetros y pulgadas", "Qué llave métrica entra en una tuerca en pulgadas", "herramientas", COLOR, 1.0, func() -> void: raiz.ir_a("tabla_llaves", {}))
 	_fila_placa(pan[1], "Identifique la herramienta", "Minijuego · %s" % ("%d de 3 estrellas" % int(juego_h.get("estrellas", 0)) if not juego_h.is_empty() else "sin jugar"), "herramientas", COLOR, int(juego_h.get("estrellas", 0)) / 3.0, func() -> void: raiz.ir_a("identifique_herramienta", {}))
+	var racores: Array = raiz.contenido.leer("catalogos/racores.json").get("racores", [])
+	var juego_r: Dictionary = raiz.partida.datos["minijuegos"].get(JuegoRacores.REGISTRO, {})
+	var rac := _placa("Racores y tubería")
+	lista.add_child(rac[0])
+	_fila_placa(rac[1], "Racores", "%d racores: cómo se reconocen, dónde sellan y qué no mezclar" % racores.size(), "herramientas", COLOR, 1.0, raiz.ir_a.bind("catalogo", {"catalogo": "racores"}))
+	_fila_placa(rac[1], "Roscas, DN y NPS", "BSP y NPT, y qué medida en pulgadas es cada DN", "herramientas", COLOR, 1.0, func() -> void: raiz.ir_a("roscas_tuberia", {}))
+	_fila_placa(rac[1], "Mangueras hidráulicas", "Cómo se lee el marcado SAE y EN", "herramientas", COLOR, 1.0, func() -> void: raiz.ir_a("mangueras", {}))
+	_fila_placa(rac[1], "Elija el racor", "Minijuego · %s" % ("%d de 3 estrellas" % int(juego_r.get("estrellas", 0)) if not juego_r.is_empty() else "sin jugar"), "herramientas", COLOR, int(juego_r.get("estrellas", 0)) / 3.0, func() -> void: raiz.ir_a("elija_racor", {}))
+	if PROXIMAMENTE.is_empty():
+		return
 	var pronto := _placa("En preparación")
 	lista.add_child(pronto[0])
 	for p: Array in PROXIMAMENTE:

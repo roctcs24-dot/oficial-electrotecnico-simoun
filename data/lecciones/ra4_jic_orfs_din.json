@@ -1,0 +1,88 @@
+{
+  "id": "ra4_jic_orfs_din",
+  "titulo": "JIC, ORFS y DIN 24°",
+  "resumen": "Racores hidráulicos de asiento.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "JIC 37°",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{jic}} sella en un cono de 37°, metal con metal; su rosca {{unf}} solo sujeta. Es el más común en la hidráulica de cubierta de equipos americanos.\n\nNo lo confunda con el cono de 45° (SAE de gas y refrigeración): la rosca puede entrar y no sella."
+        },
+        {
+          "tipo": "animacion",
+          "id": "racor",
+          "params": {
+            "tipos": [
+              "jic",
+              "orfs",
+              "din24"
+            ]
+          },
+          "pie": "JIC 37°, ORFS y DIN 24°."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra4_jic",
+          "pregunta": "Un racor JIC 37° gotea apretado al par. ¿Qué se revisa?",
+          "opciones": [
+            "Ponerle teflón a la rosca UNF",
+            "El cono: rayado, sucio o aplastado",
+            "Cambiar a una tuerca más larga"
+          ],
+          "correcta": 1,
+          "explicacion": "Sella el cono: si está dañado, se cambia la pieza. El teflón en la UNF no sirve y contamina."
+        }
+      ]
+    },
+    {
+      "titulo": "ORFS",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{orfs}} tiene la punta plana con una junta tórica en una ranura de la cara. Aguanta muy bien la vibración y la alta presión."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra4_orfs",
+          "pregunta": "¿Qué se cambia siempre al desmontar un ORFS?",
+          "opciones": [
+            "La tuerca",
+            "La junta tórica de la cara",
+            "La manguera"
+          ],
+          "correcta": 1,
+          "explicacion": "La tórica nueva, del material correcto (NBR para aceite mineral), en su ranura."
+        }
+      ]
+    },
+    {
+      "titulo": "DIN 24° con anillo cortante",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En tubo rígido de equipos europeos se usa el racor DIN 24°: un {{anillo_cortante}} muerde el tubo de acero y asienta en el cono de 24° del cuerpo. Se pide por el exterior del tubo en mm y la serie: L (ligera) o S (pesada)."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra4_din",
+          "pregunta": "Para montar un racor DIN 24° nuevo, ordene:",
+          "pasos": [
+            "Cortar el tubo a escuadra y desbarbar",
+            "Meter la tuerca y el anillo en su sentido",
+            "Premontar el anillo hasta que muerda el tubo",
+            "Montar en el cuerpo y apretar lo que indica el fabricante"
+          ],
+          "explicacion": "Sin corte limpio el anillo no asienta; sin premontaje no muerde y el tubo puede salirse."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SAE J514 / ISO 8434-2: JIC 37°.",
+    "SAE J1453 / ISO 8434-3: ORFS.",
+    "ISO 8434-1: racores de 24°."
+  ]
+}

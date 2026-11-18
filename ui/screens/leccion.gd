@@ -150,6 +150,8 @@ func _crear_bloque(bloque: Dictionary, clave: String, rotulo := "") -> Control:
 			return _crear_animacion(bloque)
 		"imagen":
 			return _crear_imagen(bloque)
+		"foto":
+			return _crear_foto(bloque)
 		"quiz":
 			var quiz := BloqueQuiz.new()
 			var previa: Dictionary = args["respuestas"].get(clave, {})
@@ -256,6 +258,29 @@ func _crear_imagen(bloque: Dictionary) -> Control:
 	hoja.add_child(imagen)
 	if bloque.has("pie"):
 		columna.add_child(_pie(bloque["pie"]))
+	return columna
+
+
+## Foto tomada a bordo (data/fotos_piezas.json, por «id»), con su halo y sus partes numeradas.
+func _crear_foto(bloque: Dictionary) -> Control:
+	var columna := _columna(6)
+	var datos := raiz.contenido.leer(FotosPiezas.ARCHIVO)
+	var foto: Dictionary = {}
+	for f: Dictionary in datos.get("fotos", []):
+		if f["id"] == bloque.get("id", ""):
+			foto = f
+	if foto.is_empty() or not FotosPiezas.existe(foto):
+		return _aviso("Falta la foto %s" % bloque.get("id", ""))
+	var visor := VisorFicha.new(10.0)
+	visor.name = "VisorFoto"
+	columna.add_child(visor)
+	var f := FotoPieza.desde(foto, str(datos.get("credito", "")), bool(bloque.get("estado", false)))
+	f.custom_minimum_size.y = float(bloque.get("alto", 220.0))
+	visor.add_child(f)
+	var partes: Array = foto.get("partes", [])
+	for i in partes.size():
+		columna.add_child(PiezasLeccion.fila_lampara("ambar", "%d · %s" % [i + 1, partes[i]["titulo"]], 13))
+	columna.add_child(_pie(str(bloque.get("pie", foto.get("texto", "")))))
 	return columna
 
 

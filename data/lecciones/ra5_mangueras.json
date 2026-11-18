@@ -1,0 +1,80 @@
+{
+  "id": "ra5_mangueras",
+  "titulo": "Mangueras hidráulicas",
+  "resumen": "Trenzas, espirales y marcado.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Trenzas y espirales",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una {{manguera}} hidráulica tiene un tubo interior de goma, un refuerzo de acero y una camisa exterior. El refuerzo dice cuánta presión aguanta:\n\n• 1 trenza (1SN, 100R1): presión media.\n• 2 trenzas (2SN, 100R2): presión alta.\n• 4 o 6 espirales (4SP, 4SH, R13): presión muy alta."
+        },
+        {
+          "tipo": "foto",
+          "id": "marcado_en856"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra5_4sp",
+          "pregunta": "La manguera dice «4SP / EN 856». ¿Qué refuerzo tiene?",
+          "opciones": [
+            "Una trenza de acero",
+            "Cuatro espirales de acero",
+            "Ninguno: es de aspiración"
+          ],
+          "correcta": 1,
+          "explicacion": "EN 856 4SP: cuatro espirales de acero, para presión muy alta."
+        }
+      ]
+    },
+    {
+      "titulo": "Cómo se lee el marcado",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El marcado trae la norma y el tipo (EN 853 2SN), el diámetro interior (DN12 o 1/2\"), la presión de trabajo (275 bar) y la fecha de fabricación.\n\nEl repuesto debe ser del mismo diámetro interior y de igual o más presión."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra5_cambio",
+          "pregunta": "Se rompe una manguera EN 853 2SN DN12 de 275 bar. ¿Cuál sirve de repuesto?",
+          "opciones": [
+            "EN 853 1SN DN12, 160 bar",
+            "EN 853 2SN DN12, 275 bar",
+            "EN 853 2SN DN10, 330 bar"
+          ],
+          "correcta": 1,
+          "explicacion": "Mismo interior y al menos la misma presión. La 1SN aguanta menos y la DN10 frena el caudal."
+        }
+      ]
+    },
+    {
+      "titulo": "Montaje",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una manguera dura mucho menos si está retorcida, si se dobla más que su radio mínimo o si roza. La línea impresa de la camisa debe quedar recta: si va en espiral, la manguera está retorcida."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra5_retorcida",
+          "pregunta": "La línea impresa de una manguera recién montada va en espiral. ¿Qué pasa?",
+          "opciones": [
+            "Nada, es decorativa",
+            "La manguera quedó retorcida y durará menos",
+            "La manguera es de aspiración"
+          ],
+          "correcta": 1,
+          "explicacion": "Se retorció al apretar: se afloja, se endereza y se aprieta con contrallave."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "EN 853 y EN 856: mangueras hidráulicas con refuerzo de acero.",
+    "SAE J517: mangueras 100R.",
+    "ISO 17165-2: buenas prácticas de montaje de latiguillos."
+  ]
+}

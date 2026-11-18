@@ -10,6 +10,7 @@ const NOMBRES := {
 	"simbolos_cubierta": ["minijuego_simbolos", "Símbolos de cubierta", "Mando electrohidráulico, seguridades y alumbrado, IEC 60617 y ANSI/IEEE 315", "simbolos", 5],
 	"simbolos_electronica": ["minijuego_simbolos", "Símbolos de electrónica", "Componentes, sensores y sondas, IEC 60617 y ANSI/IEEE 315", "simbolos", 6],
 	"identifique_herramienta": ["identifique_herramienta", "Identifique la herramienta", "Llaves, destornilladores, alicates, medida y tubería; milímetros y pulgadas", "herramientas", 11],
+	"elija_racor": ["elija_racor", "Elija el racor", "Racores JIC, ORFS, DIN, BSP y NPT; DN y NPS; fotos a bordo", "herramientas", 11],
 	"abierta_cerrada": ["abierta_cerrada", "¿Abierta o cerrada?", "Bola, mariposa, macho, compuerta, globo, aguja, tres vías y actuadas", "valvulas", 10],
 }
 

@@ -1,0 +1,80 @@
+{
+  "id": "ra3_dn_nps",
+  "titulo": "DN y NPS",
+  "resumen": "Nombres de tubería, no medidas.",
+  "minutos": 3,
+  "paginas": [
+    {
+      "titulo": "DN es un nombre",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{dn}} (diámetro nominal) y el {{nps}} (en pulgadas) dicen de qué tamaño es una tubería, pero no son ninguna medida real. DN50 es 2\" NPS y mide 60,3 mm por fuera.\n\nLo fijo es el diámetro exterior: así valen las mismas bridas y racores para cualquier espesor."
+        },
+        {
+          "tipo": "animacion",
+          "id": "tubo_dn",
+          "params": {
+            "dn": [
+              15,
+              25,
+              50,
+              100
+            ]
+          },
+          "pie": "Cada DN con su NPS y su exterior."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra3_dn50",
+          "pregunta": "¿A qué NPS corresponde un tubo DN50?",
+          "opciones": [
+            "2\"",
+            "50 mm de interior",
+            "1-1/2\""
+          ],
+          "correcta": 0,
+          "explicacion": "DN50 es 2\" NPS, con 60,3 mm de exterior. El interior depende del espesor."
+        }
+      ]
+    },
+    {
+      "titulo": "La cédula cambia el interior",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Con el mismo DN, la {{schedule}} fija el espesor: a más cédula, pared más gruesa e interior más pequeño. El exterior no cambia.\n\nEn la serie ISO algunos exteriores son un poco distintos (DN20 mide 26,9 mm en lugar de 26,7): compruebe la tabla antes de pedir abrazaderas o racores de compresión grandes."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra3_cedula",
+          "pregunta": "Dos tubos DN80, uno de cédula 40 y otro de cédula 80. ¿Qué tienen igual?",
+          "opciones": [
+            "El diámetro interior",
+            "El diámetro exterior",
+            "El espesor"
+          ],
+          "correcta": 1,
+          "explicacion": "El exterior es igual (88,9 mm); el de cédula 80 tiene la pared más gruesa y menos interior."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra3_orden",
+          "pregunta": "Ordene estos tubos de menor a mayor:",
+          "pasos": [
+            "DN15 (1/2\")",
+            "DN25 (1\")",
+            "DN50 (2\")",
+            "DN100 (4\")"
+          ],
+          "explicacion": "DN15 mide 21,3 mm; DN25, 33,4 mm; DN50, 60,3 mm y DN100, 114,3 mm por fuera."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ASME B36.10: tubos de acero (exteriores).",
+    "ISO 6708: designación DN.",
+    "Conversor DN ↔ NPS del Pañol."
+  ]
+}

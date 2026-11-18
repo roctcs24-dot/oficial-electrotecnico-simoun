@@ -1,0 +1,81 @@
+{
+  "id": "ra6_latiguillo",
+  "titulo": "El latiguillo prensado",
+  "resumen": "Partes, cambio y orden.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Partes",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un {{latiguillo}} es una manguera con sus racores ya prensados. La {{virola}} se prensa a máquina: no se aprieta ni se reutiliza. La tuerca giratoria permite apretar sin retorcer la manguera."
+        },
+        {
+          "tipo": "foto",
+          "id": "latiguillo_partes"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra6_virola",
+          "pregunta": "Un latiguillo suda aceite por la virola. ¿Qué se hace?",
+          "opciones": [
+            "Apretar la virola con una llave",
+            "Cambiar el latiguillo entero",
+            "Poner cinta aislante"
+          ],
+          "correcta": 1,
+          "explicacion": "La virola prensada no se repara: se cambia el latiguillo."
+        }
+      ]
+    },
+    {
+      "titulo": "Cambiar un latiguillo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de aflojar un racor hidráulico, la presión tiene que estar a cero: un cilindro con carga o un acumulador mantienen presión aunque la bomba esté parada. Use siempre {{contrallave}}."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra6_cambio",
+          "pregunta": "Para cambiar un latiguillo de un winche, ordene:",
+          "pasos": [
+            "Bajar la carga, parar la central y aplicar LOTO",
+            "Descargar la presión del circuito y del acumulador",
+            "Aflojar con contrallave recogiendo el aceite",
+            "Montar el nuevo sin retorcer y apretar",
+            "Arrancar y revisar fugas sin acercar la mano"
+          ],
+          "explicacion": "Sin carga ni presión primero; contrallave para no retorcer; y la prueba con la vista o un cartón, nunca con la mano."
+        }
+      ]
+    },
+    {
+      "titulo": "Cada uno en su sitio",
+      "bloques": [
+        {
+          "tipo": "foto",
+          "id": "latiguillos_numerados"
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra6_numeros",
+          "pregunta": "¿Para qué se pintan números en los latiguillos del generador?",
+          "opciones": [
+            "Para saber la presión",
+            "Para volver a montar cada uno en su sitio",
+            "Para la garantía"
+          ],
+          "correcta": 1,
+          "explicacion": "Al desmontar varios iguales, el número evita cruzar conexiones."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 17165-2: montaje y revisión de latiguillos.",
+    "Manual del fabricante de la central hidráulica.",
+    "NFPA 70E / LOTO: energía almacenada."
+  ]
+}

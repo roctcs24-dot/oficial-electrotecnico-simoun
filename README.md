@@ -359,7 +359,7 @@ El módulo 10, «Válvulas y líneas», está activo con ocho lecciones de válv
 
 ## Herramientas y llaves (versión 4.20.0)
 
-El módulo 11, «Herramientas y racores», está activo con nueve lecciones de herramientas (`he1` a `he9`): familias de llaves, milímetros y pulgadas, tornillería métrica y UNC/UNF, destornilladores de 1000 V, alicates y crimpado, calibre y micrómetro, par de apriete, herramienta de tubería y cuidado y seguridad. Los racores llegarán en la etapa 43.
+El módulo 11, «Herramientas y racores», está activo con nueve lecciones de herramientas (`he1` a `he9`): familias de llaves, milímetros y pulgadas, tornillería métrica y UNC/UNF, destornilladores de 1000 V, alicates y crimpado, calibre y micrómetro, par de apriete, herramienta de tubería y cuidado y seguridad. Los racores se añadieron en la etapa 43 (versión 4.21.0).
 
 - **Dibujo** (`ui/widgets/dibujo_herramienta.gd`, `DibujoHerramienta`): 16 herramientas dibujadas con relieve (cromadas, pavonadas o con mangos aislados). `medida` se graba en el cuerpo de las llaves.
 - **Catálogo** (`data/catalogos/herramientas.json`): nombre en español e inglés, familia, para qué sirve, cómo se usa, lo que no se debe hacer, cuidado y revisión, y `similares` (los nombres que el minijuego ofrece como trampa). Usa la misma pantalla `catalogo` que las válvulas, con su configuración en `CATALOGOS`.
@@ -369,6 +369,23 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Minijuego «Identifique la herramienta»** (`JuegoHerramientas`, pantalla `identifique_herramienta`): siete herramientas para nombrar y tres rondas de llaves («¿qué llave métrica entra en una tuerca de 3/4"?»). Registro `identifique_herramienta`; sale en el Pañol y en la evaluación del módulo 11.
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
+
+## Racores, roscas y mangueras (versión 4.21.0)
+
+El módulo 11 suma ocho lecciones de racores (`ra1` a `ra8`): familias de racores, roscas BSP y NPT, DN y NPS, JIC/ORFS/DIN 24°, mangueras hidráulicas, el latiguillo prensado, compresión/banjo/bridas SAE y fugas y seguridad. Varias enseñan fotos tomadas a bordo.
+
+- **Dibujo** (`ui/widgets/dibujo_racor.gd`, `DibujoRacor`): los 10 racores de `TIPOS` de lado, con hexágonos, roscas paralelas o cónicas, conos, tóricas, férulas y virolas. Con `rotulos = false` no escribe sus marcas (37°, 24°…), para el minijuego.
+- **Catálogo** (`data/catalogos/racores.json`): nombre y nombre corto, inglés, familia, norma, cómo se reconoce, dónde sella, a bordo, lo que no se debe hacer, fallas, mantenimiento, `similares` (trampas del minijuego) y `pista` (la descripción de la ronda). Usa la pantalla `catalogo` con `{"catalogo": "racores"}`; si el racor tiene fotos, las enseña primero, con sus partes numeradas.
+- **Tablas** (`data/tablas/roscas.json`):
+  - `roscas`: BSP y NPT de 1/8" a 2", diámetro exterior e hilos por pulgada;
+  - `dn`: DN15 a DN150 con su NPS y su exterior (ASME B36.10);
+  - `mangueras` y `marcados`: tipos SAE/EN y ejemplos de marcado. Las presiones son valores típicos — verificar.
+- **Pantallas:** `roscas_tuberia` (tabla de roscas y conversor DN ↔ NPS con `TuboDN`) y `mangueras` (marcado impreso con sus visores y la lista de tipos).
+- **Minijuego «Elija el racor»** (`JuegoRacores`, pantalla `elija_racor`, registro `elija_racor`): racores dibujados sin rótulos con su pista, `RONDAS_DN` = 2 rondas de DN y NPS y hasta `FOTOS_RONDAS` = 2 fotos con pregunta propia (`pregunta`, `opciones`, `correcta` en `data/fotos_piezas.json`). Sale en el Pañol y en la evaluación del módulo 11.
+- **Fotos:** las de racores (latiguillos del grupo generador, codo giratorio, rosca con teflón y marcado EN 856) están en `art/fotos/racores/`. Una foto puede traer `partes` (x, y en píxeles de la original, título y texto); `FotoPieza` las numera y, para no cortarlas, enseña la foto entera.
+- **Bloque de lección `foto`:** `{"tipo": "foto", "id": "<id de data/fotos_piezas.json>", "pie": "…"}`.
+- **Animaciones:** `racor` (`params.tipos`) y `tubo_dn` (`params.dn`).
+- **Pruebas** en `tests/test_racores.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_r racores`.
 
 ## Fotos a bordo de las piezas (versión 4.20.1)
 

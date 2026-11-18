@@ -390,6 +390,27 @@
     "micrometro": { "es": "micrómetro", "en": "micrometer", "def": "Instrumento que mide con 0,01 mm gracias a un tornillo de paso fino." },
     "par_apriete": { "es": "par de apriete", "en": "tightening torque", "def": "Fuerza por distancia con la que se aprieta un tornillo, en N·m." },
     "cortatubos": { "es": "cortatubos", "en": "tube cutter", "def": "Herramienta con una ruedecilla que corta tubo a escuadra." },
-    "cinta_ptfe": { "es": "cinta de PTFE (teflón)", "en": "PTFE thread seal tape", "def": "Cinta para sellar roscas cónicas de tubería." }
+    "cinta_ptfe": { "es": "cinta de PTFE (teflón)", "en": "PTFE thread seal tape", "def": "Cinta para sellar roscas cónicas de tubería." },
+    "racor": { "es": "racor", "en": "fitting", "def": "Pieza que une un tubo o una manguera a otro tubo, a un equipo o a otra pieza, y que sella la unión." },
+    "rosca_paralela": { "es": "rosca paralela", "en": "parallel thread", "def": "Rosca de diámetro constante. No sella en los hilos: necesita arandela, junta tórica o un asiento." },
+    "rosca_conica": { "es": "rosca cónica", "en": "tapered thread", "def": "Rosca que se estrecha hacia la punta (1:16). Sella en los propios hilos al apretar, con cinta o sellador." },
+    "bsp": { "es": "BSP", "en": "British Standard Pipe", "def": "Rosca de tubería británica con hilos de 55°: paralela G (BSPP) o cónica R (BSPT)." },
+    "npt": { "es": "NPT", "en": "National Pipe Taper", "def": "Rosca de tubería americana cónica con hilos de 60° (ASME B1.20.1)." },
+    "galga_roscas": { "es": "galga de roscas", "en": "thread pitch gauge", "def": "Juego de peines que se apoyan en la rosca para saber cuántos hilos tiene y su ángulo." },
+    "dn": { "es": "DN", "en": "nominal diameter", "def": "Diámetro nominal de una tubería en el sistema métrico. Es un nombre: no coincide con el diámetro real." },
+    "nps": { "es": "NPS", "en": "Nominal Pipe Size", "def": "Tamaño nominal de una tubería en pulgadas. DN50 es 2\" NPS." },
+    "schedule": { "es": "cédula", "en": "schedule (SCH)", "def": "Serie de espesor de pared de un tubo. Con el mismo DN, a más cédula, pared más gruesa e interior más pequeño." },
+    "jic": { "es": "JIC 37°", "en": "JIC 37° flare", "def": "Racor hidráulico con cono de 37° que sella metal con metal; rosca UNF (SAE J514)." },
+    "orfs": { "es": "ORFS", "en": "O-ring face seal", "def": "Racor hidráulico de cara plana que sella con una junta tórica en la cara (SAE J1453)." },
+    "unf": { "es": "UNF", "en": "Unified National Fine", "def": "Rosca unificada americana de paso fino. Es la de los racores JIC y ORFS: sujeta, no sella." },
+    "junta_torica": { "es": "junta tórica", "en": "O-ring", "def": "Anillo de goma de sección redonda que sella al aplastarse en su ranura." },
+    "anillo_cortante": { "es": "anillo cortante", "en": "cutting ring / bite ring", "def": "Anillo de los racores DIN 24° que muerde el tubo de acero al apretar la tuerca." },
+    "ferula": { "es": "férula", "en": "ferrule", "def": "Anillo de un racor de compresión que se deforma contra el tubo al apretar la tuerca." },
+    "manguera": { "es": "manguera", "en": "hose", "def": "Tubo flexible de goma o termoplástico, reforzado con trenzas o espirales de acero para aguantar presión." },
+    "latiguillo": { "es": "latiguillo", "en": "hose assembly", "def": "Tramo de manguera con sus racores ya prensados en los extremos, listo para montar." },
+    "virola": { "es": "virola", "en": "ferrule / crimp shell", "def": "Casquillo metálico que se prensa a máquina sobre la manguera para fijarla al racor." },
+    "brida": { "es": "brida", "en": "flange", "def": "Unión de tubería o de manguera con un disco o dos medias piezas apretadas con tornillos contra una junta." },
+    "contrallave": { "es": "contrallave", "en": "backup wrench", "def": "Segunda llave que sujeta el cuerpo del racor mientras se gira la tuerca, para no retorcer el tubo ni la manguera." },
+    "enchufe_rapido": { "es": "enchufe rápido", "en": "quick coupling", "def": "Conexión de macho y hembra que se une y se separa sin herramientas; cada mitad cierra al separar." }
   }
 }

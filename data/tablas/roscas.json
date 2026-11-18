@@ -1,0 +1,43 @@
+{
+  "nota_roscas": "Diámetro exterior nominal de la rosca macho. BSP: hilos de 55° (ISO 228-1 paralela G; ISO 7-1 cónica R). NPT: hilos de 60° (ASME B1.20.1). Con 14 hilos por pulgada, 1/2\" y 3/4\" BSP y NPT se confunden: mida el ángulo con la galga.",
+  "roscas": [
+    { "medida": "1/8", "bsp_mm": 9.728, "bsp_hilos": 28, "npt_mm": 10.29, "npt_hilos": 27 },
+    { "medida": "1/4", "bsp_mm": 13.157, "bsp_hilos": 19, "npt_mm": 13.72, "npt_hilos": 18 },
+    { "medida": "3/8", "bsp_mm": 16.662, "bsp_hilos": 19, "npt_mm": 17.15, "npt_hilos": 18 },
+    { "medida": "1/2", "bsp_mm": 20.955, "bsp_hilos": 14, "npt_mm": 21.34, "npt_hilos": 14 },
+    { "medida": "3/4", "bsp_mm": 26.441, "bsp_hilos": 14, "npt_mm": 26.67, "npt_hilos": 14 },
+    { "medida": "1", "bsp_mm": 33.249, "bsp_hilos": 11, "npt_mm": 33.4, "npt_hilos": 11.5 },
+    { "medida": "1-1/4", "bsp_mm": 41.91, "bsp_hilos": 11, "npt_mm": 42.16, "npt_hilos": 11.5 },
+    { "medida": "1-1/2", "bsp_mm": 47.803, "bsp_hilos": 11, "npt_mm": 48.26, "npt_hilos": 11.5 },
+    { "medida": "2", "bsp_mm": 59.614, "bsp_hilos": 11, "npt_mm": 60.33, "npt_hilos": 11.5 }
+  ],
+  "nota_dn": "El DN (diámetro nominal) y el NPS (en pulgadas) son nombres, no medidas: el diámetro exterior es fijo para cada DN y lo que cambia con el espesor (schedule) es el interior. Exterior según ASME B36.10; en la serie ISO algunos cambian un poco (DN20 26,9 mm; DN32 42,4 mm; DN65 76,1 mm).",
+  "dn": [
+    { "dn": 15, "nps": "1/2", "exterior": 21.3 },
+    { "dn": 20, "nps": "3/4", "exterior": 26.7 },
+    { "dn": 25, "nps": "1", "exterior": 33.4 },
+    { "dn": 32, "nps": "1-1/4", "exterior": 42.2 },
+    { "dn": 40, "nps": "1-1/2", "exterior": 48.3 },
+    { "dn": 50, "nps": "2", "exterior": 60.3 },
+    { "dn": 65, "nps": "2-1/2", "exterior": 73.0 },
+    { "dn": 80, "nps": "3", "exterior": 88.9 },
+    { "dn": 100, "nps": "4", "exterior": 114.3 },
+    { "dn": 125, "nps": "5", "exterior": 141.3 },
+    { "dn": 150, "nps": "6", "exterior": 168.3 }
+  ],
+  "nota_mangueras": "Presiones de trabajo típicas para 1/2\" (DN12/13): valor típico — verificar en el marcado de la manguera y en el catálogo del fabricante. Se cambia por otra de igual o más presión y el mismo diámetro interior.",
+  "mangueras": [
+    { "id": "1sn", "nombre": "SAE 100R1 / EN 853 1SN", "refuerzo": "1 trenza de acero", "uso": "Presión media: retornos y pilotajes", "presion": 160, "nivel": "verde" },
+    { "id": "2sn", "nombre": "SAE 100R2 / EN 853 2SN", "refuerzo": "2 trenzas de acero", "uso": "Presión alta: la más común en cubierta", "presion": 275, "nivel": "ambar" },
+    { "id": "4sp", "nombre": "EN 856 4SP", "refuerzo": "4 espirales de acero", "uso": "Presión muy alta en diámetros pequeños y medianos", "presion": 0, "nivel": "rojo" },
+    { "id": "4sh", "nombre": "EN 856 4SH / SAE 100R12", "refuerzo": "4 espirales de acero", "uso": "Presión muy alta en diámetros grandes", "presion": 0, "nivel": "rojo" },
+    { "id": "r13", "nombre": "SAE 100R13 / EN 856 R13", "refuerzo": "4 a 6 espirales", "uso": "Presión muy alta y constante (5000 psi)", "presion": 345, "nivel": "rojo" },
+    { "id": "r4", "nombre": "SAE 100R4", "refuerzo": "Tejido con hélice de alambre", "uso": "Aspiración y retorno: no aguanta presión", "presion": 0, "nivel": "verde" },
+    { "id": "r7", "nombre": "SAE 100R7", "refuerzo": "Termoplástica con trenza de fibra", "uso": "Presión media; no conduce la electricidad si es la versión no conductiva", "presion": 0, "nivel": "verde" }
+  ],
+  "marcados": [
+    { "texto": "EN 853 2SN · DN12 · 1/2\" · 275 bar · 2026-06", "tipo": "2sn", "dn": 12, "pulgadas": "1/2", "presion": 275, "fecha": "2026-06" },
+    { "texto": "SAE 100R2AT · 3/4\" · 2250 psi · 2025-11", "tipo": "2sn", "dn": 19, "pulgadas": "3/4", "presion": 155, "fecha": "2025-11" },
+    { "texto": "EN 856 4SP · DN19 · 3/4\" · 350 bar · 2024-03", "tipo": "4sp", "dn": 19, "pulgadas": "3/4", "presion": 350, "fecha": "2024-03" }
+  ]
+}

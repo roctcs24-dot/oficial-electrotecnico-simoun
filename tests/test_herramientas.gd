@@ -101,8 +101,8 @@ func test_modulo_11_activo() -> String:
 	var m := Contenido.new().sistema(11)
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 11 está activo"),
-		A.cierto(Array(m["modos"]["aprender"]["lecciones"]) == LECCIONES, "lecciones del módulo 11"),
-		A.cierto(m["modos"]["examen"]["minijuegos"] == ["identifique_herramienta"], "su minijuego"),
+		A.cierto(Array(m["modos"]["aprender"]["lecciones"]).slice(0, LECCIONES.size()) == LECCIONES, "lecciones de herramientas al principio del módulo 11"),
+		A.cierto(Array(m["modos"]["examen"]["minijuegos"]).has("identifique_herramienta"), "su minijuego"),
 	])
 
 

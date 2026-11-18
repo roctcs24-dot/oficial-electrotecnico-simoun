@@ -1,0 +1,88 @@
+{
+  "id": "ra7_compresion_banjo_bridas",
+  "titulo": "Compresión, banjo y bridas",
+  "resumen": "Tubo fino, combustible y bridas SAE.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Racores de compresión",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Los tubos finos de instrumentos (manómetros, presostatos) usan racores de compresión: al apretar la tuerca, la {{ferula}} se deforma contra el tubo. No llevan cinta."
+        },
+        {
+          "tipo": "animacion",
+          "id": "racor",
+          "params": {
+            "tipos": [
+              "compresion",
+              "banjo",
+              "brida_sae"
+            ]
+          },
+          "pie": "Compresión, banjo y brida SAE."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra7_ferula",
+          "pregunta": "¿Se puede usar una férula de otro fabricante en un racor de doble férula?",
+          "opciones": [
+            "Sí, si la medida es igual",
+            "No: se mezclan perfiles y puede fugar",
+            "Solo con teflón"
+          ],
+          "correcta": 1,
+          "explicacion": "Los fabricantes no garantizan la mezcla: use férulas y cuerpo de la misma marca."
+        }
+      ]
+    },
+    {
+      "titulo": "Banjo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El racor banjo es un anillo atravesado por un tornillo hueco, con una arandela de cobre a cada lado. Es típico del combustible de los motores diésel."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra7_banjo",
+          "pregunta": "Al volver a montar un banjo de combustible, ¿qué se hace con las arandelas de cobre?",
+          "opciones": [
+            "Se reutilizan si no están rotas",
+            "Se cambian por nuevas (o se recuecen)",
+            "Se quitan"
+          ],
+          "correcta": 1,
+          "explicacion": "La arandela aplastada ya no sella bien: nueva o recocida."
+        }
+      ]
+    },
+    {
+      "titulo": "Brida SAE",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En bombas y latiguillos grandes se usa la {{brida}} partida SAE: dos medias bridas y cuatro tornillos aprietan un cabezal con junta tórica. El código 61 es para presión normal y el 62 para alta: no se mezclan."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ra7_cruz",
+          "pregunta": "Para montar una brida SAE, ordene:",
+          "pasos": [
+            "Limpiar las caras y poner una tórica nueva",
+            "Presentar las medias bridas y meter los cuatro tornillos a mano",
+            "Apretar en cruz poco a poco",
+            "Dar el par final en cruz"
+          ],
+          "explicacion": "En cruz y por etapas, para que el cabezal asiente plano y no pellizque la tórica."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "SAE J518 / ISO 6162: bridas partidas.",
+    "EN 1254-2: racores de compresión para cobre.",
+    "Manual del motor: pares de los banjos."
+  ]
+}

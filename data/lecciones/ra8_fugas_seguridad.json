@@ -1,0 +1,73 @@
+{
+  "id": "ra8_fugas_seguridad",
+  "titulo": "Fugas y seguridad",
+  "resumen": "Nunca con la mano.",
+  "minutos": 3,
+  "paginas": [
+    {
+      "titulo": "Inyección de aceite",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un poro en una manguera con 100 bar o más lanza un chorro tan fino que no se ve y puede atravesar la piel. Una inyección de aceite bajo la piel es una urgencia médica aunque parezca un pinchazo.\n\nLas fugas se buscan con un cartón o un papel, con gafas y guantes, nunca pasando la mano."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra8_mano",
+          "pregunta": "¿Cómo se busca una fuga en una manguera con presión?",
+          "opciones": [
+            "Pasando la mano con guante",
+            "Con un cartón o un papel, sin acercar la mano",
+            "Apretando la manguera"
+          ],
+          "correcta": 1,
+          "explicacion": "El chorro fino atraviesa el guante y la piel: cartón o papel, y a distancia."
+        }
+      ]
+    },
+    {
+      "titulo": "Dónde gotea, qué falla",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El sitio de la fuga dice qué falla: por la rosca de una cónica, cinta o sellador; por debajo de un hexágono BSPP u ORFS, la arandela o la tórica; por el cono de un JIC, el asiento; por la virola, el latiguillo entero."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ra8_diagnostico",
+          "pregunta": "Gotea aceite por debajo del hexágono de un racor BSPP. ¿Qué se cambia?",
+          "opciones": [
+            "La manguera",
+            "La arandela de sellado",
+            "Se pone teflón"
+          ],
+          "correcta": 1,
+          "explicacion": "En la BSPP sella la arandela de debajo del hexágono."
+        }
+      ]
+    },
+    {
+      "titulo": "Procedimiento",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "ra8_procedimiento",
+          "pregunta": "Ante una fuga en un racor hidráulico, ordene:",
+          "pasos": [
+            "Parar, aplicar LOTO y descargar la presión",
+            "Limpiar y secar la zona",
+            "Arrancar y buscar el punto con un cartón",
+            "Parar de nuevo y cambiar la junta o la pieza",
+            "Probar con presión y revisar"
+          ],
+          "explicacion": "La fuga se localiza con la máquina limpia; se repara siempre sin presión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413: seguridad en sistemas hidráulicos.",
+    "Fabricante de mangueras: lesiones por inyección.",
+    "SOLAS y el SMS del buque: permisos de trabajo."
+  ]
+}

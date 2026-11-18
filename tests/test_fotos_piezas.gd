@@ -27,7 +27,7 @@ func _datos() -> Dictionary:
 
 func test_archivo_de_fotos_bien_formado() -> String:
 	var datos := _datos()
-	var catalogo: Array = Contenido.new().leer("catalogos/valvulas.json").get("valvulas", [])
+	var catalogo: Array = Contenido.new().leer("catalogos/valvulas.json").get("valvulas", []) + Contenido.new().leer("catalogos/racores.json").get("racores", [])
 	var piezas := catalogo.map(func(v: Dictionary) -> String: return v["id"])
 	var fallos: Array[String] = []
 	var ids := {}
@@ -44,6 +44,11 @@ func test_archivo_de_fotos_bien_formado() -> String:
 			fallos.append("%s: estado raro" % f["id"])
 		if str(f.get("estado", "")) != "" and str(f.get("tubo", "")) not in ["vertical", "horizontal"]:
 			fallos.append("%s: con estado debe decir hacia dónde va el tubo" % f["id"])
+		for p: Vector2 in FotosPiezas.partes_relativas(f):
+			if p.x < 0.0 or p.y < 0.0 or p.x > 1.0 or p.y > 1.0:
+				fallos.append("%s: parte fuera del recorte %s" % [f["id"], p])
+		if f.has("pregunta") and not (int(f.get("correcta", -1)) >= 0 and int(f["correcta"]) < f.get("opciones", []).size()):
+			fallos.append("%s: la respuesta de su pregunta no existe" % f["id"])
 		var h := FotosPiezas.halo_relativo(f)
 		if not h.has_area() or h.position.x < -0.01 or h.position.y < -0.01 or h.end.x > 1.01 or h.end.y > 1.01:
 			fallos.append("%s: halo fuera del recorte %s" % [f["id"], h])

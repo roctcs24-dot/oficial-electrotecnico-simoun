@@ -18,6 +18,11 @@ var halo := Rect2():
 		queue_redraw()
 var rotulo := ""
 var credito := ""
+## Partes numeradas (fracciones de la foto): se pintan como monedas ámbar 1, 2, 3…
+var partes: Array[Vector2] = []
+## Con «entera», la foto se ve completa (con bandas oscuras) en lugar de llenar el espacio: así no
+## se pierde ninguna parte numerada.
+var entera := false
 ## «abierta», «cerrada» o vacío: con estado se pinta la lámpara arriba a la derecha.
 var estado := ""
 var _tiempo := 0.0
@@ -36,6 +41,8 @@ static func desde(foto: Dictionary, nota_credito := "", con_estado := false) -> 
 	f.textura = FotosPiezas.textura(foto)
 	f.halo = FotosPiezas.halo_relativo(foto)
 	f.rotulo = str(foto.get("rotulo", ""))
+	f.partes = FotosPiezas.partes_relativas(foto)
+	f.entera = not f.partes.is_empty()
 	f.credito = nota_credito
 	if con_estado:
 		f.estado = str(foto.get("estado", ""))
@@ -52,6 +59,8 @@ func region_visible() -> Rect2:
 	if textura == null or size.x <= 0.0 or size.y <= 0.0:
 		return Rect2()
 	var t := textura.get_size()
+	if entera:
+		return Rect2(Vector2.ZERO, t)
 	var escala := maxf(size.x / t.x, size.y / t.y)
 	var ver := size / escala
 	var centro := t / 2.0
@@ -69,9 +78,14 @@ func _draw() -> void:
 		draw_rect(r, Color("1b232c"))
 	else:
 		var region := region_visible()
+		if entera:
+			draw_rect(r, Color("0b0f13"))
+			r = destino()
 		draw_texture_rect_region(textura, r, region)
 		if halo.has_area():
 			_halo(region)
+		for i in partes.size():
+			_parte(region, partes[i], i + 1)
 	# Viñeta y bisel: arriba más claro, abajo y a los lados más oscuro.
 	for i in 6:
 		var a := 0.07 * (6 - i) / 6.0
@@ -93,8 +107,8 @@ func _draw() -> void:
 
 func _halo(region: Rect2) -> void:
 	var t := textura.get_size()
-	var escala := size.x / region.size.x
-	var centro := ((halo.position + halo.size / 2.0) * t - region.position) * escala
+	var escala := destino().size.x / region.size.x
+	var centro := punto_en_control(region, halo.position + halo.size / 2.0)
 	var radios := halo.size * t * escala / 2.0 + Vector2(6, 6)
 	var puntos := PackedVector2Array()
 	for i in 73:
@@ -104,6 +118,32 @@ func _halo(region: Rect2) -> void:
 	draw_polyline(puntos, Color(1.0, 0.69, 0.0, 0.18 * latido), 11.0, true)
 	draw_polyline(puntos, Color(1.0, 0.69, 0.0, 0.35 * latido), 6.0, true)
 	draw_polyline(puntos, AMBAR, 3.0, true)
+
+
+## Punto de la foto (fracción) en coordenadas del control.
+func punto_en_control(region: Rect2, fraccion: Vector2) -> Vector2:
+	var d := destino()
+	return d.position + (fraccion * textura.get_size() - region.position) * (d.size.x / region.size.x)
+
+
+## Rectángulo del control donde se pinta la foto: todo, o centrada y entera si «entera».
+func destino() -> Rect2:
+	if not entera or textura == null:
+		return Rect2(Vector2.ZERO, size)
+	var t := textura.get_size()
+	var k := minf(size.x / t.x, size.y / t.y)
+	return Rect2((size - t * k) / 2.0, t * k)
+
+
+func _parte(region: Rect2, fraccion: Vector2, n: int) -> void:
+	var c := punto_en_control(region, fraccion)
+	var r := clampf(size.x / 34.0, 9.0, 14.0)
+	c = c.clamp(Vector2(r + 3, r + 3), size - Vector2(r + 3, r + 3))
+	Relieve.halo(self, c, r * 1.9, Color("ffb000"), 0.8)
+	draw_circle(c + Vector2(0, 2), r + 2.5, Color(0, 0, 0, 0.55))
+	draw_circle(c, r + 2.0, BORDE)
+	PiezasAri._disco(self, c, r, Color("fff3c4"), Color("d99614"), Vector2(-0.3, -0.35), 8)
+	PiezasAri.texto(self, str(n), c.x, c.y + r * 0.42, r * 1.15, Color("2a1a00"))
 
 
 func _chapa(pos: Vector2, texto: String, tam: float, fuerte: bool, sangria := 0.0) -> void:

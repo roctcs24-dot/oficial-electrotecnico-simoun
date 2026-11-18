@@ -6,8 +6,18 @@
       "id": "bray_cerrada",
       "pieza": "mariposa",
       "origen": "valvulas/v03.jpg",
-      "recorte": [231, 1618, 2774, 1554],
-      "halo": [347, 2139, 2196, 405],
+      "recorte": [
+        231,
+        1618,
+        2774,
+        1554
+      ],
+      "halo": [
+        347,
+        2139,
+        2196,
+        405
+      ],
       "archivo": "art/fotos/valvulas/bray_cerrada.webp",
       "estado": "cerrada",
       "tubo": "vertical",
@@ -19,8 +29,18 @@
       "id": "bray_abierta",
       "pieza": "mariposa",
       "origen": "valvulas/v03.jpg",
-      "recorte": [0, 1387, 1757, 2081],
-      "halo": [243, 1780, 486, 1480],
+      "recorte": [
+        0,
+        1387,
+        1757,
+        2081
+      ],
+      "halo": [
+        243,
+        1780,
+        486,
+        1480
+      ],
       "archivo": "art/fotos/valvulas/bray_abierta.webp",
       "estado": "abierta",
       "tubo": "vertical",
@@ -32,8 +52,18 @@
       "id": "gt_sector",
       "pieza": "mariposa",
       "origen": "valvulas/v01.jpg",
-      "recorte": [1040, 347, 2543, 2543],
-      "halo": [1711, 509, 832, 2358],
+      "recorte": [
+        1040,
+        347,
+        2543,
+        2543
+      ],
+      "halo": [
+        1711,
+        509,
+        832,
+        2358
+      ],
       "archivo": "art/fotos/valvulas/gt_sector.webp",
       "estado": "",
       "tubo": "",
@@ -45,8 +75,18 @@
       "id": "nibco_cerrada",
       "pieza": "bola",
       "origen": "valvulas/v09.jpg",
-      "recorte": [1387, 879, 1965, 1480],
-      "halo": [1445, 1364, 1873, 555],
+      "recorte": [
+        1387,
+        879,
+        1965,
+        1480
+      ],
+      "halo": [
+        1445,
+        1364,
+        1873,
+        555
+      ],
       "archivo": "art/fotos/valvulas/nibco_cerrada.webp",
       "estado": "cerrada",
       "tubo": "vertical",
@@ -58,8 +98,18 @@
       "id": "nibco_abierta",
       "pieza": "bola",
       "origen": "valvulas/v09.jpg",
-      "recorte": [1295, 1965, 1988, 1387],
-      "halo": [1780, 2497, 1341, 393],
+      "recorte": [
+        1295,
+        1965,
+        1988,
+        1387
+      ],
+      "halo": [
+        1780,
+        2497,
+        1341,
+        393
+      ],
       "archivo": "art/fotos/valvulas/nibco_abierta.webp",
       "estado": "abierta",
       "tubo": "horizontal",
@@ -71,8 +121,18 @@
       "id": "genebre_abierta",
       "pieza": "bola",
       "origen": "valvulas/v18.jpg",
-      "recorte": [0, 347, 4162, 2543],
-      "halo": [1225, 925, 2821, 578],
+      "recorte": [
+        0,
+        347,
+        4162,
+        2543
+      ],
+      "halo": [
+        1225,
+        925,
+        2821,
+        578
+      ],
       "archivo": "art/fotos/valvulas/genebre_abierta.webp",
       "estado": "abierta",
       "tubo": "horizontal",
@@ -84,8 +144,18 @@
       "id": "nibco_pintada",
       "pieza": "bola",
       "origen": "valvulas/v17.jpg",
-      "recorte": [0, 1156, 3006, 2081],
-      "halo": [208, 1665, 1942, 925],
+      "recorte": [
+        0,
+        1156,
+        3006,
+        2081
+      ],
+      "halo": [
+        208,
+        1665,
+        1942,
+        925
+      ],
       "archivo": "art/fotos/valvulas/nibco_pintada.webp",
       "estado": "cerrada",
       "tubo": "vertical",
@@ -97,8 +167,18 @@
       "id": "globo_open_shut",
       "pieza": "globo",
       "origen": "valvulas/v06.jpg",
-      "recorte": [347, 1618, 2659, 2081],
-      "halo": [613, 1815, 1549, 1480],
+      "recorte": [
+        347,
+        1618,
+        2659,
+        2081
+      ],
+      "halo": [
+        613,
+        1815,
+        1549,
+        1480
+      ],
       "archivo": "art/fotos/valvulas/globo_open_shut.webp",
       "estado": "",
       "tubo": "",
@@ -110,8 +190,18 @@
       "id": "globo_vastago",
       "pieza": "globo",
       "origen": "valvulas/v13.jpg",
-      "recorte": [231, 1618, 2659, 1850],
-      "halo": [925, 1965, 347, 370],
+      "recorte": [
+        231,
+        1618,
+        2659,
+        1850
+      ],
+      "halo": [
+        925,
+        1965,
+        347,
+        370
+      ],
       "archivo": "art/fotos/valvulas/globo_vastago.webp",
       "estado": "",
       "tubo": "",
@@ -123,14 +213,186 @@
       "id": "colector_tanques",
       "pieza": "globo",
       "origen": "valvulas/v15.jpg",
-      "recorte": [0, 971, 4624, 2312],
-      "halo": [2035, 2173, 2497, 694],
+      "recorte": [
+        0,
+        971,
+        4624,
+        2312
+      ],
+      "halo": [
+        2035,
+        2173,
+        2497,
+        694
+      ],
       "archivo": "art/fotos/valvulas/colector_tanques.webp",
       "estado": "",
       "tubo": "",
       "rotulo": "Colector de tanques",
       "lugar": "Trasiego",
       "texto": "Caja de válvulas de trasiego: cada volante lleva escrito su tanque (ER estribor, BR babor). Antes de trasegar, compruebe cuáles están abiertas."
+    },
+    {
+      "id": "latiguillo_partes",
+      "pieza": "latiguillo",
+      "origen": "racores/r05.jpg",
+      "recorte": [
+        0,
+        1040,
+        3472,
+        2772
+      ],
+      "halo": [
+        2081,
+        1202,
+        694,
+        2613
+      ],
+      "archivo": "art/fotos/racores/latiguillo_partes.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Manguera 106 · grupo generador",
+      "lugar": "Grupo generador",
+      "texto": "Latiguillo del grupo generador, de arriba abajo: rosca al tubo con teflón, adaptador, tuerca giratoria y virola prensada. Tipo exacto de rosca: verificar a bordo.",
+      "partes": [
+        {
+          "x": 2000,
+          "y": 1306,
+          "titulo": "Rosca cónica con teflón",
+          "texto": "Entra en el codo del tubo. El teflón solo sirve en rosca cónica (NPT o BSPT)."
+        },
+        {
+          "x": 2774,
+          "y": 1480,
+          "titulo": "Adaptador hexagonal",
+          "texto": "Pasa de la rosca del tubo a la del racor. Se sujeta con una llave mientras se gira la otra."
+        },
+        {
+          "x": 2774,
+          "y": 2312,
+          "titulo": "Tuerca giratoria",
+          "texto": "Aprieta el racor sin retorcer la manguera. Contrallave siempre."
+        },
+        {
+          "x": 2774,
+          "y": 3653,
+          "titulo": "Virola prensada",
+          "texto": "Casquillo prensado a máquina: no se reutiliza. Si suda aquí, se cambia el latiguillo entero."
+        }
+      ]
+    },
+    {
+      "id": "latiguillos_numerados",
+      "pieza": "latiguillo",
+      "origen": "racores/r03.jpg",
+      "recorte": [
+        925,
+        809,
+        3006,
+        1850
+      ],
+      "halo": [
+        1064,
+        1295,
+        1896,
+        393
+      ],
+      "archivo": "art/fotos/racores/latiguillos_numerados.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Latiguillos numerados",
+      "lugar": "Grupo generador",
+      "texto": "Cada latiguillo lleva su número pintado en la tuerca. Así se sabe cuál es cuál al desmontar y se vuelve a montar cada uno en su sitio."
+    },
+    {
+      "id": "codo_giratorio",
+      "pieza": "latiguillo",
+      "origen": "racores/r02.jpg",
+      "recorte": [
+        231,
+        1040,
+        2081,
+        2081
+      ],
+      "halo": [
+        740,
+        1433,
+        601,
+        1110
+      ],
+      "archivo": "art/fotos/racores/codo_giratorio.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Codo giratorio",
+      "lugar": "Caudalímetro de combustible",
+      "texto": "El codo lleva su tuerca giratoria: se orienta la manguera sin retorcerla y después se aprieta. El óxido de la tuerca pide revisión.",
+      "pregunta": "¿Para qué sirve la tuerca giratoria del codo marcado?",
+      "opciones": [
+        "Para apretar sin retorcer la manguera",
+        "Para regular el caudal",
+        "Para purgar el aire"
+      ],
+      "correcta": 0
+    },
+    {
+      "id": "rosca_teflon",
+      "pieza": "bspt_npt",
+      "origen": "racores/r05.jpg",
+      "recorte": [
+        1988,
+        1087,
+        971,
+        603
+      ],
+      "halo": [
+        2067,
+        1239,
+        793,
+        173
+      ],
+      "archivo": "art/fotos/racores/rosca_teflon.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Rosca con teflón",
+      "lugar": "Grupo generador",
+      "texto": "La cinta de teflón solo tiene sentido en una rosca cónica (NPT o BSPT), que sella en los hilos. Las paralelas sellan con arandela o tórica y los JIC en el cono: ahí la cinta sobra y puede soltarse dentro del circuito.",
+      "pregunta": "La rosca marcada lleva cinta de teflón. ¿Qué rosca es?",
+      "opciones": [
+        "Cónica: NPT o BSPT",
+        "Paralela BSPP con arandela",
+        "JIC 37° (metal con metal)"
+      ],
+      "correcta": 0
+    },
+    {
+      "id": "marcado_en856",
+      "pieza": "latiguillo",
+      "origen": "racores/r04.jpg",
+      "recorte": [
+        2543,
+        2196,
+        1110,
+        694
+      ],
+      "halo": [
+        3165,
+        2626,
+        155,
+        250
+      ],
+      "archivo": "art/fotos/racores/marcado_en856.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Marcado de la manguera",
+      "lugar": "Grupo generador",
+      "texto": "La manguera lleva impreso «…4SP / EN 856»: 4 espirales de acero, para presión muy alta. El repuesto debe ser del mismo tipo o de más presión y del mismo diámetro interior.",
+      "pregunta": "La manguera marcada dice «4SP / EN 856». ¿Qué manguera es?",
+      "opciones": [
+        "4 espirales de acero: presión muy alta",
+        "1 trenza de acero: presión media",
+        "De aspiración: no aguanta presión"
+      ],
+      "correcta": 0
     }
   ]
 }
