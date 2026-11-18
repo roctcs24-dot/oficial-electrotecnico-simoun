@@ -14,26 +14,67 @@ const NOMBRES := {
 
 func construir() -> void:
 	var s := raiz.contenido.sistema(args["id"])
-	_cabecera("Examen", s.get("nombre", ""))
+	var cabecera := CabeceraFicha.new()
+	cabecera.iniciar(raiz, "Examen", s.get("nombre", ""), Tema.color_area(s), str(s.get("icono", "sistema_%d" % int(s.get("id", 0)))))
+	add_child(cabecera)
 	var desplazable := _desplazable()
 	add_child(desplazable)
-	var lista := _columna(6)
+	var lista := _columna(12)
 	desplazable.add_child(_ancho_lectura(lista))
-	for id: String in s["modos"]["examen"].get("examenes", []):
-		lista.add_child(_fila_examen(id))
-	for id: String in s["modos"]["examen"].get("minijuegos", []):
-		var datos: Array = NOMBRES[id]
-		var resultado: Dictionary = raiz.partida.datos["minijuegos"].get(id, {})
-		var estado := "%d de 3 estrellas" % resultado["estrellas"] if resultado.has("estrellas") else ""
-		# Un diccionario nuevo en cada visita: el minijuego guarda sus rondas en él.
-		var abrir := func() -> void: raiz.ir_a(datos[0], {"sistema": datos[4], "registro": id})
-		lista.add_child(_fila(datos[1], datos[2], abrir, datos[3], estado))
+	var examenes: Array = s["modos"]["examen"].get("examenes", [])
+	if not examenes.is_empty():
+		var placa := _placa("Exámenes")
+		for id: String in examenes:
+			placa.get_child(0).add_child(_fila_examen(id))
+		lista.add_child(placa)
+	var minijuegos: Array = s["modos"]["examen"].get("minijuegos", [])
+	if not minijuegos.is_empty():
+		var placa := _placa("Minijuegos")
+		for id: String in minijuegos:
+			var datos: Array = NOMBRES[id]
+			var resultado: Dictionary = raiz.partida.datos["minijuegos"].get(id, {})
+			var estado := "%d de 3 estrellas" % resultado["estrellas"] if resultado.has("estrellas") else "Sin jugar"
+			# Un diccionario nuevo en cada visita: el minijuego guarda sus rondas en él.
+			var abrir := func() -> void: raiz.ir_a(datos[0], {"sistema": datos[4], "registro": id})
+			var f := _fila_placa(datos[1], "%s · %s" % [datos[2], estado], datos[3], resultado.get("estrellas", 0) / 3.0, "verde" if resultado.get("estrellas", 0) > 0 else "apagada")
+			f.tocada.connect(abrir)
+			placa.get_child(0).add_child(f)
+		lista.add_child(placa)
 
 
-func _fila_examen(id: String) -> FilaMenu:
+func _placa(rotulo: String) -> PanelContainer:
+	var placa := PiezasLeccion.placa(10.0, 10.0)
+	var columna := VBoxContainer.new()
+	columna.add_theme_constant_override("separation", 4)
+	columna.mouse_filter = Control.MOUSE_FILTER_PASS
+	placa.add_child(columna)
+	var r := PiezasLeccion.rotulo(rotulo)
+	columna.add_child(r)
+	return placa
+
+
+func _fila_placa(titulo: String, nota: String, icono: String, avance: float, luz: String) -> FilaPlaca:
+	var s := raiz.contenido.sistema(args["id"])
+	var f := FilaPlaca.new(titulo, nota)
+	f.tipo = "medalla"
+	f.icono = icono
+	f.color = Tema.color_area(s)
+	f.avance = avance
+	f.lampara = luz
+	return f
+
+
+func _fila_examen(id: String) -> FilaPlaca:
 	var e := raiz.contenido.leer("examenes/%s.json" % id)
 	var r: Dictionary = raiz.partida.datos["examenes"].get(id, {})
-	var estado := ""
+	var estado := "Sin hacer"
+	var luz := "apagada"
+	var avance := 0.0
 	if not r.is_empty():
 		estado = "%d de 3 estrellas" % int(r["estrellas"]) if r["aprobado"] else "No aprobado"
-	return _fila(e.get("titulo", id), e.get("resumen", ""), raiz.ir_a.bind("prueba_examen", {"id": id}), "examen", estado)
+		luz = "verde" if r["aprobado"] else "rojo"
+		avance = int(r["estrellas"]) / 3.0
+	var f := _fila_placa(e.get("titulo", id), "%s · %s" % [e.get("resumen", ""), estado], "examen", avance, luz)
+	f.name = "Examen_%s" % id
+	f.tocada.connect(raiz.ir_a.bind("prueba_examen", {"id": id}))
+	return f

@@ -155,14 +155,15 @@ Reordenadas el 2026-11-15 tras la petición del usuario: primero la interfaz y e
 | R-B | 4.14.0 | Rediseño visual B: tableros, cuadro principal, planta de frío, PLC, red de alarmas y misiones dibujados en el marco (casillas de motor, megóhmetro R-S-T, misiones que empiezan tocando la alarma). Hecha: tema ARI para el contenido del marco; mímico de siete tableros con casillas de arrancador y megóhmetro, al lado del frente y del interior; grupos del cuadro como casillas; esquema de frío con los colores de la leyenda; frente del PLC con sus LED; puesto de alarmas con cabecera roja; avisos ARI; alarmas que llevan a su panel o a su misión; Guardia como tabla de averías; en el celular apaisado, panel derecho plegado que flota al abrirlo |
 | R-C | 4.15.0 | Rediseño visual C: inicio con el buque visto desde arriba y Escuela con camino de lecciones. Hecha: buque visto desde arriba con una zona por sistema (datos en `planta` de `data/sistemas.json`) y lámpara de estado verde, ámbar, roja o apagada; seguridad como medalla; placa del rango con visor de puntos, «Continuar» con botón redondo, botón de avería que lleva a la Guardia y repaso con insignia; Escuela con medallas de módulo, placa con «Empezar», camino de lecciones en serpentina con el examen al final y cajón de piezas del atlas; barra de navegación con relieve |
 | R-D | 4.16.0 | Rediseño visual D: fichas con el dibujo grande, marcas numeradas y pestañas con iconos. Hecha: ficha de equipo y atlas con el dibujo en un visor hundido con luz de foco; marcas numeradas con relieve que se tocan y abren un bocadillo con la parte, enlazadas con la lista de partes; marcas de las 19 fichas sin atlas en `data/marcas_fichas.json` (valores típicos — verificar a bordo); pestañas con iconos (Partes, Funciona, Conexión, Prueba y Fallas en la ficha; las cinco vistas en el atlas, con lámpara verde en las ya vistas); placa de datos como chapa remachada; lecturas en visores verdes o rojos; fallas con lámpara roja y mantenimiento con casillas de relieve |
-| 40 | 4.17.0 | Lecciones de electrónica desde cero (11) |
-| 41 | 4.18.0 | Válvulas: catálogo, lecciones y minijuego «¿Abierta o cerrada?» |
-| 42 | 4.19.0 | Pañol: herramientas y tabla de llaves mm↔pulgadas, minijuego |
-| 43 | 4.20.0 | Racores: catálogo, tablas de roscas, DN↔NPS y mangueras, minijuego |
-| 44 | 4.21.0 | Seguir líneas: esquema interactivo y colores de tubería |
-| 45 | 4.22.0 | Hidráulica: componentes en atlas y lecciones |
-| 46 | 4.23.0 | Neumática: componentes en atlas y lecciones |
-| 47 | 5.0.0 | Exámenes v6 y v7, rango «Aspirante», calibración final, README |
+| R-E | 4.17.0 | Rediseño visual E: lección, examen, repaso y pantalla «Buque» con relieve. Hecha: lección con la cabecera de la ficha y una moneda por página, texto en placas con las fórmulas en un visor ámbar, animaciones e imágenes en un visor hundido, en apaisado texto a la izquierda y lo que se toca a la derecha; preguntas con teclas de letra que se encienden en verde o rojo y la explicación en un visor; resultado con medalla, una lámpara por pregunta, visores de aciertos y puntos, «Para saber más» en papel y la siguiente lección como moneda del camino; examen con contador, tira de lámparas de las preguntas, símbolo en papel dentro del visor y caso práctico en una hoja del libro de guardia; calificación con anillo, estrellas y lámpara de aprobado; repaso con las cajas de 1, 3, 7, 14 y 30 días; lista de exámenes en placas; «Buque» con el buque visto desde arriba y las capas Sistemas y Tableros, marcas de los lugares con paneles (datos en `planta.lugares` de `data/sistemas.json`, esquemáticos — verificar a bordo) y lámpara roja donde hay una avería pendiente |
+| 40 | 4.18.0 | Lecciones de electrónica desde cero (11) |
+| 41 | 4.19.0 | Válvulas: catálogo, lecciones y minijuego «¿Abierta o cerrada?» |
+| 42 | 4.20.0 | Pañol: herramientas y tabla de llaves mm↔pulgadas, minijuego |
+| 43 | 4.21.0 | Racores: catálogo, tablas de roscas, DN↔NPS y mangueras, minijuego |
+| 44 | 4.22.0 | Seguir líneas: esquema interactivo y colores de tubería |
+| 45 | 4.23.0 | Hidráulica: componentes en atlas y lecciones |
+| 46 | 4.24.0 | Neumática: componentes en atlas y lecciones |
+| 47 | 5.1.0 | Exámenes v6 y v7, rango «Aspirante», calibración final, README |
 
 ## G. Atlas de componentes (añadido a petición del usuario)
 

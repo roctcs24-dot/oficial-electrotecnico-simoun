@@ -5,8 +5,6 @@ extends Pantalla
 
 ## Pantalla de cada tipo de misión; las de motores, sin tipo, usan la mesa de trabajo.
 const PANTALLAS := {"cuadro": "mision_cuadro", "planta": "mision_planta", "red": "mision_red"}
-## Panel del buque de cada tipo de misión sin tablero propio.
-const PANELES_TIPO := {"cuadro": "C-21", "planta": "F-41", "red": "X-81"}
 
 
 func construir() -> void:
@@ -59,9 +57,7 @@ func abrir_mision(id: String) -> void:
 
 ## Panel del buque donde ocurre la avería, como P-31 o C-21; vacío si no tiene.
 func _codigo_mision(m: Dictionary) -> String:
-	if m.has("tablero"):
-		return raiz.paneles.codigo_de("tablero", {"tablero": m["tablero"]})
-	return PANELES_TIPO.get(m.get("tipo", ""), "")
+	return raiz.paneles.codigo_mision(m)
 
 
 ## «sin_atender», «en_curso» o el número de estrellas de una misión hecha.

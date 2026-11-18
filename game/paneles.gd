@@ -3,6 +3,9 @@ extends RefCounted
 ## Índice de paneles del marco de simulador (data/paneles.json): grupos con su color, paneles
 ## con su código, la pantalla que abren y sus consejos.
 
+## Panel del buque de cada tipo de misión sin tablero propio.
+const PANELES_TIPO := {"cuadro": "C-21", "planta": "F-41", "red": "X-81"}
+
 var datos: Dictionary
 var _por_codigo := {}
 
@@ -70,6 +73,29 @@ func _coincide(p: Dictionary, nombre: String, args: Dictionary) -> bool:
 		if str(args.get(clave, "")) != str(esperados[clave]):
 			return false
 	return true
+
+
+## Panel del buque donde ocurre la avería de una misión, como P-31 o C-21; vacío si no tiene.
+func codigo_mision(m: Dictionary) -> String:
+	if m.has("tablero"):
+		return codigo_de("tablero", {"tablero": m["tablero"]})
+	return PANELES_TIPO.get(m.get("tipo", ""), "")
+
+
+## Lugares del buque con sus paneles: [{lugar, u, v, paneles: [códigos]}], en el orden de
+## «planta.lugares» de data/sistemas.json. Los lugares sin paneles se omiten.
+func por_lugar(lugares: Array) -> Array:
+	var r := []
+	for l: Dictionary in lugares:
+		var codigos := []
+		for p: Dictionary in lista():
+			if p.get("lugar", "") == l["lugar"]:
+				codigos.append(p["codigo"])
+		if not codigos.is_empty():
+			var e := l.duplicate()
+			e["paneles"] = codigos
+			r.append(e)
+	return r
 
 
 ## Panel anterior (paso -1) o siguiente (paso 1) entre los disponibles, en orden circular.

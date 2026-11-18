@@ -6,8 +6,13 @@ extends ControlToque
 ##
 ## Las zonas vienen de data/sistemas.json («planta») en el espacio del buque: «u» de popa (0) a
 ## proa (1000) y «v» de babor (0) a estribor (300). El casco y los detalles se dibujan aquí.
+##
+## En la pantalla «Buque», la capa «tableros» deja las zonas como un tinte sin rótulos y pone una
+## marca en cada lugar con paneles (data/sistemas.json, «planta.lugares»): una chapa ámbar con el
+## rayo, el número de paneles y una lámpara roja si alguno tiene una avería pendiente.
 
 signal sistema_tocado(id: int)
+signal lugar_tocado(indice: int)
 
 ## Media manga del casco en el espacio del buque y su eje.
 const MEDIA_MANGA := 128.0
@@ -38,6 +43,9 @@ const PARRILLA := Color("232d36")
 const PARRILLA_HUECO := Color("10161b")
 const AMARILLO_PLUMA := Color("e8bf27")
 const PASTILLA := Color(0.05, 0.075, 0.094, 0.88)
+## Medio lado de la marca de un lugar con tableros.
+const MEDIO_MARCA := 15.0
+const AMBAR_MARCA := [Color("ffd978"), Color("e8a524"), Color("a86a00")]
 
 ## [{sistema, nombre, u: [u0, u1], v: [v0, v1]}].
 var zonas: Array = []
@@ -49,6 +57,22 @@ var colores := {}
 var estados := {}
 ## id del sistema -> fracción de avance, para el anillo de la medalla.
 var avances := {}
+## «sistemas» (las zonas se tocan) o «tableros» (las marcas de los lugares se tocan).
+var capa := "sistemas":
+	set(valor):
+		capa = valor
+		queue_redraw()
+## [{lugar, u, v, paneles: n.º de paneles, alarma: bool}].
+var lugares: Array = []
+var lugar_elegido := -1:
+	set(valor):
+		lugar_elegido = valor
+		queue_redraw()
+## Alto libre arriba para lo que la pantalla ponga encima, como el selector de capas.
+var reserva_arriba := 0.0
+## Nombre y datos del buque, arriba a la derecha en la capa de tableros.
+var rotulo_buque := ""
+var detalle_buque := ""
 
 var _vertical := false
 var _origen := Vector2.ZERO
@@ -110,16 +134,16 @@ static func casco_puntos(margen: float) -> PackedVector2Array:
 func _ajustar() -> void:
 	_vertical = es_vertical()
 	if _vertical:
-		var arriba := MARGEN + 4.0
+		var arriba := MARGEN + 4.0 + reserva_arriba
 		var abajo := MARGEN + 18.0
 		_ku = maxf((size.y - arriba - abajo) / 1000.0, 0.05)
 		_kv = minf((size.x - MARGEN * 2.0) / 300.0, _ku * ENSANCHE_MAX_VERTICAL)
 		_origen = Vector2((size.x - 300.0 * _kv) / 2.0, arriba)
 	else:
 		_ku = maxf((size.x - MARGEN * 2.0) / 1000.0, 0.05)
-		var alto := size.y - MARGEN - ALTO_LEYENDA - 6.0
+		var alto := size.y - MARGEN - ALTO_LEYENDA - 6.0 - reserva_arriba
 		_kv = minf(alto / 300.0, _ku * ENSANCHE_MAX_APAISADO)
-		_origen = Vector2(MARGEN, MARGEN + (alto - 300.0 * _kv) / 2.0)
+		_origen = Vector2(MARGEN, MARGEN + reserva_arriba + (alto - 300.0 * _kv) / 2.0)
 
 
 ## Punto del espacio del buque en la pantalla.
@@ -153,13 +177,37 @@ func zonas_pantalla() -> Array[Dictionary]:
 
 func centro_medalla() -> Vector2:
 	if _vertical:
-		return Vector2(MARGEN + RADIO_MEDALLA + 6.0, MARGEN + RADIO_MEDALLA + 4.0)
-	return Vector2(size.x - MARGEN - RADIO_MEDALLA - 14.0, MARGEN + RADIO_MEDALLA)
+		return Vector2(MARGEN + RADIO_MEDALLA + 6.0, MARGEN + RADIO_MEDALLA + 4.0 + reserva_arriba)
+	return Vector2(size.x - MARGEN - RADIO_MEDALLA - 14.0, MARGEN + RADIO_MEDALLA + reserva_arriba)
+
+
+## Centro de la marca de cada lugar en la pantalla.
+func centros_lugares() -> Array[Vector2]:
+	_ajustar()
+	var r: Array[Vector2] = []
+	for l: Dictionary in lugares:
+		r.append(a_pantalla(float(l["u"]), float(l["v"])))
+	return r
+
+
+## Lugar bajo el punto, o -1: la marca más cercana, con un área táctil de 48 puntos o más.
+func lugar_en(punto: Vector2) -> int:
+	var mejor := maxf(MEDIO_MARCA, RADIO_TOQUE) + 2.0
+	var r := -1
+	var centros := centros_lugares()
+	for i in centros.size():
+		var d := maxf(absf(punto.x - centros[i].x), absf(punto.y - centros[i].y))
+		if d <= mejor:
+			mejor = d
+			r = i
+	return r
 
 
 ## Sistema bajo el punto, o -1. La medalla va primero; fuera de las zonas vale la más cercana a
 ## menos de RADIO_TOQUE, para que el área tocable llegue a los 48 puntos.
 func zona_en(punto: Vector2) -> int:
+	if capa == "tableros":
+		return -1
 	var lista := zonas_pantalla()
 	if not aparte.is_empty() and punto.distance_to(centro_medalla()) <= maxf(RADIO_MEDALLA * 1.3, RADIO_TOQUE):
 		return int(aparte["sistema"])
@@ -188,6 +236,11 @@ func _al_soltar() -> void:
 
 
 func _al_tocar(punto: Vector2) -> void:
+	if capa == "tableros":
+		var i := lugar_en(punto)
+		if i >= 0:
+			lugar_tocado.emit(i)
+		return
 	var id := zona_en(punto)
 	if id >= 0:
 		sistema_tocado.emit(id)
@@ -201,6 +254,18 @@ func _draw() -> void:
 	_dibujar_casco()
 	_dibujar_cubierta()
 	_dibujar_superestructura()
+	if capa == "tableros":
+		for z: Dictionary in zonas:
+			_dibujar_zona_tenue(z)
+		var centros := centros_lugares()
+		for i in lugares.size():
+			if i != lugar_elegido:
+				_dibujar_marca_lugar(centros[i], lugares[i], false)
+		if lugar_elegido >= 0 and lugar_elegido < lugares.size():
+			_dibujar_marca_lugar(centros[lugar_elegido], lugares[lugar_elegido], true)
+		_dibujar_rotulo_buque()
+		_dibujar_leyenda_tableros()
+		return
 	for z: Dictionary in zonas:
 		_dibujar_zona(z)
 	if not aparte.is_empty():
@@ -413,3 +478,81 @@ func _dibujar_leyenda() -> void:
 		Relieve.lampara_estado(self, p, 4.0, par[0])
 		PiezasAri.texto(self, par[1], p.x + 10.0, p.y + tam * 0.36, tam, Color("b9c6d1"), Tema.PESO_FUERTE, HORIZONTAL_ALIGNMENT_LEFT)
 		x += PiezasAri.ancho_texto(par[1], tam, Tema.PESO_FUERTE) + 30.0
+
+
+# --- Capa de tableros ---
+
+## La zona del sistema como un tinte con el borde a trazos, sin rótulo ni lámpara.
+func _dibujar_zona_tenue(z: Dictionary) -> void:
+	var r := _rect(z["u"][0], z["u"][1], z["v"][0], z["v"][1])
+	var color: Color = colores.get(int(z["sistema"]), Tema.ACENTO)
+	DibujoAri.relleno(self, r, 9.0, Color(color, 0.1))
+	var c := Color(color, 0.5)
+	var esquinas := [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	for k in 4:
+		draw_dashed_line(esquinas[k], esquinas[(k + 1) % 4], c, 1.4, 5.0)
+
+
+## Marca de un lugar con tableros: chapa ámbar con aro cromado y el rayo, la insignia con el
+## número de paneles y, si hay avería, la lámpara roja. La elegida brilla y lleva su nombre.
+func _dibujar_marca_lugar(c: Vector2, l: Dictionary, elegida: bool) -> void:
+	var m := MEDIO_MARCA
+	if elegida:
+		Relieve.halo(self, c, m * 2.4, Relieve.AMBAR_HALO, 1.8)
+		var pasos := 28
+		for i in pasos:
+			if i % 2 == 0:
+				var a0 := TAU * i / pasos
+				draw_arc(c, m * 1.45, a0, a0 + TAU / pasos * 0.75, 3, Color(Tema.ACENTO, 0.85), 1.5, true)
+	var caja := Rect2(c - Vector2(m, m), Vector2(m, m) * 2.0)
+	DibujoAri.relleno(self, Rect2(caja.position + Vector2(0, 2.5), caja.size), 7.0, Color(0, 0, 0, 0.55))
+	DibujoAri.degradado(self, caja, 7.0, [Color("ffffff"), Color("b9c2ca"), Color("5b646d"), Color("2b3238")])
+	var dentro := caja.grow(-2.0)
+	var colores_marca: Array = AMBAR_MARCA if not elegida else [Color("fff4cf"), Color("ffd166"), Color("f0a21a")]
+	DibujoAri.degradado(self, dentro, 5.5, colores_marca)
+	DibujoAri.relleno(self, Rect2(dentro.position + Vector2(1, 1), Vector2(dentro.size.x - 2.0, dentro.size.y * 0.45)), 4.5, Color(1, 1, 1, 0.28))
+	var k := m / 12.0
+	var rayo := PackedVector2Array()
+	for q: Vector2 in [Vector2(1.5, -7), Vector2(-4.5, 1), Vector2(-0.5, 1), Vector2(-2, 7.5), Vector2(4.5, -1.5), Vector2(0.5, -1.5)]:
+		rayo.append(c + q * k)
+	draw_colored_polygon(rayo, Color("2a1a00"))
+	var n := int(l.get("paneles", 0))
+	if n > 0:
+		var b := c + Vector2(m - 1.0, m - 1.0)
+		draw_circle(b, 8.0, Color("0d1318"))
+		draw_arc(b, 8.0, 0, TAU, 20, Tema.ACENTO, 1.2, true)
+		PiezasAri.texto(self, str(n), b.x, b.y + 3.6, 10.0, Tema.ACENTO, Tema.PESO_NEGRITA)
+	if l.get("alarma", false):
+		PiezasAri.lampara(self, c + Vector2(m - 1.0, -m + 1.0), 4.5, "rojo", 1.0)
+	if elegida:
+		var nombre := str(l.get("nombre", l.get("lugar", "")))
+		var tam := float(Tema.tam(11.5))
+		var w := PiezasAri.ancho_texto(nombre, tam) + 20.0
+		var y := c.y - m - 30.0 if c.y - m - 30.0 > 4.0 + reserva_arriba else c.y + m + 8.0
+		var p := Rect2(Vector2(clampf(c.x - w / 2.0, 4.0, maxf(size.x - w - 4.0, 4.0)), y), Vector2(w, tam + 10.0))
+		DibujoAri.relleno(self, Rect2(p.position + Vector2(0, 1.5), p.size), p.size.y / 2.0, Color(0, 0, 0, 0.45))
+		DibujoAri.relleno(self, p, p.size.y / 2.0, PASTILLA)
+		DibujoAri.borde(self, p, p.size.y / 2.0, Color(Relieve.AMBAR, 0.8), 1.2)
+		PiezasAri.texto(self, nombre, p.get_center().x, p.get_center().y + tam * 0.36, tam, Tema.ACENTO, Tema.PESO_NEGRITA)
+
+
+func _dibujar_rotulo_buque() -> void:
+	if rotulo_buque.is_empty():
+		return
+	var tam := float(Tema.tam(13))
+	var x := size.x - MARGEN - 6.0
+	var y := MARGEN + 16.0
+	PiezasAri.texto(self, rotulo_buque, x, y + 1.0, tam, Color(0, 0, 0, 0.6), Tema.PESO_NEGRITA, HORIZONTAL_ALIGNMENT_RIGHT)
+	PiezasAri.texto(self, rotulo_buque, x, y, tam, Color.WHITE, Tema.PESO_NEGRITA, HORIZONTAL_ALIGNMENT_RIGHT)
+	if not detalle_buque.is_empty() and not _vertical:
+		PiezasAri.texto(self, detalle_buque, x, y + tam + 4.0, float(Tema.tam(10.5)), Color("a9b6c1"), Tema.PESO_MEDIO, HORIZONTAL_ALIGNMENT_RIGHT)
+
+
+func _dibujar_leyenda_tableros() -> void:
+	var tam := float(Tema.tam(10.5))
+	var p := Vector2(MARGEN + 12.0, size.y - 12.0)
+	DibujoAri.degradado(self, Rect2(p - Vector2(6, 6), Vector2(12, 12)), 3.0, AMBAR_MARCA)
+	PiezasAri.texto(self, "lugar con tableros", p.x + 12.0, p.y + tam * 0.36, tam, Color("b9c6d1"), Tema.PESO_FUERTE, HORIZONTAL_ALIGNMENT_LEFT)
+	var x := p.x + 28.0 + PiezasAri.ancho_texto("lugar con tableros", tam, Tema.PESO_FUERTE)
+	PiezasAri.lampara(self, Vector2(x, p.y), 3.8, "rojo", 1.0)
+	PiezasAri.texto(self, "avería pendiente", x + 10.0, p.y + tam * 0.36, tam, Color("b9c6d1"), Tema.PESO_FUERTE, HORIZONTAL_ALIGNMENT_LEFT)

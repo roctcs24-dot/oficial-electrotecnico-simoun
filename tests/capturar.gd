@@ -67,6 +67,8 @@ func _capturar() -> void:
 		await _capturar_inicio(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fichas_d":
 		await _capturar_fichas_d(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
+		await _capturar_rediseno_e(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "revision":
 		await _capturar_revision(raiz, carpeta)
 	else:
@@ -565,6 +567,79 @@ func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
 
 ## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
 ## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
+## Etapa E del rediseño: lección, resultado, examen, repaso y la pantalla «Buque».
+func _capturar_rediseno_e(raiz: Raiz, carpeta: String) -> void:
+	var p := raiz.partida
+	p.datos = Partida.datos_nuevos()
+	p.datos["puntos"] = 120
+	var mision: String = raiz.contenido.sistema(3)["modos"]["guardia"]["misiones"][0]
+	for m: String in raiz.contenido.sistema(3)["modos"]["guardia"]["misiones"]:
+		if raiz.contenido.mision(m).has("tablero"):
+			mision = m
+			break
+	p.datos["equipos_danados"][mision] = {"motor": "quemado"}
+	for tema: String in ["ex_caso_placa_254", "ohm_corriente", "cortocircuito"]:
+		p.registrar_error(tema)
+	var banco: Dictionary = raiz.contenido.leer("examenes/v1.json")
+	var caso: Dictionary = {}
+	for q: Dictionary in banco["preguntas"]:
+		if q["tipo"] == "caso" and caso.is_empty():
+			caso = q
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 3
+	var simbolo := JuegoSimbolos.crear_ronda("contacto_na", raiz.contenido.simbolos(), azar)
+	simbolo["tipo"] = "simbolo"
+	simbolo["tema"] = "simbolo_contacto_na"
+	var mal: int = (int(simbolo["correcta"]) + 1) % int(simbolo["opciones"].size())
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("inicio")
+		await _esperar()
+		raiz.ir_a("leccion", {"id": "l0_ohm_potencia", "sistema": 0, "pagina": 1, "respuestas": {"0_2": {"acierto": true, "indice": 1}, "1_1": {"acierto": true, "indice": 1}}})
+		await _guardar(carpeta, "e_leccion_respondida", tam)
+		raiz.volver()
+		raiz.ir_a("leccion", {"id": "l0_ohm_potencia", "sistema": 0, "pagina": 0, "respuestas": {}})
+		await _guardar(carpeta, "e_leccion_animacion", tam)
+		raiz.volver()
+		raiz.ir_a("leccion", {"id": "l0_loto", "sistema": 0, "pagina": 1, "respuestas": {}})
+		await _guardar(carpeta, "e_leccion_ordenar", tam)
+		raiz.volver()
+		raiz.ir_a("leccion", {"id": "l0_ohm_potencia", "sistema": 0, "pagina": 3, "respuestas": {"0_2": {"acierto": true, "indice": 1}, "1_1": {"acierto": false, "indice": 0}, "2_2": {"acierto": true, "indice": 2}}, "ganados": 25})
+		await _guardar(carpeta, "e_leccion_final", tam)
+		raiz.volver()
+		var estados := {}
+		for i in 6:
+			estados[i] = {"acierto": i != 2, "elegida": 0}
+		var items := []
+		for i in 20:
+			items.append(simbolo)
+		estados[6] = {"acierto": false, "elegida": mal}
+		raiz.ir_a("prueba_examen", {"id": "v1", "items": items, "indice": 6, "respuestas": estados})
+		await _guardar(carpeta, "e_examen_simbolo", tam)
+		raiz.volver()
+		raiz.ir_a("prueba_examen", {"id": "v1", "items": [caso, caso, caso], "indice": 1, "respuestas": {0: {"acierto": true, "elegida": 1}}})
+		await _guardar(carpeta, "e_examen_caso", tam)
+		raiz.volver()
+		var finales := {}
+		for i in 20:
+			finales[i] = {"acierto": i not in [2, 9, 14], "elegida": 0}
+		raiz.ir_a("prueba_examen", {"id": "v1", "items": items.map(func(q: Dictionary) -> Dictionary: return caso), "indice": 20, "respuestas": finales, "ganados": 60})
+		await _guardar(carpeta, "e_examen_final", tam)
+		raiz.volver()
+		raiz.ir_a("repaso", {"items": [caso, caso], "indice": 0, "respuestas": {0: {"acierto": true, "elegida": 1}}})
+		await _guardar(carpeta, "e_repaso", tam)
+		raiz.volver()
+		raiz.ir_a("examen", {"id": 3})
+		await _guardar(carpeta, "e_examen_lista", tam)
+		raiz.volver()
+		raiz.ir_a_seccion("plano_barco")
+		await _guardar(carpeta, "e_buque_tableros", tam)
+		raiz.pantalla_actual().elegir_capa("sistemas")
+		await _guardar(carpeta, "e_buque_sistemas", tam)
+		raiz.ir_a_seccion("inicio")
+
+
 func _capturar_inicio(raiz: Raiz, carpeta: String) -> void:
 	var p := raiz.partida
 	p.datos = Partida.datos_nuevos()

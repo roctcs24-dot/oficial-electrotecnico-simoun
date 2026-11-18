@@ -20,7 +20,21 @@
       { "sistema": 6, "nombre": "Puente · PLC", "u": [702, 884], "v": [56, 147] },
       { "sistema": 2, "nombre": "Distribución", "u": [702, 884], "v": [153, 244] }
     ],
-    "aparte": { "sistema": 0, "nombre": "Seguridad" }
+    "aparte": { "sistema": 0, "nombre": "Seguridad" },
+    "nota_lugares": "Lugares de los paneles de data/paneles.json en la pantalla «Buque» (capa Tableros). Posición esquemática: verificar a bordo.",
+    "lugares": [
+      { "lugar": "Cuadro principal", "u": 585, "v": 75 },
+      { "lugar": "Sala de control", "u": 652, "v": 122 },
+      { "lugar": "Sala de máquinas", "u": 598, "v": 205 },
+      { "lugar": "Sala de purificadoras", "u": 662, "v": 246 },
+      { "lugar": "Sala de compresores", "u": 470, "v": 95 },
+      { "lugar": "Local del servotimón", "u": 70, "v": 236 },
+      { "lugar": "Cubierta principal", "u": 262, "v": 92 },
+      { "lugar": "Pasillo de habitabilidad", "u": 760, "v": 205 },
+      { "lugar": "Cuadro de emergencia", "u": 852, "v": 215 },
+      { "lugar": "Taller eléctrico", "u": 748, "v": 102 },
+      { "lugar": "Puente", "u": 852, "v": 102 }
+    ]
   },
   "sistemas": [
     {

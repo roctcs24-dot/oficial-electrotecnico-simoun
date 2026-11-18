@@ -321,6 +321,31 @@ La ficha de equipo (`ui/screens/ficha.gd`) y el atlas (`ui/screens/atlas.gd`) si
 - **Atlas:** placa de datos como una chapa remachada; pasos de la animación como monedas que se encienden; lecturas de Medir y de Fallas en visores negros, verdes si son normales y rojas si indican falla; fallas con su lámpara roja (`BotonAri.lampara`) y mantenimiento con casillas de relieve.
 - **Pruebas** en `tests/test_rediseno_d.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_d fichas_d`.
 
+## Lección, examen, repaso y Buque (versión 4.17.0)
+
+La lección, el examen, el repaso y la pantalla «Buque» siguen con el tema oscuro y el color por área, con el relieve de la Escuela y de las fichas. Las piezas comunes están en `ui/widgets/piezas_leccion.gd` (`PiezasLeccion`), `TeclaOpcion` y `FilaPlaca`.
+
+- **Lección** (`ui/screens/leccion.gd`):
+  - cabecera de la ficha (`CabeceraFicha`) con la medalla del área y una moneda por página (`PiezasLeccion.MonedasPaginas`): verde la hecha, ámbar la actual y hundida la pendiente;
+  - el texto va en placas. Un párrafo que sea solo una fórmula centrada en negrita, como `[center][b]V = I × R[/b][/center]`, sale en un visor con letras ámbar (`partir_formulas`), sin cambiar los JSON;
+  - las animaciones y las imágenes van dentro de un visor hundido (`VisorFicha`); las imágenes, en papel;
+  - en apaisado (desde 720 puntos de ancho), el texto va a la izquierda y lo que se toca a la derecha: animación, imagen, pregunta, ordenar o práctica. En vertical, una sola columna;
+  - «Anterior» oscuro y «Siguiente» ámbar; mientras falte contestar, «Siguiente» queda oscuro con la lámpara apagada;
+  - al final: medalla con el anillo de aciertos, una lámpara por pregunta, visores de aciertos y puntos, los temas fallados con lámpara roja, «Para saber más» en papel y la siguiente lección como moneda del camino.
+- **Preguntas** (`BloqueQuiz` y `BloqueOrdenar`): una placa con su rótulo y una tecla por opción con la moneda de su letra (`TeclaOpcion`). Al contestar, la correcta se enciende en verde, la elegida mal en rojo y las demás se apagan; la explicación sale en un visor con «CORRECTO» o «INCORRECTO». El caso práctico va en una hoja rayada del libro de guardia. En ordenar, los pasos ya puestos son filas numeradas.
+- **Examen y repaso** (`ui/pantalla_preguntas.gd`):
+  - contador de la pregunta en un visor ámbar y, en el examen, una lámpara por pregunta (`TiraPreguntas`);
+  - en el repaso, las cinco cajas de la repetición espaciada (1, 3, 7, 14 y 30 días), con la del tema en ámbar (`CajasRepaso`);
+  - el símbolo va en papel dentro de un visor, al lado de la pregunta en apaisado;
+  - calificación del examen con el anillo del porcentaje, las tres estrellas dibujadas (la fuente no tiene ★), la lámpara de APROBADO y los visores de aciertos y puntos;
+  - la lista de exámenes y minijuegos de cada sistema (`examen.gd`) va en placas con filas `FilaPlaca`.
+- **Buque** (`ui/screens/plano_barco.gd`): el buque visto desde arriba (`PlantaBuque`) con dos capas que se eligen arriba a la izquierda.
+  - **Tableros** (la de inicio): cada lugar con paneles lleva una marca ámbar con el rayo, el número de paneles y una lámpara roja si alguno tiene una avería pendiente (una misión que dejó un equipo dañado). Al tocarla, al lado salen sus paneles con el código en un visor ámbar; tocar uno lo abre en el marco.
+  - **Sistemas**: las zonas abren su sistema, como en el inicio, y al lado va la lista de sistemas con su medalla, su avance y su lámpara de estado.
+  - Los lugares están en `data/sistemas.json`, bloque `planta.lugares`: `lugar` (el mismo texto que el campo `lugar` de `data/paneles.json`), `u` y `v`. La posición es esquemática: verificar a bordo. Un panel nuevo sale solo en su lugar; las pruebas comprueban que todos los paneles tengan uno.
+  - `Paneles.codigo_mision()` da el panel de una misión, y `Paneles.por_lugar()` agrupa los paneles por lugar.
+- **Pruebas** en `tests/test_rediseno_e.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_e rediseno_e`.
+
 ## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).
