@@ -24,7 +24,8 @@ a('<path d="M48,11.5 H232" stroke="#fff" stroke-opacity="0.2" stroke-width="1.5"
 a('<rect x="54" y="62" width="172" height="52" rx="5" fill="none" stroke="url(#ho_cromo)" stroke-width="4"/>')
 a('<rect x="57" y="65" width="166" height="46" rx="3" fill="none" stroke="#050607" stroke-width="1.5"/>')
 # Rodillos: separadores con su eje y curvatura de cada rodillo
-for x in (90, 122, 154, 186):
+# Cinco rodillos de horas y uno rojo de décimas, como las 12408,6 h de la simulación.
+for x in (85, 112, 140, 167, 195):
     a(f'<rect x="{x - 2.5}" y="66" width="5" height="44" fill="#1b1e21"/><rect x="{x - 2.5}" y="66" width="1.2" height="44" fill="#fff" opacity="0.15"/>')
 a('<rect x="58" y="66" width="164" height="44" rx="3" fill="url(#ho_rodillo)"/>')
 # Cristal de la ventana

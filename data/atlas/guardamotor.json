@@ -66,7 +66,7 @@
     "texto": "Bloque auxiliar lateral, que no se ve en el dibujo: 13-14 ({{na}}) y la señal de disparo 97-98."
    }
   ],
-  "placa": "24-32 A · Ue 380 V 50 Hz · IEC 60947-2 y 60947-4-1",
+  "placa": "17-23 A · Ue 380 V 50 Hz · IEC 60947-2 y 60947-4-1",
   "a_bordo": "En cada salida de motor de los tableros de bombas, compresores y ventiladores. Valores típicos — verificar a bordo."
  },
  "funciona": {

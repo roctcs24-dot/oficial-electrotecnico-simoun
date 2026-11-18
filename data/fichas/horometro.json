@@ -10,13 +10,13 @@
     ],
     "nota": "Horómetro de 48 × 48 mm de 110 V 50 Hz con contador mecánico, dibujado de forma general. Tensión y frecuencia de cada uno: verificar a bordo.",
     "etiquetas": [
-      {
-        "texto": "1 2 4 0 8 , 6",
-        "x": 140,
-        "y": 88,
-        "tam": 16,
-        "color": "#f4f4f0"
-      },
+      {"texto": "1", "x": 71.5, "y": 88, "tam": 16, "color": "#f4f4f0"},
+      {"texto": "2", "x": 98.5, "y": 88, "tam": 16, "color": "#f4f4f0"},
+      {"texto": "4", "x": 126, "y": 88, "tam": 16, "color": "#f4f4f0"},
+      {"texto": "0", "x": 153.5, "y": 88, "tam": 16, "color": "#f4f4f0"},
+      {"texto": "8", "x": 181, "y": 88, "tam": 16, "color": "#f4f4f0"},
+      {"texto": ",", "x": 195, "y": 96, "tam": 12, "color": "#f4f4f0"},
+      {"texto": "6", "x": 208, "y": 88, "tam": 16, "color": "#f4f4f0"},
       {
         "texto": "h",
         "x": 140,

@@ -7,9 +7,9 @@
     "tamano": [360, 540],
     "nota": "Ilustración sin marca con la disposición típica de un arrancador suave con pantalla y bypass interno, como los Siemens SIRIUS 3RW55 de los compresores nº 3 y nº 4 del buque. La posición y el nombre de los bornes de mando cambian con cada modelo: verifique en el esquema del tablero y en el manual.",
     "etiquetas": [
-      { "texto": "1/L1", "x": 110, "y": 88, "tam": 14 },
-      { "texto": "3/L2", "x": 180, "y": 88, "tam": 14 },
-      { "texto": "5/L3", "x": 250, "y": 88, "tam": 14 },
+      { "texto": "1/L1", "x": 110, "y": 88, "tam": 14, "color": "#20242a" },
+      { "texto": "3/L2", "x": 180, "y": 88, "tam": 14, "color": "#20242a" },
+      { "texto": "5/L3", "x": 250, "y": 88, "tam": 14, "color": "#20242a" },
       { "texto": "A1", "x": 70, "y": 108, "tam": 13, "color": "#20242a" },
       { "texto": "A2", "x": 130, "y": 108, "tam": 13, "color": "#20242a" },
       { "texto": "13", "x": 230, "y": 108, "tam": 13, "color": "#20242a" },

@@ -78,5 +78,9 @@ for x0 in (20, 116):
     a(f'<rect x="{cx - 6}" y="173" width="12" height="5" rx="1" fill="#050607"/><rect x="{cx - 4}" y="174.4" width="8" height="2" rx="0.8" fill="#2fa84d"/>')
 for x in (42, 82, 138, 178):
     a(borne(x, 212))
+# Tercer contacto 33-34, el que usa el selector REMOTE-STOP-LOCAL del servotimón: bornes más
+# pequeños a los lados de la placa de leyenda.
+for x in (42, 178):
+    a(f'<g transform="translate({x},150) scale(0.7) translate({-x},-150)">' + borne(x, 150) + '</g>')
 
 ANCHO, ALTO, CUERPO = R.automatico(os.path.join(R.REPO, "art", "taller", "selector.svg"), "".join(d), P.DEFS + DEFS)

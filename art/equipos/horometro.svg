@@ -13,8 +13,8 @@
   </defs>
   <rect x="40" y="10" width="200" height="160" rx="8" fill="url(#oscuro)" stroke="#1d2124" stroke-width="2"/>
   <rect x="58" y="66" width="164" height="44" rx="3" fill="#111417"/>
-  <path d="M90,66 V110 M122,66 V110 M154,66 V110 M186,66 V110" stroke="#3b4043" stroke-width="2"/>
-  <rect x="190" y="68" width="30" height="40" fill="#c0392b" opacity="0.85"/>
+  <path d="M85,66 V110 M112,66 V110 M140,66 V110 M167,66 V110 M195,66 V110" stroke="#3b4043" stroke-width="2"/>
+  <rect x="196" y="68" width="24" height="40" fill="#c0392b" opacity="0.85"/>
   <path d="M132,128 H148 L136,146 H148 L132,128 Z" fill="none" stroke="#d9dcde" stroke-width="2"/>
   <rect x="70" y="180" width="140" height="64" rx="4" fill="#33383c"/>
   <use xlink:href="#tornillo" x="110" y="212"/>

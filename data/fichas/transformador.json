@@ -15,7 +15,7 @@
       { "texto": "2W", "x": 340, "y": 22, "tam": 11 },
       { "texto": "Yugo de chapa", "x": 210, "y": 90, "tam": 12, "color": "#f4f4f0" },
       { "texto": "Devanado", "x": 100, "y": 214, "tam": 12, "color": "#f4f4f0" },
-      { "texto": "Placa", "x": 210, "y": 349, "tam": 12 }
+      { "texto": "Placa", "x": 210, "y": 349, "tam": 12, "color": "#20242a" }
     ]
   },
   "simbolos": {
