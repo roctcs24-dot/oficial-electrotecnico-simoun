@@ -370,6 +370,22 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
 
+## Fotos a bordo de las piezas (versión 4.20.1)
+
+Las válvulas se ven también en fotos tomadas en el B/P Vía Simoun, no solo dibujadas.
+
+- **Datos** (`data/fotos_piezas.json`): una entrada por foto con `pieza` (el `id` del catálogo), `estado` (`abierta`, `cerrada` o vacío si solo sirve para reconocerla), `tubo` (`vertical` u `horizontal`, para la pregunta), `rotulo`, `lugar`, `texto` (la explicación) y, en píxeles de la foto original, `recorte` y `halo` (el óvalo ámbar sobre la pieza que importa).
+- **Preparar las fotos:** deje las originales en una carpeta (por ejemplo `fotos_via_simoun/piezas/valvulas/v03.jpg`), apunte `origen` relativo a esa carpeta y ejecute:
+  ```bash
+  godot --headless --path . --script res://tools/fotos/preparar_fotos.gd -- C:/ruta/fotos_via_simoun/piezas
+  godot --headless --path . --import
+  ```
+  La herramienta recorta, reduce a 1024 px por el lado largo y guarda en WebP en `archivo` (dentro de `art/fotos/`), unos 50–120 KB por foto.
+- **Minijuego «¿Abierta o cerrada?»:** hasta 4 de las 10 rondas (`JuegoValvulas.FOTOS_RONDAS`) son fotos con estado. La pregunta dice hacia dónde va el tubo y la foto no lleva rótulo ni lámpara, para no chivar la respuesta.
+- **Catálogo de válvulas:** si la pieza tiene fotos, el visor empieza por la primera; los botones 1, 2, 3… cambian de foto y DIBUJO vuelve al dibujo. En el catálogo la foto sí lleva la lámpara de su estado.
+- **Widget** `FotoPieza` (`ui/widgets/foto_pieza.gd`): llena su espacio centrado en el halo, con bisel, halo que late, rótulo y crédito.
+- **Pruebas** en `tests/test_fotos_piezas.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_fotos fotos`.
+
 ## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).

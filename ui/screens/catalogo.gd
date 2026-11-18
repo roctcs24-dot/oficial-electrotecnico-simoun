@@ -2,7 +2,9 @@ extends Pantalla
 ## Catálogo del Pañol (data/catalogos/<catalogo>.json): la lista en una placa, el elegido dibujado
 ## en un visor y sus datos al lado. En las válvulas, el visor deja elegir el estado (abierta o
 ## cerrada). En vertical, el visor y los datos arriba y la lista debajo. El elegido y su estado
-## viven en args. Cada catálogo tiene su configuración en CATALOGOS.
+## viven en args. Cada catálogo tiene su configuración en CATALOGOS. Si la pieza tiene fotos
+## tomadas a bordo (data/fotos_piezas.json), el visor las enseña primero (args «foto»: su número,
+## o -1 para el dibujo).
 
 const CATALOGOS := {
 	"valvulas": {
@@ -23,6 +25,7 @@ var elementos: Array = []
 var filas: Array[FilaPlaca] = []
 var dibujo: Control
 var botones_estado: Array[BotonAri] = []
+var fotos: Array = []
 
 
 func construir() -> void:
@@ -127,6 +130,39 @@ func _visor() -> Control:
 	fila.add_theme_constant_override("separation", 6)
 	columna.add_child(fila)
 	botones_estado.clear()
+	fotos = FotosPiezas.de_pieza(raiz.contenido.leer(FotosPiezas.ARCHIVO), str(e["id"])) if es_valvula() else []
+	var foto := int(args.get("foto", 0 if not fotos.is_empty() else -1))
+	if foto >= fotos.size():
+		foto = -1
+	if not fotos.is_empty():
+		var vistas := HBoxContainer.new()
+		vistas.add_theme_constant_override("separation", 6)
+		columna.add_child(vistas)
+		var rotulo := PiezasLeccion.rotulo("Foto a bordo")
+		rotulo.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		rotulo.autowrap_mode = TextServer.AUTOWRAP_OFF
+		vistas.add_child(rotulo)
+		for i in fotos.size() + 1:
+			var vista := i if i < fotos.size() else -1
+			var b := BotonAri.new(str(i + 1) if vista >= 0 else "DIBUJO", ver_foto.bind(vista), "ambar" if vista == foto else "oscuro")
+			b.name = "Vista_%d" % i
+			b.custom_minimum_size = Vector2(44.0 if vista >= 0 else 0.0, 44.0)
+			b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			if vista < 0:
+				b.ajustar_ancho()
+			vistas.add_child(b)
+	if foto >= 0:
+		var f := FotoPieza.desde(fotos[foto], str(raiz.contenido.leer(FotosPiezas.ARCHIVO).get("credito", "")), true)
+		f.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		f.custom_minimum_size.y = 220.0
+		dibujo = f
+		columna.add_child(f)
+		var nota := PiezasLeccion.etiqueta(str(fotos[foto].get("texto", "")), 12, Tema.TEXTO_SUAVE)
+		nota.name = "TextoFoto"
+		nota.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		nota.custom_minimum_size.x = 120.0
+		columna.add_child(nota)
+		return visor
 	var con_estado: bool = es_valvula() and not str(e["dibujo"]) in ["retencion", "seguridad", "reductora"]
 	if con_estado:
 		var nombres := ["DE A A B", "DE A A C"] if e["dibujo"] == "tres_vias" else ["ABIERTA", "CERRADA"]
@@ -185,6 +221,13 @@ func _ficha() -> Control:
 func elegir(id: String) -> void:
 	args["elegido"] = id
 	args["abierta"] = true
+	args.erase("foto")
+	raiz.reconstruir()
+
+
+## Cambia la vista del visor: una foto a bordo (su número) o el dibujo (-1).
+func ver_foto(i: int) -> void:
+	args["foto"] = i
 	raiz.reconstruir()
 
 

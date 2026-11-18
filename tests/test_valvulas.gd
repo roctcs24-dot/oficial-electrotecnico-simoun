@@ -169,7 +169,7 @@ func test_minijuego_suma_estrellas() -> String:
 	raiz.ir_a("abierta_cerrada", {})
 	var p = raiz.pantalla_actual()
 	var total: int = p.args["items"].size()
-	var dibujo_ok := p.find_child("Dibujo", true, false) is DibujoValvula
+	var dibujo_ok: bool = p.find_child("Dibujo", true, false) is DibujoValvula or not p.find_children("*", "FotoPieza", true, false).is_empty()
 	for i in total:
 		var q = raiz.pantalla_actual()
 		var item: Dictionary = q.args["items"][q.args["indice"]]
@@ -180,7 +180,7 @@ func test_minijuego_suma_estrellas() -> String:
 	raiz.free()
 	return A.primero([
 		A.cierto(total == 10, "10 rondas: %d" % total),
-		A.cierto(dibujo_ok, "cada ronda dibuja la válvula"),
+		A.cierto(dibujo_ok, "cada ronda dibuja la válvula o enseña su foto"),
 		A.cierto(estrellas == 3, "todo acertado da 3 estrellas: %d" % estrellas),
 		A.cierto(final_ok, "el final muestra la calificación"),
 	])

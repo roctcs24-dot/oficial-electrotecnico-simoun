@@ -71,6 +71,8 @@ func _capturar() -> void:
 		await _capturar_herramientas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "valvulas":
 		await _capturar_valvulas(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "fotos":
+		await _capturar_fotos(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -657,6 +659,33 @@ func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
 				if s != null:
 					s.ensure_control_visible(anim)
 			await _guardar(carpeta, "g_%s_%d" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
+## Fotos a bordo: ronda con foto de «¿Abierta o cerrada?» y fichas del catálogo con foto.
+func _capturar_fotos(raiz: Raiz, carpeta: String) -> void:
+	var catalogo := raiz.contenido.leer("catalogos/valvulas.json")
+	var fotos := FotosPiezas.con_estado(raiz.contenido.leer(FotosPiezas.ARCHIVO))
+	var lista := JuegoValvulas.jugables(catalogo)
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 4
+	var rondas := JuegoValvulas.crear_rondas(catalogo, 10, azar)
+	for f: Dictionary in fotos:
+		if f["id"] == "bray_cerrada":
+			rondas[3] = JuegoValvulas.ronda_foto(f, lista)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a("abierta_cerrada", {"items": rondas, "indice": 3, "respuestas": {0: {"acierto": true, "elegida": 0}, 1: {"acierto": true, "elegida": 0}, 2: {"acierto": false, "elegida": 1}}})
+		await _guardar(carpeta, "p_ronda_foto", tam)
+		raiz.pantalla_actual()._al_responder(true, 1, 3)
+		raiz.reconstruir()
+		await _guardar(carpeta, "p_ronda_foto_respondida", tam)
+		raiz.volver()
+		for par: Array in [["bola", 0], ["bola", 1], ["mariposa", 2], ["globo", 0]]:
+			raiz.ir_a("catalogo", {"catalogo": "valvulas", "elegido": par[0], "foto": par[1]})
+			await _guardar(carpeta, "p_catalogo_%s_%d" % [par[0], par[1]], tam)
 			raiz.volver()
 		raiz.ir_a_seccion("inicio")
 

@@ -1,7 +1,8 @@
 extends PantallaPreguntas
 ## Minijuego «¿Abierta o cerrada?»: diez válvulas del catálogo dibujadas en un estado al azar,
 ## con la chapa de su servicio. Se contesta mirando la maneta, el vástago o el indicador, como a
-## bordo. Las estrellas quedan en la partida (registro «abierta_cerrada»).
+## bordo. Algunas rondas son fotos tomadas a bordo, con un halo sobre la válvula que se pregunta.
+## Las estrellas quedan en la partida (registro «abierta_cerrada»).
 
 const RONDAS := 10
 const COLOR := Color("2e9e6a")
@@ -15,7 +16,18 @@ func _catalogo() -> Dictionary:
 func _crear_items() -> Array:
 	var azar := RandomNumberGenerator.new()
 	azar.randomize()
-	return JuegoValvulas.crear_rondas(_catalogo(), RONDAS, azar)
+	return JuegoValvulas.crear_rondas(_catalogo(), RONDAS, azar, FotosPiezas.con_estado(_fotos()))
+
+
+func _fotos() -> Dictionary:
+	return raiz.contenido.leer(FotosPiezas.ARCHIVO)
+
+
+func _foto(id: String) -> Dictionary:
+	for f: Dictionary in _fotos().get("fotos", []):
+		if f["id"] == id:
+			return f
+	return {}
 
 
 func _titulo() -> String:
@@ -50,15 +62,24 @@ func _crear_pregunta(columna: VBoxContainer, item: Dictionary, indice: int) -> v
 	var dentro := VBoxContainer.new()
 	dentro.mouse_filter = Control.MOUSE_FILTER_PASS
 	visor.add_child(dentro)
-	dentro.add_child(PiezasLeccion.rotulo("Mire la maneta, el vástago o el indicador"))
-	var d := DibujoValvula.new()
-	d.name = "Dibujo"
-	d.tipo = item["dibujo"]
-	d.apertura = float(item["apertura"])
-	d.via = str(item.get("via", "b"))
-	d.rotulo = str(item.get("servicio", ""))
-	d.custom_minimum_size.y = 250.0 if raiz.vertical else 230.0
-	dentro.add_child(d)
+	var foto := _foto(str(item.get("foto", "")))
+	if not foto.is_empty() and FotosPiezas.existe(foto):
+		dentro.add_child(PiezasLeccion.rotulo("Mire la maneta marcada · %s" % item.get("servicio", "")))
+		var f := FotoPieza.desde(foto, str(_fotos().get("credito", "")))
+		f.rotulo = ""
+		f.custom_minimum_size.y = 330.0 if raiz.vertical else 230.0
+		f.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		dentro.add_child(f)
+	else:
+		dentro.add_child(PiezasLeccion.rotulo("Mire la maneta, el vástago o el indicador"))
+		var d := DibujoValvula.new()
+		d.name = "Dibujo"
+		d.tipo = item["dibujo"]
+		d.apertura = float(item["apertura"])
+		d.via = str(item.get("via", "b"))
+		d.rotulo = str(item.get("servicio", ""))
+		d.custom_minimum_size.y = 250.0 if raiz.vertical else 230.0
+		dentro.add_child(d)
 	var lado := _columna()
 	lado.size_flags_stretch_ratio = 1.0
 	disposicion.add_child(lado)
