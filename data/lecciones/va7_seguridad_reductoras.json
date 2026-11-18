@@ -1,0 +1,75 @@
+{
+  "id": "va7_seguridad_reductoras",
+  "titulo": "Válvulas de seguridad y reductoras",
+  "resumen": "La protección que no se toca y la válvula que baja la presión.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La válvula de seguridad",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_seguridad}} va cerrada: un resorte aprieta el disco contra el asiento y solo abre si la presión pasa del tarado de su placa. Protege calderas, recibidores de aire, compresores y la planta de frío.\n\nNo se toca el tarado ni se bloquea la palanca. Si descarga, hay que buscar por qué ha subido la presión: la válvula hizo su trabajo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va7_dispara",
+          "pregunta": "La válvula de seguridad del recibidor de aire descarga. ¿Qué se hace?",
+          "opciones": [
+            "Apretar el tornillo para que no descargue",
+            "Buscar por qué ha subido la presión, por ejemplo un presostato del compresor",
+            "Bloquear la palanca"
+          ],
+          "correcta": 1,
+          "explicacion": "La válvula protege: la causa está antes, casi siempre en el control del compresor."
+        }
+      ]
+    },
+    {
+      "titulo": "La reductora",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_reductora}} baja la presión: del aire de arranque a 30 bar saca el aire de servicio a 7 bar, por ejemplo ([i]valores típicos — verificar a bordo[/i]). Un resorte y la presión de salida mueven el obturador para que la salida quede constante.\n\nAguas abajo siempre hay una válvula de seguridad: si la reductora falla abierta, pasaría toda la presión."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va7_reductora",
+          "pregunta": "¿Por qué hay una válvula de seguridad después de una reductora?",
+          "opciones": [
+            "Para medir la presión",
+            "Por si la reductora falla abierta y pasa toda la presión",
+            "Para purgar el agua"
+          ],
+          "correcta": 1,
+          "explicacion": "Si la reductora falla, la de seguridad protege la línea de baja presión."
+        }
+      ]
+    },
+    {
+      "titulo": "Prueba y registro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las válvulas de seguridad se prueban según el plan de mantenimiento del buque, y su tarado lo hace un taller autorizado con su precinto. Cada prueba se anota en el libro de registro."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va7_prueba",
+          "pregunta": "Para probar con la palanca una válvula de seguridad de un recibidor, ordene:",
+          "pasos": [
+            "Avisar y ponerse la protección auditiva",
+            "Comprobar la presión en el manómetro",
+            "Levantar la palanca y soltarla",
+            "Comprobar que vuelve a cerrar y anotarlo"
+          ],
+          "explicacion": "La descarga hace mucho ruido; después de soltar, debe asentar sin quedar goteando."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4126-1: válvulas de seguridad.",
+    "Reglas de la sociedad de clasificación del buque (verificar)."
+  ]
+}

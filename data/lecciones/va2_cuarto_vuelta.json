@@ -1,0 +1,89 @@
+{
+  "id": "va2_cuarto_vuelta",
+  "titulo": "Cuarto de vuelta: bola, mariposa y macho",
+  "resumen": "La maneta dice si están abiertas; y por qué no se usan para regular.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La válvula de bola",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_bola}} tiene una bola con un agujero que gira 90°. Con la maneta [b]en línea con el tubo, está abierta[/b]; cruzada, cerrada.\n\n[center][b]maneta en línea = ABIERTA[/b][/center]\n\nGire la maneta en la animación y vea cómo el agujero se cruza con el tubo. Se cierra un poco antes de los 90°, cuando los asientos tapan el agujero."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_valvula",
+          "params": {},
+          "pie": "El paso es aproximado: sirve para ver cómo se cruza el agujero, no para calcular un caudal."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va2_bola",
+          "pregunta": "La maneta de una válvula de bola está cruzada con el tubo. ¿Cómo está?",
+          "opciones": [
+            "Abierta",
+            "Cerrada",
+            "A medio abrir"
+          ],
+          "correcta": 1,
+          "explicacion": "Cruzada: el agujero de la bola queda atravesado y no deja pasar."
+        }
+      ]
+    },
+    {
+      "titulo": "Mariposa y macho",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_mariposa}} tiene un disco que gira en mitad del paso. Su maneta va en el sentido del disco: en línea con el tubo, abierta. Las grandes llevan volante con reductor y un indicador.\n\nLa {{valvula_macho}} tiene un tapón cónico. Se maniobra con una llave que no queda puesta: el estado lo dice la ranura de su cabeza cuadrada, que va en el sentido del paso."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "mariposa"
+          },
+          "pie": "Mueva la apertura y mire la maneta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va2_macho",
+          "pregunta": "Una válvula de macho no tiene maneta. ¿Cómo se sabe si está abierta?",
+          "opciones": [
+            "No se puede saber",
+            "Por la ranura de la cabeza, que va en el sentido del paso",
+            "Por el color de la cabeza"
+          ],
+          "correcta": 1,
+          "explicacion": "La ranura o el plano del eje marcan el paso en todas las de cuarto de vuelta."
+        }
+      ]
+    },
+    {
+      "titulo": "Trampas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una maneta mal montada después de un mantenimiento engaña: parece abierta y está cerrada. Si hay duda, mire la ranura del eje, no la maneta.\n\nNo use las de bola para regular: a medio abrir, el chorro erosiona los asientos y después ya no cierran. Para regular están las de globo y las de aguja."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va2_regular",
+          "pregunta": "Hay que regular el caudal de agua de un enfriador. ¿Qué válvula se usa?",
+          "opciones": [
+            "Una de bola a medio abrir",
+            "Una de globo",
+            "Una de retención"
+          ],
+          "correcta": 1,
+          "explicacion": "La de globo está hecha para regular. La de bola a medio abrir se estropea."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 17292: válvulas de bola metálicas.",
+    "API 609: válvulas de mariposa."
+  ]
+}

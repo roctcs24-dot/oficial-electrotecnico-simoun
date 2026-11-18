@@ -1,0 +1,75 @@
+{
+  "id": "va8_maniobra_segura",
+  "titulo": "Maniobra segura de válvulas",
+  "resumen": "Antes de abrir o cerrar: permiso, despacio y bloqueo.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Antes de tocar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una válvula forma parte de un sistema: cerrar la equivocada puede dejar sin refrigeración un motor o sin aspiración una bomba. Antes de maniobrar, identifique la válvula en el plano y en su chapa, consulte con el jefe de guardia y avise al puesto de control."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va8_identificar",
+          "pregunta": "Le piden cerrar la válvula de aspiración de la bomba de agua salada nº 2. ¿Qué hace primero?",
+          "opciones": [
+            "Cerrar la primera que encuentre cerca de la bomba",
+            "Identificarla en el plano y por su chapa, y avisar",
+            "Cerrarla y luego avisar"
+          ],
+          "correcta": 1,
+          "explicacion": "La chapa y el plano evitan cerrar la de la bomba que está en servicio."
+        }
+      ]
+    },
+    {
+      "titulo": "Despacio",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las válvulas se abren despacio. En las líneas de vapor, primero se purga el agua condensada y se calienta la línea con poco paso; si no, el agua golpea como un martillo. En las de agua, abrir de golpe da un {{golpe_ariete}}.\n\nNunca se usa una barra para forzar un volante: se rompe el vástago o se tuerce el volante."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va8_vapor",
+          "pregunta": "¿Por qué se abre despacio una válvula de vapor con la línea fría?",
+          "opciones": [
+            "Para ahorrar vapor",
+            "Para purgar el condensado y evitar el golpe de ariete",
+            "Porque el volante está duro"
+          ],
+          "correcta": 1,
+          "explicacion": "El agua condensada empujada por el vapor golpea con mucha fuerza."
+        }
+      ]
+    },
+    {
+      "titulo": "Bloquear y etiquetar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Para trabajar en una línea o una bomba, las válvulas que la aíslan se cierran, se bloquean con candado o cadena y se etiquetan, igual que un interruptor ({{loto}}). Después se purga la presión entre ellas y se comprueba que no queda."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va8_aislar",
+          "pregunta": "Para abrir el filtro de una bomba de agua salada, ordene:",
+          "pasos": [
+            "Parar la bomba y bloquear su motor",
+            "Cerrar la aspiración y la descarga",
+            "Bloquear y etiquetar las dos válvulas",
+            "Abrir la purga y comprobar que no queda presión"
+          ],
+          "explicacion": "Motor bloqueado, válvulas cerradas y bloqueadas, y sin presión antes de abrir."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Código IMO de prácticas seguras: aislamiento de sistemas.",
+    "Procedimientos de bloqueo y etiquetado del buque (verificar)."
+  ]
+}

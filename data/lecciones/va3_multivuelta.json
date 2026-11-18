@@ -1,0 +1,92 @@
+{
+  "id": "va3_multivuelta",
+  "titulo": "Multivuelta: compuerta, globo y aguja",
+  "resumen": "Vástago ascendente o no ascendente, la flecha del globo y las vueltas de la aguja.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La compuerta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_compuerta}} sube y baja una cuña con el vástago. Si es de vástago ascendente, [b]cuanto más asoma el vástago por encima del volante, más abierta está[/b]. Cerrada, apenas sobresale.\n\nSi el vástago no es ascendente, por fuera no se ve nada: hay que mirar el indicador, si lo tiene, o girar el volante con suavidad."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "compuerta",
+            "apertura": 0.0
+          },
+          "pie": "Abra la compuerta y mire cuánto asoma el vástago."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va3_vastago",
+          "pregunta": "En una compuerta de vástago ascendente, el vástago apenas sobresale del volante. ¿Cómo está?",
+          "opciones": [
+            "Abierta",
+            "Cerrada",
+            "No se puede saber"
+          ],
+          "correcta": 1,
+          "explicacion": "Con vástago ascendente, poco vástago a la vista quiere decir cerrada."
+        }
+      ]
+    },
+    {
+      "titulo": "El globo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_globo}} tiene el cuerpo abombado y un disco que baja contra un asiento horizontal. El fluido hace una S: por eso pierde más presión que una compuerta, pero regula bien.\n\nLleva una flecha fundida: el fluido entra por debajo del asiento. Así, cerrada, la presión no empuja la empaquetadura del vástago."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "globo"
+          },
+          "pie": "Mueva la apertura: el vástago sube menos que en la compuerta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va3_globo",
+          "pregunta": "¿Para qué se elige una válvula de globo en lugar de una de compuerta?",
+          "opciones": [
+            "Para que pierda menos presión",
+            "Para regular el caudal",
+            "Para que cierre sola"
+          ],
+          "correcta": 1,
+          "explicacion": "El globo regula bien. La compuerta va abierta del todo o cerrada."
+        }
+      ]
+    },
+    {
+      "titulo": "La aguja y la última vuelta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_aguja}} tiene una punta cónica fina: muchas vueltas para poco paso. Se usa en las tomas de manómetros y presostatos. Se cierra con suavidad: apretarla de más clava la punta.\n\nAl abrir del todo una válvula multivuelta, se retrocede un cuarto de vuelta: si se deja apretada contra el tope, se agarrota y el siguiente que la maniobre creerá que está cerrada."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va3_abrir",
+          "pregunta": "Para abrir del todo una válvula de compuerta, ordene:",
+          "pasos": [
+            "Comprobar que se puede abrir (permiso y aviso)",
+            "Girar el volante en sentido contrario a las agujas del reloj",
+            "Llegar al tope sin forzar",
+            "Retroceder un cuarto de vuelta"
+          ],
+          "explicacion": "Retroceder del tope evita que se agarrote y que alguien la tome por cerrada."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 10434 y API 600: válvulas de compuerta.",
+    "BS 1873: válvulas de globo de acero."
+  ]
+}

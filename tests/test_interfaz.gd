@@ -191,9 +191,8 @@ func test_escuela_y_panol_en_la_barra() -> String:
 	raiz.ir_a_seccion("escuela")
 	var medallas_escuela: int = raiz.pantalla_actual().medallas.size()
 	raiz.ir_a_seccion("panol")
-	var filas_panol: Array[FilaMenu] = []
-	_filas(raiz.pantalla_actual(), filas_panol)
-	filas_panol[0].pulsada.emit()
+	var filas_panol: Array[FilaPlaca] = raiz.pantalla_actual().filas
+	filas_panol[0].pulsar()
 	var fichas := raiz.nombre_actual() == "fichas_equipos"
 	var filas_fichas: Array[FilaMenu] = []
 	_filas(raiz.pantalla_actual(), filas_fichas)

@@ -346,6 +346,17 @@ La lección, el examen, el repaso y la pantalla «Buque» siguen con el tema osc
   - `Paneles.codigo_mision()` da el panel de una misión, y `Paneles.por_lugar()` agrupa los paneles por lugar.
 - **Pruebas** en `tests/test_rediseno_e.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_e rediseno_e`.
 
+## Válvulas (versión 4.19.0)
+
+El módulo 10, «Válvulas y líneas», está activo con ocho lecciones de válvulas (`va1` a `va8`): partes, cuarto de vuelta (bola, mariposa y macho), multivuelta (compuerta, globo y aguja), retención, tres vías, actuadas, de seguridad y reductoras, y maniobra segura. Las líneas llegarán en la etapa 44.
+
+- **Dibujo** (`ui/widgets/dibujo_valvula.gd`, `DibujoValvula`): once tipos dibujados con relieve sobre su tubo, en cualquier apertura de 0 (cerrada) a 1 (abierta). El estado se ve como a bordo: la maneta en línea con el tubo o cruzada, la ranura del macho, el vástago que asoma por encima del volante, el indicador amarillo del actuador o la salida de la tres vías (`via`). Con `flujo` se ve el agua y con `rotulo`, la chapa del servicio.
+- **Catálogo** (`data/catalogos/valvulas.json`, pantalla `catalogo`): para cada tipo, el nombre en español e inglés, la familia, cómo saber si está abierta, cómo funciona, el uso a bordo, para qué no se usa, las fallas y el mantenimiento. Se abre desde el Pañol. Los datos del buque son valores típicos — verificar a bordo. Para añadir un tipo, basta con una entrada nueva con un `dibujo` de `DibujoValvula.TIPOS`.
+- **Minijuego «¿Abierta o cerrada?»** (pantalla `abierta_cerrada`, `JuegoValvulas`): diez válvulas del catálogo en un estado al azar, con la chapa de un servicio. Las preguntas, las opciones y los estados salen del campo `minijuego` de cada tipo. Las estrellas se guardan como `abierta_cerrada` y el minijuego sale en el Pañol y en la evaluación del módulo 10.
+- **Animaciones:** `corte_valvula` (el corte de la válvula de bola, que se cierra un poco antes de los 90°) y `valvula_estado` (cualquier tipo del catálogo, que se abre, se cierra o cambia de vía; `params.tipo`).
+- **Pañol:** las filas van ahora en placas (`FilaPlaca`), con el catálogo de válvulas y el minijuego.
+- **Pruebas** en `tests/test_valvulas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_g valvulas`.
+
 ## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).

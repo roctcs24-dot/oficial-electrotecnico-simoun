@@ -350,6 +350,22 @@
     "binario": { "es": "binario", "en": "binary", "def": "Forma de escribir números solo con 0 y 1; cada posición vale el doble que la de su derecha." },
     "histeresis": { "es": "histéresis", "en": "hysteresis", "def": "Diferencia entre el valor al que algo conecta y al que desconecta, para que no oscile." },
     "esd": { "es": "descarga electrostática", "en": "electrostatic discharge (ESD)", "def": "Descarga de la carga estática del cuerpo o de un objeto; puede dañar componentes electrónicos sin notarse." },
-    "pulsera_antiestatica": { "es": "pulsera antiestática", "en": "ESD wrist strap", "def": "Pulsera conectada a tierra por una resistencia de 1 MΩ que descarga la estática del cuerpo." }
+    "pulsera_antiestatica": { "es": "pulsera antiestática", "en": "ESD wrist strap", "def": "Pulsera conectada a tierra por una resistencia de 1 MΩ que descarga la estática del cuerpo." },
+    "asiento": { "es": "asiento", "en": "seat", "def": "Superficie de la válvula contra la que se aprieta el obturador para cerrar el paso." },
+    "obturador": { "es": "obturador", "en": "closure member (disc, plug)", "def": "Pieza que cierra el paso: la bola, el disco, la cuña o la aguja." },
+    "vastago": { "es": "vástago", "en": "stem", "def": "Eje que transmite el giro o el movimiento del volante o de la maneta al obturador." },
+    "prensaestopas": { "es": "prensaestopas", "en": "packing gland", "def": "Anillos de empaquetadura apretados alrededor del vástago para que no escape el fluido." },
+    "actuador": { "es": "actuador", "en": "actuator", "def": "Mecanismo neumático o eléctrico que mueve una válvula por orden a distancia." },
+    "valvula_bola": { "es": "válvula de bola", "en": "ball valve", "def": "Válvula de cuarto de vuelta con una bola agujereada; maneta en línea con el tubo, abierta." },
+    "valvula_mariposa": { "es": "válvula de mariposa", "en": "butterfly valve", "def": "Válvula de cuarto de vuelta con un disco que gira en mitad del paso." },
+    "valvula_macho": { "es": "válvula de macho", "en": "plug valve (cock)", "def": "Válvula de cuarto de vuelta con un tapón cónico agujereado." },
+    "valvula_compuerta": { "es": "válvula de compuerta", "en": "gate valve", "def": "Válvula multivuelta con una cuña que sube y baja; va abierta del todo o cerrada." },
+    "valvula_globo": { "es": "válvula de globo", "en": "globe valve", "def": "Válvula multivuelta con un disco que baja contra un asiento horizontal; regula bien." },
+    "valvula_aguja": { "es": "válvula de aguja", "en": "needle valve", "def": "Válvula con una punta cónica fina para caudales muy pequeños." },
+    "valvula_retencion": { "es": "válvula de retención", "en": "check valve, non-return valve", "def": "Válvula automática que deja pasar en un solo sentido." },
+    "valvula_tres_vias": { "es": "válvula de tres vías", "en": "three-way valve", "def": "Válvula que une una boca común con una u otra salida." },
+    "valvula_reductora": { "es": "válvula reductora de presión", "en": "pressure-reducing valve", "def": "Válvula que mantiene constante una presión de salida menor que la de entrada." },
+    "golpe_ariete": { "es": "golpe de ariete", "en": "water hammer", "def": "Golpe de presión cuando el líquido de una línea se frena de golpe." },
+    "posicion_falla": { "es": "posición de falla", "en": "fail-safe position", "def": "Posición a la que va una válvula actuada sin aire o sin tensión: cerrada (FC) o abierta (FO)." }
   }
 }

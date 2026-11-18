@@ -1,0 +1,345 @@
+{
+  "nota": "Catálogo de consulta del Pañol. Tipos, usos y fallas habituales en buques pesqueros; los modelos, colores y pares de maniobra del buque son valores típicos — verificar a bordo.",
+  "valvulas": [
+    {
+      "id": "bola",
+      "nombre": "Válvula de bola",
+      "en": "ball valve",
+      "familia": "Cuarto de vuelta",
+      "dibujo": "bola",
+      "como_saber": "Maneta en línea con el tubo: abierta. Cruzada: cerrada. Sin maneta, la ranura del eje va en el sentido del paso.",
+      "funciona": "Una bola con un agujero gira 90° dentro de dos asientos de teflón.",
+      "a_bordo": "Aislar equipos, purgas, aire comprimido y de arranque, combustible y agua dulce.",
+      "no_usar": "Para regular: a medio abrir, el chorro erosiona los asientos y deja de cerrar bien.",
+      "fallas": [
+        "Pasa con la maneta cerrada: asientos rayados o maneta montada al revés.",
+        "Gotea por el eje: apretar la tuerca del prensaestopas."
+      ],
+      "mantenimiento": "Maniobrarla de vez en cuando para que no se agarrote; revisar el prensaestopas.",
+      "minijuego": {
+        "pregunta": "¿Cómo está esta válvula de bola?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          },
+          {
+            "apertura": 0.5,
+            "correcta": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "mariposa",
+      "nombre": "Válvula de mariposa",
+      "en": "butterfly valve",
+      "familia": "Cuarto de vuelta",
+      "dibujo": "mariposa",
+      "como_saber": "La maneta va en el sentido del disco: en línea con el tubo, abierta; cruzada, cerrada. Las grandes llevan volante con reductor e indicador.",
+      "funciona": "Un disco gira 90° sobre un eje en mitad del paso; cierra contra un anillo de goma.",
+      "a_bordo": "Agua salada de refrigeración, lastre, contraincendios y aspiraciones grandes.",
+      "no_usar": "Muy poco abierta durante mucho tiempo: el disco vibra y gasta la goma.",
+      "fallas": [
+        "No cierra del todo: goma del asiento dañada o con suciedad.",
+        "La maneta no traba en el sector: diente o muelle roto."
+      ],
+      "mantenimiento": "Maniobrarla; revisar la goma cuando se desmonta la línea.",
+      "minijuego": {
+        "pregunta": "¿Cómo está esta válvula de mariposa?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          },
+          {
+            "apertura": 0.5,
+            "correcta": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "macho",
+      "nombre": "Válvula de macho",
+      "en": "plug valve (cock)",
+      "familia": "Cuarto de vuelta",
+      "dibujo": "macho",
+      "como_saber": "La ranura de la cabeza cuadrada marca el paso: en línea con el tubo, abierta. Se maniobra con una llave que no queda puesta.",
+      "funciona": "Un tapón cónico con un agujero gira 90° en su asiento.",
+      "a_bordo": "Purgas, grifos de prueba y tomas de manómetro (valor típico — verificar a bordo).",
+      "no_usar": "Sin engrasar: se agarrota y se rompe la cabeza al forzarla.",
+      "fallas": [
+        "Agarrotada: engrasar o desmontar.",
+        "Pasa cerrada: macho rayado."
+      ],
+      "mantenimiento": "Engrasar según el fabricante y maniobrarla.",
+      "minijuego": {
+        "pregunta": "Mire la ranura de la cabeza. ¿Cómo está esta válvula de macho?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "compuerta",
+      "nombre": "Válvula de compuerta",
+      "en": "gate valve",
+      "familia": "Multivuelta",
+      "dibujo": "compuerta",
+      "como_saber": "Si es de vástago ascendente, cuanto más asoma el vástago por encima del volante, más abierta. Si no es ascendente, no se ve: hay que girar el volante o mirar el indicador.",
+      "funciona": "Una cuña sube y baja con el vástago; abierta deja el paso libre.",
+      "a_bordo": "Aislar líneas de agua, vapor y combustible donde se quiere el paso libre.",
+      "no_usar": "Para regular: la cuña vibra y se raya. Va abierta del todo o cerrada.",
+      "fallas": [
+        "Gotea por el prensaestopas: apretar con cuidado o cambiar la empaquetadura.",
+        "No cierra: cuña o asientos rayados, o suciedad."
+      ],
+      "mantenimiento": "Engrasar la rosca del vástago; al abrir del todo, retroceder un cuarto de vuelta para que no se agarrote.",
+      "minijuego": {
+        "pregunta": "Mire el vástago. ¿Cómo está esta válvula de compuerta?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          },
+          {
+            "apertura": 0.5,
+            "correcta": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "globo",
+      "nombre": "Válvula de globo",
+      "en": "globe valve",
+      "familia": "Multivuelta",
+      "dibujo": "globo",
+      "como_saber": "Cuerpo abombado y vástago que sube al abrir. Lleva una flecha fundida: el fluido entra por debajo del asiento.",
+      "funciona": "Un disco baja contra un asiento horizontal; el fluido hace un recorrido en S.",
+      "a_bordo": "Regular agua, vapor y aceite; válvulas de los cuadros de purgas.",
+      "no_usar": "Al revés de la flecha: cuesta abrirla y el asiento sufre.",
+      "fallas": [
+        "Pasa cerrada: disco o asiento erosionados.",
+        "Gotea por el prensaestopas."
+      ],
+      "mantenimiento": "Revisar el asiento y la empaquetadura; engrasar la rosca.",
+      "minijuego": {
+        "pregunta": "Mire el vástago. ¿Cómo está esta válvula de globo?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "aguja",
+      "nombre": "Válvula de aguja",
+      "en": "needle valve",
+      "familia": "Multivuelta",
+      "dibujo": "aguja",
+      "como_saber": "Cuerpo pequeño de acero y maneta en T. Muchas vueltas para poco paso: se cuenta las vueltas.",
+      "funciona": "Una punta cónica fina entra en un orificio pequeño: regula caudales muy pequeños.",
+      "a_bordo": "Tomas de manómetros y presostatos, amortiguar la aguja de un manómetro.",
+      "no_usar": "Apretarla con fuerza: la punta se clava y se estropea.",
+      "fallas": [
+        "Manómetro sin lectura: aguja cerrada u orificio tapado."
+      ],
+      "mantenimiento": "Cerrar con suavidad; limpiar el orificio.",
+      "minijuego": {
+        "pregunta": "¿Cómo está esta válvula de aguja?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "retencion",
+      "nombre": "Válvula de retención",
+      "en": "check valve (non-return valve)",
+      "familia": "Automática",
+      "dibujo": "retencion",
+      "como_saber": "No tiene maneta: la flecha del cuerpo dice el único sentido en que deja pasar.",
+      "funciona": "Una clapeta o un disco se abre con el flujo y asienta solo si el flujo se invierte.",
+      "a_bordo": "Descarga de las bombas, para que el agua no vuelva ni la bomba gire al revés.",
+      "no_usar": "Montada al revés: la línea queda cortada.",
+      "fallas": [
+        "La bomba parada gira al revés: retención que no asienta.",
+        "Golpe al parar la bomba: clapeta que cierra de golpe."
+      ],
+      "mantenimiento": "Revisar la clapeta y su eje cuando se abre la línea."
+    },
+    {
+      "id": "tres_vias",
+      "nombre": "Válvula de tres vías",
+      "en": "three-way valve",
+      "familia": "Cuarto de vuelta",
+      "dibujo": "tres_vias",
+      "como_saber": "Con bola en L, la maneta apunta a la boca que queda unida con la entrada común. Mire siempre la placa del fabricante: las hay en T.",
+      "funciona": "Una bola con un paso en L o en T une la boca común con una u otra salida.",
+      "a_bordo": "Cambiar de filtro, de enfriador o de tanque sin parar el servicio.",
+      "no_usar": "Suponer el paso por la maneta sin comprobar el tipo de bola.",
+      "fallas": [
+        "Pasa a las dos salidas: asientos gastados."
+      ],
+      "mantenimiento": "Maniobrarla y comprobar el paso después de montarla.",
+      "minijuego": {
+        "pregunta": "Bola en L: la maneta apunta a la salida unida con A. ¿Hacia dónde pasa?",
+        "opciones": [
+          "De A a B",
+          "De A a C",
+          "No pasa"
+        ],
+        "estados": [
+          {
+            "via": "b",
+            "correcta": 0
+          },
+          {
+            "via": "c",
+            "correcta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "actuada",
+      "nombre": "Válvula actuada",
+      "en": "actuated valve",
+      "familia": "Actuada",
+      "dibujo": "actuada",
+      "como_saber": "El indicador de posición encima del actuador: la flecha en línea con el tubo, abierta (OPEN); cruzada, cerrada (SHUT).",
+      "funciona": "Un actuador neumático o eléctrico gira la válvula por orden del PLC o del puesto de control.",
+      "a_bordo": "Válvulas de tanques mandadas a distancia, lastre y combustible.",
+      "no_usar": "Maniobrarla a mano sin desembragar el actuador ni avisar al puesto de control.",
+      "fallas": [
+        "No se mueve: falta aire o tensión, o solenoide piloto averiado.",
+        "El indicador no coincide con el PLC: final de carrera desajustado."
+      ],
+      "mantenimiento": "Probar su maniobra y los finales de carrera; purgar el aire.",
+      "minijuego": {
+        "pregunta": "Mire el indicador del actuador. ¿Cómo está la válvula?",
+        "opciones": [
+          "Abierta",
+          "Cerrada",
+          "A medio abrir"
+        ],
+        "estados": [
+          {
+            "apertura": 1.0,
+            "correcta": 0
+          },
+          {
+            "apertura": 0.0,
+            "correcta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "seguridad",
+      "nombre": "Válvula de seguridad",
+      "en": "safety valve (relief valve)",
+      "familia": "Automática",
+      "dibujo": "seguridad",
+      "como_saber": "Va cerrada: un resorte la aprieta contra el asiento y solo abre si la presión pasa del tarado de la placa.",
+      "funciona": "La presión empuja el disco contra el resorte; al pasar del tarado, abre y descarga.",
+      "a_bordo": "Calderas, recibidores de aire, compresores y la planta de frío.",
+      "no_usar": "Cambiar el tarado o bloquear la palanca: es una protección de la vida y del equipo.",
+      "fallas": [
+        "Descarga a menos presión de la debida: resorte fatigado o asiento sucio.",
+        "Gotea siempre: asiento dañado."
+      ],
+      "mantenimiento": "Probarla según el plan del buque; el tarado lo hace un taller autorizado (verificar a bordo)."
+    },
+    {
+      "id": "reductora",
+      "nombre": "Válvula reductora de presión",
+      "en": "pressure-reducing valve",
+      "familia": "Automática",
+      "dibujo": "reductora",
+      "como_saber": "Cúpula con un resorte y un tornillo de ajuste, y un manómetro aguas abajo que dice la presión que da.",
+      "funciona": "El resorte y la presión de salida mueven un obturador que mantiene la presión de salida constante.",
+      "a_bordo": "Aire de servicio y de mando a partir del aire de arranque, agua dulce.",
+      "no_usar": "Sin válvula de seguridad aguas abajo: si falla abierta, pasa toda la presión.",
+      "fallas": [
+        "La presión de salida sube con el consumo parado: asiento que no cierra.",
+        "No da presión: membrana rota o filtro tapado."
+      ],
+      "mantenimiento": "Limpiar el filtro de entrada y comprobar la presión de salida."
+    }
+  ],
+  "servicios": [
+    "SW · CHUMACERA",
+    "FW · ENFRIADOR",
+    "FO · PURIFICADORA",
+    "LO · BOMBA 2",
+    "AIRE · RECIBIDOR",
+    "LASTRE · TQ 3",
+    "SENTINA · ASPIRACIÓN",
+    "NH₃ · CONDENSADOR"
+  ]
+}

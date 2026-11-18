@@ -1,0 +1,83 @@
+{
+  "id": "va5_tres_vias",
+  "titulo": "Válvulas de tres vías",
+  "resumen": "Bola en L y en T, filtros dúplex y cambiar de equipo sin parar.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Una entrada, dos salidas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_tres_vias}} une una boca común con una u otra salida. Con bola en L, la maneta suele apuntar a la boca que queda unida con la común.\n\nNo se fíe solo de la maneta: las hay con bola en T, que pueden unir las tres bocas. Mire la placa o el plano del fabricante ([i]verificar a bordo[/i])."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "tres_vias"
+          },
+          "pie": "Cambie la salida y mire hacia dónde apunta la maneta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va5_maneta",
+          "pregunta": "Bola en L: la maneta apunta a la boca B. ¿Hacia dónde pasa el fluido?",
+          "opciones": [
+            "De A a B",
+            "De A a C",
+            "A las dos salidas"
+          ],
+          "correcta": 0,
+          "explicacion": "Con bola en L, la maneta apunta a la salida unida con la boca común."
+        }
+      ]
+    },
+    {
+      "titulo": "Filtros dúplex",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Los filtros de combustible y de aceite suelen ser dúplex: dos cestos y una válvula de tres vías (o una palanca de cambio) que pasa de uno a otro. Así se limpia uno sin parar el motor.\n\nAntes de cambiar, el filtro de reserva tiene que estar lleno y purgado: si entra aire, el motor puede pararse."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va5_duplex",
+          "pregunta": "¿Por qué se purga el filtro de reserva antes de pasar a él?",
+          "opciones": [
+            "Para que pese menos",
+            "Para que no entre aire en la línea",
+            "Para enfriarlo"
+          ],
+          "correcta": 1,
+          "explicacion": "Un filtro vacío mete aire en la línea de combustible: el motor puede pararse."
+        }
+      ]
+    },
+    {
+      "titulo": "Cambio de filtro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El cambio se hace despacio, mirando la presión diferencial. Después de cambiar, se aísla el cesto sucio y se le quita la presión antes de abrirlo."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va5_cambio",
+          "pregunta": "Para pasar al filtro limpio de un dúplex, ordene:",
+          "pasos": [
+            "Llenar y purgar el filtro de reserva",
+            "Girar la palanca despacio al de reserva",
+            "Comprobar la presión después del filtro",
+            "Aislar y despresurizar el sucio antes de abrirlo"
+          ],
+          "explicacion": "Llenar y purgar primero, y no abrir el sucio con presión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Manual del fabricante del filtro dúplex.",
+    "ISO 17292: válvulas de bola metálicas (de varias vías)."
+  ]
+}

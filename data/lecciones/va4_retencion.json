@@ -1,0 +1,83 @@
+{
+  "id": "va4_retencion",
+  "titulo": "Válvula de retención",
+  "resumen": "Deja pasar en un solo sentido: la flecha, las bombas y el golpe de ariete.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Un solo sentido",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_retencion}} no tiene maneta: una clapeta o un disco se abre con el flujo y asienta solo cuando el flujo se invierte. La flecha del cuerpo dice el único sentido en que deja pasar.\n\nVa en la descarga de las bombas: cuando la bomba para, la retención impide que el agua vuelva y que la bomba gire al revés."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "retencion"
+          },
+          "pie": "Cambie el sentido del flujo y vea cómo asienta."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va4_sentido",
+          "pregunta": "Una retención se monta al revés de su flecha. ¿Qué pasa al arrancar la bomba?",
+          "opciones": [
+            "Nada: funciona igual",
+            "La línea queda cortada: la clapeta asienta",
+            "El agua pasa más rápido"
+          ],
+          "correcta": 1,
+          "explicacion": "Al revés, el flujo empuja la clapeta contra su asiento: no deja pasar."
+        }
+      ]
+    },
+    {
+      "titulo": "Golpe de ariete",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Cuando una bomba para, el agua de la línea frena y vuelve. Si la clapeta cierra tarde y de golpe, se oye un martillazo: es el {{golpe_ariete}}. Con el tiempo afloja soportes y rompe juntas.\n\nLas retenciones de disco con resorte cierran antes, antes de que el agua tome velocidad hacia atrás."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va4_ariete",
+          "pregunta": "Cada vez que para la bomba de agua salada se oye un golpe fuerte en la descarga. ¿Qué se sospecha?",
+          "opciones": [
+            "La retención cierra tarde y de golpe",
+            "El motor tiene mal aislamiento",
+            "Falta una brida"
+          ],
+          "correcta": 0,
+          "explicacion": "El golpe al parar es el agua que vuelve y cierra la clapeta de golpe."
+        }
+      ]
+    },
+    {
+      "titulo": "Cuando no asienta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Si la retención no asienta, al parar la bomba el agua vuelve: la bomba parada gira al revés y la de reserva bombea en círculo por ella. Con dos bombas en paralelo, la presión no sube aunque las dos estén en marcha."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va4_comprobar",
+          "pregunta": "Una bomba parada gira al revés. Ordene la comprobación:",
+          "pasos": [
+            "Aislar la bomba con sus válvulas",
+            "Bloquear y etiquetar el motor",
+            "Abrir la tapa de la retención",
+            "Revisar la clapeta, su eje y el asiento"
+          ],
+          "explicacion": "Antes de abrir, la bomba queda aislada por los dos lados y su motor bloqueado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "API 594: válvulas de retención.",
+    "EN 12334: válvulas de retención de fundición."
+  ]
+}

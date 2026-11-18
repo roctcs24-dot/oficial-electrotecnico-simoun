@@ -1,0 +1,76 @@
+{
+  "id": "va1_partes",
+  "titulo": "Partes de una válvula",
+  "resumen": "Cuerpo, asiento, obturador, vástago y prensaestopas; y las familias de válvulas.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Qué hay dentro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Toda válvula tiene un cuerpo con dos bocas, un {{asiento}} donde se cierra el paso y un {{obturador}} que se aprieta contra él: una bola, un disco, una cuña o una aguja.\n\nEl obturador se mueve con un {{vastago}} que sale por arriba. Para que el fluido no escape por el vástago, se sella con un {{prensaestopas}}: unos anillos de empaquetadura apretados por una tuerca o un casquillo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va1_prensaestopas",
+          "pregunta": "Una válvula gotea por donde sale el vástago. ¿Qué pieza se revisa?",
+          "opciones": [
+            "El asiento",
+            "El prensaestopas",
+            "La brida"
+          ],
+          "correcta": 1,
+          "explicacion": "Por el vástago sella el prensaestopas. Se aprieta con cuidado, sin pasarse, o se cambia la empaquetadura."
+        }
+      ]
+    },
+    {
+      "titulo": "Cuatro familias",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Por cómo se maniobran, las válvulas se agrupan en cuatro familias:\n\n• [b]Cuarto de vuelta[/b]: bola, mariposa y macho. Pasan de cerrada a abierta con 90°.\n• [b]Multivuelta[/b]: compuerta, globo y aguja. Necesitan muchas vueltas del volante.\n• [b]Automáticas[/b]: retención, seguridad y reductoras. Se mueven solas con la presión o el flujo.\n• [b]Actuadas[/b]: un {{actuador}} neumático o eléctrico las mueve por orden a distancia."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va1_familia",
+          "pregunta": "¿A qué familia pertenece una válvula de compuerta?",
+          "opciones": [
+            "Cuarto de vuelta",
+            "Multivuelta",
+            "Automática"
+          ],
+          "correcta": 1,
+          "explicacion": "La compuerta sube y baja con el vástago: necesita muchas vueltas del volante."
+        }
+      ]
+    },
+    {
+      "titulo": "Lo que dice el cuerpo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En el cuerpo vienen fundidos o en una placa el diámetro nominal (DN), la presión nominal (PN), el material y, a veces, una flecha con el sentido del flujo.\n\nLa flecha manda: una válvula de globo o de retención montada al revés no funciona como debe. Antes de montar una válvula, compruebe el sentido y que su PN es igual o mayor que la presión de la línea ([i]verificar en el plano del buque[/i])."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va1_flecha",
+          "pregunta": "Una válvula de retención lleva una flecha fundida. ¿Qué indica?",
+          "opciones": [
+            "El sentido en que se abre la maneta",
+            "El único sentido en que deja pasar el fluido",
+            "La boca que va a la bomba de reserva"
+          ],
+          "correcta": 1,
+          "explicacion": "La flecha marca el sentido del flujo. Al revés, la retención corta la línea."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 6708: diámetro nominal (DN).",
+    "ISO 7268 y EN 1333: presión nominal (PN).",
+    "Manual de mantenimiento del fabricante de cada válvula."
+  ]
+}

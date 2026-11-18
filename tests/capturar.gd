@@ -67,6 +67,8 @@ func _capturar() -> void:
 		await _capturar_inicio(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fichas_d":
 		await _capturar_fichas_d(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "valvulas":
+		await _capturar_valvulas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -569,6 +571,49 @@ func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
 
 ## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
 ## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
+## Etapa 41: catálogo de válvulas, minijuego «¿Abierta o cerrada?», lecciones y Pañol.
+func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
+	raiz.partida.datos = Partida.datos_nuevos()
+	raiz.partida.datos["lecciones"]["va1_partes"] = {"aciertos": 3, "total": 3}
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 4
+	var rondas := JuegoValvulas.crear_rondas(raiz.contenido.leer("catalogos/valvulas.json"), 10, azar)
+	for i in rondas.size():
+		if rondas[i]["id"] == "compuerta":
+			var r: Dictionary = rondas[i]
+			rondas.remove_at(i)
+			rondas.insert(3, r)
+			break
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("panol")
+		await _guardar(carpeta, "g_panol", tam)
+		raiz.ir_a("catalogo", {"catalogo": "valvulas", "elegido": "bola"})
+		await _guardar(carpeta, "g_catalogo_bola", tam)
+		raiz.volver()
+		raiz.ir_a("catalogo", {"catalogo": "valvulas", "elegido": "actuada", "abierta": false})
+		await _guardar(carpeta, "g_catalogo_actuada", tam)
+		raiz.volver()
+		raiz.ir_a("abierta_cerrada", {"items": rondas, "indice": 3, "respuestas": {0: {"acierto": true, "elegida": 0}, 1: {"acierto": true, "elegida": 0}, 2: {"acierto": false, "elegida": 1}, 3: {"acierto": true, "elegida": int(rondas[3]["correcta"])}}})
+		await _guardar(carpeta, "g_abierta_cerrada", tam)
+		raiz.volver()
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(10)
+		await _guardar(carpeta, "g_escuela_10", tam)
+		for par: Array in [["va2_cuarto_vuelta", 0], ["va3_multivuelta", 0], ["va5_tres_vias", 0], ["va6_actuadas", 0]]:
+			raiz.ir_a("leccion", {"id": par[0], "sistema": 10, "pagina": par[1], "respuestas": {}})
+			await _esperar()
+			var anim := _buscar_animacion(raiz)
+			if anim != null and raiz.vertical:
+				var s := _scroll_de(anim)
+				if s != null:
+					s.ensure_control_visible(anim)
+			await _guardar(carpeta, "g_%s_%d" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
 ## Etapa 40: lecciones de electrónica desde cero con sus animaciones, y la Escuela en el módulo 8.
 func _capturar_electronica(raiz: Raiz, carpeta: String) -> void:
 	raiz.partida.datos = Partida.datos_nuevos()

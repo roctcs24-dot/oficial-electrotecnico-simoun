@@ -1,0 +1,83 @@
+{
+  "id": "va6_actuadas",
+  "titulo": "Válvulas actuadas",
+  "resumen": "El actuador, su indicador, los finales de carrera y la posición de falla.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Mandadas a distancia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una válvula actuada lleva encima un {{actuador}} neumático (con aire de mando) o eléctrico (con un motor) que la gira por orden del PLC o del puesto de control. Encima va un indicador de posición: la flecha en línea con el tubo, abierta (OPEN); cruzada, cerrada (SHUT)."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_estado",
+          "params": {
+            "tipo": "actuada"
+          },
+          "pie": "Mueva la apertura y mire el indicador amarillo del actuador."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va6_indicador",
+          "pregunta": "El indicador del actuador está cruzado con el tubo y dice SHUT. ¿Cómo está la válvula?",
+          "opciones": [
+            "Abierta",
+            "Cerrada",
+            "Sin aire"
+          ],
+          "correcta": 1,
+          "explicacion": "El indicador va con el eje de la válvula: cruzado, cerrada."
+        }
+      ]
+    },
+    {
+      "titulo": "Finales de carrera y falla",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Dentro del actuador, dos finales de carrera avisan al PLC de «abierta» y «cerrada». Si el indicador y la pantalla no coinciden, suele estar desajustado un final de carrera.\n\nLos neumáticos de simple efecto tienen un resorte: sin aire van a su {{posicion_falla}}, abierta o cerrada según el servicio (por ejemplo, las de cierre rápido de combustible cierran). Mire la placa: dice «FC» (cierra) o «FO» (abre)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "va6_falla",
+          "pregunta": "Se corta el aire de mando de una válvula marcada «FC». ¿Qué hace?",
+          "opciones": [
+            "Se queda donde estaba",
+            "Cierra",
+            "Abre"
+          ],
+          "correcta": 1,
+          "explicacion": "FC (fail close): sin aire, el resorte la cierra."
+        }
+      ]
+    },
+    {
+      "titulo": "Maniobrarla a mano",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Casi todas se pueden maniobrar a mano con una llave o un volante, pero antes hay que desembragar el actuador y avisar al puesto de control: si el PLC da una orden mientras se maniobra, el actuador puede mover la llave de golpe."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "va6_mano",
+          "pregunta": "Para maniobrar a mano una válvula actuada, ordene:",
+          "pasos": [
+            "Avisar al puesto de control",
+            "Quitar el aire o la tensión del actuador",
+            "Desembragar o poner el mando manual",
+            "Maniobrar y comprobar el indicador"
+          ],
+          "explicacion": "Sin aviso y sin quitar el mando, el actuador puede moverse mientras se maniobra."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 5211: acoplamiento de actuadores de cuarto de vuelta.",
+    "IEC 60534: válvulas de control de procesos."
+  ]
+}

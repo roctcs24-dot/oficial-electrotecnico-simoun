@@ -9,6 +9,7 @@ const NOMBRES := {
 	"simbolos_distribucion": ["minijuego_simbolos", "Símbolos de distribución", "Transformadores, protecciones y alumbrado, IEC 60617 y ANSI/IEEE 315", "simbolos", 2],
 	"simbolos_cubierta": ["minijuego_simbolos", "Símbolos de cubierta", "Mando electrohidráulico, seguridades y alumbrado, IEC 60617 y ANSI/IEEE 315", "simbolos", 5],
 	"simbolos_electronica": ["minijuego_simbolos", "Símbolos de electrónica", "Componentes, sensores y sondas, IEC 60617 y ANSI/IEEE 315", "simbolos", 6],
+	"abierta_cerrada": ["abierta_cerrada", "¿Abierta o cerrada?", "Bola, mariposa, macho, compuerta, globo, aguja, tres vías y actuadas", "valvulas", 10],
 }
 
 
