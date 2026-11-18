@@ -321,7 +321,7 @@ La ficha de equipo (`ui/screens/ficha.gd`) y el atlas (`ui/screens/atlas.gd`) si
 - **Atlas:** placa de datos como una chapa remachada; pasos de la animación como monedas que se encienden; lecturas de Medir y de Fallas en visores negros, verdes si son normales y rojas si indican falla; fallas con su lámpara roja (`BotonAri.lampara`) y mantenimiento con casillas de relieve.
 - **Pruebas** en `tests/test_rediseno_d.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_d fichas_d`.
 
-## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.5)
+## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).
 
@@ -331,7 +331,9 @@ Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi c
   - `python tools/dibujos_realistas/realzar.py todas` rehace los dibujos de todas las fichas (74); `taller`, los de la mesa; `faltan`, solo los que no tienen imagen; `electricidad`, la tanda del módulo 7;
   - `python tools/dibujos_realistas/realzar.py art/equipos/<nombre>.svg` rehace uno;
   - el acabado automático da relieve a cada pieza del SVG, una textura fina y la sombra;
-  - un dibujo con guion propio en `a_mano/<nombre>.py` (`ANCHO`, `ALTO` y `CUERPO`) se toma de allí. El motor trifásico y el contactor están redibujados enteros; el alternador, el ACB y los compresores de pistón y de tornillo parten de su SVG con `realzar.automatico(svg, encima, defs)` y suman una capa de detalles (`a_mano/_piezas.py`: pernos, bridas, válvulas, manómetros, escarcha, placas grabadas y rejillas);
+  - todos los dibujos tienen guion propio en `a_mano/` (`<nombre>.py` para `art/equipos` y `taller_<nombre>.py` para `art/taller`, porque hay nombres repetidos), con `ANCHO`, `ALTO` y `CUERPO`. El motor trifásico y el contactor están redibujados enteros; los demás parten de su SVG con `realzar.automatico(svg, encima, defs)` y suman una capa de detalles (piezas comunes en `a_mano/_piezas.py`). Algunos guiones comparten piezas: las cápsulas TO-220 están en `mosfet.py` y las DIP en `operacional.py`;
+  - `--png` solo hace el PNG de revisión en `build/dibujos_realistas/`, sin tocar `art/realista`: sirve para probar varios a la vez;
+  - en la capa de detalles, un trazo recto (`M… H…` o `M… V…`) con un degradado o un filtro de caja propia no se dibuja, porque su caja tiene alto o ancho cero: use un `<rect>`. Muchos `<path>` sueltos dentro de un mismo grupo con filtro pueden dejar zonas sin pintar: agrúpelos en pocos `<path>`;
   - después de crear imágenes nuevas, importe el proyecto y ponga en su `.import` `compress/mode=1`, `compress/lossy_quality=0.9` y `mipmaps/generate=true`.
 - **Si cambia un SVG**, vuelva a ejecutar la herramienta para ese dibujo: si no, el juego seguirá mostrando la imagen anterior.
 - **Alcance:** todas las fichas y el atlas (74 dibujos) y las piezas de la mesa del Taller y del interior de los tableros (18 más; la mesa los toma en `VistaMesa._textura`).

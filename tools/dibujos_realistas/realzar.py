@@ -7,6 +7,7 @@ Uso, desde la raíz del repositorio:
     python tools/dibujos_realistas/realzar.py todas                 # los dibujos de todas las fichas
     python tools/dibujos_realistas/realzar.py faltan                # solo los que aún no tienen imagen
     python tools/dibujos_realistas/realzar.py taller                # los dibujos de la mesa del Taller
+    python tools/dibujos_realistas/realzar.py --png art/equipos/x.svg  # solo el PNG de revisión
     python tools/dibujos_realistas/realzar.py art/equipos/rele_termico.svg ...
 
 Un dibujo con guion propio en a_mano/<nombre>.py (ANCHO, ALTO y CUERPO) se toma de allí; los demás
@@ -66,6 +67,10 @@ def _lleva_relieve(e):
         return False
     if e.get("fill") == "none" and _local(e.tag) not in ("g", "use"):
         return False
+    # Un trazo sin relleno propio (una patilla, una ranura) puede ser una recta: su caja tiene alto o
+    # ancho cero, el filtro no tiene sitio donde dibujar y la línea desaparecería.
+    if _local(e.tag) == "path" and e.get("stroke") and e.get("fill") is None:
+        return False
     for clave in ("opacity", "fill-opacity"):
         try:
             if float(e.get(clave, "1")) < 0.6:
@@ -98,16 +103,24 @@ def automatico(ruta_svg, encima="", defs_extra=""):
     return ancho, alto, cuerpo
 
 
+def modulo_a_mano(relativa):
+    """Guion a mano de un SVG: a_mano/<nombre>.py para art/equipos y a_mano/taller_<nombre>.py para
+    art/taller, porque hay nombres repetidos entre las dos carpetas."""
+    nombre = os.path.splitext(os.path.basename(relativa))[0]
+    return ("taller_" + nombre) if relativa.replace("\\", "/").startswith("art/taller/") else nombre
+
+
 def preparar(relativa):
     """relativa: art/equipos/<nombre>.svg. Devuelve la ruta del WebP escrito."""
     nombre = os.path.splitext(os.path.basename(relativa))[0]
-    if os.path.exists(os.path.join(AQUI, "a_mano", nombre + ".py")):
-        m = importlib.import_module("a_mano." + nombre)
+    modulo = modulo_a_mano(relativa)
+    if os.path.exists(os.path.join(AQUI, "a_mano", modulo + ".py")):
+        m = importlib.import_module("a_mano." + modulo)
         ancho, alto, cuerpo = m.ANCHO, m.ALTO, m.CUERPO
     else:
         ancho, alto, cuerpo = automatico(os.path.join(REPO, relativa))
     os.makedirs(TEMPORAL, exist_ok=True)
-    png = C.render(nombre, int(ancho), int(alto), cuerpo, ESCALA, TEMPORAL)
+    png = C.render(modulo, int(ancho), int(alto), cuerpo, ESCALA, TEMPORAL)
     destino = os.path.join(REPO, "art", "realista", os.path.splitext(relativa[len("art/"):])[0] + ".webp")
     os.makedirs(os.path.dirname(destino), exist_ok=True)
     return png, destino
@@ -154,6 +167,9 @@ def taller():
 
 
 def main(argumentos):
+    # --png: solo el PNG de revisión en build/dibujos_realistas, sin pasar a WebP (para probar a la vez).
+    solo_png = "--png" in argumentos
+    argumentos = [x for x in argumentos if x != "--png"]
     rutas = []
     for x in argumentos:
         if x == "electricidad":
@@ -167,6 +183,8 @@ def main(argumentos):
         else:
             rutas.append(x.replace("\\", "/"))
     pares = [preparar(r) for r in rutas]
+    if solo_png:
+        return
     # Godot pasa los PNG a WebP con pérdida: unos 100 KB por dibujo.
     lista = []
     for png, destino in pares:

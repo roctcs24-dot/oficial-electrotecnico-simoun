@@ -82,7 +82,7 @@ def render(id_, w, h, svg, capas):
     open(ruta, "w", encoding="utf-8").write(doc)
     png = os.path.join(R.TEMPORAL, "tablero_" + id_ + ".png")
     subprocess.run([C.CH, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
-                    "--default-background-color=00000000", "--user-data-dir=" + os.path.join(R.TEMPORAL, "perfil"),
+                    "--default-background-color=00000000", "--virtual-time-budget=4000", "--run-all-compositor-stages-before-draw", "--user-data-dir=" + os.path.join(R.TEMPORAL, "perfil"),
                     f"--force-device-scale-factor={ESCALA}", f"--window-size={w},{h}", "--screenshot=" + png,
                     "file:///" + ruta.replace("\\", "/")], timeout=120, capture_output=True)
     print(png, os.path.exists(png))

@@ -57,7 +57,7 @@ def render(nombre, w, h, cuerpo, escala=2.0, carpeta=AQUI):
     open(ruta, "w", encoding="utf-8").write(html)
     png = os.path.join(carpeta, nombre + ".png")
     subprocess.run([CH, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
-                    "--default-background-color=00000000", "--user-data-dir=" + os.path.join(carpeta, "perfil"),
+                    "--default-background-color=00000000", "--virtual-time-budget=4000", "--run-all-compositor-stages-before-draw", "--user-data-dir=" + os.path.join(carpeta, "perfil_%d" % os.getpid()),
                     f"--force-device-scale-factor={escala}", f"--window-size={w},{h}", "--screenshot=" + png,
                     "file:///" + ruta.replace("\\", "/")], timeout=120, capture_output=True)
     print(png, os.path.exists(png))

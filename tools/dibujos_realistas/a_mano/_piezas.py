@@ -9,7 +9,7 @@ DEFS = '''
 <linearGradient id="am_bridaV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c7276"/><stop offset="0.35" stop-color="#d5d9db"/><stop offset="1" stop-color="#5a6064"/></linearGradient>
 <linearGradient id="am_placa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2f4f4"/><stop offset="0.45" stop-color="#c6ccd0"/><stop offset="0.6" stop-color="#e9ecee"/><stop offset="1" stop-color="#b0b7bb"/></linearGradient>
 <linearGradient id="am_cable" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0a0b0c"/><stop offset="0.35" stop-color="#4a4f53"/><stop offset="1" stop-color="#0d0e10"/></linearGradient>
-<filter id="am_escarcha" x="0" y="0" width="100%" height="100%">
+<filter id="am_escarcha" filterUnits="userSpaceOnUse" x="-50" y="-50" width="2200" height="2200">
  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="9" result="n"/>
  <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -4.2" result="m"/>
  <feComposite in="m" in2="SourceAlpha" operator="in"/>
