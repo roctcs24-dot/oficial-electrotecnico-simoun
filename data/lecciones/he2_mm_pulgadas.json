@@ -1,0 +1,81 @@
+{
+  "id": "he2_mm_pulgadas",
+  "titulo": "Milímetros y pulgadas",
+  "resumen": "La medida entre caras, cómo se pasa de pulgadas a milímetros y qué llave entra.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La medida entre caras",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una llave se mide por la distancia {{entre_caras}} de la tuerca que gira, no por el diámetro del tornillo. A bordo hay equipos métricos y equipos en pulgadas: hay que saber pasar de una medida a otra.\n\n[center][b]1 pulgada = 25,4 mm[/b][/center]\n\n3/4\" = 0,75 × 25,4 = 19,05 mm."
+        },
+        {
+          "tipo": "animacion",
+          "id": "llave_tuerca",
+          "params": {},
+          "pie": "Elija la tuerca en pulgadas y busque la llave métrica que entra. Criterio: valores de enseñanza — verificar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he2_conversion",
+          "pregunta": "¿Cuántos milímetros son 5/8\"?",
+          "opciones": [
+            "15,88 mm",
+            "16,5 mm",
+            "12,7 mm"
+          ],
+          "correcta": 0,
+          "explicacion": "5 ÷ 8 = 0,625; 0,625 × 25,4 = 15,875 mm."
+        }
+      ]
+    },
+    {
+      "titulo": "Cuándo entra",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las bocas de las llaves se fabrican algo mayores que su medida nominal. Por eso una llave métrica sirve en una tuerca en pulgadas si es igual o muy poco mayor: 19 mm en 3/4\", 16 mm en 5/8\" y 8 mm en 5/16\".\n\nSi la llave es medio milímetro mayor, queda holgada y redondea las esquinas en cuanto se aprieta. Si es menor, no entra: no la fuerce a golpes."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he2_entra",
+          "pregunta": "Tuerca de 1/2\" (12,70 mm). Solo tiene llaves de 12 y 13 mm. ¿Qué hace?",
+          "opciones": [
+            "Usar la de 13 mm con fuerza",
+            "Buscar la llave de 1/2\": la de 13 queda holgada y la de 12 no entra",
+            "Meter la de 12 a golpes"
+          ],
+          "correcta": 1,
+          "explicacion": "La de 13 mm le sobra 0,3 mm: holgada, redondea las esquinas. Lo correcto es la de 1/2\"."
+        }
+      ]
+    },
+    {
+      "titulo": "En el pañol",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Guarde los juegos métricos y los de pulgadas por separado, y marque los equipos que van en pulgadas. La tabla de llaves del Pañol dice para cada medida en pulgadas su valor en milímetros y qué llave métrica le sirve."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he2_elegir",
+          "pregunta": "Para elegir la llave de una tuerca desconocida, ordene:",
+          "pasos": [
+            "Mirar si el equipo es métrico o en pulgadas",
+            "Probar la llave que parece de su medida",
+            "Comprobar que entra sin holgura",
+            "Si queda holgada, probar la medida siguiente o la del otro sistema"
+          ],
+          "explicacion": "Una llave que baila redondea la tuerca: solo se usa la que entra justa."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 691: aberturas de las llaves y sus tolerancias.",
+    "ASME B18.2.2: tuercas en pulgadas."
+  ]
+}

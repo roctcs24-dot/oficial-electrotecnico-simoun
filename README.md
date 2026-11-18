@@ -357,6 +357,19 @@ El módulo 10, «Válvulas y líneas», está activo con ocho lecciones de válv
 - **Pañol:** las filas van ahora en placas (`FilaPlaca`), con el catálogo de válvulas y el minijuego.
 - **Pruebas** en `tests/test_valvulas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_g valvulas`.
 
+## Herramientas y llaves (versión 4.20.0)
+
+El módulo 11, «Herramientas y racores», está activo con nueve lecciones de herramientas (`he1` a `he9`): familias de llaves, milímetros y pulgadas, tornillería métrica y UNC/UNF, destornilladores de 1000 V, alicates y crimpado, calibre y micrómetro, par de apriete, herramienta de tubería y cuidado y seguridad. Los racores llegarán en la etapa 43.
+
+- **Dibujo** (`ui/widgets/dibujo_herramienta.gd`, `DibujoHerramienta`): 16 herramientas dibujadas con relieve (cromadas, pavonadas o con mangos aislados). `medida` se graba en el cuerpo de las llaves.
+- **Catálogo** (`data/catalogos/herramientas.json`): nombre en español e inglés, familia, para qué sirve, cómo se usa, lo que no se debe hacer, cuidado y revisión, y `similares` (los nombres que el minijuego ofrece como trampa). Usa la misma pantalla `catalogo` que las válvulas, con su configuración en `CATALOGOS`.
+- **Tabla de llaves** (`data/tablas/llaves.json`, `TablaLlaves`, pantalla `tabla_llaves`): cada medida en pulgadas en mm y la llave métrica que le sirve, con lámpara verde (entra), ámbar (holgada) o roja; el conversor dibuja la llave y muestra los visores.
+  - Criterio: una llave entra si mide como mucho 0,06 mm menos y hasta 0,2 mm más que la tuerca, porque las bocas se fabrican algo mayores que su medida (ISO 691). De 0,2 a 0,5 mm más queda holgada, y más, redondea la tuerca: entonces la tabla dice «use la de pulgadas».
+  - Son valores de enseñanza: verificar con la llave y la tuerca reales.
+- **Minijuego «Identifique la herramienta»** (`JuegoHerramientas`, pantalla `identifique_herramienta`): siete herramientas para nombrar y tres rondas de llaves («¿qué llave métrica entra en una tuerca de 3/4"?»). Registro `identifique_herramienta`; sale en el Pañol y en la evaluación del módulo 11.
+- **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
+- **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
+
 ## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 
 Godot solo dibuja degradados al leer un SVG. Para que los equipos se vean casi como una foto, sus dibujos se preparan fuera del juego con textura, relieve con luz y sombras difuminadas, y se guardan como imagen en `art/realista/` (por ejemplo, `art/equipos/contactor.svg` pasa a `art/realista/equipos/contactor.webp`).

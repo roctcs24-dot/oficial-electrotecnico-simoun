@@ -1,0 +1,277 @@
+{
+  "nota": "Catálogo de consulta del Pañol. Nombres y usos habituales; los nombres locales a bordo pueden cambiar (verificar a bordo).",
+  "herramientas": [
+    {
+      "id": "boca",
+      "nombre": "Llave de boca",
+      "en": "open-end wrench",
+      "familia": "Llaves",
+      "dibujo": "boca",
+      "medida": "19 mm",
+      "para_que": "Girar tuercas y tornillos de cabeza hexagonal donde no entra una estrella.",
+      "como_usar": "Meta la boca hasta el fondo de la tuerca y tire hacia usted.",
+      "no_hacer": "Usarla en una tuerca muy apretada: la boca se abre y redondea la tuerca. Alargarla con un tubo.",
+      "cuidado": "Deséchela si la boca está abierta o tiene rebabas.",
+      "similares": [
+        "estrella",
+        "combinada",
+        "ajustable"
+      ]
+    },
+    {
+      "id": "estrella",
+      "nombre": "Llave de estrella",
+      "en": "ring spanner (box-end wrench)",
+      "familia": "Llaves",
+      "dibujo": "estrella",
+      "medida": "19 mm",
+      "para_que": "Aflojar y apretar con fuerza: abraza los seis lados de la tuerca.",
+      "como_usar": "Encájela del todo; las acodadas salvan obstáculos.",
+      "no_hacer": "Usar una de pulgadas en una tuerca métrica o al revés.",
+      "cuidado": "Compruebe que las puntas no están gastadas.",
+      "similares": [
+        "boca",
+        "combinada",
+        "carraca"
+      ]
+    },
+    {
+      "id": "combinada",
+      "nombre": "Llave combinada",
+      "en": "combination wrench",
+      "familia": "Llaves",
+      "dibujo": "combinada",
+      "medida": "19 mm",
+      "para_que": "Boca y estrella de la misma medida en una sola llave.",
+      "como_usar": "La estrella para aflojar lo duro; la boca para girar rápido después.",
+      "no_hacer": "Golpearla con el martillo.",
+      "cuidado": "Guárdela en su sitio del juego, por medidas.",
+      "similares": [
+        "boca",
+        "estrella",
+        "ajustable"
+      ]
+    },
+    {
+      "id": "ajustable",
+      "nombre": "Llave ajustable (inglesa)",
+      "en": "adjustable wrench",
+      "familia": "Llaves",
+      "dibujo": "ajustable",
+      "medida": "",
+      "para_que": "Tuercas de una medida que no está en el juego, o en apuros.",
+      "como_usar": "Ajuste la mandíbula sin holgura y cargue el esfuerzo hacia la mandíbula fija.",
+      "no_hacer": "Usarla para aprietes fuertes: resbala y redondea la tuerca.",
+      "cuidado": "Limpie y engrase el tornillo sin fin.",
+      "similares": [
+        "stillson",
+        "boca",
+        "gancho"
+      ]
+    },
+    {
+      "id": "stillson",
+      "nombre": "Llave Stillson",
+      "en": "pipe wrench",
+      "familia": "Llaves",
+      "dibujo": "stillson",
+      "medida": "",
+      "para_que": "Girar tubos y piezas redondas: los dientes muerden.",
+      "como_usar": "Ajústela al tubo y gire en el sentido en que muerde.",
+      "no_hacer": "Usarla en tuercas o en tubo cromado: lo marca y lo deforma.",
+      "cuidado": "Limpie los dientes y la tuerca de ajuste.",
+      "similares": [
+        "ajustable",
+        "cortatubos",
+        "gancho"
+      ]
+    },
+    {
+      "id": "carraca",
+      "nombre": "Carraca y dados",
+      "en": "ratchet and sockets",
+      "familia": "Llaves",
+      "dibujo": "carraca",
+      "medida": "",
+      "para_que": "Apretar y aflojar rápido sin sacar la llave de la tuerca.",
+      "como_usar": "Elija el dado de la medida exacta; los de seis caras agarran mejor que los de doce.",
+      "no_hacer": "Usar dados de mano con una llave de impacto: se rompen.",
+      "cuidado": "Cuadradillos de 1/4\", 3/8\", 1/2\" y 3/4\": no los fuerce con adaptadores.",
+      "similares": [
+        "estrella",
+        "dinamometrica",
+        "allen"
+      ]
+    },
+    {
+      "id": "allen",
+      "nombre": "Llave Allen",
+      "en": "hex key (Allen key)",
+      "familia": "Llaves",
+      "dibujo": "allen",
+      "medida": "8 mm",
+      "para_que": "Tornillos con hueco hexagonal en la cabeza.",
+      "como_usar": "Métala hasta el fondo; el brazo largo da más fuerza y el corto, más precisión.",
+      "no_hacer": "Mezclar medidas métricas y en pulgadas: redondea el hueco.",
+      "cuidado": "Deseche las que tengan la punta redondeada.",
+      "similares": [
+        "torx",
+        "destornillador",
+        "carraca"
+      ]
+    },
+    {
+      "id": "torx",
+      "nombre": "Llave Torx",
+      "en": "Torx key",
+      "familia": "Llaves",
+      "dibujo": "torx",
+      "medida": "T30",
+      "para_que": "Tornillos con hueco de estrella de seis puntas (T10, T20, T30…).",
+      "como_usar": "Use la medida exacta y empuje hacia el tornillo.",
+      "no_hacer": "Usar una Allen en un Torx: lo destroza.",
+      "cuidado": "Revise que las puntas están enteras.",
+      "similares": [
+        "allen",
+        "destornillador",
+        "gancho"
+      ]
+    },
+    {
+      "id": "gancho",
+      "nombre": "Llave de gancho",
+      "en": "hook spanner (C spanner)",
+      "familia": "Llaves",
+      "dibujo": "gancho",
+      "medida": "",
+      "para_que": "Tuercas ranuradas, como las de fijación de rodamientos.",
+      "como_usar": "Meta el tetón en la ranura y gire en el sentido en que el gancho abraza la tuerca.",
+      "no_hacer": "Golpear la tuerca con un cincel en lugar de usarla.",
+      "cuidado": "Elija la de su diámetro: las hay articuladas.",
+      "similares": [
+        "ajustable",
+        "stillson",
+        "boca"
+      ]
+    },
+    {
+      "id": "dinamometrica",
+      "nombre": "Llave dinamométrica",
+      "en": "torque wrench",
+      "familia": "Medida",
+      "dibujo": "dinamometrica",
+      "medida": "",
+      "para_que": "Apretar al par que pide el fabricante.",
+      "como_usar": "Ajuste el par, tire despacio del mango hasta el clic y pare.",
+      "no_hacer": "Aflojar con ella o seguir apretando después del clic.",
+      "cuidado": "Después de usarla, vuelva la escala al mínimo; se calibra según el plan (verificar a bordo).",
+      "similares": [
+        "carraca",
+        "estrella",
+        "calibre"
+      ]
+    },
+    {
+      "id": "destornillador",
+      "nombre": "Destornillador aislado de 1000 V",
+      "en": "insulated screwdriver (VDE)",
+      "familia": "Electricidad",
+      "dibujo": "destornillador",
+      "medida": "",
+      "para_que": "Trabajos eléctricos cerca de partes con tensión, según IEC 60900.",
+      "como_usar": "Compruebe el doble triángulo y «1000 V» en el mango; elija la punta exacta (plana, PH, PZ).",
+      "no_hacer": "Fiarse de él para trabajar con tensión: primero se quita la tensión.",
+      "cuidado": "Deséchelo si el aislamiento tiene grietas o cortes.",
+      "similares": [
+        "allen",
+        "torx",
+        "alicate"
+      ]
+    },
+    {
+      "id": "alicate",
+      "nombre": "Alicate universal",
+      "en": "combination pliers",
+      "familia": "Electricidad",
+      "dibujo": "alicate",
+      "medida": "",
+      "para_que": "Sujetar, doblar y cortar cable.",
+      "como_usar": "Use las mordazas para sujetar y el filo para cortar cable de cobre.",
+      "no_hacer": "Usarlo como llave en tuercas: las redondea.",
+      "cuidado": "Los aislados de 1000 V llevan el mismo marcado que los destornilladores.",
+      "similares": [
+        "crimpadora",
+        "stillson",
+        "ajustable"
+      ]
+    },
+    {
+      "id": "crimpadora",
+      "nombre": "Crimpadora",
+      "en": "crimping tool",
+      "familia": "Electricidad",
+      "dibujo": "crimpadora",
+      "medida": "",
+      "para_que": "Prensar terminales en los cables.",
+      "como_usar": "Terminal del color de la sección en el hueco de su color: rojo 0,5–1,5, azul 1,5–2,5 y amarillo 4–6 mm². Tire después para comprobar.",
+      "no_hacer": "Crimpar con un alicate: el terminal queda flojo y se calienta.",
+      "cuidado": "Las de trinquete no se abren hasta completar el prensado.",
+      "similares": [
+        "alicate",
+        "cortatubos",
+        "gancho"
+      ]
+    },
+    {
+      "id": "calibre",
+      "nombre": "Calibre (pie de rey)",
+      "en": "vernier caliper",
+      "familia": "Medida",
+      "dibujo": "calibre",
+      "medida": "",
+      "para_que": "Medir exteriores, interiores y profundidades con una precisión de 0,05 o 0,02 mm.",
+      "como_usar": "Cierre las puntas sin forzar y lea los milímetros en la regla y la fracción en el nonio.",
+      "no_hacer": "Usarlo como llave o como compás para rayar.",
+      "cuidado": "Guárdelo limpio, en su estuche y con las puntas algo abiertas.",
+      "similares": [
+        "micrometro",
+        "dinamometrica",
+        "alicate"
+      ]
+    },
+    {
+      "id": "micrometro",
+      "nombre": "Micrómetro",
+      "en": "micrometer",
+      "familia": "Medida",
+      "dibujo": "micrometro",
+      "medida": "",
+      "para_que": "Medir exteriores con una precisión de 0,01 mm, como el diámetro de un eje.",
+      "como_usar": "Apriete con el trinquete, nunca con el tambor, y compruebe el cero antes.",
+      "no_hacer": "Dejarlo caer o guardarlo con los topes juntos.",
+      "cuidado": "Limpie los topes y compruebe el cero con su patrón.",
+      "similares": [
+        "calibre",
+        "dinamometrica",
+        "carraca"
+      ]
+    },
+    {
+      "id": "cortatubos",
+      "nombre": "Cortatubos",
+      "en": "tube cutter",
+      "familia": "Tubería",
+      "dibujo": "cortatubos",
+      "medida": "",
+      "para_que": "Cortar tubo de cobre o de acero inoxidable fino a escuadra.",
+      "como_usar": "Apriete la ruedecilla un poco en cada vuelta y desbarbe después.",
+      "no_hacer": "Apretar de golpe: ovaliza el tubo.",
+      "cuidado": "Cambie la ruedecilla cuando pierda el filo.",
+      "similares": [
+        "stillson",
+        "alicate",
+        "crimpadora"
+      ]
+    }
+  ]
+}

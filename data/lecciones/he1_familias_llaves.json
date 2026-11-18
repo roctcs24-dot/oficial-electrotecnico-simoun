@@ -1,0 +1,111 @@
+{
+  "id": "he1_familias_llaves",
+  "titulo": "Familias de llaves",
+  "resumen": "Boca, estrella, combinada, ajustable, Stillson, carraca, Allen, Torx y gancho.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Boca, estrella y combinada",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{llave_boca}} abraza dos caras de la tuerca: es rápida, pero en una tuerca muy apretada se abre y la redondea. La {{llave_estrella}} abraza los seis lados y aguanta mucha más fuerza. La {{llave_combinada}} tiene una boca y una estrella de la misma medida.\n\nRegla de pañol: afloje con la estrella y gire rápido con la boca."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "boca",
+              "estrella",
+              "combinada"
+            ]
+          },
+          "pie": "Así se reconoce cada una: pase de una a otra."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he1_estrella",
+          "pregunta": "Hay que aflojar una tuerca muy apretada. ¿Qué llave se usa?",
+          "opciones": [
+            "La de boca",
+            "La de estrella",
+            "La ajustable"
+          ],
+          "correcta": 1,
+          "explicacion": "La estrella abraza los seis lados y no redondea la tuerca."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajustable y Stillson",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{llave_ajustable}} (inglesa) se adapta a la tuerca con un tornillo sin fin. Se ajusta sin holgura y se carga hacia la mandíbula fija. No es para aprietes fuertes.\n\nLa {{llave_stillson}} tiene dientes que muerden: es para tubos y piezas redondas. En una tuerca la destroza."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "ajustable",
+              "stillson"
+            ]
+          },
+          "pie": "Compare la mandíbula lisa de la ajustable con los dientes de la Stillson."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he1_stillson",
+          "pregunta": "¿Para qué se usa la llave Stillson?",
+          "opciones": [
+            "Para tuercas hexagonales",
+            "Para tubos y piezas redondas",
+            "Para tornillos Allen"
+          ],
+          "correcta": 1,
+          "explicacion": "Sus dientes muerden el tubo. En una tuerca la marcan y la redondean."
+        }
+      ]
+    },
+    {
+      "titulo": "Carraca, Allen, Torx y gancho",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{carraca}} gira el {{dado}} sin sacarlo de la tuerca. Los dados de seis caras agarran mejor que los de doce. La {{llave_allen}} entra en el hueco hexagonal de un tornillo y la {{llave_torx}}, en un hueco de estrella de seis puntas: no se cambian una por otra.\n\nLa {{llave_gancho}} tiene un tetón que entra en la ranura de las tuercas de fijación de los rodamientos."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "carraca",
+              "allen",
+              "torx",
+              "gancho"
+            ]
+          },
+          "pie": "Carraca, Allen, Torx y gancho."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he1_torx",
+          "pregunta": "Un tornillo tiene un hueco de estrella de seis puntas. ¿Qué llave se usa?",
+          "opciones": [
+            "Una Allen de la medida más parecida",
+            "Una Torx de su medida",
+            "Un destornillador plano"
+          ],
+          "correcta": 1,
+          "explicacion": "Es un Torx. Una Allen gira en falso y destroza el hueco."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 691: aberturas de las llaves.",
+    "ISO 1711-1: llaves de boca y de estrella."
+  ]
+}

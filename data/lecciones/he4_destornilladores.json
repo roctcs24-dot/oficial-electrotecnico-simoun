@@ -1,0 +1,85 @@
+{
+  "id": "he4_destornilladores",
+  "titulo": "Destornilladores de 1000 V",
+  "resumen": "El marcado de las herramientas aisladas y las puntas que no se mezclan.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La herramienta aislada",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{destornillador_aislado}} lleva en el mango el doble triángulo y «1000 V»: está probado según IEC 60900 para trabajar cerca de partes con tensión hasta 1000 V AC.\n\nEs una protección más, no un permiso: antes de trabajar, se quita la tensión y se comprueba que no hay ([i]las 5 reglas de oro[/i])."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "destornillador"
+            ]
+          },
+          "pie": "Mire el marcado del mango."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he4_marcado",
+          "pregunta": "¿Qué indica el doble triángulo con «1000 V» en un destornillador?",
+          "opciones": [
+            "Que es para tornillos de 1000 mm",
+            "Que su aislamiento está probado hasta 1000 V según IEC 60900",
+            "Que se puede trabajar con tensión sin más precauciones"
+          ],
+          "correcta": 1,
+          "explicacion": "Está probado para 1000 V AC, pero no sustituye a quitar la tensión."
+        }
+      ]
+    },
+    {
+      "titulo": "Las puntas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Plana, Phillips (PH) y Pozidriv (PZ) parecen iguales, pero no lo son: la PZ tiene unas rayas entre las aspas. Un PH en un tornillo PZ se sale y estropea la cabeza.\n\nLa punta tiene que llenar la ranura: una pequeña la redondea y una grande no entra."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he4_pz",
+          "pregunta": "Un tornillo de un borne tiene una cruz con rayas finas entre las aspas. ¿Qué punta se usa?",
+          "opciones": [
+            "Phillips (PH)",
+            "Pozidriv (PZ)",
+            "Plana"
+          ],
+          "correcta": 1,
+          "explicacion": "Las rayas entre las aspas marcan los Pozidriv."
+        }
+      ]
+    },
+    {
+      "titulo": "Revisarlo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de usarlo, mire que el aislamiento no tiene cortes, grietas ni quemaduras, y que la caña no asoma más de lo debido. Si está dañado, se retira: el aislamiento no se repara con cinta."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he4_revisar",
+          "pregunta": "Antes de usar un destornillador aislado, ordene:",
+          "pasos": [
+            "Comprobar el marcado de 1000 V",
+            "Revisar el mango y el aislamiento de la caña",
+            "Elegir la punta exacta",
+            "Quitar la tensión y comprobar que no hay"
+          ],
+          "explicacion": "Herramienta en buen estado y, aun así, sin tensión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60900: herramientas aisladas para trabajos en tensión hasta 1000 V AC.",
+    "EN 50110-1: trabajos eléctricos."
+  ]
+}

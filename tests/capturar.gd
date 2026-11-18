@@ -67,6 +67,8 @@ func _capturar() -> void:
 		await _capturar_inicio(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "fichas_d":
 		await _capturar_fichas_d(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "herramientas":
+		await _capturar_herramientas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "valvulas":
 		await _capturar_valvulas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
@@ -571,6 +573,51 @@ func _capturar_fichas_d(raiz: Raiz, carpeta: String) -> void:
 
 ## Etapa C del rediseño: el inicio con el buque visto desde arriba y la Escuela con su camino,
 ## con una partida de ejemplo que tiene algo hecho, un equipo dañado y temas para repasar.
+## Etapa 42: herramientas, tabla de llaves, minijuego «Identifique la herramienta» y lecciones.
+func _capturar_herramientas(raiz: Raiz, carpeta: String) -> void:
+	raiz.partida.datos = Partida.datos_nuevos()
+	var c := raiz.contenido
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 9
+	var rondas := JuegoHerramientas.crear_rondas(c.leer("catalogos/herramientas.json"), c.leer("tablas/llaves.json"), 10, azar)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("panol")
+		await _guardar(carpeta, "h_panol", tam)
+		raiz.ir_a("tabla_llaves", {"pulgada": "3/4"})
+		await _guardar(carpeta, "h_tabla_llaves", tam)
+		raiz.volver()
+		raiz.ir_a("catalogo", {"catalogo": "herramientas", "elegido": "combinada"})
+		await _guardar(carpeta, "h_catalogo", tam)
+		raiz.volver()
+		raiz.ir_a("identifique_herramienta", {"items": rondas, "indice": 1, "respuestas": {0: {"acierto": true, "elegida": int(rondas[0]["correcta"])}, 1: {"acierto": false, "elegida": (int(rondas[1]["correcta"]) + 1) % 3}}})
+		await _guardar(carpeta, "h_identifique", tam)
+		raiz.volver()
+		var i_llave := -1
+		for i in rondas.size():
+			if rondas[i]["tipo"] == "llave":
+				i_llave = i
+		if i_llave >= 0:
+			raiz.ir_a("identifique_herramienta", {"items": rondas, "indice": i_llave, "respuestas": {}})
+			await _guardar(carpeta, "h_identifique_llave", tam)
+			raiz.volver()
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(11)
+		await _guardar(carpeta, "h_escuela_11", tam)
+		for par: Array in [["he1_familias_llaves", 0], ["he2_mm_pulgadas", 0], ["he6_calibre_micrometro", 0]]:
+			raiz.ir_a("leccion", {"id": par[0], "sistema": 11, "pagina": par[1], "respuestas": {}})
+			await _esperar()
+			var anim := _buscar_animacion(raiz)
+			if anim != null and raiz.vertical:
+				var s := _scroll_de(anim)
+				if s != null:
+					s.ensure_control_visible(anim)
+			await _guardar(carpeta, "h_%s_%d" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
 ## Etapa 41: catálogo de válvulas, minijuego «¿Abierta o cerrada?», lecciones y Pañol.
 func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
 	raiz.partida.datos = Partida.datos_nuevos()

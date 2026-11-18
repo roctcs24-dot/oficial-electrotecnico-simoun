@@ -1,0 +1,86 @@
+{
+  "id": "he5_alicates_crimpado",
+  "titulo": "Alicates y crimpadoras",
+  "resumen": "Qué alicate para cada trabajo y cómo se crimpa un terminal.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Alicates",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El alicate universal sujeta, dobla y corta cable. El de corte lateral corta limpio; el de puntas llega a los sitios estrechos y el pelacables quita el aislamiento sin marcar el cobre.\n\nNingún alicate es una llave: en una tuerca, la redondea."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "alicate",
+              "crimpadora"
+            ]
+          },
+          "pie": "Alicate universal y crimpadora."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he5_pelar",
+          "pregunta": "Hay que quitar el aislamiento de un cable sin marcar el cobre. ¿Qué se usa?",
+          "opciones": [
+            "Una navaja",
+            "Un pelacables de la sección del cable",
+            "Los dientes del alicate"
+          ],
+          "correcta": 1,
+          "explicacion": "El pelacables corta solo el aislamiento; un cobre marcado se rompe con la vibración."
+        }
+      ]
+    },
+    {
+      "titulo": "Crimpar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{crimpadora}} prensa el {{terminal_preaislado}} sobre el cable. El color dice la sección: rojo de 0,5 a 1,5 mm², azul de 1,5 a 2,5 mm² y amarillo de 4 a 6 mm². Cada color tiene su hueco en la crimpadora.\n\nDespués de crimpar, tire del terminal: no debe salirse ni girar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he5_color",
+          "pregunta": "Un cable de 2,5 mm². ¿Qué terminal se usa?",
+          "opciones": [
+            "Rojo",
+            "Azul",
+            "Amarillo"
+          ],
+          "correcta": 1,
+          "explicacion": "El azul es para 1,5 a 2,5 mm²."
+        }
+      ]
+    },
+    {
+      "titulo": "Un buen crimpado",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Un terminal flojo hace mal contacto, se calienta y puede quemar el borne. Por eso no se crimpa con un alicate."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he5_crimpar",
+          "pregunta": "Para poner un terminal preaislado, ordene:",
+          "pasos": [
+            "Pelar la longitud justa",
+            "Meter el cobre hasta el fondo del terminal",
+            "Crimpar en el hueco del color del terminal",
+            "Tirar del terminal para comprobarlo"
+          ],
+          "explicacion": "Sin cobre fuera, prensado en su hueco y probado con un tirón."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "IEC 60352-2: conexiones crimpadas.",
+    "Instrucciones del fabricante de los terminales."
+  ]
+}

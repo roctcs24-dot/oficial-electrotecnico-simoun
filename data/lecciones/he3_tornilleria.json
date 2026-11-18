@@ -1,0 +1,76 @@
+{
+  "id": "he3_tornilleria",
+  "titulo": "Tornillería métrica y UNC/UNF",
+  "resumen": "Cómo se designa una rosca, su paso y su clase de resistencia.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "La rosca métrica",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una rosca métrica se designa con una M, el diámetro y el {{paso_rosca}} en milímetros: M10 × 1,5 tiene 10 mm de diámetro y avanza 1,5 mm por vuelta. Si no se dice el paso, es el grueso normal; la rosca fina lleva el paso escrito (M10 × 1,25).\n\nEl paso se comprueba con una galga de roscas: la hoja que encaja sin luz da la medida."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he3_m10",
+          "pregunta": "¿Qué indica «M10 × 1,5»?",
+          "opciones": [
+            "10 mm de largo y 1,5 mm de cabeza",
+            "10 mm de diámetro y 1,5 mm de paso",
+            "Clase 10 y 1,5 vueltas"
+          ],
+          "correcta": 1,
+          "explicacion": "M y diámetro en mm; después de la ×, el paso en mm por vuelta."
+        }
+      ]
+    },
+    {
+      "titulo": "UNC y UNF",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las roscas en pulgadas se designan por el diámetro y los hilos por pulgada: 3/8\"-16 {{unc_unf}} es la gruesa (UNC) y 3/8\"-24 UNF, la fina. Una rosca en pulgadas y una métrica parecidas pueden entrar dos vueltas y después agarrotarse: se pasa la rosca.\n\nNo mezcle tornillos de dos sistemas en un mismo equipo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he3_unc",
+          "pregunta": "Un tornillo de 3/8\" entra dos vueltas en una tuerca y se clava. ¿Qué se sospecha?",
+          "opciones": [
+            "Que falta grasa",
+            "Que la rosca es de otro sistema o de otro paso",
+            "Que el tornillo es demasiado largo"
+          ],
+          "correcta": 1,
+          "explicacion": "Roscas parecidas de distinto paso entran un poco y se agarrotan: así se pasa la rosca."
+        }
+      ]
+    },
+    {
+      "titulo": "Clase de resistencia",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La cabeza de un tornillo métrico lleva su {{clase_resistencia}}: 8.8, 10.9 o 12.9. En el 8.8, el primer 8 son 800 N/mm² de resistencia a la tracción, y el 0,8 dice que cede al 80 % de ella. Los de pulgadas llevan rayas en la cabeza: tres rayas el grado 5 y seis el grado 8.\n\nUn tornillo se cambia por otro de la misma clase o mayor, nunca menor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he3_clase",
+          "pregunta": "Se pierde un tornillo 10.9 de una brida. ¿Cuál se pone?",
+          "opciones": [
+            "Cualquiera de la misma medida",
+            "Uno de la misma medida y clase 10.9 o mayor",
+            "Uno 8.8, que es más blando y no se rompe"
+          ],
+          "correcta": 1,
+          "explicacion": "Uno de menor clase puede ceder o romperse con el apriete de diseño."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 261 e ISO 965: roscas métricas.",
+    "ASME B1.1: roscas UNC y UNF.",
+    "ISO 898-1: clases de resistencia de los tornillos."
+  ]
+}

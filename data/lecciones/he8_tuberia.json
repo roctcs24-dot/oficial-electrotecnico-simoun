@@ -1,0 +1,86 @@
+{
+  "id": "he8_tuberia",
+  "titulo": "Herramienta de tubería",
+  "resumen": "Cortar, desbarbar, roscar y sellar.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Cortar y desbarbar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{cortatubos}} corta el tubo de cobre o de inoxidable fino a escuadra: se aprieta la ruedecilla un poco en cada vuelta. Después se desbarba por dentro y por fuera: una rebaba frena el fluido y no deja asentar el racor.\n\nEl tubo de acero grueso se corta con sierra y se lima a escuadra."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "cortatubos",
+              "stillson"
+            ]
+          },
+          "pie": "Cortatubos y llave Stillson."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he8_desbarbar",
+          "pregunta": "¿Por qué se desbarba un tubo después de cortarlo?",
+          "opciones": [
+            "Para que pese menos",
+            "Para que la rebaba no frene el fluido ni impida asentar el racor",
+            "Para pintarlo"
+          ],
+          "correcta": 1,
+          "explicacion": "Una rebaba dentro frena el fluido y una fuera impide asentar el racor o la férula."
+        }
+      ]
+    },
+    {
+      "titulo": "Roscas cónicas y cinta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las roscas cónicas (BSPT y NPT) sellan en la propia rosca con ayuda de {{cinta_ptfe}} o de un sellador. La cinta se enrolla en el sentido de la rosca, mirando el extremo, dos o tres vueltas, sin tapar el primer hilo.\n\nLos racores de compresión y los de asiento cónico no llevan cinta: sellan en su asiento."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he8_cinta",
+          "pregunta": "¿En qué racor no se pone cinta de PTFE?",
+          "opciones": [
+            "En una rosca NPT",
+            "En un racor de compresión con férula",
+            "En una rosca BSPT"
+          ],
+          "correcta": 1,
+          "explicacion": "El de compresión sella en la férula; la cinta podría entrar en la línea."
+        }
+      ]
+    },
+    {
+      "titulo": "Apretar tubería",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Para apretar un racor se sujeta el cuerpo con una llave y se gira la tuerca con otra: así no se retuerce el tubo. La Stillson es para tubo; en un racor, la llave de boca o de estrella de su medida."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he8_racor",
+          "pregunta": "Para cambiar un tramo de tubo de cobre con racores, ordene:",
+          "pasos": [
+            "Aislar y despresurizar la línea",
+            "Cortar a escuadra con el cortatubos",
+            "Desbarbar por dentro y por fuera",
+            "Montar y apretar sujetando con dos llaves"
+          ],
+          "explicacion": "Sin presión, corte limpio, sin rebabas y con contrallave."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 7-1: roscas de tubería que sellan en la rosca.",
+    "ASME B1.20.1: roscas NPT."
+  ]
+}

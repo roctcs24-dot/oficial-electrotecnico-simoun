@@ -1,19 +1,33 @@
 extends Pantalla
-## Catálogo del Pañol (data/catalogos/<catalogo>.json): la lista de tipos en una placa, el elegido
-## dibujado en un visor con su estado (abierta o cerrada) y sus datos al lado. En vertical, el
-## visor y los datos arriba y la lista debajo. El elegido y su estado viven en args.
+## Catálogo del Pañol (data/catalogos/<catalogo>.json): la lista en una placa, el elegido dibujado
+## en un visor y sus datos al lado. En las válvulas, el visor deja elegir el estado (abierta o
+## cerrada). En vertical, el visor y los datos arriba y la lista debajo. El elegido y su estado
+## viven en args. Cada catálogo tiene su configuración en CATALOGOS.
 
-const COLOR := Color("2e9e6a")
+const CATALOGOS := {
+	"valvulas": {
+		"titulo": "Catálogo de válvulas", "sub": "Pañol · cómo se reconocen y cómo saber si están abiertas", "rotulo": "Tipos",
+		"color": "2e9e6a", "icono": "valvulas",
+		"campos": [["Cómo saber si está abierta", "como_saber"], ["Cómo funciona", "funciona"], ["A bordo", "a_bordo"], ["No se usa para", "no_usar"], ["Mantenimiento", "mantenimiento"]],
+	},
+	"herramientas": {
+		"titulo": "Herramientas del pañol", "sub": "Pañol · cómo se llaman, para qué sirven y cómo se usan bien", "rotulo": "Herramientas",
+		"color": "d9534f", "icono": "herramientas",
+		"campos": [["Para qué sirve", "para_que"], ["Cómo se usa", "como_usar"], ["No haga esto", "no_hacer"], ["Cuidado y revisión", "cuidado"]],
+	},
+}
 
 var datos := {}
+var config := {}
 var elementos: Array = []
 var filas: Array[FilaPlaca] = []
-var dibujo: DibujoValvula
+var dibujo: Control
 var botones_estado: Array[BotonAri] = []
 
 
 func construir() -> void:
 	var nombre := str(args.get("catalogo", "valvulas"))
+	config = CATALOGOS.get(nombre, CATALOGOS["valvulas"])
 	datos = raiz.contenido.leer("catalogos/%s.json" % nombre)
 	elementos = datos.get(nombre, [])
 	if elementos.is_empty():
@@ -24,7 +38,7 @@ func construir() -> void:
 	if not args.has("abierta"):
 		args["abierta"] = true
 	var cabecera := CabeceraFicha.new()
-	cabecera.iniciar(raiz, "Catálogo de válvulas", "Pañol · cómo se reconocen y cómo saber si están abiertas" if not raiz.vertical else "Pañol · %d tipos" % elementos.size(), COLOR, "valvulas")
+	cabecera.iniciar(raiz, config["titulo"], config["sub"] if not raiz.vertical else "Pañol · %d %s" % [elementos.size(), str(config["rotulo"]).to_lower()], color(), config["icono"])
 	add_child(cabecera)
 	var lista := _lista()
 	var visor := _visor()
@@ -52,6 +66,14 @@ func construir() -> void:
 			fila.add_child(zona)
 
 
+func color() -> Color:
+	return Color(str(config["color"]))
+
+
+func es_valvula() -> bool:
+	return config == CATALOGOS["valvulas"]
+
+
 func elegido() -> Dictionary:
 	for e: Dictionary in elementos:
 		if e["id"] == args["elegido"]:
@@ -67,14 +89,14 @@ func _lista() -> Control:
 	columna.add_theme_constant_override("separation", 2)
 	columna.mouse_filter = Control.MOUSE_FILTER_PASS
 	placa.add_child(columna)
-	columna.add_child(PiezasLeccion.rotulo("Tipos · %d" % elementos.size()))
+	columna.add_child(PiezasLeccion.rotulo("%s · %d" % [config["rotulo"], elementos.size()]))
 	filas.clear()
 	for e: Dictionary in elementos:
 		var f := FilaPlaca.new(_corto(str(e["nombre"])), str(e.get("familia", "")))
 		f.name = "Tipo_%s" % e["id"]
 		f.tipo = "medalla"
-		f.icono = "valvulas"
-		f.color = COLOR
+		f.icono = config["icono"]
+		f.color = color()
 		f.avance = 1.0 if e["id"] == args["elegido"] else 0.0
 		f.elegida = e["id"] == args["elegido"]
 		f.tocada.connect(elegir.bind(str(e["id"])))
@@ -105,7 +127,7 @@ func _visor() -> Control:
 	fila.add_theme_constant_override("separation", 6)
 	columna.add_child(fila)
 	botones_estado.clear()
-	var con_estado: bool = not str(e["dibujo"]) in ["retencion", "seguridad", "reductora"]
+	var con_estado: bool = es_valvula() and not str(e["dibujo"]) in ["retencion", "seguridad", "reductora"]
 	if con_estado:
 		var nombres := ["DE A A B", "DE A A C"] if e["dibujo"] == "tres_vias" else ["ABIERTA", "CERRADA"]
 		for i in 2:
@@ -115,18 +137,23 @@ func _visor() -> Control:
 			b.ajustar_ancho()
 			fila.add_child(b)
 			botones_estado.append(b)
-	dibujo = DibujoValvula.new()
+	if es_valvula():
+		var v := DibujoValvula.new()
+		v.tipo = str(e["dibujo"])
+		v.flujo = true
+		v.apertura = 1.0 if bool(args["abierta"]) else 0.0
+		v.via = "b" if bool(args["abierta"]) or v.tipo == "retencion" else "c"
+		dibujo = v
+	else:
+		var h := DibujoHerramienta.new()
+		h.tipo = str(e["dibujo"])
+		h.medida = str(e.get("medida", ""))
+		dibujo = h
 	dibujo.name = "Dibujo"
-	dibujo.tipo = str(e["dibujo"])
-	dibujo.flujo = true
-	dibujo.apertura = 1.0 if bool(args["abierta"]) else 0.0
-	dibujo.via = "b" if bool(args["abierta"]) else "c"
-	if dibujo.tipo == "retencion":
-		dibujo.via = "b"
 	dibujo.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	dibujo.custom_minimum_size.y = 220.0
 	columna.add_child(dibujo)
-	var pie := PiezasLeccion.rotulo(str(e.get("como_saber", "")).get_slice(".", 0))
+	var pie := PiezasLeccion.rotulo(str(e.get("como_saber", e.get("para_que", ""))).get_slice(".", 0))
 	pie.add_theme_font_size_override("font_size", Tema.tam(10.5))
 	columna.add_child(pie)
 	return visor
@@ -143,7 +170,7 @@ func _ficha() -> Control:
 	placa.add_child(columna)
 	columna.add_child(PiezasLeccion.rotulo(str(e["nombre"])))
 	columna.add_child(PiezasLeccion.texto_rico("[i]%s[/i] · %s" % [e.get("en", ""), str(e.get("familia", "")).to_lower()], 13, Tema.TEXTO_SUAVE))
-	for par: Array in [["Cómo saber si está abierta", "como_saber"], ["Cómo funciona", "funciona"], ["A bordo", "a_bordo"], ["No se usa para", "no_usar"], ["Mantenimiento", "mantenimiento"]]:
+	for par: Array in config["campos"]:
 		if e.has(par[1]):
 			columna.add_child(PiezasLeccion.rotulo(par[0]))
 			columna.add_child(PiezasLeccion.texto_rico(str(e[par[1]]), 14))
@@ -163,8 +190,11 @@ func elegir(id: String) -> void:
 
 func poner_estado(abierta: bool) -> void:
 	args["abierta"] = abierta
-	dibujo.apertura = 1.0 if abierta else 0.0
-	if dibujo.tipo == "tres_vias":
-		dibujo.via = "b" if abierta else "c"
+	var v := dibujo as DibujoValvula
+	if v == null:
+		return
+	v.apertura = 1.0 if abierta else 0.0
+	if v.tipo == "tres_vias":
+		v.via = "b" if abierta else "c"
 	for i in botones_estado.size():
 		botones_estado[i].estilo = "ambar" if (i == 0) == abierta else "oscuro"

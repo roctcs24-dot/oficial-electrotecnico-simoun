@@ -6,7 +6,6 @@ extends Pantalla
 const COLOR := Color("d9534f")
 const COLOR_VALVULAS := Color("2e9e6a")
 const PROXIMAMENTE := [
-	["Llaves: milímetros y pulgadas", "Equivalencias, cuál sirve y cuál redondea la tuerca", "herramientas"],
 	["Roscas, bridas y racores", "BSP, NPT, JIC, ORFS, DIN, DN y NPS", "herramientas"],
 	["Mangueras hidráulicas", "Marcado SAE 100R y EN 853/856", "hidraulica"],
 ]
@@ -35,6 +34,13 @@ func construir() -> void:
 	_fila_placa(consultar[1], "Glosario español–inglés", "Los términos de las placas y los manuales", "glosario", COLOR, 1.0, raiz.ir_a.bind("glosario"))
 	_fila_placa(consultar[1], "Válvulas", "%d tipos: cómo se reconocen y cómo saber si están abiertas" % valvulas.size(), "valvulas", COLOR_VALVULAS, 1.0, raiz.ir_a.bind("catalogo", {"catalogo": "valvulas"}))
 	_fila_placa(consultar[1], "¿Abierta o cerrada?", "Minijuego · %s" % ("%d de 3 estrellas" % estrellas if not juego.is_empty() else "sin jugar"), "valvulas", COLOR_VALVULAS, estrellas / 3.0, func() -> void: raiz.ir_a("abierta_cerrada", {}))
+	var herramientas: Array = raiz.contenido.leer("catalogos/herramientas.json").get("herramientas", [])
+	var juego_h: Dictionary = raiz.partida.datos["minijuegos"].get(JuegoHerramientas.REGISTRO, {})
+	var pan := _placa("Herramientas")
+	lista.add_child(pan[0])
+	_fila_placa(pan[1], "Herramientas", "%d herramientas: cómo se llaman, para qué sirven y cómo se usan" % herramientas.size(), "herramientas", COLOR, 1.0, raiz.ir_a.bind("catalogo", {"catalogo": "herramientas"}))
+	_fila_placa(pan[1], "Llaves: milímetros y pulgadas", "Qué llave métrica entra en una tuerca en pulgadas", "herramientas", COLOR, 1.0, func() -> void: raiz.ir_a("tabla_llaves", {}))
+	_fila_placa(pan[1], "Identifique la herramienta", "Minijuego · %s" % ("%d de 3 estrellas" % int(juego_h.get("estrellas", 0)) if not juego_h.is_empty() else "sin jugar"), "herramientas", COLOR, int(juego_h.get("estrellas", 0)) / 3.0, func() -> void: raiz.ir_a("identifique_herramienta", {}))
 	var pronto := _placa("En preparación")
 	lista.add_child(pronto[0])
 	for p: Array in PROXIMAMENTE:

@@ -1,0 +1,75 @@
+{
+  "id": "he9_cuidado_seguridad",
+  "titulo": "Cuidado y seguridad de la herramienta",
+  "resumen": "La herramienta adecuada, en buen estado y de vuelta al pañol.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La herramienta adecuada",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La mayoría de los golpes en las manos vienen de una llave que resbala: una medida que no es, una boca abierta o una llave alargada con un tubo. Use la llave exacta y tire hacia usted, con la mano abierta si la tuerca está dura."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he9_tubo",
+          "pregunta": "Una tuerca no afloja con la llave de estrella. ¿Qué se hace?",
+          "opciones": [
+            "Alargar la llave con un tubo",
+            "Usar una llave de golpe o una carraca de mayor brazo pensadas para ello, o un aflojatodo",
+            "Golpear la llave con el martillo"
+          ],
+          "correcta": 1,
+          "explicacion": "Un tubo dobla la llave o la rompe; se usa la herramienta pensada para ese esfuerzo."
+        }
+      ]
+    },
+    {
+      "titulo": "En buen estado",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de usarla, mire la herramienta: bocas abiertas, dados agrietados, mangos aislados dañados o un martillo con la cabeza floja se retiran. En altura o encima de maquinaria abierta, átela."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he9_altura",
+          "pregunta": "Hay que trabajar encima de un reductor abierto. ¿Qué se hace con la herramienta?",
+          "opciones": [
+            "Dejarla en el borde del reductor",
+            "Atarla o tapar el reductor, y contar la herramienta al terminar",
+            "Nada especial"
+          ],
+          "correcta": 1,
+          "explicacion": "Una herramienta olvidada dentro de una máquina la destroza al arrancar."
+        }
+      ]
+    },
+    {
+      "titulo": "De vuelta al pañol",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Al terminar, se cuenta la herramienta antes de cerrar y arrancar el equipo, se limpia y se devuelve a su sitio del pañol. Una herramienta que falta puede estar dentro de una máquina."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he9_terminar",
+          "pregunta": "Al terminar un trabajo en una bomba abierta, ordene:",
+          "pasos": [
+            "Contar la herramienta que se usó",
+            "Revisar que no queda nada dentro",
+            "Cerrar la bomba",
+            "Limpiar y devolver la herramienta al pañol"
+          ],
+          "explicacion": "Contar y revisar antes de cerrar: después ya no se ve."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Código IMO de prácticas seguras de trabajo para la gente de mar.",
+    "Normas del pañol del buque (verificar)."
+  ]
+}

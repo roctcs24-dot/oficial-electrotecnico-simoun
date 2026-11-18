@@ -1,0 +1,86 @@
+{
+  "id": "he6_calibre_micrometro",
+  "titulo": "Calibre y micrómetro",
+  "resumen": "Cómo se lee el nonio y el tambor.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "El calibre",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{calibre}} (pie de rey) mide exteriores con las puntas grandes, interiores con las pequeñas y profundidades con la varilla. Se leen los milímetros enteros en la regla, antes del cero del {{nonio}}, y la fracción en la raya del nonio que coincide con una de la regla.\n\n[center][b]23 mm + 7 × 0,05 = 23,35 mm[/b][/center]"
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "calibre",
+              "micrometro"
+            ]
+          },
+          "pie": "Calibre y micrómetro."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he6_calibre",
+          "pregunta": "El cero del nonio pasa de 41 mm y coincide la raya 4 de un nonio de 0,05 mm. ¿Cuánto mide?",
+          "opciones": [
+            "41,4 mm",
+            "41,2 mm",
+            "41,04 mm"
+          ],
+          "correcta": 1,
+          "explicacion": "41 + 4 × 0,05 = 41,20 mm."
+        }
+      ]
+    },
+    {
+      "titulo": "El micrómetro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{micrometro}} mide con 0,01 mm. Cada vuelta del tambor avanza 0,5 mm y el tambor tiene 50 rayas: cada raya, 0,01 mm. Se leen los milímetros y medios milímetros en el cilindro, y se suma el tambor.\n\n[center][b]7,5 mm + 28 × 0,01 = 7,78 mm[/b][/center]\n\nSe aprieta siempre con el trinquete, para medir siempre con la misma fuerza."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he6_micrometro",
+          "pregunta": "En el cilindro se ve 12,5 mm y el tambor marca 16. ¿Cuánto mide?",
+          "opciones": [
+            "12,66 mm",
+            "12,16 mm",
+            "28,5 mm"
+          ],
+          "correcta": 0,
+          "explicacion": "12,5 + 16 × 0,01 = 12,66 mm."
+        }
+      ]
+    },
+    {
+      "titulo": "Medir bien",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Antes de medir, limpie las puntas y compruebe el cero. Mida varias veces y en varios sitios: un eje gastado puede estar ovalado. Anote la medida con sus decimales y compárela con la del fabricante."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he6_medir",
+          "pregunta": "Para medir el diámetro de un eje con el micrómetro, ordene:",
+          "pasos": [
+            "Limpiar los topes y comprobar el cero",
+            "Acercar con el tambor sin apretar",
+            "Apretar con el trinquete hasta que salte",
+            "Leer el cilindro y el tambor, y medir en otro diámetro"
+          ],
+          "explicacion": "Cero comprobado, fuerza del trinquete y varias medidas."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 13385-1: calibres.",
+    "ISO 3611: micrómetros de exteriores."
+  ]
+}

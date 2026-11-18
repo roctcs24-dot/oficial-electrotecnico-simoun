@@ -1,0 +1,85 @@
+{
+  "id": "he7_par_apriete",
+  "titulo": "Par de apriete",
+  "resumen": "Qué es el par, la llave dinamométrica y el apriete en cruz.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Fuerza por brazo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{par_apriete}} es la fuerza por la distancia al centro del tornillo, en N·m. Con 100 N en el extremo de una llave de 0,5 m se aprietan 50 N·m.\n\n[center][b]50 N·m = 100 N × 0,5 m[/b][/center]\n\nPoco par y la unión se afloja con la vibración; demasiado y el tornillo cede o la rosca se pasa."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he7_par",
+          "pregunta": "Se empuja con 200 N en el extremo de una llave de 0,25 m. ¿Qué par se aplica?",
+          "opciones": [
+            "50 N·m",
+            "800 N·m",
+            "200 N·m"
+          ],
+          "correcta": 0,
+          "explicacion": "200 × 0,25 = 50 N·m."
+        }
+      ]
+    },
+    {
+      "titulo": "La llave dinamométrica",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{llave_dinamometrica}} se ajusta al par del fabricante y hace clic al llegar. Se tira despacio y del mango, y se para en el clic. No se usa para aflojar y, al terminar, se vuelve la escala al mínimo para que el muelle no pierda la calibración.\n\nLos pares de cada unión salen del manual del equipo ([i]verificar a bordo[/i])."
+        },
+        {
+          "tipo": "animacion",
+          "id": "herramienta",
+          "params": {
+            "tipos": [
+              "dinamometrica"
+            ]
+          },
+          "pie": "La escala va en el mango."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "he7_clic",
+          "pregunta": "La llave hace clic. ¿Qué se hace?",
+          "opciones": [
+            "Dar un poco más para asegurar",
+            "Parar: el par ya está dado",
+            "Volver a empezar desde el mínimo"
+          ],
+          "correcta": 1,
+          "explicacion": "El clic dice que llegó al par. Seguir apretando pasa del par."
+        }
+      ]
+    },
+    {
+      "titulo": "Apriete en cruz",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Las bridas, las tapas y las culatas se aprietan en cruz y en varias pasadas (por ejemplo, al 30 %, al 70 % y al 100 % del par): así la junta asienta pareja y no se tuerce la pieza."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "he7_brida",
+          "pregunta": "Para apretar una brida de ocho tornillos, ordene:",
+          "pasos": [
+            "Poner todos los tornillos a mano",
+            "Apretar en cruz a un tercio del par",
+            "Repetir en cruz a dos tercios",
+            "Terminar en cruz al par final y repasar en círculo"
+          ],
+          "explicacion": "En cruz y por pasadas, la junta asienta igual por todos lados."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 6789: llaves dinamométricas.",
+    "Manual del fabricante de cada equipo (pares de apriete)."
+  ]
+}
