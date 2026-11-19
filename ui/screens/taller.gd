@@ -69,8 +69,7 @@ func _panel_pieza() -> void:
 	var id: String = args["pieza"]
 	var cable: int = args["cable"]
 	if cable >= 0 and cable < mesa.sim.cables.size():
-		var c: Array = mesa.sim.cables[cable]
-		_panel.add_child(_etiqueta("Cable %s — %s" % [c[0], c[1]], "Subtitulo"))
+		_agregar_hilo(cable, false)
 		_panel.add_child(_selector_estilo_cable(cable))
 		if mesa.tiene_mango(cable):
 			_panel.add_child(_etiqueta("Arrastre el punto dorado para acomodarlo.", "Nota"))

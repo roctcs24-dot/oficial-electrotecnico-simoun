@@ -73,6 +73,7 @@ func _iniciar_banco(nueva_mesa: MesaTaller, pestana: String, medicion := "") -> 
 	args["roja"] = ""
 	args["negra"] = ""
 	args["cable"] = -1
+	args["etiquetas"] = true
 	args["medicion"] = medicion
 	_cuadros_encuadre = CUADROS_ENCUADRE
 
@@ -130,12 +131,19 @@ func _crear_vista_mesa() -> Control:
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
 		b.custom_minimum_size.x = 56.0
 		barra.add_child(b)
-	var ver := _boton("Ver todo", func() -> void: vista.encuadrar())
+	# En vertical, textos cortos: con los cinco botones la barra no cabría en el celular.
+	var ver := _boton("Todo" if raiz.vertical else "Ver todo", func() -> void: vista.encuadrar())
 	ver.autowrap_mode = TextServer.AUTOWRAP_OFF
 	barra.add_child(ver)
-	var ordenar := _boton("Ordenar cables", ordenar_cables)
+	var ordenar := _boton("Ordenar" if raiz.vertical else "Ordenar cables", ordenar_cables)
 	ordenar.autowrap_mode = TextServer.AUTOWRAP_OFF
 	barra.add_child(ordenar)
+	var etiquetas := _boton("Hilos" if raiz.vertical else "Etiquetas", alternar_etiquetas)
+	etiquetas.name = "BotonEtiquetas"
+	etiquetas.autowrap_mode = TextServer.AUTOWRAP_OFF
+	etiquetas.toggle_mode = true
+	etiquetas.set_pressed_no_signal(args.get("etiquetas", true))
+	barra.add_child(etiquetas)
 	# En su propia línea y sin ajuste: en vertical no queda ancho junto a los botones.
 	_estado = _etiqueta("", "Nota")
 	_estado.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -467,6 +475,55 @@ func soltar(indice: int) -> void:
 			c.estado["presionado"] = false
 		"selector":
 			(c as SimSelector).soltar()
+
+
+## Enciende o apaga los marcadores de los cables (los del hilo tocado se ven siempre).
+func alternar_etiquetas() -> void:
+	args["etiquetas"] = not args.get("etiquetas", true)
+	_actualizar_marcas()
+
+
+## Ficha del hilo de un cable: su número, sus dos extremos y los demás cables del mismo punto.
+func _agregar_hilo(indice: int, de_tablero := true) -> void:
+	var d := mesa.descripcion_cable(indice)
+	_panel.add_child(_etiqueta("Hilo %s" % d["numero"], "Subtitulo"))
+	_panel.add_child(_etiqueta("%s · todos los cables con este número son el mismo punto eléctrico." % ("Potencia" if d["potencia"] else "Mando"), "Nota"))
+	for par: Array in [["Desde", d["desde"]], ["Hasta", d["hasta"]]]:
+		_panel.add_child(_etiqueta("%s %s — %s" % [par[0], par[1]["borne"], par[1]["aparato"]]))
+	var otros := mesa.cables_del_hilo(indice).size() - 1
+	if otros > 0:
+		_panel.add_child(_etiqueta("Este hilo tiene %d cable%s más, marcados en ámbar en la mesa." % [otros, "" if otros == 1 else "s"], "Nota"))
+	if de_tablero:
+		_panel.add_child(_etiqueta("Numeración de enseñanza por potencial: verificar contra el esquema del tablero.", "Nota"))
+
+
+## Tabla de hilos: un renglón por número, con los bornes que une. Tocarlo marca su primer cable.
+func _agregar_tabla_hilos() -> void:
+	_panel.add_child(_rotulo("Tabla de hilos"))
+	var por_numero := {}
+	var orden: Array[String] = []
+	for i in mesa.sim.cables.size():
+		var n := mesa.numero_hilo(i)
+		if not por_numero.has(n):
+			por_numero[n] = {"cable": i, "bornes": []}
+			orden.append(n)
+		for nodo: String in mesa.sim.cables[i]:
+			var b := nodo.replace(".", ":")
+			if not por_numero[n]["bornes"].has(b):
+				por_numero[n]["bornes"].append(b)
+	for n: String in orden:
+		var b := _boton("%s   %s" % [n, " · ".join(por_numero[n]["bornes"])], marcar_hilo.bind(int(por_numero[n]["cable"])))
+		b.name = "Hilo_%s" % n
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_panel.add_child(b)
+
+
+## Marca un cable como si se hubiera tocado en la mesa y abre su ficha.
+func marcar_hilo(indice: int) -> void:
+	args["cable"] = indice
+	args["pieza"] = ""
+	_elegir_pestana("pieza")
+	_actualizar_marcas()
 
 
 func ordenar_cables() -> void:
@@ -930,6 +987,7 @@ func _actualizar_marcas() -> void:
 	vista.punta_negra = args["negra"]
 	vista.pieza_marcada = args["pieza"]
 	vista.cable_marcado = args["cable"]
+	vista.etiquetas = args.get("etiquetas", true)
 	vista.cables_pinza = args.get("pinza_cables", [])
 	vista.queue_redraw()
 

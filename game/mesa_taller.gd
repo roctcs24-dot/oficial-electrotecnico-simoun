@@ -256,6 +256,141 @@ func cable_en(punto: Vector2, tolerancia: float) -> int:
 	return mejor
 
 
+## Número de hilo de cada cable, por potencial: todos los cables unidos entre sí sin pasar por un
+## aparato (un mismo punto eléctrico) llevan el mismo número, como en los tableros (IEC 81346).
+##   L1, L2, L3  si el punto toca un borne de fase de la alimentación;
+##   N, PE       neutro y tierra;
+##   1U1, 2V1…   bornes del motor, con el número del motor delante (M1 → 1);
+##   1L1, 2L3…   potencia tras el aparato nº 1, 2… (Q1, AS2): la fase sale del borne (1-2, 3-4, 5-6);
+##   1, 2, 3…    el resto, en el orden de los cables.
+## «hilos» (del tablero, opcional) fija el número de un punto por uno de sus nodos: {"Q1.14": "21"}.
+var hilos := {}
+var _cache_hilos := {"clave": -1, "numeros": []}
+
+
+func numero_hilo(indice: int) -> String:
+	var numeros: Array = _numeros_hilos()
+	return str(numeros[indice]) if indice < numeros.size() else ""
+
+
+## Marcador de los dos extremos de un cable: su número de hilo.
+func marcador(indice: int, _extremo: int) -> String:
+	return numero_hilo(indice)
+
+
+func _numeros_hilos() -> Array:
+	var clave := hash([sim.cables, hilos])
+	if int(_cache_hilos["clave"]) == clave:
+		return _cache_hilos["numeros"]
+	# Puntos eléctricos: unión de los nodos que une cada cable.
+	var padre := {}
+	var raiz := func(n: String) -> String:
+		var r := n
+		while padre.get(r, r) != r:
+			r = padre[r]
+		return r
+	for c: Array in sim.cables:
+		for n: String in c:
+			if not padre.has(n):
+				padre[n] = n
+		var a: String = raiz.call(c[0])
+		var b: String = raiz.call(c[1])
+		if a != b:
+			padre[b] = a
+	var redes := {}
+	var orden: Array[String] = []
+	for c: Array in sim.cables:
+		var r: String = raiz.call(c[0])
+		if not redes.has(r):
+			redes[r] = []
+			orden.append(r)
+		for n: String in c:
+			if not redes[r].has(n):
+				redes[r].append(n)
+	var nombre_red := {}
+	var usados := {}
+	for r: String in orden:
+		var nombre := _nombre_red(redes[r])
+		if not nombre.is_empty() and not usados.has(nombre):
+			nombre_red[r] = nombre
+			usados[nombre] = true
+	var siguiente := 1
+	for r: String in orden:
+		if nombre_red.has(r):
+			continue
+		while usados.has(str(siguiente)):
+			siguiente += 1
+		nombre_red[r] = str(siguiente)
+		usados[str(siguiente)] = true
+	var numeros := []
+	for c: Array in sim.cables:
+		numeros.append(nombre_red[raiz.call(c[0])])
+	_cache_hilos = {"clave": clave, "numeros": numeros}
+	return numeros
+
+
+func _nombre_red(nodos: Array) -> String:
+	for n: String in nodos:
+		if hilos.has(n):
+			return str(hilos[n])
+	var bornes_red := nodos.map(func(n: String) -> String: return borne_de(n))
+	for especial: String in ["PE", "N", "L1", "L2", "L3"]:
+		if bornes_red.has(especial):
+			return especial
+	for n: String in nodos:
+		var id := n.get_slice(".", 0)
+		var b := borne_de(n)
+		if piezas.has(id) and str(piezas[id]["tipo"]).begins_with("motor") and b.length() == 2 and b[0] in ["U", "V", "W"]:
+			return _digitos(id) + b
+	var potencia := false
+	for n: String in nodos:
+		var id := n.get_slice(".", 0)
+		if piezas.has(id) and entrada(piezas[id]["tipo"]).get("potencia", false) and borne_de(n) in ["1", "2", "3", "4", "5", "6"]:
+			potencia = true
+	if potencia:
+		for n: String in nodos:
+			var id := n.get_slice(".", 0)
+			var b := borne_de(n)
+			if piezas.has(id) and entrada(piezas[id]["tipo"]).get("potencia", false) and b in ["2", "4", "6"] and not _digitos(id).is_empty():
+				return "%sL%d" % [_digitos(id), int(b) / 2]
+	return ""
+
+
+static func _digitos(id: String) -> String:
+	var r := ""
+	for ch in id:
+		if ch >= "0" and ch <= "9":
+			r += ch
+	return r
+
+
+## true si el cable es de potencia (sale de un borne de fase de un aparato de potencia).
+func cable_de_potencia(indice: int) -> bool:
+	return color_cable(indice) != COLOR_MANDO
+
+
+## Datos del cable para el panel: su número de hilo, desde y hasta (borne y nombre del aparato) y
+## si es de potencia.
+func descripcion_cable(indice: int) -> Dictionary:
+	var c: Array = sim.cables[indice]
+	var lados := []
+	for nodo: String in c:
+		var id := nodo.get_slice(".", 0)
+		var nombre := str(entrada(piezas[id]["tipo"]).get("nombre", id)) if piezas.has(id) else id
+		lados.append({"borne": nodo.replace(".", ":"), "aparato": nombre})
+	return {"numero": numero_hilo(indice), "desde": lados[0], "hasta": lados[1], "potencia": cable_de_potencia(indice)}
+
+
+## Cables con el mismo número de hilo que el dado (el mismo punto eléctrico), él incluido.
+func cables_del_hilo(indice: int) -> Array[int]:
+	var n := numero_hilo(indice)
+	var r: Array[int] = []
+	for k in sim.cables.size():
+		if numero_hilo(k) == n:
+			r.append(k)
+	return r
+
+
 func color_cable(indice: int) -> Color:
 	var c: Array = sim.cables[indice]
 	for nodo: String in c:

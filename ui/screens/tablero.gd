@@ -12,6 +12,7 @@ func construir() -> void:
 	if not args.has("mesa"):
 		var nueva := MesaTaller.new(raiz.contenido)
 		nueva.cargar_circuito(raiz.contenido.circuito_datos(tablero["circuito"]), tablero["interior"])
+		nueva.hilos = tablero.get("hilos", {})
 		_iniciar_banco(nueva, "mando")
 		args["puerta"] = false
 	_cabecera(tablero["titulo"], tablero.get("ubicacion", ""))
@@ -197,6 +198,10 @@ func _alternar_averia(a: Dictionary) -> void:
 
 func _panel_pieza() -> void:
 	var id: String = args["pieza"]
+	var cable: int = args["cable"]
+	if cable >= 0 and cable < mesa.sim.cables.size():
+		_agregar_hilo(cable)
+		return
 	if id.is_empty() or not mesa.piezas.has(id):
 		_panel.add_child(_etiqueta("Abra la puerta y toque una pieza para ver su estado y sus ajustes.", "Nota"))
 		return
@@ -238,6 +243,7 @@ func _reparar(id: String) -> void:
 
 func _panel_datos() -> void:
 	_panel.add_child(_etiqueta(tablero.get("nota", ""), "Nota"))
+	_agregar_tabla_hilos()
 	if tablero.has("foto"):
 		_panel.add_child(_etiqueta("Referencia: %s." % tablero["foto"], "Nota"))
 	var circuito := raiz.contenido.circuito_datos(tablero["circuito"])

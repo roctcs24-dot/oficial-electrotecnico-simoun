@@ -376,6 +376,19 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
 
+## Etiquetado de hilos en los tableros (versión 5.2.0)
+
+En el interior de los tableros y en el Taller, cada cable lleva un manguito con su número de hilo en los dos extremos, junto al borne.
+
+- **Numeración por potencial** (`MesaTaller.numero_hilo`): todos los cables unidos sin pasar por un aparato son el mismo punto eléctrico y llevan el mismo número.
+  - `L1`, `L2` y `L3` si el punto toca una fase de la alimentación; `N` y `PE`, el neutro y la tierra;
+  - `1U1`, `2V1`… los bornes del motor, con su número delante (M1 → 1);
+  - `1L1`… `1L3` la potencia tras el aparato nº 1 (Q1, AS1…), con la fase de su borne (2, 4 o 6);
+  - el resto, 1, 2, 3… en el orden de los cables.
+- **Números reales:** `"hilos"` en el JSON del tablero fija el número de un punto por uno de sus nodos, como `{"Q1.14": "21"}`. Sin él, la numeración es de enseñanza: verificar contra el esquema del tablero.
+- **En la mesa:** los marcadores se dibujan desde el zoom `ZOOM_ETIQUETAS` (0,6); al tocar un cable, todo su hilo se marca en ámbar y la pestaña «Equipo» muestra su número, desde y hasta. El botón «Etiquetas» («Hilos» en vertical) los apaga. En «Datos», la tabla de hilos lista cada número con sus bornes; tocar un renglón marca el hilo.
+- **Pruebas** en `tests/test_hilos.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_hilos hilos`.
+
 ## Exámenes de la Escuela y rangos (versión 5.1.0)
 
 - **Examen de la Escuela I** (`data/examenes/v6.json`), en los módulos 7 y 8: electricidad industrial y electrónica. 20 preguntas al azar (10 de concepto, 4 casos, 2 de ordenar y 4 símbolos IEC/ANSI del sistema 3) de un banco de 38.

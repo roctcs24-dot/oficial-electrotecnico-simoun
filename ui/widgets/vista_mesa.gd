@@ -17,6 +17,10 @@ const TOLERANCIA_CABLE := 14.0
 const TOLERANCIA_CABLE_EXACTA := 6.0
 const RADIO_MANGO := 10.0
 const ALFA_ATENUADO := 0.3
+## Marcadores de los cables: a qué distancia del borne van (unidades de mesa) y desde qué zoom se
+## dibujan todos; más alejado taparían la vista, y solo se ven los del cable tocado.
+const DISTANCIA_MARCADOR := 34.0
+const ZOOM_ETIQUETAS := 0.6
 const ESCALA_TEXTURA := 1.5
 const FONDO := Color("0b1824")
 const CUADRICULA := Color("15283a")
@@ -41,6 +45,8 @@ var punta_roja := ""
 var punta_negra := ""
 var pieza_marcada := ""
 var cable_marcado := -1
+## Marcadores de destino en los dos extremos de cada cable (como los manguitos de un tablero).
+var etiquetas := true
 ## Cables abrazados por la pinza amperimétrica.
 var cables_pinza: Array = []
 
@@ -254,6 +260,12 @@ func _draw() -> void:
 		_dibujar_cable(cable_marcado)
 	for id: String in mesa.piezas:
 		_dibujar_bornes(id)
+	if etiquetas and zoom >= ZOOM_ETIQUETAS:
+		for i in mesa.sim.cables.size():
+			if i != cable_marcado:
+				_dibujar_marcadores(i)
+	if cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size():
+		_dibujar_marcadores(cable_marcado)
 	if cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size() and mesa.tiene_mango(cable_marcado):
 		var mango := a_pantalla(mesa.mango_cable(cable_marcado))
 		draw_circle(mango, RADIO_MANGO, Tema.ACENTO)
@@ -408,6 +420,51 @@ func _dibujar_cable(i: int) -> void:
 	else:
 		draw_polyline(pantalla, Color(0.0, 0.0, 0.0, 0.5 * alfa), ancho + 2.0, true)
 	draw_polyline(pantalla, Color(mesa.color_cable(i), alfa), ancho, true)
+
+
+## Los dos manguitos de un cable, a DISTANCIA_MARCADOR de cada borne a lo largo del cable, con su
+## número de hilo. Los del hilo tocado (todos sus cables) van en ámbar; los demás se atenúan.
+func _dibujar_marcadores(i: int) -> void:
+	var puntos := mesa.puntos_cable(i)
+	if puntos.size() < 2:
+		return
+	var marcado := i == cable_marcado or (cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size() and mesa.numero_hilo(i) == mesa.numero_hilo(cable_marcado))
+	var alfa := ALFA_ATENUADO if cable_marcado >= 0 and not marcado else 1.0
+	var fuente := get_theme_default_font()
+	var t := int(clampf(9.0 * zoom, 8.0, 13.0))
+	for extremo in 2:
+		var lista := puntos if extremo == 0 else _al_reves(puntos)
+		var p := a_pantalla(_punto_a_distancia(lista, DISTANCIA_MARCADOR))
+		var texto := mesa.marcador(i, extremo)
+		var w := fuente.get_string_size(texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t).x + 8.0
+		var r := Rect2(p - Vector2(w / 2.0, t * 0.75), Vector2(w, t * 1.5))
+		if marcado:
+			draw_rect(r.grow(3.0), Color(1.0, 0.69, 0.0, 0.45))
+		draw_rect(Rect2(r.position + Vector2(0, 1.5), r.size), Color(0, 0, 0, 0.45 * alfa))
+		draw_rect(r, Color("ffd26a") if marcado else Color(0.95, 0.95, 0.91, alfa))
+		draw_rect(r, Color(0.29, 0.3, 0.27, alfa), false, 1.0)
+		draw_string(fuente, Vector2(r.position.x + 4.0, r.get_center().y + t * 0.36), texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t, Color(0.08, 0.09, 0.11, alfa))
+
+
+static func _al_reves(puntos: PackedVector2Array) -> PackedVector2Array:
+	var r := PackedVector2Array()
+	for k in range(puntos.size() - 1, -1, -1):
+		r.append(puntos[k])
+	return r
+
+
+## El punto de la polilínea a «d» unidades de mesa de su inicio (o su mitad, si es más corta).
+static func _punto_a_distancia(puntos: PackedVector2Array, d: float) -> Vector2:
+	var total := 0.0
+	for k in puntos.size() - 1:
+		total += puntos[k].distance_to(puntos[k + 1])
+	var objetivo := minf(d, total * 0.35)
+	for k in puntos.size() - 1:
+		var tramo := puntos[k].distance_to(puntos[k + 1])
+		if objetivo <= tramo and tramo > 0.0:
+			return puntos[k].lerp(puntos[k + 1], objetivo / tramo)
+		objetivo -= tramo
+	return puntos[-1]
 
 
 func _dibujar_bornes(id: String) -> void:
