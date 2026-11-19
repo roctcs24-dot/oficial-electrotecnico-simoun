@@ -85,6 +85,8 @@ func _capturar() -> void:
 		await _capturar_cierre(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "hilos":
 		await _capturar_hilos(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "cables":
+		await _capturar_cables(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -745,6 +747,36 @@ func _capturar_hilos(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "h_cerca", tam)
 		raiz.pantalla_actual()._elegir_pestana("datos")
 		await _guardar(carpeta, "h_tabla", tam)
+		raiz.volver()
+
+
+## Versión 5.3.0: cables con volumen, punteras, silleta y tornillo en los bornes; de cerca, de
+## lejos y ordenados.
+func _capturar_cables(raiz: Raiz, carpeta: String) -> void:
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a("tablero", {"tablero": "bombas_mp"})
+		var p = raiz.pantalla_actual()
+		p._alternar_puerta()
+		await _esperar()
+		p = raiz.pantalla_actual()
+		var mesa: MesaTaller = p.mesa
+		var vista: VistaMesa = p.vista
+		vista.encuadrar()
+		await _guardar(carpeta, "c_todo", tam)
+		for z in [1.0, 2.0]:
+			vista.zoom = z
+			var centro := mesa.posicion_borne("KA1.A1")
+			vista.origen = vista.size / 2.0 - centro * vista.zoom
+			vista.queue_redraw()
+			await _guardar(carpeta, "c_cerca_%d" % int(z), tam)
+		p.ordenar_cables()
+		p = raiz.pantalla_actual()
+		vista = p.vista
+		vista.encuadrar()
+		await _guardar(carpeta, "c_ordenados", tam)
+		p.ordenar_cables()
 		raiz.volver()
 
 

@@ -19,7 +19,23 @@ const RADIO_MANGO := 10.0
 const ALFA_ATENUADO := 0.3
 ## Marcadores de los cables: a qué distancia del borne van (unidades de mesa) y desde qué zoom se
 ## dibujan todos; más alejado taparían la vista, y solo se ven los del cable tocado.
-const DISTANCIA_MARCADOR := 34.0
+const DISTANCIA_MARCADOR := 40.0
+## Terminación del cable en el borne, en unidades de mesa: tubo metálico de la puntera, cuello de
+## plástico (rojo 1 mm² en mando, azul 2,5 mm² en potencia, DIN 46228), silleta y tornillo.
+const PUNTERA := 14.0
+const CUELLO := 8.0
+const ANCHO_PUNTERA := 4.6
+const ANCHO_CUELLO := 8.0
+const RECORTE_CABLE := PUNTERA + CUELLO - 2.0
+const LADO_SILLETA := Vector2(18.0, 17.0)
+const RADIO_TORNILLO := 7.0
+const RADIO_BORNE_LIBRE := 13.0
+const COLOR_CUELLO_MANDO := Color("d23a2f")
+const COLOR_CUELLO_POTENCIA := Color("2f74c6")
+const METAL := Color("c9cfd3")
+## Radio de las esquinas de los cables ordenados y largo del desvío en S cuando casi no hay desvío.
+const RADIO_ESQUINA := 12.0
+const TRAMO_S := 14.0
 const ZOOM_ETIQUETAS := 0.6
 const ESCALA_TEXTURA := 1.5
 const FONDO := Color("0b1824")
@@ -39,6 +55,8 @@ const T_TINTE_MAX := 180.0
 var mesa: MesaTaller
 var origen := Vector2(20.0, 20.0)
 var zoom := 0.5
+## Cuántos cables llegan a cada borne, contado en cada dibujo.
+var _por_borne := {}
 ## Primer borne de un cable en curso, o puntas del instrumento.
 var borne_marcado := ""
 var punta_roja := ""
@@ -252,6 +270,7 @@ func _draw() -> void:
 		return
 	for id: String in mesa.piezas:
 		_dibujar_pieza(id)
+	_contar_por_borne()
 	# El cable seleccionado va al final, sobre los demás.
 	for i in mesa.sim.cables.size():
 		if i != cable_marcado:
@@ -408,24 +427,142 @@ func _dibujar_pinza(i: int) -> void:
 
 
 func _dibujar_cable(i: int) -> void:
-	var puntos := mesa.puntos_cable(i)
+	var puntos := trazado_cable(i)
+	var cuerpo := _recortar(puntos, minf(RECORTE_CABLE, _largo(puntos) * 0.3))
 	var pantalla := PackedVector2Array()
-	for p in puntos:
+	for p in cuerpo:
 		pantalla.append(a_pantalla(p))
 	var ancho := maxf(5.0 * zoom, 2.0)
 	# Con un cable seleccionado, los demás se atenúan para poder seguirlo.
 	var alfa := ALFA_ATENUADO if cable_marcado >= 0 and i != cable_marcado else 1.0
+	var base := mesa.color_cable(i)
+	# Sombra sobre la placa, borde oscuro, color y brillo: el cable se ve redondo.
+	draw_polyline(_desplazar(pantalla, Vector2(1.5, 3.0) * clampf(zoom, 0.4, 1.2)), Color(0.0, 0.0, 0.0, 0.35 * alfa), ancho + 3.0, true)
 	if i == cable_marcado:
-		draw_polyline(pantalla, Tema.ACENTO, ancho + 4.0, true)
-	else:
-		draw_polyline(pantalla, Color(0.0, 0.0, 0.0, 0.5 * alfa), ancho + 2.0, true)
-	draw_polyline(pantalla, Color(mesa.color_cable(i), alfa), ancho, true)
+		draw_polyline(pantalla, Color(Tema.ACENTO, 0.6), ancho + 8.0, true)
+	draw_polyline(pantalla, Color(base.darkened(0.6), alfa), ancho + maxf(1.6 * zoom, 1.0), true)
+	draw_polyline(pantalla, Color(base, alfa), ancho, true)
+	if ancho >= 3.0:
+		draw_polyline(_desplazar(pantalla, Vector2(-0.18, -0.24) * ancho), Color(base.lightened(0.45), 0.9 * alfa), ancho * 0.35, true)
+		draw_polyline(_desplazar(pantalla, Vector2(-0.22, -0.3) * ancho), Color(1.0, 1.0, 1.0, 0.5 * alfa), maxf(ancho * 0.12, 1.0), true)
+	for extremo in 2:
+		_dibujar_puntera(i, puntos if extremo == 0 else _al_reves(puntos), extremo, alfa)
 
 
-## Los dos manguitos de un cable, a DISTANCIA_MARCADOR de cada borne a lo largo del cable, con su
+## Puntera de un extremo del cable: tubo metálico desde el borne y cuello de color donde entra
+## el aislante. Con dos cables en el mismo borne, puntera doble (más ancha).
+func _dibujar_puntera(i: int, lista: PackedVector2Array, extremo: int, alfa: float) -> void:
+	var nodo: String = mesa.sim.cables[i][extremo]
+	var p0 := lista[0]
+	var dir := _punto_a_distancia(lista, RECORTE_CABLE) - p0
+	dir = dir.normalized() if dir.length() > 0.01 else mesa.salida_borne(nodo)
+	var doble: bool = _por_borne.get(nodo, 0) >= 2
+	var w := ANCHO_PUNTERA * (1.9 if doble else 1.0)
+	var cw := ANCHO_CUELLO * (1.8 if doble else 1.0)
+	var cuello := COLOR_CUELLO_POTENCIA if mesa.cable_de_potencia(i) else COLOR_CUELLO_MANDO
+	draw_set_transform(a_pantalla(p0), dir.angle() - PI / 2.0, Vector2(zoom, zoom))
+	draw_rect(Rect2(-w / 2.0, 0.0, w, PUNTERA), Color(METAL, alfa))
+	draw_rect(Rect2(-w / 2.0, 0.0, w * 0.35, PUNTERA), Color(1.0, 1.0, 1.0, 0.4 * alfa))
+	draw_rect(Rect2(w / 4.0, 0.0, w / 4.0, PUNTERA), Color(0.0, 0.0, 0.0, 0.25 * alfa))
+	for k in 3:
+		var y := 5.0 + k * 3.0
+		draw_line(Vector2(-w / 2.0, y), Vector2(w / 2.0, y), Color(0.35, 0.38, 0.4, alfa), 0.7)
+	var forma := PackedVector2Array([Vector2(-cw / 2.0 + 0.8, PUNTERA), Vector2(cw / 2.0 - 0.8, PUNTERA),
+			Vector2(cw / 2.0, PUNTERA + CUELLO), Vector2(-cw / 2.0, PUNTERA + CUELLO)])
+	draw_colored_polygon(forma, Color(cuello, alfa))
+	forma.append(forma[0])
+	draw_polyline(forma, Color(0.08, 0.09, 0.11, alfa), 0.8, true)
+	draw_rect(Rect2(-cw / 2.0 + 1.3, PUNTERA + 1.0, 1.6, CUELLO - 2.0), Color(1.0, 1.0, 1.0, 0.3 * alfa))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+## Recorrido dibujado del cable: el del modelo y, en los ordenados, con las esquinas redondeadas
+## (o un desvío suave en S cuando los dos bornes casi están alineados).
+func trazado_cable(i: int) -> PackedVector2Array:
+	var p := mesa.puntos_cable(i)
+	if p.size() != 4 or mesa.ruta_cable(i)["estilo"] != "angulos":
+		return p
+	var y := p[1].y
+	var baja := signf(y - p[0].y)
+	var sube := signf(p[3].y - y)
+	if absf(p[3].x - p[0].x) < 2.0 * RADIO_ESQUINA + 4.0 and baja == sube and baja != 0.0:
+		var t := minf(TRAMO_S, minf(absf(y - p[0].y), absf(p[3].y - y)))
+		var e1 := Vector2(p[0].x, y - baja * t)
+		var e2 := Vector2(p[3].x, y + sube * t)
+		var r := PackedVector2Array([p[0]])
+		for k in 9:
+			r.append(_cubica(e1, Vector2(p[0].x, y), Vector2(p[3].x, y), e2, k / 8.0))
+		r.append(p[3])
+		return r
+	return redondear(p, RADIO_ESQUINA)
+
+
+static func redondear(p: PackedVector2Array, radio: float) -> PackedVector2Array:
+	var r := PackedVector2Array([p[0]])
+	for k in range(1, p.size() - 1):
+		var esquina := p[k]
+		var rr := minf(radio, minf(esquina.distance_to(p[k - 1]), esquina.distance_to(p[k + 1])) / 2.0)
+		if rr < 0.5:
+			r.append(esquina)
+			continue
+		var e1 := esquina + (p[k - 1] - esquina).normalized() * rr
+		var e2 := esquina + (p[k + 1] - esquina).normalized() * rr
+		for n in 7:
+			var t := n / 6.0
+			r.append(e1.lerp(esquina, t).lerp(esquina.lerp(e2, t), t))
+	r.append(p[-1])
+	return r
+
+
+static func _cubica(a: Vector2, c1: Vector2, c2: Vector2, b: Vector2, t: float) -> Vector2:
+	var u := 1.0 - t
+	return a * u * u * u + c1 * 3.0 * u * u * t + c2 * 3.0 * u * t * t + b * t * t * t
+
+
+static func _desplazar(puntos: PackedVector2Array, d: Vector2) -> PackedVector2Array:
+	var r := PackedVector2Array()
+	for p in puntos:
+		r.append(p + d)
+	return r
+
+
+static func _largo(puntos: PackedVector2Array) -> float:
+	var total := 0.0
+	for k in puntos.size() - 1:
+		total += puntos[k].distance_to(puntos[k + 1])
+	return total
+
+
+## La polilínea sin sus primeras y últimas «d» unidades: ahí van las punteras.
+static func _recortar(puntos: PackedVector2Array, d: float) -> PackedVector2Array:
+	if d <= 0.0 or puntos.size() < 2:
+		return puntos
+	return _al_reves(_quitar_inicio(_al_reves(_quitar_inicio(puntos, d)), d))
+
+
+static func _quitar_inicio(puntos: PackedVector2Array, d: float) -> PackedVector2Array:
+	var resto := d
+	for k in puntos.size() - 1:
+		var tramo := puntos[k].distance_to(puntos[k + 1])
+		if resto < tramo:
+			var r := PackedVector2Array([puntos[k].lerp(puntos[k + 1], resto / tramo)])
+			r.append_array(puntos.slice(k + 1))
+			return r
+		resto -= tramo
+	return PackedVector2Array([puntos[-1], puntos[-1]])
+
+
+func _contar_por_borne() -> void:
+	_por_borne = {}
+	for c: Array in mesa.sim.cables:
+		for nodo: String in c:
+			_por_borne[nodo] = _por_borne.get(nodo, 0) + 1
+
+
+## Los dos manguitos de un cable, pasada la puntera, girados a lo largo del cable y con su
 ## número de hilo. Los del hilo tocado (todos sus cables) van en ámbar; los demás se atenúan.
 func _dibujar_marcadores(i: int) -> void:
-	var puntos := mesa.puntos_cable(i)
+	var puntos := trazado_cable(i)
 	if puntos.size() < 2:
 		return
 	var marcado := i == cable_marcado or (cable_marcado >= 0 and cable_marcado < mesa.sim.cables.size() and mesa.numero_hilo(i) == mesa.numero_hilo(cable_marcado))
@@ -434,16 +571,26 @@ func _dibujar_marcadores(i: int) -> void:
 	var t := int(clampf(9.0 * zoom, 8.0, 13.0))
 	for extremo in 2:
 		var lista := puntos if extremo == 0 else _al_reves(puntos)
-		var p := a_pantalla(_punto_a_distancia(lista, DISTANCIA_MARCADOR))
 		var texto := mesa.marcador(i, extremo)
 		var w := fuente.get_string_size(texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t).x + 8.0
-		var r := Rect2(p - Vector2(w / 2.0, t * 0.75), Vector2(w, t * 1.5))
+		var d := maxf(DISTANCIA_MARCADOR, RECORTE_CABLE + (w / 2.0 + 3.0) / zoom)
+		var p := _punto_a_distancia(lista, d)
+		var tangente := _punto_a_distancia(lista, d + 4.0) - _punto_a_distancia(lista, d - 4.0)
+		var angulo := tangente.angle() if tangente.length() > 0.01 else 0.0
+		# Que el número se lea de izquierda a derecha, o de arriba abajo en los tramos verticales.
+		if cos(angulo) < -0.05 or (absf(cos(angulo)) <= 0.05 and sin(angulo) < 0.0):
+			angulo += PI
+		draw_set_transform(a_pantalla(p), angulo, Vector2.ONE)
+		var r := Rect2(Vector2(-w / 2.0, -t * 0.75), Vector2(w, t * 1.5))
 		if marcado:
 			draw_rect(r.grow(3.0), Color(1.0, 0.69, 0.0, 0.45))
 		draw_rect(Rect2(r.position + Vector2(0, 1.5), r.size), Color(0, 0, 0, 0.45 * alfa))
 		draw_rect(r, Color("ffd26a") if marcado else Color(0.95, 0.95, 0.91, alfa))
+		draw_line(r.position + Vector2(1.5, 1.0), Vector2(r.position.x + 1.5, r.end.y - 1.0), Color(0.6, 0.61, 0.57, alfa), 1.0)
+		draw_line(Vector2(r.end.x - 1.5, r.position.y + 1.0), r.end - Vector2(1.5, 1.0), Color(0.6, 0.61, 0.57, alfa), 1.0)
 		draw_rect(r, Color(0.29, 0.3, 0.27, alfa), false, 1.0)
-		draw_string(fuente, Vector2(r.position.x + 4.0, r.get_center().y + t * 0.36), texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t, Color(0.08, 0.09, 0.11, alfa))
+		draw_string(fuente, Vector2(r.position.x + 4.0, t * 0.36), texto, HORIZONTAL_ALIGNMENT_LEFT, -1, t, Color(0.08, 0.09, 0.11, alfa))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 static func _al_reves(puntos: PackedVector2Array) -> PackedVector2Array:
@@ -467,15 +614,47 @@ static func _punto_a_distancia(puntos: PackedVector2Array, d: float) -> Vector2:
 	return puntos[-1]
 
 
+## Bornes: con cable, la silleta de apriete sobre las punteras y el tornillo encima; libres, el
+## tornillo suelto y un aro ámbar discontinuo que invita a cablear.
 func _dibujar_bornes(id: String) -> void:
 	for b: String in mesa.bornes(id):
 		var nodo := "%s.%s" % [id, b]
 		var p := a_pantalla(mesa.posicion_borne(nodo))
-		var radio := maxf(8.0 * zoom, 4.0)
+		var conectado: bool = _por_borne.get(nodo, 0) > 0
+		var radio := maxf(RADIO_TORNILLO * zoom, 3.0)
 		if nodo == borne_marcado:
-			draw_circle(p, radio + 5.0, Tema.ACENTO)
+			draw_circle(p, maxf(RADIO_BORNE_LIBRE * zoom, 7.0) + 4.0, Tema.ACENTO)
+		if conectado:
+			var lado := LADO_SILLETA * zoom
+			var r := Rect2(p - lado / 2.0, lado)
+			draw_rect(Rect2(r.position + Vector2(1.0, 2.0), r.size), Color(0.0, 0.0, 0.0, 0.4))
+			draw_rect(r, Color("9aa3a9"))
+			draw_rect(Rect2(r.position, Vector2(r.size.x, r.size.y * 0.45)), Color("dfe4e7"))
+			draw_rect(r, Color("3a4248"), false, maxf(0.8 * zoom, 1.0))
 		else:
-			draw_arc(p, radio + 2.0, 0.0, TAU, 20, Color(Tema.ACENTO, 0.7), 1.5, true)
+			var anillo := maxf(RADIO_BORNE_LIBRE * zoom, 7.0)
+			for k in 12:
+				var desde := k * TAU / 12.0
+				draw_arc(p, anillo, desde, desde + TAU / 20.0, 4, Color(Tema.ACENTO, 0.85 if zoom >= ZOOM_ETIQUETAS else 0.5), maxf(1.8 * zoom, 1.5), true)
+			draw_circle(p + Vector2(1.0, 2.0) * maxf(zoom, 0.5), radio + 1.5, Color(0.0, 0.0, 0.0, 0.45))
+		_tornillo(p, radio)
+
+
+## Tornillo combinado (ranura y pozidriv) niquelado, visto de frente.
+func _tornillo(p: Vector2, r: float) -> void:
+	draw_circle(p, r + maxf(zoom, 0.8), Color("2a3036"))
+	draw_circle(p, r, Color("8d969c"))
+	draw_circle(p + Vector2(-0.12, -0.12) * r, r * 0.78, Color("c3cacf"))
+	draw_circle(p + Vector2(-0.22, -0.24) * r, r * 0.45, Color("e4e8eb"))
+	var k := r * 0.62
+	var oscuro := Color("3a4146")
+	draw_line(p - Vector2(k, 0.0), p + Vector2(k, 0.0), oscuro, maxf(r * 0.26, 1.0), true)
+	draw_line(p - Vector2(0.0, k), p + Vector2(0.0, k), oscuro, maxf(r * 0.26, 1.0), true)
+	if r >= 5.0:
+		var q := r * 0.3
+		draw_line(p + Vector2(-q, -q), p + Vector2(q, q), Color("4f575d"), maxf(r * 0.1, 0.8), true)
+		draw_line(p + Vector2(-q, q), p + Vector2(q, -q), Color("4f575d"), maxf(r * 0.1, 0.8), true)
+	draw_circle(p + Vector2(-0.38, -0.45) * r, r * 0.16, Color(1.0, 1.0, 1.0, 0.8))
 
 
 func _dibujar_punta(nodo: String, color: Color) -> void:

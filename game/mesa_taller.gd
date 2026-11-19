@@ -8,7 +8,13 @@ const AUTOGUARDADO := "user://taller_ultimo.json"
 const COLUMNAS_PLANTILLA := 4
 const SEPARACION_PLANTILLA := Vector2(540.0, 640.0)
 const CURVA_CABLE := 0.12
-const PUNTOS_CABLE := 12
+const PUNTOS_CABLE := 20
+## Cuánto sale recto el cable del borne antes de curvarse, en proporción a su largo y con topes.
+const SALIDA_CABLE := 0.35
+const SALIDA_MIN := 30.0
+const SALIDA_MAX := 120.0
+## Tramo recto del cable al salir del borne (puntera, cuello y manguito), en unidades de mesa.
+const TRAMO_RECTO := 50.0
 const CANALES_CABLE := 9
 const SEPARACION_CANALES := 22.0
 ## Colores de IEC 60445 para potencia; los cables de mando van en rojo.
@@ -197,9 +203,11 @@ func mover_mango(indice: int, punto: Vector2) -> void:
 	var b := posicion_borne(c[1])
 	var medio := (a + b) / 2.0
 	if r["estilo"] == "curva":
-		# El punto medio de la curva queda a mitad de camino hacia su punto de control.
-		var caida := Vector2(0.0, a.distance_to(b) * CURVA_CABLE)
-		var d := (punto - medio) * 2.0 - caida
+		# El punto medio de la curva (t = 0,5) pesa 1/16 los extremos, 4/16 los controles de salida
+		# y 6/16 el control del medio (medio + desvío + caída).
+		var k := _controles_curva(c)
+		var fijo: Vector2 = (k[0] + k[3] + (k[1] + k[2]) * 4.0) / 16.0
+		var d: Vector2 = (punto - fijo) / 0.375 - (k[0] + k[3]) / 2.0 - _caida(k[0], k[3])
 		r["dx"] = d.x
 		r["dy"] = d.y
 	else:
@@ -234,12 +242,57 @@ func puntos_cable(indice: int) -> PackedVector2Array:
 		"angulos":
 			var y: float = medio.y + r["dy"]
 			return PackedVector2Array([a, Vector2(a.x, y), Vector2(b.x, y), b])
-	var control := medio + Vector2(r["dx"], r["dy"]) + Vector2(0.0, a.distance_to(b) * CURVA_CABLE)
-	var puntos := PackedVector2Array()
+	# El cable sale recto de cada borne, alejándose del aparato, y luego sigue una curva de grado 4.
+	# El desvío y la caída van solo en el control del medio: no tuercen la salida.
+	var k := _controles_curva(c)
+	var a2: Vector2 = k[0]
+	var c1: Vector2 = k[1]
+	var c3: Vector2 = k[2]
+	var b2: Vector2 = k[3]
+	var c2 := (a2 + b2) / 2.0 + Vector2(r["dx"], r["dy"]) + _caida(a2, b2)
+	var puntos := PackedVector2Array([a])
 	for i in PUNTOS_CABLE + 1:
-		var t := float(i) / PUNTOS_CABLE
-		puntos.append(a.lerp(control, t).lerp(control.lerp(b, t), t))
+		# Puntos más juntos cerca de los extremos, donde el cable se dobla; t = 0,5 en el medio.
+		var t := (1.0 - cos(PI * i / PUNTOS_CABLE)) / 2.0
+		var u := 1.0 - t
+		puntos.append(a2 * u * u * u * u + c1 * 4.0 * u * u * u * t + c2 * 6.0 * u * u * t * t + c3 * 4.0 * u * t * t * t + b2 * t * t * t * t)
+	puntos.append(b)
 	return puntos
+
+
+## Extremos del tramo curvo (tras el tramo recto de salida de cada borne) y sus controles de
+## salida: [inicio, control 1, control 2, fin].
+func _controles_curva(c: Array) -> Array:
+	var a := posicion_borne(c[0])
+	var b := posicion_borne(c[1])
+	var da := salida_borne(c[0])
+	var db := salida_borne(c[1])
+	var recto := minf(TRAMO_RECTO, a.distance_to(b) * 0.25)
+	var a2 := a + da * recto
+	var b2 := b + db * recto
+	var largo := _largo_salida(a2, b2)
+	return [a2, a2 + da * largo, b2 + db * largo, b2]
+
+
+## Hacia dónde sale un cable de su borne: alejándose del centro del aparato, por el lado más
+## cercano (arriba o abajo en contactores y relés; a un costado en bornes laterales).
+func salida_borne(nodo: String) -> Vector2:
+	var id := nodo.get_slice(".", 0)
+	var tam := tamano_pieza(id)
+	var rel := posicion_borne(nodo) - (posicion_pieza(id) + tam / 2.0)
+	rel = Vector2(rel.x / maxf(tam.x, 1.0), rel.y / maxf(tam.y, 1.0))
+	if absf(rel.x) > absf(rel.y):
+		return Vector2(signf(rel.x), 0.0)
+	return Vector2(0.0, -1.0 if rel.y < 0.0 else 1.0)
+
+
+func _largo_salida(a: Vector2, b: Vector2) -> float:
+	return clampf(a.distance_to(b) * SALIDA_CABLE, SALIDA_MIN, SALIDA_MAX)
+
+
+## Caída del control del medio: el centro del cable cuelga CURVA_CABLE/2 de su largo, como antes.
+func _caida(a: Vector2, b: Vector2) -> Vector2:
+	return Vector2(0.0, a.distance_to(b) * CURVA_CABLE / 0.75)
 
 
 ## Cable más cercano al punto, o -1.

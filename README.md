@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v5.1**, con el plan completo:
+Estado: **v5.3**, con el plan completo:
 
 - la v1 a la v5 de la hoja de ruta: los siete sistemas del buque están abiertos, con lecciones y examen, y Taller y Guardia en los seis sistemas de equipos;
 - la Escuela técnica con sus cinco módulos (electricidad industrial, electrónica, hidráulica y neumática, válvulas y líneas, herramientas y racores) y sus exámenes v6 y v7;
@@ -375,6 +375,18 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Minijuego «Identifique la herramienta»** (`JuegoHerramientas`, pantalla `identifique_herramienta`): siete herramientas para nombrar y tres rondas de llaves («¿qué llave métrica entra en una tuerca de 3/4"?»). Registro `identifique_herramienta`; sale en el Pañol y en la evaluación del módulo 11.
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
+
+## Cables y bornes con aspecto real (versión 5.3.0)
+
+La mesa del Taller y el interior de los tableros dibujan los cables y su conexión como se ven a bordo (`ui/widgets/vista_mesa.gd`).
+
+- **Cable con volumen:** sombra sobre la placa, borde oscuro, color y un brillo. El cable tocado lleva un halo ámbar.
+- **Salida del borne** (`MesaTaller.salida_borne`): cada cable sale recto `TRAMO_RECTO` (50 unidades) alejándose del aparato, hacia arriba o abajo según el lado del borne y hacia un costado en los bornes laterales. Luego sigue una curva de grado 4. El arrastre del mango y la caída del centro no tuercen esa salida.
+- **Puntera:** tubo metálico desde el borne y cuello de color según la sección (DIN 46228). El cuello es rojo (1 mm²) en mando y azul (2,5 mm²) en potencia. Con dos o más cables en un borne, la puntera es doble.
+- **Borne con cable:** silleta de apriete sobre la puntera y tornillo niquelado de cabeza combinada encima. **Borne libre:** tornillo suelto con un aro ámbar discontinuo.
+- **Ordenar cables:** las esquinas se redondean (`RADIO_ESQUINA`). Si los dos bornes casi están alineados, el cable hace un desvío suave en S.
+- **Manguitos:** van pasada la puntera, girados a lo largo del cable.
+- **Pruebas** en `tests/test_cables_reales.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_cables cables`.
 
 ## Etiquetado de hilos en los tableros (versión 5.2.0)
 
