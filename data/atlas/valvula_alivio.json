@@ -1,0 +1,360 @@
+{
+ "id": "valvula_alivio",
+ "ficha": "valvula_alivio",
+ "titulo": "Válvula de alivio",
+ "termino": "valvula_alivio",
+ "icono": "hidraulica",
+ "resumen": "Limita la presión máxima: cuando la presión vence al muelle, abre y manda el aceite al tanque.",
+ "bornes_dibujo": {
+  "P": [
+   140,
+   330
+  ],
+  "T": [
+   232,
+   330
+  ]
+ },
+ "que_es": {
+  "texto": "La {{valvula_alivio}} es la protección de todo el circuito. Está cerrada mientras la presión en P es menor que la fuerza del muelle; al llegar al {{tarado}}, el asiento se levanta y el aceite pasa a T. Sin ella, con el cilindro a tope la bomba reventaría la manguera más débil. Todo el caudal que pasa por ella se convierte en calor.",
+  "partes": [
+   {
+    "texto": "Capuchón precintado.",
+    "marca": [
+     162,
+     30
+    ]
+   },
+   {
+    "texto": "Tornillo de ajuste del tarado.",
+    "marca": [
+     194,
+     76
+    ]
+   },
+   {
+    "texto": "Contratuerca.",
+    "marca": [
+     152,
+     106
+    ]
+   },
+   {
+    "texto": "Cartucho con el muelle y el asiento.",
+    "marca": [
+     196,
+     180
+    ]
+   },
+   {
+    "texto": "Bloque de montaje.",
+    "marca": [
+     86,
+     270
+    ]
+   },
+   {
+    "texto": "Boca P, de la bomba.",
+    "marca": [
+     140,
+     330
+    ]
+   },
+   {
+    "texto": "Boca T, al tanque.",
+    "marca": [
+     232,
+     330
+    ]
+   }
+  ],
+  "placa": "Cartucho de alivio · tarado 160 bar · rango 50-210 bar · 40 L/min",
+  "a_bordo": "Una en cada central y en cada circuito; la central de cubierta del buque tiene circuitos de 65 a 160 bar según las fotos — valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_hidraulico",
+  "params": {
+   "foco": "alivio",
+   "tarado": 160
+  },
+  "pasos": [
+   "Con la direccional en el centro cerrado el aceite no tiene salida: la presión sube al tarado y el alivio lo devuelve todo al tanque.",
+   "Con Y1 el cilindro avanza y la presión es solo la que pide la carga: el alivio queda cerrado.",
+   "Con el cilindro a tope la presión vuelve al tarado: el muelle cede y todo el caudal pasa al tanque convertido en calor."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_valvula_alivio.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "P",
+     "x": 162,
+     "y": 162,
+     "tam": 13
+    },
+    {
+     "texto": "T",
+     "x": 162,
+     "y": 218,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "P": [
+    150,
+    172
+   ],
+   "T": [
+    150,
+    228
+   ]
+  },
+  "bornes": {
+   "P": "Entrada desde la bomba, antes de cualquier válvula que pueda cerrar.",
+   "T": "Salida al tanque, sin contrapresión: la presión en T se suma al tarado."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada P",
+    "bornes": [
+     "P"
+    ],
+    "texto": "Siempre conectada a la bomba: nada debe poder aislarla."
+   },
+   {
+    "nombre": "Salida T",
+    "bornes": [
+     "T"
+    ],
+    "texto": "Directa al tanque."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Tarado",
+    "instrumento": "manometro",
+    "roja": "P",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de la bomba con el cilindro a tope",
+    "nota": "Se lleva el cilindro a tope (o se cierra la salida) y se lee el máximo: eso es el tarado.",
+    "titulo_tabla": "Qué marca a tope",
+    "columna": "P",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "P",
+     "instrumento": "manometro",
+     "params": {
+      "actuador": {
+       "a_tope": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Tarado correcto",
+      "hacer": "Normal: 160 bar",
+      "bien": true
+     },
+     {
+      "estado": "Asiento dañado",
+      "hacer": "Falla: no llega",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "fuga": true
+        }
+       }
+      }
+     },
+     {
+      "estado": "Pegada abierta",
+      "hacer": "Falla: casi no sube",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "pegada": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Caudal por el alivio",
+    "instrumento": "caudalimetro",
+    "roja": "T",
+    "negra": "",
+    "escala": "0-60 L/min",
+    "como": "Caudalímetro en la salida T",
+    "nota": "Lo que pasa por el alivio se convierte en calor.",
+    "titulo_tabla": "Qué pasa a tanque",
+    "columna": "T",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "Q_alivio",
+     "instrumento": "caudalimetro"
+    },
+    "filas": [
+     {
+      "estado": "Cilindro avanzando",
+      "hacer": "Normal: cerrado",
+      "bien": true
+     },
+     {
+      "estado": "Cilindro a tope",
+      "hacer": "Normal, pero todo es calor: no dejarlo así",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No sube de presión",
+    "sintoma": "Nada se mueve con carga y el manómetro marca poco.",
+    "mide": [
+     {
+      "donde": "P a tope",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "P",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "pegada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Suciedad que mantiene el asiento abierto o muelle roto.",
+    "reparacion": "Desmontar y limpiar el cartucho; cambiarlo si el asiento está marcado."
+   },
+   {
+    "nombre": "Tarado bajo",
+    "sintoma": "Las máquinas pierden fuerza poco a poco.",
+    "mide": [
+     {
+      "donde": "P a tope",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "P",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "fuga": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Asiento erosionado: pasa aceite antes de llegar al tarado.",
+    "reparacion": "Cambiar el cartucho y tararlo con manómetro."
+   },
+   {
+    "nombre": "Aceite muy caliente",
+    "sintoma": "Temperatura alta en la central sin trabajar mucho.",
+    "mide": [
+     {
+      "donde": "calor a tope",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "calor",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "a_tope": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "El circuito pasa mucho tiempo con todo el caudal por el alivio (direccional en centro cerrado o cilindro a tope).",
+    "reparacion": "Descargar la bomba cuando no se trabaja y no dejar los cilindros apretados a tope."
+   },
+   {
+    "nombre": "Tarado manipulado",
+    "sintoma": "Mangueras que revientan o latiguillos que sudan.",
+    "mide": [
+     {
+      "donde": "tarado",
+      "bien": false,
+      "valor": "210 bar"
+     }
+    ],
+    "causa": "Alguien subió el tarado por encima de lo que aguantan las mangueras.",
+    "reparacion": "Volver al tarado del esquema, precintar y revisar mangueras y racores."
+   },
+   {
+    "nombre": "Silba y vibra",
+    "sintoma": "Pitido y vibración al abrir.",
+    "mide": [
+     {
+      "donde": "presión",
+      "bien": false,
+      "valor": "oscila"
+     }
+    ],
+    "causa": "Muelle o asiento gastado, o aire en el aceite.",
+    "reparacion": "Cambiar el cartucho y purgar."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "precinto puesto y sin fugas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tarado comprobado con manómetro y apuntado"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "cartucho limpio o cambiado"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Esquema hidráulico de la central de cubierta (verificar a bordo)."
+ ]
+}

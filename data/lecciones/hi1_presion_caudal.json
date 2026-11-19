@@ -1,0 +1,85 @@
+{
+  "id": "hi1_presion_caudal",
+  "titulo": "Presión, fuerza y caudal",
+  "resumen": "Pascal, la prensa y la potencia hidráulica.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Presión y fuerza",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En un líquido encerrado, la presión llega igual a todas partes: es el {{principio_pascal}}. Por eso con poca fuerza sobre un émbolo pequeño se levanta mucho peso sobre uno grande.\n\n• Presión = fuerza ÷ área.\n• Fuerza = presión × área.\n• 1 bar son 10 N por cada cm², unos 14,5 psi.\n\nMueva la fuerza del émbolo pequeño y mire la presión y la fuerza del grande."
+        },
+        {
+          "tipo": "animacion",
+          "id": "prensa_hidraulica",
+          "params": {
+            "pequeno": 20,
+            "grande": 100,
+            "fuerza": 200
+          },
+          "pie": "Prensa de enseñanza: émbolos de 20 y 100 mm, área 25 veces mayor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi1_fuerza",
+          "pregunta": "Un cilindro de 50 cm² recibe aceite a 100 bar. ¿Con qué fuerza empuja?",
+          "opciones": [
+            "5 kN",
+            "50 kN",
+            "500 kN"
+          ],
+          "correcta": 1,
+          "explicacion": "100 bar son 1000 N por cm²; por 50 cm² dan 50 000 N, es decir, 50 kN."
+        }
+      ]
+    },
+    {
+      "titulo": "Caudal y velocidad",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{caudal}} es el volumen de aceite por minuto (L/min) y da la velocidad: cuanto más caudal entra en un cilindro, más rápido se mueve. La presión no la pone la bomba: la pone lo que se opone al aceite. Una bomba sin nada delante da caudal a casi cero bar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi1_velocidad",
+          "pregunta": "Si llega el doble de caudal al mismo cilindro, ¿qué cambia?",
+          "opciones": [
+            "La fuerza se duplica",
+            "La velocidad se duplica",
+            "La presión se duplica"
+          ],
+          "correcta": 1,
+          "explicacion": "El caudal da la velocidad; la fuerza la da la presión, y la presión la pide la carga."
+        }
+      ]
+    },
+    {
+      "titulo": "Potencia y calor",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La potencia hidráulica es presión por caudal: en kW, bar × L/min ÷ 600. Toda la potencia que no se convierte en movimiento, por ejemplo la del aceite que pasa por una válvula de alivio, se convierte en calor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi1_potencia",
+          "pregunta": "Una bomba da 30 L/min a 160 bar. ¿Qué potencia hidráulica es?",
+          "opciones": [
+            "0,8 kW",
+            "8 kW",
+            "80 kW"
+          ],
+          "correcta": 1,
+          "explicacion": "160 × 30 ÷ 600 = 8 kW."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413: transmisiones hidráulicas.",
+    "Manual de la central hidráulica de cubierta (verificar a bordo)."
+  ]
+}

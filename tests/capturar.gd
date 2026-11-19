@@ -77,6 +77,8 @@ func _capturar() -> void:
 		await _capturar_racores(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "lineas":
 		await _capturar_lineas(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "hidraulica":
+		await _capturar_hidraulica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -669,6 +671,45 @@ func _capturar_valvulas(raiz: Raiz, carpeta: String) -> void:
 
 ## Etapa 44: seguir líneas. Minijuego con la línea a medias, aislar con válvulas elegidas y ya
 ## comprobado, pregunta de servicio, colores de tubería y una lección.
+## Etapa 45: hidráulica. Atlas (funciona, medir y conexión), minijuego ISO 1219 con una ronda de
+## pieza contestada y otra de nombre, el módulo 9 y dos lecciones.
+func _capturar_hidraulica(raiz: Raiz, carpeta: String) -> void:
+	var lista := JuegoIso1219.leer(raiz.contenido)
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 45
+	var pieza := JuegoIso1219.ronda_pieza(JuegoIso1219.simbolo(lista, "acumulador"), lista, azar)
+	var nombre := JuegoIso1219.ronda_nombre(JuegoIso1219.simbolo(lista, "direccional_43"), lista, azar)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(9)
+		await _guardar(carpeta, "h_modulo", tam)
+		for par: Array in [["valvula_alivio", "funciona"], ["valvula_alivio", "que_es"], ["bomba_engranajes", "medir"], ["acumulador", "funciona"], ["cilindro_hidraulico", "conexion"], ["bomba_pistones", "funciona"]]:
+			raiz.ir_a("atlas", {"id": par[0], "pestana": par[1]})
+			var vista := raiz.pantalla_actual()
+			if par[1] == "funciona" and vista.animacion != null and vista.animacion.has_method("_mandar"):
+				vista.animacion._mandar(1)
+				for i in 60:
+					vista.animacion._process(0.05)
+			await _guardar(carpeta, "h_%s_%s" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a("simbolos_iso1219", {"items": [pieza, nombre], "indice": 0, "respuestas": {}})
+		await _guardar(carpeta, "h_iso_pieza", tam)
+		raiz.pantalla_actual().elegir(int(pieza["correcta"]))
+		await _guardar(carpeta, "h_iso_pieza_ok", tam)
+		raiz.volver()
+		raiz.ir_a("simbolos_iso1219", {"items": [pieza, nombre], "indice": 1, "respuestas": {0: {"acierto": true, "elegida": pieza["correcta"]}}})
+		await _guardar(carpeta, "h_iso_nombre", tam)
+		raiz.volver()
+		for id: String in ["hi1_presion_caudal", "hi8_acumuladores"]:
+			raiz.ir_a("leccion", {"id": id, "sistema": 9, "pagina": 0, "respuestas": {}})
+			await _esperar()
+			await _guardar(carpeta, "h_%s" % id, tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
 func _capturar_lineas(raiz: Raiz, carpeta: String) -> void:
 	var items := JuegoLineas.crear_items(JuegoLineas.leer(raiz.contenido, "purificadora"))
 	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]

@@ -11,7 +11,14 @@ const CUERPOS := {
 	"megohmetro": [Color("d9622b"), Color("7a3212"), "MEGÓHMETRO"],
 	"pinza": [Color("e8c43a"), Color("7a6416"), "PINZA"],
 	"monitor": [Color("e9ebe8"), Color("3b444b"), "MONITOR"],
+	"manometro": [Color("4a8ad0"), Color("123766"), "MANÓMETRO"],
+	"caudalimetro": [Color("e8a03a"), Color("7a4206"), "CAUDALÍMETRO"],
+	"comparador": [Color("d9dde0"), Color("59626a"), "COMPARADOR"],
 }
+## Instrumentos de fluidos (y el reloj comparador): se unen a la pieza con un latiguillo de prueba o
+## un soporte, no con puntas.
+const DE_FLUIDOS := ["manometro", "caudalimetro", "comparador"]
+const LATIGUILLO := Color("1d2124")
 
 var dibujo: VistaBornes
 var instrumento := "multimetro"
@@ -98,7 +105,12 @@ func _draw() -> void:
 	var tam_nombre := int(clampf(r.size.x * 0.085, 9.0, 14.0))
 	var ancho_nombre := fuente.get_string_size(nombre, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_nombre).x
 	draw_string(fuente, Vector2(r.get_center().x - ancho_nombre / 2.0, pantalla.end.y + tam_nombre * 1.5), nombre, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_nombre, Tema.TINTA)
-	if instrumento == "pinza":
+	if instrumento in DE_FLUIDOS:
+		# Sin selector: la escala va escrita bajo el nombre y la conexión, abajo.
+		var tam_escala := int(clampf(r.size.x * 0.075, 9.0, 13.0))
+		var ancho_escala := fuente.get_string_size(escala, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_escala).x
+		draw_string(fuente, Vector2(r.get_center().x - ancho_escala / 2.0, pantalla.end.y + tam_nombre * 1.5 + tam_escala * 1.4), escala, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_escala, Tema.TINTA)
+	elif instrumento == "pinza":
 		# Mordaza abierta arriba del cuerpo.
 		var c := Vector2(r.get_center().x, r.position.y - 2.0)
 		draw_arc(c, r.size.x * 0.28, PI, TAU, 24, Color("2b2f32"), 8.0, true)
@@ -115,6 +127,11 @@ func _draw() -> void:
 		draw_string(fuente, Vector2(x_escala, centro.y - radio * 0.75), escala, HORIZONTAL_ALIGNMENT_LEFT, -1, tam_escala, Tema.TINTA)
 	for i in 2:
 		var hembra := _hembra(i)
+		if instrumento in DE_FLUIDOS:
+			if (i == 0 and not roja.is_empty()) or (i == 1 and not negra.is_empty()):
+				draw_circle(hembra, 7.0, Color("b9c3cb"))
+				draw_circle(hembra, 4.0, LATIGUILLO)
+			continue
 		draw_circle(hembra, 6.0, ROJO if i == 0 else NEGRO)
 
 
@@ -159,14 +176,17 @@ func _dibujar_cables() -> void:
 		var borne := roja if i == 0 else negra
 		if borne.is_empty():
 			continue
+		if instrumento in DE_FLUIDOS:
+			_curva(_punto(borne, i), _hembra(i), LATIGUILLO, 6.0)
+			continue
 		_curva(_punto(borne, i), _hembra(i), ROJO if i == 0 else NEGRO)
 
 
-func _curva(desde: Vector2, hasta: Vector2, color: Color) -> void:
+func _curva(desde: Vector2, hasta: Vector2, color: Color, grosor := 4.0) -> void:
 	var puntos := PackedVector2Array()
 	var control := Vector2((desde.x + hasta.x) / 2.0, maxf(desde.y, hasta.y) + 40.0)
 	for k in 21:
 		var t := k / 20.0
 		puntos.append(desde.lerp(control, t).lerp(control.lerp(hasta, t), t))
-	_cables.draw_polyline(puntos, color, 4.0, true)
+	_cables.draw_polyline(puntos, color, grosor, true)
 	_cables.draw_circle(desde, 5.0, color)

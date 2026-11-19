@@ -1,0 +1,321 @@
+{
+ "id": "acumulador",
+ "ficha": "acumulador",
+ "titulo": "Acumulador de vejiga",
+ "termino": "acumulador_hidraulico",
+ "icono": "hidraulica",
+ "resumen": "Guarda aceite a presión con nitrógeno comprimido: energía que queda aunque la bomba pare.",
+ "bornes_dibujo": {
+  "N2": [
+   150,
+   14
+  ],
+  "P": [
+   150,
+   404
+  ]
+ },
+ "que_es": {
+  "texto": "El {{acumulador_hidraulico}} de {{vejiga}} es una botella de acero con una vejiga de goma llena de nitrógeno a la {{precarga}}. Cuando entra aceite, el gas se comprime y guarda energía; cuando el circuito la pide, el gas empuja el aceite fuera. Sirve de reserva, para emergencias y para amortiguar golpes. Con la bomba parada sigue con presión: hay que descargarlo antes de abrir el circuito.",
+  "partes": [
+   {
+    "texto": "Válvula de carga de gas, con su tapa.",
+    "marca": [
+     150,
+     14
+    ]
+   },
+   {
+    "texto": "Botella de acero.",
+    "marca": [
+     180,
+     250
+    ]
+   },
+   {
+    "texto": "Chapa con volumen, presión máxima y precarga.",
+    "marca": [
+     150,
+     205
+    ]
+   },
+   {
+    "texto": "Aviso: solo nitrógeno.",
+    "marca": [
+     150,
+     120
+    ]
+   },
+   {
+    "texto": "Conexión de aceite con válvula antiextrusión.",
+    "marca": [
+     150,
+     404
+    ]
+   },
+   {
+    "texto": "Abrazadera de sujeción.",
+    "marca": [
+     226,
+     311
+    ]
+   }
+  ],
+  "placa": "Vejiga · 10 L · PS 250 bar · precarga N₂ 90 bar a 20 °C",
+  "a_bordo": "Servotimón, frenos y circuitos de emergencia de cubierta. Volúmenes y precargas: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "acumulador_vejiga",
+  "params": {
+   "volumen": 10,
+   "precarga": 90,
+   "p_max": 160
+  },
+  "pasos": [
+   "Sin aceite, la vejiga llena la botella a la presión de precarga; el manómetro del aceite marca cero.",
+   "Con la bomba en marcha entra aceite y el gas se comprime: guarda energía y la devuelve cuando el circuito la pide.",
+   "Al abrir la descarga, el aceite vuelve al tanque y la presión cae: solo así se puede abrir el circuito con seguridad."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_acumulador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "P",
+     "x": 262,
+     "y": 118,
+     "tam": 13
+    },
+    {
+     "texto": "N2",
+     "x": 262,
+     "y": 16,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "P": [
+    250,
+    128
+   ],
+   "N2": [
+    250,
+    26
+   ]
+  },
+  "bornes": {
+   "P": "Aceite: al circuito, con un bloque de seguridad que lleva válvula de alivio, llave de aislamiento y descarga a tanque.",
+   "N2": "Válvula de carga de gas: solo nitrógeno, con el equipo de carga del fabricante."
+  },
+  "grupos": [
+   {
+    "nombre": "Aceite P",
+    "bornes": [
+     "P"
+    ],
+    "texto": "Siempre con descarga a tanque para dejarlo sin presión."
+   },
+   {
+    "nombre": "Gas N₂",
+    "bornes": [
+     "N2"
+    ],
+    "texto": "Nunca aire ni oxígeno."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Precarga del gas",
+    "instrumento": "manometro",
+    "roja": "N2",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Equipo de carga en la válvula de gas, con el lado del aceite sin presión",
+    "nota": "La precarga solo se lee con el aceite descargado del todo.",
+    "titulo_tabla": "Qué marca el gas",
+    "columna": "N₂",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "gas",
+     "instrumento": "manometro"
+    },
+    "filas": [
+     {
+      "estado": "Precarga correcta",
+      "hacer": "Normal: 90 bar",
+      "bien": true
+     },
+     {
+      "estado": "Vejiga que pierde gas",
+      "hacer": "Falla: recargar y buscar la fuga",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "acumulador": {
+         "perdida_gas": 0.7
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Aceite útil",
+    "instrumento": "caudalimetro",
+    "roja": "P",
+    "negra": "",
+    "escala": "litros",
+    "como": "Aceite que entrega entre 100 y 160 bar",
+    "nota": "Se mide descargándolo a un recipiente graduado.",
+    "titulo_tabla": "Cuánto aceite entrega",
+    "columna": "Volumen",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "volumen_util",
+     "instrumento": "caudalimetro"
+    },
+    "filas": [
+     {
+      "estado": "Precarga correcta",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "Precarga perdida",
+      "hacer": "Falla: entrega poco y la bomba arranca a menudo",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "acumulador": {
+         "perdida_gas": 0.7
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Pérdida de precarga",
+    "sintoma": "La bomba arranca y para muy seguido; la presión cae de golpe.",
+    "mide": [
+     {
+      "donde": "precarga",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "gas",
+       "instrumento": "manometro",
+       "params": {
+        "acumulador": {
+         "perdida_gas": 0.7
+        }
+       }
+      }
+     },
+     {
+      "donde": "aceite útil",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "volumen_util",
+       "instrumento": "caudalimetro",
+       "params": {
+        "acumulador": {
+         "perdida_gas": 0.7
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fuga por la válvula de gas o por la vejiga.",
+    "reparacion": "Comprobar la precarga con el aceite descargado; recargar con nitrógeno y buscar la fuga."
+   },
+   {
+    "nombre": "Vejiga rota",
+    "sintoma": "Sale aceite por la válvula de gas.",
+    "mide": [
+     {
+      "donde": "válvula de gas",
+      "bien": false,
+      "valor": "aceite"
+     }
+    ],
+    "causa": "Vejiga rota o pellizcada.",
+    "reparacion": "Descargar, cambiar la vejiga y recargar."
+   },
+   {
+    "nombre": "Presión con la bomba parada",
+    "sintoma": "El manómetro marca presión con la central parada.",
+    "mide": [
+     {
+      "donde": "aceite",
+      "bien": false,
+      "valor": "140 bar"
+     }
+    ],
+    "causa": "Es normal en un acumulador: no se ha descargado.",
+    "reparacion": "Abrir la descarga a tanque y comprobar cero en el manómetro antes de aflojar nada."
+   },
+   {
+    "nombre": "Precarga excesiva",
+    "sintoma": "La vejiga golpea y se rompe pronto.",
+    "mide": [
+     {
+      "donde": "precarga",
+      "bien": false,
+      "valor": "150 bar"
+     }
+    ],
+    "causa": "Precarga por encima de la presión mínima de trabajo: la vejiga se cierra contra la válvula del aceite.",
+    "reparacion": "Precargar a la presión del esquema (cerca del 90 % de la mínima; valor típico)."
+   },
+   {
+    "nombre": "Corrosión de la botella",
+    "sintoma": "Óxido alrededor de la abrazadera.",
+    "mide": [
+     {
+      "donde": "botella",
+      "bien": false,
+      "valor": "óxido"
+     }
+    ],
+    "causa": "Agua de mar y pintura dañada en un recipiente a presión.",
+    "reparacion": "Limpiar, pintar y pasar la inspección reglamentaria."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "presión de aceite y fugas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "precarga con el aceite descargado"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "inspección de la botella como recipiente a presión"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Normativa de recipientes a presión del Estado de bandera (verificar a bordo)."
+ ]
+}

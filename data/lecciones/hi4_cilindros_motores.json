@@ -1,0 +1,72 @@
+{
+  "id": "hi4_cilindros_motores",
+  "titulo": "Cilindros y motores",
+  "resumen": "Lo que convierte el aceite en movimiento.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Cilindros",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{cilindro_doble_efecto}} empuja con aceite en A y tira con aceite en B. En B la fuerza actúa sobre la {{seccion_anular}}, menor porque el {{vastago_cilindro}} ocupa parte del pistón: retrocede con menos fuerza y más rápido. El {{cilindro_simple_efecto}} vuelve por muelle o por el peso."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_hidraulico",
+          "params": {
+            "foco": "cilindro",
+            "carga": 20
+          },
+          "pie": "Cilindro de 63/36 mm con 20 kN (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi4_retroceso",
+          "pregunta": "Con el mismo caudal, ¿por qué el cilindro retrocede más rápido de lo que avanza?",
+          "opciones": [
+            "Porque el muelle ayuda",
+            "Porque en el lado del vástago hay menos área que llenar",
+            "Porque la presión es mayor"
+          ],
+          "correcta": 1,
+          "explicacion": "Velocidad = caudal ÷ área. La sección anular es menor: con el mismo caudal, más velocidad."
+        }
+      ]
+    },
+    {
+      "titulo": "Motores hidráulicos",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{motor_hidraulico}} recibe caudal y da giro: las rpm las pone el caudal y el par, la presión. El {{motor_orbital}} da mucho par a pocas vueltas, como piden los winches. Su fuga interna vuelve por el {{drenaje_carcasa}}, que va libre al tanque."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_hidraulico",
+          "params": {
+            "foco": "motor",
+            "par": 150
+          },
+          "pie": "Motor orbital de 100 cm³/rev en un winche (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi4_drenaje",
+          "pregunta": "¿Qué pasa si se tapona el drenaje de carcasa de un motor hidráulico?",
+          "opciones": [
+            "Gira más rápido",
+            "La carcasa se presuriza y revienta el retén del eje",
+            "Nada, es opcional"
+          ],
+          "correcta": 1,
+          "explicacion": "La fuga interna no tiene salida: sube la presión en la carcasa y el retén no la aguanta."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 6020/6022: cilindros.",
+    "Manual del power block y de los winches (verificar a bordo)."
+  ]
+}

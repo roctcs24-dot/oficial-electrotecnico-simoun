@@ -1,0 +1,72 @@
+{
+  "id": "hi7_direccionales_esquemas",
+  "titulo": "Direccionales y esquemas",
+  "resumen": "Leer un esquema ISO 1219.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La válvula direccional",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_direccional}} decide adónde va el aceite moviendo su {{corredera}}. Se nombra por bocas y posiciones: una 4/3 tiene cuatro bocas (P, T, A y B) y tres posiciones. En {{centro_cerrado}}, las cuatro bocas quedan bloqueadas."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_direccional",
+          "params": {},
+          "pie": "Válvula 4/3 de centro cerrado con dos bobinas."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi7_43",
+          "pregunta": "¿Qué significa «4/3» en una válvula direccional?",
+          "opciones": [
+            "4 bar y 3 L/min",
+            "Cuatro bocas y tres posiciones",
+            "Cuatro bobinas y tres muelles"
+          ],
+          "correcta": 1,
+          "explicacion": "El primer número son las bocas y el segundo, las posiciones (casillas del símbolo)."
+        }
+      ]
+    },
+    {
+      "titulo": "Leer el esquema",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{esquema_hidraulico}} dibuja el circuito con los símbolos de la ISO 1219, siempre en reposo: bobinas sin tensión y cilindros recogidos. Cada casilla de una direccional es una posición; las flechas, el paso del aceite. Un triángulo lleno hacia fuera es una bomba; hacia dentro, un motor."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi7_triangulo",
+          "pregunta": "En un círculo del esquema, el triángulo lleno apunta hacia dentro. ¿Qué es?",
+          "opciones": [
+            "Una bomba",
+            "Un motor hidráulico",
+            "Un manómetro"
+          ],
+          "correcta": 1,
+          "explicacion": "Hacia fuera sale aceite (bomba); hacia dentro entra aceite y sale giro (motor)."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "hi7_leer",
+          "pregunta": "Para leer un esquema hidráulico que no conoce, ordene:",
+          "pasos": [
+            "Encontrar la bomba y el tanque",
+            "Seguir la línea de presión hasta la válvula de alivio",
+            "Ver qué direccional manda cada actuador",
+            "Mirar qué pasa al dar tensión a cada bobina"
+          ],
+          "explicacion": "De la bomba hacia los actuadores, como el aceite."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 1219-1 e ISO 1219-2: símbolos y esquemas.",
+    "Esquema hidráulico del buque (verificar a bordo)."
+  ]
+}

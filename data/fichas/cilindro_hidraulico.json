@@ -1,0 +1,81 @@
+{
+ "id": "cilindro_hidraulico",
+ "titulo": "Cilindro de doble efecto",
+ "resumen": "Convierte la presión en fuerza en línea recta: empuja por un lado y tira por el otro.",
+ "dibujo": {
+  "svg": "res://art/equipos/cilindro_hidraulico.svg",
+  "tamano": [
+   560,
+   220
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "A",
+    "x": 72,
+    "y": 10,
+    "tam": 14
+   },
+   {
+    "texto": "B",
+    "x": 364,
+    "y": 10,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/cilindro_doble.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Mueve en línea recta con mucha fuerza: abrir, levantar, empujar o tirar."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Camisa, pistón con su junta, vástago cromado, dos culatas (la delantera con casquillo, juntas de vástago y rascador) y tirantes o culatas roscadas."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Dos bocas: A (fondo) y B (vástago), a las bocas A y B de la direccional. La {{seccion_anular}} es menor: retrocede más rápido con el mismo caudal."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Se elige por fuerza (presión por área), carrera y velocidad (caudal entre área). La amortiguación del final de carrera se ajusta con su tornillo, si lo tiene."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Presión en A y B, tiempo de carrera y prueba de fuga interna con la boca B suelta."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Juntas que pasan, vástago rayado o doblado, aire dentro y fijaciones con holgura."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Vástago limpio, fijaciones engrasadas y juntas cambiadas antes de que la fuga crezca."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 6020 e ISO 6022: cilindros hidráulicos de tirantes."
+ ]
+}

@@ -223,6 +223,11 @@ func _flujo() -> HFlowContainer:
 	return f
 
 
+## Piezas de hidráulica y neumática: tienen bocas, no bornes.
+func _de_fluidos() -> bool:
+	return ficha.get("simbolos", {}).has("iso")
+
+
 func _vista_dibujo() -> VistaBornes:
 	var v := VistaBornes.new()
 	v.cargar(ficha.get("dibujo", {"svg": "", "tamano": [100, 100]}))
@@ -331,7 +336,12 @@ func _tarjeta_simbolos() -> Control:
 		definiciones = {"iec": s.get("iec", {}), "ansi": s.get("ansi", {})}
 	else:
 		definiciones = {"iec": simbolos.get("iec", {}), "ansi": simbolos.get("ansi", {})}
-	for par: Array in [["iec", "IEC 60617"], ["ansi", "ANSI/IEEE 315"]]:
+	var normas := [["iec", "IEC 60617"], ["ansi", "ANSI/IEEE 315"]]
+	if simbolos.has("iso"):
+		# Hidráulica y neumática: un solo símbolo, el de la ISO 1219-1.
+		definiciones = {"iso": simbolos["iso"]}
+		normas = [["iso", str(simbolos["iso"].get("titulo", "ISO 1219-1"))]]
+	for par: Array in normas:
 		var tarjeta := _papel()
 		tarjeta.size_flags_vertical = Control.SIZE_FILL
 		tarjeta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -441,7 +451,7 @@ func _construir_conexion() -> void:
 	textos.add_child(_titulo_borne)
 	_texto_borne = _rico("", 16)
 	textos.add_child(_texto_borne)
-	textos.add_child(_etiqueta("Toque un borne en el esquema o en el dibujo: se ilumina en los dos.", "Nota"))
+	textos.add_child(_etiqueta("Toque una boca en el esquema o en el dibujo: se ilumina en los dos." if _de_fluidos() else "Toque un borne en el esquema o en el dibujo: se ilumina en los dos.", "Nota"))
 	resto.append(tarjeta)
 	var chips := _flujo()
 	var grupos: Array = datos.get("grupos", [])
@@ -469,7 +479,7 @@ func elegir_grupo(indice: int) -> void:
 	var g: Dictionary = grupos[indice]
 	esquema.resaltar(g["bornes"])
 	dibujo_conexion.resaltar(g["bornes"])
-	_titulo_borne.text = "Bornes %s" % g["nombre"]
+	_titulo_borne.text = ("Bocas %s" if _de_fluidos() else "Bornes %s") % g["nombre"]
 	_texto_borne.text = TextoTecnico.expandir(g.get("texto", ""), _glosario, {})
 	_marcar_chip(indice)
 
@@ -480,7 +490,7 @@ func tocar_borne(id: String) -> void:
 	args["borne"] = id
 	esquema.resaltar([id])
 	dibujo_conexion.resaltar([id])
-	_titulo_borne.text = "Borne tocado: %s" % id
+	_titulo_borne.text = ("Boca tocada: %s" if _de_fluidos() else "Borne tocado: %s") % id
 	_texto_borne.text = TextoTecnico.expandir(textos.get(id, ""), _glosario, {})
 	var grupos: Array = atlas.get("conexion", {}).get("grupos", [])
 	var del_grupo := -1

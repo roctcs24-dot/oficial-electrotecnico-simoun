@@ -1,0 +1,86 @@
+{
+ "id": "antirretorno_pilotada",
+ "titulo": "Antirretorno pilotada",
+ "resumen": "Sostiene una carga colgada sin que baje, y la deja bajar solo cuando hay presión de pilotaje.",
+ "dibujo": {
+  "svg": "res://art/equipos/antirretorno_pilotada.svg",
+  "tamano": [
+   440,
+   280
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "V",
+    "x": 140,
+    "y": 194,
+    "tam": 15
+   },
+   {
+    "texto": "C",
+    "x": 300,
+    "y": 194,
+    "tam": 15
+   },
+   {
+    "texto": "X",
+    "x": 220,
+    "y": 216,
+    "tam": 12
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/antirretorno_pilotada.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Sujeta cargas colgadas sin deriva y deja bajarlas cuando se manda."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Asiento cónico apretado por un muelle y un pistón de pilotaje mayor que el asiento: con la relación de áreas (3:1 típica), poca presión en X abre el asiento."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "V a la direccional, C al cilindro (lo más cerca posible) y X a la otra línea del cilindro. Con la direccional de centro abierto a tanque A y B, para que el asiento cierre del todo."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "No se ajusta: se elige por presión, caudal y relación de pilotaje."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Deriva con reloj comparador, presión que sostiene y presión en X al bajar."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Asiento que pasa, pilotaje obstruido, golpes al bajar y fugas por tapones."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aceite limpio y comprobación periódica de la deriva."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática."
+ ]
+}

@@ -1,0 +1,337 @@
+{
+ "id": "cilindro_hidraulico",
+ "ficha": "cilindro_hidraulico",
+ "titulo": "Cilindro de doble efecto",
+ "termino": "cilindro_doble_efecto",
+ "icono": "hidraulica",
+ "resumen": "Convierte la presión en fuerza en línea recta: empuja por un lado y tira por el otro.",
+ "bornes_dibujo": {
+  "A": [
+   72,
+   32
+  ],
+  "B": [
+   364,
+   32
+  ]
+ },
+ "que_es": {
+  "texto": "El {{cilindro_doble_efecto}} tiene dos cámaras separadas por el pistón. Con aceite en A (lado del fondo) avanza; con aceite en B retrocede. La fuerza es presión por área: en A actúa todo el pistón; en B solo la {{seccion_anular}}, porque el {{vastago_cilindro}} ocupa el resto. Por eso avanza con más fuerza y retrocede más rápido.",
+  "partes": [
+   {
+    "texto": "Camisa: el tubo por dentro del cual corre el pistón.",
+    "marca": [
+     220,
+     96
+    ]
+   },
+   {
+    "texto": "Vástago cromado.",
+    "marca": [
+     450,
+     106
+    ]
+   },
+   {
+    "texto": "Culata delantera con casquillo, juntas y rascador.",
+    "marca": [
+     364,
+     140
+    ]
+   },
+   {
+    "texto": "Culata trasera o fondo.",
+    "marca": [
+     72,
+     140
+    ]
+   },
+   {
+    "texto": "Tirantes que aprietan las dos culatas.",
+    "marca": [
+     300,
+     148
+    ]
+   },
+   {
+    "texto": "Ojos de fijación con rótula.",
+    "marca": [
+     538,
+     106
+    ]
+   }
+  ],
+  "placa": "Ø 63/36 mm · carrera 250 mm · máx. 210 bar",
+  "a_bordo": "Grúas, puertas, plumas del power block y cilindros de las maniobras de pesca. Medidas: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_hidraulico",
+  "params": {
+   "foco": "cilindro",
+   "carga": 20
+  },
+  "pasos": [
+   "Sin tensión, la direccional bloquea A y B: el cilindro queda quieto.",
+   "Con Y1 el aceite entra por A y empuja el pistón; el de B vuelve al tanque. Con Y2, al revés y más rápido.",
+   "A tope la presión sube hasta el tarado del alivio: ahí la fuerza es la máxima, presión por área."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_cilindro_hidraulico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "A",
+     "x": 282,
+     "y": 66,
+     "tam": 13
+    },
+    {
+     "texto": "B",
+     "x": 344,
+     "y": 66,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    270,
+    76
+   ],
+   "B": [
+    332,
+    76
+   ]
+  },
+  "bornes": {
+   "A": "Cámara del fondo: con presión aquí el vástago sale con toda el área del pistón.",
+   "B": "Cámara del vástago: con presión aquí el vástago entra; menos área, menos fuerza, más velocidad."
+  },
+  "grupos": [
+   {
+    "nombre": "Avance A",
+    "bornes": [
+     "A"
+    ],
+    "texto": "Lado del fondo."
+   },
+   {
+    "nombre": "Retroceso B",
+    "bornes": [
+     "B"
+    ],
+    "texto": "Lado del vástago."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión en A",
+    "instrumento": "manometro",
+    "roja": "A",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de la boca A",
+    "nota": "Moviendo el cilindro y a tope.",
+    "titulo_tabla": "Qué marca en A",
+    "columna": "A",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "A",
+     "instrumento": "manometro"
+    },
+    "filas": [
+     {
+      "estado": "Avanzando con 20 kN",
+      "hacer": "Normal: 20 kN entre el área del pistón",
+      "bien": true
+     },
+     {
+      "estado": "Avanzando con 40 kN",
+      "hacer": "Normal: el doble",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "carga": 40
+        }
+       }
+      }
+     },
+     {
+      "estado": "A tope",
+      "hacer": "Normal: el tarado",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Fuga de la junta del pistón",
+    "instrumento": "caudalimetro",
+    "roja": "B",
+    "negra": "",
+    "escala": "0-10 L/min",
+    "como": "Cilindro a tope con presión en A y la boca B suelta a un recipiente",
+    "nota": "Lo que sale por B con presión en A es lo que pasa por la junta del pistón.",
+    "titulo_tabla": "Qué sale por B",
+    "columna": "Fuga",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "fuga_B",
+     "instrumento": "caudalimetro",
+     "params": {
+      "actuador": {
+       "a_tope": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Junta sana",
+      "hacer": "Normal: nada o unas gotas",
+      "bien": true
+     },
+     {
+      "estado": "Junta gastada",
+      "hacer": "Falla: cambiar las juntas",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true,
+         "fuga_juntas": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "La junta del pistón pasa",
+    "sintoma": "El cilindro pierde fuerza y, cargado, baja despacio.",
+    "mide": [
+     {
+      "donde": "fuga por B",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "fuga_B",
+       "instrumento": "caudalimetro",
+       "params": {
+        "actuador": {
+         "a_tope": true,
+         "fuga_juntas": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Junta del pistón gastada o camisa rayada.",
+    "reparacion": "Prueba de fuga por B; cambiar juntas y revisar la camisa."
+   },
+   {
+    "nombre": "Vástago rayado",
+    "sintoma": "Fuga por el rascador y juntas que duran poco.",
+    "mide": [
+     {
+      "donde": "rascador",
+      "bien": false,
+      "valor": "gotea"
+     }
+    ],
+    "causa": "Golpes o suciedad sobre el cromo.",
+    "reparacion": "Proteger el vástago; cambiar juntas y, si el rayado es hondo, el vástago."
+   },
+   {
+    "nombre": "Va a tirones",
+    "sintoma": "Avanza a saltos, sobre todo despacio.",
+    "mide": [
+     {
+      "donde": "presión en A",
+      "bien": false,
+      "valor": "oscila"
+     }
+    ],
+    "causa": "Aire en el cilindro o juntas que agarran.",
+    "reparacion": "Purgar el aire moviéndolo varias veces en vacío de tope a tope."
+   },
+   {
+    "nombre": "No hace fuerza",
+    "sintoma": "No levanta lo que levantaba.",
+    "mide": [
+     {
+      "donde": "presión a tope",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "A",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "fuga": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Suele ser el alivio que no llega al tarado, no el cilindro.",
+    "reparacion": "Medir la presión a tope; después, la fuga por B."
+   },
+   {
+    "nombre": "Doblado o pandeado",
+    "sintoma": "Roza y hace fuerza al final de la carrera.",
+    "mide": [
+     {
+      "donde": "vástago",
+      "bien": false,
+      "valor": "doblado"
+     }
+    ],
+    "causa": "Carga lateral o desalineación.",
+    "reparacion": "Alinear los ojos y cambiar el vástago."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "vástago limpio y sin rayas, fugas por el rascador"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tiempo de carrera y presión a tope apuntados"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "ojos, rótulas y engrase de las fijaciones"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 6020 e ISO 6022: cilindros hidráulicos de tirantes."
+ ]
+}

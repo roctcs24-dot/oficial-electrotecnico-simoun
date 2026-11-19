@@ -1,0 +1,87 @@
+{
+ "id": "bomba_pistones",
+ "titulo": "Bomba de pistones axiales",
+ "resumen": "Pistones en un barrilete que gira sobre un plato inclinado: la inclinación fija el caudal.",
+ "dibujo": {
+  "svg": "res://art/equipos/bomba_pistones.svg",
+  "tamano": [
+   520,
+   300
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "S",
+    "x": 452,
+    "y": 148,
+    "tam": 14
+   },
+   {
+    "texto": "P",
+    "x": 452,
+    "y": 196,
+    "tam": 14
+   },
+   {
+    "texto": "L",
+    "x": 200,
+    "y": 70,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/bomba_variable.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Da mucho caudal a presión alta con buen rendimiento y, con plato variable, ajusta el caudal a lo que se gasta."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Barrilete con 7 a 9 pistones, patines sobre el plato inclinado y placa de distribución con dos riñones: uno de aspiración y otro de impulsión."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Tres bocas: aspiración S, presión P y drenaje de carcasa L. El drenaje va solo y directo al tanque."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "El {{compensador_presion}} se ajusta con el manómetro en la toma de prueba, unos 10 a 20 bar por debajo del alivio (valor típico)."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Presión, caudal a presión y caudal de drenaje: un drenaje que crece avisa de desgaste antes de la avería."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Drenaje obstruido, arranque en seco, cavitación, desgaste del grupo rotativo y compensador desajustado."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aceite muy limpio (son sensibles a la suciedad), drenaje libre y tendencias de caudal apuntadas."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del fabricante de la bomba (verificar a bordo)."
+ ]
+}

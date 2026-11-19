@@ -1,0 +1,64 @@
+{
+  "id": "hi5_valvulas_presion",
+  "titulo": "Válvulas de presión",
+  "resumen": "Alivio, reductora y contrabalance.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "La válvula de alivio",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_alivio}} limita la presión máxima: está cerrada hasta que la presión llega a su {{tarado}} y entonces manda el aceite al tanque. Protege bomba y mangueras. Mientras pasa aceite por ella, toda esa potencia se convierte en calor.\n\nLleve el cilindro a tope y baje el tarado."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_hidraulico",
+          "params": {
+            "foco": "alivio",
+            "tarado": 160
+          },
+          "pie": "Tarado de enseñanza: 160 bar. Los circuitos del buque van de 65 a 160 bar según las fotos (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi5_calor",
+          "pregunta": "Un cilindro se queda a tope con la direccional accionada. ¿Qué pasa con el aceite de la bomba?",
+          "opciones": [
+            "Se para la bomba",
+            "Sale todo por el alivio al tarado y se convierte en calor",
+            "Se queda en el cilindro"
+          ],
+          "correcta": 1,
+          "explicacion": "La bomba sigue dando caudal; sin salida, la presión llega al tarado y todo pasa por el alivio calentando el aceite."
+        }
+      ]
+    },
+    {
+      "titulo": "Reductora y contrabalance",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_reductora}} da a una parte del circuito menos presión que la general: está abierta y cierra cuando la salida llega a su ajuste. La {{valvula_contrabalance}} sujeta una carga que empuja (una pluma que baja) y la deja bajar frenada."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "hi5_tarar",
+          "pregunta": "Para comprobar el tarado de un alivio, ordene:",
+          "pasos": [
+            "Conectar el manómetro en la toma de prueba",
+            "Arrancar y llevar el cilindro a tope",
+            "Leer la presión máxima",
+            "Si no coincide, aflojar la contratuerca y ajustar al valor del esquema",
+            "Apretar la contratuerca, precintar y apuntarlo"
+          ],
+          "explicacion": "Se mide con la salida cerrada (a tope), se ajusta al valor del esquema y se deja precintado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413.",
+    "Esquema hidráulico de la central (verificar a bordo)."
+  ]
+}

@@ -1,0 +1,344 @@
+{
+ "id": "estranguladora",
+ "ficha": "estranguladora",
+ "titulo": "Estranguladora con antirretorno",
+ "termino": "valvula_estranguladora",
+ "icono": "hidraulica",
+ "resumen": "Frena el aceite en un sentido para regular la velocidad, y lo deja pasar libre en el otro.",
+ "bornes_dibujo": {
+  "1": [
+   44,
+   155
+  ],
+  "2": [
+   396,
+   155
+  ]
+ },
+ "que_es": {
+  "texto": "La {{valvula_estranguladora}} estrecha el paso con un pomo: cuanto más cerrado, más presión hace falta para que pase el mismo caudal. Con un antirretorno en paralelo, frena solo en un sentido. Montada a la salida del cilindro ({{meter_out}}) lo sujeta y le da una velocidad estable aunque la carga empuje. Con una bomba de caudal fijo, el aceite que no pasa vuelve por el alivio: regula a costa de calor.",
+  "partes": [
+   {
+    "texto": "Pomo moleteado de ajuste.",
+    "marca": [
+     220,
+     62
+    ]
+   },
+   {
+    "texto": "Escala de apertura.",
+    "marca": [
+     210,
+     104
+    ]
+   },
+   {
+    "texto": "Tornillo de bloqueo del pomo.",
+    "marca": [
+     275,
+     103
+    ]
+   },
+   {
+    "texto": "Cuerpo de la válvula.",
+    "marca": [
+     130,
+     140
+    ]
+   },
+   {
+    "texto": "Flecha del sentido regulado.",
+    "marca": [
+     250,
+     172
+    ]
+   },
+   {
+    "texto": "Boca 1.",
+    "marca": [
+     44,
+     155
+    ]
+   },
+   {
+    "texto": "Boca 2.",
+    "marca": [
+     396,
+     155
+    ]
+   }
+  ],
+  "placa": "Estranguladora con antirretorno · G 1/2 · 0-60 L/min · máx. 315 bar",
+  "a_bordo": "Velocidad de cilindros de grúas, puertas y plumas. Medidas: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_hidraulico",
+  "params": {
+   "foco": "estranguladora",
+   "carga": 20
+  },
+  "pasos": [
+   "Sin tensión, el cilindro está quieto.",
+   "Avanzando, el aceite que sale por B pasa por el estrechamiento. Con el pomo muy cerrado sube la presión, el alivio deja pasar el sobrante y el cilindro va más lento.",
+   "A tope, el alivio vuelve a llevarse todo el caudal. Al retroceder, el aceite entra libre por el antirretorno."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_estranguladora.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "1",
+     "x": 342,
+     "y": 80,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 372,
+     "y": 166,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    330,
+    90
+   ],
+   "2": [
+    360,
+    176
+   ]
+  },
+  "bornes": {
+   "1": "Lado del cilindro (boca B): de aquí a 2 el paso está estrechado.",
+   "2": "Lado de la direccional: de 2 a 1 pasa libre por el antirretorno."
+  },
+  "grupos": [
+   {
+    "nombre": "Sentido regulado",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "La flecha del cuerpo marca el sentido en que frena. Montada al revés, no regula."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Contrapresión en B",
+    "instrumento": "manometro",
+    "roja": "1",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro entre el cilindro y la estranguladora",
+    "nota": "Avanzando con 20 kN y distintas aperturas.",
+    "titulo_tabla": "Qué marca en la boca 1",
+    "columna": "B",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "B",
+     "instrumento": "manometro",
+     "params": {
+      "estrangulador": {
+       "presente": true,
+       "apertura": 1.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Pomo abierto",
+      "hacer": "Normal: poca contrapresión",
+      "bien": true
+     },
+     {
+      "estado": "Pomo al 20 %",
+      "hacer": "Normal: frena con contrapresión",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "estrangulador": {
+         "presente": true,
+         "apertura": 0.2
+        }
+       }
+      }
+     },
+     {
+      "estado": "Pomo al 5 %",
+      "hacer": "Cuidado: la contrapresión se multiplica por la relación de áreas",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "estrangulador": {
+         "presente": true,
+         "apertura": 0.05
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Presión de la bomba",
+    "instrumento": "manometro",
+    "roja": "2",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de la bomba",
+    "nota": "Si el pomo cierra mucho, el sobrante sale por el alivio.",
+    "titulo_tabla": "Qué marca la bomba",
+    "columna": "P",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "P",
+     "instrumento": "manometro",
+     "params": {
+      "estrangulador": {
+       "presente": true,
+       "apertura": 1.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Pomo abierto",
+      "hacer": "Normal: lo que pide la carga",
+      "bien": true
+     },
+     {
+      "estado": "Pomo al 10 %",
+      "hacer": "El alivio abre: regula a costa de calor",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "estrangulador": {
+         "presente": true,
+         "apertura": 0.1
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No regula",
+    "sintoma": "El cilindro va igual de rápido con el pomo cerrado.",
+    "mide": [
+     {
+      "donde": "velocidad",
+      "bien": false,
+      "valor": "igual"
+     }
+    ],
+    "causa": "Montada al revés: la flecha no coincide con el sentido que se quiere frenar.",
+    "reparacion": "Darle la vuelta según la flecha del cuerpo."
+   },
+   {
+    "nombre": "Aceite caliente",
+    "sintoma": "La central se calienta cuando se maniobra despacio.",
+    "mide": [
+     {
+      "donde": "bomba",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "P",
+       "instrumento": "manometro",
+       "params": {
+        "estrangulador": {
+         "presente": true,
+         "apertura": 0.1
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Con bomba de caudal fijo, lo que no pasa por la estranguladora sale por el alivio a toda presión.",
+    "reparacion": "Es normal en estos circuitos: vigilar el enfriador y no maniobrar despacio más de lo necesario."
+   },
+   {
+    "nombre": "Juntas del vástago que revientan",
+    "sintoma": "Fuga por la culata delantera al frenar mucho.",
+    "mide": [
+     {
+      "donde": "contrapresión",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "B",
+       "instrumento": "manometro",
+       "params": {
+        "estrangulador": {
+         "presente": true,
+         "apertura": 0.05
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Con el pomo casi cerrado, la presión de A empuja al aceite de B por un área menor: la contrapresión puede pasar del tarado.",
+    "reparacion": "No cerrar del todo; comprobar la contrapresión con manómetro."
+   },
+   {
+    "nombre": "Se desajusta sola",
+    "sintoma": "La velocidad cambia de un día a otro.",
+    "mide": [
+     {
+      "donde": "pomo",
+      "bien": false,
+      "valor": "flojo"
+     }
+    ],
+    "causa": "Tornillo de bloqueo suelto o vibración.",
+    "reparacion": "Ajustar, bloquear y apuntar la posición de la escala."
+   },
+   {
+    "nombre": "A saltos",
+    "sintoma": "El cilindro avanza a tirones a velocidad muy baja.",
+    "mide": [
+     {
+      "donde": "presión",
+      "bien": false,
+      "valor": "oscila"
+     }
+    ],
+    "causa": "Aire, juntas que agarran o aceite frío.",
+    "reparacion": "Purgar, calentar el aceite y revisar las juntas."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "bloqueo apretado y posición apuntada"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tiempo de carrera comprobado"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "limpieza del asiento del antirretorno"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática."
+ ]
+}

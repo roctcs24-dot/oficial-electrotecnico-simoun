@@ -1,0 +1,65 @@
+{
+  "id": "hi8_acumuladores",
+  "titulo": "Acumuladores",
+  "resumen": "Energía guardada que no se ve.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Cómo guarda energía",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{acumulador_hidraulico}} de {{vejiga}} guarda aceite a presión empujado por nitrógeno. Con el aceite fuera, el gas está a la {{precarga}}; al entrar aceite, el gas se comprime. Sirve de reserva en el servotimón, en frenos y en paradas de emergencia.\n\nCargue el acumulador, pare la bomba y mire el manómetro."
+        },
+        {
+          "tipo": "animacion",
+          "id": "acumulador_vejiga",
+          "params": {
+            "volumen": 10,
+            "precarga": 90,
+            "p_max": 160
+          },
+          "pie": "Acumulador de 10 L precargado a 90 bar (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi8_nitrogeno",
+          "pregunta": "¿Por qué se precarga solo con nitrógeno y nunca con aire u oxígeno?",
+          "opciones": [
+            "Porque es más barato",
+            "Porque el oxígeno con aceite a presión puede inflamarse o explotar",
+            "Porque pesa menos"
+          ],
+          "correcta": 1,
+          "explicacion": "El nitrógeno es inerte. Aire u oxígeno con aceite comprimido es una mezcla que puede explotar."
+        }
+      ]
+    },
+    {
+      "titulo": "Antes de abrir el circuito",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Es {{energia_almacenada}}: con la bomba parada y la central bloqueada, el acumulador puede seguir a más de 100 bar. Antes de aflojar un racor hay que abrir su descarga a tanque y ver el manómetro en cero."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "hi8_descargar",
+          "pregunta": "Para dejar sin energía un circuito con acumulador, ordene:",
+          "pasos": [
+            "Parar la bomba y aplicar LOTO en su arrancador",
+            "Abrir la descarga del acumulador a tanque",
+            "Esperar y comprobar el manómetro en cero",
+            "Bloquear las cargas que puedan bajar",
+            "Aflojar el racor despacio, con trapo y gafas"
+          ],
+          "explicacion": "Energía eléctrica fuera, acumulador descargado y comprobado, cargas apoyadas, y aún así se afloja con precaución."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413: seguridad de los acumuladores.",
+    "Normativa de recipientes a presión (verificar a bordo)."
+  ]
+}

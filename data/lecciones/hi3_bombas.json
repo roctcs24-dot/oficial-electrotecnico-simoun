@@ -1,0 +1,72 @@
+{
+  "id": "hi3_bombas",
+  "titulo": "Bombas hidráulicas",
+  "resumen": "Engranajes, paletas y pistones.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Caudal = cilindrada × vueltas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La bomba hidráulica mete aceite en el circuito. Cada vuelta mueve su {{cilindrada}} (cm³/rev); el caudal en L/min es cilindrada × rpm ÷ 1000. Parte vuelve por dentro por las holguras: el {{rendimiento_volumetrico}} baja con la presión y con el desgaste.\n\nLa {{bomba_engranajes}} es la más sencilla: mire cómo los dientes llevan el aceite por fuera."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_bomba",
+          "params": {
+            "tipo": "engranajes",
+            "cilindrada": 20
+          },
+          "pie": "Bomba de engranajes de 20 cm³/rev (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi3_caudal",
+          "pregunta": "Una bomba de 20 cm³/rev gira a 1500 rpm. ¿Qué caudal teórico da?",
+          "opciones": [
+            "3 L/min",
+            "30 L/min",
+            "300 L/min"
+          ],
+          "correcta": 1,
+          "explicacion": "20 × 1500 = 30 000 cm³/min = 30 L/min."
+        }
+      ]
+    },
+    {
+      "titulo": "Paletas y pistones",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{bomba_paletas}} es más silenciosa. La {{bomba_pistones}} da más presión y, con plato variable, ajusta su caudal; con {{compensador_presion}} solo da el aceite que se gasta. Si la aspiración se estrecha aparece la {{cavitacion}}: ruido de grava y desgaste rápido."
+        },
+        {
+          "tipo": "animacion",
+          "id": "corte_bomba",
+          "params": {
+            "tipo": "pistones",
+            "cilindrada": 45
+          },
+          "pie": "Bomba de pistones axiales: incline el plato y mire el caudal."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi3_presion",
+          "pregunta": "La bomba gira, pero el manómetro marca casi cero con todo parado y la salida abierta a tanque. ¿Está rota?",
+          "opciones": [
+            "Sí, una bomba siempre da presión",
+            "No necesariamente: la presión la pone lo que se opone al aceite",
+            "Sí, hay que cambiarla"
+          ],
+          "correcta": 1,
+          "explicacion": "La bomba da caudal. Sin nada que se oponga no hay presión; primero se busca una salida abierta, como un alivio pegado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413.",
+    "Manuales de las bombas de la central (verificar a bordo)."
+  ]
+}

@@ -12,6 +12,7 @@ const NOMBRES := {
 	"identifique_herramienta": ["identifique_herramienta", "Identifique la herramienta", "Llaves, destornilladores, alicates, medida y tubería; milímetros y pulgadas", "herramientas", 11],
 	"elija_racor": ["elija_racor", "Elija el racor", "Racores JIC, ORFS, DIN, BSP y NPT; DN y NPS; fotos a bordo", "herramientas", 11],
 	"seguir_lineas": ["seguir_lineas", "Siga la línea", "Seguir una línea, aislar un equipo y colores de tubería en la purificadora", "valvulas", 10],
+	"simbolos_iso1219": ["simbolos_iso1219", "Símbolos ISO 1219", "Bombas, cilindros, motores, válvulas y acumuladores de hidráulica", "hidraulica", 9],
 	"abierta_cerrada": ["abierta_cerrada", "¿Abierta o cerrada?", "Bola, mariposa, macho, compuerta, globo, aguja, tres vías y actuadas", "valvulas", 10],
 }
 

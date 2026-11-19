@@ -1,0 +1,87 @@
+{
+ "id": "motor_hidraulico",
+ "titulo": "Motor hidráulico orbital",
+ "resumen": "Al revés que la bomba: recibe caudal y da giro con mucho par a pocas vueltas.",
+ "dibujo": {
+  "svg": "res://art/equipos/motor_hidraulico.svg",
+  "tamano": [
+   460,
+   300
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "A",
+    "x": 176,
+    "y": 124,
+    "tam": 14
+   },
+   {
+    "texto": "B",
+    "x": 176,
+    "y": 176,
+    "tam": 14
+   },
+   {
+    "texto": "L",
+    "x": 302,
+    "y": 86,
+    "tam": 13
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/motor_hidraulico.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Da giro con mucho par: winches, power block, cabrestantes y grúas."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "El orbital lleva un rotor con lóbulos que rueda dentro de un estator con un lóbulo más (gerotor); un distribuidor manda el aceite a las cámaras que crecen."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Bocas A y B a la direccional; drenaje L al tanque. Cambiar A por B invierte el giro."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "rpm = caudal entre {{cilindrada}}; par = cilindrada por presión entre 20π (cm³ y bar dan N·m)."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Presión en A y B, rpm y caudal de drenaje."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Desgaste interno, retén roto por drenaje tapado, falta de freno y golpes."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aceite limpio, drenaje libre y lecturas de drenaje apuntadas."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del winche y del power block (verificar a bordo)."
+ ]
+}

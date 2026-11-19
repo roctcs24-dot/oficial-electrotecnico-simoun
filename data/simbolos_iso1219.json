@@ -1,0 +1,264 @@
+{
+ "nota": "Símbolos de hidráulica dibujados según ISO 1219-1 de forma general. Verificar contra la norma y contra el esquema del buque: cada fabricante añade detalles.",
+ "simbolos": [
+  {
+   "id": "bomba_fija",
+   "nombre": "Bomba de cilindrada fija",
+   "en": "fixed displacement pump",
+   "familia": "hidraulica",
+   "pieza": "bomba_engranajes",
+   "svg": "res://art/simbolos/iso1219/bomba_fija.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Círculo con un triángulo lleno que apunta hacia fuera: sale aceite. Sin flecha diagonal: cilindrada fija."
+  },
+  {
+   "id": "bomba_variable",
+   "nombre": "Bomba de cilindrada variable",
+   "en": "variable displacement pump",
+   "familia": "hidraulica",
+   "pieza": "bomba_pistones",
+   "svg": "res://art/simbolos/iso1219/bomba_variable.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "La flecha diagonal que cruza el círculo dice que la cilindrada se puede variar."
+  },
+  {
+   "id": "motor_hidraulico",
+   "nombre": "Motor hidráulico",
+   "en": "hydraulic motor",
+   "familia": "hidraulica",
+   "pieza": "motor_hidraulico",
+   "svg": "res://art/simbolos/iso1219/motor_hidraulico.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Triángulo que apunta hacia dentro: entra aceite y sale giro."
+  },
+  {
+   "id": "motor_electrico",
+   "nombre": "Motor eléctrico",
+   "en": "electric motor",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/motor_electrico.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [
+    {
+     "texto": "M",
+     "x": 120,
+     "y": 100,
+     "tam": 30
+    }
+   ],
+   "explicacion": "Círculo con una M: el motor que mueve la bomba."
+  },
+  {
+   "id": "cilindro_doble",
+   "nombre": "Cilindro de doble efecto",
+   "en": "double-acting cylinder",
+   "familia": "hidraulica",
+   "pieza": "cilindro_hidraulico",
+   "svg": "res://art/simbolos/iso1219/cilindro_doble.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Pistón, vástago y dos bocas: empuja y tira con aceite."
+  },
+  {
+   "id": "cilindro_simple",
+   "nombre": "Cilindro de simple efecto con muelle",
+   "en": "single-acting cylinder, spring return",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/cilindro_simple.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Una sola boca: el aceite empuja y el muelle lo devuelve."
+  },
+  {
+   "id": "valvula_alivio",
+   "nombre": "Válvula de alivio",
+   "en": "pressure relief valve",
+   "familia": "hidraulica",
+   "pieza": "valvula_alivio",
+   "svg": "res://art/simbolos/iso1219/valvula_alivio.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Flecha desplazada (normalmente cerrada), muelle ajustable y piloto desde la entrada: abre al llegar al tarado."
+  },
+  {
+   "id": "valvula_reductora",
+   "nombre": "Válvula reductora de presión",
+   "en": "pressure reducing valve",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/valvula_reductora.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Flecha alineada (normalmente abierta) y piloto desde la salida: cierra cuando la salida llega al ajuste."
+  },
+  {
+   "id": "estranguladora",
+   "nombre": "Estranguladora ajustable",
+   "en": "adjustable throttle valve",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/estranguladora.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Dos arcos que estrechan el paso y la flecha de ajustable."
+  },
+  {
+   "id": "estranguladora_antirretorno",
+   "nombre": "Estranguladora con antirretorno",
+   "en": "one-way flow control valve",
+   "familia": "hidraulica",
+   "pieza": "estranguladora",
+   "svg": "res://art/simbolos/iso1219/estranguladora_antirretorno.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Estranguladora con un antirretorno en paralelo: frena en un sentido y pasa libre en el otro."
+  },
+  {
+   "id": "antirretorno",
+   "nombre": "Válvula antirretorno",
+   "en": "check valve",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/antirretorno.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Bola contra su asiento: deja pasar en un solo sentido."
+  },
+  {
+   "id": "antirretorno_pilotada",
+   "nombre": "Antirretorno pilotada",
+   "en": "pilot-operated check valve",
+   "familia": "hidraulica",
+   "pieza": "antirretorno_pilotada",
+   "svg": "res://art/simbolos/iso1219/antirretorno_pilotada.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Antirretorno con una línea de trazos de pilotaje: abre en sentido contrario con presión de piloto."
+  },
+  {
+   "id": "direccional_43",
+   "nombre": "Direccional 4/3 de mando eléctrico",
+   "en": "4/3 solenoid directional valve",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/direccional_43.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Tres casillas (tres posiciones) y cuatro bocas; solenoides en los extremos y muelles que la centran."
+  },
+  {
+   "id": "acumulador",
+   "nombre": "Acumulador",
+   "en": "accumulator",
+   "familia": "hidraulica",
+   "pieza": "acumulador",
+   "svg": "res://art/simbolos/iso1219/acumulador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Cápsula partida por una línea: acumulador; el triángulo marca el lado del gas."
+  },
+  {
+   "id": "filtro",
+   "nombre": "Filtro",
+   "en": "filter",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/filtro.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rombo con una línea de trazos atravesada al paso del aceite."
+  },
+  {
+   "id": "enfriador",
+   "nombre": "Enfriador de aceite",
+   "en": "cooler",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/enfriador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rombo con flechas que salen: se saca calor del aceite."
+  },
+  {
+   "id": "tanque",
+   "nombre": "Tanque",
+   "en": "reservoir",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/tanque.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rectángulo abierto por arriba: tanque a presión atmosférica."
+  },
+  {
+   "id": "manometro",
+   "nombre": "Manómetro",
+   "en": "pressure gauge",
+   "familia": "hidraulica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/manometro.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Círculo con una flecha diagonal: indica presión."
+  }
+ ]
+}

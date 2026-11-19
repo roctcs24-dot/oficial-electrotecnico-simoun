@@ -1,0 +1,81 @@
+{
+ "id": "bomba_engranajes",
+ "titulo": "Bomba de engranajes",
+ "resumen": "Da caudal: los huecos entre dientes llevan el aceite de la aspiración a la impulsión.",
+ "dibujo": {
+  "svg": "res://art/equipos/bomba_engranajes.svg",
+  "tamano": [
+   480,
+   300
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "S",
+    "x": 222,
+    "y": 182,
+    "tam": 14
+   },
+   {
+    "texto": "P",
+    "x": 288,
+    "y": 172,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/bomba_fija.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "La {{bomba_engranajes}} convierte el giro del motor en {{caudal}} de aceite. Es barata, tolera algo de suciedad y aguanta bien hasta unos 200 bar (valor típico)."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Dos piñones iguales en una carcasa ajustada. El aceite viaja en los huecos entre dientes por fuera de los piñones; donde engranan, el diente ocupa el hueco y empuja el aceite a la salida. Las placas laterales cierran las caras de los piñones."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "La aspiración, más grande, va al tanque sin estrangular; la impulsión, a la válvula de alivio y a las direccionales. El sentido de giro lo marca la flecha: al revés no aspira."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "No se ajusta: su caudal es {{cilindrada}} por revoluciones. Se elige por caudal y presión máxima."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Con un {{caudalimetro}} y su válvula de carga: caudal a 0 bar y a la presión de trabajo. La diferencia es la fuga interna."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Cavitación por aspiración estrecha, desgaste de holguras, retén con fuga y giro invertido."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aceite y filtros limpios, temperatura bajo control y lecturas de caudal apuntadas para ver la tendencia."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del fabricante de la central hidráulica de cubierta (verificar a bordo)."
+ ]
+}

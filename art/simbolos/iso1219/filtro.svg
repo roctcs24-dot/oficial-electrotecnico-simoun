@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200">
+<defs></defs>
+<path d="M120,70 L150,100 L120,130 L90,100 Z" fill="none" stroke="#20262c" stroke-width="3.0" stroke-linejoin="round"/><path d="M90,100 L150,100" stroke="#20262c" stroke-width="2" fill="none" stroke-dasharray="8 6"/><path d="M120,20 L120,70" stroke="#20262c" stroke-width="3.0" fill="none"/><path d="M120,130 L120,180" stroke="#20262c" stroke-width="3.0" fill="none"/>
+</svg>

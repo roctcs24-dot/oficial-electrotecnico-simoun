@@ -1,0 +1,80 @@
+{
+ "id": "estranguladora",
+ "titulo": "Estranguladora con antirretorno",
+ "resumen": "Frena el aceite en un sentido para regular la velocidad, y lo deja pasar libre en el otro.",
+ "dibujo": {
+  "svg": "res://art/equipos/estranguladora.svg",
+  "tamano": [
+   440,
+   260
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "1",
+    "x": 44,
+    "y": 190,
+    "tam": 15
+   },
+   {
+    "texto": "2",
+    "x": 396,
+    "y": 190,
+    "tam": 15
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/estranguladora_antirretorno.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Regula la velocidad de un cilindro o un motor en un sentido."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Una aguja o un casquillo que estrecha el paso, con su pomo y su escala, y un antirretorno de bola o cono en paralelo."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "En la línea del actuador, con la flecha en el sentido que se quiere frenar. A la salida ({{meter_out}}) sujeta las cargas que empujan."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Con el actuador moviéndose, se cierra el pomo hasta la velocidad deseada y se bloquea."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Tiempo de carrera y contrapresión con manómetro."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Montada al revés, calor, contrapresión excesiva y desajuste."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aceite limpio: una partícula en la aguja cambia la velocidad."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática."
+ ]
+}

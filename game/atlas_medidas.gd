@@ -10,7 +10,9 @@ extends RefCounted
 ## vez; la pinza de fugas mide en mA lo que no vuelve por los conductores que abraza. Con el
 ## megóhmetro, "v_prueba" elige 250, 500 o 1000 V. "monitor" lee el monitor de aislamiento
 ## "id" de la propia red. "aparato" lee la pantalla o la aguja del componente "id" (un
-## amperímetro, un analizador de red o un variador), con su "magnitud". Una medida puede llevar "valor" escrito en su lugar:
+## amperímetro, un analizador de red o un variador), con su "magnitud". Una medida con
+## "hidraulica" se resuelve con SimHidraulica: "params" por componente y "punto" (P, A, B, T, S,
+## Q, gas…) con el manómetro o el caudalímetro. Una medida puede llevar "valor" escrito en su lugar:
 ## solo se admite en las fallas, para lo que la simulación no modela.
 
 
@@ -47,6 +49,10 @@ static func medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
 
 
 static func _medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
+	if medida.has("hidraulica"):
+		var h := SimHidraulica.medir(medida)
+		h["texto"] = texto(h)
+		return h
 	var datos := contenido.circuito_datos(str(medida.get("circuito", "")))
 	if datos.is_empty():
 		return {"texto": "?", "averia": "sin_circuito"}
@@ -148,6 +154,8 @@ static func texto(r: Dictionary) -> String:
 			return "%s %s" % [_numero(v, 0 if v >= 20.0 else 1), unidad]
 		"MΩ":
 			return "%s MΩ" % _numero(v, 0 if v >= 20.0 else 1)
+		"bar", "L/min", "rpm", "mm/s", "mm/min", "L", "kW", "N·m":
+			return "%s %s" % [_numero(v, 0 if absf(v) >= 20.0 or unidad == "rpm" else 1), unidad]
 	return "%s %s" % [_numero(v, 1), unidad]
 
 

@@ -1,0 +1,81 @@
+{
+ "id": "valvula_alivio",
+ "titulo": "Válvula de alivio",
+ "resumen": "Limita la presión máxima: cuando la presión vence al muelle, abre y manda el aceite al tanque.",
+ "dibujo": {
+  "svg": "res://art/equipos/valvula_alivio.svg",
+  "tamano": [
+   360,
+   420
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "P",
+    "x": 140,
+    "y": 362,
+    "tam": 15
+   },
+   {
+    "texto": "T",
+    "x": 232,
+    "y": 358,
+    "tam": 15
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/valvula_alivio.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Protege la bomba, las mangueras y las máquinas limitando la presión máxima."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Asiento o cono apretado por un muelle; el tornillo comprime el muelle y fija el {{tarado}}. En las grandes, una pequeña válvula piloto gobierna la principal."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "P a la bomba, sin nada que pueda aislarla; T al tanque, sin contrapresión."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Con el manómetro en la toma de prueba y la salida cerrada (cilindro a tope), se afloja la contratuerca, se gira el tornillo hasta el valor del esquema, se aprieta y se precinta."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Presión máxima a tope y temperatura del aceite; un alivio que pasa calienta la central."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Pegada abierta, asiento dañado, tarado manipulado y vibración."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Comprobar el tarado y el precinto; aceite limpio para que el asiento cierre bien."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Esquema hidráulico de la central de cubierta (verificar a bordo)."
+ ]
+}

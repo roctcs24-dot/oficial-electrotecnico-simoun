@@ -1,0 +1,360 @@
+{
+ "id": "motor_hidraulico",
+ "ficha": "motor_hidraulico",
+ "titulo": "Motor hidráulico orbital",
+ "termino": "motor_hidraulico",
+ "icono": "hidraulica",
+ "resumen": "Al revés que la bomba: recibe caudal y da giro con mucho par a pocas vueltas.",
+ "bornes_dibujo": {
+  "A": [
+   196,
+   124
+  ],
+  "B": [
+   196,
+   176
+  ],
+  "L": [
+   302,
+   108
+  ]
+ },
+ "que_es": {
+  "texto": "El {{motor_hidraulico}} hace lo contrario que una bomba: el aceite a presión entra por una boca, empuja el rotor y sale por la otra. Las revoluciones las da el {{caudal}}; el par, la presión. El {{motor_orbital}} da mucho par a pocas vueltas, justo lo que pide un winche. La fuga interna sale por el {{drenaje_carcasa}}.",
+  "partes": [
+   {
+    "texto": "Eje de salida, al tambor o a la reductora.",
+    "marca": [
+     80,
+     150
+    ]
+   },
+   {
+    "texto": "Brida de montaje.",
+    "marca": [
+     145,
+     84
+    ]
+   },
+   {
+    "texto": "Conjunto gerotor: rotor y estator.",
+    "marca": [
+     255,
+     108
+    ]
+   },
+   {
+    "texto": "Bocas A y B: según por cuál entra el aceite, gira a un lado o al otro.",
+    "marca": [
+     196,
+     150
+    ]
+   },
+   {
+    "texto": "Drenaje L.",
+    "marca": [
+     302,
+     108
+    ]
+   },
+   {
+    "texto": "Chapa con la cilindrada.",
+    "marca": [
+     256,
+     192
+    ]
+   }
+  ],
+  "placa": "Orbital · 100 cm³/rev · máx. 175 bar · 600 rpm",
+  "a_bordo": "Winches, power block, cabrestantes y grúas de cubierta. Tipos y medidas: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_hidraulico",
+  "params": {
+   "foco": "motor",
+   "par": 150
+  },
+  "pasos": [
+   "Sin tensión, A y B quedan bloqueados: el motor queda frenado por el aceite.",
+   "Con Y1 el aceite entra por A, hace girar el rotor y sale por B: las rpm las da el caudal, el par lo pide el winche.",
+   "Si el winche pide más par del que da el tarado, el motor se para y el aceite sale por el alivio."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_motor_hidraulico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "A",
+     "x": 330,
+     "y": 88,
+     "tam": 13
+    },
+    {
+     "texto": "B",
+     "x": 330,
+     "y": 38,
+     "tam": 13
+    },
+    {
+     "texto": "L",
+     "x": 312,
+     "y": 82,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    318,
+    98
+   ],
+   "B": [
+    318,
+    48
+   ],
+   "L": [
+    300,
+    92
+   ]
+  },
+  "bornes": {
+   "A": "Con presión aquí gira en un sentido.",
+   "B": "Con presión aquí gira en el otro.",
+   "L": "Drenaje de carcasa directo al tanque, sin contrapresión."
+  },
+  "grupos": [
+   {
+    "nombre": "Bocas A y B",
+    "bornes": [
+     "A",
+     "B"
+    ],
+    "texto": "Cambiar A por B cambia el sentido de giro."
+   },
+   {
+    "nombre": "Drenaje L",
+    "bornes": [
+     "L"
+    ],
+    "texto": "Si se tapona, revienta el retén del eje."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión en A",
+    "instrumento": "manometro",
+    "roja": "A",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de la boca A",
+    "nota": "Virando con distintos pares.",
+    "titulo_tabla": "Qué marca en A",
+    "columna": "A",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "A",
+     "instrumento": "manometro",
+     "params": {
+      "actuador": {
+       "tipo": "motor"
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Par de 150 N·m",
+      "hacer": "Normal: el par entre la cilindrada",
+      "bien": true
+     },
+     {
+      "estado": "Par de 300 N·m",
+      "hacer": "Llega al tarado: el winche se para",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "tipo": "motor",
+         "par": 300
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Caudal de drenaje",
+    "instrumento": "caudalimetro",
+    "roja": "L",
+    "negra": "",
+    "escala": "0-10 L/min",
+    "como": "Caudalímetro o recipiente graduado en el drenaje",
+    "nota": "Virando con carga: el drenaje es la fuga interna del motor.",
+    "titulo_tabla": "Qué sale por el drenaje",
+    "columna": "L",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "drenaje",
+     "instrumento": "caudalimetro",
+     "params": {
+      "actuador": {
+       "tipo": "motor"
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Motor sano",
+      "hacer": "Normal: muy poco",
+      "bien": true
+     },
+     {
+      "estado": "Motor gastado",
+      "hacer": "Falla: el drenaje se multiplica",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "tipo": "motor",
+         "desgaste": 1.0
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Pierde velocidad con carga",
+    "sintoma": "El winche vira despacio cuando tira fuerte.",
+    "mide": [
+     {
+      "donde": "drenaje",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "drenaje",
+       "instrumento": "caudalimetro",
+       "params": {
+        "actuador": {
+         "tipo": "motor",
+         "desgaste": 1.0
+        }
+       }
+      }
+     },
+     {
+      "donde": "giro",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "rpm",
+       "instrumento": "caudalimetro",
+       "params": {
+        "actuador": {
+         "tipo": "motor",
+         "desgaste": 1.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Desgaste del gerotor: el aceite se escapa por el drenaje en lugar de hacer girar el rotor.",
+    "reparacion": "Medir el drenaje; si se ha multiplicado, revisar o cambiar el motor."
+   },
+   {
+    "nombre": "No gira con carga",
+    "sintoma": "Con poca carga gira; con la red cargada se para.",
+    "mide": [
+     {
+      "donde": "presión en A",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "A",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "tipo": "motor",
+         "par": 300
+        }
+       }
+      }
+     }
+    ],
+    "causa": "La carga pide más par del que da el tarado del alivio.",
+    "reparacion": "No subir el tarado sin consultar el esquema: comprobar alivio, bomba y reductora."
+   },
+   {
+    "nombre": "Fuga por el retén",
+    "sintoma": "Aceite por el eje después de una maniobra larga.",
+    "mide": [
+     {
+      "donde": "drenaje",
+      "bien": false,
+      "valor": "taponado"
+     }
+    ],
+    "causa": "Drenaje obstruido o con contrapresión.",
+    "reparacion": "Dejar el drenaje libre y cambiar el retén."
+   },
+   {
+    "nombre": "Se mueve con el mando en el centro",
+    "sintoma": "La carga hace girar el winche despacio.",
+    "mide": [
+     {
+      "donde": "freno",
+      "bien": false,
+      "valor": "no frena"
+     }
+    ],
+    "causa": "La corredera de la direccional no sostiene la carga: hace falta freno o válvula de contrabalance.",
+    "reparacion": "Revisar el freno del winche y la válvula de contrabalance."
+   },
+   {
+    "nombre": "Golpes y ruido",
+    "sintoma": "Golpeteo al arrancar y al parar.",
+    "mide": [
+     {
+      "donde": "presión",
+      "bien": false,
+      "valor": "picos"
+     }
+    ],
+    "causa": "Arranques y paradas bruscas, aire o fijación floja.",
+    "reparacion": "Purgar el aire, apretar la fijación y maniobrar suave."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "fugas, ruido y temperatura"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "caudal de drenaje apuntado"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "fijación, estrías del eje y reductora"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del winche y del power block (verificar a bordo)."
+ ]
+}

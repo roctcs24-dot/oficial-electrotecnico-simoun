@@ -271,16 +271,17 @@ func test_cajon_de_piezas_con_el_atlas_del_modulo() -> String:
 	piezas[0].pulsada.emit()
 	var abre: bool = raiz.nombre_actual() == "atlas" and raiz.args_actuales().get("id", "") == atlas[0]
 	raiz.ir_a_seccion("escuela")
+	# El módulo 9 (hidráulica, etapa 45) ya tiene camino y cajón con sus ocho piezas.
 	raiz.pantalla_actual().elegir_modulo(9)
 	var p = raiz.pantalla_actual()
-	var vacio: bool = p.camino == null and p.piezas.is_empty()
+	var hidraulica: bool = p.camino != null and p.piezas.size() == raiz.contenido.sistema(9)["modos"]["aprender"]["atlas"].size()
 	raiz.free()
 	return A.primero([
 		A.cierto(piezas.size() == atlas.size(), "una pieza por ficha del atlas: %d de %d" % [piezas.size(), atlas.size()]),
 		A.cierto(is_equal_approx(avances.get("contactor", 0.0), 1.0), "el contactor, con sus cinco vistas, está completo"),
 		A.cierto(is_equal_approx(avances.get("rele_termico", 0.0), 0.6), "el relé térmico lleva 3 de 5: %s" % str(avances.get("rele_termico"))),
 		A.cierto(abre, "tocar la pieza abre su ficha del atlas"),
-		A.cierto(vacio, "un módulo en preparación no tiene camino ni cajón"),
+		A.cierto(hidraulica, "el módulo de hidráulica tiene camino y una pieza por ficha del atlas"),
 	])
 
 

@@ -1,0 +1,360 @@
+{
+ "id": "bomba_pistones",
+ "ficha": "bomba_pistones",
+ "titulo": "Bomba de pistones axiales",
+ "termino": "bomba_pistones",
+ "icono": "hidraulica",
+ "resumen": "Pistones en un barrilete que gira sobre un plato inclinado: la inclinación fija el caudal.",
+ "bornes_dibujo": {
+  "S": [
+   403,
+   148
+  ],
+  "P": [
+   403,
+   196
+  ],
+  "L": [
+   200,
+   92
+  ]
+ },
+ "que_es": {
+  "texto": "En la {{bomba_pistones}} varios pistones van en un barrilete que gira. Sus pies apoyan en un plato inclinado: en media vuelta salen y aspiran, en la otra entran e impulsan. Cuanto más inclinado el plato, más carrera y más {{caudal}}. Con {{compensador_presion}}, el plato se endereza solo al llegar a la presión ajustada y la bomba da solo el aceite que se gasta.",
+  "partes": [
+   {
+    "texto": "Eje de mando.",
+    "marca": [
+     56,
+     166
+    ]
+   },
+   {
+    "texto": "Carcasa llena de aceite, con el barrilete y el plato dentro.",
+    "marca": [
+     300,
+     210
+    ]
+   },
+   {
+    "texto": "Compensador de presión: tornillo de ajuste y contratuerca.",
+    "marca": [
+     394,
+     79
+    ]
+   },
+   {
+    "texto": "Drenaje de carcasa L, directo al tanque.",
+    "marca": [
+     200,
+     92
+    ]
+   },
+   {
+    "texto": "Boca de aspiración S.",
+    "marca": [
+     403,
+     148
+    ]
+   },
+   {
+    "texto": "Boca de presión P.",
+    "marca": [
+     403,
+     196
+    ]
+   }
+  ],
+  "placa": "Pistones axiales · 45 cm³/rev · compensador 180 bar · drenaje L a tanque",
+  "a_bordo": "Centrales de cubierta grandes y servotimón. Modelos y ajustes: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_bomba",
+  "params": {
+   "tipo": "pistones",
+   "cilindrada": 45
+  },
+  "pasos": [
+   "Parada no da nada.",
+   "Al girar el barrilete, cada pistón sube y baja por el plato inclinado: aspira en media vuelta e impulsa en la otra.",
+   "Con el plato más recto da menos caudal aunque gire igual; recto del todo no da nada."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_bomba_pistones.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "S",
+     "x": 98,
+     "y": 242,
+     "tam": 13
+    },
+    {
+     "texto": "P",
+     "x": 98,
+     "y": 174,
+     "tam": 13
+    },
+    {
+     "texto": "L",
+     "x": 122,
+     "y": 224,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "S": [
+    86,
+    252
+   ],
+   "P": [
+    86,
+    184
+   ],
+   "L": [
+    110,
+    234
+   ]
+  },
+  "bornes": {
+   "S": "Aspiración desde el tanque, con poca depresión: estas bombas cavitan con facilidad.",
+   "P": "Impulsión al circuito; toma de prueba para el manómetro.",
+   "L": "Drenaje de carcasa: tubo propio y directo al tanque, sin filtro ni válvula que lo cierre. Llenar la carcasa de aceite antes del primer arranque."
+  },
+  "grupos": [
+   {
+    "nombre": "Aspiración S",
+    "bornes": [
+     "S"
+    ],
+    "texto": "Tubo grueso y corto, sin estrangular."
+   },
+   {
+    "nombre": "Presión P",
+    "bornes": [
+     "P"
+    ],
+    "texto": "Al alivio y a las direccionales."
+   },
+   {
+    "nombre": "Drenaje L",
+    "bornes": [
+     "L"
+    ],
+    "texto": "La fuga interna que lubrica la bomba vuelve por aquí. Si se tapona, la carcasa se presuriza y revienta el retén."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión de trabajo",
+    "instrumento": "manometro",
+    "roja": "P",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de prueba",
+    "nota": "Con el cilindro moviéndose y a tope.",
+    "titulo_tabla": "Qué marca el manómetro",
+    "columna": "P",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "P",
+     "instrumento": "manometro",
+     "params": {
+      "bomba": {
+       "cilindrada": 45.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Cilindro avanzando con 20 kN",
+      "hacer": "Normal: lo que pide la carga",
+      "bien": true
+     },
+     {
+      "estado": "Cilindro a tope",
+      "hacer": "Normal: el tarado",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Caudal a presión",
+    "instrumento": "caudalimetro",
+    "roja": "P",
+    "negra": "",
+    "escala": "0-100 L/min",
+    "como": "Caudalímetro con válvula de carga",
+    "nota": "Caudal a 0 bar y a la presión de trabajo.",
+    "titulo_tabla": "Qué marca el caudalímetro",
+    "columna": "Caudal",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "Q_bomba",
+     "instrumento": "caudalimetro",
+     "params": {
+      "bomba": {
+       "cilindrada": 45.0
+      }
+     },
+     "presion_prueba": 0
+    },
+    "filas": [
+     {
+      "estado": "Nueva a 0 bar",
+      "hacer": "Normal: el teórico",
+      "bien": true
+     },
+     {
+      "estado": "Nueva a 160 bar",
+      "hacer": "Normal: cae un 5 %",
+      "bien": true,
+      "cambios": {
+       "presion_prueba": 160
+      }
+     },
+     {
+      "estado": "Gastada a 160 bar",
+      "hacer": "Falla: cambiar el grupo rotativo",
+      "bien": false,
+      "cambios": {
+       "presion_prueba": 160,
+       "params": {
+        "bomba": {
+         "desgaste": 1.0
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Drenaje obstruido",
+    "sintoma": "Fuga fuerte por el retén del eje y carcasa muy caliente.",
+    "mide": [
+     {
+      "donde": "carcasa",
+      "bien": false,
+      "valor": "3 bar"
+     }
+    ],
+    "causa": "Válvula cerrada o filtro en el drenaje: la carcasa se presuriza (aguanta muy poco, del orden de 1 a 2 bar; valor típico).",
+    "reparacion": "Dejar el drenaje libre y directo al tanque; cambiar el retén."
+   },
+   {
+    "nombre": "Arranque sin llenar la carcasa",
+    "sintoma": "Ruido y desgaste rápido después de un cambio de bomba.",
+    "mide": [
+     {
+      "donde": "carcasa",
+      "bien": false,
+      "valor": "vacía"
+     }
+    ],
+    "causa": "Sin aceite dentro, los pistones y el plato trabajan en seco los primeros segundos.",
+    "reparacion": "Llenar la carcasa por el drenaje antes de arrancar."
+   },
+   {
+    "nombre": "Bomba gastada",
+    "sintoma": "Movimientos lentos con carga.",
+    "mide": [
+     {
+      "donde": "caudal a 160 bar",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "Q_bomba",
+       "instrumento": "caudalimetro",
+       "params": {
+        "bomba": {
+         "cilindrada": 45.0,
+         "desgaste": 1.0
+        }
+       },
+       "presion_prueba": 160
+      }
+     }
+    ],
+    "causa": "Desgaste de pistones, barrilete y placa de distribución.",
+    "reparacion": "Medir caudal a presión y caudal de drenaje; cambiar el grupo rotativo."
+   },
+   {
+    "nombre": "Compensador mal ajustado",
+    "sintoma": "No llega a la presión que pide el winche.",
+    "mide": [
+     {
+      "donde": "presión máxima",
+      "bien": false,
+      "valor": "120 bar"
+     }
+    ],
+    "causa": "Tornillo del compensador aflojado o mal tarado.",
+    "reparacion": "Ajustar con manómetro en la toma de prueba, por debajo del tarado del alivio, y apretar la contratuerca."
+   },
+   {
+    "nombre": "Cavitación",
+    "sintoma": "Ruido metálico y espuma.",
+    "mide": [
+     {
+      "donde": "aspiración",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "S",
+       "instrumento": "manometro",
+       "params": {
+        "bomba": {
+         "cilindrada": 45.0,
+         "aspiracion_obstruida": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Aspiración estrecha o aceite frío.",
+    "reparacion": "Revisar filtro y válvula de aspiración; calentar el aceite."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "ruido, temperatura de carcasa y fugas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "caudal de drenaje y caudal a presión"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "acoplamiento, soportes y ajuste del compensador"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del fabricante de la bomba (verificar a bordo)."
+ ]
+}

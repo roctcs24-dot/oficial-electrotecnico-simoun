@@ -1,0 +1,76 @@
+{
+ "id": "acumulador",
+ "titulo": "Acumulador de vejiga",
+ "resumen": "Guarda aceite a presión con nitrógeno comprimido: energía que queda aunque la bomba pare.",
+ "dibujo": {
+  "svg": "res://art/equipos/acumulador.svg",
+  "tamano": [
+   300,
+   440
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "SOLO N₂",
+    "x": 150,
+    "y": 120,
+    "tam": 11,
+    "color": "#2a1a00"
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/acumulador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "Reserva de aceite a presión para emergencias, picos de consumo y amortiguar golpes."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Botella de acero, vejiga de goma con nitrógeno, válvula de gas arriba y válvula antiextrusión abajo para que la vejiga no salga por la boca de aceite."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Por un bloque de seguridad con alivio, llave de aislamiento y descarga a tanque. Nunca sin descarga."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "La {{precarga}} se fija con nitrógeno, con el aceite descargado, a la presión del esquema."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Precarga con el equipo de carga y comprobación de que descarga a cero."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Pérdida de gas, vejiga rota, presión olvidada con la bomba parada y corrosión."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Precarga comprobada, inspección como recipiente a presión y descarga probada."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Normativa de recipientes a presión del Estado de bandera (verificar a bordo)."
+ ]
+}

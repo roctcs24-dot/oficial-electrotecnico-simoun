@@ -1,0 +1,68 @@
+{
+  "id": "hi2_aceite",
+  "titulo": "El aceite hidráulico",
+  "resumen": "Viscosidad, limpieza, agua y temperatura.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Viscosidad y temperatura",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El aceite transmite la fuerza, lubrica y se lleva el calor. Su {{viscosidad}} se da con el {{grado_iso_vg}}: ISO VG 46 es un aceite de 46 mm²/s a 40 °C, habitual en centrales de cubierta (valores típicos — verificar a bordo). Frío está espeso y la bomba cavita; muy caliente se vuelve fino, fuga por todas partes y se degrada. Trabaje entre unos 40 y 60 °C (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi2_vg",
+          "pregunta": "¿Qué dice «ISO VG 46» en un bidón de aceite?",
+          "opciones": [
+            "Que aguanta 46 bar",
+            "Su viscosidad a 40 °C",
+            "Que dura 46 meses"
+          ],
+          "correcta": 1,
+          "explicacion": "El grado ISO VG es la viscosidad a 40 °C en mm²/s."
+        }
+      ]
+    },
+    {
+      "titulo": "Limpieza y agua",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La mayoría de las averías hidráulicas empieza por suciedad. El {{codigo_limpieza}} cuenta las partículas; los filtros las retienen y el {{filtro_retorno}} avisa con su indicador cuando está colmatado. En cubierta entra también agua de mar: el aceite se vuelve lechoso. El {{enfriador_aceite}} mantiene la temperatura."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi2_lechoso",
+          "pregunta": "Al tomar una muestra, el aceite sale lechoso. ¿Qué indica?",
+          "opciones": [
+            "Que está muy caliente",
+            "Que tiene agua",
+            "Que es aceite nuevo"
+          ],
+          "correcta": 1,
+          "explicacion": "El aspecto lechoso es agua emulsionada: buscar por dónde entra (enfriador, tapas, respiradero)."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "hi2_filtro",
+          "pregunta": "Para cambiar el cartucho del filtro de retorno, ordene:",
+          "pasos": [
+            "Parar la central y aplicar LOTO",
+            "Descargar la presión y comprobar el manómetro a cero",
+            "Abrir la tapa y sacar el cartucho",
+            "Montar el cartucho nuevo con su junta lubricada",
+            "Arrancar y revisar fugas e indicador"
+          ],
+          "explicacion": "Primero sin energía y sin presión; al final, comprobar fugas y que el indicador quede en verde."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 3448: grados de viscosidad.",
+    "ISO 4406: código de limpieza.",
+    "Ficha del aceite de la central (verificar a bordo)."
+  ]
+}

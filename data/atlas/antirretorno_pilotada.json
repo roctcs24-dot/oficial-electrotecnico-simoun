@@ -1,0 +1,361 @@
+{
+ "id": "antirretorno_pilotada",
+ "ficha": "antirretorno_pilotada",
+ "titulo": "Antirretorno pilotada",
+ "termino": "antirretorno_pilotada",
+ "icono": "hidraulica",
+ "resumen": "Sostiene una carga colgada sin que baje, y la deja bajar solo cuando hay presión de pilotaje.",
+ "bornes_dibujo": {
+  "V": [
+   140,
+   160
+  ],
+  "C": [
+   300,
+   160
+  ],
+  "X": [
+   220,
+   196
+  ]
+ },
+ "que_es": {
+  "texto": "La {{antirretorno_pilotada}} deja pasar libre de V a C, hacia el cilindro. De vuelta cierra por asiento, sin fuga: la carga queda colgada aunque la corredera de la direccional pase un poco. Para bajar, la presión del otro lado del cilindro llega al piloto X, empuja un pistón y levanta el asiento.",
+  "partes": [
+   {
+    "texto": "Bloque de acero.",
+    "marca": [
+     344,
+     204
+    ]
+   },
+   {
+    "texto": "Boca V, de la direccional.",
+    "marca": [
+     140,
+     160
+    ]
+   },
+   {
+    "texto": "Boca C, al cilindro.",
+    "marca": [
+     300,
+     160
+    ]
+   },
+   {
+    "texto": "Boca X de pilotaje.",
+    "marca": [
+     220,
+     196
+    ]
+   },
+   {
+    "texto": "Tapón del asiento.",
+    "marca": [
+     220,
+     78
+    ]
+   },
+   {
+    "texto": "Flecha del paso libre.",
+    "marca": [
+     220,
+     126
+    ]
+   },
+   {
+    "texto": "Tapa del pistón de pilotaje.",
+    "marca": [
+     371,
+     160
+    ]
+   }
+  ],
+  "placa": "Antirretorno pilotada · relación de pilotaje 3:1 · máx. 350 bar",
+  "a_bordo": "Grúas, plumas y puertas que deben quedar sujetas. Relación y montaje: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_hidraulico",
+  "params": {
+   "foco": "pilotada",
+   "carga": 30
+  },
+  "pasos": [
+   "Sin tensión, la pilotada cierra por asiento: la carga queda colgada y no baja.",
+   "Moviendo el cilindro, el aceite pasa libre hacia C; para bajar, la presión de B pilota X y abre el asiento.",
+   "A tope, el alivio se lleva el caudal. Con el asiento dañado, la carga baja sola."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_antirretorno_pilotada.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "V",
+     "x": 312,
+     "y": 140,
+     "tam": 13
+    },
+    {
+     "texto": "C",
+     "x": 312,
+     "y": 90,
+     "tam": 13
+    },
+    {
+     "texto": "X",
+     "x": 336,
+     "y": 150,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "V": [
+    300,
+    150
+   ],
+   "C": [
+    300,
+    100
+   ],
+   "X": [
+    324,
+    160
+   ]
+  },
+  "bornes": {
+   "V": "Viene de la boca A de la direccional.",
+   "C": "Va al cilindro: lo más cerca posible, mejor atornillada a él.",
+   "X": "Pilotaje desde la línea B: con presión aquí la válvula abre en sentido contrario."
+  },
+  "grupos": [
+   {
+    "nombre": "Paso libre V → C",
+    "bornes": [
+     "V",
+     "C"
+    ],
+    "texto": "Hacia el cilindro pasa sin pilotaje."
+   },
+   {
+    "nombre": "Pilotaje X",
+    "bornes": [
+     "X"
+    ],
+    "texto": "Desde la otra línea del cilindro."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión que sostiene la carga",
+    "instrumento": "manometro",
+    "roja": "C",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la boca C con la carga colgada",
+    "nota": "Direccional en el centro.",
+    "titulo_tabla": "Qué marca en C",
+    "columna": "C",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "A",
+     "instrumento": "manometro",
+     "params": {
+      "direccional": {
+       "posicion": 0
+      },
+      "pilotada": {
+       "presente": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "20 kN colgados",
+      "hacer": "Normal: la carga entre el área",
+      "bien": true
+     },
+     {
+      "estado": "40 kN colgados",
+      "hacer": "Normal: el doble",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "carga": 40
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Deriva de la carga",
+    "instrumento": "comparador",
+    "roja": "C",
+    "negra": "",
+    "escala": "mm/min",
+    "como": "Reloj comparador sobre el vástago, con la direccional en el centro",
+    "nota": "Lo que baja el vástago en un minuto con la carga colgada.",
+    "titulo_tabla": "Qué baja en un minuto",
+    "columna": "Deriva",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "deriva",
+     "instrumento": "comparador",
+     "params": {
+      "direccional": {
+       "posicion": 0
+      },
+      "pilotada": {
+       "presente": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Con pilotada sana",
+      "hacer": "Normal: no baja",
+      "bien": true
+     },
+     {
+      "estado": "Asiento dañado",
+      "hacer": "Falla: baja sola",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "pilotada": {
+         "presente": true,
+         "asiento_danado": true
+        }
+       }
+      }
+     },
+     {
+      "estado": "Sin pilotada, solo la corredera",
+      "hacer": "Baja poco a poco: por eso se monta la pilotada",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "pilotada": {
+         "presente": false
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "La carga baja sola",
+    "sintoma": "La pluma baja unos milímetros cada minuto con la direccional en el centro.",
+    "mide": [
+     {
+      "donde": "deriva",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "deriva",
+       "instrumento": "comparador",
+       "params": {
+        "direccional": {
+         "posicion": 0
+        },
+        "pilotada": {
+         "presente": true,
+         "asiento_danado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Suciedad o marca en el asiento, o junta del pistón del cilindro que pasa.",
+    "reparacion": "Apoyar la carga, descargar la presión, limpiar o cambiar la pilotada y repetir la prueba."
+   },
+   {
+    "nombre": "No baja",
+    "sintoma": "La pluma sube pero no baja.",
+    "mide": [
+     {
+      "donde": "piloto X",
+      "bien": false,
+      "valor": "0 bar"
+     }
+    ],
+    "causa": "Línea de pilotaje obstruida, tapón mal puesto o presión de pilotaje insuficiente.",
+    "reparacion": "Comprobar presión en X al mandar bajar."
+   },
+   {
+    "nombre": "Baja a golpes",
+    "sintoma": "Al bajar, la carga cae y frena a tirones.",
+    "mide": [
+     {
+      "donde": "presión en C",
+      "bien": false,
+      "valor": "oscila"
+     }
+    ],
+    "causa": "La carga se adelanta, cae la presión de pilotaje y la válvula cierra y abre.",
+    "reparacion": "Para cargas que empujan se usa válvula de contrabalance, no pilotada."
+   },
+   {
+    "nombre": "Fuga externa",
+    "sintoma": "Aceite por el tapón o el bloque.",
+    "mide": [
+     {
+      "donde": "tapón",
+      "bien": false,
+      "valor": "gotea"
+     }
+    ],
+    "causa": "Junta tórica del tapón dañada.",
+    "reparacion": "Con la carga apoyada y sin presión, cambiar la junta."
+   },
+   {
+    "nombre": "Abre sola con contrapresión",
+    "sintoma": "Baja cuando otra máquina devuelve mucho aceite al tanque.",
+    "mide": [
+     {
+      "donde": "retorno",
+      "bien": false,
+      "valor": "8 bar"
+     }
+    ],
+    "causa": "Contrapresión en la línea de retorno que llega al piloto.",
+    "reparacion": "Bajar la contrapresión del retorno o usar pilotada con drenaje externo."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "deriva de la carga comprobada"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "presión de pilotaje al bajar"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "juntas de tapones y limpieza"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática."
+ ]
+}

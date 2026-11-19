@@ -1,0 +1,67 @@
+{
+  "id": "hi9_diagnostico",
+  "titulo": "Diagnóstico hidráulico",
+  "resumen": "Lento es caudal; sin fuerza es presión.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Medir antes de cambiar",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Casi todo se diagnostica con tres lecturas: presión con el manómetro en la {{toma_prueba}}, caudal con el {{caudalimetro}} y temperatura. La regla: si va lento, falta caudal (bomba gastada, fuga interna, estranguladora); si no hace fuerza, falta presión (alivio, carga excesiva)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi9_lento",
+          "pregunta": "Un cilindro levanta su carga máxima pero cada vez más despacio. ¿Qué se busca primero?",
+          "opciones": [
+            "Un problema de presión: el alivio",
+            "Un problema de caudal: bomba gastada o fuga interna",
+            "La bobina de la direccional"
+          ],
+          "correcta": 1,
+          "explicacion": "Si hace la fuerza, la presión llega. Si va lento, se pierde caudal por dentro."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "hi9_orden",
+          "pregunta": "Para diagnosticar un movimiento que no va bien, ordene:",
+          "pasos": [
+            "Preguntar y mirar: ruido, fugas, temperatura, nivel",
+            "Medir la presión en la toma de prueba",
+            "Medir el caudal o el tiempo de carrera",
+            "Aislar componentes uno a uno según el esquema",
+            "Reparar y repetir las medidas"
+          ],
+          "explicacion": "Primero lo que se ve y se oye, después medir, y solo entonces desmontar."
+        }
+      ]
+    },
+    {
+      "titulo": "Seguridad",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una fuga fina de aceite a presión atraviesa la piel: es una {{lesion_inyeccion}}, urgencia médica aunque parezca un pinchazo. Las fugas se buscan con un cartón, nunca con la mano. No se afloja nada con presión y se respetan los precintos de los alivios."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi9_fuga",
+          "pregunta": "¿Cómo se busca una fuga fina en un latiguillo con presión?",
+          "opciones": [
+            "Pasando la mano",
+            "Con un cartón o una tabla, con guantes y gafas",
+            "Apretando el racor con la máquina en marcha"
+          ],
+          "correcta": 1,
+          "explicacion": "El chorro fino inyecta aceite bajo la piel. Se busca con un cartón y, para repararla, se quita la presión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413.",
+    "Procedimientos de trabajo del SMS del buque (verificar a bordo)."
+  ]
+}

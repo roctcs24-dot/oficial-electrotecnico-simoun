@@ -1,0 +1,403 @@
+{
+ "id": "bomba_engranajes",
+ "ficha": "bomba_engranajes",
+ "titulo": "Bomba de engranajes",
+ "termino": "bomba_engranajes",
+ "icono": "hidraulica",
+ "resumen": "Da caudal: los huecos entre dientes llevan el aceite de la aspiración a la impulsión.",
+ "bornes_dibujo": {
+  "S": [
+   222,
+   150
+  ],
+  "P": [
+   288,
+   150
+  ]
+ },
+ "que_es": {
+  "texto": "La {{bomba_engranajes}} es la bomba hidráulica más sencilla y robusta: dos piñones engranados dentro de una carcasa de aluminio. Al girar, los huecos entre dientes llevan el aceite por fuera, de la aspiración a la impulsión. Es de {{cilindrada}} fija: su {{caudal}} es proporcional a las revoluciones. La bomba no da presión: la presión la pone lo que se opone al aceite.",
+  "partes": [
+   {
+    "texto": "Eje con chaveta, acoplado al motor eléctrico o al diésel.",
+    "marca": [
+     70,
+     150
+    ]
+   },
+   {
+    "texto": "Brida de montaje de dos tornillos.",
+    "marca": [
+     112,
+     104
+    ]
+   },
+   {
+    "texto": "Boca de aspiración: la más grande.",
+    "marca": [
+     222,
+     150
+    ]
+   },
+   {
+    "texto": "Boca de presión o impulsión.",
+    "marca": [
+     288,
+     150
+    ]
+   },
+   {
+    "texto": "Tornillos pasantes que cierran las tapas.",
+    "marca": [
+     350,
+     196
+    ]
+   },
+   {
+    "texto": "Flecha del sentido de giro.",
+    "marca": [
+     254,
+     98
+    ]
+   }
+  ],
+  "placa": "20 cm³/rev · 1450 rpm · 29 L/min · máx. 210 bar · giro a derechas",
+  "a_bordo": "Centrales pequeñas, bombas de carga y servicios auxiliares. Cilindradas y presiones: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "corte_bomba",
+  "params": {
+   "tipo": "engranajes",
+   "cilindrada": 20
+  },
+  "pasos": [
+   "Parada no da nada: el caudal es cilindrada por revoluciones.",
+   "Al girar, los dientes llevan el aceite por fuera de la aspiración a la impulsión; donde engranan, lo empujan hacia la salida.",
+   "Con presión alta parte del aceite vuelve por las holguras: el caudal real cae un poco; mucho si la bomba está gastada."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_bomba_engranajes.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "S",
+     "x": 98,
+     "y": 242,
+     "tam": 13
+    },
+    {
+     "texto": "P",
+     "x": 98,
+     "y": 174,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "S": [
+    86,
+    252
+   ],
+   "P": [
+    86,
+    184
+   ]
+  },
+  "bornes": {
+   "S": "Aspiración desde el tanque: tubo grueso, sin estrangular y siempre por debajo del nivel de aceite.",
+   "P": "Impulsión hacia la válvula de alivio y la direccional. Lleva una toma de prueba para el manómetro."
+  },
+  "grupos": [
+   {
+    "nombre": "Aspiración S",
+    "bornes": [
+     "S"
+    ],
+    "texto": "La boca grande. Una aspiración estrecha o un filtro sucio hacen cavitar la bomba."
+   },
+   {
+    "nombre": "Presión P",
+    "bornes": [
+     "P"
+    ],
+    "texto": "La boca pequeña. Antes de cualquier válvula, la de alivio protege a la bomba."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo hidráulico del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión de trabajo",
+    "instrumento": "manometro",
+    "roja": "P",
+    "negra": "",
+    "escala": "0-250 bar",
+    "como": "Manómetro en la toma de prueba de la impulsión",
+    "nota": "Con el motor en marcha: primero moviendo el cilindro, después a tope.",
+    "titulo_tabla": "Qué marca el manómetro",
+    "columna": "P",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "P",
+     "instrumento": "manometro"
+    },
+    "filas": [
+     {
+      "estado": "Cilindro avanzando con 20 kN",
+      "hacer": "Normal: la presión que pide la carga",
+      "bien": true
+     },
+     {
+      "estado": "Cilindro a tope",
+      "hacer": "Normal: llega al tarado del alivio",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        }
+       }
+      }
+     },
+     {
+      "estado": "A tope, alivio pegado abierto",
+      "hacer": "Falla: no sube; revisar el alivio antes que la bomba",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "pegada": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Caudal a presión",
+    "instrumento": "caudalimetro",
+    "roja": "P",
+    "negra": "",
+    "escala": "0-60 L/min",
+    "como": "Caudalímetro con válvula de carga en la impulsión",
+    "nota": "Se cierra poco a poco la válvula de carga del caudalímetro y se lee el caudal a cada presión.",
+    "titulo_tabla": "Qué marca el caudalímetro",
+    "columna": "Caudal",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "Q_bomba",
+     "instrumento": "caudalimetro",
+     "presion_prueba": 0
+    },
+    "filas": [
+     {
+      "estado": "Bomba nueva a 0 bar",
+      "hacer": "Normal: el caudal teórico",
+      "bien": true
+     },
+     {
+      "estado": "Bomba nueva a 160 bar",
+      "hacer": "Normal: cae un 5 %",
+      "bien": true,
+      "cambios": {
+       "presion_prueba": 160
+      }
+     },
+     {
+      "estado": "Bomba gastada a 160 bar",
+      "hacer": "Falla: cae más de un 20 %; cambiar la bomba",
+      "bien": false,
+      "cambios": {
+       "presion_prueba": 160,
+       "params": {
+        "bomba": {
+         "desgaste": 1.0
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Aspiración",
+    "instrumento": "manometro",
+    "roja": "S",
+    "negra": "",
+    "escala": "-1 a +1 bar",
+    "como": "Vacuómetro en la aspiración",
+    "nota": "La aspiración trabaja en depresión: cuanto más negativa, peor aspira.",
+    "titulo_tabla": "Qué marca el vacuómetro",
+    "columna": "S",
+    "medida": {
+     "hidraulica": "banco",
+     "punto": "S",
+     "instrumento": "manometro"
+    },
+    "filas": [
+     {
+      "estado": "Filtro y válvula de aspiración bien",
+      "hacer": "Normal: poca depresión",
+      "bien": true
+     },
+     {
+      "estado": "Filtro de aspiración obstruido",
+      "hacer": "Falla: cavitación",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "bomba": {
+         "aspiracion_obstruida": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Ruido y cavitación",
+    "sintoma": "Ruido de grava dentro de la bomba y aceite con espuma.",
+    "mide": [
+     {
+      "donde": "aspiración",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "S",
+       "instrumento": "manometro",
+       "params": {
+        "bomba": {
+         "aspiracion_obstruida": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Filtro de aspiración obstruido, válvula de aspiración medio cerrada o aceite frío y espeso: la presión de la aspiración cae, se forman burbujas y revientan contra los dientes.",
+    "reparacion": "Abrir la válvula, limpiar el filtro y calentar el aceite antes de cargar. Nunca estrangular la aspiración."
+   },
+   {
+    "nombre": "Bomba gastada",
+    "sintoma": "El cilindro va lento con carga y la bomba se calienta.",
+    "mide": [
+     {
+      "donde": "caudal a 0 bar",
+      "bien": true,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "Q_bomba",
+       "instrumento": "caudalimetro",
+       "params": {
+        "bomba": {
+         "desgaste": 1.0
+        }
+       },
+       "presion_prueba": 0
+      }
+     },
+     {
+      "donde": "caudal a 160 bar",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "Q_bomba",
+       "instrumento": "caudalimetro",
+       "params": {
+        "bomba": {
+         "desgaste": 1.0
+        }
+       },
+       "presion_prueba": 160
+      }
+     }
+    ],
+    "causa": "Holguras gastadas entre piñones, carcasa y placas: el aceite vuelve por dentro, más cuanto más presión.",
+    "reparacion": "Medir el caudal a presión con el caudalímetro; si cae más de un 20 % respecto al de 0 bar (valor típico), cambiar la bomba o su kit."
+   },
+   {
+    "nombre": "No da presión",
+    "sintoma": "Manómetro casi a cero con el cilindro a tope.",
+    "mide": [
+     {
+      "donde": "P a tope",
+      "bien": false,
+      "medida": {
+       "hidraulica": "banco",
+       "punto": "P",
+       "instrumento": "manometro",
+       "params": {
+        "actuador": {
+         "a_tope": true
+        },
+        "alivio": {
+         "pegada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Casi siempre es el alivio pegado abierto, no la bomba; o el acoplamiento roto y el eje sin girar.",
+    "reparacion": "Comprobar que el eje gira y aislar el alivio. Una bomba que da caudal da presión si algo se opone."
+   },
+   {
+    "nombre": "Gira al revés",
+    "sintoma": "Después de cambiar el motor eléctrico no aspira y suena.",
+    "mide": [
+     {
+      "donde": "caudal",
+      "bien": false,
+      "valor": "0 L/min"
+     }
+    ],
+    "causa": "Dos fases del motor cruzadas: la bomba gira contra su flecha.",
+    "reparacion": "Parar enseguida, cruzar dos fases y comprobar el sentido con un toque antes de cargar."
+   },
+   {
+    "nombre": "Fuga por el retén del eje",
+    "sintoma": "Aceite por la brida de montaje.",
+    "mide": [
+     {
+      "donde": "retén",
+      "bien": false,
+      "valor": "gotea"
+     }
+    ],
+    "causa": "Retén gastado o eje con holgura.",
+    "reparacion": "Cambiar el retén y revisar la alineación del acoplamiento."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "escuchar ruido, tocar temperatura y revisar fugas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "caudal a presión con caudalímetro, apuntado en el libro"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "acoplamiento, alineación y soportes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4413: transmisiones hidráulicas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "Manual del fabricante de la central hidráulica de cubierta (verificar a bordo)."
+ ]
+}

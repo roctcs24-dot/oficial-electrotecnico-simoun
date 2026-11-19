@@ -370,6 +370,49 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
 
+## Hidráulica (versión 4.23.0)
+
+El módulo 9, «Hidráulica y neumática», se abre con la parte de hidráulica. La neumática llega en la etapa 46.
+
+- **Lecciones** `hi1` a `hi9`:
+  - presión, fuerza y caudal;
+  - el aceite;
+  - bombas;
+  - cilindros y motores;
+  - válvulas de presión;
+  - caudal y retención;
+  - direccionales y esquemas ISO 1219;
+  - acumuladores;
+  - diagnóstico.
+- **Atlas** de ocho piezas, con ficha y atlas (`data/fichas/<id>.json` y `data/atlas/<id>.json`): `bomba_engranajes`, `bomba_pistones`, `cilindro_hidraulico`, `motor_hidraulico`, `valvula_alivio`, `estranguladora`, `antirretorno_pilotada` y `acumulador`.
+  - Sus fichas llevan un solo símbolo, `simbolos.iso`, según la ISO 1219-1, en lugar de la pareja IEC/ANSI.
+  - En «Conexión» se habla de bocas: P, T, A, B, S, L, X, V, C y N₂.
+- **Modelo hidráulico** `SimHidraulica` (`game/sim_hidraulica.gd`), en régimen estable. Resuelve un circuito con estos componentes:
+  - motor eléctrico;
+  - bomba fija con fuga interna que crece con la presión y el desgaste;
+  - válvula de alivio (normal, pegada o con el asiento dañado);
+  - direccional 4/3 de centro cerrado;
+  - cilindro de doble efecto (avance, retroceso, a tope, junta gastada) o motor hidráulico (par, rpm y drenaje);
+  - estranguladora a la salida (meter-out);
+  - antirretorno pilotada (deriva);
+  - acumulador de vejiga (ley de Boyle).
+
+  Los valores por defecto son típicos y hay que verificarlos a bordo.
+- **Lecturas de «Medir» y de las fallas:** una medida con `"hidraulica": "banco"` se calcula con el modelo. Lleva `"punto"` (`P`, `A`, `B`, `T`, `S`, `Q`, `Q_bomba` con `presion_prueba`, `Q_alivio`, `fuga_B`, `drenaje`, `rpm`, `deriva`, `gas`, `volumen_util` o `calor`) y `"params"` por componente. Los cambios de cada fila se mezclan como en los circuitos eléctricos. Instrumentos nuevos en `VistaMedida`:
+  - `manometro`;
+  - `caudalimetro`;
+  - `comparador`, el reloj comparador.
+
+  Se dibujan unidos a la pieza con un latiguillo de prueba.
+- **Animaciones** (`ui/animaciones/`), con piezas comunes en `dibujo_hidraulico.gd`:
+  - `prensa_hidraulica`: Pascal;
+  - `corte_bomba`: engranajes o pistones, con rpm, presión, plato y desgaste;
+  - `circuito_hidraulico`: bomba, alivio, manómetro, direccional y cilindro o motor. El `foco` puede ser `alivio`, `cilindro`, `motor`, `estranguladora` o `pilotada`;
+  - `acumulador_vejiga`.
+- **Minijuego «Símbolos ISO 1219»** (registro `simbolos_iso1219`): 18 símbolos en `data/simbolos_iso1219.json`, cada uno con nombre, término inglés, `familia`, la `pieza` del atlas si la tiene y su explicación. Cuatro rondas enseñan la pieza dibujada y se toca su símbolo entre cuatro. Las demás enseñan el símbolo y se elige su nombre. Está en la evaluación del módulo 9.
+- **Dibujos:** `python tools/svg_hidraulica.py` regenera los SVG de las piezas (`art/equipos`), los esquemas de «Conexión» (`art/esquemas/atlas_<id>.svg`) y los símbolos (`art/simbolos/iso1219`). Después, `python tools/dibujos_realistas/realzar.py faltan` saca su versión realista.
+- **Pruebas** en `tests/test_hidraulica.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_h hidraulica`.
+
 ## Seguir líneas y colores de tubería (versión 4.22.0)
 
 El módulo 10, «Válvulas y líneas», suma cuatro lecciones (`li1` a `li4`): planos P&ID, colores de tubería, seguir una línea y aislar un equipo.

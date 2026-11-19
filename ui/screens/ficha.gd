@@ -207,6 +207,10 @@ func _mostrar_simbolos() -> void:
 			var datos := raiz.contenido.simbolo(id)
 			rejilla.add_child(_tarjeta_simbolo(datos["iec"], "IEC 60617"))
 			rejilla.add_child(_tarjeta_simbolo(datos["ansi"], "ANSI/IEEE 315 (NEMA)"))
+	elif simbolos.has("iso"):
+		# Hidráulica y neumática: un solo símbolo, el de la ISO 1219-1.
+		rejilla.columns = 1
+		rejilla.add_child(_tarjeta_simbolo(simbolos["iso"], simbolos["iso"].get("titulo", "ISO 1219-1")))
 	else:
 		rejilla.add_child(_tarjeta_simbolo(simbolos["iec"], simbolos["iec"].get("titulo", "IEC 60617")))
 		rejilla.add_child(_tarjeta_simbolo(simbolos["ansi"], simbolos["ansi"].get("titulo", "ANSI/IEEE 315")))

@@ -90,6 +90,8 @@ func test_dibujos_de_las_fichas_se_pueden_rasterizar() -> String:
 			for id: String in ficha["simbolos"]["lista"]:
 				if c.simbolo(id).is_empty():
 					return "%s usa un símbolo que no existe: %s" % [f, id]
+		elif ficha["simbolos"].has("iso"):
+			rutas.append(ficha["simbolos"]["iso"]["svg"])
 		else:
 			rutas.append_array([ficha["simbolos"]["iec"]["svg"], ficha["simbolos"]["ansi"]["svg"]])
 	for s: Dictionary in c.simbolos():

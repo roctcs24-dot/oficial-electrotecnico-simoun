@@ -1,0 +1,72 @@
+{
+  "id": "hi6_caudal_retencion",
+  "titulo": "Caudal y retención",
+  "resumen": "Estranguladoras y antirretornos.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Regular la velocidad",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_estranguladora}} estrecha el paso para regular la velocidad. Montada a la salida del cilindro ({{meter_out}}) lo sujeta aunque la carga empuje. Con una bomba de caudal fijo, el aceite que no pasa vuelve por el alivio: se regula a costa de calor.\n\nCierre el pomo y mire la presión y el caudal por el alivio."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_hidraulico",
+          "params": {
+            "foco": "estranguladora",
+            "carga": 20
+          },
+          "pie": "Estranguladora con antirretorno en la línea B."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi6_al_reves",
+          "pregunta": "Una estranguladora con antirretorno no regula nada aunque se cierre el pomo. ¿Qué es lo primero que se mira?",
+          "opciones": [
+            "La flecha del cuerpo: puede estar montada al revés",
+            "El tarado del alivio",
+            "La bobina Y1"
+          ],
+          "correcta": 0,
+          "explicacion": "Frena en un sentido y deja pasar libre en el otro: montada al revés, el aceite pasa por el antirretorno."
+        }
+      ]
+    },
+    {
+      "titulo": "Retener la carga",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{valvula_retencion}} deja pasar en un solo sentido. La {{antirretorno_pilotada}} además abre en sentido contrario cuando recibe presión en su piloto: sostiene una carga colgada sin deriva, porque cierra por asiento, y la deja bajar cuando se manda."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_hidraulico",
+          "params": {
+            "foco": "pilotada",
+            "carga": 30
+          },
+          "pie": "Pilotada sosteniendo 30 kN: dañe el asiento y mire la deriva."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "hi6_deriva",
+          "pregunta": "Con la direccional en el centro, ¿por qué baja una carga si no hay pilotada?",
+          "opciones": [
+            "Porque la corredera siempre deja pasar un poco",
+            "Porque el alivio abre",
+            "Porque la bomba sigue girando"
+          ],
+          "correcta": 0,
+          "explicacion": "La corredera trabaja con holgura y pasa algo de aceite; el asiento de la pilotada no."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4413.",
+    "Esquemas de las grúas de cubierta (verificar a bordo)."
+  ]
+}
