@@ -461,6 +461,12 @@ Las válvulas se ven también en fotos tomadas en el B/P Vía Simoun, no solo di
 - **Catálogo de válvulas:** si la pieza tiene fotos, el visor empieza por la primera; los botones 1, 2, 3… cambian de foto y DIBUJO vuelve al dibujo. En el catálogo la foto sí lleva la lámpara de su estado.
 - **Widget** `FotoPieza` (`ui/widgets/foto_pieza.gd`): llena su espacio centrado en el halo, con bisel, halo que late, rótulo y crédito.
 - **Pruebas** en `tests/test_fotos_piezas.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_fotos fotos`.
+- **Versión 4.23.1:** tres fotos más del taller de máquinas, con sus partes numeradas:
+  - el acoplamiento de levas Dixon tipo D, con la pregunta de seguridad antes de soltar las palancas (`camlock_dixon`, pieza `enchufe_rapido`);
+  - los adaptadores giratorios de 45° con los niples sellados con cinta y con sellador (`codo_niples`, pieza `bspt_npt`);
+  - la válvula de bola NIBCO T-580 suelta, cerrada y con el agujero para el candado (`nibco_suelta`, pieza `bola`).
+
+  La foto de la te de inoxidable 304 está movida y queda fuera hasta repetirla.
 
 ## Dibujos realistas de los equipos (versiones 4.16.2 a 4.16.6)
 

@@ -800,6 +800,11 @@ func _capturar_fotos(raiz: Raiz, carpeta: String) -> void:
 			raiz.ir_a("catalogo", {"catalogo": "valvulas", "elegido": par[0], "foto": par[1]})
 			await _guardar(carpeta, "p_catalogo_%s_%d" % [par[0], par[1]], tam)
 			raiz.volver()
+		# Fotos de la versión 4.23.1 (taller de máquinas).
+		for trio: Array in [["valvulas", "bola", 4], ["racores", "enchufe_rapido", 0], ["racores", "bspt_npt", 1]]:
+			raiz.ir_a("catalogo", {"catalogo": trio[0], "elegido": trio[1], "foto": trio[2]})
+			await _guardar(carpeta, "p_catalogo_%s_%d" % [trio[1], trio[2]], tam)
+			raiz.volver()
 		raiz.ir_a_seccion("inicio")
 
 

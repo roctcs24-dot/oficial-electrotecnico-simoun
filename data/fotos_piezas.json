@@ -393,6 +393,185 @@
         "De aspiración: no aguanta presión"
       ],
       "correcta": 0
+    },
+    {
+      "id": "camlock_dixon",
+      "pieza": "enchufe_rapido",
+      "origen": "racores/r09.jpg",
+      "recorte": [
+        532,
+        1295,
+        2936,
+        2312
+      ],
+      "halo": [
+        647,
+        1826,
+        1017,
+        1341
+      ],
+      "archivo": "art/fotos/racores/camlock_dixon.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Acoplamiento Dixon tipo D",
+      "lugar": "Taller de máquinas",
+      "texto": "Acoplamiento rápido de levas (camlock) en la boca de una bomba: hembra de palancas por un lado y rosca hembra por el otro. Las dos palancas se cierran a la vez y llevan anillo de seguridad. El óxido de la brida pide revisión. Tamaño y junta: verificar a bordo.",
+      "partes": [
+        {
+          "x": 694,
+          "y": 2034,
+          "titulo": "Palancas con anillo",
+          "texto": "Las levas aprietan el macho contra la junta. El anillo impide que se abran solas con la vibración."
+        },
+        {
+          "x": 1295,
+          "y": 2427,
+          "titulo": "Cuerpo hembra",
+          "texto": "Por dentro lleva la junta de goma: si falta o está cortada, gotea al conectar."
+        },
+        {
+          "x": 1873,
+          "y": 2497,
+          "titulo": "Hexágono DIXON",
+          "texto": "Extremo de rosca hembra: se aprieta con llave, nunca tirando de las palancas."
+        },
+        {
+          "x": 2150,
+          "y": 2497,
+          "titulo": "Niple roscado",
+          "texto": "Une el acoplamiento con la brida de la bomba. Rosca cónica con sellador."
+        },
+        {
+          "x": 2497,
+          "y": 2312,
+          "titulo": "Brida oxidada",
+          "texto": "El óxido entre brida y cuerpo indica que suda o que le cae agua: revisar y proteger."
+        }
+      ],
+      "pregunta": "Antes de soltar las palancas del acoplamiento marcado, ¿qué hay que hacer?",
+      "opciones": [
+        "Cerrar la válvula y descargar la presión de la manguera",
+        "Nada: por ser rápido se suelta en marcha",
+        "Abrir más la válvula para vaciar"
+      ],
+      "correcta": 0
+    },
+    {
+      "id": "codo_niples",
+      "pieza": "bspt_npt",
+      "origen": "racores/r11.jpg",
+      "recorte": [
+        1480,
+        347,
+        1757,
+        2196
+      ],
+      "halo": [
+        2000,
+        1595,
+        890,
+        312
+      ],
+      "archivo": "art/fotos/racores/codo_niples.webp",
+      "estado": "",
+      "tubo": "",
+      "rotulo": "Codo giratorio y niples",
+      "lugar": "Taller de máquinas",
+      "texto": "Arriba, dos adaptadores giratorios de 45° unidos (hembra giratoria y macho). Abajo, dos niples de tubo: el largo lleva cinta amarilla de teflón (la gruesa, para gas) en un extremo y sellador rojo en el otro. Las dos cosas sellan en los hilos, así que la rosca es cónica. Tipo exacto de rosca: verificar a bordo.",
+      "partes": [
+        {
+          "x": 2451,
+          "y": 670,
+          "titulo": "Tuerca giratoria",
+          "texto": "Gira libre: orienta el codo sin retorcer la línea y después se aprieta con contrallave."
+        },
+        {
+          "x": 2913,
+          "y": 948,
+          "titulo": "Extremo macho",
+          "texto": "Rosca del codo hacia el equipo. Antes de poner cinta, mire si es cónica o si sella en un cono o una arandela."
+        },
+        {
+          "x": 2127,
+          "y": 1757,
+          "titulo": "Cinta amarilla",
+          "texto": "Teflón de alta densidad. Se enrolla en el sentido de la rosca y sin tapar el primer hilo, para que no entre al circuito."
+        },
+        {
+          "x": 2844,
+          "y": 1757,
+          "titulo": "Sellador rojo",
+          "texto": "Sellador anaeróbico de roscas: endurece al apretar y quedarse sin aire. Se limpia antes de volver a montar."
+        },
+        {
+          "x": 2358,
+          "y": 2289,
+          "titulo": "Niple corto",
+          "texto": "Tubo corto roscado en los dos extremos para unir dos piezas hembra."
+        }
+      ],
+      "pregunta": "El niple marcado lleva cinta de teflón en un extremo y sellador en el otro. ¿Por qué se puede sellar así?",
+      "opciones": [
+        "Es rosca cónica: sella en los hilos",
+        "Es rosca JIC: sella en el cono",
+        "Es rosca BSPP: sella con arandela"
+      ],
+      "correcta": 0
+    },
+    {
+      "id": "nibco_suelta",
+      "pieza": "bola",
+      "origen": "valvulas/v21.jpg",
+      "recorte": [
+        416,
+        1295,
+        2820,
+        1433
+      ],
+      "halo": [
+        509,
+        1364,
+        2659,
+        1295
+      ],
+      "archivo": "art/fotos/valvulas/nibco_suelta.webp",
+      "estado": "cerrada",
+      "tubo": "vertical",
+      "rotulo": "NIBCO T-580 en el banco",
+      "lugar": "Taller de máquinas",
+      "texto": "Válvula de bola NIBCO de acero inoxidable, roscada. Las bocas están arriba y abajo y la maneta cruza ese eje: está cerrada. La maneta y el tope tienen agujeros para un candado (bloqueo y etiquetado). Código T580S6R66: verificar en el catálogo del fabricante.",
+      "partes": [
+        {
+          "x": 878,
+          "y": 2520,
+          "titulo": "Boca roscada",
+          "texto": "Rosca hembra en cada extremo; el paso va de arriba abajo en la foto."
+        },
+        {
+          "x": 1110,
+          "y": 2011,
+          "titulo": "Tuerca del vástago",
+          "texto": "Aprieta la empaquetadura. Si gotea por el vástago, se reaprieta un poco con la válvula sin presión."
+        },
+        {
+          "x": 971,
+          "y": 1711,
+          "titulo": "Tope",
+          "texto": "Limita el giro a un cuarto de vuelta entre abierta y cerrada."
+        },
+        {
+          "x": 1625,
+          "y": 2020,
+          "titulo": "Agujero para candado",
+          "texto": "Con un candado o un bloqueo de válvula aquí, nadie puede abrirla mientras se trabaja aguas abajo."
+        },
+        {
+          "x": 2219,
+          "y": 2034,
+          "titulo": "OFF con flecha",
+          "texto": "Marca hacia dónde se gira para cerrar. Lo que manda es la maneta: cruzada al tubo, cerrada."
+        }
+      ]
     }
   ]
 }

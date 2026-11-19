@@ -176,3 +176,36 @@ func test_catalogo_enseña_fotos_y_dibujo() -> String:
 		A.cierto(compuerta_dibujo, "sin fotos, el dibujo de siempre"),
 		A.cierto(globo_foto, "al elegir otra pieza con fotos, vuelve a la primera foto"),
 	])
+
+
+## Versión 4.23.1: las fotos del taller (acoplamiento Dixon, codo con niples, NIBCO suelta) se ven
+## en su catálogo, y en vertical la fila de botones de cinco fotos cabe en la pantalla.
+func test_fotos_del_taller_en_su_catalogo() -> String:
+	var raiz := _raiz(Vector2i(432, 960))
+	var vistas: Array[String] = []
+	var anchos_ok := true
+	for trio: Array in [["valvulas", "bola", "nibco_suelta"], ["racores", "enchufe_rapido", "camlock_dixon"], ["racores", "bspt_npt", "codo_niples"]]:
+		raiz.ir_a("catalogo", {"catalogo": trio[0], "elegido": trio[1]})
+		var c = raiz.pantalla_actual()
+		var i := -1
+		for k in c.fotos.size():
+			if c.fotos[k]["id"] == trio[2]:
+				i = k
+		if i < 0:
+			vistas.append("%s no está en %s" % [trio[2], trio[1]])
+			raiz.volver()
+			continue
+		c.ver_foto(i)
+		c = raiz.pantalla_actual()
+		if not (c.dibujo is FotoPieza):
+			vistas.append("%s no se enseña" % trio[2])
+		var ultimo: Control = c.find_child("Vista_%d" % c.fotos.size(), true, false)
+		# La fila de botones (rótulo, fotos y DIBUJO) debe caber en el visor: 432 menos márgenes.
+		if ultimo == null or (ultimo.get_parent() as Control).get_combined_minimum_size().x > 380.0:
+			anchos_ok = false
+		raiz.volver()
+	raiz.free()
+	return A.primero([
+		A.cierto(vistas.is_empty(), ", ".join(vistas)),
+		A.cierto(anchos_ok, "en vertical el botón DIBUJO queda dentro de la pantalla"),
+	])

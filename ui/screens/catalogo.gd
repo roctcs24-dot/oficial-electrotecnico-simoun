@@ -146,6 +146,8 @@ func _visor() -> Control:
 		var rotulo := PiezasLeccion.rotulo("Foto a bordo")
 		rotulo.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		rotulo.autowrap_mode = TextServer.AUTOWRAP_OFF
+		# En vertical, con muchas fotos, los botones no caben junto al rótulo: la foto ya lleva su crédito.
+		rotulo.visible = not raiz.vertical or fotos.size() < 4
 		vistas.add_child(rotulo)
 		for i in fotos.size() + 1:
 			var vista := i if i < fotos.size() else -1
