@@ -1,0 +1,72 @@
+{
+  "id": "ne8_actuadores_posicionadores",
+  "titulo": "Actuadores y posicionadores",
+  "resumen": "Cuarto de vuelta, NAMUR, 4–20 mA y falla segura.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Actuadores de cuarto de vuelta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{actuador_cuarto_vuelta}} gira 90° para abrir válvulas de bola y de mariposa. En simple efecto, los muelles lo cierran al quitar el aire: es su {{posicion_falla}}. La cara {{namur}} permite montar encima la electroválvula o el posicionador."
+        },
+        {
+          "tipo": "animacion",
+          "id": "posicionador_lazo",
+          "params": {
+            "senal": 12.0,
+            "foco": "actuador"
+          },
+          "pie": "Actuador de simple efecto, muelles de 1 a 4 bar (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne8_falla",
+          "pregunta": "Una válvula de agua de refrigeración debe abrirse si falla el aire. ¿Cómo se elige el actuador?",
+          "opciones": [
+            "Simple efecto con muelle que abre",
+            "Simple efecto con muelle que cierra",
+            "Da igual"
+          ],
+          "correcta": 0,
+          "explicacion": "La posición de falla se elige según la seguridad del sistema: aquí, que no falte refrigeración."
+        }
+      ]
+    },
+    {
+      "titulo": "El posicionador",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{posicionador}} lee el {{lazo_4_20}}: 4 mA es cerrada y 20 mA abierta. Compara con la posición real y manda aire hasta que coinciden. Mueva la señal y corte el aire."
+        },
+        {
+          "tipo": "animacion",
+          "id": "posicionador_lazo",
+          "params": {
+            "senal": 12.0
+          },
+          "pie": "Lazo de 4–20 mA con calibrador y posicionador."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne8_ma",
+          "pregunta": "¿Qué posición pide una señal de 8 mA?",
+          "opciones": [
+            "25 %",
+            "40 %",
+            "50 %"
+          ],
+          "correcta": 0,
+          "explicacion": "(8 − 4) ÷ 16 = 0,25: el 25 %."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "VDI/VDE 3845 (NAMUR).",
+    "IEC 60381-1: señales analógicas.",
+    "Manual del posicionador (verificar a bordo)."
+  ]
+}

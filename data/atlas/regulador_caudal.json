@@ -1,0 +1,314 @@
+{
+ "id": "regulador_caudal",
+ "ficha": "regulador_caudal",
+ "titulo": "Regulador de caudal unidireccional",
+ "termino": "regulador_caudal",
+ "icono": "hidraulica",
+ "resumen": "Frena el aire en un sentido y lo deja pasar libre en el otro: así se ajusta la velocidad.",
+ "bornes_dibujo": {
+  "1": [
+   340,
+   165
+  ],
+  "2": [
+   190,
+   262
+  ]
+ },
+ "que_es": {
+  "texto": "El {{regulador_caudal}} se rosca en la boca del cilindro. Tiene una aguja que estrecha el paso y un antirretorno en paralelo: el aire que entra al cilindro pasa libre por el antirretorno y el que sale tiene que pasar por la aguja. Se frena el escape ({{meter_out}}): el pistón queda apretado entre dos colchones de aire y se mueve sin tirones, aunque cambie la carga.",
+  "partes": [
+   {
+    "texto": "Pomo moleteado: cerrar es frenar más.",
+    "marca": [
+     190,
+     50
+    ]
+   },
+   {
+    "texto": "Contratuerca que bloquea el ajuste.",
+    "marca": [
+     190,
+     92
+    ]
+   },
+   {
+    "texto": "Cuerpo giratorio tipo banjo.",
+    "marca": [
+     170,
+     165
+    ]
+   },
+   {
+    "texto": "Racor rápido para el tubo de la válvula (boca 1).",
+    "marca": [
+     300,
+     165
+    ]
+   },
+   {
+    "texto": "Rosca al cilindro (boca 2).",
+    "marca": [
+     190,
+     244
+    ]
+   },
+   {
+    "texto": "Hexágono para apretarlo.",
+    "marca": [
+     150,
+     210
+    ]
+   }
+  ],
+  "placa": "G1/4 · tubo 8 mm · regulación del escape · 0,5–10 bar",
+  "a_bordo": "En las bocas de casi todos los cilindros de a bordo. Tamaños: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_neumatico",
+  "params": {
+   "foco": "regulador",
+   "apertura": 0.3
+  },
+  "pasos": [
+   "El aire que entra al cilindro pasa libre por el antirretorno del regulador.",
+   "El aire que sale tiene que pasar por la aguja: cuanto más cerrada, más despacio.",
+   "La fuerza no cambia, porque la presión que empuja es la misma: solo cambia la velocidad."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_regulador_caudal.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "1",
+     "x": 336,
+     "y": 116,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 336,
+     "y": 80,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    324,
+    126
+   ],
+   "2": [
+    324,
+    90
+   ]
+  },
+  "bornes": {
+   "1": "Al tubo que viene de la válvula.",
+   "2": "Roscado en la boca del cilindro."
+  },
+  "grupos": [
+   {
+    "nombre": "Bocas",
+    "bornes": [
+     "1",
+     "2"
+    ],
+    "texto": "El símbolo grabado dice hacia dónde frena. Para frenar el escape, la flecha libre va hacia el cilindro."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Velocidad del vástago",
+    "instrumento": "cronometro",
+    "roja": "2",
+    "negra": "",
+    "escala": "s y mm",
+    "como": "Cronómetro en la carrera completa",
+    "nota": "Se cierra el regulador del lado que escapa y se mide el tiempo.",
+    "titulo_tabla": "Qué velocidad da",
+    "columna": "Velocidad",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "velocidad",
+     "instrumento": "cronometro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Abierto del todo",
+      "hacer": "Normal: lo más rápido",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "reguladores": {
+         "avance": 1.0
+        }
+       }
+      }
+     },
+     {
+      "estado": "Al 30 %",
+      "hacer": "Normal: la ajustada",
+      "bien": true
+     },
+     {
+      "estado": "Cerrado del todo",
+      "hacer": "Falla: no se mueve; abrirlo",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "reguladores": {
+         "avance": 0.0
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Aire por ciclo",
+    "instrumento": "caudalimetro",
+    "roja": "1",
+    "negra": "",
+    "escala": "NL",
+    "como": "Caudalímetro con totalizador en la entrada de la unidad",
+    "nota": "El regulador no ahorra aire: el cilindro se llena igual. Lo que ahorra es bajar la presión.",
+    "titulo_tabla": "Cuánto gasta un ciclo",
+    "columna": "Consumo",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "consumo",
+     "instrumento": "caudalimetro"
+    },
+    "filas": [
+     {
+      "estado": "A 6 bar, cualquier ajuste",
+      "hacer": "Normal",
+      "bien": true
+     },
+     {
+      "estado": "A 4 bar",
+      "hacer": "Menos aire y menos fuerza",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "fr": {
+         "regulado": 4.0
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No se mueve",
+    "sintoma": "Después de ajustar, el cilindro se queda quieto.",
+    "mide": [
+     {
+      "donde": "velocidad",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "velocidad",
+       "instrumento": "cronometro",
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "reguladores": {
+         "avance": 0.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Regulador cerrado del todo.",
+    "reparacion": "Abrirlo una vuelta, probar y ajustar poco a poco; bloquear con la contratuerca."
+   },
+   {
+    "nombre": "Va a tirones",
+    "sintoma": "El vástago se para y arranca, sobre todo despacio.",
+    "mide": [
+     {
+      "donde": "velocidad",
+      "bien": false,
+      "valor": "irregular"
+     }
+    ],
+    "causa": "Se está frenando la entrada en vez del escape, o juntas que rozan mucho.",
+    "reparacion": "Comprobar el sentido del símbolo grabado: debe frenar el aire que sale."
+   },
+   {
+    "nombre": "Desajustado solo",
+    "sintoma": "La velocidad cambia de un día a otro.",
+    "mide": [
+     {
+      "donde": "pomo",
+      "bien": false,
+      "valor": "suelto"
+     }
+    ],
+    "causa": "Contratuerca sin apretar: la vibración gira el pomo.",
+    "reparacion": "Ajustar y apretar la contratuerca; marcar la posición con pintura."
+   },
+   {
+    "nombre": "Fuga por la rosca",
+    "sintoma": "Soplido en la boca del cilindro.",
+    "mide": [
+     {
+      "donde": "rosca",
+      "bien": false,
+      "valor": "sopla"
+     }
+    ],
+    "causa": "Junta de la rosca dañada o apriete excesivo.",
+    "reparacion": "Cambiar la junta y apretar con el par del fabricante; sin cinta en roscas con junta."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "comprobar que las contratuercas siguen apretadas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tiempo de carrera apuntado"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisar juntas y racores rápidos"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante (verificar a bordo)."
+ ]
+}

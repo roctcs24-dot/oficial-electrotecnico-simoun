@@ -372,7 +372,7 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 
 ## Hidráulica (versión 4.23.0)
 
-El módulo 9, «Hidráulica y neumática», se abre con la parte de hidráulica. La neumática llega en la etapa 46.
+El módulo 9, «Hidráulica y neumática», se abre con la parte de hidráulica. La neumática llegó en la etapa 46 (abajo).
 
 - **Lecciones** `hi1` a `hi9`:
   - presión, fuerza y caudal;
@@ -412,6 +412,39 @@ El módulo 9, «Hidráulica y neumática», se abre con la parte de hidráulica.
 - **Minijuego «Símbolos ISO 1219»** (registro `simbolos_iso1219`): 18 símbolos en `data/simbolos_iso1219.json`, cada uno con nombre, término inglés, `familia`, la `pieza` del atlas si la tiene y su explicación. Cuatro rondas enseñan la pieza dibujada y se toca su símbolo entre cuatro. Las demás enseñan el símbolo y se elige su nombre. Está en la evaluación del módulo 9.
 - **Dibujos:** `python tools/svg_hidraulica.py` regenera los SVG de las piezas (`art/equipos`), los esquemas de «Conexión» (`art/esquemas/atlas_<id>.svg`) y los símbolos (`art/simbolos/iso1219`). Después, `python tools/dibujos_realistas/realzar.py faltan` saca su versión realista.
 - **Pruebas** en `tests/test_hidraulica.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_h hidraulica`.
+
+## Neumática (versión 4.24.0)
+
+El módulo 9 sigue con la neumática después de la hidráulica: 18 lecciones y 16 piezas en total.
+
+- **Lecciones** `ne1` a `ne9`:
+  - el aire comprimido a bordo (arranque, control y servicio);
+  - agua y suciedad: punto de rocío, secadores y la ISO 8573-1;
+  - la unidad FRL;
+  - cilindros: fuerza, consumo, amortiguación y detectores;
+  - válvulas 3/2, 5/2 y 5/3 con la numeración ISO 5599;
+  - velocidad: reguladores de caudal en el escape;
+  - electroneumática: bobinas, detectores y PLC;
+  - actuadores de cuarto de vuelta, NAMUR y posicionadores de 4–20 mA;
+  - fugas y seguridad.
+- **Atlas** de ocho piezas: `unidad_fr`, `secador_frigorifico`, `valvula_52`, `valvula_53`, `cilindro_neumatico`, `regulador_caudal`, `actuador_cuarto_vuelta` y `posicionador`. Cada una con su símbolo ISO 1219-1 (el posicionador, con la caja I/P de los esquemas de instrumentación).
+- **Modelo neumático** `SimNeumatica` (`game/sim_neumatica.gd`), en régimen estable:
+  - red de aire de control, secador (punto de rocío) y fugas (caudal y kW de compresor);
+  - unidad de filtro y regulador, con la caída del cartucho sucio cuando hay caudal;
+  - válvula 5/2 monoestable o 5/3 de centro cerrado, con bobina quemada, corredera pegada o con fuga;
+  - reguladores de caudal en los escapes (meter-out);
+  - cilindro de doble efecto (fuerza, velocidad, consumo por ciclo, junta gastada, carga excesiva) y detectores B1 y B2;
+  - posicionador de 4–20 mA sobre un actuador de simple efecto que cierra en falla (sin aire, sin señal, membrana con fuga, acción invertida).
+
+  Una medida con `"neumatica": "banco"` se calcula con el modelo; `"punto"` puede ser `P_red`, `P_reg`, `dP_filtro`, `P_A`, `P_B`, `velocidad`, `tiempo`, `fuerza`, `consumo`, `fuga_escape`, `B1`, `B2`, `Y1`, `senal`, `P_salida`, `P_alim`, `posicion`, `rocio`, `fuga_Q` o `fuga_kW`. Instrumentos nuevos en `VistaMedida`: `higrometro` y `cronometro`. Los valores por defecto son típicos y hay que verificarlos a bordo.
+- **Animaciones**, con piezas comunes en `dibujo_neumatico.gd`:
+  - `circuito_neumatico`: secador, FR, válvula, reguladores y cilindro con B1 y B2. El `foco` puede ser `cilindro`, `regulador`, `52`, `53`, `fr` o `secador`;
+  - `valvula_corte`: la 5/2 por dentro, con mando manual y bobina quemada;
+  - `posicionador_lazo`: calibrador, posicionador, actuador y mariposa;
+  - `fuga_aire`: caudal, kW y kWh al año de un agujero.
+- **Minijuego «Símbolos de neumática»** (registro `simbolos_neumatica`): 16 símbolos con `familia: "neumatica"` en el mismo `data/simbolos_iso1219.json`. La pantalla `simbolos_iso1219` elige la familia por su registro (`JuegoIso1219.FAMILIAS`), así que los dos minijuegos guardan sus estrellas por separado.
+- **Dibujos:** `python tools/svg_neumatica.py` (usa las piezas comunes de `svg_hidraulica.py`; en neumática los triángulos van huecos) y después `python tools/dibujos_realistas/realzar.py faltan`.
+- **Pruebas** en `tests/test_neumatica.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_n neumatica`.
 
 ## Seguir líneas y colores de tubería (versión 4.22.0)
 

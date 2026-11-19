@@ -1,0 +1,82 @@
+{
+ "id": "regulador_caudal",
+ "titulo": "Regulador de caudal unidireccional",
+ "resumen": "Frena el aire en un sentido y lo deja pasar libre en el otro: así se ajusta la velocidad.",
+ "dibujo": {
+  "svg": "res://art/equipos/regulador_caudal.svg",
+  "tamano": [
+   380,
+   300
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "1",
+    "x": 346,
+    "y": 140,
+    "tam": 14
+   },
+   {
+    "texto": "2",
+    "x": 236,
+    "y": 252,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/regulador_caudal.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "El {{regulador_caudal}} ajusta la velocidad del cilindro sin cambiar su fuerza."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Aguja cónica con pomo y contratuerca, y antirretorno de labio en paralelo."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "En la boca del cilindro, frenando el escape. Uno por cada sentido que se quiera ajustar."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Empezar cerrado casi del todo, abrir hasta la velocidad buscada y bloquear con la contratuerca."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Tiempo de carrera con cronómetro antes y después del ajuste."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Montado al revés, pomo suelto y juntas con fuga."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Comprobar el bloqueo y apuntar los tiempos de carrera."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante (verificar a bordo)."
+ ]
+}

@@ -1,0 +1,94 @@
+{
+ "id": "cilindro_neumatico",
+ "titulo": "Cilindro neumático con detectores",
+ "resumen": "Cilindro de doble efecto de perfil de aluminio, con amortiguación y detectores magnéticos B1 y B2.",
+ "dibujo": {
+  "svg": "res://art/equipos/cilindro_neumatico.svg",
+  "tamano": [
+   580,
+   230
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "A",
+    "x": 86,
+    "y": 8,
+    "tam": 14
+   },
+   {
+    "texto": "B",
+    "x": 422,
+    "y": 8,
+    "tam": 14
+   },
+   {
+    "texto": "B1",
+    "x": 112,
+    "y": 46,
+    "tam": 13
+   },
+   {
+    "texto": "B2",
+    "x": 298,
+    "y": 46,
+    "tam": 13
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/cilindro_amortiguado.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "El {{cilindro_neumatico}} convierte el aire en un movimiento lineal rápido y limpio, con detectores que le dicen al PLC dónde está."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Tubo de perfil, dos culatas con amortiguación regulable, pistón con imán y juntas, vástago cromado con rascador."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "A y B a las bocas 4 y 2 de la válvula, con reguladores de caudal en las bocas del cilindro. Detectores a entradas del PLC."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Fuerza = presión × área × rendimiento: con Ø 63 a 6 bar, unos 1,7 kN al salir (valor típico). La velocidad con los reguladores; el final suave con la amortiguación."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Tiempo de carrera, señal de los detectores con multímetro y prueba de fuga de la junta del pistón."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Juntas gastadas, detectores desplazados, golpes por amortiguación abierta y vástago rayado."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Vástago limpio, detectores bien apretados y aire seco."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "ISO 15552: cilindros neumáticos. Catálogo del fabricante (verificar a bordo)."
+ ]
+}

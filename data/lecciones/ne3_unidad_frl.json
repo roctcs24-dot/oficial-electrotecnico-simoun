@@ -1,0 +1,72 @@
+{
+  "id": "ne3_unidad_frl",
+  "titulo": "La unidad FRL",
+  "resumen": "Filtro, regulador y lubricador antes de cada equipo.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Filtro, regulador y lubricador",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Cada equipo lleva su {{unidad_frl}}: el {{filtro_aire}} retiene agua y polvo, el {{regulador_presion}} baja la red a la presión de trabajo y el {{lubricador}}, si lo hay, mete aceite. Ajuste la presión y ensucie el cartucho: con el cilindro moviéndose, la presión cae."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "fr",
+            "regulado": 6.0
+          },
+          "pie": "Unidad de filtro y regulador ajustada a 6 bar (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne3_sucio",
+          "pregunta": "Con el cilindro parado el manómetro marca 6 bar, pero al moverse baja a 5. ¿Qué se revisa primero?",
+          "opciones": [
+            "El cartucho del filtro",
+            "La bobina de la válvula",
+            "El detector B2"
+          ],
+          "correcta": 0,
+          "explicacion": "La caída con caudal es la firma de un filtro colmatado; parado no se nota."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajustar el regulador",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "ne3_ajuste",
+          "pregunta": "Ordene el ajuste del regulador:",
+          "pasos": [
+            "Tirar del pomo para desbloquearlo",
+            "Girar hasta la presión de trabajo con el equipo moviéndose",
+            "Comprobar el manómetro",
+            "Empujar el pomo para bloquearlo",
+            "Apuntar el ajuste"
+          ],
+          "explicacion": "Se ajusta con caudal, que es como trabaja. Bloqueado no se desajusta con la vibración."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne3_lubricador",
+          "pregunta": "¿Hace falta lubricador en un equipo con «lubricado de por vida»?",
+          "opciones": [
+            "Sí, siempre",
+            "No; y si un día se pone aceite, ya no se puede quitar",
+            "Solo en invierno"
+          ],
+          "correcta": 1,
+          "explicacion": "El aceite del lubricador lava la grasa de fábrica: si se empieza, hay que seguir para siempre."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Catálogo de unidades FRL (verificar a bordo).",
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad."
+  ]
+}

@@ -1,0 +1,468 @@
+{
+ "id": "valvula_52",
+ "ficha": "valvula_52",
+ "titulo": "Válvula 5/2 de solenoide",
+ "termino": "valvula_52",
+ "icono": "hidraulica",
+ "resumen": "Cinco bocas y dos posiciones: con la bobina mueve el cilindro hacia fuera y sin ella lo devuelve.",
+ "bornes_dibujo": {
+  "1": [
+   245,
+   228
+  ],
+  "2": [
+   275,
+   42
+  ],
+  "3": [
+   290,
+   200
+  ],
+  "4": [
+   215,
+   42
+  ],
+  "5": [
+   200,
+   200
+  ],
+  "Y1": [
+   92,
+   86
+  ]
+ },
+ "que_es": {
+  "texto": "La {{valvula_52}} es la direccional neumática más usada. Sus números siguen la ISO 5599: 1 entrada de aire, 2 y 4 salidas al cilindro, 3 y 5 escapes. Es {{monoestable}}: sin tensión, el muelle la deja en reposo (1→2, 4→5); con tensión en la {{bobina}}, el piloto empuja la corredera (1→4, 2→3). El {{mando_manual}} hace lo mismo sin electricidad para probarla.",
+  "partes": [
+   {
+    "texto": "Bobina de 24 V DC: tira del piloto.",
+    "marca": [
+     92,
+     140
+    ]
+   },
+   {
+    "texto": "Conector DIN con LED y prensaestopas.",
+    "marca": [
+     92,
+     86
+    ]
+   },
+   {
+    "texto": "Mando manual amarillo, para probar sin tensión.",
+    "marca": [
+     140,
+     148
+    ]
+   },
+   {
+    "texto": "Cuerpo de aluminio con la corredera dentro.",
+    "marca": [
+     245,
+     135
+    ]
+   },
+   {
+    "texto": "Tapa del muelle que la devuelve al reposo.",
+    "marca": [
+     360,
+     135
+    ]
+   },
+   {
+    "texto": "Racores rápidos en 4 y 2 hacia el cilindro.",
+    "marca": [
+     215,
+     56
+    ]
+   },
+   {
+    "texto": "Silenciadores de bronce en los escapes 3 y 5.",
+    "marca": [
+     200,
+     188
+    ]
+   }
+  ],
+  "placa": "5/2 monoestable · 24 V DC 2,5 W · G1/4 · 2–10 bar · 1000 NL/min",
+  "a_bordo": "Mando de cilindros de puertas estancas de ventilación, compuertas, válvulas de mariposa y equipos de cubierta. Tensión y modelo: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "valvula_corte",
+  "params": {
+   "y1": false
+  },
+  "pasos": [
+   "Sin tensión, el muelle deja la corredera en reposo: el aire va de 1 a 2 y la boca 4 escapa por 5.",
+   "Con tensión en Y1 la corredera se desplaza: el aire va de 1 a 4 y la 2 escapa por 3.",
+   "Con la bobina quemada no cambia; con el mando manual sí: así se sabe si falla la parte eléctrica o la neumática."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_valvula_52.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "1",
+     "x": 322.0,
+     "y": 210,
+     "tam": 13
+    },
+    {
+     "texto": "4",
+     "x": 312.0,
+     "y": 162,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 332.0,
+     "y": 162,
+     "tam": 13
+    },
+    {
+     "texto": "5",
+     "x": 308.0,
+     "y": 218,
+     "tam": 13
+    },
+    {
+     "texto": "3",
+     "x": 336.0,
+     "y": 218,
+     "tam": 13
+    },
+    {
+     "texto": "Y1",
+     "x": 250,
+     "y": 186,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    310.0,
+    220
+   ],
+   "4": [
+    300.0,
+    172
+   ],
+   "2": [
+    320.0,
+    172
+   ],
+   "5": [
+    296.0,
+    228
+   ],
+   "3": [
+    324.0,
+    228
+   ],
+   "Y1": [
+    238,
+    196
+   ]
+  },
+  "bornes": {
+   "1": "Aire de la unidad FRL.",
+   "4": "A la cámara trasera del cilindro: hace salir el vástago.",
+   "2": "A la cámara delantera: lo hace entrar.",
+   "5": "Escape de la boca 4, con silenciador.",
+   "3": "Escape de la boca 2, con silenciador.",
+   "Y1": "Bobina de 24 V DC desde una salida del PLC."
+  },
+  "grupos": [
+   {
+    "nombre": "Aire",
+    "bornes": [
+     "1",
+     "4",
+     "2"
+    ],
+    "texto": "1 siempre a la presión; 4 y 2 a cada cámara del cilindro."
+   },
+   {
+    "nombre": "Escapes",
+    "bornes": [
+     "5",
+     "3"
+    ],
+    "texto": "Con silenciador o con regulador de escape para frenar el movimiento."
+   },
+   {
+    "nombre": "Eléctrico",
+    "bornes": [
+     "Y1"
+    ],
+    "texto": "Conector DIN de tres patillas: dos de la bobina y tierra. El LED dice si llega tensión."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Tensión en la bobina",
+    "instrumento": "multimetro",
+    "roja": "Y1",
+    "negra": "",
+    "escala": "V DC",
+    "como": "Multímetro en V DC en las patillas del conector",
+    "nota": "Se mide con el conector puesto, pinchando por detrás, o con un adaptador.",
+    "titulo_tabla": "Qué marca el multímetro",
+    "columna": "Y1",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "Y1",
+     "instrumento": "multimetro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "El PLC manda avance",
+      "hacer": "Normal: 24 V",
+      "bien": true
+     },
+     {
+      "estado": "El PLC en reposo",
+      "hacer": "Normal: 0 V",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": false
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Presión en la boca 4",
+    "instrumento": "manometro",
+    "roja": "4",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro en T en la línea de la boca 4",
+    "nota": "Con la válvula mandada, la boca 4 tiene que llegar a la presión regulada.",
+    "titulo_tabla": "Qué marca la boca 4",
+    "columna": "P 4",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_A",
+     "instrumento": "manometro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Y1 con tensión",
+      "hacer": "Normal: la regulada",
+      "bien": true
+     },
+     {
+      "estado": "Sin tensión",
+      "hacer": "Normal: 0 bar, escapa por 5",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": false
+        }
+       }
+      }
+     },
+     {
+      "estado": "Y1 con tensión y bobina quemada",
+      "hacer": "Falla: no cambia; probar con el mando manual",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true,
+         "bobina_quemada": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Escape continuo",
+    "instrumento": "caudalimetro",
+    "roja": "3",
+    "negra": "",
+    "escala": "0-100 NL/min",
+    "como": "Caudalímetro en el escape, con el cilindro quieto",
+    "nota": "Con todo parado no debería salir aire por los escapes.",
+    "titulo_tabla": "Qué sale por el escape",
+    "columna": "Fuga",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "fuga_escape",
+     "instrumento": "caudalimetro",
+     "params": {
+      "valvula": {
+       "y1": false
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Corredera sana",
+      "hacer": "Normal: nada",
+      "bien": true
+     },
+     {
+      "estado": "Juntas de la corredera gastadas",
+      "hacer": "Falla: sopla siempre; kit de juntas o válvula nueva",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": false,
+         "fuga_corredera": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No conmuta con señal",
+    "sintoma": "El LED del conector luce pero el cilindro no se mueve.",
+    "mide": [
+     {
+      "donde": "tensión en Y1",
+      "bien": true,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "Y1",
+       "instrumento": "multimetro",
+       "params": {
+        "valvula": {
+         "y1": true
+        }
+       }
+      }
+     },
+     {
+      "donde": "presión en 4",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_A",
+       "instrumento": "manometro",
+       "params": {
+        "valvula": {
+         "y1": true,
+         "bobina_quemada": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Bobina quemada (mida su resistencia: abierta) o piloto atascado.",
+    "reparacion": "Probar con el mando manual: si así se mueve, cambiar la bobina; si no, limpiar o cambiar la válvula."
+   },
+   {
+    "nombre": "Sin tensión en la bobina",
+    "sintoma": "El LED no luce cuando el PLC debería mandar.",
+    "mide": [
+     {
+      "donde": "tensión en Y1",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "Y1",
+       "instrumento": "multimetro",
+       "params": {
+        "valvula": {
+         "y1": false
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fusible de la salida, cable cortado o la salida del PLC que no se activa.",
+    "reparacion": "Mirar el LED de la salida del PLC y seguir el cable hasta el conector."
+   },
+   {
+    "nombre": "Escape que sopla siempre",
+    "sintoma": "Ruido de aire continuo y el compresor arranca más a menudo.",
+    "mide": [
+     {
+      "donde": "escape",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "fuga_escape",
+       "instrumento": "caudalimetro",
+       "params": {
+        "valvula": {
+         "y1": false,
+         "fuga_corredera": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Juntas de la corredera gastadas o rayadas por suciedad.",
+    "reparacion": "Kit de juntas o válvula nueva; revisar el filtro de la unidad FRL."
+   },
+   {
+    "nombre": "Conmuta lenta o a medias",
+    "sintoma": "El cilindro arranca tarde, sobre todo con frío.",
+    "mide": [
+     {
+      "donde": "presión en 4",
+      "bien": false,
+      "valor": "sube despacio"
+     }
+    ],
+    "causa": "Agua o aceite viejo en la corredera, o presión baja para el piloto (mínimo unos 2 bar).",
+    "reparacion": "Limpiar, comprobar la presión mínima del piloto y revisar el secador."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "escuchar fugas por los escapes y comprobar los LED"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "probar con el mando manual y medir la tensión en la bobina"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisar silenciadores y apriete de racores y conectores"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Norma ISO 5599 (numeración de bocas). Catálogo del fabricante de las válvulas (verificar a bordo)."
+ ]
+}

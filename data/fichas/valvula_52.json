@@ -1,0 +1,106 @@
+{
+ "id": "valvula_52",
+ "titulo": "Válvula 5/2 de solenoide",
+ "resumen": "Cinco bocas y dos posiciones: con la bobina mueve el cilindro hacia fuera y sin ella lo devuelve.",
+ "dibujo": {
+  "svg": "res://art/equipos/valvula_52.svg",
+  "tamano": [
+   470,
+   280
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "4",
+    "x": 215,
+    "y": 20,
+    "tam": 14
+   },
+   {
+    "texto": "2",
+    "x": 275,
+    "y": 20,
+    "tam": 14
+   },
+   {
+    "texto": "1",
+    "x": 245,
+    "y": 252,
+    "tam": 14
+   },
+   {
+    "texto": "5",
+    "x": 176,
+    "y": 206,
+    "tam": 14
+   },
+   {
+    "texto": "3",
+    "x": 314,
+    "y": 206,
+    "tam": 14
+   },
+   {
+    "texto": "Y1",
+    "x": 92,
+    "y": 136,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/valvula_52.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "La {{valvula_52}} dirige el aire a un lado u otro del cilindro: es la que manda el movimiento."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Una corredera con juntas se desliza en el cuerpo. La bobina no la mueve directamente: abre un pequeño piloto y es el propio aire el que empuja la corredera. El muelle la devuelve."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "1 a la unidad FRL; 4 y 2 al cilindro; 3 y 5 a silenciadores o reguladores de escape; la bobina a una salida de 24 V DC."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "No se ajusta: se elige por caudal, tensión de la bobina y monoestable (muelle) o {{biestable}} (dos bobinas, se queda donde la dejan)."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Tensión en la bobina, resistencia de la bobina sin tensión, mando manual y manómetro en la boca de salida."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Bobina quemada, piloto atascado, juntas gastadas y escapes tapados."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aire limpio y seco; con eso duran millones de maniobras."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Norma ISO 5599 (numeración de bocas). Catálogo del fabricante de las válvulas (verificar a bordo)."
+ ]
+}

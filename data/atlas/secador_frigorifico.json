@@ -1,0 +1,328 @@
+{
+ "id": "secador_frigorifico",
+ "ficha": "secador_frigorifico",
+ "titulo": "Secador frigorífico",
+ "termino": "secador_frigorifico",
+ "icono": "hidraulica",
+ "resumen": "Enfría el aire comprimido para condensar el agua y purgarla antes de la red.",
+ "bornes_dibujo": {
+  "IN": [
+   130,
+   18
+  ],
+  "OUT": [
+   290,
+   18
+  ],
+  "DR": [
+   387,
+   322
+  ]
+ },
+ "que_es": {
+  "texto": "El aire que sale del compresor va cargado de vapor de agua. El {{secador_frigorifico}} lo enfría a unos 3 °C en un intercambiador con refrigerante: el vapor se condensa, el {{purgador_automatico}} lo echa fuera y el aire sale seco. Lo que importa es el {{punto_rocio}} a presión: la temperatura a la que el aire empezaría a soltar agua. Si es más bajo que la temperatura más fría de la red, no aparece agua.",
+  "partes": [
+   {
+    "texto": "Entrada IN del aire húmedo desde el depósito.",
+    "marca": [
+     130,
+     40
+    ]
+   },
+   {
+    "texto": "Salida OUT del aire seco hacia la red.",
+    "marca": [
+     290,
+     40
+    ]
+   },
+   {
+    "texto": "Pantalla con el punto de rocío.",
+    "marca": [
+     299,
+     119
+    ]
+   },
+   {
+    "texto": "Interruptor general y lámparas de marcha y alarma.",
+    "marca": [
+     299,
+     176
+    ]
+   },
+   {
+    "texto": "Rejilla del condensador del refrigerante: debe tener aire libre.",
+    "marca": [
+     170,
+     262
+    ]
+   },
+   {
+    "texto": "Purgador electrónico del condensado.",
+    "marca": [
+     387,
+     300
+    ]
+   },
+   {
+    "texto": "Placa: caudal, presión máxima, refrigerante y tensión.",
+    "marca": [
+     156,
+     130
+    ]
+   }
+  ],
+  "placa": "Caudal 1,2 m³/min · 16 bar máx. · punto de rocío +3 °C · R-134a · 230 V 50 Hz",
+  "a_bordo": "Detrás del depósito de aire de control, en la sala de compresores. Modelo, caudal y refrigerante: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_neumatico",
+  "params": {
+   "foco": "secador"
+  },
+  "pasos": [
+   "El aire caliente y húmedo del compresor entra en el secador.",
+   "Se enfría a unos 3 °C: el vapor se condensa y el purgador lo echa fuera.",
+   "Con el secador averiado, el agua llega a la red: aparece en los vasos de los filtros y en las válvulas."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_secador_frigorifico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "IN",
+     "x": 76,
+     "y": 240,
+     "tam": 13
+    },
+    {
+     "texto": "OUT",
+     "x": 120,
+     "y": 240,
+     "tam": 13
+    },
+    {
+     "texto": "DR",
+     "x": 98,
+     "y": 264,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "IN": [
+    64,
+    250
+   ],
+   "OUT": [
+    108,
+    250
+   ],
+   "DR": [
+    86,
+    274
+   ]
+  },
+  "bornes": {
+   "IN": "Aire del depósito, después del separador de agua y del prefiltro.",
+   "OUT": "Aire seco a la red de control, con su filtro posterior.",
+   "DR": "Purga del condensado a un recipiente o separador de aceite; nunca al mar directamente."
+  },
+  "grupos": [
+   {
+    "nombre": "Aire",
+    "bornes": [
+     "IN",
+     "OUT"
+    ],
+    "texto": "Con su bypass de tres válvulas, para poder sacarlo sin dejar el buque sin aire."
+   },
+   {
+    "nombre": "Condensado",
+    "bornes": [
+     "DR"
+    ],
+    "texto": "El condensado de compresores lleva aceite: va a un separador antes de descargar."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Punto de rocío",
+    "instrumento": "higrometro",
+    "roja": "OUT",
+    "negra": "",
+    "escala": "-20 a +40 °C",
+    "como": "Higrómetro de punto de rocío en la toma de salida",
+    "nota": "Con el aire a presión y el secador en marcha al menos media hora.",
+    "titulo_tabla": "Qué marca el higrómetro",
+    "columna": "Rocío",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "rocio",
+     "instrumento": "higrometro"
+    },
+    "filas": [
+     {
+      "estado": "Secador en marcha",
+      "hacer": "Normal: unos 3 °C",
+      "bien": true
+     },
+     {
+      "estado": "Secador averiado o parado",
+      "hacer": "Falla: igual que el ambiente; entra agua",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "secador": {
+         "averiado": true
+        }
+       }
+      }
+     },
+     {
+      "estado": "Secador en bypass",
+      "hacer": "Falla: aire sin secar",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "secador": {
+         "presente": false
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Presión de la red",
+    "instrumento": "manometro",
+    "roja": "OUT",
+    "negra": "",
+    "escala": "0-16 bar",
+    "como": "Manómetro a la salida del secador",
+    "nota": "La presión la ponen los compresores; el secador solo pierde unas décimas.",
+    "titulo_tabla": "Qué marca la salida",
+    "columna": "P red",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_red",
+     "instrumento": "manometro"
+    },
+    "filas": [
+     {
+      "estado": "Compresores en carga",
+      "hacer": "Normal: unos 7 bar",
+      "bien": true
+     },
+     {
+      "estado": "Compresores sin dar presión",
+      "hacer": "Falla: revisar compresores, no el secador",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "red": {
+         "presion": 5.0
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Agua en la red",
+    "sintoma": "Vasos de filtro llenos y válvulas que se agarrotan.",
+    "mide": [
+     {
+      "donde": "punto de rocío",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "rocio",
+       "instrumento": "higrometro",
+       "params": {
+        "secador": {
+         "averiado": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Secador parado, condensador sucio o con poco refrigerante: el aire no se enfría.",
+    "reparacion": "Comprobar marcha y alarmas, limpiar el condensador y llamar al técnico de frío si falta refrigerante."
+   },
+   {
+    "nombre": "Purgador que no purga",
+    "sintoma": "Agua en la salida aunque el secador enfría bien.",
+    "mide": [
+     {
+      "donde": "purgador",
+      "bien": false,
+      "valor": "sin descargas"
+     }
+    ],
+    "causa": "Purgador electrónico atascado o sin tensión.",
+    "reparacion": "Pulsar su botón de prueba, limpiar el filtro del purgador o cambiarlo."
+   },
+   {
+    "nombre": "Alta temperatura",
+    "sintoma": "Alarma de alta y aire caliente a la salida.",
+    "mide": [
+     {
+      "donde": "punto de rocío",
+      "bien": false,
+      "valor": "+15 °C"
+     }
+    ],
+    "causa": "Rejilla del condensador tapada o sala de compresores muy caliente.",
+    "reparacion": "Limpiar la rejilla con aire a poca presión y mejorar la ventilación."
+   },
+   {
+    "nombre": "Punto de rocío bajo cero",
+    "sintoma": "Hielo en el intercambiador y caída de presión.",
+    "mide": [
+     {
+      "donde": "punto de rocío",
+      "bien": false,
+      "valor": "-2 °C"
+     }
+    ],
+    "causa": "Válvula de bypass de gas caliente desajustada: el agua se congela dentro.",
+    "reparacion": "Ajuste por el técnico de frío; mientras, pasar a bypass y purgar más a menudo."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "comprobar el punto de rocío en pantalla y el purgador con su botón de prueba"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "limpiar la rejilla del condensador"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisión del circuito de refrigerante por el técnico y cambio del prefiltro"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Manual del secador del buque (verificar a bordo)."
+ ]
+}

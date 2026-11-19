@@ -1,0 +1,63 @@
+{
+  "id": "ne4_cilindros",
+  "titulo": "Cilindros neumáticos",
+  "resumen": "Fuerza, consumo, amortiguación y detectores.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Fuerza y consumo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{cilindro_neumatico}} es casi siempre un {{cilindro_doble_efecto}}. Su fuerza es presión × área × rendimiento: con Ø 63 mm (31 cm²) a 6 bar, 6 × 10 × 31 × 0,9 ≈ 1700 N al salir. Al entrar, el vástago resta área y da algo menos.\n\nEl consumo de aire por ciclo es el volumen de las dos cámaras por la presión absoluta: no depende de la velocidad."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne4_fuerza",
+          "pregunta": "Un cilindro de 50 cm² a 6 bar, ¿con qué fuerza teórica empuja?",
+          "opciones": [
+            "300 N",
+            "3000 N",
+            "30 000 N"
+          ],
+          "correcta": 1,
+          "explicacion": "6 bar son 60 N por cm²; por 50 cm² dan 3000 N (menos un 10 % de rozamiento)."
+        }
+      ]
+    },
+    {
+      "titulo": "Detectores y amortiguación",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El pistón lleva un imán y los detectores B1 y B2 ({{detector_magnetico}}) lo ven a través del perfil: le dicen al PLC dónde está el vástago. La {{amortiguacion}} frena el pistón al final para que no golpee. Mire cómo se encienden B1 y B2."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "cilindro",
+            "apertura": 0.3
+          },
+          "pie": "Cilindro Ø 63 × 200 con detectores B1 y B2 (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne4_detector",
+          "pregunta": "El vástago llega al final pero el LED de B2 no se enciende. ¿Qué es lo más probable?",
+          "opciones": [
+            "La bobina quemada",
+            "El detector se ha movido en la ranura",
+            "El regulador cerrado"
+          ],
+          "correcta": 1,
+          "explicacion": "Si el vástago llegó, el aire funciona. Un detector desplazado por la vibración es la causa más común."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 15552: cilindros neumáticos normalizados.",
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad."
+  ]
+}

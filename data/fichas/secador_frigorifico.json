@@ -1,0 +1,89 @@
+{
+ "id": "secador_frigorifico",
+ "titulo": "Secador frigorífico",
+ "resumen": "Enfría el aire comprimido para condensar el agua y purgarla antes de la red.",
+ "dibujo": {
+  "svg": "res://art/equipos/secador_frigorifico.svg",
+  "tamano": [
+   420,
+   360
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "IN",
+    "x": 130,
+    "y": 4,
+    "tam": 13
+   },
+   {
+    "texto": "OUT",
+    "x": 290,
+    "y": 4,
+    "tam": 13
+   },
+   {
+    "texto": "3 °C",
+    "x": 299,
+    "y": 120,
+    "tam": 13,
+    "color": "#7dff9a"
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/secador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "El {{secador_frigorifico}} quita el agua del aire comprimido. El agua oxida tuberías, lava la grasa de las válvulas y congela escapes."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Un intercambiador aire-aire precalienta el aire de salida con el de entrada; un evaporador lo enfría con refrigerante; un separador recoge las gotas y el purgador las echa."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Después del depósito y de un prefiltro, con bypass de tres válvulas. El purgador, a un separador de condensados."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "No se ajusta a bordo: se comprueba que el punto de rocío esté cerca de +3 °C (valor típico)."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Lectura del punto de rocío en su pantalla o con un higrómetro portátil, y prueba del purgador."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Condensador sucio, falta de refrigerante, purgador atascado y congelación."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Rejilla limpia, purgador probado y el técnico de frío una vez al año."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Manual del secador del buque (verificar a bordo)."
+ ]
+}

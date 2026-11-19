@@ -1,6 +1,7 @@
 extends PantallaPreguntas
-## Minijuego «Símbolos ISO 1219»: diez rondas. En unas se ve la pieza dibujada (la del atlas) y se
-## toca su símbolo entre cuatro hojas de papel; en otras se ve el símbolo y se elige su nombre.
+## Minijuego «Símbolos ISO 1219», de hidráulica o de neumática según el registro: diez rondas. En
+## unas se ve la pieza dibujada (la del atlas) y se toca su símbolo entre cuatro hojas de papel; en
+## otras se ve el símbolo y se elige su nombre.
 ## Registro «simbolos_iso1219». Lo elegido vive en args para sobrevivir al giro.
 
 const RONDAS := 10
@@ -10,8 +11,17 @@ const Examen := preload("res://ui/screens/prueba_examen.gd")
 var opciones: Array[OpcionSimbolo] = []
 
 
+## Registro del minijuego: el de hidráulica o el de neumática (los abre el examen del módulo 9).
+func _registro() -> String:
+	return str(args.get("registro", JuegoIso1219.REGISTRO))
+
+
+func _familia() -> String:
+	return str(args.get("familia", JuegoIso1219.familia_de(_registro())))
+
+
 func _simbolos() -> Array:
-	return JuegoIso1219.leer(raiz.contenido, str(args.get("familia", "")))
+	return JuegoIso1219.leer(raiz.contenido, _familia())
 
 
 func _crear_items() -> Array:
@@ -25,7 +35,7 @@ func _titulo() -> String:
 
 
 func _subtitulo() -> String:
-	return "Símbolos de hidráulica · %d rondas" % args.get("items", []).size()
+	return "Símbolos de %s · %d rondas" % ["neumática" if _familia() == "neumatica" else "hidráulica", args.get("items", []).size()]
 
 
 func _color() -> Color:
@@ -129,7 +139,7 @@ func _construir_final() -> void:
 	var correctas := aciertos()
 	var estrellas := JuegoSimbolos.estrellas(correctas, total)
 	if not args.has("ganados"):
-		args["ganados"] = raiz.partida.registrar_minijuego(JuegoIso1219.REGISTRO, estrellas)
+		args["ganados"] = raiz.partida.registrar_minijuego(_registro(), estrellas)
 	_poner_cabecera("Resultado")
 	var calif: Array = _placa_con("Calificación", "PlacaCalificacion")
 	var cal = Examen.Calificacion.new()

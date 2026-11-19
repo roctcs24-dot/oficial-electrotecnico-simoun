@@ -1,0 +1,59 @@
+{
+  "id": "ne6_velocidad",
+  "titulo": "Velocidad y suavidad",
+  "resumen": "Reguladores de caudal, frenar el escape y amortiguar.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Frenar el escape",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{regulador_caudal}} se pone en la boca del cilindro y frena el aire que sale ({{meter_out}}): el pistón queda entre dos colchones de aire y se mueve sin tirones. Cierre el regulador y mire la velocidad: la fuerza al final es la misma."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "regulador",
+            "apertura": 0.3
+          },
+          "pie": "Reguladores de caudal en las bocas del cilindro."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne6_fuerza",
+          "pregunta": "Cerrando el regulador, ¿qué le pasa a la fuerza del cilindro al final de la carrera?",
+          "opciones": [
+            "Baja",
+            "Es la misma: la da la presión",
+            "Sube"
+          ],
+          "correcta": 1,
+          "explicacion": "Al llegar al final la cámara que empuja alcanza la presión regulada. El regulador solo cambia la velocidad."
+        }
+      ]
+    },
+    {
+      "titulo": "Ajuste",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "ne6_ajuste",
+          "pregunta": "Ordene el ajuste de la velocidad:",
+          "pasos": [
+            "Cerrar casi del todo los reguladores",
+            "Mover el cilindro en vacío",
+            "Abrir poco a poco hasta la velocidad buscada",
+            "Ajustar la amortiguación para que llegue suave",
+            "Bloquear con las contratuercas y apuntar el tiempo"
+          ],
+          "explicacion": "Primero la velocidad y después la amortiguación; y siempre bloqueado."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad."
+  ]
+}

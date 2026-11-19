@@ -1,0 +1,345 @@
+{
+ "id": "unidad_fr",
+ "ficha": "unidad_fr",
+ "titulo": "Unidad de mantenimiento FRL",
+ "termino": "unidad_frl",
+ "icono": "hidraulica",
+ "resumen": "Filtra el aire, le baja la presión a la de trabajo y, si hace falta, le pone aceite.",
+ "bornes_dibujo": {
+  "1": [
+   36,
+   111
+  ],
+  "2": [
+   424,
+   111
+  ]
+ },
+ "que_es": {
+  "texto": "La {{unidad_frl}} prepara el aire antes de cada máquina. El {{filtro_aire}} retiene el agua y la suciedad en su vaso, que se vacía por la purga. El {{regulador_presion}} baja la presión de la red a la de trabajo y la mantiene aunque la red suba y baje: se ajusta con el pomo y se lee en su manómetro. El {{lubricador}} mete una niebla de aceite; hoy casi todos los equipos vienen engrasados de fábrica y van sin él.",
+  "partes": [
+   {
+    "texto": "Entrada 1 desde la red de aire.",
+    "marca": [
+     36,
+     111
+    ]
+   },
+   {
+    "texto": "Vaso del filtro con el cartucho y el agua recogida.",
+    "marca": [
+     112,
+     190
+    ]
+   },
+   {
+    "texto": "Purga del vaso, manual o automática.",
+    "marca": [
+     112,
+     300
+    ]
+   },
+   {
+    "texto": "Pomo del regulador: tirar para desbloquear, girar y empujar.",
+    "marca": [
+     230,
+     30
+    ]
+   },
+   {
+    "texto": "Manómetro de la presión regulada.",
+    "marca": [
+     230,
+     112
+    ]
+   },
+   {
+    "texto": "Lubricador con su cúpula de goteo.",
+    "marca": [
+     348,
+     230
+    ]
+   },
+   {
+    "texto": "Salida 2 hacia la válvula.",
+    "marca": [
+     424,
+     111
+    ]
+   }
+  ],
+  "placa": "Filtro 5 µm · regulador 0,5–10 bar · 1/2\" BSPP · máx. 16 bar",
+  "a_bordo": "Antes de cada grupo neumático: aire de control, cuadros de válvulas, servicios de cubierta. Presiones y tamaños: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_neumatico",
+  "params": {
+   "foco": "fr",
+   "regulado": 6.0
+  },
+  "pasos": [
+   "El aire de la red, a unos 7 bar, entra por 1 y pasa primero por el filtro: el agua y la suciedad caen al vaso.",
+   "El regulador deja pasar solo lo justo para mantener la presión ajustada; si se gasta aire, abre más.",
+   "Con el cartucho sucio, al moverse el cilindro la presión regulada cae: el manómetro avisa."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_unidad_fr.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "1",
+     "x": 136,
+     "y": 240,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 276,
+     "y": 240,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    124,
+    250
+   ],
+   "2": [
+    264,
+    250
+   ]
+  },
+  "bornes": {
+   "1": "Entrada desde la red de aire de control, con una válvula de corte antes para aislar la unidad.",
+   "2": "Salida a la válvula direccional del equipo, a la presión regulada."
+  },
+  "grupos": [
+   {
+    "nombre": "Entrada 1",
+    "bornes": [
+     "1"
+    ],
+    "texto": "La flecha del cuerpo indica el sentido: al revés, el regulador no regula."
+   },
+   {
+    "nombre": "Salida 2",
+    "bornes": [
+     "2"
+    ],
+    "texto": "Siempre aguas arriba de la válvula; la presión regulada es la que da la fuerza del cilindro."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión regulada",
+    "instrumento": "manometro",
+    "roja": "2",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro en la salida 2 con el cilindro moviéndose",
+    "nota": "Se lee con el equipo trabajando, no en reposo: la caída del filtro solo se ve con caudal.",
+    "titulo_tabla": "Qué marca la salida",
+    "columna": "P regulada",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_reg",
+     "instrumento": "manometro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Cartucho limpio, red a 7 bar",
+      "hacer": "Normal: la ajustada, 6 bar",
+      "bien": true
+     },
+     {
+      "estado": "Cartucho colmatado",
+      "hacer": "Falla: cae al moverse; cambiar el cartucho",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "fr": {
+         "filtro_sucio": 1.0
+        }
+       }
+      }
+     },
+     {
+      "estado": "Red baja a 5,5 bar",
+      "hacer": "Falla: no llega a la ajustada; revisar compresores",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "red": {
+         "presion": 5.5
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Caída en el filtro",
+    "instrumento": "manometro",
+    "roja": "1",
+    "negra": "2",
+    "escala": "0-2 bar",
+    "como": "Manómetros a la entrada y a la salida del filtro",
+    "nota": "La diferencia entre la entrada y la salida, con caudal, dice lo sucio que está el cartucho.",
+    "titulo_tabla": "Cuánto pierde el filtro",
+    "columna": "Δp",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "dP_filtro",
+     "instrumento": "manometro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Cartucho nuevo",
+      "hacer": "Normal: unas décimas",
+      "bien": true
+     },
+     {
+      "estado": "Cartucho colmatado",
+      "hacer": "Falla: más de 1 bar; cambiarlo",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "fr": {
+         "filtro_sucio": 1.0
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Presión que cae al trabajar",
+    "sintoma": "El cilindro pierde fuerza y el manómetro baja en cada movimiento.",
+    "mide": [
+     {
+      "donde": "presión regulada",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_reg",
+       "instrumento": "manometro",
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "fr": {
+         "filtro_sucio": 1.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Cartucho del filtro colmatado: con caudal, pierde más de lo que el regulador puede compensar.",
+    "reparacion": "Cerrar el aire, descargar la unidad y cambiar el cartucho; apuntar la fecha."
+   },
+   {
+    "nombre": "Agua en las válvulas",
+    "sintoma": "Las válvulas fallan por la mañana y sale agua por los escapes.",
+    "mide": [
+     {
+      "donde": "vaso del filtro",
+      "bien": false,
+      "valor": "lleno"
+     }
+    ],
+    "causa": "Purga atascada o vaso sin vaciar: el agua pasa el filtro y llega a los equipos.",
+    "reparacion": "Vaciar el vaso, limpiar o cambiar la purga automática y revisar el secador."
+   },
+   {
+    "nombre": "Regulador que no baja",
+    "sintoma": "Por mucho que se gire el pomo, la presión sigue igual a la de la red.",
+    "mide": [
+     {
+      "donde": "presión regulada",
+      "bien": false,
+      "valor": "7 bar"
+     }
+    ],
+    "causa": "Pomo bloqueado sin tirar de él, o membrana del regulador rota.",
+    "reparacion": "Tirar del pomo para desbloquear; si no regula, cambiar el kit de membrana."
+   },
+   {
+    "nombre": "Fuga por el escape del regulador",
+    "sintoma": "Soplido continuo en el cuerpo del regulador.",
+    "mide": [
+     {
+      "donde": "escape",
+      "bien": false,
+      "valor": "sopla"
+     }
+    ],
+    "causa": "Asiento del alivio secundario sucio o membrana rota.",
+    "reparacion": "Limpiar el asiento o cambiar el kit del regulador."
+   },
+   {
+    "nombre": "Vaso rajado",
+    "sintoma": "Grietas finas en el vaso de policarbonato.",
+    "mide": [
+     {
+      "donde": "vaso",
+      "bien": false,
+      "valor": "rajado"
+     }
+    ],
+    "causa": "Disolventes, sol o golpes: el policarbonato se debilita y puede reventar.",
+    "reparacion": "Cambiar el vaso de inmediato y comprobar que lleva su guarda metálica. Nunca limpiarlo con disolvente."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "purgar el vaso y comprobar que la purga automática funciona"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "presión regulada con el equipo trabajando y caída del filtro, apuntadas"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "cambiar el cartucho del filtro y revisar el vaso y su guarda"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante de la unidad FRL (verificar a bordo)."
+ ]
+}

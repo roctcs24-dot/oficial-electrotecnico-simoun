@@ -160,16 +160,17 @@ func test_modulo_9_publicado_con_atlas_y_lecciones() -> String:
 				fallos.append("%s: %s no sale del modelo hidráulico" % [id, g["nombre"]])
 	return A.primero([
 		A.cierto(m.get("estado", "") == "activo", "el módulo 9 debe estar activo"),
-		A.cierto(aprender.get("lecciones", []) == LECCIONES, "lecciones del módulo 9: %s" % str(aprender.get("lecciones", []))),
-		A.cierto(aprender.get("atlas", []) == ATLAS, "atlas del módulo 9: %s" % str(aprender.get("atlas", []))),
-		A.cierto(m["modos"].get("examen", {}).get("minijuegos", []) == ["simbolos_iso1219"], "minijuego del módulo 9"),
+		# Desde la etapa 46 el módulo sigue con la neumática: la hidráulica va primero.
+		A.cierto(aprender.get("lecciones", []).slice(0, LECCIONES.size()) == LECCIONES, "lecciones del módulo 9: %s" % str(aprender.get("lecciones", []))),
+		A.cierto(aprender.get("atlas", []).slice(0, ATLAS.size()) == ATLAS, "atlas del módulo 9: %s" % str(aprender.get("atlas", []))),
+		A.cierto(m["modos"].get("examen", {}).get("minijuegos", []).has("simbolos_iso1219"), "minijuego del módulo 9"),
 		"; ".join(fallos),
 	])
 
 
 func test_simbolos_iso1219_bien_formados() -> String:
 	var c := Contenido.new()
-	var lista := JuegoIso1219.leer(c)
+	var lista := JuegoIso1219.leer(c, "hidraulica")
 	var fallos: Array[String] = []
 	var piezas := 0
 	for s: Dictionary in lista:

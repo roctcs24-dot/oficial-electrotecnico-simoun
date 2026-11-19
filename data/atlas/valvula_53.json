@@ -1,0 +1,402 @@
+{
+ "id": "valvula_53",
+ "ficha": "valvula_53",
+ "titulo": "Válvula 5/3 de centro cerrado",
+ "termino": "valvula_53",
+ "icono": "hidraulica",
+ "resumen": "Tres posiciones: avanza, retrocede o se queda quieta con las bocas cerradas.",
+ "bornes_dibujo": {
+  "1": [
+   280,
+   228
+  ],
+  "2": [
+   310,
+   42
+  ],
+  "3": [
+   325,
+   200
+  ],
+  "4": [
+   250,
+   42
+  ],
+  "5": [
+   235,
+   200
+  ],
+  "Y1": [
+   131,
+   86
+  ],
+  "Y2": [
+   431,
+   86
+  ]
+ },
+ "que_es": {
+  "texto": "La {{valvula_53}} tiene dos bobinas y una posición central. En la de {{centro_cerrado}} las cinco bocas quedan bloqueadas: el cilindro se para donde esté y el aire queda encerrado en sus cámaras. Sirve para parar a media carrera, por ejemplo una compuerta a medio abrir. Los muelles la centran cuando ninguna bobina tiene tensión.",
+  "partes": [
+   {
+    "texto": "Bobina Y1: avance.",
+    "marca": [
+     131,
+     140
+    ]
+   },
+   {
+    "texto": "Bobina Y2: retroceso.",
+    "marca": [
+     431,
+     140
+    ]
+   },
+   {
+    "texto": "Mandos manuales de cada lado.",
+    "marca": [
+     180,
+     148
+    ]
+   },
+   {
+    "texto": "Cuerpo con la corredera centrada por muelles.",
+    "marca": [
+     280,
+     135
+    ]
+   },
+   {
+    "texto": "Racores rápidos 4 y 2.",
+    "marca": [
+     250,
+     56
+    ]
+   },
+   {
+    "texto": "Silenciadores en 3 y 5.",
+    "marca": [
+     235,
+     188
+    ]
+   }
+  ],
+  "placa": "5/3 centro cerrado · 24 V DC · G1/4 · 3–10 bar",
+  "a_bordo": "Compuertas, mamparos y mandos que deben quedarse a media carrera. Modelo: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_neumatico",
+  "params": {
+   "foco": "53"
+  },
+  "pasos": [
+   "Con Y1, el aire va a la cámara trasera y el vástago sale.",
+   "Sin ninguna bobina, los muelles centran la corredera: todo cerrado y el cilindro se para donde está.",
+   "Con Y2, el aire va a la cámara delantera y el vástago entra."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_valvula_53.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "1",
+     "x": 302,
+     "y": 206,
+     "tam": 13
+    },
+    {
+     "texto": "4",
+     "x": 294.0,
+     "y": 166,
+     "tam": 13
+    },
+    {
+     "texto": "2",
+     "x": 310.0,
+     "y": 166,
+     "tam": 13
+    },
+    {
+     "texto": "Y1",
+     "x": 242,
+     "y": 186,
+     "tam": 13
+    },
+    {
+     "texto": "Y2",
+     "x": 362,
+     "y": 186,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "1": [
+    290,
+    216
+   ],
+   "4": [
+    282.0,
+    176
+   ],
+   "2": [
+    298.0,
+    176
+   ],
+   "Y1": [
+    230,
+    196
+   ],
+   "Y2": [
+    350,
+    196
+   ]
+  },
+  "bornes": {
+   "1": "Aire de la unidad FRL.",
+   "4": "A la cámara trasera.",
+   "2": "A la cámara delantera.",
+   "Y1": "Bobina de avance.",
+   "Y2": "Bobina de retroceso."
+  },
+  "grupos": [
+   {
+    "nombre": "Aire",
+    "bornes": [
+     "1",
+     "4",
+     "2"
+    ],
+    "texto": "Como en la 5/2; en el centro las tres quedan cerradas."
+   },
+   {
+    "nombre": "Bobinas",
+    "bornes": [
+     "Y1",
+     "Y2"
+    ],
+    "texto": "Nunca las dos a la vez: el programa del PLC las enclava entre sí."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión en las cámaras",
+    "instrumento": "manometro",
+    "roja": "4",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro en la boca 4",
+    "nota": "En el centro cerrado la presión queda encerrada: el cilindro no se mueve, pero sigue con aire.",
+    "titulo_tabla": "Qué marca la boca 4",
+    "columna": "P 4",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_A",
+     "instrumento": "manometro",
+     "params": {
+      "valvula": {
+       "tipo": "53",
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Y1: avance",
+      "hacer": "Normal: la regulada",
+      "bien": true
+     },
+     {
+      "estado": "Ninguna bobina: centro cerrado",
+      "hacer": "Normal: el aire queda encerrado",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y1": false,
+         "y2": false
+        }
+       }
+      }
+     },
+     {
+      "estado": "Las dos bobinas a la vez",
+      "hacer": "Falla de mando: no se mueve; revisar el enclavamiento",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y1": true,
+         "y2": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Presión en la boca 2",
+    "instrumento": "manometro",
+    "roja": "2",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro en la boca 2",
+    "nota": "En el centro, la cámara delantera tiene menos área: queda a algo más de presión que la trasera.",
+    "titulo_tabla": "Qué marca la boca 2",
+    "columna": "P 2",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_B",
+     "instrumento": "manometro",
+     "params": {
+      "valvula": {
+       "tipo": "53",
+       "y1": false,
+       "y2": false
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Centro cerrado",
+      "hacer": "Normal: algo más que la boca 4",
+      "bien": true
+     },
+     {
+      "estado": "Y2: retroceso",
+      "hacer": "Normal: la regulada",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y2": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Se mueve solo en el centro",
+    "sintoma": "El cilindro cede despacio con la válvula centrada.",
+    "mide": [
+     {
+      "donde": "boca 4",
+      "bien": false,
+      "valor": "baja despacio"
+     }
+    ],
+    "causa": "Juntas de la corredera o del pistón con fuga: el aire encerrado se escapa.",
+    "reparacion": "Cambiar juntas. Si debe sostener carga, añadir válvulas de bloqueo en el cilindro."
+   },
+   {
+    "nombre": "No se para",
+    "sintoma": "Al quitar la tensión sigue hasta el final.",
+    "mide": [
+     {
+      "donde": "boca 4",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_A",
+       "instrumento": "manometro",
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y1": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Muelle de centrado roto o corredera pegada; o el PLC no quita la tensión.",
+    "reparacion": "Medir tensión en Y1 con el mando en reposo; si es 0 V, cambiar la válvula."
+   },
+   {
+    "nombre": "Las dos bobinas a la vez",
+    "sintoma": "Ruido, bobinas calientes y el cilindro quieto.",
+    "mide": [
+     {
+      "donde": "boca 4",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_A",
+       "instrumento": "manometro",
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y1": true,
+         "y2": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Falta el enclavamiento en el programa o un pulsador pegado.",
+    "reparacion": "Corregir el programa: Y1 solo si no Y2 y al revés."
+   },
+   {
+    "nombre": "Peligro al purgar",
+    "sintoma": "Al aflojar un racor el cilindro se mueve de golpe.",
+    "mide": [
+     {
+      "donde": "boca 2",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_B",
+       "instrumento": "manometro",
+       "params": {
+        "valvula": {
+         "tipo": "53",
+         "y1": false,
+         "y2": false
+        }
+       }
+      }
+     }
+    ],
+    "causa": "En el centro cerrado queda aire a presión en las dos cámaras.",
+    "reparacion": "Descargar las dos cámaras antes de desmontar: aflojar despacio con la carga asegurada."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "escuchar fugas y comprobar los LED de las dos bobinas"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "probar que se para a media carrera y sostiene"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisar silenciadores, racores y conectores"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante (verificar a bordo)."
+ ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "ne7_electroneumatica",
+  "titulo": "Electroneumática",
+  "resumen": "Bobinas, detectores y PLC.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Bobinas y detectores",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "En la {{electroneumatica}} el PLC manda cada {{bobina}} de 24 V DC y lee los detectores. El LED del conector dice si llega tensión; el del detector, si ve el imán. Con eso se separa casi cualquier avería en eléctrica o neumática.\n\nDé tensión a Y1 y siga la secuencia: Y1 → avanza → B2."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "52",
+            "apertura": 0.4
+          },
+          "pie": "Válvula 5/2 mandada por el PLC con detectores B1 y B2."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne7_led",
+          "pregunta": "El LED de la bobina se enciende pero el cilindro no se mueve. Con el mando manual sí se mueve. ¿Qué falla?",
+          "opciones": [
+            "La bobina o su piloto",
+            "La salida del PLC",
+            "El aire de la red"
+          ],
+          "correcta": 0,
+          "explicacion": "Llega tensión (LED) y la parte neumática funciona (mando manual): queda la bobina."
+        }
+      ]
+    },
+    {
+      "titulo": "Diagnóstico ordenado",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "ne7_diagnostico",
+          "pregunta": "Un cilindro no sale. Ordene la búsqueda:",
+          "pasos": [
+            "Mirar el LED de la salida del PLC",
+            "Mirar el LED del conector de la bobina",
+            "Probar con el mando manual",
+            "Medir la presión en la boca 4",
+            "Comprobar el detector al final"
+          ],
+          "explicacion": "Del PLC hacia el cilindro: así cada prueba descarta la mitad del camino."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne7_dos_hilos",
+          "pregunta": "Un detector magnético de dos hilos, ¿cómo se conecta?",
+          "opciones": [
+            "En serie con la entrada del PLC",
+            "En paralelo con la bobina",
+            "Directo a 230 V"
+          ],
+          "correcta": 0,
+          "explicacion": "Funciona como un contacto: en serie con la entrada. Los de tres hilos llevan + , 0 V y señal."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "Manual del PLC y esquemas eléctricos del equipo (verificar a bordo).",
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad."
+  ]
+}

@@ -7,6 +7,9 @@ extends RefCounted
 ##           se elige su nombre.
 
 const REGISTRO := "simbolos_iso1219"
+const REGISTRO_NEUMATICA := "simbolos_neumatica"
+## Familia de símbolos de cada registro: el de hidráulica y el de neumática son minijuegos aparte.
+const FAMILIAS := {REGISTRO: "hidraulica", REGISTRO_NEUMATICA: "neumatica"}
 const ARCHIVO := "simbolos_iso1219.json"
 const OPCIONES := 4
 const RONDAS_PIEZA := 4
@@ -17,6 +20,10 @@ static func leer(contenido: Contenido, familia := "") -> Array:
 	if familia.is_empty():
 		return lista
 	return lista.filter(func(s: Dictionary) -> bool: return s.get("familia", "") == familia)
+
+
+static func familia_de(registro: String) -> String:
+	return str(FAMILIAS.get(registro, ""))
 
 
 static func simbolo(lista: Array, id: String) -> Dictionary:

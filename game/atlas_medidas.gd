@@ -11,6 +11,7 @@ extends RefCounted
 ## megóhmetro, "v_prueba" elige 250, 500 o 1000 V. "monitor" lee el monitor de aislamiento
 ## "id" de la propia red. "aparato" lee la pantalla o la aguja del componente "id" (un
 ## amperímetro, un analizador de red o un variador), con su "magnitud". Una medida con
+## "neumatica" se resuelve igual con SimNeumatica (aire de control, cilindro, posicionador y fugas).
 ## "hidraulica" se resuelve con SimHidraulica: "params" por componente y "punto" (P, A, B, T, S,
 ## Q, gas…) con el manómetro o el caudalímetro. Una medida puede llevar "valor" escrito en su lugar:
 ## solo se admite en las fallas, para lo que la simulación no modela.
@@ -53,6 +54,10 @@ static func _medir(contenido: Contenido, medida: Dictionary) -> Dictionary:
 		var h := SimHidraulica.medir(medida)
 		h["texto"] = texto(h)
 		return h
+	if medida.has("neumatica"):
+		var n := SimNeumatica.medir(medida)
+		n["texto"] = texto(n)
+		return n
 	var datos := contenido.circuito_datos(str(medida.get("circuito", "")))
 	if datos.is_empty():
 		return {"texto": "?", "averia": "sin_circuito"}
@@ -154,8 +159,10 @@ static func texto(r: Dictionary) -> String:
 			return "%s %s" % [_numero(v, 0 if v >= 20.0 else 1), unidad]
 		"MΩ":
 			return "%s MΩ" % _numero(v, 0 if v >= 20.0 else 1)
-		"bar", "L/min", "rpm", "mm/s", "mm/min", "L", "kW", "N·m":
-			return "%s %s" % [_numero(v, 0 if absf(v) >= 20.0 or unidad == "rpm" else 1), unidad]
+		"bar", "L/min", "rpm", "mm/s", "mm/min", "L", "kW", "N·m", "NL/min", "NL", "N", "s", "°C":
+			return "%s %s" % [_numero(v, 0 if absf(v) >= 20.0 or unidad in ["rpm", "N"] else 1), unidad]
+		"%":
+			return "%d %%" % roundi(v)
 	return "%s %s" % [_numero(v, 1), unidad]
 
 

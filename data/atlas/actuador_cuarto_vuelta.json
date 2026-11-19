@@ -1,0 +1,322 @@
+{
+ "id": "actuador_cuarto_vuelta",
+ "ficha": "actuador_cuarto_vuelta",
+ "titulo": "Actuador de cuarto de vuelta",
+ "termino": "actuador_cuarto_vuelta",
+ "icono": "hidraulica",
+ "resumen": "Piñón y cremallera: el aire empuja dos pistones que giran el eje 90° para abrir una válvula.",
+ "bornes_dibujo": {
+  "2": [
+   312,
+   199
+  ],
+  "4": [
+   348,
+   199
+  ]
+ },
+ "que_es": {
+  "texto": "El {{actuador_cuarto_vuelta}} de piñón y cremallera mueve válvulas de bola y de mariposa. El aire entra entre los dos pistones, que se separan y hacen girar el piñón 90°. En el de simple efecto, los muelles de las tapas lo devuelven al quitar el aire: es de {{posicion_falla}} cerrada. Las bocas y el eje siguen la norma {{namur}}, para montar encima una electroválvula, un posicionador o finales de carrera.",
+  "partes": [
+   {
+    "texto": "Cuerpo de perfil de aluminio con los dos pistones y el piñón.",
+    "marca": [
+     200,
+     150
+    ]
+   },
+   {
+    "texto": "Tapas con los muelles: simple efecto.",
+    "marca": [
+     82,
+     175
+    ]
+   },
+   {
+    "texto": "Indicador amarillo de posición.",
+    "marca": [
+     250,
+     96
+    ]
+   },
+   {
+    "texto": "Eje NAMUR para el posicionador o los finales de carrera.",
+    "marca": [
+     250,
+     70
+    ]
+   },
+   {
+    "texto": "Cara NAMUR con las bocas 2 y 4.",
+    "marca": [
+     330,
+     182
+    ]
+   },
+   {
+    "texto": "Placa: par, presión y tipo.",
+    "marca": [
+     210,
+     200
+    ]
+   }
+  ],
+  "placa": "Simple efecto · muelles 1–4 bar · par 60 N·m a 6 bar · NAMUR · 90°",
+  "a_bordo": "Válvulas de mariposa de agua de mar, combustible y lastre con mando remoto. Pares, presiones de muelle y modelos: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "posicionador_lazo",
+  "params": {
+   "senal": 12.0,
+   "foco": "actuador"
+  },
+  "pasos": [
+   "Sin aire, los muelles empujan los pistones hacia dentro: la válvula queda cerrada.",
+   "Al entrar aire por la boca 2, los pistones se separan y el piñón gira hacia abierta.",
+   "Con una fuga en la junta de un pistón, no llega a la presión que pide el muelle y se queda a medias."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_actuador_cuarto_vuelta.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "2",
+     "x": 274,
+     "y": 80,
+     "tam": 13
+    },
+    {
+     "texto": "4",
+     "x": 342,
+     "y": 108,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "2": [
+    262,
+    90
+   ],
+   "4": [
+    330,
+    118
+   ]
+  },
+  "bornes": {
+   "2": "Aire del posicionador o de la electroválvula: abre.",
+   "4": "En simple efecto, respiradero con filtro; en doble efecto, aire para cerrar."
+  },
+  "grupos": [
+   {
+    "nombre": "Bocas NAMUR",
+    "bornes": [
+     "2",
+     "4"
+    ],
+    "texto": "Separadas 24 mm, para montar la electroválvula directamente sin tubos."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Presión para abrir",
+    "instrumento": "manometro",
+    "roja": "2",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro en la boca 2",
+    "nota": "En simple efecto la presión crece con la apertura: de 1 bar (empieza) a 4 bar (abierta), valores típicos de muelle.",
+    "titulo_tabla": "Qué presión pide",
+    "columna": "P 2",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_salida",
+     "instrumento": "manometro",
+     "params": {
+      "posicionador": {
+       "senal": 12.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Al 50 % (12 mA)",
+      "hacer": "Normal: a medio muelle",
+      "bien": true
+     },
+     {
+      "estado": "Abierta (20 mA)",
+      "hacer": "Normal: el muelle entero",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 20.0
+        }
+       }
+      }
+     },
+     {
+      "estado": "Junta con fuga",
+      "hacer": "Falla: no llega y se queda a medias",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 20.0,
+         "membrana_fuga": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Posición",
+    "instrumento": "comparador",
+    "roja": "2",
+    "negra": "",
+    "escala": "0-100 %",
+    "como": "Indicador de posición del actuador",
+    "nota": "El indicador amarillo dice abierta o cerrada; la escala, cuánto.",
+    "titulo_tabla": "Qué marca el indicador",
+    "columna": "Posición",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "posicion",
+     "instrumento": "comparador",
+     "params": {
+      "posicionador": {
+       "senal": 12.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Señal de 12 mA",
+      "hacer": "Normal: 50 %",
+      "bien": true
+     },
+     {
+      "estado": "Sin aire",
+      "hacer": "Normal en falla: cerrada por los muelles",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 12.0,
+         "sin_aire": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "No abre del todo",
+    "sintoma": "El indicador se queda a medias.",
+    "mide": [
+     {
+      "donde": "posición",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "posicion",
+       "instrumento": "comparador",
+       "params": {
+        "posicionador": {
+         "senal": 20.0,
+         "membrana_fuga": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Junta de un pistón con fuga o presión de alimentación baja.",
+    "reparacion": "Medir la alimentación y probar fugas con agua jabonosa en el respiradero 4."
+   },
+   {
+    "nombre": "No cierra al quitar el aire",
+    "sintoma": "La válvula sigue abierta en falla.",
+    "mide": [
+     {
+      "donde": "indicador",
+      "bien": false,
+      "valor": "abierta"
+     }
+    ],
+    "causa": "Muelle roto o válvula agarrotada.",
+    "reparacion": "Desmontar del cuerpo de la válvula y probar el actuador solo. Ojo: los muelles van precargados."
+   },
+   {
+    "nombre": "Sale aire por el respiradero",
+    "sintoma": "Soplido continuo por la boca 4.",
+    "mide": [
+     {
+      "donde": "respiradero",
+      "bien": false,
+      "valor": "sopla"
+     }
+    ],
+    "causa": "Junta de un pistón gastada.",
+    "reparacion": "Kit de juntas; desmontar las tapas siguiendo el procedimiento del fabricante por los muelles precargados."
+   },
+   {
+    "nombre": "Gira pero la válvula no",
+    "sintoma": "El indicador marca abierta y no pasa nada por la tubería.",
+    "mide": [
+     {
+      "donde": "indicador",
+      "bien": true,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "posicion",
+       "instrumento": "comparador",
+       "params": {
+        "posicionador": {
+         "senal": 20.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Acoplamiento o cuadradillo del eje de la válvula roto.",
+    "reparacion": "Comprobar el acoplamiento y el eje de la válvula."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "maniobra completa y lectura del indicador"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "buscar fugas en tapas y respiradero"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisar acoplamiento, tornillos y finales de carrera"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Norma VDI/VDE 3845 (NAMUR). Catálogo del fabricante (verificar a bordo)."
+ ]
+}

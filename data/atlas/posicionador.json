@@ -1,0 +1,431 @@
+{
+ "id": "posicionador",
+ "ficha": "posicionador",
+ "titulo": "Posicionador electroneumático",
+ "termino": "posicionador",
+ "icono": "hidraulica",
+ "resumen": "Recibe una señal de 4–20 mA y manda el aire justo para que la válvula quede en esa posición.",
+ "bornes_dibujo": {
+  "+": [
+   56,
+   106
+  ],
+  "-": [
+   56,
+   122
+  ],
+  "SUP": [
+   366,
+   110
+  ],
+  "OUT": [
+   366,
+   190
+  ]
+ },
+ "que_es": {
+  "texto": "El {{posicionador}} es la pieza que convierte la señal del regulador en una posición. Lee la señal del {{lazo_4_20}} (4 mA cerrada, 20 mA abierta), mide la posición real por su eje y mete o saca aire del actuador hasta que coinciden. Sin señal o sin aire, el muelle del actuador lleva la válvula a su {{posicion_falla}}.",
+  "partes": [
+   {
+    "texto": "Pantalla con la posición y los menús.",
+    "marca": [
+     178,
+     113
+    ]
+   },
+   {
+    "texto": "Pulsadores para el ajuste y la autocalibración.",
+    "marca": [
+     178,
+     168
+    ]
+   },
+   {
+    "texto": "Prensaestopas del cable del lazo.",
+    "marca": [
+     74,
+     113
+    ]
+   },
+   {
+    "texto": "Manómetro de la alimentación SUP.",
+    "marca": [
+     366,
+     110
+    ]
+   },
+   {
+    "texto": "Manómetro de la salida OUT al actuador.",
+    "marca": [
+     366,
+     190
+    ]
+   },
+   {
+    "texto": "Eje de realimentación acoplado al actuador.",
+    "marca": [
+     200,
+     280
+    ]
+   },
+   {
+    "texto": "Tapa con junta: estanca IP66.",
+    "marca": [
+     270,
+     230
+    ]
+   }
+  ],
+  "placa": "4–20 mA a 2 hilos · alimentación 1,4–7 bar · simple efecto · IP66",
+  "a_bordo": "Válvulas de control de temperatura y de nivel: agua de refrigeración, combustible, vapor. Modelos y ajustes: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "posicionador_lazo",
+  "params": {
+   "senal": 12.0,
+   "foco": "posicionador"
+  },
+  "pasos": [
+   "El calibrador (o el regulador) da la señal: 4 mA cerrada, 20 mA abierta.",
+   "El posicionador compara la señal con la posición que lee por el eje y manda aire hasta que coinciden.",
+   "Sin aire o sin señal, el muelle cierra: es la posición de falla."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_posicionador.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "+",
+     "x": 212,
+     "y": 174,
+     "tam": 13
+    },
+    {
+     "texto": "SUP",
+     "x": 312,
+     "y": 212,
+     "tam": 13
+    },
+    {
+     "texto": "OUT",
+     "x": 312,
+     "y": 140,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "+": [
+    200,
+    184
+   ],
+   "SUP": [
+    300,
+    222
+   ],
+   "OUT": [
+    300,
+    150
+   ]
+  },
+  "bornes": {
+   "+": "Lazo de 4–20 mA, positivo (el posicionador se alimenta del propio lazo).",
+   "SUP": "Alimentación de aire filtrado, a unos 6 bar.",
+   "OUT": "Salida a la boca 2 del actuador."
+  },
+  "grupos": [
+   {
+    "nombre": "Lazo",
+    "bornes": [
+     "+"
+    ],
+    "texto": "Dos hilos con pantalla; respetar la polaridad. Con menos de unos 3,6 mA el posicionador se apaga."
+   },
+   {
+    "nombre": "Aire",
+    "bornes": [
+     "SUP",
+     "OUT"
+    ],
+    "texto": "Alimentación con su propio filtro-regulador; salida al actuador."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Señal del lazo",
+    "instrumento": "multimetro",
+    "roja": "+",
+    "negra": "",
+    "escala": "mA DC",
+    "como": "Multímetro en serie con el lazo, en mA",
+    "nota": "Se abre el lazo en sus bornes de prueba o se usa una pinza de mA.",
+    "titulo_tabla": "Qué marca el lazo",
+    "columna": "Señal",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "senal",
+     "instrumento": "multimetro",
+     "params": {
+      "posicionador": {
+       "senal": 12.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Regulador pide 50 %",
+      "hacer": "Normal: 12 mA",
+      "bien": true
+     },
+     {
+      "estado": "Regulador pide cerrar",
+      "hacer": "Normal: 4 mA",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 4.0
+        }
+       }
+      }
+     },
+     {
+      "estado": "Lazo cortado",
+      "hacer": "Falla: 0 mA y la válvula en falla",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 0.0
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Salida al actuador",
+    "instrumento": "manometro",
+    "roja": "OUT",
+    "negra": "",
+    "escala": "0-10 bar",
+    "como": "Manómetro OUT del posicionador",
+    "nota": "La salida sube y baja hasta que la posición coincide con la señal.",
+    "titulo_tabla": "Qué marca la salida",
+    "columna": "OUT",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "P_salida",
+     "instrumento": "manometro",
+     "params": {
+      "posicionador": {
+       "senal": 12.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "12 mA",
+      "hacer": "Normal: a medio muelle",
+      "bien": true
+     },
+     {
+      "estado": "20 mA",
+      "hacer": "Normal: muelle entero",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 20.0
+        }
+       }
+      }
+     },
+     {
+      "estado": "Sin aire de alimentación",
+      "hacer": "Falla: 0 bar y válvula cerrada",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 12.0,
+         "sin_aire": true
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Posición",
+    "instrumento": "comparador",
+    "roja": "OUT",
+    "negra": "",
+    "escala": "0-100 %",
+    "como": "Indicador del actuador o pantalla del posicionador",
+    "nota": "Debe coincidir con la señal: (mA − 4) ÷ 16.",
+    "titulo_tabla": "Qué posición marca",
+    "columna": "Posición",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "posicion",
+     "instrumento": "comparador",
+     "params": {
+      "posicionador": {
+       "senal": 12.0
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "12 mA",
+      "hacer": "Normal: 50 %",
+      "bien": true
+     },
+     {
+      "estado": "Membrana con fuga, 20 mA",
+      "hacer": "Falla: se queda corta",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "posicionador": {
+         "senal": 20.0,
+         "membrana_fuga": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Válvula cerrada sin motivo",
+    "sintoma": "La temperatura se dispara y la válvula está cerrada.",
+    "mide": [
+     {
+      "donde": "señal",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "senal",
+       "instrumento": "multimetro",
+       "params": {
+        "posicionador": {
+         "senal": 0.0
+        }
+       }
+      }
+     },
+     {
+      "donde": "posición",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "posicion",
+       "instrumento": "comparador",
+       "params": {
+        "posicionador": {
+         "senal": 0.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Lazo cortado o borne flojo: sin señal, el posicionador se apaga y el muelle cierra.",
+    "reparacion": "Medir los mA en sus bornes, seguir el cable y apretar bornes."
+   },
+   {
+    "nombre": "Sin aire",
+    "sintoma": "Salida a 0 bar con señal correcta.",
+    "mide": [
+     {
+      "donde": "salida",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "P_salida",
+       "instrumento": "manometro",
+       "params": {
+        "posicionador": {
+         "senal": 12.0,
+         "sin_aire": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Válvula de corte cerrada o filtro-regulador del posicionador taponado.",
+    "reparacion": "Abrir el aire, purgar y limpiar su filtro."
+   },
+   {
+    "nombre": "No llega a la posición",
+    "sintoma": "Pide 100 % y se queda en 60 %.",
+    "mide": [
+     {
+      "donde": "posición",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "posicion",
+       "instrumento": "comparador",
+       "params": {
+        "posicionador": {
+         "senal": 20.0,
+         "membrana_fuga": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Fuga en la membrana o en las juntas del actuador.",
+    "reparacion": "Buscar fugas con agua jabonosa; cambiar el kit de juntas."
+   },
+   {
+    "nombre": "Oscila",
+    "sintoma": "La válvula va y viene sin parar.",
+    "mide": [
+     {
+      "donde": "posición",
+      "bien": false,
+      "valor": "oscila"
+     }
+    ],
+    "causa": "Autocalibración vieja, rozamiento alto o regulador mal ajustado.",
+    "reparacion": "Repetir la autocalibración del posicionador y revisar la empaquetadura de la válvula."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "comparar señal y posición en la pantalla"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "recorrido con calibrador: 4, 8, 12, 16 y 20 mA"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "autocalibración y revisión del filtro de aire"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "IEC 60381-1 (señales de 4–20 mA). Manual del posicionador (verificar a bordo)."
+ ]
+}

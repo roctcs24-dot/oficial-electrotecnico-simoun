@@ -1,0 +1,75 @@
+{
+  "id": "ne9_fugas_seguridad",
+  "titulo": "Fugas y seguridad",
+  "resumen": "Lo que cuesta una fuga y cómo trabajar sin peligro.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Lo que cuesta una fuga",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una {{fuga_aire}} no se ve, pero el compresor la paga día y noche. Un agujero de 3 mm a 7 bar se lleva unos 650 NL/min: unos 4 kW de compresor (valores típicos — verificar a bordo). Se buscan con agua jabonosa o con un {{detector_ultrasonico}}, que oye el silbido aunque haya ruido. Mueva el agujero y mire la energía de un año."
+        },
+        {
+          "tipo": "animacion",
+          "id": "fuga_aire",
+          "params": {
+            "diametro": 1.0
+          },
+          "pie": "Fuga en un racor de la red de 7 bar."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne9_fuga",
+          "pregunta": "Si el diámetro del agujero se duplica, el aire perdido…",
+          "opciones": [
+            "se duplica",
+            "se multiplica por cuatro",
+            "no cambia"
+          ],
+          "correcta": 1,
+          "explicacion": "El caudal crece con el área del agujero, es decir, con el diámetro al cuadrado."
+        }
+      ]
+    },
+    {
+      "titulo": "Trabajar sin peligro",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El aire guarda energía: un cilindro puede moverse de golpe al soltar un racor, un tubo suelto latiguea y el aire contra la piel puede entrar en la sangre. Nunca se limpia la ropa ni el cuerpo con aire. Antes de trabajar se corta, se bloquea y se descarga, como en el {{loto}} eléctrico, y se comprueba con el manómetro que no queda presión ni en el depósito ni en las cámaras."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ne9_descargar",
+          "pregunta": "Antes de cambiar un cilindro, ordene:",
+          "pasos": [
+            "Avisar y asegurar la carga del cilindro",
+            "Cerrar y bloquear la válvula de aire del equipo con candado y etiqueta",
+            "Descargar por la válvula de escape de la unidad",
+            "Comprobar 0 bar en el manómetro y aflojar despacio los racores",
+            "Desmontar"
+          ],
+          "explicacion": "Primero la carga y el aire bloqueado; después comprobar que no queda presión, aflojando despacio."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne9_ropa",
+          "pregunta": "¿Se puede limpiar el mono con la pistola de aire si se baja la presión?",
+          "opciones": [
+            "Sí, a menos de 2 bar",
+            "No: el aire puede entrar en la piel o los ojos",
+            "Sí, con gafas"
+          ],
+          "correcta": 1,
+          "explicacion": "Nunca contra el cuerpo: use un cepillo o un aspirador."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad.",
+    "Procedimientos de trabajo del SMS del buque (verificar a bordo)."
+  ]
+}

@@ -1,0 +1,94 @@
+{
+ "id": "unidad_fr",
+ "titulo": "Unidad de mantenimiento FRL",
+ "resumen": "Filtra el aire, le baja la presión a la de trabajo y, si hace falta, le pone aceite.",
+ "dibujo": {
+  "svg": "res://art/equipos/unidad_fr.svg",
+  "tamano": [
+   460,
+   340
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "1",
+    "x": 36,
+    "y": 78,
+    "tam": 14
+   },
+   {
+    "texto": "2",
+    "x": 424,
+    "y": 78,
+    "tam": 14
+   },
+   {
+    "texto": "F",
+    "x": 112,
+    "y": 96,
+    "tam": 13
+   },
+   {
+    "texto": "L",
+    "x": 348,
+    "y": 96,
+    "tam": 13
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/unidad_frl.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "La {{unidad_frl}} da a cada equipo aire limpio, seco y a la presión justa. Sin ella, el agua y la suciedad de la red acaban en las válvulas."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Filtro: el aire gira dentro del vaso, el agua cae por centrifugación y el cartucho retiene las partículas. Regulador: una membrana con muelle compara la presión de salida con la del pomo y abre o cierra el paso. Lubricador: el aire arrastra gotas de aceite por un pequeño venturi."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "En línea, respetando la flecha. Antes, una válvula de corte con escape para descargar el equipo. Después, la direccional."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Se tira del pomo, se gira hasta la presión de trabajo (unos 6 bar, valor típico) y se empuja para bloquear. Se ajusta con el equipo trabajando."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Manómetro a la salida con caudal y, si hay dudas, otro a la entrada para leer la caída del filtro."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Cartucho colmatado, purga atascada, membrana rota y vaso dañado."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Purgar a diario o comprobar la purga automática, cambiar el cartucho cada año y no usar disolventes en el vaso."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante de la unidad FRL (verificar a bordo)."
+ ]
+}

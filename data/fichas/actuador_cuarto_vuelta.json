@@ -1,0 +1,82 @@
+{
+ "id": "actuador_cuarto_vuelta",
+ "titulo": "Actuador de cuarto de vuelta",
+ "resumen": "Piñón y cremallera: el aire empuja dos pistones que giran el eje 90° para abrir una válvula.",
+ "dibujo": {
+  "svg": "res://art/equipos/actuador_cuarto_vuelta.svg",
+  "tamano": [
+   500,
+   320
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "2",
+    "x": 312,
+    "y": 248,
+    "tam": 14
+   },
+   {
+    "texto": "4",
+    "x": 348,
+    "y": 248,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/actuador_giratorio.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "El {{actuador_cuarto_vuelta}} abre y cierra a distancia válvulas de bola y de mariposa."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Dos pistones con cremallera que engranan con un piñón central; en simple efecto, muelles en las tapas."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Brida ISO 5211 a la válvula; cara NAMUR para la electroválvula o el posicionador."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Topes de carrera en las tapas para el 0 y el 90°. Se elige por par con margen."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Maniobra completa, presión en la boca 2 y prueba de fallo al cortar el aire."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Juntas con fuga, muelles rotos y acoplamientos rotos."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Maniobrar periódicamente las válvulas que pasan mucho tiempo quietas."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Norma VDI/VDE 3845 (NAMUR). Catálogo del fabricante (verificar a bordo)."
+ ]
+}

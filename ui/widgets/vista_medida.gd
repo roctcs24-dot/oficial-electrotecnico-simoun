@@ -14,10 +14,12 @@ const CUERPOS := {
 	"manometro": [Color("4a8ad0"), Color("123766"), "MANÓMETRO"],
 	"caudalimetro": [Color("e8a03a"), Color("7a4206"), "CAUDALÍMETRO"],
 	"comparador": [Color("d9dde0"), Color("59626a"), "COMPARADOR"],
+	"higrometro": [Color("3aa0a0"), Color("14504f"), "HIGRÓMETRO"],
+	"cronometro": [Color("e9ebe8"), Color("3b444b"), "CRONÓMETRO"],
 }
 ## Instrumentos de fluidos (y el reloj comparador): se unen a la pieza con un latiguillo de prueba o
 ## un soporte, no con puntas.
-const DE_FLUIDOS := ["manometro", "caudalimetro", "comparador"]
+const DE_FLUIDOS := ["manometro", "caudalimetro", "comparador", "higrometro", "cronometro"]
 const LATIGUILLO := Color("1d2124")
 
 var dibujo: VistaBornes

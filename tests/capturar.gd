@@ -79,6 +79,8 @@ func _capturar() -> void:
 		await _capturar_lineas(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "hidraulica":
 		await _capturar_hidraulica(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "neumatica":
+		await _capturar_neumatica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -706,6 +708,53 @@ func _capturar_hidraulica(raiz: Raiz, carpeta: String) -> void:
 			raiz.ir_a("leccion", {"id": id, "sistema": 9, "pagina": 0, "respuestas": {}})
 			await _esperar()
 			await _guardar(carpeta, "h_%s" % id, tam)
+			raiz.volver()
+		raiz.ir_a_seccion("inicio")
+
+
+## Etapa 46: neumática en el atlas, sus lecciones y el minijuego de símbolos de neumática.
+func _capturar_neumatica(raiz: Raiz, carpeta: String) -> void:
+	var lista := JuegoIso1219.leer(raiz.contenido, "neumatica")
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 46
+	var pieza := JuegoIso1219.ronda_pieza(JuegoIso1219.simbolo(lista, "valvula_52"), lista, azar)
+	var nombre := JuegoIso1219.ronda_nombre(JuegoIso1219.simbolo(lista, "unidad_frl"), lista, azar)
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(9)
+		await _guardar(carpeta, "n_modulo", tam)
+		for par: Array in [["valvula_52", "funciona"], ["cilindro_neumatico", "funciona"], ["posicionador", "medir"], ["posicionador", "funciona"],
+				["unidad_fr", "que_es"], ["valvula_53", "conexion"], ["secador_frigorifico", "medir"], ["regulador_caudal", "que_es"]]:
+			raiz.ir_a("atlas", {"id": par[0], "pestana": par[1]})
+			var vista := raiz.pantalla_actual()
+			if par[1] == "funciona" and vista.animacion != null and "y1" in vista.animacion:
+				vista.animacion.y1 = true
+				for metodo in ["_actualizar", "_actualizar_botones"]:
+					if vista.animacion.has_method(metodo):
+						vista.animacion.call(metodo)
+				for i in 30:
+					vista.animacion._process(0.05)
+			await _guardar(carpeta, "n_%s_%s" % [par[0], par[1]], tam)
+			raiz.volver()
+		raiz.ir_a("simbolos_iso1219", {"registro": JuegoIso1219.REGISTRO_NEUMATICA, "items": [pieza, nombre], "indice": 0, "respuestas": {}})
+		await _guardar(carpeta, "n_iso_pieza", tam)
+		raiz.pantalla_actual().elegir(int(pieza["correcta"]))
+		await _guardar(carpeta, "n_iso_pieza_ok", tam)
+		raiz.volver()
+		raiz.ir_a("simbolos_iso1219", {"registro": JuegoIso1219.REGISTRO_NEUMATICA, "items": [pieza, nombre], "indice": 1, "respuestas": {0: {"acierto": true, "elegida": pieza["correcta"]}}})
+		await _guardar(carpeta, "n_iso_nombre", tam)
+		raiz.volver()
+		for par: Array in [["ne1_aire_comprimido", 0], ["ne5_valvulas", 0], ["ne8_actuadores_posicionadores", 1], ["ne9_fugas_seguridad", 0]]:
+			raiz.ir_a("leccion", {"id": par[0], "sistema": 9, "pagina": par[1], "respuestas": {}})
+			await _esperar()
+			var anim := _buscar_animacion(raiz)
+			if anim != null and raiz.vertical:
+				var sc := _scroll_de(anim)
+				if sc != null:
+					sc.ensure_control_visible(anim)
+			await _guardar(carpeta, "n_%s_%d" % [par[0], par[1]], tam)
 			raiz.volver()
 		raiz.ir_a_seccion("inicio")
 

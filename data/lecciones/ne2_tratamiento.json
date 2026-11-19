@@ -1,0 +1,63 @@
+{
+  "id": "ne2_tratamiento",
+  "titulo": "Agua y suciedad en el aire",
+  "resumen": "Punto de rocío, secadores, purgas y calidad ISO 8573-1.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "De dónde sale el agua",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El aire que aspira el compresor trae vapor de agua. Al comprimirlo y enfriarse, ese vapor se condensa: un compresor de sala de máquinas puede sacar varios litros de agua al día. El agua oxida tuberías, lava la grasa de las válvulas y se congela en los escapes.\n\nEl {{secador_frigorifico}} enfría el aire a unos 3 °C para que el agua caiga y el {{purgador_automatico}} la eche. Lo que importa es el {{punto_rocio}}: mire qué pasa con el secador averiado."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "secador"
+          },
+          "pie": "Red de aire de control con secador frigorífico (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne2_rocio",
+          "pregunta": "El secador marca un punto de rocío de 3 °C y la red pasa por una cubierta a 25 °C. ¿Aparece agua?",
+          "opciones": [
+            "Sí, siempre",
+            "No: el aire está más seco de lo que hace falta a 25 °C",
+            "Solo de noche"
+          ],
+          "correcta": 1,
+          "explicacion": "Solo aparece agua donde la red está más fría que el punto de rocío."
+        }
+      ]
+    },
+    {
+      "titulo": "Calidad del aire",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{iso_8573}} da la calidad del aire con tres cifras: partículas, agua y aceite. Para instrumentos se suele pedir algo como 1.4.1 (valores típicos — verificar a bordo). En la práctica: purgar vasos y depósitos, comprobar el secador y cambiar los cartuchos de cada {{filtro_aire}}."
+        },
+        {
+          "tipo": "ordenar",
+          "tema": "ne2_purga",
+          "pregunta": "Para revisar la purga de un depósito, ordene:",
+          "pasos": [
+            "Avisar al de guardia",
+            "Abrir la purga manual despacio, con gafas",
+            "Ver si sale agua o aceite y cuánta",
+            "Cerrar la purga",
+            "Pulsar la prueba del purgador automático y apuntar"
+          ],
+          "explicacion": "La purga manual dice si la automática trabaja. Mucha agua es aviso de secador o purgador con problemas."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 8573-1: calidad del aire comprimido.",
+    "Manual del secador del buque (verificar a bordo)."
+  ]
+}

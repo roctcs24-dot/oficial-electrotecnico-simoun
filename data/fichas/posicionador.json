@@ -1,0 +1,96 @@
+{
+ "id": "posicionador",
+ "titulo": "Posicionador electroneumático",
+ "resumen": "Recibe una señal de 4–20 mA y manda el aire justo para que la válvula quede en esa posición.",
+ "dibujo": {
+  "svg": "res://art/equipos/posicionador.svg",
+  "tamano": [
+   420,
+   330
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "50.0 %",
+    "x": 178,
+    "y": 114,
+    "tam": 18,
+    "color": "#9fffb0"
+   },
+   {
+    "texto": "SUP",
+    "x": 366,
+    "y": 146,
+    "tam": 12
+   },
+   {
+    "texto": "OUT",
+    "x": 366,
+    "y": 226,
+    "tam": 12
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/posicionador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [
+    {
+     "texto": "I/P",
+     "x": 130,
+     "y": 90,
+     "tam": 20
+    }
+   ]
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "El {{posicionador}} hace que una válvula de control quede exactamente donde la pide la señal, aunque la empaquetadura roce o cambie la presión del fluido."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Electrónica alimentada por el lazo, convertidor I/P con una tobera y una paleta o piezoeléctrico, amplificador neumático y sensor de posición en el eje."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Lazo a dos hilos al regulador o al PLC; aire filtrado a SUP; OUT al actuador; eje acoplado al del actuador."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Autocalibración desde sus pulsadores: recorre de cerrada a abierta y aprende los topes. Se ajusta la acción (aire abre o aire cierra)."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Con un calibrador de lazo se dan 4, 12 y 20 mA y se lee la posición y la presión de salida."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Lazo cortado, falta de aire, fugas y oscilación."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Aire limpio y seco y una autocalibración al año o tras cambiar la válvula."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "IEC 60381-1 (señales de 4–20 mA). Manual del posicionador (verificar a bordo)."
+ ]
+}

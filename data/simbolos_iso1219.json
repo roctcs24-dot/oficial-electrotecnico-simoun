@@ -1,5 +1,5 @@
 {
- "nota": "Símbolos de hidráulica dibujados según ISO 1219-1 de forma general. Verificar contra la norma y contra el esquema del buque: cada fabricante añade detalles.",
+ "nota": "Símbolos de hidráulica y neumática dibujados según ISO 1219-1 de forma general. Verificar contra la norma y contra el esquema del buque: cada fabricante añade detalles.",
  "simbolos": [
   {
    "id": "bomba_fija",
@@ -259,6 +259,237 @@
    ],
    "etiquetas": [],
    "explicacion": "Círculo con una flecha diagonal: indica presión."
+  },
+  {
+   "id": "fuente_aire",
+   "nombre": "Fuente de aire comprimido",
+   "en": "pressure source (pneumatic)",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/fuente_aire.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Círculo con un triángulo hueco: aire. En hidráulica el triángulo es lleno."
+  },
+  {
+   "id": "compresor",
+   "nombre": "Compresor",
+   "en": "compressor",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/compresor.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Como la bomba, pero con el triángulo hueco: lo que sale es aire."
+  },
+  {
+   "id": "secador",
+   "nombre": "Secador",
+   "en": "air dryer",
+   "familia": "neumatica",
+   "pieza": "secador_frigorifico",
+   "svg": "res://art/simbolos/iso1219/secador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rombo con una línea entera y dos triángulos: quita el agua del aire."
+  },
+  {
+   "id": "filtro_purga",
+   "nombre": "Filtro con purga manual",
+   "en": "filter with manual drain",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/filtro_purga.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rombo con la línea de trazos del filtro y la salida de purga abajo."
+  },
+  {
+   "id": "lubricador",
+   "nombre": "Lubricador",
+   "en": "lubricator",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/lubricador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rombo con una línea vertical: añade aceite al aire."
+  },
+  {
+   "id": "regulador_presion",
+   "nombre": "Regulador de presión con escape",
+   "en": "pressure regulator, relieving",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/regulador_presion.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Flecha alineada (normalmente abierta), piloto desde la salida y escape: baja la presión y alivia el exceso."
+  },
+  {
+   "id": "unidad_frl",
+   "nombre": "Unidad de mantenimiento FRL",
+   "en": "air service unit (FRL)",
+   "familia": "neumatica",
+   "pieza": "unidad_fr",
+   "svg": "res://art/simbolos/iso1219/unidad_frl.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Filtro, regulador con manómetro y lubricador dentro de un recuadro de trazos."
+  },
+  {
+   "id": "valvula_32",
+   "nombre": "Válvula 3/2 normalmente cerrada",
+   "en": "3/2 normally closed valve",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/valvula_32.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Dos casillas, tres bocas: con la bobina da aire; sin ella, escapa."
+  },
+  {
+   "id": "valvula_52",
+   "nombre": "Válvula 5/2 de solenoide y muelle",
+   "en": "5/2 solenoid valve, spring return",
+   "familia": "neumatica",
+   "pieza": "valvula_52",
+   "svg": "res://art/simbolos/iso1219/valvula_52.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Dos casillas y cinco bocas: 1 entrada, 4 y 2 salidas, 3 y 5 escapes con triángulo hueco."
+  },
+  {
+   "id": "valvula_53",
+   "nombre": "Válvula 5/3 de centro cerrado",
+   "en": "5/3 closed centre valve",
+   "familia": "neumatica",
+   "pieza": "valvula_53",
+   "svg": "res://art/simbolos/iso1219/valvula_53.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Tres casillas; en la central todas las bocas cerradas. Dos bobinas y muelles de centrado."
+  },
+  {
+   "id": "cilindro_amortiguado",
+   "nombre": "Cilindro de doble efecto con amortiguación",
+   "en": "double-acting cylinder, adjustable cushioning",
+   "familia": "neumatica",
+   "pieza": "cilindro_neumatico",
+   "svg": "res://art/simbolos/iso1219/cilindro_amortiguado.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Dos bocas, y los rectángulos con flecha en los extremos: amortiguación regulable."
+  },
+  {
+   "id": "regulador_caudal",
+   "nombre": "Regulador de caudal unidireccional",
+   "en": "one-way flow control valve",
+   "familia": "neumatica",
+   "pieza": "regulador_caudal",
+   "svg": "res://art/simbolos/iso1219/regulador_caudal.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Estrangulación ajustable con antirretorno en paralelo: frena en un sentido y pasa libre en el otro."
+  },
+  {
+   "id": "silenciador",
+   "nombre": "Silenciador",
+   "en": "silencer",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/silenciador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Rectángulo rayado al final de un escape."
+  },
+  {
+   "id": "actuador_giratorio",
+   "nombre": "Actuador giratorio de giro limitado",
+   "en": "semi-rotary actuator",
+   "familia": "neumatica",
+   "pieza": "actuador_cuarto_vuelta",
+   "svg": "res://art/simbolos/iso1219/actuador_giratorio.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Medio círculo con triángulo hueco y la flecha curva de giro limitado; con muelle, de simple efecto."
+  },
+  {
+   "id": "presostato",
+   "nombre": "Presostato",
+   "en": "pressure switch",
+   "familia": "neumatica",
+   "pieza": "",
+   "svg": "res://art/simbolos/iso1219/presostato.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [],
+   "explicacion": "Caja con un contacto eléctrico, muelle ajustable y piloto de presión a trazos."
+  },
+  {
+   "id": "posicionador",
+   "nombre": "Posicionador I/P",
+   "en": "I/P positioner",
+   "familia": "neumatica",
+   "pieza": "posicionador",
+   "svg": "res://art/simbolos/iso1219/posicionador.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": [
+    {
+     "texto": "I/P",
+     "x": 130,
+     "y": 90,
+     "tam": 20
+    }
+   ],
+   "explicacion": "No es de la ISO 1219: caja con «I/P», entrada eléctrica a trazos y salida de aire. Así suele aparecer en los esquemas de instrumentación."
   }
  ]
 }

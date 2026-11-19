@@ -1,0 +1,431 @@
+{
+ "id": "cilindro_neumatico",
+ "ficha": "cilindro_neumatico",
+ "titulo": "Cilindro neumático con detectores",
+ "termino": "cilindro_neumatico",
+ "icono": "hidraulica",
+ "resumen": "Cilindro de doble efecto de perfil de aluminio, con amortiguación y detectores magnéticos B1 y B2.",
+ "bornes_dibujo": {
+  "A": [
+   86,
+   28
+  ],
+  "B": [
+   422,
+   28
+  ],
+  "B1": [
+   150,
+   84
+  ],
+  "B2": [
+   336,
+   84
+  ]
+ },
+ "que_es": {
+  "texto": "El {{cilindro_neumatico}} de perfil normalizado (ISO 15552) es un {{cilindro_doble_efecto}}: aire por A para salir y por B para entrar. Su pistón lleva un imán; los detectores B1 y B2 ({{detector_magnetico}}), metidos en la ranura del perfil, se encienden cuando el imán pasa por debajo y avisan al PLC. Al final de cada carrera, la {{amortiguacion}} frena el pistón para que no golpee.",
+  "partes": [
+   {
+    "texto": "Culata trasera con la boca A.",
+    "marca": [
+     86,
+     146
+    ]
+   },
+   {
+    "texto": "Tubo de perfil de aluminio con ranuras para los detectores.",
+    "marca": [
+     256,
+     124
+    ]
+   },
+   {
+    "texto": "Detector magnético con su LED y su cable.",
+    "marca": [
+     150,
+     100
+    ]
+   },
+   {
+    "texto": "Tornillo de la amortiguación regulable.",
+    "marca": [
+     422,
+     132
+    ]
+   },
+   {
+    "texto": "Vástago cromado.",
+    "marca": [
+     480,
+     114
+    ]
+   },
+   {
+    "texto": "Tuerca del vástago y rosca para la horquilla.",
+    "marca": [
+     540,
+     114
+    ]
+   },
+   {
+    "texto": "Rascador que limpia el vástago al entrar.",
+    "marca": [
+     447,
+     114
+    ]
+   }
+  ],
+  "placa": "ISO 15552 · Ø 63 · carrera 200 mm · vástago Ø 20 · 10 bar máx. · pistón magnético",
+  "a_bordo": "Compuertas de ventilación, cierres de tanques, mandos de cubierta y bancos de prueba. Diámetros y carreras: valor típico — verificar a bordo."
+ },
+ "funciona": {
+  "animacion": "circuito_neumatico",
+  "params": {
+   "foco": "cilindro",
+   "apertura": 0.3
+  },
+  "pasos": [
+   "Con Y1, el aire entra por A y el de B sale por el regulador: el vástago sale a la velocidad que deja el escape.",
+   "Al llegar al final, el imán del pistón queda bajo B2 y su LED se enciende: el PLC sabe que llegó.",
+   "Sin Y1, el aire entra por B, el vástago vuelve y se enciende B1."
+  ]
+ },
+ "conexion": {
+  "esquema": {
+   "svg": "res://art/esquemas/atlas_cilindro_neumatico.svg",
+   "tamano": [
+    400,
+    290
+   ],
+   "etiquetas": [
+    {
+     "texto": "A",
+     "x": 248,
+     "y": 60,
+     "tam": 13
+    },
+    {
+     "texto": "B",
+     "x": 336,
+     "y": 60,
+     "tam": 13
+    },
+    {
+     "texto": "B1",
+     "x": 256,
+     "y": 16,
+     "tam": 13
+    },
+    {
+     "texto": "B2",
+     "x": 330,
+     "y": 16,
+     "tam": 13
+    }
+   ]
+  },
+  "bornes_esquema": {
+   "A": [
+    236,
+    70
+   ],
+   "B": [
+    324,
+    70
+   ],
+   "B1": [
+    244,
+    26
+   ],
+   "B2": [
+    318,
+    26
+   ]
+  },
+  "bornes": {
+   "A": "Cámara trasera: desde la boca 4 de la válvula, por su regulador de caudal.",
+   "B": "Cámara delantera: desde la boca 2.",
+   "B1": "Detector de vástago dentro, a una entrada del PLC (24 V DC).",
+   "B2": "Detector de vástago fuera, a otra entrada."
+  },
+  "grupos": [
+   {
+    "nombre": "Aire",
+    "bornes": [
+     "A",
+     "B"
+    ],
+    "texto": "Con un regulador de caudal en cada boca, frenando el escape."
+   },
+   {
+    "nombre": "Detectores",
+    "bornes": [
+     "B1",
+     "B2"
+    ],
+    "texto": "Tres hilos (marrón +24 V, azul 0 V, negro señal) o dos hilos en serie con la entrada."
+   }
+  ],
+  "subtitulo": "Cómo se conecta en el circuito"
+ },
+ "medir": {
+  "nota": "Lecturas calculadas con el modelo neumático del juego: valores típicos — verificar a bordo.",
+  "grupos": [
+   {
+    "nombre": "Velocidad",
+    "instrumento": "cronometro",
+    "roja": "B",
+    "negra": "",
+    "escala": "s y mm",
+    "como": "Cronómetro entre el apagado de B1 y el encendido de B2",
+    "nota": "Velocidad = carrera ÷ tiempo. Se mide con el regulador del escape en su ajuste de trabajo.",
+    "titulo_tabla": "Qué velocidad da",
+    "columna": "Velocidad",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "velocidad",
+     "instrumento": "cronometro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Regulador al 30 %",
+      "hacer": "Normal: la ajustada",
+      "bien": true
+     },
+     {
+      "estado": "Regulador al 10 %",
+      "hacer": "Normal: más lento, misma fuerza",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "reguladores": {
+         "avance": 0.1
+        }
+       }
+      }
+     },
+     {
+      "estado": "Junta del pistón gastada",
+      "hacer": "Falla: lento y pierde fuerza",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "fuga_juntas": true
+        }
+       }
+      }
+     },
+     {
+      "estado": "Carga de 2000 N",
+      "hacer": "Falla: pide más de lo que da; no se mueve",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "carga": 2000.0
+        }
+       }
+      }
+     }
+    ]
+   },
+   {
+    "nombre": "Detector B2",
+    "instrumento": "multimetro",
+    "roja": "B2",
+    "negra": "",
+    "escala": "V DC",
+    "como": "Multímetro entre el cable negro de B2 y 0 V",
+    "nota": "Con el vástago fuera, B2 da 24 V a la entrada del PLC.",
+    "titulo_tabla": "Qué marca la señal",
+    "columna": "B2",
+    "medida": {
+     "neumatica": "banco",
+     "punto": "B2",
+     "instrumento": "multimetro",
+     "params": {
+      "valvula": {
+       "y1": true
+      }
+     }
+    },
+    "filas": [
+     {
+      "estado": "Vástago fuera",
+      "hacer": "Normal: 24 V",
+      "bien": true
+     },
+     {
+      "estado": "Vástago dentro",
+      "hacer": "Normal: 0 V",
+      "bien": true,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": false
+        }
+       }
+      }
+     },
+     {
+      "estado": "Detector movido o pistón sin imán",
+      "hacer": "Falla: 0 V aunque el vástago esté fuera",
+      "bien": false,
+      "cambios": {
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "sin_iman": true
+        }
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "fallas": {
+  "lista": [
+   {
+    "nombre": "Detector que no se enciende",
+    "sintoma": "El vástago llega pero el PLC espera y salta la alarma de tiempo.",
+    "mide": [
+     {
+      "donde": "señal de B2",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "B2",
+       "instrumento": "multimetro",
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "sin_iman": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Detector desplazado por la vibración, cable cortado o pistón sin imán.",
+    "reparacion": "Mover el detector hasta que encienda en el final, apretar su tornillo y probar."
+   },
+   {
+    "nombre": "Lento y sin fuerza",
+    "sintoma": "Tarda más y no cierra bien la compuerta.",
+    "mide": [
+     {
+      "donde": "velocidad",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "velocidad",
+       "instrumento": "cronometro",
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "fuga_juntas": true
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Junta del pistón gastada: el aire pasa de una cámara a otra.",
+    "reparacion": "Prueba de fuga: con aire en A y B desconectada, si sopla por B la junta pasa. Kit de juntas."
+   },
+   {
+    "nombre": "No se mueve",
+    "sintoma": "La válvula conmuta pero el vástago no sale.",
+    "mide": [
+     {
+      "donde": "velocidad",
+      "bien": false,
+      "medida": {
+       "neumatica": "banco",
+       "punto": "velocidad",
+       "instrumento": "cronometro",
+       "params": {
+        "valvula": {
+         "y1": true
+        },
+        "cilindro": {
+         "carga": 2000.0
+        }
+       }
+      }
+     }
+    ],
+    "causa": "Carga mayor que la fuerza (presión × área), mecanismo agarrotado o regulador cerrado del todo.",
+    "reparacion": "Soltar la carga y probar en vacío; revisar presión y reguladores."
+   },
+   {
+    "nombre": "Golpea en los finales",
+    "sintoma": "Golpe seco al llegar y tornillos que se aflojan.",
+    "mide": [
+     {
+      "donde": "final de carrera",
+      "bien": false,
+      "valor": "golpe"
+     }
+    ],
+    "causa": "Amortiguación abierta del todo o velocidad excesiva.",
+    "reparacion": "Cerrar la amortiguación poco a poco hasta que llegue suave, y bajar la velocidad con el regulador."
+   },
+   {
+    "nombre": "Fuga por el vástago",
+    "sintoma": "Soplido en la culata delantera.",
+    "mide": [
+     {
+      "donde": "vástago",
+      "bien": false,
+      "valor": "sopla"
+     }
+    ],
+    "causa": "Rascador y junta del vástago gastados, o vástago rayado.",
+    "reparacion": "Kit de juntas; si el vástago está rayado, cambiarlo."
+   }
+  ],
+  "mantenimiento": [
+   {
+    "periodo": "Mensual",
+    "tarea": "limpiar el vástago y comprobar los LED de los detectores"
+   },
+   {
+    "periodo": "Semestral",
+    "tarea": "tiempo de carrera apuntado y escuchar fugas"
+   },
+   {
+    "periodo": "Anual",
+    "tarea": "revisar horquillas, pasadores y apriete de soportes"
+   }
+  ],
+  "nota_mantenimiento": "Periodos típicos — verificar en el plan de mantenimiento del buque."
+ },
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "ISO 15552: cilindros neumáticos. Catálogo del fabricante (verificar a bordo)."
+ ]
+}

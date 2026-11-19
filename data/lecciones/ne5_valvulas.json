@@ -1,0 +1,71 @@
+{
+  "id": "ne5_valvulas",
+  "titulo": "Válvulas 3/2, 5/2 y 5/3",
+  "resumen": "Vías, posiciones, números de las bocas y mando.",
+  "minutos": 5,
+  "paginas": [
+    {
+      "titulo": "Vías y posiciones",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "Una direccional se nombra por {{vias_posiciones}}: la {{valvula_32}} tiene tres bocas y dos posiciones; la {{valvula_52}}, cinco y dos; la {{valvula_53}}, cinco y tres. Las bocas siguen la ISO 5599: 1 entrada, 2 y 4 salidas, 3 y 5 escapes; 12 y 14, los pilotos.\n\nDé tensión a la bobina y mire por dónde pasa el aire. Pruebe también el {{mando_manual}} con la bobina quemada."
+        },
+        {
+          "tipo": "animacion",
+          "id": "valvula_corte",
+          "params": {
+            "y1": false
+          },
+          "pie": "Válvula 5/2 cortada, monoestable, bobina de 24 V DC (valores típicos — verificar a bordo)."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne5_bocas",
+          "pregunta": "En una 5/2, ¿qué número tiene la entrada de aire?",
+          "opciones": [
+            "1",
+            "2",
+            "5"
+          ],
+          "correcta": 0,
+          "explicacion": "1 es siempre la entrada; 2 y 4, salidas; 3 y 5, escapes."
+        }
+      ]
+    },
+    {
+      "titulo": "Monoestable, biestable y centro cerrado",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "La {{monoestable}} vuelve sola por muelle: si se va la tensión, el cilindro vuelve. La {{biestable}} se queda donde está: útil cuando no debe moverse en un apagón. La 5/3 de {{centro_cerrado}} para el cilindro a media carrera."
+        },
+        {
+          "tipo": "animacion",
+          "id": "circuito_neumatico",
+          "params": {
+            "foco": "53"
+          },
+          "pie": "Válvula 5/3 de centro cerrado con bobinas Y1 e Y2."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne5_apagon",
+          "pregunta": "Una compuerta debe quedarse donde está si falla la tensión. ¿Qué válvula?",
+          "opciones": [
+            "5/2 monoestable",
+            "5/2 biestable o 5/3 de centro cerrado",
+            "3/2 normalmente abierta"
+          ],
+          "correcta": 1,
+          "explicacion": "La monoestable se movería con el muelle al quitarse la tensión."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 5599: numeración de bocas.",
+    "ISO 1219-1.",
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "ne1_aire_comprimido",
+  "titulo": "El aire comprimido a bordo",
+  "resumen": "Presión, aire libre y las tres redes de aire.",
+  "minutos": 4,
+  "paginas": [
+    {
+      "titulo": "Tres redes de aire",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El {{aire_comprimido}} guarda energía en un depósito. A bordo suele haber tres redes (valores típicos — verificar a bordo):\n\n• El {{aire_arranque}}: unos 30 bar, para arrancar los motores diésel.\n• El {{aire_control}}: unos 7 bar, seco y limpio, para válvulas, instrumentos y mandos.\n• El {{aire_servicio}}: unos 7 bar, para herramientas y limpieza.\n\nEl aire de control sale del de servicio a través de un {{secador_frigorifico}} y filtros: es el que usan los equipos de este módulo."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne1_redes",
+          "pregunta": "¿Qué red alimenta las válvulas de mando y los posicionadores?",
+          "opciones": [
+            "El aire de arranque de 30 bar",
+            "El aire de control, seco y a unos 7 bar",
+            "Cualquiera, todas sirven"
+          ],
+          "correcta": 1,
+          "explicacion": "Los mandos necesitan aire seco y limpio a presión de control. El de arranque es para los motores."
+        }
+      ]
+    },
+    {
+      "titulo": "Manométrica y absoluta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "texto": "El manómetro marca la {{presion_manometrica}}: lo que hay por encima de la atmósfera. La {{presion_absoluta}} cuenta desde el vacío: la manométrica más 1 bar, más o menos. 1 bar son 14,5 psi.\n\nEl aire se comprime: un litro de cilindro a 6 bar contiene unos 7 litros de {{aire_libre}} (NL). Por eso los consumos se dan en NL o Nm³."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne1_absoluta",
+          "pregunta": "El manómetro del depósito marca 7 bar. ¿Cuál es la presión absoluta?",
+          "opciones": [
+            "6 bar",
+            "7 bar",
+            "8 bar"
+          ],
+          "correcta": 2,
+          "explicacion": "Absoluta = manométrica + 1 bar de la atmósfera, aproximadamente."
+        },
+        {
+          "tipo": "quiz",
+          "tema": "ne1_aire_libre",
+          "pregunta": "Un cilindro de 2 litros se llena a 6 bar. ¿Cuánto aire libre gasta?",
+          "opciones": [
+            "2 NL",
+            "unos 14 NL",
+            "12 NL"
+          ],
+          "correcta": 1,
+          "explicacion": "2 L × (6 + 1) ÷ 1 ≈ 14 NL: se cuenta con la presión absoluta."
+        }
+      ]
+    },
+    {
+      "titulo": "Del compresor al equipo",
+      "bloques": [
+        {
+          "tipo": "ordenar",
+          "tema": "ne1_recorrido",
+          "pregunta": "Ordene el camino del aire de control:",
+          "pasos": [
+            "Compresor",
+            "Depósito",
+            "Secador frigorífico",
+            "Filtros de la red",
+            "Unidad FRL del equipo",
+            "Válvula y cilindro"
+          ],
+          "explicacion": "El depósito calma los golpes del compresor; el secador y los filtros limpian; la FRL ajusta la presión de cada equipo."
+        }
+      ]
+    }
+  ],
+  "para_saber_mas": [
+    "ISO 4414: transmisiones neumáticas, reglas de seguridad.",
+    "Esquema de aire comprimido del buque (verificar a bordo)."
+  ]
+}

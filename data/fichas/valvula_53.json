@@ -1,0 +1,112 @@
+{
+ "id": "valvula_53",
+ "titulo": "Válvula 5/3 de centro cerrado",
+ "resumen": "Tres posiciones: avanza, retrocede o se queda quieta con las bocas cerradas.",
+ "dibujo": {
+  "svg": "res://art/equipos/valvula_53.svg",
+  "tamano": [
+   560,
+   280
+  ],
+  "nota": "Dibujo de enseñanza sin marca. Marca, tamaño y presiones de los equipos del buque: verificar a bordo.",
+  "etiquetas": [
+   {
+    "texto": "4",
+    "x": 250,
+    "y": 20,
+    "tam": 14
+   },
+   {
+    "texto": "2",
+    "x": 310,
+    "y": 20,
+    "tam": 14
+   },
+   {
+    "texto": "1",
+    "x": 280,
+    "y": 252,
+    "tam": 14
+   },
+   {
+    "texto": "5",
+    "x": 211,
+    "y": 206,
+    "tam": 14
+   },
+   {
+    "texto": "3",
+    "x": 349,
+    "y": 206,
+    "tam": 14
+   },
+   {
+    "texto": "Y1",
+    "x": 131,
+    "y": 136,
+    "tam": 14
+   },
+   {
+    "texto": "Y2",
+    "x": 431,
+    "y": 136,
+    "tam": 14
+   }
+  ]
+ },
+ "simbolos": {
+  "nota": "Símbolo según ISO 1219-1, dibujado de forma general: verificar contra la norma y el esquema del buque.",
+  "iso": {
+   "titulo": "ISO 1219-1",
+   "svg": "res://art/simbolos/iso1219/valvula_53.svg",
+   "tamano": [
+    240,
+    200
+   ],
+   "etiquetas": []
+  }
+ },
+ "secciones": [
+  {
+   "id": "funcion",
+   "titulo": "Para qué sirve",
+   "texto": "La {{valvula_53}} manda el cilindro en los dos sentidos y además lo para a media carrera."
+  },
+  {
+   "id": "partes",
+   "titulo": "Cómo funciona por dentro",
+   "texto": "Corredera con dos pilotos, uno a cada lado, y dos muelles que la centran. En la versión de {{centro_cerrado}} el centro bloquea todas las bocas."
+  },
+  {
+   "id": "conexion",
+   "titulo": "Cómo se conecta",
+   "texto": "Como la 5/2, con una bobina más. Cada bobina a una salida del PLC con enclavamiento entre ellas."
+  },
+  {
+   "id": "ajuste",
+   "titulo": "Cómo se ajusta y se elige",
+   "texto": "Se elige el centro: cerrado (para y sostiene), abierto a escape (el cilindro queda libre) o a presión."
+  },
+  {
+   "id": "pruebas",
+   "titulo": "Cómo se prueba",
+   "texto": "Tensión en cada bobina, mandos manuales y manómetros en 4 y 2 con la válvula centrada."
+  },
+  {
+   "id": "fallas",
+   "titulo": "Fallas típicas",
+   "texto": "Fugas internas que dejan ceder la carga, muelles rotos y las dos bobinas a la vez."
+  },
+  {
+   "id": "mantenimiento",
+   "titulo": "Mantenimiento",
+   "texto": "Como cualquier direccional: aire limpio y prueba periódica de que para y sostiene."
+  }
+ ],
+ "para_saber_mas": [
+  "ISO 4414: transmisiones neumáticas, reglas generales y de seguridad.",
+  "ISO 1219-1: símbolos gráficos de hidráulica y neumática.",
+  "ISO 8573-1: calidad del aire comprimido.",
+  "Catálogo del fabricante (verificar a bordo)."
+ ]
+}
