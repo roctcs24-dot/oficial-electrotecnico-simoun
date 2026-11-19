@@ -5,10 +5,14 @@ extends RefCounted
 const TIPOS_DEL_BANCO := ["quiz", "caso", "ordenar"]
 const PORCENTAJE_DOS_ESTRELLAS := 90.0
 const PORCENTAJE_TRES_ESTRELLAS := 100.0
+## Opciones de una pregunta de símbolo ISO 1219: tres, como las de concepto, para que quepan apaisado.
+const OPCIONES_ISO := 3
 
 
 ## Elige al azar según datos["composicion"]: tipo -> cantidad. Los símbolos salen del minijuego.
-static func crear(datos: Dictionary, simbolos: Array, azar: RandomNumberGenerator) -> Array:
+## «simbolo_iso» son símbolos ISO 1219 (lista «iso», de JuegoIso1219.leer): se ve el símbolo y se
+## elige su nombre entre otros de su misma familia.
+static func crear(datos: Dictionary, simbolos: Array, azar: RandomNumberGenerator, iso: Array = []) -> Array:
 	var composicion: Dictionary = datos["composicion"]
 	var items := []
 	for tipo: String in TIPOS_DEL_BANCO:
@@ -22,6 +26,18 @@ static func crear(datos: Dictionary, simbolos: Array, azar: RandomNumberGenerato
 		var item := r.duplicate()
 		item["tipo"] = "simbolo"
 		item["tema"] = "simbolo_%s" % r["id"]
+		items.append(item)
+	for s: Dictionary in JuegoSimbolos.mezclar(iso, azar).slice(0, int(composicion.get("simbolo_iso", 0))):
+		var familia := iso.filter(func(o: Dictionary) -> bool: return o.get("familia", "") == s.get("familia", ""))
+		var item := JuegoIso1219.ronda_nombre(s, familia, azar)
+		# Se quitan opciones falsas hasta dejar OPCIONES_ISO.
+		while item["opciones"].size() > OPCIONES_ISO:
+			var quitar := 0 if int(item["correcta"]) != 0 else 1
+			item["opciones"].remove_at(quitar)
+			if quitar < int(item["correcta"]):
+				item["correcta"] = int(item["correcta"]) - 1
+		item["tipo"] = "simbolo_iso"
+		item["tema"] = "iso1219_%s" % s["id"]
 		items.append(item)
 	return JuegoSimbolos.mezclar(items, azar)
 

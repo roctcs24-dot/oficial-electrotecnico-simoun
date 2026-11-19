@@ -377,8 +377,9 @@ func test_avance_del_modulo_y_mantenimiento_guardado() -> String:
 	var guardada := Partida.new(RUTA_PARTIDA)
 	guardada.cargar()
 	return A.primero([
-		A.cierto(antes == [0, 41], "al empezar: %s" % str(antes)),
-		A.cierto(despues == [1, 41], "tras ver las cinco pestañas: %s" % str(despues)),
+		# 9 lecciones, 32 piezas del atlas y, desde la 5.1.0, el examen de la Escuela I.
+		A.cierto(antes == [0, 42], "al empezar: %s" % str(antes)),
+		A.cierto(despues == [1, 42], "tras ver las cinco pestañas: %s" % str(despues)),
 		A.cierto(guardada.tarea_atlas_hecha("contactor", 1), "la tarea marcada debe quedar guardada"),
 		A.cierto(guardada.atlas_completo("rele_termico"), "la ficha vista debe quedar guardada"),
 	])

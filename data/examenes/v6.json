@@ -1,0 +1,489 @@
+{
+  "id": "v6",
+  "sistema_simbolos": 3,
+  "titulo": "Examen de la Escuela I",
+  "resumen": "20 preguntas al azar de electricidad industrial y electrónica: componentes, medidas, casos prácticos, secuencias y símbolos.",
+  "minimo": 80,
+  "composicion": {
+    "quiz": 10,
+    "caso": 4,
+    "ordenar": 2,
+    "simbolo": 4
+  },
+  "preguntas": [
+    {
+      "tipo": "quiz",
+      "tema": "ex6_contactor_bobina",
+      "pregunta": "¿Entre qué bornes va la bobina de un contactor?",
+      "opciones": [
+        "1 y 2",
+        "A1 y A2",
+        "13 y 14"
+      ],
+      "correcta": 1,
+      "explicacion": "A1-A2 es la bobina; 1-2, 3-4 y 5-6 los contactos principales; 13-14 un auxiliar NA."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_aux_nc",
+      "pregunta": "Un contacto auxiliar marcado 21-22, ¿cómo es?",
+      "opciones": [
+        "Normalmente abierto",
+        "Normalmente cerrado",
+        "De potencia"
+      ],
+      "correcta": 1,
+      "explicacion": "La cifra final 1-2 indica NC; 3-4, NA."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_termico_ajuste",
+      "pregunta": "¿A qué se ajusta el relé térmico de un motor?",
+      "opciones": [
+        "Al doble de la corriente nominal",
+        "A la corriente nominal de la placa",
+        "A la corriente de arranque"
+      ],
+      "correcta": 1,
+      "explicacion": "Se ajusta a la In de la placa: el disparo lo da el retardo de su curva."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_guardamotor",
+      "pregunta": "¿Qué dos protecciones reúne un guardamotor?",
+      "opciones": [
+        "Sobrecarga y cortocircuito",
+        "Sobretensión y frecuencia",
+        "Fuga a tierra y falta de fase"
+      ],
+      "correcta": 0,
+      "explicacion": "Tiene disparo térmico regulable y magnético fijo, más un mando de maniobra."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_diferencial",
+      "pregunta": "¿Qué mide un interruptor diferencial?",
+      "opciones": [
+        "La tensión entre fases",
+        "La diferencia entre la corriente que entra y la que sale",
+        "La potencia del circuito"
+      ],
+      "correcta": 1,
+      "explicacion": "Si falta corriente a la vuelta es que se va por otro camino, a tierra o por una persona."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_aislado",
+      "pregunta": "En la red aislada del buque, ¿qué pasa con la primera falla a tierra?",
+      "opciones": [
+        "Dispara el general",
+        "No dispara, pero el monitor de aislamiento avisa",
+        "Se quema el transformador"
+      ],
+      "correcta": 1,
+      "explicacion": "Con el neutro aislado no hay camino de vuelta: hay que buscarla antes de que aparezca una segunda."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_seccionador",
+      "pregunta": "¿Se puede abrir un seccionador en carga?",
+      "opciones": [
+        "Sí, siempre",
+        "No: solo sin carga, salvo que sea interruptor-seccionador",
+        "Solo en corriente continua"
+      ],
+      "correcta": 1,
+      "explicacion": "El seccionador da corte visible; para cortar corriente hace falta poder de corte."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_fusible_am",
+      "pregunta": "¿Para qué se usa un fusible aM?",
+      "opciones": [
+        "Para proteger motores contra cortocircuito",
+        "Para cables de alumbrado",
+        "Para electrónica rápida"
+      ],
+      "correcta": 0,
+      "explicacion": "El aM aguanta el arranque del motor y corta cortocircuitos; la sobrecarga la cubre el térmico."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_ti_abierto",
+      "pregunta": "¿Por qué nunca se abre el secundario de un transformador de intensidad con carga?",
+      "opciones": [
+        "Porque se descalibra",
+        "Porque aparece una tensión peligrosa",
+        "Porque se pierde la medida un segundo"
+      ],
+      "correcta": 1,
+      "explicacion": "Sin carga que lo cierre, el secundario sube a tensiones muy altas: se cortocircuita con su puente antes de quitar el amperímetro."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_estrella_tension",
+      "pregunta": "En estrella-triángulo, ¿qué tensión recibe cada devanado durante el arranque en estrella?",
+      "opciones": [
+        "La de línea",
+        "La de línea ÷ √3",
+        "El doble de la de línea"
+      ],
+      "correcta": 1,
+      "explicacion": "En estrella cada devanado ve la tensión de fase: unos 220 V con red de 380 V, y la corriente baja a un tercio."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_variador_rampa",
+      "pregunta": "En un variador, ¿qué ajusta el parámetro de rampa de aceleración?",
+      "opciones": [
+        "La velocidad máxima",
+        "El tiempo para llegar a la velocidad",
+        "La tensión de la red"
+      ],
+      "correcta": 1,
+      "explicacion": "Es el tiempo de 0 a la frecuencia nominal: una rampa corta pide más corriente."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_suave",
+      "pregunta": "Un arrancador suave, ¿qué varía para arrancar el motor?",
+      "opciones": [
+        "La frecuencia",
+        "La tensión, con tiristores",
+        "El número de polos"
+      ],
+      "correcta": 1,
+      "explicacion": "Recorta la tensión con tiristores; la velocidad final la da la red. Para variar velocidad hace falta un variador."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_cos_phi",
+      "pregunta": "¿Para qué sirven los condensadores de compensación?",
+      "opciones": [
+        "Para subir la tensión",
+        "Para mejorar el factor de potencia",
+        "Para filtrar armónicos siempre"
+      ],
+      "correcta": 1,
+      "explicacion": "Aportan la potencia reactiva que piden los motores: baja la corriente por los cables y el generador."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_temporizador",
+      "pregunta": "Un temporizador a la conexión (on-delay), ¿cuándo cierra su contacto?",
+      "opciones": [
+        "Al dar tensión",
+        "Pasado el tiempo desde que recibe tensión",
+        "Al quitar tensión"
+      ],
+      "correcta": 1,
+      "explicacion": "Retrasa la conexión; el de desconexión (off-delay) retrasa la apertura."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_ohm_caida",
+      "pregunta": "Un cable de 0,5 Ω lleva 20 A. ¿Cuánta tensión cae en él?",
+      "opciones": [
+        "2,5 V",
+        "10 V",
+        "40 V"
+      ],
+      "correcta": 1,
+      "explicacion": "U = I × R = 20 × 0,5 = 10 V."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_paralelo",
+      "pregunta": "Dos resistencias de 100 Ω en paralelo, ¿cuánto suman?",
+      "opciones": [
+        "200 Ω",
+        "100 Ω",
+        "50 Ω"
+      ],
+      "correcta": 2,
+      "explicacion": "Dos iguales en paralelo dan la mitad de una."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_colores",
+      "pregunta": "Una resistencia marrón, negro, rojo, ¿cuánto vale?",
+      "opciones": [
+        "102 Ω",
+        "1 kΩ",
+        "10 kΩ"
+      ],
+      "correcta": 1,
+      "explicacion": "Marrón 1, negro 0, rojo ×100: 10 × 100 = 1000 Ω."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_diodo_medida",
+      "pregunta": "Con el multímetro en prueba de diodo, un diodo de silicio sano marca en directo…",
+      "opciones": [
+        "0,0 V",
+        "unos 0,6 V",
+        "OL"
+      ],
+      "correcta": 1,
+      "explicacion": "Unos 0,6–0,7 V en directo y OL en inverso. 0 V en los dos sentidos es un diodo en corto."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_zener",
+      "pregunta": "¿Cómo se conecta un diodo zener para estabilizar una tensión?",
+      "opciones": [
+        "En directo y en serie",
+        "En inverso y en paralelo con la carga, con una resistencia en serie",
+        "Sin resistencia"
+      ],
+      "correcta": 1,
+      "explicacion": "Trabaja en inverso; la resistencia en serie limita la corriente."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_led",
+      "pregunta": "Un LED de 2 V y 20 mA va a 24 V DC. ¿Qué resistencia en serie le corresponde?",
+      "opciones": [
+        "110 Ω",
+        "1,1 kΩ",
+        "11 kΩ"
+      ],
+      "correcta": 1,
+      "explicacion": "(24 − 2) ÷ 0,02 = 1100 Ω."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_mosfet",
+      "pregunta": "¿Qué hace conducir a un MOSFET de canal N?",
+      "opciones": [
+        "Corriente en la base",
+        "Tensión entre puerta y fuente",
+        "Luz en su ventana"
+      ],
+      "correcta": 1,
+      "explicacion": "Se manda por tensión en la puerta; casi no consume corriente de mando."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_triac",
+      "pregunta": "¿Para qué se usa un triac?",
+      "opciones": [
+        "Para rectificar",
+        "Para conmutar corriente alterna",
+        "Para amplificar audio"
+      ],
+      "correcta": 1,
+      "explicacion": "Conduce en los dos sentidos: regula o conmuta cargas de alterna."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_opto",
+      "pregunta": "¿Para qué sirve un optoacoplador?",
+      "opciones": [
+        "Para aislar eléctricamente el mando de la potencia",
+        "Para subir la tensión",
+        "Para medir temperatura"
+      ],
+      "correcta": 0,
+      "explicacion": "Pasa la señal con luz: entrada y salida quedan separadas."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_ssr_fuga",
+      "pregunta": "Un relé de estado sólido abierto, ¿corta del todo la corriente?",
+      "opciones": [
+        "Sí, como un contacto",
+        "No: deja pasar una pequeña corriente de fuga",
+        "Solo en continua"
+      ],
+      "correcta": 1,
+      "explicacion": "Por eso antes de trabajar en la carga se abre un seccionador: el SSR no es un corte seguro."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_4_20_vivo",
+      "pregunta": "En un lazo de 4–20 mA, ¿por qué el cero es 4 mA y no 0?",
+      "opciones": [
+        "Por costumbre",
+        "Para distinguir el valor mínimo de un cable cortado",
+        "Para ahorrar energía"
+      ],
+      "correcta": 1,
+      "explicacion": "0 mA solo aparece si el lazo está cortado: el sistema sabe que es una falla."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex6_puerta_and",
+      "pregunta": "Una puerta AND de dos entradas, ¿cuándo da 1?",
+      "opciones": [
+        "Con una entrada a 1",
+        "Con las dos a 1",
+        "Con las dos a 0"
+      ],
+      "correcta": 1,
+      "explicacion": "AND exige todas; OR basta con una."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_termico",
+      "caso": "Una bomba de agua salada dispara el térmico a los diez minutos. La pinza marca 16 A en las tres fases; la placa dice 13,5 A.",
+      "pregunta": "¿Qué se revisa primero?",
+      "opciones": [
+        "Subir el ajuste del térmico",
+        "La carga mecánica y el motor: rodamientos, bomba y válvulas",
+        "Cambiar el contactor"
+      ],
+      "correcta": 1,
+      "explicacion": "El térmico hace su trabajo: el motor consume de más. Subir el ajuste solo esconde la avería."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_falta_fase",
+      "caso": "Un ventilador zumba y no arranca. En la entrada del contactor hay 380 V entre las tres fases; a la salida, con el contactor cerrado, L1-L2 da 380 V y L2-L3 da 0 V.",
+      "pregunta": "¿Dónde está la falla?",
+      "opciones": [
+        "En el motor",
+        "En un contacto principal del contactor",
+        "En la red"
+      ],
+      "correcta": 1,
+      "explicacion": "Entra bien y sale mal: un polo del contactor no cierra. El motor en dos fases zumba y se calienta."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_aislamiento",
+      "caso": "El monitor de aislamiento del cuadro de 380 V baja a 40 kΩ al arrancar el compresor de aire nº 2.",
+      "pregunta": "¿Qué se hace?",
+      "opciones": [
+        "Nada, sigue en servicio",
+        "Aislar ese circuito con LOTO y medir con megóhmetro el motor y su cable",
+        "Puentear el monitor"
+      ],
+      "correcta": 1,
+      "explicacion": "La bajada coincide con ese equipo. Se mide por partes para saber si es el motor o el cable."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_estrella",
+      "caso": "Un motor 380 Δ / 660 Y se conecta en estrella a la red de 380 V.",
+      "pregunta": "¿Qué le pasa?",
+      "opciones": [
+        "Gira bien",
+        "Arranca flojo y, con carga, se calienta y dispara el térmico",
+        "Explota al arrancar"
+      ],
+      "correcta": 1,
+      "explicacion": "En estrella cada devanado recibe 220 V en vez de 380 V: da un tercio de par. En esta red va en triángulo."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_puente",
+      "caso": "Una fuente de 24 V DC con puente rectificador da a la salida mucha ondulación y la tensión cae con carga.",
+      "pregunta": "¿Qué es lo más probable?",
+      "opciones": [
+        "Condensador de filtro seco",
+        "Fusible fundido",
+        "Exceso de tensión de red"
+      ],
+      "correcta": 0,
+      "explicacion": "Sin el condensador que rellene los valles, la salida es casi la onda rectificada."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_sensor",
+      "caso": "Un transmisor de presión de 4–20 mA marca 0 % en la pantalla. El multímetro en serie con el lazo da 0,0 mA.",
+      "pregunta": "¿Qué se busca?",
+      "opciones": [
+        "La calibración del transmisor",
+        "Un corte en el lazo o la fuente de 24 V",
+        "Un problema de la pantalla"
+      ],
+      "correcta": 1,
+      "explicacion": "Sin corriente no es una lectura baja: es un lazo abierto o sin alimentación."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_variador",
+      "caso": "Un variador para con «sobrecorriente» al acelerar una bomba grande. En marcha estable funciona bien.",
+      "pregunta": "¿Qué parámetro se prueba primero?",
+      "opciones": [
+        "Bajar la frecuencia máxima",
+        "Alargar la rampa de aceleración",
+        "Quitar la protección"
+      ],
+      "correcta": 1,
+      "explicacion": "Una rampa corta pide más corriente para vencer la inercia."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex6_caso_condensador",
+      "caso": "Al revisar la batería de condensadores de compensación, un escalón tiene un condensador hinchado.",
+      "pregunta": "¿Qué se hace antes de tocarlo?",
+      "opciones": [
+        "Desconectar y esperar la descarga, comprobando con el voltímetro",
+        "Tocarlo con guantes",
+        "Nada, los condensadores no guardan carga"
+      ],
+      "correcta": 0,
+      "explicacion": "Guardan carga después de cortar: se espera el tiempo de sus resistencias de descarga y se comprueba."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex6_orden_loto",
+      "pregunta": "Antes de cambiar el contactor de una bomba, ordene:",
+      "pasos": [
+        "Avisar y pedir el permiso",
+        "Abrir el guardamotor del arrancador",
+        "Poner candado y etiqueta",
+        "Verificar ausencia de tensión con el detector probado",
+        "Cambiar el contactor"
+      ],
+      "explicacion": "Las reglas de oro: cortar, bloquear, verificar y solo entonces trabajar."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex6_orden_mega",
+      "pregunta": "Para medir el aislamiento de un motor, ordene:",
+      "pasos": [
+        "Aplicar LOTO y verificar ausencia de tensión",
+        "Desconectar el cable del motor en la bornera",
+        "Medir con el megóhmetro a 500 V entre fases y tierra",
+        "Descargar el devanado",
+        "Anotar la lectura en el libro"
+      ],
+      "explicacion": "Se mide con el motor aislado de la instalación y se descarga antes de tocar."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex6_orden_diodo",
+      "pregunta": "Para probar un puente rectificador fuera del circuito, ordene:",
+      "pasos": [
+        "Quitar tensión y sacar el puente",
+        "Poner el multímetro en prueba de diodo",
+        "Medir cada diodo en directo: unos 0,6 V",
+        "Medir en inverso: OL",
+        "Cambiar el puente si alguno da 0 V o OL en los dos sentidos"
+      ],
+      "explicacion": "Cuatro diodos: cada uno conduce en un solo sentido."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex6_orden_estrella",
+      "pregunta": "Ordene la secuencia del arranque estrella-triángulo:",
+      "pasos": [
+        "Pulsar marcha",
+        "Cierran el contactor de línea y el de estrella",
+        "Pasa el tiempo del temporizador",
+        "Abre el de estrella",
+        "Cierra el de triángulo"
+      ],
+      "explicacion": "Estrella y triángulo nunca a la vez: los enclavamientos lo impiden."
+    }
+  ],
+  "para_saber_mas": [
+    "Lecciones y atlas de los módulos 7 y 8 de la Escuela técnica.",
+    "IEC 60947 (aparamenta de baja tensión) e IEC 60092 (instalaciones eléctricas en buques).",
+    "IEC 60617 y ANSI/IEEE 315 (símbolos).",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

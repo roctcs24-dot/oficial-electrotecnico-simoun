@@ -1,0 +1,465 @@
+{
+  "id": "v7",
+  "sistema_simbolos": -1,
+  "titulo": "Examen de la Escuela II",
+  "resumen": "20 preguntas al azar de hidráulica, neumática, válvulas, líneas, herramientas y racores, con símbolos ISO 1219.",
+  "minimo": 80,
+  "composicion": {
+    "quiz": 10,
+    "caso": 4,
+    "ordenar": 2,
+    "simbolo_iso": 4
+  },
+  "preguntas": [
+    {
+      "tipo": "quiz",
+      "tema": "ex7_pascal",
+      "pregunta": "Un cilindro de 40 cm² recibe aceite a 150 bar. ¿Qué fuerza da?",
+      "opciones": [
+        "6 kN",
+        "60 kN",
+        "600 kN"
+      ],
+      "correcta": 1,
+      "explicacion": "150 bar son 1500 N por cm²; por 40 cm², 60 000 N."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_bomba_presion",
+      "pregunta": "¿Qué pone la presión en un circuito hidráulico?",
+      "opciones": [
+        "La bomba",
+        "Lo que se opone al aceite: la carga",
+        "El tanque"
+      ],
+      "correcta": 1,
+      "explicacion": "La bomba da caudal; la presión sube hasta lo que pide la carga o hasta el alivio."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_alivio",
+      "pregunta": "¿Para qué sirve la válvula de alivio?",
+      "opciones": [
+        "Para regular la velocidad",
+        "Para limitar la presión máxima",
+        "Para filtrar el aceite"
+      ],
+      "correcta": 1,
+      "explicacion": "Abre a tanque al llegar a su tarado y protege la bomba y el circuito."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_calor",
+      "pregunta": "Una central da 30 L/min y todo pasa por el alivio a 160 bar. ¿Cuánto calor genera?",
+      "opciones": [
+        "0,8 kW",
+        "8 kW",
+        "80 kW"
+      ],
+      "correcta": 1,
+      "explicacion": "160 × 30 ÷ 600 = 8 kW, todos a calentar el aceite."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_acumulador",
+      "pregunta": "Antes de abrir un circuito con acumulador, ¿qué hay que hacer?",
+      "opciones": [
+        "Nada si la bomba está parada",
+        "Descargar el acumulador y comprobar 0 bar",
+        "Cargarlo de nitrógeno"
+      ],
+      "correcta": 1,
+      "explicacion": "El acumulador guarda presión con la bomba parada."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_aceite_lechoso",
+      "pregunta": "Una muestra de aceite hidráulico sale lechosa. ¿Qué indica?",
+      "opciones": [
+        "Que está caliente",
+        "Agua en el aceite",
+        "Que es nuevo"
+      ],
+      "correcta": 1,
+      "explicacion": "El agua emulsionada lo vuelve lechoso: se busca por dónde entra."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_inyeccion",
+      "pregunta": "Una fuga fina de aceite a presión, ¿cómo se busca?",
+      "opciones": [
+        "Con la mano",
+        "Con un cartón, guantes y gafas",
+        "Apretando con la máquina en marcha"
+      ],
+      "correcta": 1,
+      "explicacion": "El chorro fino puede inyectar aceite bajo la piel: urgencia médica."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_absoluta",
+      "pregunta": "El manómetro marca 6 bar. ¿Cuál es la presión absoluta?",
+      "opciones": [
+        "5 bar",
+        "6 bar",
+        "7 bar"
+      ],
+      "correcta": 2,
+      "explicacion": "Absoluta = manométrica + 1 bar de la atmósfera, aproximadamente."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_rocio",
+      "pregunta": "¿Qué dice el punto de rocío a presión del aire?",
+      "opciones": [
+        "Su temperatura",
+        "La temperatura a la que empieza a soltar agua",
+        "Su presión máxima"
+      ],
+      "correcta": 1,
+      "explicacion": "Debe estar por debajo de la temperatura más fría de la red."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_bocas",
+      "pregunta": "En una válvula 5/2, ¿qué son las bocas 3 y 5?",
+      "opciones": [
+        "Entradas",
+        "Salidas al cilindro",
+        "Escapes"
+      ],
+      "correcta": 2,
+      "explicacion": "1 entrada, 2 y 4 salidas, 3 y 5 escapes (ISO 5599)."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_monoestable",
+      "pregunta": "Si se va la tensión, ¿qué hace una 5/2 monoestable?",
+      "opciones": [
+        "Se queda donde está",
+        "Vuelve a reposo por el muelle",
+        "Se bloquea en el centro"
+      ],
+      "correcta": 1,
+      "explicacion": "La biestable se queda donde estaba; la monoestable vuelve por muelle."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_meter_out",
+      "pregunta": "¿Por qué se frena el escape del cilindro y no la entrada?",
+      "opciones": [
+        "Para gastar menos aire",
+        "Para que se mueva suave, sin tirones",
+        "Para tener más fuerza"
+      ],
+      "correcta": 1,
+      "explicacion": "El pistón queda entre dos colchones de aire y no da tirones aunque cambie la carga."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_posicionador",
+      "pregunta": "Un posicionador recibe 16 mA. ¿Qué posición pide?",
+      "opciones": [
+        "50 %",
+        "75 %",
+        "100 %"
+      ],
+      "correcta": 1,
+      "explicacion": "(16 − 4) ÷ 16 = 0,75."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_fuga",
+      "pregunta": "Si el agujero de una fuga de aire pasa de 1 a 2 mm, el aire perdido…",
+      "opciones": [
+        "se duplica",
+        "se multiplica por cuatro",
+        "no cambia"
+      ],
+      "correcta": 1,
+      "explicacion": "Crece con el área del agujero, el diámetro al cuadrado."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_triangulo",
+      "pregunta": "En un símbolo ISO 1219, ¿qué indica un triángulo hueco?",
+      "opciones": [
+        "Aceite",
+        "Aire",
+        "Electricidad"
+      ],
+      "correcta": 1,
+      "explicacion": "Hueco es neumática; lleno, hidráulica."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_bola_maneta",
+      "pregunta": "Una válvula de bola con la maneta cruzada al tubo, ¿cómo está?",
+      "opciones": [
+        "Abierta",
+        "Cerrada",
+        "A medias"
+      ],
+      "correcta": 1,
+      "explicacion": "Maneta en línea con el tubo: abierta. Cruzada: cerrada."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_globo",
+      "pregunta": "¿Qué válvula se usa para regular caudal con precisión?",
+      "opciones": [
+        "Compuerta",
+        "Globo",
+        "Mariposa de corte"
+      ],
+      "correcta": 1,
+      "explicacion": "La de globo regula; la de compuerta se usa toda abierta o toda cerrada."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_retencion",
+      "pregunta": "¿Para qué sirve una válvula de retención?",
+      "opciones": [
+        "Para regular la presión",
+        "Para que el fluido pase en un solo sentido",
+        "Para purgar aire"
+      ],
+      "correcta": 1,
+      "explicacion": "Impide el retorno, por ejemplo a la descarga de una bomba."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_verde",
+      "pregunta": "Según la ISO 14726, una tubería con banda verde lleva…",
+      "opciones": [
+        "Combustible",
+        "Agua de mar o dulce",
+        "Aire"
+      ],
+      "correcta": 1,
+      "explicacion": "Verde agua, marrón combustible, azul claro aire (verificar el código del buque)."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_llave_19",
+      "pregunta": "¿Qué llave en pulgadas encaja casi igual que una de 19 mm?",
+      "opciones": [
+        "5/8\"",
+        "3/4\"",
+        "7/8\""
+      ],
+      "correcta": 1,
+      "explicacion": "3/4\" son 19,05 mm."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_teflon",
+      "pregunta": "¿En qué rosca tiene sentido la cinta de teflón?",
+      "opciones": [
+        "En una cónica (NPT o BSPT)",
+        "En una JIC",
+        "En una BSPP con arandela"
+      ],
+      "correcta": 0,
+      "explicacion": "La cónica sella en los hilos; las demás sellan en un cono, una arandela o una tórica."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_jic",
+      "pregunta": "¿Dónde sella un racor JIC?",
+      "opciones": [
+        "En los hilos",
+        "En el cono de 37°",
+        "En una arandela de cobre"
+      ],
+      "correcta": 1,
+      "explicacion": "Metal con metal en el cono: la cinta sobra."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_par",
+      "pregunta": "¿Para qué se usa la llave dinamométrica?",
+      "opciones": [
+        "Para aflojar tuercas oxidadas",
+        "Para apretar al par del fabricante",
+        "Para medir roscas"
+      ],
+      "correcta": 1,
+      "explicacion": "Da el apriete justo: ni flojo ni pasado de rosca."
+    },
+    {
+      "tipo": "quiz",
+      "tema": "ex7_dn",
+      "pregunta": "¿Qué indica el DN de una tubería?",
+      "opciones": [
+        "Su diámetro exterior exacto",
+        "Su tamaño nominal, aproximado al interior",
+        "Su presión"
+      ],
+      "correcta": 1,
+      "explicacion": "DN es un tamaño nominal; la presión la da el PN o el schedule."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_alivio",
+      "caso": "El cilindro de la grúa no sube con carga. Con el cilindro a tope el manómetro marca 20 bar y el tarado es 160 bar.",
+      "pregunta": "¿Qué se revisa primero?",
+      "opciones": [
+        "La bomba",
+        "La válvula de alivio, que puede estar pegada abierta",
+        "El cilindro"
+      ],
+      "correcta": 1,
+      "explicacion": "Si la presión no sube a tope, casi siempre el aceite se escapa por el alivio antes que por una bomba rota."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_deriva",
+      "caso": "Con la direccional en el centro, el brazo cargado baja despacio. El circuito tiene antirretorno pilotada.",
+      "pregunta": "¿Qué es lo más probable?",
+      "opciones": [
+        "Asiento de la pilotada dañado o junta del cilindro",
+        "El alivio mal tarado",
+        "Aceite demasiado frío"
+      ],
+      "correcta": 0,
+      "explicacion": "La pilotada debe sostener sin deriva; si baja, fuga por su asiento o por la junta del pistón."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_filtro",
+      "caso": "Un cilindro neumático pierde fuerza al moverse. Parado, el manómetro de la FRL marca 6 bar; moviéndose, baja a 5.",
+      "pregunta": "¿Qué se cambia?",
+      "opciones": [
+        "La bobina",
+        "El cartucho del filtro",
+        "El detector"
+      ],
+      "correcta": 1,
+      "explicacion": "La caída con caudal es la firma del filtro colmatado."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_bobina",
+      "caso": "El LED del conector de la 5/2 se enciende, pero el cilindro no sale. Con el mando manual sí sale.",
+      "pregunta": "¿Qué falla?",
+      "opciones": [
+        "La salida del PLC",
+        "La bobina o su piloto",
+        "El aire"
+      ],
+      "correcta": 1,
+      "explicacion": "Llega tensión y la parte neumática funciona: queda la bobina."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_posicionador",
+      "caso": "La válvula de control de temperatura se queda cerrada. El multímetro en serie con el lazo marca 0 mA.",
+      "pregunta": "¿Qué se busca?",
+      "opciones": [
+        "Un corte en el lazo",
+        "Una fuga en el actuador",
+        "Agua en el aire"
+      ],
+      "correcta": 0,
+      "explicacion": "Sin señal, el posicionador se apaga y el muelle cierra: posición de falla."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_aislar",
+      "caso": "Hay que cambiar el filtro de la purificadora con el resto de la planta en servicio.",
+      "pregunta": "¿Qué se cierra?",
+      "opciones": [
+        "Solo la válvula de entrada",
+        "Entrada y salida del filtro, y se descarga y purga antes de abrir",
+        "Todas las válvulas de la sala"
+      ],
+      "correcta": 1,
+      "explicacion": "Se aísla por los dos lados para que no llegue fluido por la vuelta, se descarga y se comprueba."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_llave",
+      "caso": "Una tuerca de 3/4\" está muy apretada y solo hay llaves métricas.",
+      "pregunta": "¿Qué llave se usa?",
+      "opciones": [
+        "La de 18 mm a golpes",
+        "La de 19 mm, de estrella o de vaso",
+        "Una inglesa grande"
+      ],
+      "correcta": 1,
+      "explicacion": "19 mm encaja con 3/4\" (19,05 mm); mejor de estrella o vaso para no redondear."
+    },
+    {
+      "tipo": "caso",
+      "tema": "ex7_caso_latiguillo",
+      "caso": "Un latiguillo hidráulico suda por la virola prensada.",
+      "pregunta": "¿Qué se hace?",
+      "opciones": [
+        "Apretar la virola",
+        "Cambiar el latiguillo entero",
+        "Ponerle cinta"
+      ],
+      "correcta": 1,
+      "explicacion": "La virola prensada no se reaprieta: el latiguillo se cambia."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex7_orden_hidraulica",
+      "pregunta": "Antes de cambiar un latiguillo de la central de cubierta, ordene:",
+      "pasos": [
+        "Bajar o asegurar la carga",
+        "Parar la central y aplicar LOTO",
+        "Descargar acumuladores y comprobar 0 bar",
+        "Aflojar despacio con contrallave",
+        "Cambiar el latiguillo y probar sin carga"
+      ],
+      "explicacion": "Primero la carga y la energía; después comprobar que no queda presión."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex7_orden_neumatica",
+      "pregunta": "Antes de cambiar un cilindro neumático, ordene:",
+      "pasos": [
+        "Asegurar la carga",
+        "Cerrar y bloquear el aire del equipo",
+        "Descargar por la válvula de la FRL",
+        "Comprobar 0 bar y aflojar despacio",
+        "Desmontar"
+      ],
+      "explicacion": "El aire guarda energía en las cámaras: se descarga y se comprueba."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex7_orden_valvula",
+      "pregunta": "Para maniobrar una válvula de vapor o de agua caliente, ordene:",
+      "pasos": [
+        "Identificar la línea y la válvula",
+        "Abrir el purgador o el venteo",
+        "Abrir despacio un poco para calentar",
+        "Abrir del todo",
+        "Revisar fugas"
+      ],
+      "explicacion": "Abrir de golpe produce golpe de ariete."
+    },
+    {
+      "tipo": "ordenar",
+      "tema": "ex7_orden_racor",
+      "pregunta": "Para montar un racor JIC nuevo, ordene:",
+      "pasos": [
+        "Comprobar rosca y cono con la galga",
+        "Limpiar el cono sin cinta ni pasta",
+        "Roscar a mano hasta el asiento",
+        "Apretar con contrallave al par o a las caras indicadas",
+        "Probar a presión y revisar fugas"
+      ],
+      "explicacion": "El JIC sella en el cono: limpio y al par."
+    }
+  ],
+  "para_saber_mas": [
+    "Lecciones, atlas y pañol de los módulos 9 a 11 de la Escuela técnica.",
+    "ISO 4413 e ISO 4414 (hidráulica y neumática), ISO 1219-1 (símbolos).",
+    "ISO 14726 (colores de tubería), ISO 7-1 y ASME B1.20.1 (roscas), SAE J514 (JIC).",
+    "Este material es de formación. A bordo prevalecen los procedimientos del buque."
+  ]
+}

@@ -117,6 +117,18 @@ func _crear_pregunta(columna: VBoxContainer, item: Dictionary, indice: int) -> v
 			lado.size_flags_stretch_ratio = 1.1
 			disposicion.add_child(lado)
 			_agregar_quiz(lado, _quiz_de_simbolo(item), respuesta, indice, "Identificación de símbolos")
+		"simbolo_iso":
+			var disposicion: BoxContainer = VBoxContainer.new() if raiz.vertical else HBoxContainer.new()
+			disposicion.add_theme_constant_override("separation", 12)
+			disposicion.mouse_filter = Control.MOUSE_FILTER_PASS
+			columna.add_child(disposicion)
+			var visor := _visor_iso(item)
+			visor.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			disposicion.add_child(visor)
+			var lado := _columna()
+			lado.size_flags_stretch_ratio = 1.1
+			disposicion.add_child(lado)
+			_agregar_quiz(lado, item, respuesta, indice, "Símbolos ISO 1219")
 		_:
 			_agregar_quiz(columna, item, respuesta, indice)
 
@@ -153,6 +165,35 @@ func _visor_simbolo(item: Dictionary) -> Control:
 	var dibujo := VistaSvg.new()
 	dibujo.color_etiquetas = Tema.TINTA
 	dibujo.cargar(datos[item["norma"]])
+	dibujo.custom_minimum_size.y = ALTO_SIMBOLO if raiz.vertical else ALTO_SIMBOLO * 0.72
+	dentro.add_child(dibujo)
+	return visor
+
+
+## Un símbolo ISO 1219 (hidráulica o neumática) en su hoja de papel, con la norma y la familia encima.
+func _visor_iso(item: Dictionary) -> Control:
+	var datos := JuegoIso1219.simbolo(JuegoIso1219.leer(raiz.contenido), str(item["id"]))
+	var visor := VisorFicha.new(14.0)
+	visor.name = "VisorSimbolo"
+	var columna := VBoxContainer.new()
+	columna.add_theme_constant_override("separation", 8)
+	columna.mouse_filter = Control.MOUSE_FILTER_PASS
+	visor.add_child(columna)
+	columna.add_child(PiezasLeccion.rotulo("Identifique el símbolo"))
+	var hoja := PiezasLeccion.papel(8.0)
+	hoja.name = "Papel"
+	columna.add_child(hoja)
+	var dentro := VBoxContainer.new()
+	dentro.add_theme_constant_override("separation", 2)
+	dentro.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hoja.add_child(dentro)
+	var familia := "NEUMÁTICA" if datos.get("familia", "") == "neumatica" else "HIDRÁULICA"
+	var titulo := PiezasLeccion.etiqueta("ISO 1219-1 · %s" % familia, 12, Color("4b545c"), Tema.PESO_NEGRITA)
+	titulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	dentro.add_child(titulo)
+	var dibujo := VistaSvg.new()
+	dibujo.color_etiquetas = Tema.TINTA
+	dibujo.cargar(datos)
 	dibujo.custom_minimum_size.y = ALTO_SIMBOLO if raiz.vertical else ALTO_SIMBOLO * 0.72
 	dentro.add_child(dibujo)
 	return visor

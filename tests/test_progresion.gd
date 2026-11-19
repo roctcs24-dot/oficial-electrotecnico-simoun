@@ -37,8 +37,8 @@ func test_banco_del_examen_bien_formado() -> String:
 	var temas := {}
 	var publicados := c.examenes()
 	publicados.sort()
-	if publicados != ["v1", "v2", "v3", "v4", "v5"]:
-		return "deben publicarse los exámenes v1 a v5: %s" % str(c.examenes())
+	if publicados != ["v1", "v2", "v3", "v4", "v5", "v6", "v7"]:
+		return "deben publicarse los exámenes v1 a v7: %s" % str(c.examenes())
 	for id: String in c.examenes():
 		var motivo := _revisar_examen(c.examen(id), temas)
 		if not motivo.is_empty():
@@ -73,7 +73,7 @@ func _revisar_examen(datos: Dictionary, temas: Dictionary) -> String:
 func test_el_banco_no_repite_temas_de_las_lecciones() -> String:
 	var c := Contenido.new()
 	var lecciones := {}
-	for s: Dictionary in c.sistemas():
+	for s: Dictionary in c.todos():
 		for id: String in s.get("modos", {}).get("aprender", {}).get("lecciones", []):
 			for pagina: Dictionary in c.leccion(id)["paginas"]:
 				for b: Dictionary in pagina["bloques"]:
@@ -98,7 +98,8 @@ func test_examen_respeta_la_composicion_y_no_repite() -> String:
 
 func _revisar_composicion(c: Contenido, datos: Dictionary, azar: RandomNumberGenerator) -> String:
 	for _i in 20:
-		var items := ExamenTeorico.crear(datos, c.simbolos(int(datos["sistema_simbolos"])), azar)
+		var iso := JuegoIso1219.leer(c) if int(datos["composicion"].get("simbolo_iso", 0)) > 0 else []
+		var items := ExamenTeorico.crear(datos, c.simbolos(int(datos["sistema_simbolos"])), azar, iso)
 		var cuenta := {}
 		var temas := {}
 		for item: Dictionary in items:
@@ -265,28 +266,12 @@ func test_las_preguntas_de_repaso_tienen_respuesta_valida() -> String:
 	])
 
 
+## Puntos de todo el contenido publicado (sistemas del buque y Escuela técnica).
 func _puntos_maximos(c: Contenido) -> Dictionary:
-	var lecciones := 0
-	var misiones := 0
-	for s: Dictionary in c.sistemas():
-		var modos: Dictionary = s.get("modos", {})
-		for id: String in modos.get("aprender", {}).get("lecciones", []):
-			lecciones += Partida.PUNTOS_LECCION
-			for pagina: Dictionary in c.leccion(id)["paginas"]:
-				for b: Dictionary in pagina["bloques"]:
-					if b["tipo"] == "quiz" or b["tipo"] == "ordenar":
-						lecciones += Partida.PUNTOS_ACIERTO
-		for _id: String in modos.get("guardia", {}).get("misiones", []):
-			misiones += Partida.PUNTOS_MISION + 3 * Partida.PUNTOS_ESTRELLA
-	var evaluaciones := 0
-	for s: Dictionary in c.sistemas():
-		var examen: Dictionary = s.get("modos", {}).get("examen", {})
-		evaluaciones += examen.get("minijuegos", []).size() * 3 * Partida.PUNTOS_ESTRELLA
-	evaluaciones += c.examenes().size() * (Partida.PUNTOS_EXAMEN + 3 * Partida.PUNTOS_ESTRELLA)
-	return {"lecciones": lecciones, "misiones": misiones, "evaluaciones": evaluaciones, "total": lecciones + misiones + evaluaciones}
+	return PuntosJuego.maximos(c)
 
 
-## Con todo el contenido de la v1 debe alcanzarse el rango más alto, pero solo con las lecciones no.
+## Con todo el contenido debe alcanzarse el rango más alto; solo con las lecciones no pasa de 2da.
 func test_rangos_calibrados_con_el_contenido() -> String:
 	var c := Contenido.new()
 	var maximos := _puntos_maximos(c)
@@ -301,9 +286,10 @@ func test_rangos_calibrados_con_el_contenido() -> String:
 	var jefe := int(rangos[-1]["puntos"])
 	var primera := int(rangos[-2]["puntos"])
 	return A.primero([
-		A.cierto(nombres == ["Cadete", "Oficial Electrotécnico de 3ra", "Oficial Electrotécnico de 2da", "Oficial Electrotécnico de 1ra", "Jefe Electrotécnico"], "nombres: %s" % str(nombres)),
+		A.cierto(nombres == ["Aspirante", "Cadete", "Oficial Electrotécnico de 3ra", "Oficial Electrotécnico de 2da", "Oficial Electrotécnico de 1ra", "Jefe Electrotécnico"], "nombres: %s" % str(nombres)),
 		A.cierto(maximos["total"] >= jefe, "el rango más alto debe poder alcanzarse: %s, faltan para %d" % [str(maximos), jefe]),
 		A.cierto(maximos["lecciones"] < primera, "las lecciones no deben bastar para Oficial de 1ra: %s" % str(maximos)),
+		A.cierto(maximos["total"] < jefe * 1.25, "el rango más alto no debe quedar regalado: %s para %d" % [str(maximos), jefe]),
 		A.cierto(maximos["total"] - maximos["misiones"] < jefe, "sin misiones no debe alcanzarse el rango más alto: %s" % str(maximos)),
 		A.cierto(maximos["total"] - maximos["evaluaciones"] < jefe, "sin examen no debe alcanzarse el rango más alto: %s" % str(maximos)),
 	])
@@ -403,7 +389,7 @@ func test_todo_el_contenido_alcanza_el_rango_mas_alto() -> String:
 	var raiz := _raiz()
 	var l = load("res://tests/test_lecciones.gd").new()
 	var publicadas := 0
-	for s: Dictionary in raiz.contenido.sistemas():
+	for s: Dictionary in raiz.contenido.todos():
 		for id: String in s["modos"].get("aprender", {}).get("lecciones", []):
 			l._completar(raiz, id, false)
 			raiz.volver()

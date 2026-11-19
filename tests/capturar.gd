@@ -81,6 +81,8 @@ func _capturar() -> void:
 		await _capturar_hidraulica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "neumatica":
 		await _capturar_neumatica(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "cierre":
+		await _capturar_cierre(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -710,6 +712,44 @@ func _capturar_hidraulica(raiz: Raiz, carpeta: String) -> void:
 			await _guardar(carpeta, "h_%s" % id, tam)
 			raiz.volver()
 		raiz.ir_a_seccion("inicio")
+
+
+## Etapa 47: exámenes de la Escuela (v7 con símbolo ISO, v6 con un caso), escalera de rangos y el
+## camino del módulo 7 que acaba en su examen.
+func _capturar_cierre(raiz: Raiz, carpeta: String) -> void:
+	var azar := RandomNumberGenerator.new()
+	azar.seed = 47
+	var v7 := ExamenTeorico.crear(raiz.contenido.examen("v7"), [], azar, JuegoIso1219.leer(raiz.contenido))
+	var iso: Dictionary = v7.filter(func(x: Dictionary) -> bool: return x["tipo"] == "simbolo_iso")[0]
+	var v6 := ExamenTeorico.crear(raiz.contenido.examen("v6"), raiz.contenido.simbolos(3), azar)
+	var caso: Dictionary = v6.filter(func(x: Dictionary) -> bool: return x["tipo"] == "caso")[0]
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		raiz.ir_a("prueba_examen", {"id": "v7", "items": [iso, caso], "indice": 0, "respuestas": {}})
+		await _guardar(carpeta, "c_v7_iso", tam)
+		raiz.pantalla_actual()._al_responder(true, int(iso["correcta"]), 0)
+		raiz.reconstruir()
+		await _guardar(carpeta, "c_v7_iso_ok", tam)
+		raiz.volver()
+		raiz.ir_a("prueba_examen", {"id": "v6", "items": [caso], "indice": 0, "respuestas": {}})
+		await _guardar(carpeta, "c_v6_caso", tam)
+		raiz.volver()
+		raiz.partida.datos["puntos"] = 820
+		raiz.ir_a("progreso")
+		await _esperar()
+		var escalera := raiz.pantalla_actual().find_child("Rango_5", true, false)
+		if escalera != null:
+			var sc := _scroll_de(escalera)
+			if sc != null:
+				sc.scroll_vertical = int(escalera.global_position.y - sc.global_position.y + sc.scroll_vertical - 120)
+		await _guardar(carpeta, "c_progreso", tam)
+		raiz.volver()
+		raiz.ir_a_seccion("escuela")
+		raiz.pantalla_actual().elegir_modulo(7)
+		await _guardar(carpeta, "c_modulo_7", tam)
+		raiz.ir_a_seccion("inicio")
+		await _guardar(carpeta, "c_inicio", tam)
 
 
 ## Etapa 46: neumática en el atlas, sus lecciones y el minijuego de símbolos de neumática.

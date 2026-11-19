@@ -233,7 +233,8 @@ func test_camino_marca_lo_hecho_y_abre_la_leccion() -> String:
 	var abre: bool = raiz.nombre_actual() == "leccion" and raiz.args_actuales().get("id", "") == lecciones[3]
 	raiz.free()
 	return A.primero([
-		A.cierto(camino.pasos.size() == lecciones.size(), "una moneda por lección: %d" % camino.pasos.size()),
+		# Una moneda por lección y, al final, la del examen de la Escuela I (desde la 5.1.0).
+		A.cierto(camino.pasos.size() == lecciones.size() + 1 and camino.pasos[-1]["tipo"] == "examen", "una moneda por lección y el examen: %d" % camino.pasos.size()),
 		A.cierto(hechas == 3 and actual == 3, "tres hechas y la cuarta es la siguiente: %d, %d" % [hechas, actual]),
 		A.cierto(abre, "tocar la moneda abre su lección"),
 	])

@@ -46,14 +46,85 @@ func _seccion_ajustes(columna: VBoxContainer) -> void:
 func _seccion_rango(columna: VBoxContainer) -> void:
 	var p := raiz.partida
 	var rangos := raiz.contenido.rangos()
+	var actual := p.rango(rangos)
 	columna.add_child(_rotulo("Rango"))
-	columna.add_child(_etiqueta(p.rango(rangos), "Subtitulo"))
-	columna.add_child(_barra_avance(p.progreso_rango(rangos)))
+	var fila := HBoxContainer.new()
+	fila.add_theme_constant_override("separation", 14)
+	columna.add_child(fila)
+	var pala := PalaRango.new(_galones(rangos, actual), true)
+	pala.name = "PalaActual"
+	pala.custom_minimum_size = Vector2(96, 48)
+	pala.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	fila.add_child(pala)
+	var textos := _columna(2)
+	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	fila.add_child(textos)
+	textos.add_child(_etiqueta(actual, "Subtitulo"))
 	var siguiente := p.siguiente_rango(rangos)
 	if siguiente.is_empty():
-		columna.add_child(_etiqueta("%d puntos. Es el rango más alto." % p.datos["puntos"], "Nota"))
+		textos.add_child(_etiqueta("%d puntos. Es el rango más alto." % p.datos["puntos"], "Nota"))
 	else:
-		columna.add_child(_etiqueta("%d puntos. Faltan %d para %s." % [p.datos["puntos"], siguiente["faltan"], siguiente["nombre"]], "Nota"))
+		textos.add_child(_etiqueta("%d puntos. Faltan %d para %s." % [p.datos["puntos"], siguiente["faltan"], siguiente["nombre"]], "Nota"))
+	columna.add_child(_barra_avance(p.progreso_rango(rangos)))
+	_escalera(columna, rangos, actual)
+	_puntos_del_juego(columna)
+
+
+func _galones(rangos: Array, nombre: String) -> int:
+	for r: Dictionary in rangos:
+		if r["nombre"] == nombre:
+			return int(r.get("galones", 0))
+	return 0
+
+
+## Los rangos de arriba abajo, del más alto al primero: alcanzados en verde, el actual en ámbar.
+func _escalera(columna: VBoxContainer, rangos: Array, actual: String) -> void:
+	columna.add_child(_rotulo("Escalera de rangos"))
+	var puntos := int(raiz.partida.datos["puntos"])
+	for i in range(rangos.size() - 1, -1, -1):
+		var r: Dictionary = rangos[i]
+		var es_actual: bool = r["nombre"] == actual
+		var alcanzado := puntos >= int(r["puntos"])
+		var fila := HBoxContainer.new()
+		fila.name = "Rango_%d" % i
+		fila.add_theme_constant_override("separation", 10)
+		fila.custom_minimum_size.y = 40.0
+		columna.add_child(fila)
+		var luz := PiezasLeccion.Lampara.new("ambar" if es_actual else "verde", alcanzado, 6.0)
+		luz.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(luz)
+		var pala := PalaRango.new(int(r.get("galones", 0)), es_actual, not alcanzado)
+		pala.custom_minimum_size = Vector2(58, 29)
+		pala.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(pala)
+		var color := Color("ffd166") if es_actual else (Color.WHITE if alcanzado else Tema.TEXTO_SUAVE)
+		var nombre := PiezasLeccion.etiqueta(str(r["nombre"]), 14, color, Tema.PESO_FUERTE)
+		nombre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		nombre.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		nombre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		fila.add_child(nombre)
+		var pts := PiezasLeccion.etiqueta("%d pts" % int(r["puntos"]), 13, color, Tema.PESO_FUERTE)
+		pts.autowrap_mode = TextServer.AUTOWRAP_OFF
+		pts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fila.add_child(pts)
+
+
+## Cuántos puntos da cada parte del juego: así se ve qué falta para el rango más alto.
+func _puntos_del_juego(columna: VBoxContainer) -> void:
+	var m := PuntosJuego.maximos(raiz.contenido)
+	columna.add_child(_rotulo("Puntos que da el juego"))
+	for par: Array in [["Lecciones", m["lecciones"]], ["Misiones de Guardia", m["misiones"]], ["Exámenes y minijuegos", m["evaluaciones"]], ["Todo el juego", m["total"]]]:
+		var fila := HBoxContainer.new()
+		fila.name = "Puntos_%s" % str(par[0]).replace(" ", "_")
+		columna.add_child(fila)
+		var total: bool = par[0] == "Todo el juego"
+		var color := Color("ffd166") if total else Tema.TEXTO
+		var e := PiezasLeccion.etiqueta(str(par[0]), 14, color, Tema.PESO_FUERTE if total else Tema.PESO_MEDIO)
+		e.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		fila.add_child(e)
+		var valor := PiezasLeccion.etiqueta(str(par[1]), 14, color, Tema.PESO_FUERTE)
+		valor.autowrap_mode = TextServer.AUTOWRAP_OFF
+		fila.add_child(valor)
 
 
 func _seccion_avance(columna: VBoxContainer) -> void:

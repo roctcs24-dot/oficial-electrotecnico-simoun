@@ -1,10 +1,11 @@
 {
-  "nota": "Calibrados con el contenido de la v1 a la v5 y los tableros del buque. Para el rango más alto hacen falta lecciones, misiones y exámenes. Subir estos valores al añadir contenido.",
+  "nota": "Calibrados en la versión 5.1.0 con todo el contenido: los sistemas del buque y la Escuela técnica (unos 7400 puntos). Solo con lecciones no se pasa de Oficial de 2da; sin misiones o sin exámenes no se llega a Jefe. «galones» dibuja la pala: -1 nada, 0 distintivo de cadete, 1 a 4 galones.",
   "rangos": [
-    { "nombre": "Cadete", "puntos": 0 },
-    { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 450 },
-    { "nombre": "Oficial Electrotécnico de 2da", "puntos": 900 },
-    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 1800 },
-    { "nombre": "Jefe Electrotécnico", "puntos": 3900 }
+    { "nombre": "Aspirante", "puntos": 0, "galones": -1 },
+    { "nombre": "Cadete", "puntos": 300, "galones": 0 },
+    { "nombre": "Oficial Electrotécnico de 3ra", "puntos": 1200, "galones": 1 },
+    { "nombre": "Oficial Electrotécnico de 2da", "puntos": 2600, "galones": 2 },
+    { "nombre": "Oficial Electrotécnico de 1ra", "puntos": 4200, "galones": 3 },
+    { "nombre": "Jefe Electrotécnico", "puntos": 6600, "galones": 4 }
   ]
 }

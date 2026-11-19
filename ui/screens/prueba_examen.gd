@@ -10,7 +10,8 @@ func _crear_items() -> Array:
 	var azar := RandomNumberGenerator.new()
 	azar.randomize()
 	var datos := _datos()
-	return ExamenTeorico.crear(datos, raiz.contenido.simbolos(int(datos.get("sistema_simbolos", -1))), azar)
+	var iso := JuegoIso1219.leer(raiz.contenido) if int(datos["composicion"].get("simbolo_iso", 0)) > 0 else []
+	return ExamenTeorico.crear(datos, raiz.contenido.simbolos(int(datos.get("sistema_simbolos", -1))), azar, iso)
 
 
 func _titulo() -> String:

@@ -63,6 +63,8 @@ func _agregar_mision(m: Dictionary) -> void:
 
 
 func tiene(tema: String) -> bool:
+	if tema.begins_with("iso1219_"):
+		return not JuegoIso1219.simbolo(JuegoIso1219.leer(contenido), tema.trim_prefix("iso1219_")).is_empty()
 	if tema.begins_with("simbolo_"):
 		return not contenido.simbolo(tema.trim_prefix("simbolo_")).is_empty()
 	return _indice.has(tema)
@@ -70,6 +72,13 @@ func tiene(tema: String) -> bool:
 
 ## Devuelve un elemento listo para preguntar, con tipo y tema.
 func pregunta(tema: String, azar: RandomNumberGenerator) -> Dictionary:
+	if tema.begins_with("iso1219_"):
+		var lista := JuegoIso1219.leer(contenido)
+		var s := JuegoIso1219.simbolo(lista, tema.trim_prefix("iso1219_"))
+		var r := JuegoIso1219.ronda_nombre(s, lista.filter(func(o: Dictionary) -> bool: return o.get("familia", "") == s.get("familia", "")), azar)
+		r["tipo"] = "simbolo_iso"
+		r["tema"] = tema
+		return r
 	if tema.begins_with("simbolo_"):
 		var id := tema.trim_prefix("simbolo_")
 		# Las opciones falsas salen del mismo sistema, como en el examen y el minijuego.
@@ -82,6 +91,8 @@ func pregunta(tema: String, azar: RandomNumberGenerator) -> Dictionary:
 
 ## Nombre legible del tema, para las estadísticas.
 func titulo(tema: String) -> String:
+	if tema.begins_with("iso1219_"):
+		return "Símbolo ISO 1219: %s" % JuegoIso1219.simbolo(JuegoIso1219.leer(contenido), tema.trim_prefix("iso1219_")).get("nombre", tema)
 	if tema.begins_with("simbolo_"):
 		var s := contenido.simbolo(tema.trim_prefix("simbolo_"))
 		return "Símbolo: %s" % s.get("nombre", tema)
