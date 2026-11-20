@@ -2,7 +2,7 @@
 
 Juego educativo de simulación para Android y Windows que enseña, desde cero, lo que debe saber un oficial electrotécnico (ETO) a bordo de un atunero cerquero. Funciona 100 % sin conexión.
 
-Estado: **v5.3**, con el plan completo:
+Estado: **v5.4**, con el plan completo:
 
 - la v1 a la v5 de la hoja de ruta: los siete sistemas del buque están abiertos, con lecciones y examen, y Taller y Guardia en los seis sistemas de equipos;
 - la Escuela técnica con sus cinco módulos (electricidad industrial, electrónica, hidráulica y neumática, válvulas y líneas, herramientas y racores) y sus exámenes v6 y v7;
@@ -375,6 +375,37 @@ El módulo 11, «Herramientas y racores», está activo con nueve lecciones de h
 - **Minijuego «Identifique la herramienta»** (`JuegoHerramientas`, pantalla `identifique_herramienta`): siete herramientas para nombrar y tres rondas de llaves («¿qué llave métrica entra en una tuerca de 3/4"?»). Registro `identifique_herramienta`; sale en el Pañol y en la evaluación del módulo 11.
 - **Animaciones:** `herramienta` (las herramientas de `params.tipos`, con su nombre y uso) y `llave_tuerca` (la llave sobre la tuerca, con la holgura exagerada para verla).
 - **Pruebas** en `tests/test_herramientas.gd`. Las capturas se hacen con `godot --path . --script res://tests/capturar.gd -- build/capturas_h herramientas`.
+
+## Código de colores de los cables (versión 5.4.0)
+
+Cada cable de la mesa y de los tableros lleva el color de su conductor (`MesaTaller.conductor_cable`, tabla `MesaTaller.CONDUCTORES`). Son valores típicos según IEC 60445 y, en el mando, IEC 60204-1: verificar a bordo.
+
+| Conductor | Color |
+|---|---|
+| L1 · L2 · L3 (fases) | marrón · negro · gris |
+| N (neutro) | azul claro |
+| PE (tierra) | verde-amarillo |
+| Mando en alterna | rojo |
+| Mando en continua (+24 V y señales) | azul oscuro |
+| 0 V de continua | azul con raya blanca |
+| Enclavamiento con tensión externa | naranja |
+| Hilos del propio cable de un sensor | BN marrón · BU azul · BK negro |
+
+- **Cómo se decide**, por los bornes de los dos extremos y en este orden:
+  1. lo que fije el tablero;
+  2. un borne `PE`;
+  3. los bornes BN, BU o BK de un sensor;
+  4. una fase: `L1`, `L2` o `L3`; los bornes 1 a 6 y U1-V1-W1 de los aparatos con `"potencia"`; o los de `"fases"` del catálogo (en el interruptor automático y el diferencial, el polo 1-2 es L1 y el 3-4 es L2);
+  5. un borne `N`;
+  6. un borne de `"cero_v"` del catálogo (el `-` de la fuente, `M` y `1M` del PLC);
+  7. un borne de `"cc"` del catálogo (`true` para toda la pieza, o la lista de sus bornes de continua);
+  8. si no, mando en alterna.
+- **Naranja y otros fijados:** `"colores"` en el JSON del tablero fija el conductor de un punto eléctrico por uno de sus nodos o por su número de hilo, como `{"Q1.14": "naranja"}` o `{"21": "naranja"}`. Admite las claves de `CONDUCTORES` y `naranja`, `rojo`, `azul_oscuro`, `azul_claro` y `verde_amarillo`.
+- **Dibujo:** el PE y el 0 V llevan la raya del aislante a lo largo del cable. El cuello de la puntera sigue la sección: azul en fases y tierra, rojo en el resto.
+- **Interfaz:**
+  - la ficha del hilo muestra una muestra del cable, qué conductor es y su color;
+  - la pestaña «Datos» del tablero y el panel vacío del Taller muestran la leyenda (`MuestraCable`).
+- **Pruebas** en `tests/test_colores_cables.gd`. Capturas: `godot --path . --script res://tests/capturar.gd -- build/capturas_colores colores`.
 
 ## Cables y bornes con aspecto real (versión 5.3.0)
 

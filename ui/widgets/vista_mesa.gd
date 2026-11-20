@@ -442,6 +442,10 @@ func _dibujar_cable(i: int) -> void:
 		draw_polyline(pantalla, Color(Tema.ACENTO, 0.6), ancho + 8.0, true)
 	draw_polyline(pantalla, Color(base.darkened(0.6), alfa), ancho + maxf(1.6 * zoom, 1.0), true)
 	draw_polyline(pantalla, Color(base, alfa), ancho, true)
+	# Raya longitudinal del aislante: verde en el PE, blanca en el 0 V de continua.
+	var raya := mesa.raya_cable(i)
+	if raya.a > 0.0:
+		draw_polyline(_desplazar(pantalla, Vector2(0.06, 0.1) * ancho), Color(raya, alfa), ancho * 0.42, true)
 	if ancho >= 3.0:
 		draw_polyline(_desplazar(pantalla, Vector2(-0.18, -0.24) * ancho), Color(base.lightened(0.45), 0.9 * alfa), ancho * 0.35, true)
 		draw_polyline(_desplazar(pantalla, Vector2(-0.22, -0.3) * ancho), Color(1.0, 1.0, 1.0, 0.5 * alfa), maxf(ancho * 0.12, 1.0), true)

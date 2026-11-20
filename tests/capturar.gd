@@ -87,6 +87,8 @@ func _capturar() -> void:
 		await _capturar_hilos(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "cables":
 		await _capturar_cables(raiz, carpeta)
+	elif argumentos.size() > 1 and argumentos[1] == "colores":
+		await _capturar_colores(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "electronica":
 		await _capturar_electronica(raiz, carpeta)
 	elif argumentos.size() > 1 and argumentos[1] == "rediseno_e":
@@ -778,6 +780,39 @@ func _capturar_cables(raiz: Raiz, carpeta: String) -> void:
 		await _guardar(carpeta, "c_ordenados", tam)
 		p.ordenar_cables()
 		raiz.volver()
+
+
+## Versión 5.4.0: código de colores en los tableros de distribución, power block y máquina
+## principal, el PE tocado con su ficha y la leyenda en Datos.
+func _capturar_colores(raiz: Raiz, carpeta: String) -> void:
+	var tamanos: Array = TAMANOS if not OS.get_environment("CAPTURA_TAMANOS").is_empty() else [Vector2i(960, 432), Vector2i(432, 960)]
+	for tam: Vector2i in tamanos:
+		root.size = tam
+		for t: String in ["distribucion_220", "power_block", "maquina_principal"]:
+			raiz.ir_a("tablero", {"tablero": t})
+			raiz.pantalla_actual()._alternar_puerta()
+			await _esperar()
+			var p = raiz.pantalla_actual()
+			p.vista.encuadrar()
+			await _guardar(carpeta, "k_%s" % t, tam)
+			if t == "distribucion_220":
+				for i in p.mesa.sim.cables.size():
+					if p.mesa.conductor_cable(i) == "PE":
+						p.marcar_hilo(i)
+						break
+				await _guardar(carpeta, "k_pe_tocado", tam)
+				p = raiz.pantalla_actual()
+				p._elegir_pestana("datos")
+				p = raiz.pantalla_actual()
+				await _esperar()
+				var fila: Control = p.find_child("Conductor_L1", true, false)
+				var desliz := fila.get_parent()
+				while desliz != null and not desliz is ScrollContainer:
+					desliz = desliz.get_parent()
+				if desliz != null:
+					(desliz as ScrollContainer).scroll_vertical = int(fila.global_position.y - (desliz as ScrollContainer).global_position.y) - 40
+				await _guardar(carpeta, "k_leyenda", tam)
+			raiz.volver()
 
 
 ## Etapa 47: exámenes de la Escuela (v7 con símbolo ISO, v6 con un caso), escalera de rangos y el

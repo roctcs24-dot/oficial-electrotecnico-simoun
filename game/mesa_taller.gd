@@ -17,10 +17,28 @@ const SALIDA_MAX := 120.0
 const TRAMO_RECTO := 50.0
 const CANALES_CABLE := 9
 const SEPARACION_CANALES := 22.0
-## Colores de IEC 60445 para potencia; los cables de mando van en rojo.
-const COLOR_FASE := {"1": Color("7a4a24"), "2": Color("7a4a24"), "3": Color("17181a"), "4": Color("17181a"), "5": Color("8a8f93"), "6": Color("8a8f93"),
-	"L1": Color("7a4a24"), "L2": Color("17181a"), "L3": Color("8a8f93"), "U1": Color("7a4a24"), "V1": Color("17181a"), "W1": Color("8a8f93")}
-const COLOR_MANDO := Color("b02a22")
+## Código de colores de los conductores (IEC 60445 y, en el mando, IEC 60204-1). Cada uno con su
+## color, la raya longitudinal del aislante (transparente si no tiene) y su nombre.
+const CONDUCTORES := {
+	"L1": {"color": Color("7a4a24"), "nombre": "L1 · fase 1", "color_nombre": "marrón"},
+	"L2": {"color": Color("17181a"), "nombre": "L2 · fase 2", "color_nombre": "negro"},
+	"L3": {"color": Color("8a8f93"), "nombre": "L3 · fase 3", "color_nombre": "gris"},
+	"N": {"color": Color("4f9fd8"), "nombre": "N · neutro", "color_nombre": "azul claro"},
+	"PE": {"color": Color("d9b81c"), "raya": Color("2f8f34"), "nombre": "PE · tierra de protección", "color_nombre": "verde-amarillo"},
+	"CA": {"color": Color("b02a22"), "nombre": "Mando en alterna", "color_nombre": "rojo"},
+	"CC": {"color": Color("2747a8"), "nombre": "Mando en continua (+24 V)", "color_nombre": "azul oscuro"},
+	"0V": {"color": Color("2747a8"), "raya": Color("e2e5e0"), "nombre": "0 V de continua", "color_nombre": "azul con raya blanca"},
+	"EXT": {"color": Color("e36d14"), "nombre": "Enclavamiento con tensión externa", "color_nombre": "naranja"},
+	"BN": {"color": Color("7a4a24"), "nombre": "BN · positivo del sensor", "color_nombre": "marrón, del cable del sensor"},
+	"BU": {"color": Color("2a6cb8"), "nombre": "BU · 0 V del sensor", "color_nombre": "azul, del cable del sensor"},
+	"BK": {"color": Color("17181a"), "nombre": "BK · salida del sensor", "color_nombre": "negro, del cable del sensor"},
+}
+## Orden de la leyenda.
+const LEYENDA_CONDUCTORES := ["L1", "L2", "L3", "N", "PE", "CA", "CC", "0V", "EXT"]
+## Bornes de fase de los aparatos de potencia (1-2, 3-4, 5-6) y del motor y las barras.
+const FASE_BORNE := {"1": "L1", "2": "L1", "3": "L2", "4": "L2", "5": "L3", "6": "L3", "U1": "L1", "V1": "L2", "W1": "L3"}
+## Nombres de color que admite «colores» en el JSON del tablero, además de las claves de CONDUCTORES.
+const COLOR_A_CONDUCTOR := {"naranja": "EXT", "rojo": "CA", "azul_oscuro": "CC", "azul_claro": "N", "verde_amarillo": "PE"}
 ## Piezas que cambiaron de nombre al pasar la red a 380 V: los circuitos guardados antes se
 ## siguen abriendo.
 const RENOMBRADOS := {"motor_440": "motor_380", "motor_254": "motor_220"}
@@ -417,9 +435,10 @@ static func _digitos(id: String) -> String:
 	return r
 
 
-## true si el cable es de potencia (sale de un borne de fase de un aparato de potencia).
+## true si el cable es de potencia: una fase o la tierra de un aparato de potencia (puntera de
+## 2,5 mm², cuello azul).
 func cable_de_potencia(indice: int) -> bool:
-	return color_cable(indice) != COLOR_MANDO
+	return conductor_cable(indice) in ["L1", "L2", "L3", "PE"]
 
 
 ## Datos del cable para el panel: su número de hilo, desde y hasta (borne y nombre del aparato) y
@@ -431,7 +450,9 @@ func descripcion_cable(indice: int) -> Dictionary:
 		var id := nodo.get_slice(".", 0)
 		var nombre := str(entrada(piezas[id]["tipo"]).get("nombre", id)) if piezas.has(id) else id
 		lados.append({"borne": nodo.replace(".", ":"), "aparato": nombre})
-	return {"numero": numero_hilo(indice), "desde": lados[0], "hasta": lados[1], "potencia": cable_de_potencia(indice)}
+	var conductor := conductor_cable(indice)
+	return {"numero": numero_hilo(indice), "desde": lados[0], "hasta": lados[1], "potencia": cable_de_potencia(indice),
+		"conductor": conductor, "nombre_conductor": CONDUCTORES[conductor]["nombre"], "color_nombre": CONDUCTORES[conductor]["color_nombre"]}
 
 
 ## Cables con el mismo número de hilo que el dado (el mismo punto eléctrico), él incluido.
@@ -445,13 +466,85 @@ func cables_del_hilo(indice: int) -> Array[int]:
 
 
 func color_cable(indice: int) -> Color:
+	return CONDUCTORES[conductor_cable(indice)]["color"]
+
+
+## Raya longitudinal del aislante (verde en el PE, blanca en el 0 V) o transparente.
+func raya_cable(indice: int) -> Color:
+	return CONDUCTORES[conductor_cable(indice)].get("raya", Color.TRANSPARENT)
+
+
+## «colores» (del tablero, opcional) fija el conductor de un punto eléctrico por uno de sus nodos
+## o por su número de hilo: {"Q1.14": "naranja"} o {"21": "naranja"}. Sirve para lo que no se
+## deduce de los bornes, como un enclavamiento alimentado desde otro tablero.
+var colores := {}
+var _cache_conductores := {"clave": -1, "lista": []}
+
+
+## Conductor del cable según los bornes de sus extremos, en este orden: lo que fije el tablero,
+## tierra (PE), los hilos del propio cable de un sensor, fase de potencia, neutro, continua (0 V o
+## +24 V y señales) y, si no, mando en alterna.
+func conductor_cable(indice: int) -> String:
+	var clave := hash([sim.cables, colores, hilos, piezas.keys()])
+	if int(_cache_conductores["clave"]) != clave:
+		var lista := []
+		for i in sim.cables.size():
+			lista.append(_conductor(i))
+		_cache_conductores = {"clave": clave, "lista": lista}
+	var l: Array = _cache_conductores["lista"]
+	return str(l[indice]) if indice < l.size() else "CA"
+
+
+func _conductor(indice: int) -> String:
 	var c: Array = sim.cables[indice]
+	if not colores.is_empty():
+		var fijado := _conductor_fijado(indice)
+		if not fijado.is_empty():
+			return fijado
+	var info := []
 	for nodo: String in c:
-		var borne := borne_de(nodo)
-		var es_potencia: bool = entrada(piezas[nodo.get_slice(".", 0)]["tipo"]).get("potencia", false)
-		if es_potencia and COLOR_FASE.has(borne):
-			return COLOR_FASE[borne]
-	return COLOR_MANDO
+		var id := nodo.get_slice(".", 0)
+		info.append({"borne": borne_de(nodo), "entrada": entrada(piezas[id]["tipo"]) if piezas.has(id) else {}})
+	for d: Dictionary in info:
+		if d["borne"] == "PE":
+			return "PE"
+	for d: Dictionary in info:
+		if d["entrada"].get("tipo", "") == "sensor_proximidad" and d["borne"] in ["BN", "BU", "BK"]:
+			return d["borne"]
+	for d: Dictionary in info:
+		var b: String = d["borne"]
+		var fases: Dictionary = d["entrada"].get("fases", {})
+		if fases.has(b):
+			return fases[b]
+		if b in ["L1", "L2", "L3"]:
+			return b
+		if d["entrada"].get("potencia", false) and FASE_BORNE.has(b):
+			return FASE_BORNE[b]
+	for d: Dictionary in info:
+		if d["borne"] == "N":
+			return "N"
+	for d: Dictionary in info:
+		if d["borne"] in d["entrada"].get("cero_v", []):
+			return "0V"
+	for d: Dictionary in info:
+		var cc: Variant = d["entrada"].get("cc", false)
+		if (cc is bool and cc) or (cc is Array and d["borne"] in cc):
+			return "CC"
+	return "CA"
+
+
+func _conductor_fijado(indice: int) -> String:
+	var valor := ""
+	var numero := numero_hilo(indice)
+	if colores.has(numero):
+		valor = str(colores[numero])
+	else:
+		for k in cables_del_hilo(indice):
+			for nodo: String in sim.cables[k]:
+				if colores.has(nodo):
+					valor = str(colores[nodo])
+	valor = COLOR_A_CONDUCTOR.get(valor, valor)
+	return valor if CONDUCTORES.has(valor) else ""
 
 
 func a_dict() -> Dictionary:

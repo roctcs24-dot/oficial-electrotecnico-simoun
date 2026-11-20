@@ -77,6 +77,7 @@ func _panel_pieza() -> void:
 		return
 	if id.is_empty() or not mesa.piezas.has(id):
 		_panel.add_child(_etiqueta("Toque una pieza o un cable en la mesa para ver sus opciones.", "Nota"))
+		_agregar_leyenda_colores()
 		return
 	var e := mesa.entrada(mesa.piezas[id]["tipo"])
 	_panel.add_child(_etiqueta("%s: %s" % [id, e["nombre"]], "Subtitulo"))

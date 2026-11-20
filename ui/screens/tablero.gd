@@ -13,6 +13,7 @@ func construir() -> void:
 		var nueva := MesaTaller.new(raiz.contenido)
 		nueva.cargar_circuito(raiz.contenido.circuito_datos(tablero["circuito"]), tablero["interior"])
 		nueva.hilos = tablero.get("hilos", {})
+		nueva.colores = tablero.get("colores", {})
 		_iniciar_banco(nueva, "mando")
 		args["puerta"] = false
 	_cabecera(tablero["titulo"], tablero.get("ubicacion", ""))
@@ -244,6 +245,7 @@ func _reparar(id: String) -> void:
 func _panel_datos() -> void:
 	_panel.add_child(_etiqueta(tablero.get("nota", ""), "Nota"))
 	_agregar_tabla_hilos()
+	_agregar_leyenda_colores()
 	if tablero.has("foto"):
 		_panel.add_child(_etiqueta("Referencia: %s." % tablero["foto"], "Nota"))
 	var circuito := raiz.contenido.circuito_datos(tablero["circuito"])

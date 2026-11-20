@@ -487,7 +487,9 @@ func alternar_etiquetas() -> void:
 func _agregar_hilo(indice: int, de_tablero := true) -> void:
 	var d := mesa.descripcion_cable(indice)
 	_panel.add_child(_etiqueta("Hilo %s" % d["numero"], "Subtitulo"))
-	_panel.add_child(_etiqueta("%s · todos los cables con este número son el mismo punto eléctrico." % ("Potencia" if d["potencia"] else "Mando"), "Nota"))
+	_panel.add_child(_fila_conductor(d["conductor"]))
+	var grupo := "Potencia" if d["conductor"] in ["L1", "L2", "L3"] else ("Tierra" if d["conductor"] == "PE" else "Mando")
+	_panel.add_child(_etiqueta("%s · todos los cables con este número son el mismo punto eléctrico." % grupo, "Nota"))
 	for par: Array in [["Desde", d["desde"]], ["Hasta", d["hasta"]]]:
 		_panel.add_child(_etiqueta("%s %s — %s" % [par[0], par[1]["borne"], par[1]["aparato"]]))
 	var otros := mesa.cables_del_hilo(indice).size() - 1
@@ -495,6 +497,30 @@ func _agregar_hilo(indice: int, de_tablero := true) -> void:
 		_panel.add_child(_etiqueta("Este hilo tiene %d cable%s más, marcados en ámbar en la mesa." % [otros, "" if otros == 1 else "s"], "Nota"))
 	if de_tablero:
 		_panel.add_child(_etiqueta("Numeración de enseñanza por potencial: verificar contra el esquema del tablero.", "Nota"))
+
+
+## Renglón de la leyenda: muestra del cable, qué conductor es y de qué color.
+func _fila_conductor(conductor: String) -> HBoxContainer:
+	var d: Dictionary = MesaTaller.CONDUCTORES[conductor]
+	var fila := HBoxContainer.new()
+	fila.name = "Conductor_%s" % conductor
+	fila.add_theme_constant_override("separation", 10)
+	fila.add_child(MuestraCable.new(conductor))
+	var textos := VBoxContainer.new()
+	textos.add_theme_constant_override("separation", 0)
+	textos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textos.add_child(_etiqueta(d["nombre"]))
+	textos.add_child(_etiqueta(d["color_nombre"], "Nota"))
+	fila.add_child(textos)
+	return fila
+
+
+## Leyenda del código de colores de los cables.
+func _agregar_leyenda_colores() -> void:
+	_panel.add_child(_rotulo("Código de colores"))
+	for conductor: String in MesaTaller.LEYENDA_CONDUCTORES:
+		_panel.add_child(_fila_conductor(conductor))
+	_panel.add_child(_etiqueta("Sensor: BN marrón · BU azul · BK negro, los de su propio cable. IEC 60445 · IEC 60204-1: valor típico, verificar a bordo.", "Nota"))
 
 
 ## Tabla de hilos: un renglón por número, con los bornes que une. Tocarlo marca su primer cable.
