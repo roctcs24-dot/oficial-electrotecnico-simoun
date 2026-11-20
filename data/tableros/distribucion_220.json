@@ -98,6 +98,8 @@
     }
   ],
   "circuito": "tablero_distribucion_220",
+  "colores": {"ST.14": "rojo"},
+  "nota_colores": "El hilo del pulsador TEST al casco es del circuito de prueba de las lámparas de tierra, no una tierra de protección: va en el color del mando (verificar a bordo).",
   "interior": {
     "B": [
       0,

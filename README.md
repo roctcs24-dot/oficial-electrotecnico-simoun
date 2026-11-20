@@ -401,6 +401,7 @@ Cada cable de la mesa y de los tableros lleva el color de su conductor (`MesaTal
   7. un borne de `"cc"` del catálogo (`true` para toda la pieza, o la lista de sus bornes de continua);
   8. si no, mando en alterna.
 - **Naranja y otros fijados:** `"colores"` en el JSON del tablero fija el conductor de un punto eléctrico por uno de sus nodos o por su número de hilo, como `{"Q1.14": "naranja"}` o `{"21": "naranja"}`. Admite las claves de `CONDUCTORES` y `naranja`, `rojo`, `azul_oscuro`, `azul_claro` y `verde_amarillo`.
+- **Tablero D-51 (5.4.1):** el hilo del pulsador TEST de las lámparas de tierra al casco va en rojo con `"colores": {"ST.14": "rojo"}`. Es del circuito de prueba, no una tierra de protección. `"nota_colores"` explica el motivo en «Datos».
 - **Dibujo:** el PE y el 0 V llevan la raya del aislante a lo largo del cable. El cuello de la puntera sigue la sección: azul en fases y tierra, rojo en el resto.
 - **Interfaz:**
   - la ficha del hilo muestra una muestra del cable, qué conductor es y su color;

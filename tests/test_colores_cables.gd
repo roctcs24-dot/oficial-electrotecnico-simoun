@@ -92,6 +92,23 @@ func test_el_tablero_fija_el_naranja() -> String:
 	])
 
 
+func test_el_hilo_de_prueba_de_tierra_va_en_rojo() -> String:
+	var c := Contenido.new()
+	var t := c.tablero("distribucion_220")
+	var m := MesaTaller.new(c)
+	m.cargar_circuito(c.circuito_datos(t["circuito"]), t["interior"])
+	var i := -1
+	for k in m.sim.cables.size():
+		if m.sim.cables[k] == ["ST.14", "PE.PE"]:
+			i = k
+	var sin_fijar := m.conductor_cable(i)
+	m.colores = t.get("colores", {})
+	return A.primero([
+		A.cierto(sin_fijar == "PE", "por sus bornes sería tierra: %s" % sin_fijar),
+		A.cierto(m.conductor_cable(i) == "CA", "el tablero lo fija como mando: %s" % m.conductor_cable(i)),
+	])
+
+
 func test_todos_los_tableros_tienen_colores_validos() -> String:
 	var c := Contenido.new()
 	var fallos: Array[String] = []

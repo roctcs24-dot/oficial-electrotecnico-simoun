@@ -246,6 +246,8 @@ func _panel_datos() -> void:
 	_panel.add_child(_etiqueta(tablero.get("nota", ""), "Nota"))
 	_agregar_tabla_hilos()
 	_agregar_leyenda_colores()
+	if tablero.has("nota_colores"):
+		_panel.add_child(_etiqueta(tablero["nota_colores"], "Nota"))
 	if tablero.has("foto"):
 		_panel.add_child(_etiqueta("Referencia: %s." % tablero["foto"], "Nota"))
 	var circuito := raiz.contenido.circuito_datos(tablero["circuito"])

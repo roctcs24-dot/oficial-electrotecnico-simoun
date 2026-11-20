@@ -797,10 +797,10 @@ func _capturar_colores(raiz: Raiz, carpeta: String) -> void:
 			await _guardar(carpeta, "k_%s" % t, tam)
 			if t == "distribucion_220":
 				for i in p.mesa.sim.cables.size():
-					if p.mesa.conductor_cable(i) == "PE":
+					if p.mesa.sim.cables[i] == ["ST.14", "PE.PE"]:
 						p.marcar_hilo(i)
 						break
-				await _guardar(carpeta, "k_pe_tocado", tam)
+				await _guardar(carpeta, "k_prueba_tierra", tam)
 				p = raiz.pantalla_actual()
 				p._elegir_pestana("datos")
 				p = raiz.pantalla_actual()
